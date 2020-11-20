@@ -25,8 +25,8 @@
 	}
 	#Footer__Header {
 		position: absolute;
-		width: 700px;
-		height: 900px;
+		width: 375px;
+		height: 812px;
 		background-color: rgba(255,255,255,1);
 		overflow: hidden;
 		--web-view-name: Footer / Header;
@@ -36,22 +36,13 @@
 		--web-scale-on-resize: true;
 		--web-enable-deep-linking: true;
 	}
-	#Rectangle_4 {
-		fill: rgba(204,204,204,1);
-		stroke: rgba(112,112,112,1);
-		stroke-width: 1px;
-		stroke-linejoin: miter;
-		stroke-linecap: butt;
-		stroke-miterlimit: 4;
-		shape-rendering: auto;
-	}
-	.Rectangle_4 {
+	#Header {
 		position: absolute;
-		overflow: visible;
 		width: 375px;
 		height: 77px;
 		left: 0px;
-		top: 823px;
+		top: 0px;
+		overflow: visible;
 	}
 	#Rectangle_56 {
 		fill: rgba(204,204,204,1);
@@ -65,42 +56,10 @@
 	.Rectangle_56 {
 		position: absolute;
 		overflow: visible;
-		width: 611px;
+		width: 375px;
 		height: 77px;
 		left: 0px;
 		top: 0px;
-	}
-	#Brukere {
-		left: 252px;
-		top: 867px;
-		position: absolute;
-		overflow: visible;
-		width: 46px;
-		white-space: nowrap;
-		line-height: 18px;
-		margin-top: -3px;
-		text-align: left;
-		font-family: Arial;
-		font-style: normal;
-		font-weight: bold;
-		font-size: 12px;
-		color: rgba(0,0,0,1);
-	}
-	#Hjem {
-		left: 74px;
-		top: 870px;
-		position: absolute;
-		overflow: visible;
-		width: 30px;
-		white-space: nowrap;
-		line-height: 18px;
-		margin-top: -3px;
-		text-align: left;
-		font-family: Arial;
-		font-style: normal;
-		font-weight: bold;
-		font-size: 12px;
-		color: rgba(0,0,0,1);
 	}
 	#Ellipse_1 {
 		fill: rgba(255,255,255,1);
@@ -116,11 +75,11 @@
 		overflow: visible;
 		width: 40px;
 		height: 40px;
-		left: 541px;
+		left: 305px;
 		top: 19px;
 	}
 	#K {
-		left: 541px;
+		left: 305px;
 		top: 24px;
 		position: absolute;
 		overflow: visible;
@@ -147,9 +106,66 @@
 		font-size: 24px;
 		color: rgba(0,0,0,1);
 	}
+	#Footer {
+		position: absolute;
+		width: 375px;
+		height: 77px;
+		left: 0px;
+		top: 735px;
+		overflow: visible;
+	}
+	#Rectangle_4 {
+		fill: rgba(204,204,204,1);
+		stroke: rgba(112,112,112,1);
+		stroke-width: 1px;
+		stroke-linejoin: miter;
+		stroke-linecap: butt;
+		stroke-miterlimit: 4;
+		shape-rendering: auto;
+	}
+	.Rectangle_4 {
+		position: absolute;
+		overflow: visible;
+		width: 375px;
+		height: 77px;
+		left: 0px;
+		top: 0px;
+	}
+	#Brukere {
+		left: 252px;
+		top: 44px;
+		position: absolute;
+		overflow: visible;
+		width: 46px;
+		white-space: nowrap;
+		line-height: 18px;
+		margin-top: -3px;
+		text-align: left;
+		font-family: Arial;
+		font-style: normal;
+		font-weight: bold;
+		font-size: 12px;
+		color: rgba(0,0,0,1);
+	}
+	#Hjem {
+		left: 74px;
+		top: 47px;
+		position: absolute;
+		overflow: visible;
+		width: 30px;
+		white-space: nowrap;
+		line-height: 18px;
+		margin-top: -3px;
+		text-align: left;
+		font-family: Arial;
+		font-style: normal;
+		font-weight: bold;
+		font-size: 12px;
+		color: rgba(0,0,0,1);
+	}
 	#Ledertavler {
 		left: 154px;
-		top: 869px;
+		top: 46px;
 		position: absolute;
 		overflow: visible;
 		width: 66px;
@@ -168,7 +184,7 @@
 		width: 33px;
 		height: 33px;
 		left: 170px;
-		top: 833px;
+		top: 10px;
 		overflow: visible;
 	}
 	#free-users-icon-267-thumb {
@@ -176,7 +192,7 @@
 		width: 33px;
 		height: 33px;
 		left: 258px;
-		top: 833px;
+		top: 10px;
 		overflow: visible;
 	}
 	#home {
@@ -184,7 +200,7 @@
 		width: 33px;
 		height: 33px;
 		left: 72px;
-		top: 835px;
+		top: 12px;
 		overflow: visible;
 	}
 </style>
@@ -3029,39 +3045,43 @@ window.application = new Application();
 </head>
 <body>
 <div id="Footer__Header">
-	<svg class="Rectangle_4">
-		<rect id="Rectangle_4" rx="0" ry="0" x="0" y="0" width="375" height="77">
-		</rect>
-	</svg>
-	<svg class="Rectangle_56">
-		<rect id="Rectangle_56" rx="0" ry="0" x="0" y="0" width="611" height="77">
-		</rect>
-	</svg>
-	<div id="Brukere">
-		<span>Brukere</span>
+	<div id="Header">
+		<svg class="Rectangle_56">
+			<rect id="Rectangle_56" rx="0" ry="0" x="0" y="0" width="375" height="77">
+			</rect>
+		</svg>
+		<svg class="Ellipse_1">
+			<ellipse id="Ellipse_1" rx="20" ry="20" cx="20" cy="20">
+			</ellipse>
+		</svg>
+		<div id="K">
+			<span>K</span>
+		</div>
+		<div id="Tittel">
+			<span>Tittel</span>
+		</div>
 	</div>
-	<div id="Hjem">
-		<span>Hjem</span>
+	<div id="Footer">
+		<svg class="Rectangle_4">
+			<rect id="Rectangle_4" rx="0" ry="0" x="0" y="0" width="375" height="77">
+			</rect>
+		</svg>
+		<div id="Brukere">
+			<span>Brukere</span>
+		</div>
+		<div id="Hjem">
+			<span>Hjem</span>
+		</div>
+		<div id="Ledertavler">
+			<span>Ledertavler</span>
+		</div>
+		<img id="ID3388492-200" src="images/ID3388492-200.png" srcset="images/ID3388492-200.png 1x">
+			
+		<img id="free-users-icon-267-thumb" src="images/free-users-icon-267-thumb.png" srcset="images/free-users-icon-267-thumb.png 1x">
+			
+		<img id="home" src="images/home.png" srcset="images/home.png 1x">
+			
 	</div>
-	<svg class="Ellipse_1">
-		<ellipse id="Ellipse_1" rx="20" ry="20" cx="20" cy="20">
-		</ellipse>
-	</svg>
-	<div id="K">
-		<span>K</span>
-	</div>
-	<div id="Tittel">
-		<span>Tittel</span>
-	</div>
-	<div id="Ledertavler">
-		<span>Ledertavler</span>
-	</div>
-	<img id="ID3388492-200" src="images/ID3388492-200.png" srcset="images/ID3388492-200.png 1x">
-		
-	<img id="free-users-icon-267-thumb" src="images/free-users-icon-267-thumb.png" srcset="images/free-users-icon-267-thumb.png 1x">
-		
-	<img id="home" src="images/home.png" srcset="images/home.png 1x">
-		
 </div>
 </body>
 </html>
