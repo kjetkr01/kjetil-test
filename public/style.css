@@ -106,18 +106,28 @@ body {
    }
 
    #userMessage {
+      font-size: 22px;
+      float: left;
+      margin-top: 2vh;
+      margin-left: var(--main-marginFromLeftOrRight);
+   }
+
+   #currentWorkout {
+      font-size: 20px;
       float: left;
       margin-top: 2vh;
       margin-left: var(--main-marginFromLeftOrRight);
    }
    
+   
    #isGymOpen {
+      font-size: 22px;
       margin-top: 52.5vh;
       /*margin-left: var(--main-marginFromLeftOrRight);*/
    }
 
    #gymCloseTime {
-      font-size: 20px;
+      font-size: 16px;
    }
 
    #content {

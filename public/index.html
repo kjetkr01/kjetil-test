@@ -12,15 +12,17 @@
    <div id="container">
 
       <div id="header">
-         <p id="title" class="headerText">Home</p>
+         <p id="title" class="headerText">Tittel</p>
          <p id="avatar" class="headerText">K</p>
       </div>
 
       <div id="content">
          <p id="userMessage">God morgen, Kjetil</p>
+         <p id="currentWorkout">I dag (fredag) skal du trene bein og mage!</p>
          <button onClick="location.href = 'test.html'">info side</button>
          <p id="isGymOpen">Treningssenteret er åpent!</p>
          <p id="gymCloseTime">Stenger om 2t og 30 min</p>
+         
 
          <!--Bare noe tekst for å vise at scrollbar funksjonen fungerer-->
 
@@ -43,18 +45,19 @@
    <p id="gymCloseTime">Stenger om 2t og 30 min</p>
    `;
 
-   let bool = true;
-
    const title = document.getElementById("title");
+   const content = document.getElementById("content");
 
-   title.addEventListener("click", function (evt) {
+   const footerBar = document.getElementById("footer");
 
-      if (!bool) {
-         document.getElementById("content").innerHTML = mainHtml;
-         bool = true;
+   footerBar.addEventListener("click", function (evt) {
+      const loadPage = evt.target.innerHTML;
+
+      if (loadPage === "Hjem") {
+         title.innerHTML = loadPage;
+         content.innerHTML = mainHtml;
       } else {
          document.getElementById("content").innerHTML = "cleared";
-         bool = false;
       }
 
 
