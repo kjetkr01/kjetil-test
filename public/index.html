@@ -36,6 +36,30 @@
 
 <script>
 
+   const mainHtml = `
+   <p id="userMessage">God morgen, Kjetil</p>
+   <button onClick="location.href = 'test.html'">info side</button>
+   <p id="isGymOpen">Treningssenteret er åpent!</p>
+   <p id="gymCloseTime">Stenger om 2t og 30 min</p>
+   `;
+
+   let bool = true;
+
+   const title = document.getElementById("title");
+
+   title.addEventListener("click", function (evt) {
+
+      if (!bool) {
+         document.getElementById("content").innerHTML = mainHtml;
+         bool = true;
+      } else {
+         document.getElementById("content").innerHTML = "cleared";
+         bool = false;
+      }
+
+
+   })
+
 </script>
 
 </html>
