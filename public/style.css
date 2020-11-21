@@ -58,7 +58,7 @@ body {
 
 
 /*@media (orientation: portrait)*/
-@media screen and (max-width: 1000px) { /*stående*/
+@media screen and (max-width: 1100px) { /*stående*/
 
    .headerText, .footerText {
       display: inline-block;
