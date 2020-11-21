@@ -1,4 +1,11 @@
 /*VERSION 1*/
+:root {
+   --main-color: lightgray;
+   --main-firstBackground-color: lightgreen;
+   --main-background-color: white;
+   --main-marginFromLeftOrRight: 3vw;
+}
+
 
 body {
    background-color: azure;
@@ -51,6 +58,21 @@ body {
 
 
 @media (orientation: portrait) { /*stående*/
+
+   .headerText {
+      display: inline-block;
+   }
+
+   #title {
+      float: left;
+      margin-left: var(--main-marginFromLeftOrRight);
+   }
+
+   #firstLetterName {
+      float: right;
+      margin-right: var(--main-marginFromLeftOrRight);
+   }
+
    #header {
        grid-column-start: 1;
        grid-column-end: 4;
