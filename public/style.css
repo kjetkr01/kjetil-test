@@ -59,18 +59,24 @@ body {
 
 @media (orientation: portrait) { /*stående*/
 
-   .headerText {
+   .headerText, .footerText {
       display: inline-block;
-   }
-
-   #title {
-      float: left;
       margin-left: var(--main-marginFromLeftOrRight);
+      margin-right: var(--main-marginFromLeftOrRight);
    }
 
-   #firstLetterName {
+   #title, #home {
+      float: left;
+      /*margin-left: var(--main-marginFromLeftOrRight);*/
+   }
+
+   #title, #avatar {
+      font-weight: bold;
+   }
+
+   #avatar, #users {
       float: right;
-      margin-right: var(--main-marginFromLeftOrRight);
+      /*margin-right: var(--main-marginFromLeftOrRight);*/
    }
 
    #header {
