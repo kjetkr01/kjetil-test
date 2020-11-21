@@ -125,8 +125,7 @@ body {
    }
 
    #currentWorkout {
-      position: absolute;
-      float: left;
+      position: fixed;
       font-size: 20px;
       margin-top: 10vh;
       margin-left: var(--main-marginFromLeftOrRight);
