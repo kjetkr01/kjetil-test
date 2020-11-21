@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<title>kjetil-test</title>
+<meta name="viewport" content="initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="manifest" href="/manifest.json">
+<!-- <link rel="stylesheet" href="w3.css"> -->
+<link rel="stylesheet" href="style.css">
+
+<body>
+
+
+   <div id="container">
+      
+      <div id="header">
+         <p id="title" class="headerText">Tittel</p>
+         <p id="avatar" class="headerText">K</p>
+      </div>
+      
+      <div id="content">Test page:<br>
+         <button onClick="location.reload();">Oppdater siden</button><br>
+         <p>Sist oppdatert:</p>
+         <p id="updateTime"></p>
+
+         <button onClick="location.href = 'index.html'">homepage</button>
+
+         <!--Bare noe tekst for å vise at scrollbar funksjonen fungerer-->
+
+      </div>
+      <div id="footer">
+         <p id="home" class="footerText">Hjem</p>
+         <p id="leaderboards" class="footerText">Ledertavler</p>
+         <p id="users" class="footerText">Brukere</p>
+         </div>
+   </div>
+
+
+
+
+   <!-- 
+
+   <div id="Header">
+      
+      <h1 id="title" class="k-headerLeft">Hisøy IL treningssenter</h1>
+      <h1 id="avatarText" class="k-headerRight">K</h1>
+   </div>
+   <div id="Content">
+      
+      <p class="k-smallText">God morgen, Kjetil</p>
+   </div>
+   <div id="Footer" class="k-smallText k-footerRow">
+      
+      <p class="k-footerColumn">Hjem</p>
+      <p class="k-footerColumn">Ledertavler</p>
+      <p class="k-footerColumn">Brukere</p>
+   </div>
+
+-->
+
+
+   <!--
+<div class="w3-container">
+
+  <div class="w3-display-container" style="height:100vh;">
+ 
+ 	<div class="w3-top">
+    <h1 id="title" class="w3-display-topleft">Hisøy IL treningssenter</h1>
+    <h1 id="avatarText" class=" w3-display-topright w3-button">K</h1>
+    </div>
+    
+    <div class="k-smallText w3-display-middle">God morgen, Kjetil</div>
+    
+    <div class="w3-bottom">
+    <div class="k-smallText w3-display-bottomleft w3-button">Hjem</div>
+    <div class="k-smallText w3-display-bottommiddle w3-button">Ledertavler</div>
+    <div class="k-smallText w3-display-bottomright w3-button">Brukere</div>
+    </div>
+    
+  </div>
+</div>
+-->
+
+</body>
+
+<script>
+
+   document.title = "WIP";
+
+   updateTime();
+
+   function updateTime(){
+      let d = new Date();
+      document.getElementById("updateTime").innerHTML = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+   }
+
+</script>
+
+</html>
