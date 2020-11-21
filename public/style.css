@@ -20,13 +20,9 @@ body {
 
 #container {
    display: grid;
-   /*height: 100vh;*/
    height: auto;
    min-height: 100vh;
-   /*grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-   grid-template-rows: 80px 20px 1fr 1fr 1fr 20px 80px;*/
    grid-template-columns: 5vw 1fr 5vw;
-   /*grid-template-rows: 10vh 5vh 1fr 5vh 10vh;*/
    grid-template-rows: 10vh 5vh 70vh 5vh 10vh;
 }
 
@@ -87,7 +83,7 @@ body {
    }
 
    #title {
-      margin: 1vh;
+      margin: 2vh;
    }
 
    #title, #avatar {
@@ -116,6 +112,7 @@ body {
       background-color: var(--main-backgroundThemeColor);
       border: 1px solid black;
       overflow-y: scroll;
+      border-radius: 2.5%;
   }
 
    #footer {
