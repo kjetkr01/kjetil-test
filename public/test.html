@@ -21,6 +21,8 @@
          <p>Sist oppdatert:</p>
          <p id="updateTime"></p>
 
+         <p id="info"></p>
+
          <button onClick="location.href = 'index.html'">homepage</button>
 
          <!--Bare noe tekst for å vise at scrollbar funksjonen fungerer-->
@@ -91,6 +93,14 @@
       let d = new Date();
       document.getElementById("updateTime").innerHTML = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
    }
+
+   const html = `
+   Screensize:
+   <br>
+   H: ${window.screen.availHeight}<br>
+   W: ${window.screen.availWidth}
+   `;
+   document.getElementById("info").innerHTML = html;
 
 </script>
 
