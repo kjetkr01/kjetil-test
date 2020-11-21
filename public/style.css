@@ -4,6 +4,10 @@ font-weight: bold;
 padding: 0.5vh;
 }
 
+#title {
+user-select: none;
+}
+
 #avatarText {
 border-radius: 50%;
 border: 0.25vh solid;
