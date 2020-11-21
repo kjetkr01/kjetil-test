@@ -4,11 +4,14 @@
    --main-firstBackground-color: lightgreen;
    --main-background-color: white;
    --main-marginFromLeftOrRight: 3vw;
+   --main-themeColor: lightgray;
+   --main-backgroundThemeColor: white;
+   --main-bodyBackground: yellow;
 }
 
 
 body {
-   background-color: azure;
+   background-color: var(--main-bodyBackground);
    text-align: center;
    font-size: 28px;
    margin: 0;
@@ -84,7 +87,7 @@ body {
        grid-column-end: 4;
        grid-row-start: 1;
        grid-row-end: 1;
-       background-color: orange;
+       background-color: var(--main-themeColor);
        border: 1px solid black;
    }
 
@@ -93,7 +96,7 @@ body {
       grid-column-end: 3;
       grid-row-start: 3;
       grid-row-end: 3;
-      background-color:peru;
+      background-color: var(--main-backgroundThemeColor);
       border: 1px solid black;
       overflow-y: scroll;
   }
@@ -103,7 +106,7 @@ body {
        grid-column-end: 4;
        grid-row-start: 5;
        grid-row-end: 5;
-       background-color: lightpink;
+       background-color: var(--main-themeColor);
        border: 1px solid black;
    }
 }

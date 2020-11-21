@@ -19,6 +19,8 @@
       
       <div id="content">Content:<br>
          <button onClick="location.reload();">Oppdater siden</button><br>
+         <p>Sist oppdatert:</p>
+         <p id="updateTime"></p>
 
          <!--Bare noe tekst for å vise at scrollbar funksjonen fungerer-->
          The standard Lorem Ipsum passage, used since the 1500s
@@ -130,6 +132,13 @@
 <script>
 
    document.title = "WIP";
+
+   updateTime();
+
+   function updateTime(){
+      let d = new Date();
+      document.getElementById("updateTime").innerHTML = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+   }
 
 </script>
 
