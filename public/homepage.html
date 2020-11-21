@@ -3,7 +3,7 @@
 <title>Hjem</title>
 <meta name="viewport" content="initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
-
+<link rel="manifest" href="/manifest.json">
 <!-- <link rel="stylesheet" href="w3.css"> -->
 <link rel="stylesheet" href="style.css">
 
@@ -20,6 +20,7 @@
       <div id="content"><br>
          <p id="userMessage">God morgen, Kjetil</p>
          <p id="gymOpenTime">Treningssenteret er åpent!<br>Stenger om 2t og 30 min</p>
+         <p id="test"></p>
 
 
          <button onClick="location.href = 'index.html'">test side</button>
@@ -37,6 +38,7 @@
 </body>
 
 <script>
+   document.getElementById("test").innerHTML = window.navigator.standalone;
 
 </script>
 
