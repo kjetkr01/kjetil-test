@@ -1,3 +1,11 @@
+:root {
+  --main-color: hotpink;
+--main-firstBackground-color: lightgreen;
+--main-background-color: white;
+  --pane-padding: 5px 42px;
+}
+
+
 #avatarText, #title {
 font-size: 6vw;
 font-weight: bold;
@@ -19,6 +27,19 @@ border: 0.25vh solid;
 padding: 0.5vh 3vw;
 }
 
+.k-middle-container {
+height: 75%;
+width: 85%;
+background-color: var(--main-background-color);
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+-ms-transform:translate(-50%,-50%)}
+
+
+}
+
 .k-smallText {
 font-size: 4vw;
 }
@@ -32,7 +53,7 @@ font-size: 7vw;
 }
 
 body{
-background-color: lightgreen;
+background-color: var(--main-firstBackground-color);
 //background-image: url("images/background.png");
 background-repeat: no-repeat;
 /*background-size: cover;
