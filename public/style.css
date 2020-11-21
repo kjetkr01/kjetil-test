@@ -27,21 +27,6 @@ border: 0.25vh solid;
 padding: 0.5vh 3vw;
 }
 
-.k-middle-container {
-height: auto;
-width: 85vw;
-background-color: var(--main-background-color);
-position:absolute;
-top: 15vh;
-left:50%;
-transform:translate(-50%,-50%);
--ms-transform:translate(-50%,-50%)
-/*
-transform:translate(-50%,-50%);
--ms-transform:translate(-50%,-50%)
-*/
-}
-
 .k-smallText {
 font-size: 4vw;
 }
@@ -54,12 +39,6 @@ font-size: 6vw;
 font-size: 7vw;
 }
 
-html {
-position: relative;
-    min-height: 100%;
-
-}
-
 body{
 background-color: var(--main-firstBackground-color);
 //background-image: url("images/background.png");
@@ -67,7 +46,6 @@ background-repeat: no-repeat;
 /*background-size: cover;
 height: 100%;
 width: 100%;*/
-object-fit: cover;
 
 }
 
