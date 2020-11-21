@@ -12,8 +12,8 @@ body {
    height: 100vh;
    /*grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
    grid-template-rows: 80px 20px 1fr 1fr 1fr 20px 80px;*/
-   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-   grid-template-rows: 0.5fr 5% 20% 30% 20% 5% 0.5fr;
+   grid-template-columns: 20px 1fr 20px;
+   grid-template-rows: 80px 20px 1fr 20px 80px;
 }
 
 @media (orientation: landscape) { /*liggende*/
@@ -50,7 +50,7 @@ body {
 @media (orientation: portrait) { /*stående*/
    #header {
        grid-column-start: 1;
-       grid-column-end: 9;
+       grid-column-end: 4;
        grid-row-start: 1;
        grid-row-end: 1;
        background-color: orange;
@@ -59,9 +59,9 @@ body {
 
    #content {
       grid-column-start: 2;
-      grid-column-end: 8;
+      grid-column-end: 3;
       grid-row-start: 3;
-      grid-row-end: 6;
+      grid-row-end: 3;
       background-color:peru;
       border: 1px solid black;
       overflow-y: auto;
@@ -69,9 +69,9 @@ body {
 
    #footer {
        grid-column-start: 1;
-       grid-column-end: 9;
-       grid-row-start: 7;
-       grid-row-end: 8;
+       grid-column-end: 4;
+       grid-row-start: 5;
+       grid-row-end: 5;
        background-color: lightpink;
        border: 1px solid black;
    }
