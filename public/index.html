@@ -22,7 +22,7 @@
          <button onClick="location.href = 'test.html'">info side</button>
          <p id="isGymOpen">Treningssenteret er åpent!</p>
          <p id="gymCloseTime">Stenger om 2t og 30 min</p>
-         
+
 
          <!--Bare noe tekst for å vise at scrollbar funksjonen fungerer-->
 
@@ -57,7 +57,8 @@
          title.innerHTML = loadPage;
          content.innerHTML = mainHtml;
       } else {
-         document.getElementById("content").innerHTML = "cleared";
+         content.innerHTML = "";
+         title.innerHTML = "invalid page";
       }
 
 
