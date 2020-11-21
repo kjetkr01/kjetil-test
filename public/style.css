@@ -5,7 +5,12 @@ padding: 0.5vh;
 }
 
 #title {
-user-select: none;
+-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 #avatarText {
@@ -27,10 +32,15 @@ font-size: 7vw;
 }
 
 body{
-background-image: url("images/background.png");
+background-color: lightgreen;
+//background-image: url("images/background.png");
 background-repeat: no-repeat;
 /*background-size: cover;
 height: 100%;
 width: 100%;*/
 object-fit: cover;
+}
+
+#img {
+//user-select: none;
 }
