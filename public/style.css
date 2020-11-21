@@ -54,6 +54,12 @@ font-size: 6vw;
 font-size: 7vw;
 }
 
+html {
+position: relative;
+    min-height: 100%;
+
+}
+
 body{
 background-color: var(--main-firstBackground-color);
 //background-image: url("images/background.png");
@@ -62,7 +68,7 @@ background-repeat: no-repeat;
 height: 100%;
 width: 100%;*/
 object-fit: cover;
-overflow: hidden;
+
 }
 
 #img {
