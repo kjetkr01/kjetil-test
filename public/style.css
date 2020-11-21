@@ -28,16 +28,18 @@ padding: 0.5vh 3vw;
 }
 
 .k-middle-container {
-height: 75%;
-width: 85%;
+height: auto;
+width: 85vw;
 background-color: var(--main-background-color);
 position:absolute;
-top:50%;
+top: 15vh;
 left:50%;
 transform:translate(-50%,-50%);
--ms-transform:translate(-50%,-50%)}
-
-
+-ms-transform:translate(-50%,-50%)
+/*
+transform:translate(-50%,-50%);
+-ms-transform:translate(-50%,-50%)
+*/
 }
 
 .k-smallText {
