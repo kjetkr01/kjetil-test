@@ -12,7 +12,7 @@
 
 body {
    background-color: var(--main-bodyBackgroundColor);
-   background-image: url(images/background-bigBlur.png);
+   background-image: url(images/background-smallBlur.png);
    text-align: center;
    font-size: 28px;
    margin: 0;
