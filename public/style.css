@@ -81,19 +81,22 @@ body {
 
    #avatar {
       background: white;
-      padding: 1vh 3.5vw;
+      /*padding: 0.5vh 2.5vw;*/
+      padding-left: 2.5vw;
+      padding-right: 2.5vw;
       margin: 1vh;
       border-radius: 50%;
       border: 2px solid;
+      font-size: 40px;
    }
 
    #title {
       margin: 2vh;
+      font-size: 34px;
    }
 
    #title, #avatar {
       font-weight: bold;
-      font-size: 34px;
    }
 
    #title, #avatar, #home, #leaderboards, #users {
