@@ -40,9 +40,11 @@ font-size: 7vw;
 }
 
 body{
-background-color: var(--main-firstBackground-color);
-//background-image: url("images/background.png");
-background-repeat: no-repeat;
+//background-color: var(--main-firstBackground-color);
+background-image: url("images/background.png");
+background-attachment: fixed;
+  background-color: grey;
+  background-size: cover;
 /*background-size: cover;
 height: 100%;
 width: 100%;*/
