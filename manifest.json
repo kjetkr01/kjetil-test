@@ -1,0 +1,13 @@
+{ 
+
+    "name": "Kjetil - Test app", 
+  
+    "short_name": "Kjetil - Test", 
+  
+    "start_url": "index.html", 
+  
+    "display": "standalone"
+  
+    
+  
+  }
