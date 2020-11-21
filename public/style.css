@@ -73,6 +73,14 @@ body {
       /*margin-left: var(--main-marginFromLeftOrRight);*/
    }
 
+   #avatar {
+      background: white;
+      padding: 1vh 2.5vw;
+      margin: 1.5vh;
+      border-radius: 50%;
+      border: 2px solid;
+   }
+
    #title, #avatar {
       font-weight: bold;
    }
