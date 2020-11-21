@@ -68,6 +68,10 @@ body {
       margin-right: var(--main-marginFromLeftOrRight);
    }
 
+   .footerText {
+      margin: 2vh;
+   }
+
    #title, #home {
       float: left;
       /*margin-left: var(--main-marginFromLeftOrRight);*/
@@ -76,9 +80,13 @@ body {
    #avatar {
       background: white;
       padding: 1vh 3vw;
-      margin: 1.5vh;
+      margin: 1vh;
       border-radius: 50%;
       border: 2px solid;
+   }
+
+   #title {
+      margin: 2vh;
    }
 
    #title, #avatar {
