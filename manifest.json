@@ -1,13 +1,13 @@
-{ 
-
-    "name": "Kjetil - Test app", 
-  
-    "short_name": "Kjetil - Test", 
-  
-    "start_url": "index.html", 
-  
-    "display": "standalone"
-  
-    
-  
-  }
+{
+    "name": "Kjetil - Test App",
+    "short_name": "Kjetil - Test",
+    "start_url": "index.html",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "images/appIcon.jpg",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ]
+}
