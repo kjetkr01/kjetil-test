@@ -6,12 +6,13 @@
    --main-marginFromLeftOrRight: 3vw;
    --main-themeColor: lightgray;
    --main-backgroundThemeColor: white;
-   --main-bodyBackground: yellow;
+   --main-bodyBackgroundColor: yellow;
 }
 
 
 body {
-   background-color: var(--main-bodyBackground);
+   background-color: var(--main-bodyBackgroundColor);
+   background-image: url(images/testBackground.png);
    text-align: center;
    font-size: 28px;
    margin: 0;
@@ -69,7 +70,7 @@ body {
    }
 
    .footerText {
-      margin: 2vh;
+      margin: 1vh;
    }
 
    #title, #home {
@@ -86,7 +87,7 @@ body {
    }
 
    #title {
-      margin: 2vh;
+      margin: 1vh;
    }
 
    #title, #avatar {
