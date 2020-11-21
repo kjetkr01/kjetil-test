@@ -2,7 +2,7 @@
     "name": "Kjetil - Test App",
     "short_name": "Kjetil - Test",
     "start_url": "index.html",
-    "display": "browser",
+    
     "icons": [
         {
             "src": "images/appIcon.jpg",
