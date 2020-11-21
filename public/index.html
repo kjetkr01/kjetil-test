@@ -1,30 +1,50 @@
 <!DOCTYPE html>
 <html>
 <title>kjetil-test</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="w3.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- <link rel="stylesheet" href="w3.css"> -->
 <link rel="stylesheet" href="style.css">
+
 <body>
 
+
+   <div id="container">
+      <div id="header">div 1</div>
+      <div id="content">div 2<br>
+      
+         <!--Bare noe tekst for å vise at scrollbar funksjonen fungerer-->
+         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ullamcorper imperdiet justo, non laoreet mauris ullamcorper in. Praesent facilisis accumsan commodo. Curabitur tincidunt pellentesque odio a ultrices. Cras non mi mi. In tempus lorem non tempus venenatis. Fusce consequat porta justo id pretium. Integer eget leo eu nisi semper egestas. Aenean a fermentum metus, et pulvinar nulla.
+         Nunc nec imperdiet nulla. Quisque ac augue arcu. Nulla pellentesque, purus ut dictum sodales, enim neque tempus neque, quis malesuada magna nibh ac velit. Proin et porttitor tellus. Pellentesque in orci odio. Sed sed metus pretium, egestas massa at, volutpat nisl. Curabitur lorem dui, scelerisque sed risus et, fermentum placerat nulla. Sed gravida tincidunt dolor nec volutpat. Donec aliquet neque non erat suscipit, in lobortis diam tempus. Donec ut nibh eget velit hendrerit consectetur.
+         Maecenas a cursus risus. Sed euismod, erat quis hendrerit tempus, neque sem laoreet mi, eu interdum quam mauris eu ex. In vehicula sit amet lacus vel sodales. Nulla sit amet porta orci. Nulla interdum scelerisque consectetur. Curabitur vestibulum aliquet est luctus porttitor. In consectetur dictum iaculis. Sed tincidunt viverra velit, id efficitur erat ullamcorper id. Fusce dui lectus, gravida ut dapibus egestas, pellentesque ac eros. Pellentesque laoreet consectetur odio, at eleifend ante feugiat sed. Proin quis eros vel metus suscipit hendrerit egestas ut sapien. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+
+     </div>
+      <div id="footer">div 3</div>
+  </div>
+
+
+
+
+   <!-- 
+
    <div id="Header">
-      <!-- <p>Header</p> -->
-	<h1 id="title" class="w3-display-topleft">Hisøy IL treningssenter</h1>
-    <h1 id="avatarText" class=" w3-display-topright w3-button">K</h1>
+      
+      <h1 id="title" class="k-headerLeft">Hisøy IL treningssenter</h1>
+      <h1 id="avatarText" class="k-headerRight">K</h1>
    </div>
    <div id="Content">
-      <!-- <p>Content</p> -->
-<div class="k-smallText">God morgen, Kjetil</div>
+      
+      <p class="k-smallText">God morgen, Kjetil</p>
    </div>
-   <div id="Footer">
-      <!-- <p>Footer</p> -->
-<div class="k-smallText w3-display-bottomleft w3-button">Hjem</div>
-    <div class="k-smallText w3-display-bottommiddle w3-button">Ledertavler</div>
-    <div class="k-smallText w3-display-bottomright w3-button">Brukere</div>
+   <div id="Footer" class="k-smallText k-footerRow">
+      
+      <p class="k-footerColumn">Hjem</p>
+      <p class="k-footerColumn">Ledertavler</p>
+      <p class="k-footerColumn">Brukere</p>
    </div>
 
+-->
 
-<!--
+
+   <!--
 <div class="w3-container">
 
   <div class="w3-display-container" style="height:100vh;">
@@ -47,4 +67,27 @@
 -->
 
 </body>
-</html> 
+
+<script>
+
+   //auto reload website
+   const autoReload = false;
+   const seconds = 10;
+
+   if (autoReload) {
+      document.title = "autoReloadActive";
+   }
+
+   const autoReloadMilliseconds = seconds * 1000;
+   setInterval(function () {
+      if (autoReload) {
+         location.reload();
+      }
+
+   }, autoReloadMilliseconds);
+
+   //
+
+</script>
+
+</html>
