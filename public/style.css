@@ -1,0 +1,32 @@
+#avatarText, #title {
+font-size: 6vw;
+font-weight: bold;
+padding: 0.5vh;
+}
+
+#avatarText {
+border-radius: 50%;
+border: 0.25vh solid;
+padding: 0.5vh 3vw;
+}
+
+.k-smallText {
+font-size: 4vw;
+}
+
+.k-smallIcon {
+font-size: 6vw;
+}
+
+.k-smallIconHome {
+font-size: 7vw;
+}
+
+body{
+background-image: url("images/background.png");
+background-repeat: no-repeat;
+/*background-size: cover;
+height: 100%;
+width: 100%;*/
+object-fit: cover;
+}
