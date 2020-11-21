@@ -66,7 +66,7 @@ body {
       grid-row-end: 3;
       background-color:peru;
       border: 1px solid black;
-      overflow-y: auto;
+      overflow-y: scroll;
   }
 
    #footer {
