@@ -13,6 +13,7 @@
    <div id="container">
       <div id="header">Header</div>
       <div id="content">Content:<br>
+         <button onClick="location.reload();">Reload</button><br>
 
          <!--Bare noe tekst for å vise at scrollbar funksjonen fungerer-->
          God morgen?God morgen?God morgen?God morgen?God morgen?God morgen?God morgen?
@@ -115,23 +116,7 @@
 
 <script>
 
-   //auto reload website
-   const autoReload = false;
-   const seconds = 10;
-
-   if (autoReload) {
-      document.title = "autoReloadActive";
-   }
-
-   const autoReloadMilliseconds = seconds * 1000;
-   setInterval(function () {
-      if (autoReload) {
-         location.reload();
-      }
-
-   }, autoReloadMilliseconds);
-
-   //
+   document.title = "WIP";
 
 </script>
 
