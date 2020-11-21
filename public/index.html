@@ -12,13 +12,14 @@
    <div id="container">
 
       <div id="header">
-         <p id="title" class="headerText">Tittel</p>
+         <p id="title" class="headerText">Hjem</p>
          <p id="avatar" class="headerText">K</p>
       </div>
 
       <div id="content">
          <p id="userMessage">God morgen, Kjetil</p>
          <p id="currentWorkout">I dag (fredag) skal du trene bein og mage!</p>
+         <p id="peopleWorkout">Personer som trener i dag</p>
          <button onClick="location.href = 'test.html'">info side</button>
          <p id="isGymOpen">Treningssenteret er åpent!</p>
          <p id="gymCloseTime">Stenger om 2t og 30 min</p>
@@ -28,7 +29,7 @@
 
       </div>
       <div id="footer">
-         <p id="home" class="footerText">Hjem</p>
+         <button id="home" class="footerText">Hjem</button>
          <p id="leaderboards" class="footerText">Ledertavler</p>
          <p id="users" class="footerText">Brukere</p>
       </div>
@@ -52,18 +53,33 @@
    const footerBar = document.getElementById("footer");
 
    footerBar.addEventListener("click", function (evt) {
-      const loadPage = evt.target.innerHTML;
 
-      if (loadPage === "Hjem") {
-         title.innerHTML = loadPage;
-         content.innerHTML = homeHTML;
-      } else {
-         content.innerHTML = "";
-         title.innerHTML = "invalid page";
+      const page = evt.target.innerHTML;
+
+      if (page.length < 25) {
+         loadPage(page);
       }
 
-
    })
+
+   function loadPage(page) {
+
+      if (page === "Hjem") {
+         title.innerHTML = page;
+         content.innerHTML = homeHTML;
+      } else if (page === "Ledertavler") {
+         title.innerHTML = page;
+         content.innerHTML = "";
+      } else if (page === "Brukere") {
+         title.innerHTML = page;
+         content.innerHTML = "";
+      }
+      else {
+         title.innerHTML = "invalid page";
+         content.innerHTML = "";
+      }
+
+   }
 
 </script>
 

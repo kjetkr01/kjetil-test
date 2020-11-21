@@ -66,6 +66,10 @@ body {
       margin-right: var(--main-marginFromLeftOrRight);
    }
 
+   #avatar, #home, #leaderboards, #users {
+      cursor: pointer;
+   }
+
    .footerText {
       margin: 1vh;
    }
@@ -92,6 +96,13 @@ body {
       font-size: 34px;
    }
 
+   #title, #avatar, #home, #leaderboards, #users {
+      -webkit-user-select: none; /* Safari */        
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* IE10+/Edge */
+      user-select: none; /* Standard */
+   }
+
    #avatar, #users {
       float: right;
       /*margin-right: var(--main-marginFromLeftOrRight);*/
@@ -116,7 +127,7 @@ body {
    #currentWorkout {
       font-size: 20px;
       float: left;
-      margin-top: 2vh;
+      margin-top: 4vh;
       margin-left: var(--main-marginFromLeftOrRight);
    }
    
