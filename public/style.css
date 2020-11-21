@@ -125,20 +125,30 @@ body {
    }
 
    #currentWorkout {
+      position: absolute;
       font-size: 20px;
-      float: left;
-      margin-top: 4vh;
+      margin-top: 10vh;
       margin-left: var(--main-marginFromLeftOrRight);
    }
    
    
    #isGymOpen {
+      position: relative;
+      margin: 0;
       font-size: 22px;
-      margin-top: 52.5vh;
+      margin-top: 55vh;
       /*margin-left: var(--main-marginFromLeftOrRight);*/
    }
 
+   #peopleWorkout {
+      position: absolute;
+      font-size: 22px;
+      margin-top: 32vh;
+      margin-left: var(--main-marginFromLeftOrRight);
+   }
+
    #gymCloseTime {
+      position: relative;
       font-size: 16px;
    }
 
