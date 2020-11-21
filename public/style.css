@@ -125,8 +125,8 @@ body {
    }
 
    #currentWorkout {
-      position: fixed;
-      font-size: 20px;
+      position: relative;
+      font-size: 18px;
       margin-top: 10vh;
       margin-left: var(--main-marginFromLeftOrRight);
    }
@@ -136,14 +136,13 @@ body {
       position: relative;
       margin: 0;
       font-size: 22px;
-      margin-top: 55vh;
+      margin-top: 30vh;
       /*margin-left: var(--main-marginFromLeftOrRight);*/
    }
 
    #peopleWorkout {
-      position: absolute;
-      font-size: 22px;
-      margin-top: 32vh;
+      font-size: 20px;
+      margin-top: 12vh;
       margin-left: var(--main-marginFromLeftOrRight);
    }
 

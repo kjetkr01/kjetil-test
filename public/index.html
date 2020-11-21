@@ -17,10 +17,9 @@
       </div>
 
       <div id="content">
-         <p id="userMessage">God morgen, Kjetil</p>
+         <p id="userMessage">God morgen, Kjetil (test-click)</p>
          <p id="currentWorkout">I dag (fredag) skal du trene bein og mage!</p>
          <p id="peopleWorkout">Personer som trener i dag</p>
-         <button onClick="location.href = 'test.html'">info side</button>
          <p id="isGymOpen">Treningssenteret er åpent!</p>
          <p id="gymCloseTime">Stenger om 2t og 30 min</p>
 
@@ -39,10 +38,16 @@
 
 <script>
 
+   const testPage = document.getElementById("userMessage");
+
+   testPage.addEventListener("click", function (evt) {
+      location.href = "test.html";
+   });
+
    const homeHTML = `
-   <p id="userMessage">God morgen, Kjetil</p>
+   <p id="userMessage">God morgen, Kjetil (test-click)</p>
    <p id="currentWorkout">I dag (fredag) skal du trene bein og mage!</p>
-   <button onClick="location.href = 'test.html'">info side</button>
+   <p id="peopleWorkout">Personer som trener i dag</p>
    <p id="isGymOpen">Treningssenteret er åpent!</p>
    <p id="gymCloseTime">Stenger om 2t og 30 min</p>
    `;
