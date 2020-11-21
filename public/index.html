@@ -38,8 +38,9 @@
 
 <script>
 
-   const mainHtml = `
+   const homeHTML = `
    <p id="userMessage">God morgen, Kjetil</p>
+   <p id="currentWorkout">I dag (fredag) skal du trene bein og mage!</p>
    <button onClick="location.href = 'test.html'">info side</button>
    <p id="isGymOpen">Treningssenteret er åpent!</p>
    <p id="gymCloseTime">Stenger om 2t og 30 min</p>
@@ -55,7 +56,7 @@
 
       if (loadPage === "Hjem") {
          title.innerHTML = loadPage;
-         content.innerHTML = mainHtml;
+         content.innerHTML = homeHTML;
       } else {
          content.innerHTML = "";
          title.innerHTML = "invalid page";
