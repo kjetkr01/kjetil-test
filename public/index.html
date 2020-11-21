@@ -10,8 +10,6 @@
   <h1 id="avatar" class="w3-right">K</h1>
 </div>
 
-<img class="w3-padding w3-display-middle" src="images/background.png" alt="Background" style="width:50%">
-
 <div class="w3-container w3-light-gray w3-bottom">
 
 <p class="k-smallText w3-padding w3-left">Hjem</p>
@@ -27,8 +25,23 @@ font-size: 6vw;
 font-weight: bold;
 }
 
+#avatar {
+border-radius: 50%;
+border: 0.25vh solid;
+padding: 0.5vh 3vw;
+}
+
 .k-smallText {
 font-size: 4vw;
+}
+
+body{
+background-image: url("images/background.png");
+background-repeat: no-repeat;
+/*background-size: cover;
+height: 100%;
+width: 100%;*/
+object-fit: cover;
 }
 
 
