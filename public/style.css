@@ -71,7 +71,7 @@ body {
       margin: 10px;
       margin-left: var(--main-marginFromLeftOrRight);
       margin-right: var(--main-marginFromLeftOrRight);
-      font-size: 8vw;
+      font-size: 22px;
    }
 
    #title, #home {
@@ -87,12 +87,12 @@ body {
       margin: 10px;
       border-radius: 50%;
       border: 2px solid;
-      font-size: 14vw;
+      font-size: 40px
    }
 
    #title {
       margin: 10px;
-      font-size: 12vw;
+      font-size: 32px;
    }
 
    #title, #avatar {
