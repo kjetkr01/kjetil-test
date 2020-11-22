@@ -147,7 +147,7 @@ body {
    }
 
    #peopleWorkoutList {
-      position: fixed;
+      position: absolute;
       right: 20%;
       left: 20%;
       max-height: 20%;
@@ -177,9 +177,6 @@ body {
       margin-left: var(--main-marginFromLeftOrRight);
       margin-right: var(--main-marginFromLeftOrRight);
    }
-
-   
-   
 
    #content {
       grid-column-start: 2;
