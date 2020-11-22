@@ -141,7 +141,7 @@ body {
       position: relative;
       margin: 0;
       font-size: 22px;
-      bottom: -40%;
+      bottom: -37.5%;
       /*margin-top: 180px;*/
       /*margin-left: var(--main-marginFromLeftOrRight);*/
    }
@@ -149,7 +149,7 @@ body {
    #gymCloseTime {
       position: relative;
       font-size: 16px;
-      bottom: -40%;
+      bottom: -37.5%;
    }
 
    #peopleWorkout {
