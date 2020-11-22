@@ -141,9 +141,19 @@ body {
    #peopleWorkout {
       position: relative;
       font-size: 20px;
-      margin-top: 40%;
+      margin-top: 25.5%;
       margin-left: var(--main-marginFromLeftOrRight);
       margin-right: var(--main-marginFromLeftOrRight);
+   }
+
+   #peopleWorkoutList {
+      position: relative;
+      max-height: 20%;
+      font-size: 20px;
+      background-color: yellow;
+      margin-left: var(--main-marginFromLeftOrRight);
+      margin-right: var(--main-marginFromLeftOrRight);
+      overflow-y: scroll;
    }
    
    
