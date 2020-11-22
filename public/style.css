@@ -3,7 +3,8 @@
    --main-color: lightgray;
    --main-firstBackground-color: lightgreen;
    --main-background-color: white;
-   --main-marginFromLeftOrRight: 3vw;
+   /*--main-marginFromLeftOrRight: 3vw;*/
+   --main-marginFromLeftOrRight: 2.5%;
    --main-themeColor: lightgray;
    --main-backgroundThemeColor: white;
    --main-bodyBackgroundColor: var(--main-themeColor);
@@ -69,7 +70,7 @@ body {
    }
 
    .footerText {
-      margin: 1vh;
+      margin: 15px;
       margin-left: var(--main-marginFromLeftOrRight);
       margin-right: var(--main-marginFromLeftOrRight);
    }
@@ -82,16 +83,16 @@ body {
    #avatar {
       background: white;
       /*padding: 0.5vh 2.5vw;*/
-      padding-left: 2.5vw;
-      padding-right: 2.5vw;
-      margin: 1.5vh;
+      padding-left: 7.5px;
+      padding-right: 7.5px;
+      margin: 10px;
       border-radius: 50%;
       border: 2px solid;
       font-size: 40px;
    }
 
    #title {
-      margin: 2vh;
+      margin: 10px;
       font-size: 34px;
    }
 
@@ -125,14 +126,14 @@ body {
    #userMessage {
       font-size: 22px;
       float: left;
-      margin-top: 2vh;
+      margin-top: 30px;
       margin-left: var(--main-marginFromLeftOrRight);
    }
 
    #currentWorkout {
       position: relative;
       font-size: 18px;
-      margin-top: 10vh;
+      margin-top: 80px;
       
    }
    
@@ -141,13 +142,13 @@ body {
       position: relative;
       margin: 0;
       font-size: 22px;
-      margin-top: 30vh;
+      margin-top: 180px;
       /*margin-left: var(--main-marginFromLeftOrRight);*/
    }
 
    #peopleWorkout {
       font-size: 20px;
-      margin-top: 12vh;
+      margin-top: 120px;
       
    }
 
@@ -175,4 +176,126 @@ body {
        background-color: var(--main-themeColor);
        border: 1px solid black;
    }
+
+
+
+
+
+
+   /*
+   .headerText, .footerText {
+      display: inline-block;
+   }
+
+   #avatar, #home, #leaderboards, #users {
+      cursor: pointer;
+   }
+
+   .footerText {
+      margin: 1vh;
+      margin-left: var(--main-marginFromLeftOrRight);
+      margin-right: var(--main-marginFromLeftOrRight);
+   }
+
+   #title, #home {
+      float: left;  */
+      /*margin-left: var(--main-marginFromLeftOrRight);*/
+   /*}
+
+   #avatar {
+      background: white;  */
+      /*padding: 0.5vh 2.5vw;*/
+      /*padding-left: 2.5vw;
+      padding-right: 2.5vw;
+      margin: 1.5vh;
+      border-radius: 50%;
+      border: 2px solid;
+      font-size: 40px;
+   }
+
+   #title {
+      margin: 2vh;
+      font-size: 34px;
+   }
+
+   #title, #avatar {
+      font-weight: bold;
+      margin-left: var(--main-marginFromLeftOrRight);
+      margin-right: var(--main-marginFromLeftOrRight);
+   }
+
+   #title, #avatar, #home, #leaderboards, #users {
+      -webkit-user-select: none; */ /* Safari */        
+      /*-moz-user-select: none; *//* Firefox */
+      /*-ms-user-select: none; */ /* IE10+/Edge */
+      /*user-select: none; /* Standard */
+   /*}
+
+   #avatar, #users {
+      float: right;
+      /*margin-right: var(--main-marginFromLeftOrRight);*/
+   /*}
+
+   #header {
+       grid-column-start: 1;
+       grid-column-end: 4;
+       grid-row-start: 1;
+       grid-row-end: 1;
+       background-color: var(--main-themeColor);
+       border: 1px solid black;
+   }
+
+   #userMessage {
+      font-size: 22px;
+      float: left;
+      margin-top: 2vh;
+      margin-left: var(--main-marginFromLeftOrRight);
+   }
+
+   #currentWorkout {
+      position: relative;
+      font-size: 18px;
+      margin-top: 10vh;
+      
+   }
+   
+   
+   #isGymOpen {
+      position: relative;
+      margin: 0;
+      font-size: 22px;
+      margin-top: 30vh;
+      /*margin-left: var(--main-marginFromLeftOrRight);*/
+   /*}
+
+   #peopleWorkout {
+      font-size: 20px;
+      margin-top: 12vh;
+      
+   }
+
+   #gymCloseTime {
+      position: relative;
+      font-size: 16px;
+   }
+
+   #content {
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 3;
+      grid-row-end: 3;
+      background-color: var(--main-backgroundThemeColor);
+      border: 1px solid black;
+      overflow-y: none; /* kan endres til scroll for scroll feature, eller bruke dette for å se list */
+      /*border-radius: 2.5%;
+  }
+
+   #footer {
+       grid-column-start: 1;
+       grid-column-end: 4;
+       grid-row-start: 5;
+       grid-row-end: 5;
+       background-color: var(--main-themeColor);
+       border: 1px solid black;
+   }*/
 }
