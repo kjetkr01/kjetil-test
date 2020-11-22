@@ -23,8 +23,8 @@ body {
    display: grid;
    height: auto;
    min-height: 100vh;
-   grid-template-columns: 5vw 1fr 5vw;
-   grid-template-rows: 1fr 5vh 70vh 5vh 1fr;
+   grid-template-columns: 5% 1fr 5%;
+   grid-template-rows: 1fr 5% 70% 5% 1fr;
 }
 
 @media (orientation: landscape) { /*liggende*/
@@ -141,8 +141,15 @@ body {
       position: relative;
       margin: 0;
       font-size: 22px;
-      margin-top: 420px;
+      bottom: -40%;
+      /*margin-top: 180px;*/
       /*margin-left: var(--main-marginFromLeftOrRight);*/
+   }
+
+   #gymCloseTime {
+      position: relative;
+      font-size: 16px;
+      bottom: -40%;
    }
 
    #peopleWorkout {
@@ -150,11 +157,7 @@ body {
       margin-top: 120px;
       
    }
-
-   #gymCloseTime {
-      position: relative;
-      font-size: 16px;
-   }
+   
 
    #content {
       grid-column-start: 2;
