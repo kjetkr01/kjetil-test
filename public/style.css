@@ -174,7 +174,7 @@ body {
       border: 2px solid;
       max-height: 20%;
       font-size: 18px;
-      background-color: var(--main-themeColor);
+      background-color: white;/*var(--main-themeColor);*/
       margin-left: var(--main-marginFromLeftOrRight);
       margin-right: var(--main-marginFromLeftOrRight);
       overflow-y: scroll;
