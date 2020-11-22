@@ -62,8 +62,6 @@ body {
 
    .headerText, .footerText {
       display: inline-block;
-      margin-left: var(--main-marginFromLeftOrRight);
-      margin-right: var(--main-marginFromLeftOrRight);
    }
 
    #avatar, #home, #leaderboards, #users {
@@ -72,6 +70,8 @@ body {
 
    .footerText {
       margin: 1vh;
+      margin-left: var(--main-marginFromLeftOrRight);
+      margin-right: var(--main-marginFromLeftOrRight);
    }
 
    #title, #home {
@@ -84,7 +84,7 @@ body {
       /*padding: 0.5vh 2.5vw;*/
       padding-left: 2.5vw;
       padding-right: 2.5vw;
-      margin: 1vh;
+      margin: 1.5vh;
       border-radius: 50%;
       border: 2px solid;
       font-size: 40px;
@@ -97,6 +97,8 @@ body {
 
    #title, #avatar {
       font-weight: bold;
+      margin-left: var(--main-marginFromLeftOrRight);
+      margin-right: var(--main-marginFromLeftOrRight);
    }
 
    #title, #avatar, #home, #leaderboards, #users {
@@ -131,7 +133,7 @@ body {
       position: relative;
       font-size: 18px;
       margin-top: 10vh;
-      margin-left: var(--main-marginFromLeftOrRight);
+      
    }
    
    
@@ -146,7 +148,7 @@ body {
    #peopleWorkout {
       font-size: 20px;
       margin-top: 12vh;
-      margin-left: var(--main-marginFromLeftOrRight);
+      
    }
 
    #gymCloseTime {
