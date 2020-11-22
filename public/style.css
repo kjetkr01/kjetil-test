@@ -142,7 +142,7 @@ body {
       position: absolute;
       font-weight: bold;
       
-      font-size: 20px;
+      font-size: 22px;
       margin-left: var(--main-marginFromLeftOrRight);
       margin-right: var(--main-marginFromLeftOrRight);
    }
@@ -150,26 +150,26 @@ body {
    #peopleWorkout {
       right: 10%;
       left: 10%;
-      top: 30.5%;
+      top: 32.5%;
    }
 
    #peopleWorkoutName {
       right: 30.5%;
       left: 0%;
-      top: 35.5%;
+      top: 37.5%;
    }
 
    #peopleWorkoutExercise {
       right: 0;
       left: 30.5%;
-      top: 35.5%;
+      top: 37.5%;
    }
 
    #peopleWorkoutList {
       position: absolute;
       right: 10%;
       left: 10%;
-      top: 40%;
+      top: 42.5%;
       border-radius: 2.5%;
       border: 2px solid;
       max-height: 20%;
@@ -189,7 +189,7 @@ body {
       position: relative;
       margin: 0;
       font-size: 22px;
-      bottom: -66.5%;
+      bottom: -70.5%;
       /*margin-top: 180px;*/
       /*margin-left: var(--main-marginFromLeftOrRight);*/
       margin-left: var(--main-marginFromLeftOrRight);
@@ -199,7 +199,7 @@ body {
    #gymCloseTime {
       position: relative;
       font-size: 16px;
-      bottom: -64.5%;
+      bottom: -68.5%;
       margin-left: var(--main-marginFromLeftOrRight);
       margin-right: var(--main-marginFromLeftOrRight);
    }
