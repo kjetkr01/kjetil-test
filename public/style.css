@@ -141,7 +141,7 @@ body {
    #peopleWorkout {
       position: relative;
       font-size: 20px;
-      margin-top: 50%;
+      margin-top: 40%;
       margin-left: var(--main-marginFromLeftOrRight);
       margin-right: var(--main-marginFromLeftOrRight);
    }
