@@ -122,6 +122,8 @@ body {
        border: 1px solid black;
    }
 
+   /*Main | index*/
+
    #userMessage {
       font-size: 24px;
       position: relative;
@@ -174,7 +176,7 @@ body {
       border: 2px solid;
       max-height: 20%;
       font-size: 18px;
-      background-color: white;/*var(--main-themeColor);*/
+      background-color: var(--main-themeColor);
       margin-left: var(--main-marginFromLeftOrRight);
       margin-right: var(--main-marginFromLeftOrRight);
       overflow-y: scroll;
@@ -203,6 +205,22 @@ body {
       margin-left: var(--main-marginFromLeftOrRight);
       margin-right: var(--main-marginFromLeftOrRight);
    }
+
+   /* */
+
+   /*Leaderboards | leaderboards*/
+
+   #leaderboardsTitle {
+      font-size: 32px;
+      position: relative;
+      font-weight: bold;
+      margin-top: 2.5%;
+      margin-left: var(--main-marginFromLeftOrRight);
+      margin-right: var(--main-marginFromLeftOrRight);
+   }
+
+
+   /* */
 
    #content {
       grid-column-start: 2;

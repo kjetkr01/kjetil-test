@@ -59,16 +59,26 @@
          <p id="gymCloseTime">Stenger om 2t og 30 min</p>
    `;
 
+   const leaderboardsHTML = `
+         <p id="leaderboardsTitle">Ledertavler for ${names.length} brukere!</p>
+   `;
 
 
-   document.getElementById("content").innerHTML = homeHTML;
+
+   //onLoad
+   document.getElementById("content").innerHTML = leaderboardsHTML;
 
 
    let peopleWorkoutList = document.getElementById("peopleWorkoutList");
 
+   if(peopleWorkoutList){
+
    for (let i = 0; i < names.length; i++) {
       let html = "<p>" + names[i] + " | " + i + "</p><hr class='hrList'>";
-      peopleWorkoutList.innerHTML += html;
+      peopleWork
+      
+   }
+   outList.innerHTML += html;
    }
 
 
@@ -93,7 +103,7 @@
          case "Ledertavler":
             if (offlineUsage) {
                pageTitle = page;
-               HTML = "ledertavlerHTML";
+               HTML = leaderboardsHTML;
                update(pageTitle, HTML);
             } else {
                location.href = "ledertavler.html";
