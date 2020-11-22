@@ -13,24 +13,24 @@
 
       <div id="header">
          <p id="title" class="headerText">Hjem</p>
-         <p id="avatar" class="headerText">K</p>
+         <p id="avatar" class="headerText" onClick="loadPage('Min Konto')">K</p>
       </div>
 
       <div id="content">
-         <p id="userMessage">God morgen, Kjetil (test-click)</p>
+
+         <p id="userMessage" onClick="location.href = 'test.html';">God morgen, Kjetil (click)</p>
          <p id="currentWorkout">I dag (fredag) skal du trene bein og mage!</p>
          <p id="peopleWorkout">Personer som trener i dag</p>
          <p id="isGymOpen">Treningssenteret er åpent!</p>
          <p id="gymCloseTime">Stenger om 2t og 30 min</p>
 
-
          <!--Bare noe tekst for å vise at scrollbar funksjonen fungerer-->
 
       </div>
       <div id="footer">
-         <p id="home" class="footerText">Hjem</p>
-         <p id="leaderboards" class="footerText">Ledertavler</p>
-         <p id="users" class="footerText">Brukere</p>
+         <p id="home" class="footerText" onClick="loadPage('Hjem')">Hjem</p>
+         <p id="leaderboards" class="footerText" onClick="loadPage('Ledertavler')">Ledertavler</p>
+         <p id="users" class="footerText" onClick="loadPage('Brukere')">Brukere</p>
       </div>
    </div>
 
@@ -38,52 +38,60 @@
 
 <script>
 
-   const testPage = document.getElementById("userMessage");
-
-   testPage.addEventListener("click", function (evt) {
-      location.href = "test.html";
-   });
-
    const homeHTML = `
-   <p id="userMessage">God morgen, Kjetil (test-click)</p>
-   <p id="currentWorkout">I dag (fredag) skal du trene bein og mage!</p>
-   <p id="peopleWorkout">Personer som trener i dag</p>
-   <p id="isGymOpen">Treningssenteret er åpent!</p>
-   <p id="gymCloseTime">Stenger om 2t og 30 min</p>
+         <p id="userMessage" onClick="location.href = 'test.html';">God morgen, Kjetil (click)</p>
+         <p id="currentWorkout">I dag (fredag) skal du trene bein og mage!</p>
+         <p id="peopleWorkout">Personer som trener i dag</p>
+         <p id="isGymOpen">Treningssenteret er åpent!</p>
+         <p id="gymCloseTime">Stenger om 2t og 30 min</p>
    `;
-
-   const title = document.getElementById("title");
-   const content = document.getElementById("content");
-
-   const footerBar = document.getElementById("footer");
-
-   footerBar.addEventListener("click", function (evt) {
-
-      const page = evt.target.innerHTML;
-
-      if (page.length < 25) {
-         loadPage(page);
-      }
-
-   })
 
    function loadPage(page) {
 
-      if (page === "Hjem") {
-         title.innerHTML = page;
-         content.innerHTML = homeHTML;
-      } else if (page === "Ledertavler") {
-         title.innerHTML = page;
-         content.innerHTML = "";
-      } else if (page === "Brukere") {
-         title.innerHTML = page;
-         content.innerHTML = "";
-      }
-      else {
-         title.innerHTML = "invalid page";
-         content.innerHTML = "";
+      let HTML = "";
+      let pageTitle = "";
+
+      switch (page) {
+         case "Hjem":
+            pageTitle = page;
+            HTML = homeHTML;
+            update(pageTitle, HTML);
+            break;
+
+         case "Ledertavler":
+            pageTitle = page;
+            HTML = "ledertavlerHTML";
+            update(pageTitle, HTML);
+            break;
+
+         case "Brukere":
+            pageTitle = page;
+            HTML = "brukereHTML";
+            update(pageTitle, HTML);
+            break;
+
+         case "Min Konto":
+            pageTitle = page;
+            HTML = "minkontoHTML";
+            update(pageTitle, HTML);
+            break;
+
+         default:
+            pageTitle = page;
+            HTML = "invalid page";
+            update(pageTitle, HTML);
+            break;
       }
 
+   }
+
+   function update(pageTitle, HTML) {
+
+      const title = document.getElementById("title");
+      const content = document.getElementById("content");
+
+      title.innerHTML = pageTitle;
+      content.innerHTML = HTML;
    }
 
 </script>
