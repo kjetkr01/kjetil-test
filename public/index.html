@@ -46,6 +46,8 @@
          <p id="gymCloseTime">Stenger om 2t og 30 min</p>
    `;
 
+   let offlineUsage = true;
+
    function loadPage(page) {
 
       let HTML = "";
@@ -53,33 +55,47 @@
 
       switch (page) {
          case "Hjem":
-            pageTitle = page;
-            HTML = homeHTML;
-            update(pageTitle, HTML);
+            if (offlineUsage) {
+               pageTitle = page;
+               HTML = homeHTML;
+               update(pageTitle, HTML);
+            } else {
+               location.href = "index.html";
+            }
             break;
 
          case "Ledertavler":
-            pageTitle = page;
-            HTML = "ledertavlerHTML";
-            update(pageTitle, HTML);
+            if (offlineUsage) {
+               pageTitle = page;
+               HTML = "ledertavlerHTML";
+               update(pageTitle, HTML);
+            } else {
+               location.href = "ledertavler.html";
+            }
             break;
 
          case "Brukere":
-            pageTitle = page;
-            HTML = "brukereHTML";
-            update(pageTitle, HTML);
+         if (offlineUsage) {
+               pageTitle = page;
+               HTML = "brukereHTML";
+               update(pageTitle, HTML);
+            } else {
+               location.href = "brukere.html";
+            }
             break;
 
          case "Min Konto":
-            pageTitle = page;
-            HTML = "minkontoHTML";
-            update(pageTitle, HTML);
+         if (offlineUsage) {
+               pageTitle = page;
+               HTML = "minkontoHTML";
+               update(pageTitle, HTML);
+            } else {
+               location.href = "minkonto.html";
+            }
             break;
 
          default:
-            pageTitle = page;
-            HTML = "invalid page";
-            update(pageTitle, HTML);
+            console.log("page does not exist!");
             break;
       }
 
