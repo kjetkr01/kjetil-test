@@ -4,7 +4,7 @@
    --main-firstBackground-color: lightgreen;
    --main-background-color: white;
    /*--main-marginFromLeftOrRight: 3vw;*/
-   --main-marginFromLeftOrRight: 2.5%;
+   --main-marginFromLeftOrRight: 30px;
    --main-themeColor: lightgray;
    --main-backgroundThemeColor: white;
    --main-bodyBackgroundColor: var(--main-themeColor);
@@ -36,7 +36,6 @@ body {
        background-color: orange;
        border: 1px solid black;
    }
-
    #content {
       grid-column-start: 2;
       grid-column-end: 8;
@@ -46,7 +45,6 @@ body {
       border: 1px solid black;
       overflow-y: auto;
   }
-
    #footer {
        grid-column-start: 1;
        grid-column-end: 9;
@@ -70,7 +68,7 @@ body {
    }
 
    .footerText {
-      margin: 15px;
+      margin: 10px;
       margin-left: var(--main-marginFromLeftOrRight);
       margin-right: var(--main-marginFromLeftOrRight);
    }
@@ -186,22 +184,18 @@ body {
    .headerText, .footerText {
       display: inline-block;
    }
-
    #avatar, #home, #leaderboards, #users {
       cursor: pointer;
    }
-
    .footerText {
       margin: 1vh;
       margin-left: var(--main-marginFromLeftOrRight);
       margin-right: var(--main-marginFromLeftOrRight);
    }
-
    #title, #home {
       float: left;  */
       /*margin-left: var(--main-marginFromLeftOrRight);*/
    /*}
-
    #avatar {
       background: white;  */
       /*padding: 0.5vh 2.5vw;*/
@@ -212,30 +206,25 @@ body {
       border: 2px solid;
       font-size: 40px;
    }
-
    #title {
       margin: 2vh;
       font-size: 34px;
    }
-
    #title, #avatar {
       font-weight: bold;
       margin-left: var(--main-marginFromLeftOrRight);
       margin-right: var(--main-marginFromLeftOrRight);
    }
-
    #title, #avatar, #home, #leaderboards, #users {
       -webkit-user-select: none; */ /* Safari */        
       /*-moz-user-select: none; *//* Firefox */
       /*-ms-user-select: none; */ /* IE10+/Edge */
       /*user-select: none; /* Standard */
    /*}
-
    #avatar, #users {
       float: right;
       /*margin-right: var(--main-marginFromLeftOrRight);*/
    /*}
-
    #header {
        grid-column-start: 1;
        grid-column-end: 4;
@@ -244,14 +233,12 @@ body {
        background-color: var(--main-themeColor);
        border: 1px solid black;
    }
-
    #userMessage {
       font-size: 22px;
       float: left;
       margin-top: 2vh;
       margin-left: var(--main-marginFromLeftOrRight);
    }
-
    #currentWorkout {
       position: relative;
       font-size: 18px;
@@ -267,18 +254,15 @@ body {
       margin-top: 30vh;
       /*margin-left: var(--main-marginFromLeftOrRight);*/
    /*}
-
    #peopleWorkout {
       font-size: 20px;
       margin-top: 12vh;
       
    }
-
    #gymCloseTime {
       position: relative;
       font-size: 16px;
    }
-
    #content {
       grid-column-start: 2;
       grid-column-end: 3;
@@ -289,7 +273,6 @@ body {
       overflow-y: none; /* kan endres til scroll for scroll feature, eller bruke dette for å se list */
       /*border-radius: 2.5%;
   }
-
    #footer {
        grid-column-start: 1;
        grid-column-end: 4;
