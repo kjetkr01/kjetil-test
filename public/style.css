@@ -24,7 +24,7 @@ body {
    height: auto;
    min-height: 100vh;
    grid-template-columns: 5vw 1fr 5vw;
-   grid-template-rows: 10vh 5vh 70vh 5vh 10vh;
+   grid-template-rows: 1fr 5vh 70vh 5vh 1fr;
 }
 
 @media (orientation: landscape) { /*liggende*/
