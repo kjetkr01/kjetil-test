@@ -147,7 +147,9 @@ body {
    }
 
    #peopleWorkoutList {
-      position: relative;
+      position: fixed;
+      right: 20%;
+      left: 20%;
       max-height: 20%;
       font-size: 20px;
       background-color: yellow;
