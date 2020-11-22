@@ -162,7 +162,7 @@ body {
       grid-row-end: 3;
       background-color: var(--main-backgroundThemeColor);
       border: 1px solid black;
-      overflow-y: none; /* kan endres til scroll for scroll feature, eller bruke dette for å se list */
+      overflow-y: scroll; /* kan endres til scroll for scroll feature, eller bruke dette for å se list */
       border-radius: 2.5%;
   }
 
