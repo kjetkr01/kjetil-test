@@ -189,7 +189,7 @@ body {
       position: relative;
       margin: 0;
       font-size: 22px;
-      bottom: -70.5%;
+      bottom: -66.5%;
       /*margin-top: 180px;*/
       /*margin-left: var(--main-marginFromLeftOrRight);*/
       margin-left: var(--main-marginFromLeftOrRight);
@@ -199,7 +199,7 @@ body {
    #gymCloseTime {
       position: relative;
       font-size: 16px;
-      bottom: -68.5%;
+      bottom: -64.5%;
       margin-left: var(--main-marginFromLeftOrRight);
       margin-right: var(--main-marginFromLeftOrRight);
    }
