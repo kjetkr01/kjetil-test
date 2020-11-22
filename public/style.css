@@ -124,7 +124,7 @@ body {
 
    #userMessage {
       font-size: 24px;
-      float: left;
+      position: relative;
       margin-top: 2.5%;
       margin-left: var(--main-marginFromLeftOrRight);
       margin-right: var(--main-marginFromLeftOrRight);
