@@ -138,6 +138,36 @@ body {
       margin-right: var(--main-marginFromLeftOrRight);
    }
 
+   #peopleWorkout {
+      position: absolute;
+      right: 10%;
+      left: 10%;
+      top: 30.5%;
+      font-size: 20px;
+      margin-left: var(--main-marginFromLeftOrRight);
+      margin-right: var(--main-marginFromLeftOrRight);
+   }
+
+   #peopleWorkoutName {
+      position: absolute;
+      right: 30.5%;
+      left: 0%;
+      top: 35.5%;
+      font-size: 20px;
+      margin-left: var(--main-marginFromLeftOrRight);
+      margin-right: var(--main-marginFromLeftOrRight);
+   }
+
+   #peopleWorkoutExercise {
+      position: absolute;
+      right: 0;
+      left: 30.5%;
+      top: 35.5%;
+      font-size: 20px;
+      margin-left: var(--main-marginFromLeftOrRight);
+      margin-right: var(--main-marginFromLeftOrRight);
+   }
+
    #peopleWorkoutList {
       position: absolute;
       right: 10%;
