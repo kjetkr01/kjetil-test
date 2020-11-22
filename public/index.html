@@ -5,6 +5,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="manifest" href="/manifest.json">
+<meta charset="utf-8" />
 <link rel="stylesheet" href="style.css">
 
 <body>
@@ -17,12 +18,6 @@
       </div>
 
       <div id="content">
-
-         <p id="userMessage" onClick="location.href = 'test.html';">God morgen, Kjetil (click)</p>
-         <p id="currentWorkout">I dag (fredag) skal du trene bein og mage!</p>
-         <p id="peopleWorkout">Personer som trener i dag</p>
-         <p id="isGymOpen">Treningssenteret er åpent!</p>
-         <p id="gymCloseTime">Stenger om 2t og 30 min</p>
 
          <!--Bare noe tekst for å vise at scrollbar funksjonen fungerer-->
 
@@ -38,13 +33,23 @@
 
 <script>
 
+   const names = ["Kjetil", "Kristian", "Christian"];
+
+   const randomNumber = Math.floor(Math.random() * names.length);
+
+   const name = names[randomNumber];
+
+   document.getElementById("avatar").innerHTML = name[0];
+
    const homeHTML = `
-         <p id="userMessage" onClick="location.href = 'test.html';">God morgen, Kjetil (click)</p>
+         <p id="userMessage" onClick="location.href = 'test.html';">God morgen, ${name}</p>
          <p id="currentWorkout">I dag (fredag) skal du trene bein og mage!</p>
          <p id="peopleWorkout">Personer som trener i dag</p>
          <p id="isGymOpen">Treningssenteret er åpent!</p>
          <p id="gymCloseTime">Stenger om 2t og 30 min</p>
    `;
+
+   document.getElementById("content").innerHTML = homeHTML;
 
    let offlineUsage = true;
 
@@ -75,7 +80,7 @@
             break;
 
          case "Brukere":
-         if (offlineUsage) {
+            if (offlineUsage) {
                pageTitle = page;
                HTML = "brukereHTML";
                update(pageTitle, HTML);
@@ -85,7 +90,7 @@
             break;
 
          case "Min Konto":
-         if (offlineUsage) {
+            if (offlineUsage) {
                pageTitle = page;
                HTML = "minkontoHTML";
                update(pageTitle, HTML);

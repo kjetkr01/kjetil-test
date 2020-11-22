@@ -130,9 +130,16 @@ body {
    }
 
    #currentWorkout {
-      position: relative;
+      float: left;
       font-size: 18px;
-      margin-top: 80px;
+      margin-top: 2.5%;
+      margin-left: var(--main-marginFromLeftOrRight);
+   }
+
+   #peopleWorkout {
+      position: relative;
+      font-size: 20px;
+      margin-top: 50%;
       
    }
    
@@ -141,7 +148,7 @@ body {
       position: relative;
       margin: 0;
       font-size: 22px;
-      bottom: -37.5%;
+      bottom: -40.5%;
       /*margin-top: 180px;*/
       /*margin-left: var(--main-marginFromLeftOrRight);*/
    }
@@ -149,14 +156,10 @@ body {
    #gymCloseTime {
       position: relative;
       font-size: 16px;
-      bottom: -37.5%;
+      bottom: -40.5%;
    }
 
-   #peopleWorkout {
-      font-size: 20px;
-      margin-top: 120px;
-      
-   }
+   
    
 
    #content {
