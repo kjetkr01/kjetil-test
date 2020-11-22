@@ -34,12 +34,12 @@
 <script>
 
    const names = ["Kjetil", "Kristian", "Christian"
-   , "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian"
-   , "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian"
-   , "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian"
-   , "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian"
-   , "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian"
-   , "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian"
+      , "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian"
+      , "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian"
+      , "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian"
+      , "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian"
+      , "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian"
+      , "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian"
    ];
 
    const randomNumber = Math.floor(Math.random() * names.length);
@@ -59,18 +59,18 @@
          <p id="gymCloseTime">Stenger om 2t og 30 min</p>
    `;
 
-   
+
 
    document.getElementById("content").innerHTML = homeHTML;
 
 
    let peopleWorkoutList = document.getElementById("peopleWorkoutList");
 
-   for(let i = 0; i < names.length; i++){
+   for (let i = 0; i < names.length; i++) {
       let html = "<p>" + names[i] + " | " + i + "</p><hr class='hrList'>";
       peopleWorkoutList.innerHTML += html;
    }
-   
+
 
    let offlineUsage = true;
 
