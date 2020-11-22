@@ -33,7 +33,14 @@
 
 <script>
 
-   const names = ["Kjetil", "Kristian", "Christian"];
+   const names = ["Kjetil", "Kristian", "Christian"
+   , "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian"
+   , "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian"
+   , "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian"
+   , "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian"
+   , "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian"
+   , "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian", "Kristian", "Christian"
+   ];
 
    const randomNumber = Math.floor(Math.random() * names.length);
 
@@ -44,7 +51,8 @@
    const homeHTML = `
          <p id="userMessage" onClick="location.href = 'test.html';">God morgen, ${name}</p>
          <p id="currentWorkout">I dag (fredag) skal du trene bein og mage!</p>
-         <p id="peopleWorkoutList">Personer som trener i dag</p>
+         <p id="peopleWorkoutList">
+         Personer som trener i dag</p>
          <p id="isGymOpen">Treningssenteret er åpent!</p>
          <p id="gymCloseTime">Stenger om 2t og 30 min</p>
    `;
@@ -57,7 +65,7 @@
    let peopleWorkoutList = document.getElementById("peopleWorkoutList");
 
    for(let i = 0; i < names.length; i++){
-      let html = "<p>" + names[i] + " |  " + "test" + "</p>";
+      let html = "<p>" + names[i] + " | " + "index:" + i + "</p><hr class='hrList'>";
       peopleWorkoutList.innerHTML += html;
    }
    
