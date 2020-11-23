@@ -6,146 +6,18 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="manifest" href="/manifest.json">
 <meta charset="utf-8" />
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="test.css">
 
 <body>
 
-   <div id="container">
-
-      <div id="header">
-         <p id="title" class="headerText">Hjem</p>
-         <p id="avatar" class="headerText" onClick="loadPage('Min Konto')">K</p>
-      </div>
-
-      <div id="content">
-
-         <!--Bare noe tekst for å vise at scrollbar funksjonen fungerer-->
-
-      </div>
-      <div id="footer">
-         <p id="home" class="footerText" onClick="loadPage('Hjem')">Hjem</p>
-         <p id="leaderboards" class="footerText" onClick="loadPage('Ledertavler')">Ledertavler</p>
-         <p id="users" class="footerText" onClick="loadPage('Brukere')">Brukere</p>
-      </div>
-   </div>
+   <section id="page">
+      <header>Header</header>
+      <p id="leftSpace">L</p>
+      <main>Main area</main>
+      <p id="rightSpace">R</p>
+      <footer>Footer</footer>
+   </section>
 
 </body>
-
-<script>
-
-   const names = ["Kjetil", "Kristian", "Christian"
-   ,"Kjetil", "Kristian", "Christian","Kjetil", "Kristian", "Christian"
-   ,"Kjetil", "Kristian", "Christian","Kjetil", "Kristian", "Christian"
-   ,"Kjetil", "Kristian", "Christian","Kjetil", "Kristian", "Christian"
-   ,"Kjetil", "Kristian", "Christian","Kjetil", "Kristian", "Christian"
-   ,"Kjetil", "Kristian", "Christian","Kjetil", "Kristian", "Christian"
-   ,"Kjetil", "Kristian", "Christian","Kjetil", "Kristian", "Christian"
-   ];
-
-   const randomNumber = Math.floor(Math.random() * names.length);
-
-   const name = names[randomNumber];
-
-   document.getElementById("avatar").innerHTML = name[0];
-
-   const homeHTML = `
-         <p id="userMessage" onClick="location.href = 'test.html';">God morgen, ${name}</p>
-         <p id="currentWorkout">I dag (fredag) skal du trene bein og mage!</p>
-         <p id="peopleWorkout">Personer som trener i dag</p>
-         <p id="peopleWorkoutName">Navn</p>
-         <p id="peopleWorkoutExercise">Trener</p>
-         <p id="peopleWorkoutList"></p>
-         <p id="isGymOpen">Treningssenteret er åpent!</p>
-         <p id="gymCloseTime">Stenger om 2t og 30 min</p>
-   `;
-
-   const leaderboardsHTML = `
-         <p id="leaderboardsTitle">Ledertavler for ${names.length} brukere!</p>
-   `;
-
-
-
-   //onLoad
-   document.getElementById("content").innerHTML = leaderboardsHTML;
-
-
-   let peopleWorkoutList = document.getElementById("peopleWorkoutList");
-
-   if(peopleWorkoutList){
-
-   for (let i = 0; i < names.length; i++) {
-      let html = "<p>" + names[i] + " | " + i + "</p><hr class='hrList'>";
-      peopleWork
-      
-   }
-   outList.innerHTML += html;
-   }
-
-
-   let offlineUsage = true;
-
-   function loadPage(page) {
-
-      let HTML = "";
-      let pageTitle = "";
-
-      switch (page) {
-         case "Hjem":
-            if (offlineUsage) {
-               pageTitle = page;
-               HTML = homeHTML;
-               update(pageTitle, HTML);
-            } else {
-               location.href = "index.html";
-            }
-            break;
-
-         case "Ledertavler":
-            if (offlineUsage) {
-               pageTitle = page;
-               HTML = leaderboardsHTML;
-               update(pageTitle, HTML);
-            } else {
-               location.href = "ledertavler.html";
-            }
-            break;
-
-         case "Brukere":
-            if (offlineUsage) {
-               pageTitle = page;
-               HTML = "brukereHTML";
-               update(pageTitle, HTML);
-            } else {
-               location.href = "brukere.html";
-            }
-            break;
-
-         case "Min Konto":
-            if (offlineUsage) {
-               pageTitle = page;
-               HTML = "minkontoHTML";
-               update(pageTitle, HTML);
-            } else {
-               location.href = "minkonto.html";
-            }
-            break;
-
-         default:
-            console.log("page does not exist!");
-            break;
-      }
-
-   }
-
-   function update(pageTitle, HTML) {
-
-      const title = document.getElementById("title");
-      const content = document.getElementById("content");
-
-      title.innerHTML = pageTitle;
-      content.innerHTML = HTML;
-   }
-
-</script>
 
 </html>
