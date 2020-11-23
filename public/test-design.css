@@ -16,7 +16,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
     width: 100vw;
     height: 100vh;
     grid-template-areas: "rightS topS topS topS leftS"
-                         "rightS title head avatar leftS"
+                         "rightS title title avatar leftS"
                          "rightS topSpace topSpace topSpace leftS"
                          "rightS leftSpace main rightSpace leftS"
                          "rightS bottomSpace bottomSpace bottomSpace leftS"
@@ -28,11 +28,15 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
   #page > #title {
     grid-area: title;
+    padding-left: 5px;
+    padding-top: 5px;
     background-color: #8ca0ff;
   }
 
   #page > #avatar {
     grid-area: avatar;
+    padding-right: 5px;
+    padding-top: 5px;
     background-color: #8ca0ff;
   }
   
