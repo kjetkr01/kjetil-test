@@ -35,9 +35,14 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
   #page > #avatar {
     grid-area: avatar;
-    padding-right: 5px;
     padding-top: 5px;
-    background-color: #8ca0ff;
+    background-color: white;
+    border-radius: 50%;
+    width: 100%;
+    height: 75%;
+    font-weight: bold;
+    text-align: center;
+    border: 2px solid;
   }
   
   #page > header {
