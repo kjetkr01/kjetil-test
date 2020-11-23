@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     font-family: sans-serif;
+    text-align: center;
 }
 
 /*template:
@@ -9,6 +10,8 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 */
 
 #page {
+    background-image: url("images/background-smallBlur.png");
+    background-size: cover;
     display: grid;
     width: 100vw;
     height: 100vh;
@@ -17,8 +20,8 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
                          "leftSpace main rightSpace"
                          "bottomSpace bottomSpace bottomSpace"
                          "foot foot foot";
-    grid-template-rows: 20px 20px auto 20px 20px; /*nedover*/
-    grid-template-columns: 20px auto 20px; /*bortover*/
+    grid-template-rows: 40px 30px auto 30px 40px; /*nedover*/
+    grid-template-columns: 30px auto 30px; /*bortover*/
   }
 
   #page > #title {
@@ -39,27 +42,28 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
   #page > #topSpace {
     grid-area: topSpace;
-    background-color: #ffa08c;
+    /*background-color: #ffa08c;*/
   }
 
   #page > #bottomSpace {
     grid-area: bottomSpace;
-    background-color: #ffa08c;
+    /*background-color: #ffa08c;*/
   }
 
   #page > #leftSpace {
     grid-area: leftSpace;
-    background-color: #ffa08c;
+    /*background-color: #ffa08c;*/
   }
 
   #page > #rightSpace {
     grid-area: rightSpace;
-    background-color: #ffa08c;
+    /*background-color: #ffa08c;*/
   }
   
   #page > main {
     grid-area: main;
     background-color: #ffff64;
+    overflow-y: scroll;
   }
   
   #page > footer {
