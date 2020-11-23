@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    text-align: center;
+    font-size: 22px;
 }
 
 /*template:
@@ -15,13 +15,15 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
     display: grid;
     width: 100vw;
     height: 100vh;
-    grid-template-areas: "title head avatar"
-                         "topSpace topSpace topSpace"
-                         "leftSpace main rightSpace"
-                         "bottomSpace bottomSpace bottomSpace"
-                         "foot foot foot";
-    grid-template-rows: 40px 30px auto 30px 40px; /*nedover*/
-    grid-template-columns: 30px auto 30px; /*bortover*/
+    grid-template-areas: "rightS topS topS topS leftS"
+                         "rightS title head avatar leftS"
+                         "rightS topSpace topSpace topSpace leftS"
+                         "rightS leftSpace main rightSpace leftS"
+                         "rightS bottomSpace bottomSpace bottomSpace leftS"
+                         "rightS foot foot foot leftS"
+                         "rightS bottomS bottomS bottomS leftS";
+    grid-template-rows: 5px 40px 30px auto 30px 40px 5px; /*nedover*/
+    grid-template-columns: 5px 30px auto 30px 5px; /*bortover*/
   }
 
   #page > #title {
