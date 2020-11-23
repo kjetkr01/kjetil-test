@@ -12,11 +12,23 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
     display: grid;
     width: 100vw;
     height: 100vh;
-    grid-template-areas: "head head head"
+    grid-template-areas: "title head avatar"
+                         "topSpace topSpace topSpace"
                          "leftSpace main rightSpace"
+                         "bottomSpace bottomSpace bottomSpace"
                          "foot foot foot";
-    grid-template-rows: 20px auto 20px; /*nedover*/
+    grid-template-rows: 20px 20px auto 20px 20px; /*nedover*/
     grid-template-columns: 20px auto 20px; /*bortover*/
+  }
+
+  #page > #title {
+    grid-area: title;
+    background-color: #8ca0ff;
+  }
+
+  #page > #avatar {
+    grid-area: avatar;
+    background-color: #8ca0ff;
   }
   
   #page > header {
@@ -24,6 +36,17 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
     background-color: #8ca0ff;
   }
   
+
+  #page > #topSpace {
+    grid-area: topSpace;
+    background-color: #ffa08c;
+  }
+
+  #page > #bottomSpace {
+    grid-area: bottomSpace;
+    background-color: #ffa08c;
+  }
+
   #page > #leftSpace {
     grid-area: leftSpace;
     background-color: #ffa08c;
