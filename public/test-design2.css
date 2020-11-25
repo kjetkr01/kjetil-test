@@ -176,8 +176,11 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   text-align: center;
 }
 
-/* */
+#footerImg {
+  height: 90%;
+}
 
+/* */
 
 
 
