@@ -160,6 +160,7 @@ background-color: lightgreen;
   grid-area: boardG;
   background-color: var(--test-elementBackgroundColor);
   overflow-y: scroll;
+  border: 2px solid;
 }
 
 #page > #gymtimeG {
@@ -212,7 +213,7 @@ background-color: lightgreen;
   position: absolute;
 }
 
-#usermsg2G > #board {
+#boardG > #board {
   width: 100%;
   text-align: center;
 }
