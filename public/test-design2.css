@@ -33,16 +33,16 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
                        "e2r1 e1r2 e1r2 e1r2 e1r2 e1r2 e4r1"
 
                        "e2r1 e2r2 c1r2 c1r2 c1r2 e4r2 e4r1"
-                       "e2r1 e2r2 usermsg1G c2r2 c2r2 e4r2 e4r1"
+                       "e2r1 e2r2 usermsg1G usermsg1G usermsg1G e4r2 e4r1"
+                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
+                       "e2r1 e2r2 usermsg2G usermsg2G usermsg2G e4r2 e4r1"
                        "e2r1 e2r2 c3r2 c3r2 c3r2 e4r2 e4r1"
-                       "e2r1 e2r2 usermsg2G c4r2 c4r2 e4r2 e4r1"
-                       "e2r1 e2r2 c5r2 c5r2 c5r2 e4r2 e4r1"
-                       "e2r1 e2r2 c6r2 usermsg3G c7r2 e4r2 e4r1"
-                       "e2r1 e2r2 c8r2 boardG c9r2 e4r2 e4r1"
-                       "e2r1 e2r2 c10r2 c10r2 c10r2 e4r2 e4r1"
-                       "e2r1 e2r2 c11r2 gymtimeG c12r2 e4r2 e4r1"
-                       "e2r1 e2r2 c13r2 gymtimesmallG c14r2 e4r2 e4r1"
-                       "e2r1 e2r2 c15r2 c15r2 c15r2 e4r2 e4r1"
+                       "e2r1 e2r2 usermsg3G usermsg3G usermsg3G e4r2 e4r1"
+                       "e2r1 e2r2 c4r2 boardG c5r2 e4r2 e4r1"
+                       "e2r1 e2r2 c6r2 c6r2 c6r2 e4r2 e4r1"
+                       "e2r1 e2r2 gymtimeG gymtimeG gymtimeG e4r2 e4r1"
+                       "e2r1 e2r2 gymtimesmallG gymtimesmallG gymtimesmallG e4r2 e4r1"
+                       "e2r1 e2r2 c7r2 c7r2 c7r2 e4r2 e4r1"
 
                        "e2r1 e3r2 e3r2 e3r2 e3r2 e3r2 e4r1"
 
@@ -51,7 +51,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
                        "c3r3 c3r3 c3r3 c3r3 c3r3 c3r3 c3r3";
                        
-    grid-template-rows: 5px 5px 60px 5px 3.5% 5px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 7.5% 5% 5px 3.5% 5px 60px 5px; /*nedover*/
+    grid-template-rows: 5px 5px 60px 5px 3.5% 5px 5% 5% 5% 5% 7.5% 1fr 5% auto 5% 5px 3.5% 5px 60px 5px; /*nedover*/
     grid-template-columns: 5px 4% 60px 1fr 60px 4% 5px; /*bortover*/
 }
 
@@ -88,6 +88,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   background-color: var(--main-themeColor);
   overflow-y: scroll;
   border: 2px solid;
+  max-height: 300px;
 }
 
 #page > #gymtimeG {
@@ -266,7 +267,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
 #page > #c1r2 {
   grid-area: c1r2;
-  border-radius: 15px 15px 0 0; /* border radius til content */
+  border-radius: 30px 30px 0 0; /* border radius til content */
 }
 
 #page > #c2r2 {
@@ -293,40 +294,8 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   grid-area: c7r2;
 }
 
-#page > #c8r2 {
-  grid-area: c8r2;
-}
 
-#page > #c9r2 {
-  grid-area: c9r2;
-}
-
-#page > #c10r2 {
-  grid-area: c10r2;
-}
-
-#page > #c11r2 {
-  grid-area: c11r2;
-}
-
-#page > #c12r2 {
-  grid-area: c12r2;
-}
-
-#page > #c13r2 {
-  grid-area: c13r2;
-}
-
-#page > #c14r2 {
-  grid-area: c14r2;
-}
-
-#page > #c15r2 {
-  grid-area: c15r2;
-  border-radius: 0 0 15px 15px; /* border radius til content */
-}
-
-#c1r2, #c2r2, #c3r2, #c4r2, #c5r2, #c6r2, #c7r2, #c8r2, #c9r2, #c10r2, #c11r2, #c12r2, #c13r2, #c14r2, #c15r2 {
+#c1r2, #c2r2, #c3r2, #c4r2, #c5r2, #c6r2, #c7r2 {
   background-color: var(--main-background-color);
 }
 
