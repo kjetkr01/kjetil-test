@@ -1,3 +1,8 @@
+:root {
+  --test-gridElementBackgroundColor: lightgray;
+  --test-elementBackgroundColor: var(--test-gridElementBackgroundColor); /* cadetblue */
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -92,38 +97,42 @@ background-color: darkred;
 
 /* content */
 
-/* 1 */
+/* header */
 
 #page > #c1r1 {
-grid-area: c1r1;
-background-color: blue;
+  grid-area: c1r1;
+  /*background-color: blue;*/
 }
 
 #page > #c2r1 {
   grid-area: c2r1;
-  background-color: black;
+  /*background-color: black;*/
 }
 
 #page > #c3r1 {
   grid-area: c3r1;
-  background-color: yellow;
+  /*background-color: yellow;*/
 }
 
 #page > #c4r1 {
   grid-area: c4r1;
-  background-color: green;
+  /*background-color: green;*/
 }
 
 #page > #c5r1 {
   grid-area: c5r1;
-  background-color: blue;
+  /*background-color: blue;*/
 }
 
-/* 2 */
+#c1r1, #c2r1, #c3r1, #c4r1, #c5r1 {
+  background-color: var(--test-gridElementBackgroundColor);
+}
+
+/* content/middle */
 
 #page > #c1r2 {
-grid-area: c1r2;
-background-color: cyan;
+  grid-area: c1r2;
+  background-color: cyan;
 }
 
 #page > #c2r2 {
@@ -131,7 +140,7 @@ background-color: cyan;
   background-color: black;
   }
 
-/* 3 */
+/* footer */
 
 #page > #c1r3 {
 grid-area: c1r3;
@@ -154,12 +163,12 @@ background-color: lightgreen;
 
 #page > #titleG {
   grid-area: titleG;
-  background-color: cadetblue;
+  background-color: var(--test-elementBackgroundColor);
 }
 
 #page > #avatarG {
   grid-area: avatarG;
-  background-color: cadetblue;
+  background-color: var(--test-elementBackgroundColor);
 }
 
 
