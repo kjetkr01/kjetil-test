@@ -1,6 +1,6 @@
 :root {
   --test-gridElementBackgroundColor: lightgray;
-  --test-elementBackgroundColor: cadetblue;
+  --test-elementBackgroundColor: var(--test-gridElementBackgroundColor);
   /* cadetblue */
   /* transparent var(--test-gridElementBackgroundColor) */
 }
@@ -38,7 +38,8 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
                        "e2r1 e2r2 c6r2 boardG c7r2 e4r2 e4r1"
                        "e2r1 e2r2 c8r2 c8r2 c8r2 e4r2 e4r1"
                        "e2r1 e2r2 c9r2 gymtimeG c10r2 e4r2 e4r1"
-                       "e2r1 e2r2 c11r2 c11r2 c11r2 e4r2 e4r1"
+                       "e2r1 e2r2 c11r2 gymtimesmallG c12r2 e4r2 e4r1"
+                       "e2r1 e2r2 c13r2 c13r2 c13r2 e4r2 e4r1"
 
                        "e2r1 e3r2 e3r2 e3r2 e3r2 e3r2 e4r1"
 
@@ -48,7 +49,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
                        "e3r1 e3r1 e3r1 e3r1 e3r1 e3r1 e3r1";
                        
-    grid-template-rows: 5px 5px 60px 5px 3.5% 5px 1fr 10px 1fr 10px 1fr 10px 1fr 5px 3.5% 5px 60px 5px 5px; /*nedover*/
+    grid-template-rows: 5px 5px 60px 5px 3.5% 5px 1fr 1fr 1fr 1fr 1fr 1fr 7.5% 5% 5px 3.5% 5px 60px 5px 5px; /*nedover*/
     grid-template-columns: 5px 4% 60px 1fr 60px 4% 5px; /*bortover*/
 }
 
@@ -98,7 +99,15 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   grid-area: c11r2;
 }
 
-#c1r2, #c2r2, #c3r2, #c4r2, #c5r2, #c6r2, #c7r2, #c8r2, #c9r2, #c10r2, #c11r2 {
+#page > #c12r2 {
+  grid-area: c12r2;
+}
+
+#page > #c13r2 {
+  grid-area: c13r2;
+}
+
+#c1r2, #c2r2, #c3r2, #c4r2, #c5r2, #c6r2, #c7r2, #c8r2, #c9r2, #c10r2, #c11r2, #c12r2, #c13r2 {
   background-color: var(--test-gridElementBackgroundColor);
 }
 
@@ -158,6 +167,11 @@ background-color: lightgreen;
   background-color: var(--test-elementBackgroundColor);
 }
 
+#page > #gymtimesmallG {
+  grid-area: gymtimesmallG;
+  background-color: var(--test-elementBackgroundColor);
+}
+
 
 /* elements */
 
@@ -199,11 +213,18 @@ background-color: lightgreen;
 }
 
 #usermsg2G > #board {
-  position: absolute;
+  width: 100%;
+  text-align: center;
 }
 
 #gymtimeG > #gymtime {
-  position: absolute;
+  width: 100%;
+  text-align: center;
+}
+
+#gymtimesmallG > #gymtimesmall {
+  width: 100%;
+  text-align: center;
 }
 
 
