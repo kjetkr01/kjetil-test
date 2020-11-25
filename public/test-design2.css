@@ -1,6 +1,6 @@
 :root {
   --test-gridElementBackgroundColor: lightgray;
-  --test-elementBackgroundColor: cadetblue;
+  --test-elementBackgroundColor: var(--test-gridElementBackgroundColor);
   /* cadetblue */
   /* transparent var(--test-gridElementBackgroundColor) */
 }
@@ -46,11 +46,11 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
                        "e2r1 c1r3 c1r3 c1r3 c1r3 c1r3 e4r1"
                        "e2r1 footermenuG footermenuG footermenuG footermenuG footermenuG e4r1"
-                       "e2r1 c2r3 c2r3 c2r3 c2r3 c2r3 e4r1"
+                       
 
                        "e3r1 e3r1 e3r1 e3r1 e3r1 e3r1 e3r1";
                        
-    grid-template-rows: 5px 5px 60px 5px 3.5% 5px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 7.5% 5% 5px 3.5% 5px 60px 5px 5px; /*nedover*/
+    grid-template-rows: 5px 5px 50px 5px 3.5% 5px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 7.5% 5% 5px 3.5% 5px 50px 5px; /*nedover*/
     grid-template-columns: 5px 4% 60px 1fr 60px 4% 5px; /*bortover*/
 }
 
@@ -177,7 +177,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 }
 
 #footerImg {
-  height: 90%;
+  height: 100%;
 }
 
 /* */
@@ -349,7 +349,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   }
   
   #c1r3, #c2r3 {
-    background-color: lightgreen;
+    background-color: var(--test-gridElementBackgroundColor);
   }
   
   /* */
