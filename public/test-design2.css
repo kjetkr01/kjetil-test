@@ -165,13 +165,16 @@ background-color: lightgreen;
 
 /* elements */
 
+/* header */
+
 #titleG > #title {
   position: absolute;
+
+  font-size: 35px;;
 }
 
 #title, #avatar {
   font-weight: bold;
-  font-size: 40px;
   text-align: center;
 }
 
@@ -182,4 +185,22 @@ background-color: lightgreen;
   border-radius: 50px;
   border: 2px solid;
   width: 47.5px;
+  font-size: 40px;
 }
+
+/* */
+
+
+/* content/middle */
+
+
+
+/* */
+
+
+
+/* footer */
+
+
+
+/* */
