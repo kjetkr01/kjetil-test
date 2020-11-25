@@ -10,7 +10,7 @@
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  font-size: 22px;
+  font-size: 18px;
 }
 
 /*template:
@@ -138,14 +138,20 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
 #usermsg1G > #usermsg1 {
   position: absolute;
+  font-size: 22px;
+  margin: 10px
 }
 
 #usermsg2G > #usermsg2 {
   position: absolute;
+  font-size: 18px;
+  margin: 10px
 }
 
 #usermsg3G > #usermsg3 {
+  font-weight: bold;
   width: 100%;
+  font-size: 20px;
   text-align: center;
 }
 
@@ -156,11 +162,13 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
 #gymtimeG > #gymtime {
   width: 100%;
+  font-size: 18px;
   text-align: center;
 }
 
 #gymtimesmallG > #gymtimesmall {
   width: 100%;
+  font-size: 14px;
   text-align: center;
 }
 
@@ -182,12 +190,6 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 }
 
 /* */
-
-
-
-
-
-
 
 
 
@@ -238,27 +240,22 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   
   #page > #c1r1 {
     grid-area: c1r1;
-    /*background-color: blue;*/
   }
   
   #page > #c2r1 {
     grid-area: c2r1;
-    /*background-color: black;*/
   }
   
   #page > #c3r1 {
     grid-area: c3r1;
-    /*background-color: yellow;*/
   }
   
   #page > #c4r1 {
     grid-area: c4r1;
-    /*background-color: green;*/
   }
   
   #page > #c5r1 {
     grid-area: c5r1;
-    /*background-color: blue;*/
   }
   
   #c1r1, #c2r1, #c3r1, #c4r1, #c5r1 {
@@ -269,6 +266,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
 #page > #c1r2 {
   grid-area: c1r2;
+  border-radius: 15px 15px 0 0; /* border radius til content */
 }
 
 #page > #c2r2 {
@@ -325,6 +323,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
 #page > #c15r2 {
   grid-area: c15r2;
+  border-radius: 0 0 15px 15px; /* border radius til content */
 }
 
 #c1r2, #c2r2, #c3r2, #c4r2, #c5r2, #c6r2, #c7r2, #c8r2, #c9r2, #c10r2, #c11r2, #c12r2, #c13r2, #c14r2, #c15r2 {
