@@ -1,0 +1,88 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: 22px;
+}
+
+/*template:
+https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
+*/
+
+#page {
+    background-image: url("images/background-smallBlur.png");
+    background-size: cover;
+    display: grid;
+    width: 100vw;
+    height: 100vh;
+    grid-template-areas: "leftS leftS topS topS topS rightS rightS"
+                         "leftS leftS title title avatar rightS rightS"
+                         "leftS leftS topSpace topSpace topSpace rightS rightS"
+                         "leftS leftS main main main rightS rightS"
+                         "leftS leftS bottomSpace bottomSpace bottomSpace rightS rightS"
+                         "leftS leftS foot foot foot rightS rightS"
+                         "leftS leftS bottomS bottomS bottomS rightS rightS";
+    /*grid-template-rows: 5px 40px 30px auto 30px 40px 5px;*/ /*nedover*/
+    grid-template-rows: 5px 1fr 5% 70% 5% 1fr 5px; /*nedover*/
+    /*grid-template-columns: 5px 30px auto 30px 5px;*/ /*bortover*/
+    grid-template-columns: 5px 5% 60px 1fr 60px 5% 5px; /*bortover*/
+  }
+
+  #page > #title {
+    grid-area: title;
+    padding-left: 5px;
+    padding-top: 5px;
+    font-weight: bold;
+    font-size: 30px;
+    background-color: #8ca0ff;
+  }
+
+  #page > #avatar {
+    grid-area: avatar;
+    padding-top: 5px;
+    background-color: white;
+    border-radius: 50%;
+    font-size: 40px;
+    width: 60px;
+    height: 50px;
+    font-weight: bold;
+    text-align: center;
+    border: 2px solid;
+  }
+  
+  #page > header {
+    grid-area: head;
+    background-color: #8ca0ff;
+  }
+  
+
+  #page > #topSpace {
+    grid-area: topSpace;
+    /*background-color: #ffa08c;*/
+  }
+
+  #page > #bottomSpace {
+    grid-area: bottomSpace;
+    /*background-color: #ffa08c;*/
+  }
+
+  #page > #leftSpace {
+    grid-area: leftSpace;
+    /*background-color: #ffa08c;*/
+  }
+
+  #page > #rightSpace {
+    grid-area: rightSpace;
+    /*background-color: #ffa08c;*/
+  }
+  
+  #page > main {
+    grid-area: main;
+    background-color: #ffff64;
+    overflow-y: scroll;
+  }
+  
+  #page > footer {
+    grid-area: foot;
+    background-color: #8cffa0;
+  }
