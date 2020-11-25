@@ -129,9 +129,9 @@
       <div id="footermenuG">
          <table id="footermenu">
             <tr>
-               <td><img id="footerIconHome" src="images/homeIconDark.png"></td>
-               <td><img id="footerIconLeaderboards" src="images/leaderboardsIconDark.png"></td>
-               <td><img id="footerIconUsers" src="images/usersIconDark.png"></td>
+               <td><img id="footerIconHome" src="images/darkMode/usersIconDark.png"></td>
+               <td><img id="footerIconLeaderboards" src="images/darkMode/leaderboardsIconDark.png"></td>
+               <td><img id="footerIconUsers" src="images/darkMode/usersIconDark.png"></td>
             </tr>
             <!--
             <tr>
@@ -153,7 +153,6 @@
 
    // kun til testing
 
-
    // skifte fra light til dark mode
 
    let lightMode = false;
@@ -164,9 +163,9 @@
          const page = document.getElementById("page");
          page.className = page.className.replace("lightMode", "darkMode");
 
-         document.getElementById("footerIconHome").src = "images/HomeIconLight.png";
-         document.getElementById("footerIconLeaderboards").src = "images/LeaderboardsIconLight.png";
-         document.getElementById("footerIconUsers").src = "images/UsersIconLight.png";
+         document.getElementById("footerIconHome").src = "images/lightMode/homeIconLight.png";
+         document.getElementById("footerIconLeaderboards").src = "images/lightMode/leaderboardsIconLight.png";
+         document.getElementById("footerIconUsers").src = "images/lightMode/usersIconLight.png";
 
          //kun for nå, for switch
          lightMode = true;
@@ -176,9 +175,9 @@
          const page = document.getElementById("page");
          page.className = page.className.replace("darkMode", "lightMode");
 
-         document.getElementById("footerIconHome").src = "images/HomeIconDark.png";
-         document.getElementById("footerIconLeaderboards").src = "images/LeaderboardsIconDark.png";
-         document.getElementById("footerIconUsers").src = "images/UsersIconDark.png";
+         document.getElementById("footerIconHome").src = "images/darkMode/homeIconDark.png";
+         document.getElementById("footerIconLeaderboards").src = "images/darkMode/leaderboardsIconDark.png";
+         document.getElementById("footerIconUsers").src = "images/darkMode/usersIconDark.png";
 
          //kun for nå, for switch
          lightMode = false;
