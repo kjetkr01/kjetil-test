@@ -1,9 +1,8 @@
 :root {
   --main-themeColor: lightgray;
+  --main-avatarColor: white;
   --main-background-color: white;
-  --main-elementBackgroundColor: var(--test-gridElementBackgroundColor);
-  /* cadetblue */
-  /* transparent var(--test-gridElementBackgroundColor) */
+  --main-textColor: black;
 }
 
 * {
@@ -11,6 +10,7 @@
   padding: 0;
   font-family: sans-serif;
   font-size: 18px;
+  color: var(--main-textColor);
 }
 
 /*template:
@@ -124,7 +124,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 #avatarG > #avatar {
   position: absolute;
 
-  background-color: white;
+  background-color: var(--main-avatarColor);
   border-radius: 50px;
   border: 2px solid;
   width: 47.5px;
