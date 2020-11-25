@@ -43,8 +43,8 @@
    const html = `
    Screensize:
    <br>
-   H: ${window.screen.availHeight}<br>
-   W: ${window.screen.availWidth}
+   H: ${window.screen.availHeight} px<br>
+   W: ${window.screen.availWidth} px
 
    <br><br>
 
@@ -52,6 +52,16 @@
    ${window.navigator.standalone}
    `;
    document.getElementById("info").innerHTML = html;
+
+
+   // iOS web app full screen hacks.
+   if (window.navigator.standalone === true) {
+      // make all link remain in web app mode.
+      $('a').click(function () {
+         window.location = $(this).attr('href');
+         return false;
+      });
+   }
 
 </script>
 
