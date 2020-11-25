@@ -1,6 +1,7 @@
 :root {
-  --test-gridElementBackgroundColor: lightgray;
-  --test-elementBackgroundColor: var(--test-gridElementBackgroundColor);
+  --main-themeColor: lightgray;
+  --main-background-color: white;
+  --main-elementBackgroundColor: var(--test-gridElementBackgroundColor);
   /* cadetblue */
   /* transparent var(--test-gridElementBackgroundColor) */
 }
@@ -17,16 +18,17 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 */
 
 #page {
-  /*background-image: url("images/background-smallBlur.png");
-  background-size: cover;*/
+  background-image: url("images/background-smallBlur.png");
+  background-size: cover;
+  background-color: var(--main-themeColor);
   display: grid;
   width: 100vw;
   height: 100vh;
   
-  grid-template-areas: "e1r1 e1r1 e1r1 e1r1 e1r1 e1r1 e1r1"
-                       "e2r1 c1r1 c1r1 c1r1 c1r1 c1r1 e4r1"
-                       "e2r1 c2r1 titleG c3r1 avatarG c4r1 e4r1"
-                       "e2r1 c5r1 c5r1 c5r1 c5r1 c5r1 e4r1"
+  grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
+                       "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
+                       "c2r1 c2r1 titleG c3r1 avatarG c4r1 c4r1"
+                       "c5r1 c5r1 c5r1 c5r1 c5r1 c5r1 c5r1"
                        
                        "e2r1 e1r2 e1r2 e1r2 e1r2 e1r2 e4r1"
 
@@ -44,13 +46,12 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
                        "e2r1 e3r2 e3r2 e3r2 e3r2 e3r2 e4r1"
 
-                       "e2r1 c1r3 c1r3 c1r3 c1r3 c1r3 e4r1"
-                       "e2r1 footermenuG footermenuG footermenuG footermenuG footermenuG e4r1"
-                       
+                       "c1r3 c1r3 c1r3 c1r3 c1r3 c1r3 c1r3"
+                       "c2r3 footermenuG footermenuG footermenuG footermenuG footermenuG c4r3"
 
-                       "e3r1 e3r1 e3r1 e3r1 e3r1 e3r1 e3r1";
+                       "c3r3 c3r3 c3r3 c3r3 c3r3 c3r3 c3r3";
                        
-    grid-template-rows: 5px 5px 50px 5px 3.5% 5px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 7.5% 5% 5px 3.5% 5px 50px 5px; /*nedover*/
+    grid-template-rows: 5px 5px 60px 5px 3.5% 5px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 7.5% 5% 5px 3.5% 5px 60px 5px; /*nedover*/
     grid-template-columns: 5px 4% 60px 1fr 60px 4% 5px; /*bortover*/
 }
 
@@ -58,50 +59,50 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
 #page > #titleG {
   grid-area: titleG;
-  background-color: var(--test-elementBackgroundColor);
+  background-color: var(--main-themeColor);
 }
 
 #page > #avatarG {
   grid-area: avatarG;
-  background-color: var(--test-elementBackgroundColor);
+  background-color: var(--main-themeColor);
 }
 
 
 #page > #usermsg1G {
   grid-area: usermsg1G;
-  background-color: var(--test-elementBackgroundColor);
+  background-color: var(--main-background-color);
 }
 
 #page > #usermsg2G {
   grid-area: usermsg2G;
-  background-color: var(--test-elementBackgroundColor);
+  background-color: var(--main-background-color);
 }
 
 #page > #usermsg3G {
   grid-area: usermsg3G;
-  background-color: var(--test-elementBackgroundColor);
+  background-color: var(--main-background-color);
 }
 
 #page > #boardG {
   grid-area: boardG;
-  background-color: var(--test-elementBackgroundColor);
+  background-color: var(--main-themeColor);
   overflow-y: scroll;
   border: 2px solid;
 }
 
 #page > #gymtimeG {
   grid-area: gymtimeG;
-  background-color: var(--test-elementBackgroundColor);
+  background-color: var(--main-background-color);
 }
 
 #page > #gymtimesmallG {
   grid-area: gymtimesmallG;
-  background-color: var(--test-elementBackgroundColor);
+  background-color: var(--main-background-color);
 }
 
 #page > #footermenuG {
   grid-area: footermenuG;
-  background-color: var(--test-elementBackgroundColor);
+  background-color: var(--main-themeColor);
 }
 
 
@@ -198,43 +199,35 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
 #page > #e1r1 {
   grid-area: e1r1;
-  background-color: red;
   }
   #page > #e2r1 {
   grid-area: e2r1;
-  background-color: red;
   }
   
   #page > #e3r1 {
   grid-area: e3r1;
-  background-color: red;
   }
   
   #page > #e4r1 {
   grid-area: e4r1;
-  background-color: red;
   }
   
   /**/
   
   #page > #e1r2 {
   grid-area: e1r2;
-  background-color: darkred;
   }
   
   #page > #e2r2 {
   grid-area: e2r2;
-  background-color: darkred;
   }
   
   #page > #e3r2 {
   grid-area: e3r2;
-  background-color: darkred;
   }
   
   #page > #e4r2 {
   grid-area: e4r2;
-  background-color: darkred;
   }
   
   /* */
@@ -269,7 +262,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   }
   
   #c1r1, #c2r1, #c3r1, #c4r1, #c5r1 {
-    background-color: var(--test-gridElementBackgroundColor);
+    background-color: var(--main-themeColor);
 }
 
 /* content/middle */
@@ -335,7 +328,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 }
 
 #c1r2, #c2r2, #c3r2, #c4r2, #c5r2, #c6r2, #c7r2, #c8r2, #c9r2, #c10r2, #c11r2, #c12r2, #c13r2, #c14r2, #c15r2 {
-  background-color: var(--test-gridElementBackgroundColor);
+  background-color: var(--main-background-color);
 }
 
 /* footer */
@@ -347,9 +340,17 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   #page > #c2r3 {
     grid-area: c2r3;
   }
+
+  #page > #c3r3 {
+    grid-area: c3r3;
+  }
+
+  #page > #c4r3 {
+    grid-area: c4r3;
+  }
   
-  #c1r3, #c2r3 {
-    background-color: var(--test-gridElementBackgroundColor);
+  #c1r3, #c2r3, #c3r3, #c4r3 {
+    background-color: var(--main-themeColor);
   }
   
   /* */
