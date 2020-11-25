@@ -1,8 +1,8 @@
 * {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    font-size: 22px;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  font-size: 22px;
 }
 
 /*template:
@@ -10,58 +10,114 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 */
 
 #page {
-    /*background-image: url("images/background-smallBlur.png");
-    background-size: cover;*/
-    display: grid;
-    width: 100vw;
-    height: 100vh;
-    grid-template-areas: "e1r1 e1r1 e1r1 e1r1 e1r1 e1r1 e1r1"
-                         "e1r2 c1r1 c1r1 c1r1 c1r1 c1r1 e1r3"
-                         "e1r2 c1r1 c1r1 c1r1 c1r1 c1r1 e1r3"
-                         "e1r2 c1r1 c1r1 c1r1 c1r1 c1r1 e1r3"
-                         
-                         "e1r2 e2r1 e2r1 e2r1 e2r1 e2r1 e1r3"
-                         "e1r2 c2r6 c3r6 c4r6 c5r6 c6r6 e1r3"
-                         "e1r4 e1r4 e1r4 e1r4 e1r4 e1r4 e1r4";
-    
-    grid-template-rows: 5px 1fr 5% 70% 5% 1fr 5px; /*nedover*/
-    
-    grid-template-columns: 5px 5% 60px 1fr 60px 5% 5px; /*bortover*/
-  }
+  /*background-image: url("images/background-smallBlur.png");
+  background-size: cover;*/
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  
+  grid-template-areas: "e1r1 e1r1 e1r1 e1r1 e1r1 e1r1 e1r1"
+                       "e2r1 c1r2 c1r2 c1r2 c1r2 c1r2 e4r1"
+                       "e2r1 c1r2 c1r2 c1r2 c1r2 c1r2 e4r1"
+                       "e2r1 c1r2 c1r2 c1r2 c1r2 c1r2 e4r1"
+                       
+                       "e2r1 e1r2 e1r2 e1r2 e1r2 e1r2 e4r1"
+
+                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
+                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
+                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
+                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
+                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
+                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
+                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
+                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
+                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
+
+                       "e2r1 e3r2 e3r2 e3r2 e3r2 e3r2 e4r1"
+
+                       "e2r1 c3r2 c3r2 c3r2 c3r2 c3r2 e4r1"
+                       "e2r1 c3r2 c3r2 c3r2 c3r2 c3r2 e4r1"
+                       "e2r1 c3r2 c3r2 c3r2 c3r2 c3r2 e4r1"
+
+                       "e3r1 e3r1 e3r1 e3r1 e3r1 e3r1 e3r1";
+                       
+    grid-template-rows: 5px 15px 25px 15px 2.5% 5px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 5px 2.5% 15px 25px 15px 5px; /*nedover*/
+    grid-template-columns: 5px 2.5% 60px 1fr 60px 2.5% 5px; /*bortover*/
+}
 
 /*empty space padding*/
+
 #page > #e1r1 {
-  grid-area: e1r1;
-  background-color: red;
+grid-area: e1r1;
+background-color: red;
 }
-#page > #e1r2 {
-  grid-area: e1r2;
-  background-color: red;
-}
-
-#page > #e1r3 {
-  grid-area: e1r3;
-  background-color: red;
-}
-
-#page > #e1r4 {
-  grid-area: e1r4;
-  background-color: red;
-}
-
 #page > #e2r1 {
-  grid-area: e2r1;
-  background-color: red;
+grid-area: e2r1;
+background-color: red;
 }
 
+#page > #e3r1 {
+grid-area: e3r1;
+background-color: red;
+}
+
+#page > #e4r1 {
+grid-area: e4r1;
+background-color: red;
+}
+
+/**/
+
+#page > #e1r2 {
+grid-area: e1r2;
+background-color: darkred;
+}
+
+#page > #e2r2 {
+grid-area: e2r2;
+background-color: darkred;
+}
+
+#page > #e3r2 {
+grid-area: e3r2;
+background-color: darkred;
+}
+
+#page > #e4r2 {
+grid-area: e4r2;
+background-color: darkred;
+}
 
 /* */
 
 /* content */
 
-#page > #c1r1 {
-  grid-area: c1r1;
-  background-color: blue;
+
+
+#page > #c1r2 {
+grid-area: c1r2;
+background-color: blue;
 }
 
 /* */
+
+#page > #c2r2 {
+grid-area: c2r2;
+background-color: cyan;
+}
+
+/* */
+
+#page > #c3r2 {
+grid-area: c3r2;
+background-color: lightgreen;
+}
+
+/* */
+
+/* items */
+
+#page > #title {
+  grid-area: title;
+  background-color: black;
+}
