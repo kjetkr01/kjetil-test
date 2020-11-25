@@ -1,6 +1,8 @@
 :root {
   --test-gridElementBackgroundColor: lightgray;
-  --test-elementBackgroundColor: var(--test-gridElementBackgroundColor); /* cadetblue */
+  --test-elementBackgroundColor: cadetblue;
+  /* cadetblue */
+  /* transparent var(--test-gridElementBackgroundColor) */
 }
 
 * {
@@ -29,14 +31,14 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
                        "e2r1 e1r2 e1r2 e1r2 e1r2 e1r2 e4r1"
 
                        "e2r1 e2r2 c1r2 c1r2 c1r2 e4r2 e4r1"
-                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
-                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
-                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
-                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
-                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
-                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
-                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
-                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
+                       "e2r1 e2r2 usermsg1G c2r2 c2r2 e4r2 e4r1"
+                       "e2r1 e2r2 c3r2 c3r2 c3r2 e4r2 e4r1"
+                       "e2r1 e2r2 usermsg2G c4r2 c4r2 e4r2 e4r1"
+                       "e2r1 e2r2 c5r2 c5r2 c5r2 e4r2 e4r1"
+                       "e2r1 e2r2 c5r2 c5r2 c5r2 e4r2 e4r1"
+                       "e2r1 e2r2 c6r2 boardG c7r2 e4r2 e4r1"
+                       "e2r1 e2r2 c8r2 c8r2 c8r2 e4r2 e4r1"
+                       "e2r1 e2r2 c9r2 gymtimeG c10r2 e4r2 e4r1"
 
                        "e2r1 e3r2 e3r2 e3r2 e3r2 e3r2 e4r1"
 
@@ -50,95 +52,54 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
     grid-template-columns: 5px 4% 60px 1fr 60px 4% 5px; /*bortover*/
 }
 
-/*empty space padding*/
-
-#page > #e1r1 {
-grid-area: e1r1;
-background-color: red;
-}
-#page > #e2r1 {
-grid-area: e2r1;
-background-color: red;
-}
-
-#page > #e3r1 {
-grid-area: e3r1;
-background-color: red;
-}
-
-#page > #e4r1 {
-grid-area: e4r1;
-background-color: red;
-}
-
-/**/
-
-#page > #e1r2 {
-grid-area: e1r2;
-background-color: darkred;
-}
-
-#page > #e2r2 {
-grid-area: e2r2;
-background-color: darkred;
-}
-
-#page > #e3r2 {
-grid-area: e3r2;
-background-color: darkred;
-}
-
-#page > #e4r2 {
-grid-area: e4r2;
-background-color: darkred;
-}
-
-/* */
-
-/* content */
-
-/* header */
-
-#page > #c1r1 {
-  grid-area: c1r1;
-  /*background-color: blue;*/
-}
-
-#page > #c2r1 {
-  grid-area: c2r1;
-  /*background-color: black;*/
-}
-
-#page > #c3r1 {
-  grid-area: c3r1;
-  /*background-color: yellow;*/
-}
-
-#page > #c4r1 {
-  grid-area: c4r1;
-  /*background-color: green;*/
-}
-
-#page > #c5r1 {
-  grid-area: c5r1;
-  /*background-color: blue;*/
-}
-
-#c1r1, #c2r1, #c3r1, #c4r1, #c5r1 {
-  background-color: var(--test-gridElementBackgroundColor);
-}
-
 /* content/middle */
 
 #page > #c1r2 {
   grid-area: c1r2;
-  background-color: cyan;
 }
 
 #page > #c2r2 {
   grid-area: c2r2;
-  background-color: black;
-  }
+}
+
+#page > #c3r2 {
+  grid-area: c3r2;
+}
+
+#page > #c4r2 {
+  grid-area: c4r2;
+}
+
+#page > #c5r2 {
+  grid-area: c5r2;
+}
+
+#page > #c6r2 {
+  grid-area: c6r2;
+}
+
+#page > #c7r2 {
+  grid-area: c7r2;
+}
+
+#page > #c8r2 {
+  grid-area: c8r2;
+}
+
+#page > #c9r2 {
+  grid-area: c9r2;
+}
+
+#page > #c10r2 {
+  grid-area: c10r2;
+}
+
+#c1r2, #c2r2, #c3r2, #c4r2, #c5r2, #c6r2, #c7r2, #c8r2, #c9r2, #c10r2 {
+  background-color: var(--test-gridElementBackgroundColor);
+}
+
+
+
 
 /* footer */
 
@@ -172,6 +133,28 @@ background-color: lightgreen;
 }
 
 
+#page > #usermsg1G {
+  grid-area: usermsg1G;
+  background-color: var(--test-elementBackgroundColor);
+}
+
+#page > #usermsg2G {
+  grid-area: usermsg2G;
+  background-color: var(--test-elementBackgroundColor);
+}
+
+#page > #boardG {
+  grid-area: boardG;
+  background-color: var(--test-elementBackgroundColor);
+  overflow-y: scroll;
+}
+
+#page > #gymtimeG {
+  grid-area: gymtimeG;
+  background-color: var(--test-elementBackgroundColor);
+}
+
+
 /* elements */
 
 /* header */
@@ -179,7 +162,7 @@ background-color: lightgreen;
 #titleG > #title {
   position: absolute;
 
-  font-size: 35px;;
+  font-size: 35px;
 }
 
 #title, #avatar {
@@ -195,12 +178,29 @@ background-color: lightgreen;
   border: 2px solid;
   width: 47.5px;
   font-size: 40px;
+  /*right: 15px;*/ /* evt bruke dette til å flytte avatar ikonet */
 }
 
 /* */
 
 
 /* content/middle */
+
+#usermsg1G > #usermsg1 {
+  position: absolute;
+}
+
+#usermsg2G > #usermsg2 {
+  position: absolute;
+}
+
+#usermsg2G > #board {
+  position: absolute;
+}
+
+#gymtimeG > #gymtime {
+  position: absolute;
+}
 
 
 
@@ -213,3 +213,94 @@ background-color: lightgreen;
 
 
 /* */
+
+
+
+
+
+
+
+
+
+
+
+
+/* finished */
+
+/*empty space padding*/
+
+#page > #e1r1 {
+  grid-area: e1r1;
+  background-color: red;
+  }
+  #page > #e2r1 {
+  grid-area: e2r1;
+  background-color: red;
+  }
+  
+  #page > #e3r1 {
+  grid-area: e3r1;
+  background-color: red;
+  }
+  
+  #page > #e4r1 {
+  grid-area: e4r1;
+  background-color: red;
+  }
+  
+  /**/
+  
+  #page > #e1r2 {
+  grid-area: e1r2;
+  background-color: darkred;
+  }
+  
+  #page > #e2r2 {
+  grid-area: e2r2;
+  background-color: darkred;
+  }
+  
+  #page > #e3r2 {
+  grid-area: e3r2;
+  background-color: darkred;
+  }
+  
+  #page > #e4r2 {
+  grid-area: e4r2;
+  background-color: darkred;
+  }
+  
+  /* */
+  
+  /* content */
+  
+  /* header */
+  
+  #page > #c1r1 {
+    grid-area: c1r1;
+    /*background-color: blue;*/
+  }
+  
+  #page > #c2r1 {
+    grid-area: c2r1;
+    /*background-color: black;*/
+  }
+  
+  #page > #c3r1 {
+    grid-area: c3r1;
+    /*background-color: yellow;*/
+  }
+  
+  #page > #c4r1 {
+    grid-area: c4r1;
+    /*background-color: green;*/
+  }
+  
+  #page > #c5r1 {
+    grid-area: c5r1;
+    /*background-color: blue;*/
+  }
+  
+  #c1r1, #c2r1, #c3r1, #c4r1, #c5r1 {
+    background-color: var(--test-gridElementBackgroundColor);
+  }
