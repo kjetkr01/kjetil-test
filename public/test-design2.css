@@ -1,6 +1,6 @@
 :root {
   --test-gridElementBackgroundColor: lightgray;
-  --test-elementBackgroundColor: var(--test-gridElementBackgroundColor);
+  --test-elementBackgroundColor: cadetblue;
   /* cadetblue */
   /* transparent var(--test-gridElementBackgroundColor) */
 }
@@ -45,8 +45,8 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
                        "e2r1 e3r2 e3r2 e3r2 e3r2 e3r2 e4r1"
 
                        "e2r1 c1r3 c1r3 c1r3 c1r3 c1r3 e4r1"
-                       "e2r1 c2r3 c2r3 c2r3 c2r3 c2r3 e4r1"
-                       "e2r1 c3r3 c3r3 c3r3 c3r3 c3r3 e4r1"
+                       "e2r1 c2r3 footermenuG footermenuG footermenuG c3r3 e4r1"
+                       "e2r1 c4r3 c4r3 c4r3 c4r3 c4r3 e4r1"
 
                        "e3r1 e3r1 e3r1 e3r1 e3r1 e3r1 e3r1";
                        
@@ -68,6 +68,11 @@ background-color: lightgreen;
 
 #page > #c3r3 {
   grid-area: c3r3;
+  background-color: lightgreen;
+}
+
+#page > #c4r3 {
+  grid-area: c4r3;
   background-color: lightgreen;
 }
 
@@ -115,6 +120,11 @@ background-color: lightgreen;
 
 #page > #gymtimesmallG {
   grid-area: gymtimesmallG;
+  background-color: var(--test-elementBackgroundColor);
+}
+
+#page > #footermenuG {
+  grid-area: footermenuG;
   background-color: var(--test-elementBackgroundColor);
 }
 
@@ -185,7 +195,10 @@ background-color: lightgreen;
 
 /* footer */
 
-
+#footermenuG > #footermenu {
+  width: 100%;
+  text-align: center;
+}
 
 /* */
 
