@@ -41,8 +41,8 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
                        "e3r1 e3r1 e3r1 e3r1 e3r1 e3r1 e3r1";
                        
-    grid-template-rows: 5px 15px 25px 15px 2.5% 5px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 5px 2.5% 15px 25px 15px 5px; /*nedover*/
-    grid-template-columns: 5px 2.5% 60px 1fr 60px 2.5% 5px; /*bortover*/
+    grid-template-rows: 5px 5px 60px 5px 3.5% 5px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 5px 3.5% 5px 60px 5px 5px; /*nedover*/
+    grid-template-columns: 5px 4% 60px 1fr 60px 4% 5px; /*bortover*/
 }
 
 /*empty space padding*/
