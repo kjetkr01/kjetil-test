@@ -1,8 +1,15 @@
-:root {
+.lightMode {
   --main-themeColor: lightgray;
   --main-avatarColor: white;
   --main-background-color: white;
   --main-textColor: black;
+}
+
+.darkMode {
+  --main-themeColor: rgb(15, 15, 15);
+  --main-avatarColor:rgb(22, 21, 21);
+  --main-background-color: rgb(22, 21, 21);
+  --main-textColor: white;
 }
 
 * {
@@ -186,7 +193,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   text-align: center;
 }
 
-#footerImg {
+#footerIconHome, #footerIconLeaderboards, #footerIconUsers {
   min-height: 33px;
 }
 

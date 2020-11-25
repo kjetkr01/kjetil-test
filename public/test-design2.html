@@ -12,7 +12,7 @@
 
 <body>
 
-   <section id="page">
+   <section id="page" class="lightMode">
 
       <!-- spacing items-->
 
@@ -73,7 +73,7 @@
       <!-- content/middle -->
 
       <div id="usermsg1G">
-         <p id="usermsg1">
+         <p id="usermsg1" onClick="changeMode()">
             God morgen, Kjetil
          </p>
       </div>
@@ -129,9 +129,9 @@
       <div id="footermenuG">
          <table id="footermenu">
             <tr>
-               <td><img id="footerImg" src="images/homeIconDark.png"></td>
-               <td><img id="footerImg" src="images/leaderboardsIconDark.png"></td>
-               <td><img id="footerImg" src="images/usersIconDark.png"></td>
+               <td><img id="footerIconHome" src="images/homeIconDark.png"></td>
+               <td><img id="footerIconLeaderboards" src="images/leaderboardsIconDark.png"></td>
+               <td><img id="footerIconUsers" src="images/usersIconDark.png"></td>
             </tr>
             <!--
             <tr>
@@ -145,11 +145,50 @@
 
       <!-- -->
 
+   </section>
+
 </body>
 
 <script>
 
    // kun til testing
+
+
+   // skifte fra light til dark mode
+
+   let lightMode = false;
+
+   function changeMode() {
+
+      if (!lightMode) {
+         const page = document.getElementById("page");
+         page.className = page.className.replace("lightMode", "darkMode");
+
+         document.getElementById("footerIconHome").src = "images/HomeIconLight.png";
+         document.getElementById("footerIconLeaderboards").src = "images/LeaderboardsIconLight.png";
+         document.getElementById("footerIconUsers").src = "images/UsersIconLight.png";
+
+         //kun for nå, for switch
+         lightMode = true;
+      }
+      // eller ignore?
+      else {
+         const page = document.getElementById("page");
+         page.className = page.className.replace("darkMode", "lightMode");
+
+         document.getElementById("footerIconHome").src = "images/HomeIconDark.png";
+         document.getElementById("footerIconLeaderboards").src = "images/LeaderboardsIconDark.png";
+         document.getElementById("footerIconUsers").src = "images/UsersIconDark.png";
+
+         //kun for nå, for switch
+         lightMode = false;
+      }
+
+   }
+
+
+   //
+
    const names = ["Kjetil Kristiansen", "Kristian Tellefsen", "Christian Jenssen", "Christoffer Simonsen"];
 
    const workout = ["Bryst og triceps", "Rygg og biceps", "Cardio", "Biceps"];
