@@ -172,9 +172,14 @@ background-color: lightgreen;
 #title, #avatar {
   font-weight: bold;
   font-size: 40px;
-  color: white;
+  text-align: center;
 }
 
 #avatarG > #avatar {
   position: absolute;
+
+  background-color: white;
+  border-radius: 50px;
+  border: 2px solid;
+  width: 47.5px;
 }
