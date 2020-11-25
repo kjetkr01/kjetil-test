@@ -45,38 +45,14 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
                        "e2r1 e3r2 e3r2 e3r2 e3r2 e3r2 e4r1"
 
                        "e2r1 c1r3 c1r3 c1r3 c1r3 c1r3 e4r1"
-                       "e2r1 c2r3 footermenuG footermenuG footermenuG c3r3 e4r1"
-                       "e2r1 c4r3 c4r3 c4r3 c4r3 c4r3 e4r1"
+                       "e2r1 footermenuG footermenuG footermenuG footermenuG footermenuG e4r1"
+                       "e2r1 c2r3 c2r3 c2r3 c2r3 c2r3 e4r1"
 
                        "e3r1 e3r1 e3r1 e3r1 e3r1 e3r1 e3r1";
                        
     grid-template-rows: 5px 5px 60px 5px 3.5% 5px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 7.5% 5% 5px 3.5% 5px 60px 5px 5px; /*nedover*/
     grid-template-columns: 5px 4% 60px 1fr 60px 4% 5px; /*bortover*/
 }
-
-/* footer */
-
-#page > #c1r3 {
-grid-area: c1r3;
-background-color: lightgreen;
-}
-
-#page > #c2r3 {
-  grid-area: c2r3;
-  background-color: black;
-}
-
-#page > #c3r3 {
-  grid-area: c3r3;
-  background-color: lightgreen;
-}
-
-#page > #c4r3 {
-  grid-area: c4r3;
-  background-color: lightgreen;
-}
-
-/* */
 
 /* grid for elements */
 
@@ -358,3 +334,19 @@ background-color: lightgreen;
 #c1r2, #c2r2, #c3r2, #c4r2, #c5r2, #c6r2, #c7r2, #c8r2, #c9r2, #c10r2, #c11r2, #c12r2, #c13r2, #c14r2, #c15r2 {
   background-color: var(--test-gridElementBackgroundColor);
 }
+
+/* footer */
+
+#page > #c1r3 {
+  grid-area: c1r3;
+  }
+  
+  #page > #c2r3 {
+    grid-area: c2r3;
+  }
+  
+  #c1r3, #c2r3 {
+    background-color: lightgreen;
+  }
+  
+  /* */
