@@ -1,350 +1,331 @@
-:root {
-   --main-color: lightgray;
-   --main-firstBackground-color: lightgreen;
-   --main-background-color: white;
-   /*--main-marginFromLeftOrRight: 3vw;*/
-   --main-marginFromLeftOrRight: 2.5%;
-   --main-themeColor: lightgray;
-   --main-backgroundThemeColor: white;
-   --main-bodyBackgroundColor: var(--main-themeColor);
+.lightMode {
+  --main-themeColor: lightgray;
+  --main-avatarColor: white;
+  --main-background-color: white;
+  --main-textColor: black;
+}
+
+.darkMode {
+  --main-themeColor: rgb(15, 15, 15);
+  --main-avatarColor:rgb(22, 21, 21);
+  --main-background-color: rgb(22, 21, 21);
+  --main-textColor: white;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  font-size: 18px;
+  color: var(--main-textColor);
+}
+
+/*template:
+https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
+*/
+
+#page {
+  background-image: url("images/background-smallBlur.png");
+  background-size: cover;
+  background-color: var(--main-themeColor);
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  
+  grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
+                       "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
+                       "c2r1 c2r1 titleG c3r1 avatarG c4r1 c4r1"
+                       "c5r1 c5r1 c5r1 c5r1 c5r1 c5r1 c5r1"
+                       
+                       "e2r1 e1r2 e1r2 e1r2 e1r2 e1r2 e4r1"
+
+                       "e2r1 e2r2 c1r2 c1r2 c1r2 e4r2 e4r1"
+                       "e2r1 e2r2 usermsg1G usermsg1G usermsg1G e4r2 e4r1"
+                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
+                       "e2r1 e2r2 usermsg2G usermsg2G usermsg2G e4r2 e4r1"
+                       "e2r1 e2r2 c3r2 c3r2 c3r2 e4r2 e4r1"
+                       "e2r1 e2r2 usermsg3G usermsg3G usermsg3G e4r2 e4r1"
+                       "e2r1 e2r2 c4r2 boardG c5r2 e4r2 e4r1"
+                       "e2r1 e2r2 c6r2 c6r2 c6r2 e4r2 e4r1"
+                       "e2r1 e2r2 gymtimeG gymtimeG gymtimeG e4r2 e4r1"
+                       "e2r1 e2r2 gymtimesmallG gymtimesmallG gymtimesmallG e4r2 e4r1"
+                       "e2r1 e2r2 c7r2 c7r2 c7r2 e4r2 e4r1"
+
+                       "e2r1 e3r2 e3r2 e3r2 e3r2 e3r2 e4r1"
+
+                       "c1r3 c1r3 c1r3 c1r3 c1r3 c1r3 c1r3"
+                       "c2r3 footermenuG footermenuG footermenuG footermenuG footermenuG c4r3"
+
+                       "c3r3 c3r3 c3r3 c3r3 c3r3 c3r3 c3r3";
+                       
+    grid-template-rows: 5px 5px 60px 5px 3.5% 5px 5% 5% 5% 5% 7.5% 1fr 5% 25px 5% 5px 3.5% 5px 60px 5px; /*nedover*/
+    grid-template-columns: 5px 4% 60px 1fr 60px 4% 5px; /*bortover*/
+}
+
+/* grid for elements */
+
+#page > #titleG {
+  grid-area: titleG;
+  background-color: var(--main-themeColor);
+}
+
+#page > #avatarG {
+  grid-area: avatarG;
+  background-color: var(--main-themeColor);
 }
 
 
-body {
-   background-color: var(--main-bodyBackgroundColor);
-   background-image: url(images/background-smallBlur.png);
-   text-align: center;
-   font-size: 28px;
-   margin: 0;
+#page > #usermsg1G {
+  grid-area: usermsg1G;
+  background-color: var(--main-background-color);
 }
 
-#container {
-   display: grid;
-   height: auto;
-   min-height: 100vh;
-   grid-template-columns: 5% 1fr 5%;
-   grid-template-rows: 1fr 5% 70% 5% 1fr;
+#page > #usermsg2G {
+  grid-area: usermsg2G;
+  background-color: var(--main-background-color);
 }
 
-@media (orientation: landscape) { /*liggende*/
-   /*#header {
-       grid-column-start: 1;
-       grid-column-end: 9;
-       grid-row-start: 1;
-       grid-row-end: 1;
-       background-color: orange;
-       border: 1px solid black;
-   }
-   #content {
-      grid-column-start: 2;
-      grid-column-end: 8;
-      grid-row-start: 3;
-      grid-row-end: 6;
-      background-color:peru;
-      border: 1px solid black;
-      overflow-y: auto;
+#page > #usermsg3G {
+  grid-area: usermsg3G;
+  background-color: var(--main-background-color);
+}
+
+#page > #boardG {
+  grid-area: boardG;
+  background-color: var(--main-themeColor);
+  overflow-y: scroll;
+  border: 2px solid;
+  min-height: 50px;
+}
+
+#page > #gymtimeG {
+  grid-area: gymtimeG;
+  background-color: var(--main-background-color);
+}
+
+#page > #gymtimesmallG {
+  grid-area: gymtimesmallG;
+  background-color: var(--main-background-color);
+}
+
+#page > #footermenuG {
+  grid-area: footermenuG;
+  background-color: var(--main-themeColor);
+}
+
+
+/* elements */
+
+/* header */
+
+#titleG > #title {
+  position: absolute;
+  font-size: 35px;
+}
+
+#title, #avatar {
+  font-weight: bold;
+  text-align: center;
+}
+
+#avatarG > #avatar {
+  position: absolute;
+
+  background-color: var(--main-avatarColor);
+  border-radius: 50px;
+  border: 2px solid;
+  width: 47.5px;
+  font-size: 40px;
+  /*right: 15px;*/ /* evt bruke dette til å flytte avatar ikonet */
+}
+
+/* */
+
+
+/* content/middle */
+
+#usermsg1G > #usermsg1 {
+  position: absolute;
+  font-size: 22px;
+  margin: 10px
+}
+
+#usermsg2G > #usermsg2 {
+  position: absolute;
+  font-size: 18px;
+  margin: 10px
+}
+
+#usermsg3G > #usermsg3 {
+  font-weight: bold;
+  width: 100%;
+  font-size: 20px;
+  text-align: center;
+}
+
+#boardG > #board {
+  width: 100%;
+  text-align: center;
+}
+
+#gymtimeG > #gymtime {
+  width: 100%;
+  font-size: 18px;
+  text-align: center;
+}
+
+#gymtimesmallG > #gymtimesmall {
+  width: 100%;
+  font-size: 14px;
+  text-align: center;
+}
+
+
+
+/* */
+
+
+
+/* footer */
+
+#footermenuG > #footermenu {
+  width: 100%;
+  text-align: center;
+}
+
+#footerIconHome, #footerIconLeaderboards, #footerIconUsers {
+  min-height: 33px;
+}
+
+/* */
+
+
+
+
+
+/* finished */
+
+/*empty space padding*/
+
+#page > #e1r1 {
+  grid-area: e1r1;
   }
-   #footer {
-       grid-column-start: 1;
-       grid-column-end: 9;
-       grid-row-start: 7;
-       grid-row-end: 8;
-       background-color: lightpink;
-       border: 1px solid black;
-   }*/
+  #page > #e2r1 {
+  grid-area: e2r1;
+  }
+  
+  #page > #e3r1 {
+  grid-area: e3r1;
+  }
+  
+  #page > #e4r1 {
+  grid-area: e4r1;
+  }
+  
+  /**/
+  
+  #page > #e1r2 {
+  grid-area: e1r2;
+  }
+  
+  #page > #e2r2 {
+  grid-area: e2r2;
+  }
+  
+  #page > #e3r2 {
+  grid-area: e3r2;
+  }
+  
+  #page > #e4r2 {
+  grid-area: e4r2;
+  }
+  
+  /* */
+  
+  /* content */
+  
+  /* header */
+  
+  #page > #c1r1 {
+    grid-area: c1r1;
+  }
+  
+  #page > #c2r1 {
+    grid-area: c2r1;
+  }
+  
+  #page > #c3r1 {
+    grid-area: c3r1;
+  }
+  
+  #page > #c4r1 {
+    grid-area: c4r1;
+  }
+  
+  #page > #c5r1 {
+    grid-area: c5r1;
+  }
+  
+  #c1r1, #c2r1, #c3r1, #c4r1, #c5r1 {
+    background-color: var(--main-themeColor);
+}
+
+/* content/middle */
+
+#page > #c1r2 {
+  grid-area: c1r2;
+  border-radius: 30px 30px 0 0; /* border radius til content */
+}
+
+#page > #c2r2 {
+  grid-area: c2r2;
+}
+
+#page > #c3r2 {
+  grid-area: c3r2;
+}
+
+#page > #c4r2 {
+  grid-area: c4r2;
+}
+
+#page > #c5r2 {
+  grid-area: c5r2;
+}
+
+#page > #c6r2 {
+  grid-area: c6r2;
+}
+
+#page > #c7r2 {
+  grid-area: c7r2;
 }
 
 
-/*@media (orientation: portrait)*/
-@media screen and (max-width: 1100px) { /*for iphone, ipad osv*/
-
-   .headerText, .footerText {
-      display: inline-block;
-   }
-
-   #avatar, #home, #leaderboards, #users {
-      cursor: pointer;
-   }
-
-   .footerText {
-      margin: 10px;
-      margin-left: var(--main-marginFromLeftOrRight);
-      margin-right: var(--main-marginFromLeftOrRight);
-      font-size: 22px;
-   }
-
-   #title, #home {
-      float: left;
-      /*margin-left: var(--main-marginFromLeftOrRight);*/
-   }
-
-   #avatar {
-      background: white;
-      /*padding: 0.5vh 2.5vw;*/
-      padding-left: 7.5px;
-      padding-right: 7.5px;
-      margin: 10px;
-      border-radius: 50%;
-      border: 2px solid;
-      font-size: 40px
-   }
-
-   #title {
-      margin: 10px;
-      font-size: 32px;
-   }
-
-   #title, #avatar {
-      font-weight: bold;
-      margin-left: var(--main-marginFromLeftOrRight);
-      margin-right: var(--main-marginFromLeftOrRight);
-   }
-
-   #title, #avatar, #home, #leaderboards, #users {
-      -webkit-user-select: none; /* Safari */        
-      -moz-user-select: none; /* Firefox */
-      -ms-user-select: none; /* IE10+/Edge */
-      user-select: none; /* Standard */
-   }
-
-   #avatar, #users {
-      float: right;
-      /*margin-right: var(--main-marginFromLeftOrRight);*/
-   }
-
-   #header {
-       grid-column-start: 1;
-       grid-column-end: 4;
-       grid-row-start: 1;
-       grid-row-end: 1;
-       background-color: var(--main-themeColor);
-       border: 1px solid black;
-   }
-
-   /*Main | index*/
-
-   #userMessage {
-      font-size: 24px;
-      position: relative;
-      margin-top: 2.5%;
-      margin-left: var(--main-marginFromLeftOrRight);
-      margin-right: var(--main-marginFromLeftOrRight);
-   }
-
-   #currentWorkout {
-      font-size: 18px;
-      position: relative;
-      margin-top: 2.5%;
-      margin-left: var(--main-marginFromLeftOrRight);
-      margin-right: var(--main-marginFromLeftOrRight);
-   }
-
-   #peopleWorkout, #peopleWorkoutName, #peopleWorkoutExercise {
-      position: absolute;
-      font-weight: bold;
-      
-      font-size: 22px;
-      margin-left: var(--main-marginFromLeftOrRight);
-      margin-right: var(--main-marginFromLeftOrRight);
-   }
-
-   #peopleWorkout {
-      right: 10%;
-      left: 10%;
-      top: 32.5%;
-   }
-
-   #peopleWorkoutName {
-      right: 30.5%;
-      left: 0%;
-      top: 37.5%;
-   }
-
-   #peopleWorkoutExercise {
-      right: 0;
-      left: 30.5%;
-      top: 37.5%;
-   }
-
-   #peopleWorkoutList {
-      position: absolute;
-      right: 10%;
-      left: 10%;
-      top: 42.5%;
-      border-radius: 2.5%;
-      border: 2px solid;
-      max-height: 20%;
-      font-size: 18px;
-      background-color: var(--main-themeColor);
-      margin-left: var(--main-marginFromLeftOrRight);
-      margin-right: var(--main-marginFromLeftOrRight);
-      overflow-y: scroll;
-   }
-
-   .hrList {
-      border: 1px solid;
-   }
-   
-   
-   #isGymOpen {
-      position: relative;
-      margin: 0;
-      font-size: 22px;
-      bottom: -66.5%;
-      /*margin-top: 180px;*/
-      /*margin-left: var(--main-marginFromLeftOrRight);*/
-      margin-left: var(--main-marginFromLeftOrRight);
-      margin-right: var(--main-marginFromLeftOrRight);
-   }
-
-   #gymCloseTime {
-      position: relative;
-      font-size: 16px;
-      bottom: -64.5%;
-      margin-left: var(--main-marginFromLeftOrRight);
-      margin-right: var(--main-marginFromLeftOrRight);
-   }
-
-   /* */
-
-   /*Leaderboards | leaderboards*/
-
-   #leaderboardsTitle {
-      font-size: 32px;
-      position: relative;
-      font-weight: bold;
-      margin-top: 2.5%;
-      margin-left: var(--main-marginFromLeftOrRight);
-      margin-right: var(--main-marginFromLeftOrRight);
-   }
-
-
-   /* */
-
-   #content {
-      grid-column-start: 2;
-      grid-column-end: 3;
-      grid-row-start: 3;
-      grid-row-end: 3;
-      background-color: var(--main-backgroundThemeColor);
-      border: 1px solid black;
-      overflow-y: scroll; /* kan endres til scroll for scroll feature, eller bruke dette for å se list */
-      border-radius: 2.5%;
-  }
-
-   #footer {
-       grid-column-start: 1;
-       grid-column-end: 4;
-       grid-row-start: 5;
-       grid-row-end: 5;
-       background-color: var(--main-themeColor);
-       border: 1px solid black;
-   }
-
-
-
-
-
-
-   /*
-   .headerText, .footerText {
-      display: inline-block;
-   }
-   #avatar, #home, #leaderboards, #users {
-      cursor: pointer;
-   }
-   .footerText {
-      margin: 1vh;
-      margin-left: var(--main-marginFromLeftOrRight);
-      margin-right: var(--main-marginFromLeftOrRight);
-   }
-   #title, #home {
-      float: left;  */
-      /*margin-left: var(--main-marginFromLeftOrRight);*/
-   /*}
-   #avatar {
-      background: white;  */
-      /*padding: 0.5vh 2.5vw;*/
-      /*padding-left: 2.5vw;
-      padding-right: 2.5vw;
-      margin: 1.5vh;
-      border-radius: 50%;
-      border: 2px solid;
-      font-size: 40px;
-   }
-   #title {
-      margin: 2vh;
-      font-size: 34px;
-   }
-   #title, #avatar {
-      font-weight: bold;
-      margin-left: var(--main-marginFromLeftOrRight);
-      margin-right: var(--main-marginFromLeftOrRight);
-   }
-   #title, #avatar, #home, #leaderboards, #users {
-      -webkit-user-select: none; */ /* Safari */        
-      /*-moz-user-select: none; *//* Firefox */
-      /*-ms-user-select: none; */ /* IE10+/Edge */
-      /*user-select: none; /* Standard */
-   /*}
-   #avatar, #users {
-      float: right;
-      /*margin-right: var(--main-marginFromLeftOrRight);*/
-   /*}
-   #header {
-       grid-column-start: 1;
-       grid-column-end: 4;
-       grid-row-start: 1;
-       grid-row-end: 1;
-       background-color: var(--main-themeColor);
-       border: 1px solid black;
-   }
-   #userMessage {
-      font-size: 22px;
-      float: left;
-      margin-top: 2vh;
-      margin-left: var(--main-marginFromLeftOrRight);
-   }
-   #currentWorkout {
-      position: relative;
-      font-size: 18px;
-      margin-top: 10vh;
-      
-   }
-   
-   
-   #isGymOpen {
-      position: relative;
-      margin: 0;
-      font-size: 22px;
-      margin-top: 30vh;
-      /*margin-left: var(--main-marginFromLeftOrRight);*/
-   /*}
-   #peopleWorkout {
-      font-size: 20px;
-      margin-top: 12vh;
-      
-   }
-   #gymCloseTime {
-      position: relative;
-      font-size: 16px;
-   }
-   #content {
-      grid-column-start: 2;
-      grid-column-end: 3;
-      grid-row-start: 3;
-      grid-row-end: 3;
-      background-color: var(--main-backgroundThemeColor);
-      border: 1px solid black;
-      overflow-y: none; /* kan endres til scroll for scroll feature, eller bruke dette for å se list */
-      /*border-radius: 2.5%;
-  }
-   #footer {
-       grid-column-start: 1;
-       grid-column-end: 4;
-       grid-row-start: 5;
-       grid-row-end: 5;
-       background-color: var(--main-themeColor);
-       border: 1px solid black;
-   }*/
+#c1r2, #c2r2, #c3r2, #c4r2, #c5r2, #c6r2, #c7r2 {
+  background-color: var(--main-background-color);
 }
+
+/* footer */
+
+#page > #c1r3 {
+  grid-area: c1r3;
+  }
+  
+  #page > #c2r3 {
+    grid-area: c2r3;
+  }
+
+  #page > #c3r3 {
+    grid-area: c3r3;
+  }
+
+  #page > #c4r3 {
+    grid-area: c4r3;
+  }
+  
+  #c1r3, #c2r3, #c3r3, #c4r3 {
+    background-color: var(--main-themeColor);
+  }
+  
+  /* */

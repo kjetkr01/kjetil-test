@@ -6,145 +6,220 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="manifest" href="/manifest.json">
 <meta charset="utf-8" />
-<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet" href="test-design.css">
 
 <body>
 
-   <div id="container">
+   <section id="page" class="lightMode">
 
-      <div id="header">
-         <p id="title" class="headerText">Hjem</p>
-         <p id="avatar" class="headerText" onClick="loadPage('Min Konto')">K</p>
+      <!-- spacing items-->
+
+      <div id="e1r1"></div>
+      <div id="e2r1"></div>
+      <div id="e3r1"></div>
+      <div id="e4r1"></div>
+
+      <div id="e1r2"></div>
+      <div id="e2r2"></div>
+      <div id="e3r2"></div>
+      <div id="e4r2"></div>
+
+      <!-- -->
+
+      <!-- content items-->
+
+      <div id="c1r1"></div>
+      <div id="c2r1"></div>
+      <div id="c3r1"></div>
+      <div id="c4r1"></div>
+      <div id="c5r1"></div>
+
+      <div id="c1r2"></div>
+      <div id="c2r2"></div>
+      <div id="c3r2"></div>
+      <div id="c4r2"></div>
+      <div id="c5r2"></div>
+      <div id="c6r2"></div>
+      <div id="c7r2"></div>
+
+      <div id="c1r3"></div>
+      <div id="c2r3"></div>
+      <div id="c3r3"></div>
+      <div id="c4r3"></div>
+
+
+      <!-- -->
+
+      <!-- element content items-->
+
+      <!-- header -->
+
+      <div id="titleG">
+         <p id="title">
+            Hjem
+         </p>
       </div>
 
-      <div id="content">
-
-         <!--Bare noe tekst for å vise at scrollbar funksjonen fungerer-->
-
+      <div id="avatarG">
+         <p id="avatar">
+            K
+         </p>
       </div>
-      <div id="footer">
-         <p id="home" class="footerText" onClick="loadPage('Hjem')">Hjem</p>
-         <p id="leaderboards" class="footerText" onClick="loadPage('Ledertavler')">Ledertavler</p>
-         <p id="users" class="footerText" onClick="loadPage('Brukere')">Brukere</p>
+
+      <!-- -->
+
+      <!-- content/middle -->
+
+      <div id="usermsg1G">
+         <p id="usermsg1" onClick="changeMode()">
+            God morgen, Kjetil
+         </p>
       </div>
-   </div>
+
+      <div id="usermsg2G">
+         <p id="usermsg2">
+            I dag (fredag) skal du trene bein og mage.
+         </p>
+      </div>
+
+      <div id="usermsg3G">
+         <p id="usermsg3">
+            Hvem trener i dag?
+         </p>
+      </div>
+
+      <div id="boardG">
+         <table id="board">
+
+            <!--
+            <tr>
+               <th>Navn</th>
+               <th>Trener</th>
+            </tr>
+            <tr>
+               <td>Kjetil Kristiansen</td>
+               <td>Bryst og triceps</td>
+            </tr>
+            <tr>
+               <td>Kjetil Kristiansen</td>
+               <td>Bryst og triceps</td>
+            </tr>
+         -->
+
+         </table>
+      </div>
+
+      <div id="gymtimeG">
+         <p id="gymtime">
+            Treningssenteret er åpent!
+         </p>
+      </div>
+
+      <div id="gymtimesmallG">
+         <p id="gymtimesmall">
+            Stenger om 2t og 30 min
+         </p>
+      </div>
+
+      <!-- -->
+
+      <!-- footer -->
+
+      <div id="footermenuG">
+         <table id="footermenu">
+            <tr>
+               <td><img id="footerIconHome" src="images/darkMode/usersIconDark.png"></td>
+               <td><img id="footerIconLeaderboards" src="images/darkMode/leaderboardsIconDark.png"></td>
+               <td><img id="footerIconUsers" src="images/darkMode/usersIconDark.png"></td>
+            </tr>
+            <!--
+            <tr>
+               <td>Hjem</td>
+               <td>Ledertavler</td>
+               <td>Brukere</td>
+            </tr>
+         -->
+         </table>
+      </div>
+
+      <!-- -->
+
+   </section>
 
 </body>
 
 <script>
 
-   const names = ["Kjetil", "Kristian", "Christian"
-      , "Kjetil", "Kristian", "Christian", "Kjetil", "Kristian", "Christian"
-      , "Kjetil", "Kristian", "Christian", "Kjetil", "Kristian", "Christian"
-      , "Kjetil", "Kristian", "Christian", "Kjetil", "Kristian", "Christian"
-      , "Kjetil", "Kristian", "Christian", "Kjetil", "Kristian", "Christian"
-      , "Kjetil", "Kristian", "Christian", "Kjetil", "Kristian", "Christian"
-      , "Kjetil", "Kristian", "Christian", "Kjetil", "Kristian", "Christian"
-   ];
+   // kun til testing
 
-   const randomNumber = Math.floor(Math.random() * names.length);
+   // skifte fra light til dark mode
 
-   const name = names[randomNumber];
+   let lightMode = false;
 
-   document.getElementById("avatar").innerHTML = name[0];
+   function changeMode() {
 
-   const homeHTML = `
-         <p id="userMessage" onClick="location.href = 'test.html';">God morgen, ${name}</p>
-         <p id="currentWorkout">I dag (fredag) skal du trene bein og mage!</p>
-         <p id="peopleWorkout">Personer som trener i dag</p>
-         <p id="peopleWorkoutName">Navn</p>
-         <p id="peopleWorkoutExercise">Trener</p>
-         <p id="peopleWorkoutList"></p>
-         <p id="isGymOpen">Treningssenteret er åpent!</p>
-         <p id="gymCloseTime">Stenger om 2t og 30 min</p>
-   `;
+      if (!lightMode) {
+         const page = document.getElementById("page");
+         page.className = page.className.replace("lightMode", "darkMode");
 
-   const leaderboardsHTML = `
-         <p id="leaderboardsTitle">Ledertavler for ${names.length} brukere!</p>
-   `;
+         document.getElementById("footerIconHome").src = "images/lightMode/homeIconLight.png";
+         document.getElementById("footerIconLeaderboards").src = "images/lightMode/leaderboardsIconLight.png";
+         document.getElementById("footerIconUsers").src = "images/lightMode/usersIconLight.png";
 
-
-
-   //onLoad
-   document.getElementById("content").innerHTML = homeHTML;
-
-
-   let peopleWorkoutList = document.getElementById("peopleWorkoutList");
-
-   if (peopleWorkoutList) {
-
-      for (let i = 0; i < names.length; i++) {
-         let html = "<p>" + names[i] + " | " + i + "</p><hr class='hrList'>";
-         peopleWork
-
+         //kun for nå, for switch
+         lightMode = true;
       }
-      outList.innerHTML += html;
-   }
+      // eller ignore?
+      else {
+         const page = document.getElementById("page");
+         page.className = page.className.replace("darkMode", "lightMode");
 
+         document.getElementById("footerIconHome").src = "images/darkMode/homeIconDark.png";
+         document.getElementById("footerIconLeaderboards").src = "images/darkMode/leaderboardsIconDark.png";
+         document.getElementById("footerIconUsers").src = "images/darkMode/usersIconDark.png";
 
-   let offlineUsage = true;
-
-   function loadPage(page) {
-
-      let HTML = "";
-      let pageTitle = "";
-
-      switch (page) {
-         case "Hjem":
-            if (offlineUsage) {
-               pageTitle = page;
-               HTML = homeHTML;
-               update(pageTitle, HTML);
-            } else {
-               location.href = "index.html";
-            }
-            break;
-
-         case "Ledertavler":
-            if (offlineUsage) {
-               pageTitle = page;
-               HTML = leaderboardsHTML;
-               update(pageTitle, HTML);
-            } else {
-               location.href = "ledertavler.html";
-            }
-            break;
-
-         case "Brukere":
-            if (offlineUsage) {
-               pageTitle = page;
-               HTML = "brukereHTML";
-               update(pageTitle, HTML);
-            } else {
-               location.href = "brukere.html";
-            }
-            break;
-
-         case "Min Konto":
-            if (offlineUsage) {
-               pageTitle = page;
-               HTML = "minkontoHTML";
-               update(pageTitle, HTML);
-            } else {
-               location.href = "minkonto.html";
-            }
-            break;
-
-         default:
-            console.log("page does not exist!");
-            break;
+         //kun for nå, for switch
+         lightMode = false;
       }
 
    }
 
-   function update(pageTitle, HTML) {
 
-      const title = document.getElementById("title");
-      const content = document.getElementById("content");
+   //
 
-      title.innerHTML = pageTitle;
-      content.innerHTML = HTML;
+   const names = ["Kjetil Kristiansen", "Kristian Tellefsen", "Christian Jenssen", "Christoffer Simonsen"];
+
+   const workout = ["Bryst og triceps", "Rygg og biceps", "Cardio", "Biceps"];
+
+   let board = document.getElementById("board");
+
+   board.innerHTML = `<tr>
+               <th>Navn</th>
+               <th>Trener</th>
+            </tr>`;
+
+   for (let i = 0; i < names.length; i++) {
+
+      board.innerHTML += `
+            <tr>
+               <td>${names[i]}</td>
+               <td>${workout[i]}</td>
+            </tr>`;
    }
+
+   //
+
+
+   // iOS web app full screen hacks.
+   if (window.navigator.standalone == true) {
+      // make all link remain in web app mode.
+      $('a').click(function () {
+         window.location = $(this).attr('href');
+         return false;
+      });
+   }
+
 
 </script>
 
