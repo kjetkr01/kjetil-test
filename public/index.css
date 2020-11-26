@@ -81,17 +81,21 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   grid-area: usermsg1G;
   background-color: var(--main-background-color);
   border-left: 2px solid;
+  border-right: 2px solid;
 }
 
 #homePage > #usermsg2G {
   grid-area: usermsg2G;
   background-color: var(--main-background-color);
   border-left: 2px solid;
+  border-right: 2px solid;
 }
 
 #homePage > #usermsg3G {
   grid-area: usermsg3G;
   background-color: var(--main-background-color);
+  border-left: 2px solid;
+  border-right: 2px solid;
 }
 
 #homePage > #boardG {
@@ -105,11 +109,15 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 #homePage > #gymtimeG {
   grid-area: gymtimeG;
   background-color: var(--main-background-color);
+  border-left: 2px solid;
+  border-right: 2px solid;
 }
 
 #homePage > #gymtimesmallG {
   grid-area: gymtimesmallG;
   background-color: var(--main-background-color);
+  border-left: 2px solid;
+  border-right: 2px solid;
 }
 
 #homePage > #footermenuG {
@@ -125,6 +133,8 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 #titleG > #title {
   position: absolute;
   font-size: 35px;
+  margin-top: 5px;
+  left: 15px; /* evt bruke dette til å flytte title teksten */
 }
 
 #title, #avatar {
@@ -140,7 +150,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   border: 2px solid;
   width: 47.5px;
   font-size: 40px;
-  /*right: 15px;*/ /* evt bruke dette til å flytte avatar ikonet */
+  right: 15px; /* evt bruke dette til å flytte avatar ikonet */
 }
 
 /* */
@@ -201,6 +211,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
 #footerIconHome, #footerIconLeaderboards, #footerIconUsers {
   min-height: 33px;
+  margin-top: 7.5px;
   -webkit-filter: var(--main-filter);
   filter: var(--main-filter);
 }
@@ -292,27 +303,37 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 #homePage > #c2r2 {
   grid-area: c2r2;
   border-left: 2px solid;
+  border-right: 2px solid;
 }
 
 #homePage > #c3r2 {
   grid-area: c3r2;
+  border-left: 2px solid;
+  border-right: 2px solid;
 }
 
 #homePage > #c4r2 {
   grid-area: c4r2;
+  border-left: 2px solid;
 }
 
 #homePage > #c5r2 {
   grid-area: c5r2;
+  border-right: 2px solid;
 }
 
 #homePage > #c6r2 {
   grid-area: c6r2;
+  border-left: 2px solid;
+  border-right: 2px solid;
 }
 
 #homePage > #c7r2 {
   grid-area: c7r2;
   border-radius: 0 0 30px 30px; /* border radius til content */
+  border-left: 2px solid;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
 }
 
 
