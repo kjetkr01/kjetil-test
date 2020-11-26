@@ -184,6 +184,21 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   text-align: center;
 }
 
+/* hmm */
+tr.separated td {
+  /* set border style for separated rows */
+  border-bottom: 1px solid;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-size: 16px;
+} 
+
+table {
+  border-collapse: collapse;
+}
+
+/* hmm */
+
 #gymtimeG > #gymtime {
   width: 100%;
   font-size: 18px;

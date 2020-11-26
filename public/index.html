@@ -198,7 +198,7 @@
 
    const names = ["Kjetil Kristiansen", "Kristian Tellefsen", "Christian Jenssen", "Christoffer Simonsen"];
 
-   const workout = ["Bryst og triceps", "Rygg og biceps", "Cardio", "Biceps"];
+   const workout = ["Bryst og triceps Bryst og triceps Bryst og triceps", "Rygg og biceps", "Cardio", "Biceps"];
 
    let board = document.getElementById("board");
 
@@ -210,7 +210,7 @@
    for (let i = 0; i < names.length; i++) {
 
       board.innerHTML += `
-            <tr>
+            <tr class='separated'>
                <td>${names[i]}</td>
                <td>${workout[i]}</td>
             </tr>`;
