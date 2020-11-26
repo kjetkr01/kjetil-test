@@ -26,7 +26,7 @@
 
 <body>
 
-   <section id="page" class="lightMode">
+   <section id="homePage" class="lightMode">
 
       <!-- spacing items-->
 
@@ -144,9 +144,9 @@
       <div id="footermenuG">
          <table id="footermenu">
             <tr>
-               <td><img id="footerIconHome" src="images/darkMode/usersIconDark.png"></td>
-               <td><img id="footerIconLeaderboards" src="images/darkMode/leaderboardsIconDark.png"></td>
-               <td><img id="footerIconUsers" src="images/darkMode/usersIconDark.png"></td>
+               <td><img id="footerIconHome" src="images/homeIcon.png"></td>
+               <td><img id="footerIconLeaderboards" src="images/leaderboardsIcon.png"></td>
+               <td><img id="footerIconUsers" src="images/usersIcon.png"></td>
             </tr>
             <!--
             <tr>
@@ -175,24 +175,16 @@
    function changeMode() {
 
       if (!lightMode) {
-         const page = document.getElementById("page");
+         const page = document.getElementById("homePage");
          page.className = page.className.replace("lightMode", "darkMode");
-
-         document.getElementById("footerIconHome").src = "images/lightMode/homeIconLight.png";
-         document.getElementById("footerIconLeaderboards").src = "images/lightMode/leaderboardsIconLight.png";
-         document.getElementById("footerIconUsers").src = "images/lightMode/usersIconLight.png";
 
          //kun for nå, for switch
          lightMode = true;
       }
       // eller ignore?
       else {
-         const page = document.getElementById("page");
+         const page = document.getElementById("homePage");
          page.className = page.className.replace("darkMode", "lightMode");
-
-         document.getElementById("footerIconHome").src = "images/darkMode/homeIconDark.png";
-         document.getElementById("footerIconLeaderboards").src = "images/darkMode/leaderboardsIconDark.png";
-         document.getElementById("footerIconUsers").src = "images/darkMode/usersIconDark.png";
 
          //kun for nå, for switch
          lightMode = false;

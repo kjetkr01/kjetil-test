@@ -3,6 +3,7 @@
   --main-avatarColor: white;
   --main-background-color: white;
   --main-textColor: black;
+  --main-filter: invert(0);
 }
 
 .darkMode {
@@ -10,6 +11,7 @@
   --main-avatarColor:rgb(22, 21, 21);
   --main-background-color: rgb(22, 21, 21);
   --main-textColor: white;
+  --main-filter: invert(1);
 }
 
 * {
@@ -24,7 +26,7 @@
 https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 */
 
-#page {
+#homePage {
   background-image: url("images/background-smallBlur.png");
   background-size: cover;
   background-color: var(--main-themeColor);
@@ -64,33 +66,35 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
 /* grid for elements */
 
-#page > #titleG {
+#homePage > #titleG {
   grid-area: titleG;
   background-color: var(--main-themeColor);
 }
 
-#page > #avatarG {
+#homePage > #avatarG {
   grid-area: avatarG;
   background-color: var(--main-themeColor);
 }
 
 
-#page > #usermsg1G {
+#homePage > #usermsg1G {
   grid-area: usermsg1G;
   background-color: var(--main-background-color);
+  border-left: 2px solid;
 }
 
-#page > #usermsg2G {
+#homePage > #usermsg2G {
   grid-area: usermsg2G;
   background-color: var(--main-background-color);
+  border-left: 2px solid;
 }
 
-#page > #usermsg3G {
+#homePage > #usermsg3G {
   grid-area: usermsg3G;
   background-color: var(--main-background-color);
 }
 
-#page > #boardG {
+#homePage > #boardG {
   grid-area: boardG;
   background-color: var(--main-themeColor);
   overflow-y: scroll;
@@ -98,17 +102,17 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   min-height: 50px;
 }
 
-#page > #gymtimeG {
+#homePage > #gymtimeG {
   grid-area: gymtimeG;
   background-color: var(--main-background-color);
 }
 
-#page > #gymtimesmallG {
+#homePage > #gymtimesmallG {
   grid-area: gymtimesmallG;
   background-color: var(--main-background-color);
 }
 
-#page > #footermenuG {
+#homePage > #footermenuG {
   grid-area: footermenuG;
   background-color: var(--main-themeColor);
 }
@@ -147,13 +151,15 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 #usermsg1G > #usermsg1 {
   position: absolute;
   font-size: 22px;
-  margin: 10px
+  margin: 10px;
+  margin-left: 15px;
 }
 
 #usermsg2G > #usermsg2 {
   position: absolute;
   font-size: 18px;
-  margin: 10px
+  margin: 10px;
+  margin-left: 15px;
 }
 
 #usermsg3G > #usermsg3 {
@@ -195,6 +201,8 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
 #footerIconHome, #footerIconLeaderboards, #footerIconUsers {
   min-height: 33px;
+  -webkit-filter: var(--main-filter);
+  filter: var(--main-filter);
 }
 
 /* */
@@ -207,36 +215,36 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
 /*empty space padding*/
 
-#page > #e1r1 {
+#homePage > #e1r1 {
   grid-area: e1r1;
   }
-  #page > #e2r1 {
+  #homePage > #e2r1 {
   grid-area: e2r1;
   }
   
-  #page > #e3r1 {
+  #homePage > #e3r1 {
   grid-area: e3r1;
   }
   
-  #page > #e4r1 {
+  #homePage > #e4r1 {
   grid-area: e4r1;
   }
   
   /**/
   
-  #page > #e1r2 {
+  #homePage > #e1r2 {
   grid-area: e1r2;
   }
   
-  #page > #e2r2 {
+  #homePage > #e2r2 {
   grid-area: e2r2;
   }
   
-  #page > #e3r2 {
+  #homePage > #e3r2 {
   grid-area: e3r2;
   }
   
-  #page > #e4r2 {
+  #homePage > #e4r2 {
   grid-area: e4r2;
   }
   
@@ -246,24 +254,25 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   
   /* header */
   
-  #page > #c1r1 {
+  #homePage > #c1r1 {
     grid-area: c1r1;
   }
   
-  #page > #c2r1 {
+  #homePage > #c2r1 {
     grid-area: c2r1;
   }
   
-  #page > #c3r1 {
+  #homePage > #c3r1 {
     grid-area: c3r1;
   }
   
-  #page > #c4r1 {
+  #homePage > #c4r1 {
     grid-area: c4r1;
   }
   
-  #page > #c5r1 {
+  #homePage > #c5r1 {
     grid-area: c5r1;
+    border-bottom: 2px solid;
   }
   
   #c1r1, #c2r1, #c3r1, #c4r1, #c5r1 {
@@ -272,33 +281,38 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
 /* content/middle */
 
-#page > #c1r2 {
+#homePage > #c1r2 {
   grid-area: c1r2;
   border-radius: 30px 30px 0 0; /* border radius til content */
+  border-top: 2px solid;
+  border-left: 2px solid;
+  border-right: 2px solid;
 }
 
-#page > #c2r2 {
+#homePage > #c2r2 {
   grid-area: c2r2;
+  border-left: 2px solid;
 }
 
-#page > #c3r2 {
+#homePage > #c3r2 {
   grid-area: c3r2;
 }
 
-#page > #c4r2 {
+#homePage > #c4r2 {
   grid-area: c4r2;
 }
 
-#page > #c5r2 {
+#homePage > #c5r2 {
   grid-area: c5r2;
 }
 
-#page > #c6r2 {
+#homePage > #c6r2 {
   grid-area: c6r2;
 }
 
-#page > #c7r2 {
+#homePage > #c7r2 {
   grid-area: c7r2;
+  border-radius: 0 0 30px 30px; /* border radius til content */
 }
 
 
@@ -308,19 +322,20 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
 /* footer */
 
-#page > #c1r3 {
+#homePage > #c1r3 {
   grid-area: c1r3;
+  border-top: 2px solid;
   }
   
-  #page > #c2r3 {
+  #homePage > #c2r3 {
     grid-area: c2r3;
   }
 
-  #page > #c3r3 {
+  #homePage > #c3r3 {
     grid-area: c3r3;
   }
 
-  #page > #c4r3 {
+  #homePage > #c4r3 {
     grid-area: c4r3;
   }
   
