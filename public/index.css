@@ -100,9 +100,9 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
 #homePage > #boardG {
   grid-area: boardG;
-  background-color: var(--main-themeColor);
+  background-color: white;/*var(--main-themeColor);*/
   overflow-y: scroll;
-  border: var(--global-border);
+  /*border: var(--global-border);*/
   min-height: 50px;
 }
 
