@@ -60,7 +60,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
                        "c3r3 c3r3 c3r3 c3r3 c3r3 c3r3 c3r3";
                        
-    grid-template-rows: 5px 5px 60px 5px 3.5% 5px 5% 5% 5% 5% 7.5% 1fr 5% 25px 5% 5px 3.5% 5px 50px 5px; /*nedover*/
+    grid-template-rows: 5px 5px 60px 5px 3.5% 5px 5% 5% 5% 5% 7.5% 1fr 5% 25px 5% 5px 3.5% 5px 60px 5px; /*nedover*/
     grid-template-columns: 5px 4% 60px 1fr 60px 4% 5px; /*bortover*/
 }
 
@@ -210,8 +210,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 }
 
 #footerIconHome, #footerIconLeaderboards, #footerIconUsers {
-  min-height: 16.5px;
-  max-height: 33px;
+  min-height: 33px;
   margin-top: 7.5px;
   -webkit-filter: var(--main-filter);
   filter: var(--main-filter);
