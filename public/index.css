@@ -83,7 +83,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   border-left: var(--global-border);
   border-right: var(--global-border);
   border-top: var(--global-border);
-  border-radius: 20px 20px 0 0;
+  border-radius: var(--global-borderRadiusForContentTop);
 }
 
 #homePage > #usermsg2G {
@@ -121,7 +121,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   border-left: var(--global-border);
   border-right: var(--global-border);
   border-bottom: var(--global-border);
-  border-radius: 0 0 20px 20px;
+  border-radius: var(--global-borderRadiusForContentBottom);
 }
 
 #homePage > #footermenuG {

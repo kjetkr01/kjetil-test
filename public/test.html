@@ -41,8 +41,10 @@
 
       <button onClick="location.href = 'index.html'">index</button>
       <button onClick="location.href = 'test-design.html'">test design</button>
+      <br><br><br>
       <button onClick="localStorage.setItem('test', 123)">localstorage set</button>
       <button onClick="sessionStorage.setItem('test', 123)">sessionStorage set</button>
+      <br><br><br>
       <button onClick="sessionStorage.clear()">clear localstorage</button>
       <button onClick="localStorage.clear()">clear sessionstorage</button>
 
@@ -73,11 +75,11 @@
 
    <br>
    <br>
-   local:
+   localstorage:
    ${localStorage.getItem("test")}
 
    <br>
-   session:
+   sessionstorage:
    ${sessionStorage.getItem("test")}
    `;
    document.getElementById("info").innerHTML = html;
