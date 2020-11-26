@@ -41,6 +41,10 @@
 
       <button onClick="location.href = 'index.html'">index</button>
       <button onClick="location.href = 'test-design.html'">test design</button>
+      <button onClick="localStorage.setItem('test', 123)">localstorage set</button>
+      <button onClick="sessionStorage.setItem('test', 123)">sessionStorage set</button>
+      <button onClick="sessionStorage.clear()">clear localstorage</button>
+      <button onClick="localStorage.clear()">clear sessionstorage</button>
 
       <!--Bare noe tekst for å vise at scrollbar funksjonen fungerer-->
    </div>
@@ -66,6 +70,15 @@
 
    window.navigator.standalone:
    ${window.navigator.standalone}
+
+   <br>
+   <br>
+   local:
+   ${localStorage.getItem("test")}
+
+   <br>
+   session:
+   ${sessionStorage.getItem("test")}
    `;
    document.getElementById("info").innerHTML = html;
 

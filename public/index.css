@@ -82,6 +82,8 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   background-color: var(--main-background-color);
   border-left: var(--global-border);
   border-right: var(--global-border);
+  border-top: var(--global-border);
+  border-radius: 20px 20px 0 0;
 }
 
 #homePage > #usermsg2G {
@@ -100,7 +102,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
 #homePage > #boardG {
   grid-area: boardG;
-  background-color: white;/*var(--main-themeColor);*/
+  background-color: var(--main-background-color);
   overflow-y: scroll;
   /*border: var(--global-border);*/
   min-height: 50px;
@@ -118,6 +120,8 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   background-color: var(--main-background-color);
   border-left: var(--global-border);
   border-right: var(--global-border);
+  border-bottom: var(--global-border);
+  border-radius: 0 0 20px 20px;
 }
 
 #homePage > #footermenuG {
@@ -195,6 +199,12 @@ tr.separated td {
 
 table {
   border-collapse: collapse;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  background-color: var(--main-background-color);
 }
 
 /* hmm */
@@ -308,11 +318,11 @@ table {
 /* content/middle */
 
 #homePage > #c1r2 {
-  grid-area: c1r2;
+  /*grid-area: c1r2;
   border-radius: 30px 30px 0 0; /* border radius til content */
-  border-top: var(--global-border);
+  /*border-top: var(--global-border);
   border-left: var(--global-border);
-  border-right: var(--global-border);
+  border-right: var(--global-border);*/
 }
 
 #homePage > #c2r2 {
@@ -344,11 +354,11 @@ table {
 }
 
 #homePage > #c7r2 {
-  grid-area: c7r2;
+  /*grid-area: c7r2;
   border-radius: 0 0 30px 30px; /* border radius til content */
-  border-left: var(--global-border);
+  /*border-left: var(--global-border);
   border-bottom: var(--global-border);
-  border-right: var(--global-border);
+  border-right: var(--global-border);*/
 }
 
 
