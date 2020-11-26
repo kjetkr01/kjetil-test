@@ -1,0 +1,31 @@
+:root {
+
+    /* light mode */
+
+    --global-lightMode-themeColor: lightgray;
+    --global-lightMode-avatarColor: white;
+    --global-lightMode-background-color: white;
+    --global-lightMode-textColor: black;
+    --global-lightMode-filter: invert(0);
+
+    /* dark mode */
+
+    --global-darkMode-themeColor: rgb(15, 15, 15);
+    --global-darkMode-avatarColor:rgb(22, 21, 21);
+    --global-darkMode-background-color: rgb(22, 21, 21);
+    --global-darkMode-textColor: white;
+    --global-darkMode-filter: invert(1);
+
+    /* * vars */
+
+    --global-margin: 0;
+    --global-padding: 0;
+    --global-font-family: sans-serif;
+    --global-font-size: 18px;
+
+    /* content vars */
+
+    --global-border: 1px solid;
+    --global-border-avatar: 2px solid;
+    --global-margin-left: 15px;
+}

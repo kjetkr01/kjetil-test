@@ -1,24 +1,24 @@
 .lightMode {
-  --main-themeColor: lightgray;
-  --main-avatarColor: white;
-  --main-background-color: white;
-  --main-textColor: black;
-  --main-filter: invert(0);
+  --main-themeColor: var(--global-lightMode-themeColor);
+  --main-avatarColor: var(--global-lightMode-avatarColor);
+  --main-background-color: var(--global-lightMode-background-color);
+  --main-textColor: var(--global-lightMode-textColor);
+  --main-filter: var(--global-lightMode-filter);
 }
 
 .darkMode {
-  --main-themeColor: rgb(15, 15, 15);
-  --main-avatarColor:rgb(22, 21, 21);
-  --main-background-color: rgb(22, 21, 21);
-  --main-textColor: white;
-  --main-filter: invert(1);
+  --main-themeColor: var(--global-darkMode-themeColor);
+  --main-avatarColor: var(--global-darkMode-avatarColor);
+  --main-background-color: var(--global-darkMode-background-color);
+  --main-textColor: var(--global-darkMode-textColor);
+  --main-filter: var(--global-darkMode-filter);
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  font-size: 18px;
+  margin: var(--global-margin);
+  padding: var(--global-padding);
+  font-family: var(--global-font-family);
+  font-size: var(--global-font-size);
   color: var(--main-textColor);
 }
 
@@ -61,7 +61,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
                        "c3r3 c3r3 c3r3 c3r3 c3r3 c3r3 c3r3";
                        
     grid-template-rows: 5px 5px 60px 5px 3.5% 5px 5% 5% 5% 5% 7.5% 1fr 5% 25px 5% 5px 3.5% 5px 60px 5px; /*nedover*/
-    grid-template-columns: 5px 4% 60px 1fr 60px 4% 5px; /*bortover*/
+    grid-template-columns: 5px 4% 20px 1fr 20px 4% 5px; /*bortover*/
 }
 
 /* grid for elements */
@@ -80,44 +80,44 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 #homePage > #usermsg1G {
   grid-area: usermsg1G;
   background-color: var(--main-background-color);
-  border-left: 2px solid;
-  border-right: 2px solid;
+  border-left: var(--global-border);
+  border-right: var(--global-border);
 }
 
 #homePage > #usermsg2G {
   grid-area: usermsg2G;
   background-color: var(--main-background-color);
-  border-left: 2px solid;
-  border-right: 2px solid;
+  border-left: var(--global-border);
+  border-right: var(--global-border);
 }
 
 #homePage > #usermsg3G {
   grid-area: usermsg3G;
   background-color: var(--main-background-color);
-  border-left: 2px solid;
-  border-right: 2px solid;
+  border-left: var(--global-border);
+  border-right: var(--global-border);
 }
 
 #homePage > #boardG {
   grid-area: boardG;
   background-color: var(--main-themeColor);
   overflow-y: scroll;
-  border: 2px solid;
+  border: var(--global-border);
   min-height: 50px;
 }
 
 #homePage > #gymtimeG {
   grid-area: gymtimeG;
   background-color: var(--main-background-color);
-  border-left: 2px solid;
-  border-right: 2px solid;
+  border-left: var(--global-border);
+  border-right: var(--global-border);
 }
 
 #homePage > #gymtimesmallG {
   grid-area: gymtimesmallG;
   background-color: var(--main-background-color);
-  border-left: 2px solid;
-  border-right: 2px solid;
+  border-left: var(--global-border);
+  border-right: var(--global-border);
 }
 
 #homePage > #footermenuG {
@@ -147,7 +147,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
   background-color: var(--main-avatarColor);
   border-radius: 50px;
-  border: 2px solid;
+  border: var(--global-border-avatar);
   width: 47.5px;
   font-size: 40px;
   right: 15px; /* evt bruke dette til å flytte avatar ikonet */
@@ -162,14 +162,14 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   position: absolute;
   font-size: 22px;
   margin: 10px;
-  margin-left: 15px;
+  margin-left: var(--global-margin-left);
 }
 
 #usermsg2G > #usermsg2 {
   position: absolute;
   font-size: 18px;
   margin: 10px;
-  margin-left: 15px;
+  margin-left: var(--global-margin-left);
 }
 
 #usermsg3G > #usermsg3 {
@@ -283,7 +283,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   
   #homePage > #c5r1 {
     grid-area: c5r1;
-    border-bottom: 2px solid;
+    border-bottom: var(--global-border);
   }
   
   #c1r1, #c2r1, #c3r1, #c4r1, #c5r1 {
@@ -295,45 +295,45 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 #homePage > #c1r2 {
   grid-area: c1r2;
   border-radius: 30px 30px 0 0; /* border radius til content */
-  border-top: 2px solid;
-  border-left: 2px solid;
-  border-right: 2px solid;
+  border-top: var(--global-border);
+  border-left: var(--global-border);
+  border-right: var(--global-border);
 }
 
 #homePage > #c2r2 {
   grid-area: c2r2;
-  border-left: 2px solid;
-  border-right: 2px solid;
+  border-left: var(--global-border);
+  border-right: var(--global-border);
 }
 
 #homePage > #c3r2 {
   grid-area: c3r2;
-  border-left: 2px solid;
-  border-right: 2px solid;
+  border-left: var(--global-border);
+  border-right: var(--global-border);
 }
 
 #homePage > #c4r2 {
   grid-area: c4r2;
-  border-left: 2px solid;
+  border-left: var(--global-border);
 }
 
 #homePage > #c5r2 {
   grid-area: c5r2;
-  border-right: 2px solid;
+  border-right: var(--global-border);
 }
 
 #homePage > #c6r2 {
   grid-area: c6r2;
-  border-left: 2px solid;
-  border-right: 2px solid;
+  border-left: var(--global-border);
+  border-right: var(--global-border);
 }
 
 #homePage > #c7r2 {
   grid-area: c7r2;
   border-radius: 0 0 30px 30px; /* border radius til content */
-  border-left: 2px solid;
-  border-bottom: 2px solid;
-  border-right: 2px solid;
+  border-left: var(--global-border);
+  border-bottom: var(--global-border);
+  border-right: var(--global-border);
 }
 
 
@@ -345,7 +345,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
 #homePage > #c1r3 {
   grid-area: c1r3;
-  border-top: 2px solid;
+  border-top: var(--global-border);
   }
   
   #homePage > #c2r3 {
