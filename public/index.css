@@ -23,6 +23,7 @@
   body {
   --main-themeColor: var(--global-lightMode-themeColor);
   --main-avatarColor: var(--global-lightMode-avatarColor);
+  --main-avatarBox-shadow: var(--global-lightMode-avatarBox-shadow);
   --main-background-color: var(--global-lightMode-background-color);
   --main-textColor: var(--global-lightMode-textColor);
   --main-text-shadow: var(--global-lightMode-text-shadow);
@@ -38,6 +39,7 @@
   body {
   --main-themeColor: var(--global-darkMode-themeColor);
   --main-avatarColor: var(--global-darkMode-avatarColor);
+  --main-avatarBox-shadow: var(--global-darkMode-avatarBox-shadow);
   --main-background-color: var(--global-darkMode-background-color);
   --main-textColor: var(--global-darkMode-textColor);
   --main-text-shadow: var(--global-darkMode-text-shadow);
@@ -191,6 +193,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   width: 47.5px;
   font-size: 40px;
   right: 15px; /* evt bruke dette til å flytte avatar ikonet */
+  box-shadow: var(--main-avatarBox-shadow);
 }
 
 /* */

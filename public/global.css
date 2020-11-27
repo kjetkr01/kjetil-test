@@ -4,6 +4,7 @@
 
     --global-lightMode-themeColor: lightgray;
     --global-lightMode-avatarColor: white;
+    --global-lightMode-avatarBox-shadow: 5px 5px white;
     --global-lightMode-background-color: white;
     --global-lightMode-textColor: black;
     --global-lightMode-text-shadow: gray;
@@ -15,6 +16,7 @@
 
     --global-darkMode-themeColor: rgb(31, 30, 30);
     --global-darkMode-avatarColor:rgb(58, 56, 56);
+    --global-darkMode-avatarBox-shadow: 5px 5px black;
     --global-darkMode-background-color: rgb(46, 45, 45);
     --global-darkMode-textColor: white;
     --global-darkMode-text-shadow: 1px 1px black;
