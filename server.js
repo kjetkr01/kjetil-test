@@ -10,7 +10,7 @@ server.use(bodyParser.json());
 
 server.get("/test", function (req, res){
 
-     res.redirect("/test.html");
+     res.redirect("/index.html");
 
 });
 
