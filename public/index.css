@@ -74,17 +74,15 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
                        
                        "e2r1 e1r2 e1r2 e1r2 e1r2 e1r2 e4r1"
 
-                       "e2r1 e2r2 c1r2 c1r2 c1r2 e4r2 e4r1"
                        "e2r1 e2r2 usermsg1G usermsg1G usermsg1G e4r2 e4r1"
-                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
+                       "e2r1 e2r2 c1r2 c1r2 c1r2 e4r2 e4r1"
                        "e2r1 e2r2 usermsg2G usermsg2G usermsg2G e4r2 e4r1"
-                       "e2r1 e2r2 c3r2 c3r2 c3r2 e4r2 e4r1"
+                       "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
                        "e2r1 e2r2 usermsg3G usermsg3G usermsg3G e4r2 e4r1"
-                       "e2r1 e2r2 c4r2 boardG c5r2 e4r2 e4r1"
-                       "e2r1 e2r2 c6r2 c6r2 c6r2 e4r2 e4r1"
+                       "e2r1 e2r2 c3r2 boardG c4r2 e4r2 e4r1"
+                       "e2r1 e2r2 c5r2 c5r2 c5r2 e4r2 e4r1"
                        "e2r1 e2r2 gymtimeG gymtimeG gymtimeG e4r2 e4r1"
                        "e2r1 e2r2 gymtimesmallG gymtimesmallG gymtimesmallG e4r2 e4r1"
-                       "e2r1 e2r2 c7r2 c7r2 c7r2 e4r2 e4r1"
 
                        "e2r1 e3r2 e3r2 e3r2 e3r2 e3r2 e4r1"
 
@@ -93,7 +91,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
                        "c3r3 c3r3 c3r3 c3r3 c3r3 c3r3 c3r3";
                        
-    grid-template-rows: 5px 5px 60px 5px 3.5% 5px 5% 5% 5% 5% 7.5% 1fr 5% 25px 7.5% 5px 3.5% 5px 60px 5px; /*nedover*/
+    grid-template-rows: 5px 5px 60px 5px 3.5% 5% 5% 5% 5% 7.5% 1fr 5% 25px 7.5% 3.5% 5px 60px 5px; /*nedover*/
     grid-template-columns: 5px 4% 20px 1fr 20px 4% 5px; /*bortover*/
 }
 
@@ -272,6 +270,7 @@ th {
   margin-top: 7.5px;
   -webkit-filter: var(--main-filter);
   filter: var(--main-filter);
+  image-rendering: auto;
 }
 
 /* */
@@ -351,51 +350,36 @@ th {
 /* content/middle */
 
 #homePage > #c1r2 {
-  /*grid-area: c1r2;
-  border-radius: 30px 30px 0 0; /* border radius til content */
-  /*border-top: var(--global-border);
-  border-left: var(--global-border);
-  border-right: var(--global-border);*/
+  grid-area: c1r2;
+  border-left: var(--main-border);
+  border-right: var(--main-border);
 }
 
 #homePage > #c2r2 {
   grid-area: c2r2;
   border-left: var(--main-border);
   border-right: var(--main-border);
+  
 }
 
 #homePage > #c3r2 {
   grid-area: c3r2;
   border-left: var(--main-border);
-  border-right: var(--main-border);
 }
 
 #homePage > #c4r2 {
   grid-area: c4r2;
-  border-left: var(--main-border);
+  border-right: var(--main-border);
 }
 
 #homePage > #c5r2 {
   grid-area: c5r2;
-  border-right: var(--main-border);
-}
-
-#homePage > #c6r2 {
-  grid-area: c6r2;
   border-left: var(--main-border);
   border-right: var(--main-border);
 }
 
-#homePage > #c7r2 {
-  /*grid-area: c7r2;
-  border-radius: 0 0 30px 30px; /* border radius til content */
-  /*border-left: var(--global-border);
-  border-bottom: var(--global-border);
-  border-right: var(--global-border);*/
-}
 
-
-#c1r2, #c2r2, #c3r2, #c4r2, #c5r2, #c6r2, #c7r2 {
+#c1r2, #c2r2, #c3r2, #c4r2, #c5r2 {
   background-color: var(--main-background-color);
 }
 
