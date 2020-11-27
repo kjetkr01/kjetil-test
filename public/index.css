@@ -91,7 +91,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
                        "c3r3 c3r3 c3r3 c3r3 c3r3 c3r3 c3r3";
                        
-    grid-template-rows: 5px 5px 55px 5px 3.5% 5% 5% 5% 5% 7.5% 1fr 5% 25px 7.5% 3.5% 5px 55px 5px; /*nedover*/
+    grid-template-rows: 5px 5px 55px 5px 5% 5% 5% 5% 5% 7.5% 1fr 5% 25px 7.5% 5% 5px 55px 5px; /*nedover*/
     grid-template-columns: 5px 4% 20px 1fr 20px 4% 5px; /*bortover*/
 }
 
@@ -115,7 +115,6 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   border-right: var(--main-border);
   border-top: var(--main-border);
   border-radius: var(--global-borderRadiusForContentTop);
-  
   padding: 7.5px;
 }
 
