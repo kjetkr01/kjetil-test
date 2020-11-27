@@ -7,14 +7,19 @@
     --global-lightMode-background-color: white;
     --global-lightMode-textColor: black;
     --global-lightMode-filter: invert(0);
+    --global-lightMode-border: 1px solid black;
+    --global-lightMode-border-avatar: 2px solid black;
 
     /* dark mode */
 
-    --global-darkMode-themeColor: rgb(15, 15, 15);
-    --global-darkMode-avatarColor:rgb(22, 21, 21);
-    --global-darkMode-background-color: rgb(22, 21, 21);
+    --global-darkMode-themeColor: rgb(31, 30, 30);
+    --global-darkMode-avatarColor:rgb(58, 56, 56);
+    --global-darkMode-background-color: rgb(46, 45, 45);
     --global-darkMode-textColor: white;
     --global-darkMode-filter: invert(1);
+    --global-darkMode-border: 1px solid gray;
+    --global-darkMode-border-avatar: 2px solid gray;
+    --global-darkMode-brightness: brightness(80%);
 
     /* * vars */
 
@@ -25,8 +30,8 @@
 
     /* content vars */
 
-    --global-border: 1px solid;
-    --global-border-avatar: 2px solid;
+    /*--global-border: 1px solid;
+    --global-border-avatar: 2px solid;*/
     --global-margin-left: 15px;
     --global-borderRadiusForContentTop: 20px 20px 0 0;
     --global-borderRadiusForContentBottom: 0 0 20px 20px;

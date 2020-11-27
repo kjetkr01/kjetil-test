@@ -26,6 +26,8 @@
   --main-background-color: var(--global-lightMode-background-color);
   --main-textColor: var(--global-lightMode-textColor);
   --main-filter: var(--global-lightMode-filter);
+  --main-border: var(--global-lightMode-border);
+  --main-border-avatar: var(--global-lightMode-border-avatar);
   }
   
 }
@@ -38,6 +40,9 @@
   --main-background-color: var(--global-darkMode-background-color);
   --main-textColor: var(--global-darkMode-textColor);
   --main-filter: var(--global-darkMode-filter);
+  --main-border: var(--global-darkMode-border);
+  --main-border-avatar: var(--global-darkMode-border-avatar);
+  filter: var(--global-darkMode-brightness);
   }
   
 }
@@ -108,24 +113,24 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 #homePage > #usermsg1G {
   grid-area: usermsg1G;
   background-color: var(--main-background-color);
-  border-left: var(--global-border);
-  border-right: var(--global-border);
-  border-top: var(--global-border);
+  border-left: var(--main-border);
+  border-right: var(--main-border);
+  border-top: var(--main-border);
   border-radius: var(--global-borderRadiusForContentTop);
 }
 
 #homePage > #usermsg2G {
   grid-area: usermsg2G;
   background-color: var(--main-background-color);
-  border-left: var(--global-border);
-  border-right: var(--global-border);
+  border-left: var(--main-border);
+  border-right: var(--main-border);
 }
 
 #homePage > #usermsg3G {
   grid-area: usermsg3G;
   background-color: var(--main-background-color);
-  border-left: var(--global-border);
-  border-right: var(--global-border);
+  border-left: var(--main-border);
+  border-right: var(--main-border);
 }
 
 #homePage > #boardG {
@@ -139,16 +144,16 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 #homePage > #gymtimeG {
   grid-area: gymtimeG;
   background-color: var(--main-background-color);
-  border-left: var(--global-border);
-  border-right: var(--global-border);
+  border-left: var(--main-border);
+  border-right: var(--main-border);
 }
 
 #homePage > #gymtimesmallG {
   grid-area: gymtimesmallG;
   background-color: var(--main-background-color);
-  border-left: var(--global-border);
-  border-right: var(--global-border);
-  border-bottom: var(--global-border);
+  border-left: var(--main-border);
+  border-right: var(--main-border);
+  border-bottom: var(--main-border);
   border-radius: var(--global-borderRadiusForContentBottom);
 }
 
@@ -179,7 +184,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
   background-color: var(--main-avatarColor);
   border-radius: 50px;
-  border: var(--global-border-avatar);
+  border: var(--main-border-avatar);
   width: 47.5px;
   font-size: 40px;
   right: 15px; /* evt bruke dette til å flytte avatar ikonet */
@@ -336,7 +341,7 @@ th {
   
   #homePage > #c5r1 {
     grid-area: c5r1;
-    border-bottom: var(--global-border);
+    border-bottom: var(--main-border);
   }
   
   #c1r1, #c2r1, #c3r1, #c4r1, #c5r1 {
@@ -355,30 +360,30 @@ th {
 
 #homePage > #c2r2 {
   grid-area: c2r2;
-  border-left: var(--global-border);
-  border-right: var(--global-border);
+  border-left: var(--main-border);
+  border-right: var(--main-border);
 }
 
 #homePage > #c3r2 {
   grid-area: c3r2;
-  border-left: var(--global-border);
-  border-right: var(--global-border);
+  border-left: var(--main-border);
+  border-right: var(--main-border);
 }
 
 #homePage > #c4r2 {
   grid-area: c4r2;
-  border-left: var(--global-border);
+  border-left: var(--main-border);
 }
 
 #homePage > #c5r2 {
   grid-area: c5r2;
-  border-right: var(--global-border);
+  border-right: var(--main-border);
 }
 
 #homePage > #c6r2 {
   grid-area: c6r2;
-  border-left: var(--global-border);
-  border-right: var(--global-border);
+  border-left: var(--main-border);
+  border-right: var(--main-border);
 }
 
 #homePage > #c7r2 {
@@ -398,7 +403,7 @@ th {
 
 #homePage > #c1r3 {
   grid-area: c1r3;
-  border-top: var(--global-border);
+  border-top: var(--main-border);
   }
   
   #homePage > #c2r3 {

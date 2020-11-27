@@ -27,7 +27,7 @@
 
 <body>
 
-   <section id="homePage" class="">
+   <section id="homePage">
 
       <!-- spacing items-->
 
@@ -88,13 +88,13 @@
       <!-- content/middle -->
 
       <div id="usermsg1G">
-         <p id="usermsg1" onClick="changeMode()">
+         <p id="usermsg1">
             God morgen, Kjetil
          </p>
       </div>
 
       <div id="usermsg2G">
-         <p id="usermsg2" onClick="location.href='test.html'">
+         <p id="usermsg2">
             I dag (fredag) skal du trene bein og mage.
          </p>
       </div>
@@ -171,39 +171,42 @@
 
    // skifte fra light til dark mode
 
-   let lightMode = false;
-
-   function changeMode() {
-
-      if (!lightMode) {
-         const page = document.getElementById("homePage");
-         page.className = page.className.replace("lightMode", "darkMode");
-
-         //kun for nå, for switch
-         lightMode = true;
+   /*
+      let lightMode = false;
+   
+      function changeMode() {
+   
+         if (!lightMode) {
+            const page = document.getElementById("homePage");
+            page.className = page.className.replace("lightMode", "darkMode");
+   
+            //kun for nå, for switch
+            lightMode = true;
+         }
+         // eller ignore?
+         else {
+            const page = document.getElementById("homePage");
+            page.className = page.className.replace("darkMode", "lightMode");
+   
+            //kun for nå, for switch
+            lightMode = false;
+         }
+   
       }
-      // eller ignore?
-      else {
-         const page = document.getElementById("homePage");
-         page.className = page.className.replace("darkMode", "lightMode");
-
-         //kun for nå, for switch
-         lightMode = false;
-      }
-
-   }
+   
+      */
 
 
    //
 
    const names = ["Kjetil Kristiansen", "Kristian Tellefsen", "Christian Jenssen", "Christoffer Simonsen"
 
-   , "firstname lastname", "firstname lastname", "firstname lastname", "firstname lastname", "firstname lastname"
+      , "firstname lastname", "firstname lastname", "firstname lastname", "firstname lastname", "firstname lastname"
    ];
 
    const workout = ["Bryst og triceps", "Rygg og biceps", "Cardio", "Biceps"
 
-   , "workout 1 workout 2", "workout", "workout", "workout", "workout"
+      , "workout 1 workout 2", "workout", "workout", "workout", "workout"
    ];
 
    let board = document.getElementById("board");
