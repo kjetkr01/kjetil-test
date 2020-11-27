@@ -120,9 +120,10 @@
 
   width: 70%;
   height: 90%;
-  border: 1px solid black;
+  border: var(--main-border);
+  box-shadow: var(--main-box-shadow);
   border-radius: 5px;
-  background-color: lightgray;
+  background-color: var(--main-themeColor);
 
 }
 
@@ -145,6 +146,12 @@
 #loginbtnG > #loginbtn {
     font-size: 24px;
     font-weight: bold;
+    width: 40%;
+    height: 60%;
+    border: var(--main-border);
+    box-shadow: var(--main-box-shadow);
+    border-radius: 5px;
+    background-color: var(--main-themeColor);
 }
 
 #noaccbtnG > #noaccbtn {
