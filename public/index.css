@@ -268,7 +268,7 @@ th {
 }
 
 #footerIconHome, #footerIconLeaderboards, #footerIconUsers {
-  max-height: 48px;
+  max-height: 24px;
   margin-top: 7.5px;
   -webkit-filter: var(--main-filter);
   filter: var(--main-filter);
