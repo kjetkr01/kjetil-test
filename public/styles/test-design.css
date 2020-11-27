@@ -92,7 +92,7 @@
   
                          "e3r1 e3r1 e3r1 e3r1 e3r1";
                          
-      grid-template-rows: 1fr 20% 2.5% 5% 2.5% 5% 2.5% 5% 2.5% 5% 1% 5% 7.5% 7.5% 1fr; /*nedover*/
+      grid-template-rows: 1fr 20% 2.5% 5% 2.5% 5% 2.5% 5% 2.5% 5% 1% 5% 45px 7.5% 1fr; /*nedover*/
       grid-template-columns: 25px 1fr 1fr 1fr 25px; /*bortover*/
   }
 
