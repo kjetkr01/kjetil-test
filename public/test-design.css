@@ -23,8 +23,11 @@
     body {
     --main-themeColor: var(--global-lightMode-themeColor);
     --main-avatarColor: var(--global-lightMode-avatarColor);
+    --main-avatarBox-shadow: var(--global-lightMode-avatarBox-shadow);
+    --main-box-shadow: var(--global-lightMode-box-shadow);
     --main-background-color: var(--global-lightMode-background-color);
     --main-textColor: var(--global-lightMode-textColor);
+    --main-text-shadow: var(--global-lightMode-text-shadow);
     --main-filter: var(--global-lightMode-filter);
     --main-border: var(--global-lightMode-border);
     --main-border-avatar: var(--global-lightMode-border-avatar);
@@ -37,8 +40,11 @@
     body {
     --main-themeColor: var(--global-darkMode-themeColor);
     --main-avatarColor: var(--global-darkMode-avatarColor);
+    --main-avatarBox-shadow: var(--global-darkMode-avatarBox-shadow);
+    --main-box-shadow: var(--global-darkMode-box-shadow);
     --main-background-color: var(--global-darkMode-background-color);
     --main-textColor: var(--global-darkMode-textColor);
+    --main-text-shadow: var(--global-darkMode-text-shadow);
     --main-filter: var(--global-darkMode-filter);
     --main-border: var(--global-darkMode-border);
     --main-border-avatar: var(--global-darkMode-border-avatar);
@@ -89,7 +95,7 @@
 /* elements */
 
 #logoG > #logo {
-
+    margin-top: 5%;
 }
 
 #inp1G > #inp1 {
@@ -129,7 +135,6 @@
     background-color: var(--main-background-color);
     border-left: var(--main-border);
     border-right: var(--main-border);
-    border-top: var(--main-border);
 }
 
 #loginPage > #inp2G {
@@ -167,16 +172,22 @@
 #loginPage > #c2r2 {
     grid-area: c2r2;
     background-color: lightblue;
+    border-left: var(--main-border);
+    border-right: var(--main-border);
 }
 
 #loginPage > #c3r2 {
     grid-area: c3r2;
     background-color: lightblue;
+    border-left: var(--main-border);
+    border-right: var(--main-border);
 }
 
 #loginPage > #c4r2 {
     grid-area: c4r2;
     background-color: lightblue;
+    border-left: var(--main-border);
+    border-right: var(--main-border);
 }
 
 
