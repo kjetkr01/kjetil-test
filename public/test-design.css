@@ -160,6 +160,7 @@
     border-right: var(--main-border);
     border-top: var(--main-border);
     border-radius: var(--global-borderRadiusForContentTop);
+    image-rendering: auto;
 }
 
 #loginPage > #inp1G {
