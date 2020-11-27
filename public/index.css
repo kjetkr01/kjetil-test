@@ -24,6 +24,7 @@
   --main-themeColor: var(--global-lightMode-themeColor);
   --main-avatarColor: var(--global-lightMode-avatarColor);
   --main-avatarBox-shadow: var(--global-lightMode-avatarBox-shadow);
+  --main-box-shadow: var(--global-lightMode-box-shadow);
   --main-background-color: var(--global-lightMode-background-color);
   --main-textColor: var(--global-lightMode-textColor);
   --main-text-shadow: var(--global-lightMode-text-shadow);
@@ -40,6 +41,7 @@
   --main-themeColor: var(--global-darkMode-themeColor);
   --main-avatarColor: var(--global-darkMode-avatarColor);
   --main-avatarBox-shadow: var(--global-darkMode-avatarBox-shadow);
+  --main-box-shadow: var(--global-darkMode-box-shadow);
   --main-background-color: var(--global-darkMode-background-color);
   --main-textColor: var(--global-darkMode-textColor);
   --main-text-shadow: var(--global-darkMode-text-shadow);
@@ -279,6 +281,7 @@ th {
   -webkit-filter: var(--main-filter);
   filter: var(--main-filter);
   image-rendering: auto;
+  /*box-shadow: var(--main-box-shadow);*/
 }
 
 /* */
