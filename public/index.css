@@ -115,6 +115,8 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   border-right: var(--main-border);
   border-top: var(--main-border);
   border-radius: var(--global-borderRadiusForContentTop);
+  
+  padding: 7.5px;
 }
 
 #homePage > #usermsg2G {
@@ -122,6 +124,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   background-color: var(--main-background-color);
   border-left: var(--main-border);
   border-right: var(--main-border);
+  padding: 7.5px;
 }
 
 #homePage > #usermsg3G {
