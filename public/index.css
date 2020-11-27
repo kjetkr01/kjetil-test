@@ -212,7 +212,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 
 #usermsg2G > #usermsg2 {
   position: absolute;
-  font-size: 18px;
+  font-size: 16px;
   margin: 10px;
   margin-left: var(--global-margin-left);
 }
