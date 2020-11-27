@@ -1,5 +1,5 @@
 {
-  "name": "heltNyTest",
+  "name": "kjeti-test",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -20,5 +20,6 @@
   "bugs": {
     "url": "https://github.com/kjetkr01/kjetil-test/issues"
   },
-  "homepage": "https://github.com/kjetkr01/kjetil-test#readme"
+  "homepage": "https://github.com/kjetkr01/kjetil-test#readme",
+  "devDependencies": {}
 }
