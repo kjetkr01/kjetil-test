@@ -53,6 +53,8 @@
   font-family: var(--global-font-family);
   font-size: var(--global-font-size);
   color: var(--main-textColor);
+  
+  text-shadow: 2px 2px black;
 }
 
 /*template:
