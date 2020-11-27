@@ -4,8 +4,8 @@
 
     --global-lightMode-themeColor: lightgray;
     --global-lightMode-avatarColor: white;
-    --global-lightMode-avatarBox-shadow: 2.5px 2.5px gray;
-    --global-lightMode-box-shadow: 5px 5px black;
+    --global-lightMode-avatarBox-shadow: 5px 5px rgb(0, 0, 0, 0.5);
+    --global-lightMode-box-shadow: 5px 5px rgb(0, 0, 0, 0.5);
     --global-lightMode-background-color: white;
     --global-lightMode-textColor: black;
     --global-lightMode-text-shadow: 1px 1px gray;
@@ -17,8 +17,8 @@
 
     --global-darkMode-themeColor: rgb(31, 30, 30);
     --global-darkMode-avatarColor:rgb(58, 56, 56);
-    --global-darkMode-avatarBox-shadow: 2.5px 2.5px black;
-    --global-darkMode-box-shadow: 5px 5px black;
+    --global-darkMode-avatarBox-shadow: 5px 5px rgb(0, 0, 0, 0.5);
+    --global-darkMode-box-shadow: 5px 5px rgb(0, 0, 0, 0.5);
     --global-darkMode-background-color: rgb(46, 45, 45);
     --global-darkMode-textColor: white;
     --global-darkMode-text-shadow: 1px 1px black;
