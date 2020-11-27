@@ -6,7 +6,7 @@
     --global-lightMode-avatarColor: white;
     --global-lightMode-background-color: white;
     --global-lightMode-textColor: black;
-    --global-lightMode-filter: invert(0);
+    /*--global-lightMode-filter: invert(0);*/
 
     /* dark mode */
 

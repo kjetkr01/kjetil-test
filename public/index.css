@@ -1,12 +1,12 @@
-.lightMode {
-  /*
+/*.lightMode {
+  
   --main-themeColor: var(--global-lightMode-themeColor);
   --main-avatarColor: var(--global-lightMode-avatarColor);
   --main-background-color: var(--global-lightMode-background-color);
   --main-textColor: var(--global-lightMode-textColor);
   --main-filter: var(--global-lightMode-filter);
-  */
-}
+  
+}*/
 
 /*
 .darkMode {
@@ -26,7 +26,6 @@
   --main-background-color: var(--global-lightMode-background-color);
   --main-textColor: var(--global-lightMode-textColor);
   --main-filter: var(--global-lightMode-filter);
-
   }
   
 }
@@ -39,7 +38,6 @@
   --main-background-color: var(--global-darkMode-background-color);
   --main-textColor: var(--global-darkMode-textColor);
   --main-filter: var(--global-darkMode-filter);
-
   }
   
 }
@@ -59,7 +57,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 #homePage {
   background-image: url("images/background-smallBlur.png");
   background-size: cover;
-  background-color: var(--main-themeColor);
+  /*background-color: var(--main-themeColor);*/
   display: grid;
   width: 100vw;
   height: 100vh;
