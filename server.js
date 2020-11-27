@@ -7,13 +7,6 @@ server.set("port", port);
 server.use(express.static("public"));
 server.use(bodyParser.json());
 
-
-server.get("/test", function (req, res){
-
-     res.redirect("/index.html");
-
-});
-
 server.listen(server.get("port"), function () {
      console.log("server running", server.get("port"));
 });
