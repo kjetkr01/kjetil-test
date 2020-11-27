@@ -66,10 +66,10 @@
   https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   */
   
-  #loginPage {
+  #askForAccessPage {
     background-image: url("../images/background-smallBlur.png");
     background-size: cover;
-    background-color: var(--main-themeColor);
+    /*background-color: var(--main-themeColor);*/
     display: grid;
     width: 100vw;
     height: 100vh;
@@ -119,7 +119,7 @@
 */
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: black;
+    color: var(--main-textColor);
     opacity: 1; /* Firefox */
     text-align: center;
 }
@@ -144,7 +144,7 @@
 
 /* grid for elements */
 
-#loginPage > #logoG {
+#askForAccessPage > #logoG {
     grid-area: logoG;
     background-color: var(--main-background-color);
     border-left: var(--main-border);
@@ -153,35 +153,35 @@
     border-radius: var(--global-borderRadiusForContentTop);
 }
 
-#loginPage > #inp1G {
+#askForAccessPage > #inp1G {
     grid-area: inp1G;
     background-color: var(--main-background-color);
     border-left: var(--main-border);
     border-right: var(--main-border);
 }
 
-#loginPage > #inp2G {
+#askForAccessPage > #inp2G {
     grid-area: inp2G;
     background-color: var(--main-background-color);
     border-left: var(--main-border);
     border-right: var(--main-border);
 }
 
-#loginPage > #respmsgG {
+#askForAccessPage > #respmsgG {
     grid-area: respmsgG;
     background-color: var(--main-background-color);
     border-left: var(--main-border);
     border-right: var(--main-border);
 }
 
-#loginPage > #loginbtnG {
+#askForAccessPage > #loginbtnG {
     grid-area: loginbtnG;
     background-color: var(--main-background-color);
     border-left: var(--main-border);
     border-right: var(--main-border);
 }
 
-#loginPage > #noaccbtnG {
+#askForAccessPage > #noaccbtnG {
     grid-area: noaccbtnG;
     background-color: var(--main-background-color);
     border-left: var(--main-border);
@@ -192,21 +192,21 @@
 
 /* content */
 
-#loginPage > #c2r2 {
+#askForAccessPage > #c2r2 {
     grid-area: c2r2;
     background-color: var(--main-background-color);
     border-left: var(--main-border);
     border-right: var(--main-border);
 }
 
-#loginPage > #c3r2 {
+#askForAccessPage > #c3r2 {
     grid-area: c3r2;
     background-color: var(--main-background-color);
     border-left: var(--main-border);
     border-right: var(--main-border);
 }
 
-#loginPage > #c4r2 {
+#askForAccessPage > #c4r2 {
     grid-area: c4r2;
     background-color: var(--main-background-color);
     border-left: var(--main-border);
@@ -216,18 +216,18 @@
 
 /* empty space */
 
-#loginPage > #e1r1 {
+#askForAccessPage > #e1r1 {
     grid-area: e1r1;
 }
 
-#loginPage > #e2r1 {
+#askForAccessPage > #e2r1 {
     grid-area: e2r1;
 }
 
-#loginPage > #e3r1 {
+#askForAccessPage > #e3r1 {
     grid-area: e3r1;
 }
 
-#loginPage > #e4r1 {
+#askForAccessPage > #e4r1 {
     grid-area: e4r1;
 }
