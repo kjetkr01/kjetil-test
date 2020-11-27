@@ -121,7 +121,6 @@
   width: 70%;
   height: 90%;
   border: var(--main-border);
-  box-shadow: var(--main-box-shadow);
   border-radius: 5px;
   background-color: var(--main-themeColor);
 
@@ -146,10 +145,8 @@
 #loginbtnG > #loginbtn {
     font-size: 24px;
     font-weight: bold;
-    width: 40%;
-    height: 60%;
+    padding: 5px;
     border: var(--main-border);
-    box-shadow: var(--main-box-shadow);
     border-radius: 5px;
     background-color: var(--main-themeColor);
 }
