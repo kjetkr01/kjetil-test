@@ -26,74 +26,9 @@
 <link rel="stylesheet" href="styles/index.css">
 
 <body>
-      
+            
 
   
 </body>
-
-<script>
-
-   // kun til testing
-
-   // skifte fra light til dark mode
-
-   /*
-      let lightMode = false;
-   
-      function changeMode() {
-   
-         if (!lightMode) {
-            const page = document.getElementById("homePage");
-            page.className = page.className.replace("lightMode", "darkMode");
-   
-            //kun for nå, for switch
-            lightMode = true;
-         }
-         // eller ignore?
-         else {
-            const page = document.getElementById("homePage");
-            page.className = page.className.replace("darkMode", "lightMode");
-   
-            //kun for nå, for switch
-            lightMode = false;
-         }
-   
-      }
-   
-      */
-
-
-   //
-
-   const names = ["Kjetil Kristiansen", "Kristian Tellefsen", "Christian Jenssen", "Christoffer Simonsen"
-
-      , "firstname lastname", "firstname lastname", "firstname lastname", "firstname lastname", "firstname lastname"
-   ];
-
-   const workout = ["Bryst og triceps", "Rygg og biceps", "Cardio", "Biceps"
-
-      , "workout 1 workout 2", "workout", "workout", "workout", "workout"
-   ];
-
-   let board = document.getElementById("board");
-
-   board.innerHTML = `<tr>
-               <th>Navn</th>
-               <th>Trener</th>
-            </tr>`;
-
-   for (let i = 0; i < names.length; i++) {
-
-      board.innerHTML += `
-            <tr class='separated'>
-               <td>${names[i]}</td>
-               <td>${workout[i]}</td>
-            </tr>`;
-   }
-
-   //
-
-
-</script>
 
 </html>
