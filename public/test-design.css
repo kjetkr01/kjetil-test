@@ -137,16 +137,17 @@
     text-align: center;
 }
 
-#respmsgG > #respmsgG {
-    
+#respmsgG > #respmsg {
+    font-size: 18px;
 }
 
-#loginbtnG > #loginbtnG {
-    
+#loginbtnG > #loginbtn {
+    font-size: 24px;
+    font-weight: bold;
 }
 
-#noaccbtnG > #noaccbtnG {
-    
+#noaccbtnG > #noaccbtn {
+    font-size: 18px;
 }
 
 
@@ -202,21 +203,21 @@
 
 #loginPage > #c2r2 {
     grid-area: c2r2;
-    background-color: lightblue;
+    background-color: var(--main-background-color);
     border-left: var(--main-border);
     border-right: var(--main-border);
 }
 
 #loginPage > #c3r2 {
     grid-area: c3r2;
-    background-color: lightblue;
+    background-color: var(--main-background-color);
     border-left: var(--main-border);
     border-right: var(--main-border);
 }
 
 #loginPage > #c4r2 {
     grid-area: c4r2;
-    background-color: lightblue;
+    background-color: var(--main-background-color);
     border-left: var(--main-border);
     border-right: var(--main-border);
 }
