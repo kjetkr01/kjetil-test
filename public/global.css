@@ -19,7 +19,7 @@
     --global-darkMode-filter: invert(1);
     --global-darkMode-border: 1px solid gray;
     --global-darkMode-border-avatar: 2px solid gray;
-    --global-darkMode-brightness: brightness(80%);
+    --global-darkMode-brightness: none;/*brightness(80%);*/
 
     /* * vars */
 
