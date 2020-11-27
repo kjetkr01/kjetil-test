@@ -25,6 +25,7 @@
   --main-avatarColor: var(--global-lightMode-avatarColor);
   --main-background-color: var(--global-lightMode-background-color);
   --main-textColor: var(--global-lightMode-textColor);
+  --main-text-shadow: var(--global-lightMode-text-shadow);
   --main-filter: var(--global-lightMode-filter);
   --main-border: var(--global-lightMode-border);
   --main-border-avatar: var(--global-lightMode-border-avatar);
@@ -39,6 +40,7 @@
   --main-avatarColor: var(--global-darkMode-avatarColor);
   --main-background-color: var(--global-darkMode-background-color);
   --main-textColor: var(--global-darkMode-textColor);
+  --main-text-shadow: var(--global-darkMode-text-shadow);
   --main-filter: var(--global-darkMode-filter);
   --main-border: var(--global-darkMode-border);
   --main-border-avatar: var(--global-darkMode-border-avatar);
@@ -53,8 +55,7 @@
   font-family: var(--global-font-family);
   font-size: var(--global-font-size);
   color: var(--main-textColor);
-  
-  text-shadow: 2px 2px black;
+  text-shadow: var(--main-text-shadow);
 }
 
 /*template:

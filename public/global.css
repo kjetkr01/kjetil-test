@@ -6,6 +6,7 @@
     --global-lightMode-avatarColor: white;
     --global-lightMode-background-color: white;
     --global-lightMode-textColor: black;
+    --global-lightMode-text-shadow: gray;
     --global-lightMode-filter: invert(0);
     --global-lightMode-border: 1px solid black;
     --global-lightMode-border-avatar: 2px solid black;
@@ -16,6 +17,7 @@
     --global-darkMode-avatarColor:rgb(58, 56, 56);
     --global-darkMode-background-color: rgb(46, 45, 45);
     --global-darkMode-textColor: white;
+    --global-darkMode-text-shadow: 1px 1px black;
     --global-darkMode-filter: invert(1);
     --global-darkMode-border: 1px solid gray;
     --global-darkMode-border-avatar: 2px solid gray;
