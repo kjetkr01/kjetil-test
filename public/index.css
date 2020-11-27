@@ -162,6 +162,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
   border-right: var(--main-border);
   border-bottom: var(--main-border);
   border-radius: var(--global-borderRadiusForContentBottom);
+  box-shadow: var(--main-avatarBox-shadow);
 }
 
 #homePage > #footermenuG {
@@ -199,7 +200,6 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 }
 
 /* */
-
 
 /* content/middle */
 
