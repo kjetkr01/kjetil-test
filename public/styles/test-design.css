@@ -37,7 +37,6 @@
   
   @media (prefers-color-scheme: dark) {
     
-    /*
     body {
     --main-themeColor: var(--global-darkMode-themeColor);
     --main-avatarColor: var(--global-darkMode-avatarColor);
@@ -51,19 +50,6 @@
     --main-border-avatar: var(--global-darkMode-border-avatar);
     filter: var(--global-darkMode-brightness);
     }
-    */
-    body {
-        --main-themeColor: var(--global-lightMode-themeColor);
-        --main-avatarColor: var(--global-lightMode-avatarColor);
-        --main-avatarBox-shadow: var(--global-lightMode-avatarBox-shadow);
-        --main-box-shadow: var(--global-lightMode-box-shadow);
-        --main-background-color: var(--global-lightMode-background-color);
-        --main-textColor: var(--global-lightMode-textColor);
-        --main-text-shadow: var(--global-lightMode-text-shadow);
-        --main-filter: var(--global-lightMode-filter);
-        --main-border: var(--global-lightMode-border);
-        --main-border-avatar: var(--global-lightMode-border-avatar);
-        }
   
   }
   
@@ -81,9 +67,9 @@
   */
   
   #loginPage {
-    background-image: url("images/background-smallBlur.png");
+    background-image: url("../images/background-smallBlur.png");
     background-size: cover;
-    /*background-color: var(--main-themeColor);*/
+    background-color: var(--main-themeColor);
     display: grid;
     width: 100vw;
     height: 100vh;

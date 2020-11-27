@@ -67,7 +67,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 */
 
 #homePage {
-  background-image: url("images/background-smallBlur.png");
+  background-image: url("../images/background-smallBlur.png");
   background-size: cover;
   /*background-color: var(--main-themeColor);*/
   display: grid;
