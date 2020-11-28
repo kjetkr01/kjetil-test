@@ -74,7 +74,7 @@ function partOfDayMessage(firstName) {
 
     const hours = today.getHours();
 
-    if (hours > 0 && hours <= 5) {
+    if (hours >= 0 && hours <= 5) {
         partOfDay = "natt";
     }
     else if (hours > 5 && hours <= 10) {

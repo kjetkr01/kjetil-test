@@ -43,36 +43,28 @@
 
       <p id="info"></p>
 
-      <br>
-
+      Sider:
+      <br><br>
       <button onClick="location.href = 'login.html'">login</button>
       <button onClick="location.href = 'access.html'">access</button>
       <button onClick="location.href = 'index.html'">index</button>
-      <br><br>
-      <button onClick="location.href = 'test-design.html'">test design</button>
-      <br><br><br>
-      <button onClick="localStorage.setItem('test', 123)">localstorage set</button>
-      <button onClick="sessionStorage.setItem('test', 123)">sessionStorage set</button>
-      <br><br><br>
-      <button onClick="sessionStorage.clear()">clear localstorage</button>
-      <button onClick="localStorage.clear()">clear sessionstorage</button>
       <br><br><br>
       <button onClick="testFunc()">test function(s)</button>
       <p id="testmessage"></p>
 
-      <!--Bare noe tekst for å vise at scrollbar funksjonen fungerer-->
    </div>
 
 </body>
 
 <script>
 
-
    let test = validate("Kjetil Kristiansen", "kjetkr01", "123", "123");
+   let names = ["Kjetil", "Simonso", "Kristian", "Christian", "Trym"];
+   let randomNum = Math.floor(Math.random() * names.length);
 
    function testFunc() {
       let test1 = isGymOpen();
-      let test2 = partOfDayMessage("Kjetil");
+      let test2 = partOfDayMessage(names[randomNum]);
       document.getElementById("testmessage").innerHTML = `
       ${test1.message}
       <br>
@@ -81,7 +73,6 @@
       ${test2}
       `;
    }
-
 
    // til testing
 
@@ -97,20 +88,6 @@
    <br>
    H: ${window.screen.availHeight} px<br>
    W: ${window.screen.availWidth} px
-
-   <br><br>
-
-   window.navigator.standalone:
-   ${window.navigator.standalone}
-
-   <br>
-   <br>
-   localstorage:
-   ${localStorage.getItem("test")}
-
-   <br>
-   sessionstorage:
-   ${sessionStorage.getItem("test")}
    `;
    document.getElementById("info").innerHTML = html;
 
