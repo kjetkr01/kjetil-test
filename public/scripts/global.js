@@ -31,6 +31,8 @@ function isGymOpen() {
 
         if (hoursLeft < 1) {
             timeLeftString = `${minutesLeft} min`;
+        } else if (minutesLeft < 0) {
+            timeLeftString = `${hoursLeft} t`;
         } else {
             timeLeftString = `${hoursLeft} t og ${minutesLeft} min`;
         }
@@ -51,6 +53,8 @@ function isGymOpen() {
 
         if (hoursLeft < 1) {
             timeLeftString = `${minutesLeft} min`;
+        } else if (minutesLeft < 0) {
+            timeLeftString = `${hoursLeft} t`;
         } else {
             timeLeftString = `${hoursLeft} t og ${minutesLeft} min`;
         }
