@@ -67,9 +67,26 @@
 
 <script>
 
-   let test = validate("kjetil kristiansen", "kjetkr01", "123", "123");
 
-   console.log(test)
+   let test = validate("Kjetil Kristiansen", "kjetkr01", "123", "123");
+
+   function testFunc() {
+      let test1 = isGymOpen();
+      let test2 = partOfDayMessage("Kjetil");
+      document.getElementById("testmessage").innerHTML = `
+      ${test1.message}
+      <br>
+      ${test1.timeLeft}
+      <br>
+      ${test2}
+      `;
+   }
+
+
+
+
+
+   // til testing
 
    updateTime();
 
@@ -99,19 +116,6 @@
    ${sessionStorage.getItem("test")}
    `;
    document.getElementById("info").innerHTML = html;
-
-
-   function testFunc() {
-      let test1 = isGymOpen();
-      let test2 = partOfDayMessage("Kjetil");
-      document.getElementById("testmessage").innerHTML = `
-      ${test1.message}
-      <br>
-      ${test1.timeLeft}
-      <br>
-      ${test2}
-      `;
-   }
 
 </script>
 

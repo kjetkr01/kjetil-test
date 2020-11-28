@@ -1,8 +1,7 @@
-function test(displayName) {
+function callServerAPI(body, header, url){
 
-    let firstLetter = displayName[0];
-    displayName = displayName.split(" ");
-    let firstName = displayName[0];
+    if(!url && !body || !header){
+        return;
+    }
 
-    return { "firstLetter": firstLetter, "firstName": firstName };
 }
