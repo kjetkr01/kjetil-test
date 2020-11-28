@@ -66,7 +66,7 @@ function isGymOpen() {
     return { "message": isOpenMessage, "timeLeft": timeLeftMessage };
 }
 
-function getTime(firstName) {
+function partOfDayMessage(firstName) {
 
     const today = new Date();
 
@@ -89,6 +89,5 @@ function getTime(firstName) {
 
     let usermessage = `God ${partOfDay}, ${firstName}.`;
 
-    return { "message": usermessage };
-
+    return usermessage;
 }

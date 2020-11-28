@@ -27,6 +27,7 @@
    <meta charset="utf-8" />
 
    <script src="scripts/global.js" type="text/javascript"></script>
+   <script src="scripts/validateInfo.js" type="text/javascript"></script>
 
 </head>
 
@@ -66,7 +67,9 @@
 
 <script>
 
-getTime()
+   let test = validate("kjetil kristiansen", "kjetkr01", "123", "123");
+
+   console.log(test)
 
    updateTime();
 
@@ -100,13 +103,13 @@ getTime()
 
    function testFunc() {
       let test1 = isGymOpen();
-      let test2 = getTime("Kjetil");
+      let test2 = partOfDayMessage("Kjetil");
       document.getElementById("testmessage").innerHTML = `
       ${test1.message}
       <br>
       ${test1.timeLeft}
       <br>
-      ${test2.message}
+      ${test2}
       `;
    }
 
