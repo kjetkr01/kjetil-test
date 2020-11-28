@@ -17,9 +17,8 @@ function isGymOpen() {
 
     let total = (hours * 60) + minutes;
 
-
-    let testTime = closeTime * 60;
-    let calc = testTime - total;
+    let checkTime = closeTime * 60;
+    let calc = checkTime - total;
 
     if (calc > 0) {
 
@@ -44,8 +43,8 @@ function isGymOpen() {
 
         // closed
 
-        testTime = openTime * 60;
-        calc = total - testTime;
+        checkTime = openTime * 60;
+        calc = total - checkTime;
 
         calc = calc / 60;
         hoursLeft = Math.trunc(24 - calc);
@@ -65,4 +64,31 @@ function isGymOpen() {
     }
 
     return { "message": isOpenMessage, "timeLeft": timeLeftMessage };
+}
+
+function getTime(firstName) {
+
+    const today = new Date();
+
+    let partOfDay = "";
+
+    let hours = today.getHours();
+
+    if (hours > 0 && hours <= 5) {
+        partOfDay = "natt";
+    }
+    else if (hours > 5 && hours <= 10) {
+        partOfDay = "morgen";
+    }
+    else if (hours > 10 && hours <= 18) {
+        partOfDay = "ettermiddag";
+    }
+    else if (hours > 18 && hours <= 24) {
+        partOfDay = "kveld";
+    }
+
+    let usermessage = `God ${partOfDay}, ${firstName}.`;
+
+    return { "message": usermessage };
+
 }
