@@ -61,6 +61,10 @@
 
 <script>
 
+   document.addEventListener("fullscreenchange", function(evt){
+      evt.stopPropagation();
+   })
+
    updateTime();
 
    function updateTime() {
