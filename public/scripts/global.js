@@ -1,13 +1,9 @@
-// global variables
-
-const today = new Date();
-
-//
-
 function isGymOpen() {
 
     const openTime = 6; // 6
     const closeTime = 23; // 23
+
+    const today = new Date();
 
     let isOpenMessage = "";
     let timeLeftMessage = "";
@@ -16,10 +12,10 @@ function isGymOpen() {
     let hoursLeft = 0;
     let minutesLeft = 0;
 
-    let hours = today.getHours();
-    let minutes = today.getMinutes();
+    const hours = today.getHours();
+    const minutes = today.getMinutes();
 
-    let total = (hours * 60) + minutes;
+    const total = (hours * 60) + minutes;
 
     let checkTime = closeTime * 60;
     let calc = checkTime - total;
@@ -74,7 +70,9 @@ function partOfDayMessage(firstName) {
 
     let partOfDay = "";
 
-    let hours = today.getHours();
+    const today = new Date();
+
+    const hours = today.getHours();
 
     if (hours > 0 && hours <= 5) {
         partOfDay = "natt";
@@ -89,7 +87,7 @@ function partOfDayMessage(firstName) {
         partOfDay = "kveld";
     }
 
-    let usermessage = `God ${partOfDay}, ${firstName}.`;
+    const usermessage = `God ${partOfDay}, ${firstName}.`;
 
     return usermessage;
 }
