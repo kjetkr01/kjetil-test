@@ -17,9 +17,8 @@ function isGymOpen() {
 
     let total = (hours * 60) + minutes;
 
-
-    let testTime = closeTime * 60;
-    let calc = testTime - total;
+    let checkTime = closeTime * 60;
+    let calc = checkTime - total;
 
     if (calc > 0) {
 
@@ -44,8 +43,8 @@ function isGymOpen() {
 
         // closed
 
-        testTime = openTime * 60;
-        calc = total - testTime;
+        checkTime = openTime * 60;
+        calc = total - checkTime;
 
         calc = calc / 60;
         hoursLeft = Math.trunc(24 - calc);
