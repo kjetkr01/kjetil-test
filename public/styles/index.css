@@ -4,15 +4,15 @@
 
 .bg_gradient{
      background-image: 
-     linear-gradient(rgba(0, 117, 0, 0.50),rgba(179, 255, 0, 0.50)), 
+     linear-gradient(rgba(7, 7, 7, 0.7),rgba(82, 82, 82, 0.7)), 
      url(../images/background-smallBlur.png);     
-     height: 100vh;
+     height: 83.3333vh;
      background-size: cover;
      
 }
 header{
        display: flex;
-       background-color: rgb(0, 128, 49);
+       background-color: rgb(17, 17, 17);
        justify-content: space-between;
        align-items: center;
        padding: 30px 10%;  
@@ -42,4 +42,13 @@ img{
 }
 article{
         
+}
+footer{
+       background-color: rgb(17, 17, 17);
+       display: flex;
+       color: white;
+       font-family: Arial, Helvetica, sans-serif;
+       padding: 30px 10%;
+       align-items: center;
+       justify-content: space-between;
 }
