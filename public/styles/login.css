@@ -1,71 +1,41 @@
-/*.lightMode {
-  
-  --main-themeColor: var(--global-lightMode-themeColor);
-  --main-avatarColor: var(--global-lightMode-avatarColor);
-  --main-background-color: var(--global-lightMode-background-color);
-  --main-textColor: var(--global-lightMode-textColor);
-  --main-filter: var(--global-lightMode-filter);
-  
-}*/
 
-/*
-.darkMode {
-  --main-themeColor: var(--global-darkMode-themeColor);
-  --main-avatarColor: var(--global-darkMode-avatarColor);
-  --main-background-color: var(--global-darkMode-background-color);
-  --main-textColor: var(--global-darkMode-textColor);
-  --main-filter: var(--global-darkMode-filter);
+  .bg_gradient{
+    background-image: 
+    linear-gradient(rgba(0, 117, 0, 0.50),rgba(179, 255, 0, 0.50)), 
+    url("images/background-smallBlur.png");     
+    height: 100vh;
+    background-size: cover;
 }
-*/
-
-@media (prefers-color-scheme: light) {
-  
-    body {
-    --main-themeColor: var(--global-lightMode-themeColor);
-    --main-avatarColor: var(--global-lightMode-avatarColor);
-    --main-avatarBox-shadow: var(--global-lightMode-avatarBox-shadow);
-    --main-box-shadow: var(--global-lightMode-box-shadow);
-    --main-background-color: var(--global-lightMode-background-color);
-    --main-textColor: var(--global-lightMode-textColor);
-    --main-text-shadow: var(--global-lightMode-text-shadow);
-    --main-filter: var(--global-lightMode-filter);
-    --main-border: var(--global-lightMode-border);
-    --main-border-avatar: var(--global-lightMode-border-avatar);
-    }
-    
-  }
-  
-  @media (prefers-color-scheme: dark) {
-    
-    body {
-    --main-themeColor: var(--global-darkMode-themeColor);
-    --main-avatarColor: var(--global-darkMode-avatarColor);
-    --main-avatarBox-shadow: var(--global-darkMode-avatarBox-shadow);
-    --main-box-shadow: var(--global-darkMode-box-shadow);
-    --main-background-color: var(--global-darkMode-background-color);
-    --main-textColor: var(--global-darkMode-textColor);
-    --main-text-shadow: var(--global-darkMode-text-shadow);
-    --main-filter: var(--global-darkMode-filter);
-    --main-border: var(--global-darkMode-border);
-    --main-border-avatar: var(--global-darkMode-border-avatar);
-    filter: var(--global-darkMode-brightness);
-    }
-  
-  }
-  
-  * {
-    margin: var(--global-margin);
-    padding: var(--global-padding);
-    font-family: var(--global-font-family);
-    font-size: var(--global-font-size);
-    color: var(--main-textColor);
-    text-align: center;
-
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
-  }
+header{
+      display: flex;
+      background-color: rgb(0, 128, 49);
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 10%;  
+}
+li, a{
+     font-family: Arial, Helvetica, sans-serif;
+     color: white;
+     text-decoration: none;
+}
+.nav_links{
+          list-style: none;
+}
+.nav_links li{
+             display: inline-block;
+             padding: 0px 20px;
+}
+.nav_links li a{
+               transition: all 0,3s ease 0s;               
+}
+.nav_links li a:hover{
+                     color: rgb(0, 255, 170);              
+}
+img{
+   display: flex;
+   align-items: center;
+   
+}
+article{
+       
+}
