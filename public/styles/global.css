@@ -16,6 +16,7 @@ header{
     justify-content: space-between;
     align-items: center;
     padding: 30px 10%;
+    top: 0;
 }
 li, a{
    font-family: Arial, Helvetica, sans-serif;
