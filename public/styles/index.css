@@ -1,54 +1,19 @@
-
-
-   
-
-.bg_gradient{
-     background-image: 
-     linear-gradient(rgba(7, 7, 7, 0.7),rgba(82, 82, 82, 0.7)), 
-     url(../images/background-smallBlur.png);     
-     height: 83.3333vh;
-     background-size: cover;
-     
+#hei_melding{
+             background: none;
+             font-family: Arial, Helvetica, sans-serif;
+             color: white;
 }
-header{
-       display: flex;
-       background-color: rgb(17, 17, 17);
-       justify-content: space-between;
-       align-items: center;
-       padding: 30px 10%;  
+.flexbox-container{
+                   display: flex;
+}                  
+.flexbox-item{
+                   
 }
-li, a{
-      font-family: Arial, Helvetica, sans-serif;
-      color: white;
-      text-decoration: none;
+#gym_open{
+          font-family: Arial, Helvetica, sans-serif;
+          color: white;
 }
-.nav_links{
-           list-style: none;
-}
-.nav_links li{
-              display: inline-block;
-              padding: 0px 20px;
-}
-.nav_links li a{
-                transition: all 0,3s ease 0s;               
-}
-.nav_links li a:hover{
-                      color: rgb(0, 255, 170);              
-}
-img{
-    display: flex;
-    align-items: center;
-    
-}
-article{
-        
-}
-footer{
-       background-color: rgb(17, 17, 17);
-       display: flex;
-       color: white;
-       font-family: Arial, Helvetica, sans-serif;
-       padding: 30px 10%;
-       align-items: center;
-       justify-content: space-between;
+#time_left{
+           font-family: Arial, Helvetica, sans-serif;
+           color: white;
 }
