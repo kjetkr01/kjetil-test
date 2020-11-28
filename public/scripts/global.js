@@ -1,3 +1,9 @@
+// global variables
+
+const today = new Date();
+
+//
+
 function isGymOpen() {
 
     const openTime = 6; // 6
@@ -9,8 +15,6 @@ function isGymOpen() {
 
     let hoursLeft = 0;
     let minutesLeft = 0;
-
-    const today = new Date();
 
     let hours = today.getHours();
     let minutes = today.getMinutes();
@@ -67,8 +71,6 @@ function isGymOpen() {
 }
 
 function partOfDayMessage(firstName) {
-
-    const today = new Date();
 
     let partOfDay = "";
 

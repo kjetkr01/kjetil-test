@@ -1,4 +1,3 @@
-
 // usage: " validate("Kjetil Kristiansen", "kjetkr01", "123", "123"); "
 function validate(displayname, username, password, confirmpassword) {
 
