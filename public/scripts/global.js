@@ -65,3 +65,30 @@ function isGymOpen() {
 
     return { "message": isOpenMessage, "timeLeft": timeLeftMessage };
 }
+
+function getTime(firstName) {
+
+    const today = new Date();
+
+    let partOfDay = "";
+
+    let hours = today.getHours();
+
+    if (hours > 0 && hours <= 5) {
+        partOfDay = "natt";
+    }
+    else if (hours > 5 && hours <= 10) {
+        partOfDay = "morgen";
+    }
+    else if (hours > 10 && hours <= 18) {
+        partOfDay = "ettermiddag";
+    }
+    else if (hours > 18 && hours <= 24) {
+        partOfDay = "kveld";
+    }
+
+    let usermessage = `God ${partOfDay}, ${firstName}.`;
+
+    return { "message": usermessage };
+
+}

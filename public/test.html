@@ -56,7 +56,7 @@
       <button onClick="sessionStorage.clear()">clear localstorage</button>
       <button onClick="localStorage.clear()">clear sessionstorage</button>
       <br><br><br>
-      <button onClick="testFunc()">isgymopen</button>
+      <button onClick="testFunc()">test function(s)</button>
       <p id="testmessage"></p>
 
       <!--Bare noe tekst for å vise at scrollbar funksjonen fungerer-->
@@ -65,6 +65,8 @@
 </body>
 
 <script>
+
+getTime()
 
    updateTime();
 
@@ -97,11 +99,14 @@
 
 
    function testFunc() {
-      let resp = isGymOpen();
+      let test1 = isGymOpen();
+      let test2 = getTime("Kjetil");
       document.getElementById("testmessage").innerHTML = `
-      ${resp.message}
+      ${test1.message}
       <br>
-      ${resp.timeLeft}
+      ${test1.timeLeft}
+      <br>
+      ${test2.message}
       `;
    }
 
