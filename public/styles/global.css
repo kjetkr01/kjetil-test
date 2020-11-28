@@ -16,6 +16,8 @@ header{
     justify-content: space-between;
     align-items: center;
     padding: 30px 10%;
+    position: fixed;
+    width: 100vw;
     top: 0;
 }
 li, a{

@@ -2,18 +2,26 @@
              background: none;
              font-family: Arial, Helvetica, sans-serif;
              color: white;
+             position: fixed;
 }
 .flexbox-container{
                    display: flex;
 }                  
 .flexbox-item{
-                   
+              margin-top: 10%;     
 }
+.hei-melding{
+             margin-top: 5vw;
+}            
 #gym_open{
           font-family: Arial, Helvetica, sans-serif;
           color: white;
+          position: fixed;
+          margin-top: 8vw;   
 }
 #time_left{
            font-family: Arial, Helvetica, sans-serif;
            color: white;
+           position: fixed;
+           margin-top: 10vw;
 }
