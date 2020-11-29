@@ -28,6 +28,7 @@
 
    <script src="scripts/global.js" type="text/javascript"></script>
    <script src="scripts/validateInfo.js" type="text/javascript"></script>
+   <script src="scripts/script.js" type="text/javascript"></script>
 
 </head>
 
@@ -45,11 +46,16 @@
 
       Sider:
       <br><br>
+      
+      <button onClick="location.href = 'index.html'">index</button>
       <button onClick="location.href = 'login.html'">login</button>
       <button onClick="location.href = 'access.html'">access</button>
-      <button onClick="location.href = 'index.html'">index</button>
-      <button onClick="loadPage('access')">loadpage ajax</button>
-      <button onClick="window.location = 'index.html'">loadpage test</button>
+
+      <br><br>
+      
+      <button onClick="loadPage('index')">index (ajax)</button>
+      <button onClick="loadPage('login')">login (ajax)</button>
+      <button onClick="loadPage('access')">access (ajax)</button>
       <br><br><br>
       <button onClick="testFunc()">test function(s)</button>
       <p id="testmessage"></p>
@@ -59,18 +65,6 @@
 </body>
 
 <script>
-
-   function loadPage(page) {
-      let xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
-         if (this.readyState == 4 && this.status == 200) {
-            document.documentElement.innerHTML =
-               this.responseText;
-         }
-      };
-      xhttp.open("GET", `${page}.html`, true);
-      xhttp.send();
-   }
 
 
    let test = validate("Kjetil Kristiansen", "kjetkr01", "123", "123");
