@@ -1,5 +1,10 @@
 async function callServerAPI(body, url) {
 
+    if(offlineMode){
+        console.log("Offline mode is enabled, server fetching is disabled!");
+        return;
+    }
+
     if (!body || !url) {
         return;
     }
@@ -20,6 +25,11 @@ async function callServerAPI(body, url) {
 }
 
 function loadPage(page) {
+
+    if(!offlineMode){
+        console.log("Offline mode is enabled, ajax fetching is disabled!");
+        return;
+    }
 
     const pages = ["index", "login", "access"];
     let redirect = false;
