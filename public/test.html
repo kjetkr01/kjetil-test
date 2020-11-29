@@ -38,7 +38,7 @@
 
       Info side:
       <br><br>
-      <button onClick="location.reload();">Oppdater siden</button><br>
+      <button onClick="updateTime();">Oppdater info</button><br>
       <p>Sist oppdatert:</p>
       <p id="updateTime"></p>
 
@@ -46,13 +46,13 @@
 
       Sider:
       <br><br>
-      
+
       <button onClick="location.href = 'index.html'">index</button>
       <button onClick="location.href = 'login.html'">login</button>
       <button onClick="location.href = 'access.html'">access</button>
 
       <br><br>
-      
+
       <button onClick="loadPage('index')">index (ajax)</button>
       <button onClick="loadPage('login')">login (ajax)</button>
       <button onClick="loadPage('access')">access (ajax)</button>
@@ -65,9 +65,6 @@
 </body>
 
 <script>
-
-
-
 
    let test = validate("Kjetil Kristiansen", "kjetkr01", "123", "123");
    let names = ["Kjetil", "Simonso", "Kristian", "Christian", "Trym"];
@@ -87,22 +84,22 @@
 
    // til testing
 
-   updateTime();
+   updateTime()
 
    function updateTime() {
       let d = new Date();
       document.getElementById("updateTime").innerHTML = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-   }
 
-   const html = `
-   Screensize:
-   <br>
-   H: ${window.screen.availHeight} px<br>
-   W: ${window.screen.availWidth} px
-   <br><br>
-   window.navigator.onLine: ${window.navigator.onLine}
-   `;
-   document.getElementById("info").innerHTML = html;
+      const html = `
+      Screensize:
+      <br>
+      H: ${window.screen.availHeight} px<br>
+      W: ${window.screen.availWidth} px
+      <br><br>
+      window.navigator.onLine: ${window.navigator.onLine}
+      `;
+      document.getElementById("info").innerHTML = html;
+   }
 
 </script>
 
