@@ -4,14 +4,7 @@
 <head>
     <title>Hjem</title>
 
-    <!--
-<meta name="viewport" content="initial-scale=1.0">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link rel="manifest" href="/manifest.json">
-<meta charset="utf-8" />
-
--->
+    <meta charset="utf-8"/>
 
     <link rel="manifest" href="manifest.json">
 
@@ -24,6 +17,8 @@
 
     <link rel="icon" type="image/png" sizes="192x192" href="images/appIcon.png">
     <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+
+    <script src="scripts/global.js" type="text/javascript"></script>
 
     <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/index.css">
@@ -45,19 +40,38 @@
 
     </header>
 
-    <articale>   
-          
-              <div class="bg_gradient"></div>
-              <div class="flexbox-container">
 
+    <articale>
 
-              </div>
+        <div class="flexbox-container"></div>
+        <div class="flexbox-item hei-melding">
+            <p id="hei_melding"></p>
+        </div>
+        <div class="flexbox-item gym-open">
+            <p id="gym_open"></p>
+            <p id="time_left"></p>
+        </div>
+
+        </div>
 
     </articale>
 
-
-
+    <footer>
+        Laget av Kjetkr01 og Simonso
+    </footer>
 
 </body>
+
+<script>
+    
+    let gymopen = isGymOpen();
+    document.getElementById("gym_open").innerHTML = gymopen.message
+    document.getElementById("time_left").innerHTML = gymopen.timeLeft
+
+    let partofdaymsg = partOfDayMessage("Simonso");
+    document.getElementById("hei_melding").innerHTML = partofdaymsg
+    
+
+</script>
 
 </html>
