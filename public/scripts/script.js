@@ -26,7 +26,7 @@ async function callServerAPI(body, url) {
 
 function loadPage(page) {
 
-    if(!offlineMode){
+    if(offlineMode){
         console.log("Offline mode is enabled, ajax fetching is disabled!");
         return;
     }
