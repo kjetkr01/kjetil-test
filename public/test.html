@@ -48,7 +48,8 @@
       <button onClick="location.href = 'login.html'">login</button>
       <button onClick="location.href = 'access.html'">access</button>
       <button onClick="location.href = 'index.html'">index</button>
-      <button onClick="loadDoc()">test</button>
+      <button onClick="loadPage('access')">loadpage ajax</button>
+      <button onClick="window.location = 'index.html'">loadpage test</button>
       <br><br><br>
       <button onClick="testFunc()">test function(s)</button>
       <p id="testmessage"></p>
@@ -59,15 +60,15 @@
 
 <script>
 
-   function loadDoc() {
+   function loadPage(page) {
       let xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function () {
          if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("container").innerHTML =
+            document.documentElement.innerHTML =
                this.responseText;
          }
       };
-      xhttp.open("GET", "access.html", true);
+      xhttp.open("GET", `${page}.html`, true);
       xhttp.send();
    }
 
