@@ -1,4 +1,4 @@
-let stopIntervals = false;
+let stopIntervals = true;
 let offlineMode = false;
 
 let checkOnline = setInterval(() => {
