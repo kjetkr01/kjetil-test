@@ -29,6 +29,7 @@
    <script src="scripts/global.js" type="text/javascript"></script>
    <script src="scripts/validateInfo.js" type="text/javascript"></script>
    <script src="scripts/script.js" type="text/javascript"></script>
+   <script src="scripts/intervals.js" type="text/javascript"></script>
 
 </head>
 
@@ -38,7 +39,7 @@
 
       Info side:
       <br><br>
-      <button onClick="updateTime();">Oppdater info</button><br>
+      <button onClick="location.reload()">Oppdater siden</button><br>
       <p>Sist oppdatert:</p>
       <p id="updateTime"></p>
 
@@ -95,8 +96,6 @@
       <br>
       H: ${window.screen.availHeight} px<br>
       W: ${window.screen.availWidth} px
-      <br><br>
-      window.navigator.onLine: ${window.navigator.onLine}
       `;
       document.getElementById("info").innerHTML = html;
    }

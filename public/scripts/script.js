@@ -19,7 +19,6 @@ async function callServerAPI(body, url) {
 
 }
 
-
 function loadPage(page) {
 
     const pages = ["index", "login", "access"];
