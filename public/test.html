@@ -67,6 +67,8 @@
 <script>
 
 
+
+
    let test = validate("Kjetil Kristiansen", "kjetkr01", "123", "123");
    let names = ["Kjetil", "Simonso", "Kristian", "Christian", "Trym"];
    let randomNum = Math.floor(Math.random() * names.length);
@@ -97,6 +99,8 @@
    <br>
    H: ${window.screen.availHeight} px<br>
    W: ${window.screen.availWidth} px
+   <br><br>
+   window.navigator.onLine: ${window.navigator.onLine}
    `;
    document.getElementById("info").innerHTML = html;
 
