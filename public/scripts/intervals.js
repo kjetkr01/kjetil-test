@@ -3,6 +3,11 @@ let offlineMode = false;
 
 let checkOnline = setInterval(() => {
 
+    if(stopIntervals){
+        clearInterval(checkOnline);
+        return;
+    }
+
     let isClientOnline = window.navigator.onLine;
 
     console.log(`OfflineMode: ${offlineMode}`);
@@ -12,10 +17,6 @@ let checkOnline = setInterval(() => {
         offlineMode = false;
     }else{
         offlineMode = true;
-    }
-
-    if(stopIntervals){
-        clearInterval(checkOnline);
     }
     
 }, 10000);

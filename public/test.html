@@ -57,8 +57,7 @@
       <button onClick="loadPage('index')">index (ajax)</button>
       <button onClick="loadPage('login')">login (ajax)</button>
       <button onClick="loadPage('access')">access (ajax)</button>
-      <br><br><br>
-      <button onClick="testFunc()">test function(s)</button>
+      <br>
       <p id="testmessage"></p>
 
    </div>
@@ -71,7 +70,16 @@
    let names = ["Kjetil", "Simonso", "Kristian", "Christian", "Trym"];
    let randomNum = Math.floor(Math.random() * names.length);
 
-   function testFunc() {
+
+   let stopIntervalsTest = false;
+
+   let autoUpdate = setInterval(() => {
+
+      if (stopIntervalsTest) {
+         clearInterval(autoUpdate);
+         return;
+      }
+
       let test1 = isGymOpen();
       let test2 = partOfDayMessage(names[randomNum]);
       document.getElementById("testmessage").innerHTML = `
@@ -81,9 +89,10 @@
       <br>
       ${test2}
       `;
-   }
 
-   let program = {"Mandag": "Bein og mage", "Tirsdag": "Rygg og biceps"};
+   }, 1000);
+
+   let program = { "Mandag": "Bein og mage", "Tirsdag": "Rygg og biceps" };
 
    let resp = whatToTrainToday(program)
    console.log(resp)
