@@ -4,11 +4,11 @@
 }
 body{
   background-image: 
-  linear-gradient(rgba(7, 7, 7, 0.7),rgba(82, 82, 82, 0.7)), 
+  linear-gradient(rgba(26, 26, 26, 0.7),rgba(82, 82, 82, 0.7)), 
   url(../images/background-smallBlur.png);     
-  height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 header{
     display: flex;
@@ -37,14 +37,6 @@ li, a{
 }
 .nav_links li a:hover{
                    color: rgb(0, 255, 170);              
-}
-img{
- display: flex;
- align-items: center;
- 
-}
-article{
-     
 }
 footer{
     background-color: rgb(17, 17, 17);
