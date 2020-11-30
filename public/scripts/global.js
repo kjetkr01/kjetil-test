@@ -69,100 +69,11 @@ function isGymOpen() {
 
     }
 
-
-
-    //
-
-
-
-    /* old version
-
-    const openTime = 6; // 6
-    const closeTime = 23; // 23
-
-    const today = new Date();
-
-    let isOpenMessage = "";
-    let timeLeftMessage = "";
-    let timeLeftString = "";
-
-    let hoursLeft = 0;
-    let minutesLeft = 0;
-
-    let hours = today.getHours();
-
-
-    hours = 1;
-
-    const minutes = today.getMinutes();
-
-    const total = (hours * 60) + minutes;
-
-    let checkTime = closeTime * 60;
-    let calc = checkTime - total;
-
-    if (calc > 0 && hours >= openTime) {
-        console.log("åpent")
-
-        calc = calc / 60;
-        hoursLeft = Math.trunc(calc);
-        minutesLeft = Math.round((calc - hoursLeft) * 60);
-
-        if (hoursLeft < 1) {
-            timeLeftString = `${minutesLeft} min`;
-        } else if (minutesLeft < 0) {
-            timeLeftString = `${hoursLeft} t`;
-        } else {
-            timeLeftString = `${hoursLeft} t og ${minutesLeft} min`;
-        }
-
-        isOpenMessage = `Treningssenteret er åpent!`;
-        timeLeftMessage = `Stenger om ${timeLeftString}`;
-
-    } else {
-        console.log("stengt")
-
-        checkTime = openTime * 60;
-        calc = total - checkTime;
-
-        calc = calc / 60;
-
-        if (hours >= 0) {
-
-            // etter 0
-            hoursLeft = Math.trunc(calc - 24);
-            minutesLeft = Math.round((hoursLeft - (calc - 24)) * 60);
-
-        } else {
-
-            //før 0
-            hoursLeft = Math.trunc(24 - calc);
-            minutesLeft = Math.round(calc - hoursLeft * 60);
-
-        }
-
-
-
-
-        console.log(hoursLeft + ":" + minutesLeft)
-
-        if (hoursLeft < 1) {
-            timeLeftString = `${minutesLeft} min`;
-        } else if (minutesLeft < 0) {
-            timeLeftString = `${hoursLeft} t`;
-        } else {
-            timeLeftString = `${hoursLeft} t og ${minutesLeft} min`;
-        }
-
-        isOpenMessage = `Treningssenteret er stengt!`;
-        timeLeftMessage = `Åpner om ${timeLeftString}`;
-    }
-
-    */
-
     return { "message": isOpenMessage, "timeLeft": timeLeftMessage };
 }
 
+
+// usage : partOfDayMessage("Kjetil")
 
 function partOfDayMessage(firstName) {
 
@@ -188,4 +99,47 @@ function partOfDayMessage(firstName) {
     const usermessage = `God ${partOfDay}, ${firstName}.`;
 
     return usermessage;
+}
+
+
+// usage : let program = {"Mandag": "Bein og mage", "Tirsdag": "Rygg og biceps"}
+// whatToTrainToday(program)
+
+function whatToTrainToday(program) {
+
+    const day = new Date().getDay();
+
+    let dayTxt = "";
+    let usermessage = "";
+
+    switch (day) {
+        case 0:
+            dayTxt = "Søndag";
+            break;
+        case 1:
+            dayTxt = "Mandag";
+            break;
+        case 2:
+            dayTxt = "Tirsdag";
+            break;
+        case 3:
+            dayTxt = "Onsdag";
+            break;
+        case 4:
+            dayTxt = "Torsdag";
+            break;
+        case 5:
+            dayTxt = "Fredag";
+            break;
+        case 6:
+            dayTxt = "Lørdag";
+            break;
+    }
+
+    if(program[dayTxt]){
+        usermessage = `I dag (${dayTxt}) skal du trene ${program[dayTxt]}.`;
+    }
+
+    return usermessage;
+
 }
