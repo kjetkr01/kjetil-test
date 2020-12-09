@@ -1,5 +1,5 @@
 // usage: " validate("Kjetil Kristiansen", "kjetkr01", "123", "123"); "
-function validate(displayname, username, password, confirmpassword) {
+async function validate(displayname, username, password, confirmpassword) {
 
     const minCharLength = 3;
     const maxCharLength = 20;
@@ -13,9 +13,9 @@ function validate(displayname, username, password, confirmpassword) {
 
     if (password === confirmpassword) {
 
-        if (displayname.length > minCharLength && displayname.length < maxCharLength) {
+        if (displayname.length >= minCharLength && displayname.length <= maxCharLength) {
 
-            if (username.length > minCharLength && username.length < maxCharLength) {
+            if (username.length >= minCharLength && username.length <= maxCharLength) {
 
                 for (let i = 0; i < blacklistedChars.length; i++) {
 
@@ -56,8 +56,11 @@ function validate(displayname, username, password, confirmpassword) {
 
                     //console.log(fixedDisplayname)
 
-                    //callServerAPI?
-                    message = "godkjent";
+                    const body = { "username": username, "password": password, "displayname": fixedDisplayname };
+                    const url = `/access`;
+
+                    const resp = await callServerAPI(body, url);
+                    message = resp;//"godkjent";
                 } else {
                     message = `Brukernavnet kan ikke inneholde mellomrom eller følgende tegn: ${listOfBlacklistedChars}`;
                 }

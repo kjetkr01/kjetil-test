@@ -1,6 +1,6 @@
 async function callServerAPI(body, url) {
 
-    if(!window.navigator.onLine){
+    if (!window.navigator.onLine) {
         console.log("Offline mode is enabled, server fetching is disabled!");
         return;
     }
@@ -18,15 +18,15 @@ async function callServerAPI(body, url) {
     }
 
     const response = await fetch(url, config);
-    const data = await response.json();
-    console.log(response.status);
-    return { "response": response, "data": data };
+    //const data = await response.json();
+    //console.log(response.status);
+    //return { "response": response, "data": data };
 
 }
 
 function loadPage(page) {
 
-    if(!window.navigator.onLine){
+    if (!window.navigator.onLine) {
         console.log("Offline mode is enabled, ajax fetching is disabled!");
         return;
     }
@@ -55,7 +55,7 @@ function loadPage(page) {
         xhttp.open("GET", `${page}.html`, true);
         xhttp.send();
 
-    }else{
+    } else {
         console.log("Page does not exist!");
     }
 }

@@ -60,13 +60,42 @@
       <br>
       <p id="testmessage"></p>
 
+      <form id="askForAccess">
+
+         <input id="displayname" placeholder="displayname" type="text" value="Kjetil Kristiansen">
+         <input id="username" placeholder="username" type="text" value="kjetkr01">
+         <input id="psw" placeholder="password" type="password" value="123">
+         <input id="confirmPsw" placeholder="confirm password" type="password" value="123">
+
+         <input type="submit">
+      </form>
+
    </div>
 
 </body>
 
 <script>
 
-   let test = validate("Kjetil Kristiansen", "kjetkr01", "123", "123");
+   // ask for access
+   const askForAccess = document.getElementById("askForAccess");
+
+   askForAccess.addEventListener("submit", async function (evt) {
+
+      evt.preventDefault();
+
+      const displayname = document.getElementById("displayname").value;
+      const username = document.getElementById("username").value;
+      const psw = document.getElementById("psw").value;
+      const confirmPsw = document.getElementById("confirmPsw").value;
+
+      let resp = await validate(displayname, username, psw, confirmPsw);
+      console.log(resp)
+
+   });
+
+   //
+
+   //let test = validate("Kjetil Kristiansen", "kjetkr01", "123", "123");
    let names = ["Kjetil", "Simonso", "Kristian", "Christian", "Trym"];
    let randomNum = Math.floor(Math.random() * names.length);
 
