@@ -2,7 +2,11 @@
 window.onload = validateToken;
 async function validateToken() {
 
-    // if online, then?
+    if (!window.navigator.onLine) {
+        console.log("Offline mode is enabled, server fetching is disabled!");
+        return;
+    }
+
     const token = localStorage.getItem("authToken");
     const user = localStorage.getItem("user");
 
@@ -21,7 +25,7 @@ async function validateToken() {
         }
     }else{
         console.log("no token/user, skipped");
-        location.href = "/login.html";
+        location.href = "/test-loginlogin.html";
     }
 }
 
