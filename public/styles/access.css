@@ -1,0 +1,24 @@
+#askForAccess{
+              background: 
+              linear-gradient(rgb(0, 48, 32, 1),rgb(17, 17, 17, 1));
+              position: fixed;
+              padding: 3vh 3vw;
+              top: 30vh;
+              left: 40vw;
+              border-radius: 5%;
+}
+#displayname{
+             margin: 1vh 1vw;
+}
+#username{
+          margin: 1vh 1vw;
+}
+#psw{
+     margin: 1vh 1vw;
+}
+#confirmPsw{
+            margin: 1vh 1vw;
+}
+#giveAccess{
+            
+}
