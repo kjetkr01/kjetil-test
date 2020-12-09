@@ -75,20 +75,44 @@
 
       <button onClick="testFunction()">test token</button><br>
 
+      <p id="showLocalStorage"></p>
+
    </div>
 
 </body>
 
 <script>
 
-   async function testFunction(){
+   async function testFunction() {
       const token = localStorage.getItem("authToken");
       const user = localStorage.getItem("user");
-      const body = {"authToken": token, "userInfo": user};
+      const body = { "authToken": token, "userInfo": user };
       const url = `/validate`;
-      
+
       let resp = callServerAPI(body, url);
    }
+
+   // show localstorage list
+   showLocalStorageList()
+   function showLocalStorageList() {
+
+      let keys = Object.keys(localStorage);
+      const showLocalStorage = document.getElementById("showLocalStorage");
+      showLocalStorage.innerHTML = "";
+
+      if (keys.length > 0) {
+         showLocalStorage.innerHTML = "Localstorage items: <br><br>";
+         for (let i = 0; i < keys.length; i++) {
+            showLocalStorage.innerHTML += keys[i] + ": " + localStorage.getItem(keys[i]) + "<br>";
+         }
+
+         showLocalStorage.innerHTML += "<br> <button onClick='localStorage.clear()'>Clear localstorage</button>"
+
+      }
+
+   }
+
+   //
 
    // ask for access
    const askForAccess = document.getElementById("askForAccess");

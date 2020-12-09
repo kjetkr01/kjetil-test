@@ -1,6 +1,8 @@
 //auto redirect to login if token is invalid
 window.onload = validateToken;
 async function validateToken() {
+
+    // if online, then?
     const token = localStorage.getItem("authToken");
     const user = localStorage.getItem("user");
 
