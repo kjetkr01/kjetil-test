@@ -60,18 +60,6 @@
       <br>
       <p id="testmessage"></p>
 
-      <form id="askForAccess">
-
-         <input id="displayname" placeholder="displayname" type="text" required="true">
-         <input id="username" placeholder="username" type="text" required="true">
-         <input id="psw" placeholder="password" type="password" required="true">
-         <input id="confirmPsw" placeholder="confirm password" type="password" required="true">
-
-         <input type="submit" value="Be om tilgang">
-      </form>
-
-      <p id="askForAccesMsg"></p>
-
 
       <button onClick="testFunction()">test token</button><br>
 
@@ -82,15 +70,6 @@
 </body>
 
 <script>
-
-   async function testFunction() {
-      const token = localStorage.getItem("authToken");
-      const user = localStorage.getItem("user");
-      const body = { "authToken": token, "userInfo": user };
-      const url = `/validate`;
-
-      let resp = callServerAPI(body, url);
-   }
 
    // show localstorage list
    showLocalStorageList()
@@ -114,35 +93,12 @@
 
    //
 
-   // ask for access
-   const askForAccess = document.getElementById("askForAccess");
-
-   askForAccess.addEventListener("submit", async function (evt) {
-
-      evt.preventDefault();
-
-      const displayname = document.getElementById("displayname").value;
-      const username = document.getElementById("username").value;
-      const psw = document.getElementById("psw").value;
-      const confirmPsw = document.getElementById("confirmPsw").value;
-
-      let resp = await validate(displayname, username, psw, confirmPsw);
-
-      //console.log(resp)
-
-      const askForAccesMsg = document.getElementById("askForAccesMsg");
-      askForAccesMsg.innerHTML = resp;
-
-   });
-
-   //
-
    //let test = validate("Kjetil Kristiansen", "kjetkr01", "123", "123");
    let names = ["Kjetil", "Simonso", "Kristian", "Christian", "Trym"];
    let randomNum = Math.floor(Math.random() * names.length);
 
 
-   let stopIntervalsTest = false;
+   let stopIntervalsTest = true; // stop auto update
 
    let autoUpdate = setInterval(() => {
 

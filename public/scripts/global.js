@@ -17,10 +17,11 @@ async function validateToken() {
 
             console.log("invalid token");
             localStorage.clear();
-            //location.href = "/login.html";
+            location.href = "/login.html";
         }
     }else{
         console.log("no token/user, skipped");
+        location.href = "/login.html";
     }
 }
 
