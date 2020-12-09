@@ -1,3 +1,22 @@
+//auto redirect to login if token is invalid
+window.onload = validateToken;
+async function validateToken() {
+    const token = localStorage.getItem("authToken");
+    const user = localStorage.getItem("user");
+
+    const body = { "authToken": token, "userInfo": user };
+    const url = `/validate`;
+
+    const resp = await callServerAPI(body, url);
+
+    if(resp){
+        
+        console.log("invalid token")
+        //location.href = "/login.html";
+    }
+}
+
+
 function isGymOpen() {
 
     // new version

@@ -72,11 +72,23 @@
 
       <p id="askForAccesMsg"></p>
 
+
+      <button onClick="testFunction()">test token</button><br>
+
    </div>
 
 </body>
 
 <script>
+
+   async function testFunction(){
+      const token = localStorage.getItem("authToken");
+      const user = localStorage.getItem("user");
+      const body = {"authToken": token, "userInfo": user};
+      const url = `/validate`;
+      
+      let resp = callServerAPI(body, url);
+   }
 
    // ask for access
    const askForAccess = document.getElementById("askForAccess");

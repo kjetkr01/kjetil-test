@@ -65,7 +65,7 @@ class StorageHandler {
         try {
             await client.connect();
             // evt legge til lifts og andre ting brukeren trenger å motta
-            results = await client.query('SELECT "username","displayname" FROM "public"."users" WHERE username=$1 AND password=$2', [username, password]);
+            results = await client.query('SELECT "id","username","displayname" FROM "public"."users" WHERE username=$1 AND password=$2', [username, password]);
             results = (results.rows.length > 0) ? results.rows[0] : null;
             client.end();
         } catch (err) {

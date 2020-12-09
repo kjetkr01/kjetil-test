@@ -6,10 +6,16 @@ const port = (process.env.PORT || 8080);
 server.set('port', port);
 server.use(express.static('public'));
 
-
 //
+
+const auth = require("./modules/auth");
+
 const user = require("./modules/user");
-const validate = require("./modules/user").validate;
+const validateUser = require("./modules/user").validateUser;
+
+const createToken = require("./modules/token").createToken;
+const validateToken = require("./modules/token").validateToken;
+
 
 //
 
@@ -64,11 +70,11 @@ server.post("/autenticate", async function (req, res) {
           /*const requestUser = new user(username, password);
           const isValid = await requestUser.validate();*/
 
-          const requestUser = await validate(username, password);
+          const requestUser = await validateUser(username, password);
           const isValid = requestUser.isValid;
 
           if (isValid) {
-               const sessionToken = "jwt.io";//createToken(requestUser);
+               const sessionToken = createToken(requestUser.userInfo);
                res.status(200).json({ "authToken": sessionToken, "user": requestUser.userInfo }).end();
           } else {
                res.status(403).json("Brukernavn eller passord er feil!").end();
@@ -77,6 +83,18 @@ server.post("/autenticate", async function (req, res) {
      } else {
           res.status(403).json(`Feil, prøv igjen`).end();
      }
+
+});
+
+//
+
+// test
+
+server.post("/validate", auth, async (req, res) => {
+
+     const currentUser = JSON.parse(req.body.userInfo);
+
+     console.log("valid, current user: " + currentUser.username)
 
 });
 

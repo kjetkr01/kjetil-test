@@ -23,7 +23,7 @@ class User {
 
 }
 
-async function validate(username, password) {
+async function validateUser(username, password) {
     try {
         let isValid = false;
         password = crypto.createHmac('sha256', secret)
@@ -40,4 +40,4 @@ async function validate(username, password) {
 }
 
 module.exports = User;
-module.exports.validate = validate;
+module.exports.validateUser = validateUser;

@@ -109,7 +109,9 @@ async function login(username, password) {
 
             if(resp.authToken){
                 //localstorage / sessionstorage token? resp.authToken
-                // localstorage / sessionstorage user object? resp.user
+                localStorage.setItem("authToken", resp.authToken);
+                localStorage.setItem("user", JSON.stringify(resp.user));
+                //localstorage / sessionstorage user object? resp.user
                 message = "Login successful";
             }else{
                 message = resp;
