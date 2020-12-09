@@ -100,6 +100,14 @@ server.post("/validate", auth, async (req, res) => {
 
 //
 
+// redirects user if url does not exist
+
+server.get("*", function(req, res){
+     res.redirect("/");
+});
+
+//
+
 
 
 // ------------------------------- allows the server to run on localhost  ------------------------------- //
