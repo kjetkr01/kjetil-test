@@ -59,9 +59,6 @@
       <br>
       <p id="testmessage"></p>
 
-
-      <button onClick="testFunction()">test token</button><br>
-
       <p id="showLocalStorage"></p>
 
    </div>
@@ -70,7 +67,53 @@
 
 <script>
 
+
+
+   let stopIntervalsTest = true; // stop auto update
+
+   let autoUpdate = setInterval(() => {
+
+      if (stopIntervalsTest) {
+         clearInterval(autoUpdate);
+         return;
+      }
+
+      let test1 = isGymOpen();
+      let test2 = partOfDayMessage("Kjetil");
+      document.getElementById("testmessage").innerHTML = `
+      ${test1.message}
+      <br>
+      ${test1.timeLeft}
+      <br>
+      ${test2}
+      `;
+
+   }, 1000);
+
+
+
+
+
+
+
+   // til testing / ekstra ting
+
+   updateTime()
+   function updateTime() {
+      let d = new Date();
+      document.getElementById("updateTime").innerHTML = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      const html = `
+      Screensize:
+      <br>
+      H: ${window.screen.availHeight} px<br>
+      W: ${window.screen.availWidth} px
+      `;
+      document.getElementById("info").innerHTML = html;
+   }
+
    // show localstorage list
+   
    showLocalStorageList()
    function showLocalStorageList() {
 
@@ -91,54 +134,6 @@
    }
 
    //
-
-   //let test = validate("Kjetil Kristiansen", "kjetkr01", "123", "123");
-   let names = ["Kjetil", "Simonso", "Kristian", "Christian", "Trym"];
-   let randomNum = Math.floor(Math.random() * names.length);
-
-
-   let stopIntervalsTest = true; // stop auto update
-
-   let autoUpdate = setInterval(() => {
-
-      if (stopIntervalsTest) {
-         clearInterval(autoUpdate);
-         return;
-      }
-
-      let test1 = isGymOpen();
-      let test2 = partOfDayMessage(names[randomNum]);
-      document.getElementById("testmessage").innerHTML = `
-      ${test1.message}
-      <br>
-      ${test1.timeLeft}
-      <br>
-      ${test2}
-      `;
-
-   }, 1000);
-
-   let program = { "Mandag": "Bein og mage", "Tirsdag": "Rygg og biceps" };
-
-   let resp = whatToTrainToday(program)
-   console.log(resp)
-
-   // til testing
-
-   updateTime()
-
-   function updateTime() {
-      let d = new Date();
-      document.getElementById("updateTime").innerHTML = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-      const html = `
-      Screensize:
-      <br>
-      H: ${window.screen.availHeight} px<br>
-      W: ${window.screen.availWidth} px
-      `;
-      document.getElementById("info").innerHTML = html;
-   }
 
 </script>
 

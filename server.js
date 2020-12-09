@@ -94,7 +94,7 @@ server.post("/validate", auth, async (req, res) => {
 
      const currentUser = JSON.parse(req.body.userInfo);
 
-     console.log("valid, current user: " + currentUser.username)
+     console.log("valid, current user: " + currentUser.username); // test / grei log i terminal
 
 });
 

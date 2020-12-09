@@ -1,3 +1,5 @@
+// usage : let resp = isGymOpen();
+
 function isGymOpen() {
 
     // new version
@@ -103,7 +105,7 @@ function partOfDayMessage(firstName) {
 
 
 // usage : let program = {"Mandag": "Bein og mage", "Tirsdag": "Rygg og biceps"}
-// whatToTrainToday(program)
+// let resp = whatToTrainToday(program)
 
 function whatToTrainToday(program) {
 
