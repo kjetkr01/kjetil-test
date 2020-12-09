@@ -23,5 +23,21 @@ class User {
 
 }
 
+async function validate(username, password) {
+    try {
+        let isValid = false;
+        password = crypto.createHmac('sha256', secret)
+            .update(password)
+            .digest('hex');
+        const resp = await database.validateUser(username, password);
+        if (resp !== null) {
+            isValid = true;
+        }
+        return { "isValid": isValid, "userInfo": resp };
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 module.exports = User;
+module.exports.validate = validate;

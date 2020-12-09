@@ -1,8 +1,13 @@
-// usage: " validate("Kjetil Kristiansen", "kjetkr01", "123", "123"); "
+// global variables
+
+const minCharLength = 3;
+const maxCharLength = 20;
+
+//
+
+// usage: " validate("My Displayname", "myusername", "mypassword", "mypassword"); "
 async function validate(displayname, username, password, confirmpassword) {
 
-    const minCharLength = 3;
-    const maxCharLength = 20;
     let checkTries = 0;
     let listOfBlacklistedChars = "";
 
@@ -76,6 +81,42 @@ async function validate(displayname, username, password, confirmpassword) {
 
         } else {
             message = "Passordene stemmer ikke.";
+        }
+
+    } else {
+        message = "Vennligst fyll ut alle feltene!";
+    }
+
+    return message;
+
+}
+
+// usage: " login("myusername", "mypassword"); "
+async function login(username, password) {
+
+    let message = "";
+    let errorMsg = `må være lengre enn ${minCharLength} tegn og kortere enn ${maxCharLength} tegn`;
+
+    if (username && password) {
+
+        if (username.length >= minCharLength && username.length <= maxCharLength) {
+
+            const body = {"authorization": "Basic " + window.btoa(`${username}:${password}`)};
+
+            const url = `/autenticate`;
+
+            let resp = await callServerAPI(body, url);
+
+            if(resp.authToken){
+                //localstorage / sessionstorage token? resp.authToken
+                // localstorage / sessionstorage user object? resp.user
+                message = "Login successful";
+            }else{
+                message = resp;
+            }
+
+        } else {
+            message = `Brukernavnet ${errorMsg}`;
         }
 
     } else {

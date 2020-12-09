@@ -9,6 +9,7 @@ server.use(express.static('public'));
 
 //
 const user = require("./modules/user");
+const validate = require("./modules/user").validate;
 
 //
 
@@ -39,6 +40,38 @@ server.post("/access", async function (req, res) {
                res.status(401).json("Brukernavnet er opptatt!").end();
           } else {
                res.status(200).json("Du har nå bedt om tilgang!").end();
+          }
+
+     } else {
+          res.status(403).json(`Feil, prøv igjen`).end();
+     }
+
+});
+
+//
+
+
+
+// -------------------------------  login / autenticate user ---------------------- //
+
+server.post("/autenticate", async function (req, res) {
+
+     const credentials = req.body.authorization.split(' ')[1];
+     const [username, password] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
+
+     if (username && password) {
+
+          /*const requestUser = new user(username, password);
+          const isValid = await requestUser.validate();*/
+
+          const requestUser = await validate(username, password);
+          const isValid = requestUser.isValid;
+
+          if (isValid) {
+               const sessionToken = "jwt.io";//createToken(requestUser);
+               res.status(200).json({ "authToken": sessionToken, "user": requestUser.userInfo }).end();
+          } else {
+               res.status(403).json("Brukernavn eller passord er feil!").end();
           }
 
      } else {
