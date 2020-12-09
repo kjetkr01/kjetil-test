@@ -101,19 +101,19 @@ async function login(username, password) {
 
         if (username.length >= minCharLength && username.length <= maxCharLength) {
 
-            const body = {"authorization": "Basic " + window.btoa(`${username}:${password}`)};
+            const body = { "authorization": "Basic " + window.btoa(`${username}:${password}`) };
 
             const url = `/autenticate`;
 
             let resp = await callServerAPI(body, url);
 
-            if(resp.authToken){
+            if (resp.authToken) {
                 //localstorage / sessionstorage token? resp.authToken
                 localStorage.setItem("authToken", resp.authToken);
                 localStorage.setItem("user", JSON.stringify(resp.user));
                 //localstorage / sessionstorage user object? resp.user
                 message = "Login successful";
-            }else{
+            } else {
                 message = resp;
             }
 

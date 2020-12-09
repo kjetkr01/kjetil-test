@@ -28,6 +28,7 @@
 
     <!-- -->
 
+    <script src="scripts/global.js" type="text/javascript"></script>
     <script src="scripts/validateInfo.js" type="text/javascript"></script>
     <script src="scripts/script.js" type="text/javascript"></script>
 
@@ -72,7 +73,7 @@
         const loginMsg = document.getElementById("loginMsg");
         loginMsg.innerHTML = resp;
 
-        /* kan ta bort denne, er kun til testing: */ if(resp === "Login successful"){location.href = "/test.html";} /* */
+        /* kan ta bort denne, er kun til testing: */ if (resp === "Login successful") { location.href = "/test.html"; } /* */
 
     });
 

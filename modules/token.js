@@ -6,7 +6,7 @@ const tokenSecret = process.env.tokenSecret || require("../localenv").tokenSecre
 function createToken(userInfo) {
 
     // evt endre til lenger
-    const token = jwt.sign(userInfo, tokenSecret, {expiresIn: '1d'});
+    const token = jwt.sign(userInfo, tokenSecret, { expiresIn: '1d' });
 
     return token;
 
@@ -21,7 +21,7 @@ function validateToken(token, userInfo) {
     jwt.verify(token, tokenSecret, (err) => {
         if (err) return isTokenValid;
         const tokenInfo = jwt.verify(token, tokenSecret);
-        if(tokenInfo.id === userInfo.id && tokenInfo.username === userInfo.username && tokenInfo.displayname === userInfo.displayname){
+        if (tokenInfo.id === userInfo.id && tokenInfo.username === userInfo.username && tokenInfo.displayname === userInfo.displayname) {
             isTokenValid = true;
         }
     });

@@ -102,7 +102,7 @@ server.post("/validate", auth, async (req, res) => {
 
 // redirects user if url does not exist
 
-server.get("*", function(req, res){
+server.get("*", function (req, res) {
      res.redirect("/");
 });
 

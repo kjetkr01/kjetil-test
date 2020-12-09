@@ -1,63 +1,145 @@
-async function callServerAPI(body, url) {
+function isGymOpen() {
 
-    if (!window.navigator.onLine) {
-        console.log("Offline mode is enabled, server fetching is disabled!");
-        return;
-    }
+    // new version
 
-    if (!body || !url) {
-        return;
-    }
+    const now = new Date().getTime();
 
-    const config = {
-        method: "POST",
-        headers: {
-            "content-type": "application/json"
-        },
-        body: JSON.stringify(body)
-    }
+    const today = new Date();
+    const hours = today.getHours();
 
-    const response = await fetch(url, config);
-    const data = await response.json();
-    //console.log(response.status);
-    
-    //return { "response": response, "data": data };
-    return data;
+    const endMonthAndDay = "Dec 8";
+    const endYear = "2022";
 
-}
+    const closeTimeCheck = 23; // close time
+    const openTimeCheck = 6; // open time
 
-function loadPage(page) {
+    const closeTime = new Date(`${endMonthAndDay}, ${endYear} ${closeTimeCheck}:00:00`).getTime();
+    const openTime = new Date(`${endMonthAndDay}, ${endYear} ${openTimeCheck}:00:00`).getTime();
 
-    if (!window.navigator.onLine) {
-        console.log("Offline mode is enabled, ajax fetching is disabled!");
-        return;
-    }
+    let isOpenMessage = "";
+    let timeLeftMessage = "";
+    let timeLeftString = "";
 
-    const pages = ["index", "login", "access"];
-    let redirect = false;
+    let hoursLeft = 0;
+    let minutesLeft = 0;
 
-    for (let i = 0; i < pages.length; i++) {
+    if (today.getTime() > openTime) {
 
-        if (page === pages[i]) {
-            console.log("exists");
-            redirect = true;
+        isOpenMessage = ``;
+        timeLeftMessage = ``;
+
+    } else {
+
+        if (hours > openTimeCheck && hours < closeTimeCheck) {
+
+            const distance = closeTime - now;
+
+            hoursLeft = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            minutesLeft = Math.ceil((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+            if (hoursLeft < 1) {
+                timeLeftString = `${minutesLeft} min`;
+            } else if (minutesLeft < 0) {
+                timeLeftString = `${hoursLeft} t`;
+            } else {
+                timeLeftString = `${hoursLeft} t og ${minutesLeft} min`;
+            }
+
+            isOpenMessage = `Treningssenteret er åpent!`;
+            timeLeftMessage = `Stenger om ${timeLeftString}`;
+
+        } else {
+
+            const distance = openTime - now;
+
+            hoursLeft = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            minutesLeft = Math.ceil((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+            if (hoursLeft < 1) {
+                timeLeftString = `${minutesLeft} min`;
+            } else if (minutesLeft < 0) {
+                timeLeftString = `${hoursLeft} t`;
+            } else {
+                timeLeftString = `${hoursLeft} t og ${minutesLeft} min`;
+            }
+
+            isOpenMessage = `Treningssenteret er stengt!`;
+            timeLeftMessage = `Åpner om ${timeLeftString}`;
         }
 
     }
 
-    if (redirect) {
+    return { "message": isOpenMessage, "timeLeft": timeLeftMessage };
+}
 
-        let xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.documentElement.innerHTML =
-                    this.responseText;
-            }
-        };
-        xhttp.open("GET", `${page}.html`, true);
-        xhttp.send();
 
-    } else {
-        console.log("Page does not exist!");
+// usage : partOfDayMessage("Kjetil")
+
+function partOfDayMessage(firstName) {
+
+    let partOfDay = "";
+
+    const today = new Date();
+
+    const hours = today.getHours();
+
+    if (hours >= 0 && hours <= 5) {
+        partOfDay = "natt";
     }
+    else if (hours > 5 && hours <= 10) {
+        partOfDay = "morgen";
+    }
+    else if (hours > 10 && hours <= 18) {
+        partOfDay = "ettermiddag";
+    }
+    else if (hours > 18 && hours <= 24) {
+        partOfDay = "kveld";
+    }
+
+    const usermessage = `God ${partOfDay}, ${firstName}.`;
+
+    return usermessage;
+}
+
+
+// usage : let program = {"Mandag": "Bein og mage", "Tirsdag": "Rygg og biceps"}
+// whatToTrainToday(program)
+
+function whatToTrainToday(program) {
+
+    const day = new Date().getDay();
+
+    let dayTxt = "";
+    let usermessage = "";
+
+    switch (day) {
+        case 0:
+            dayTxt = "Søndag";
+            break;
+        case 1:
+            dayTxt = "Mandag";
+            break;
+        case 2:
+            dayTxt = "Tirsdag";
+            break;
+        case 3:
+            dayTxt = "Onsdag";
+            break;
+        case 4:
+            dayTxt = "Torsdag";
+            break;
+        case 5:
+            dayTxt = "Fredag";
+            break;
+        case 6:
+            dayTxt = "Lørdag";
+            break;
+    }
+
+    if (program[dayTxt]) {
+        usermessage = `I dag (${dayTxt}) skal du trene ${program[dayTxt]}.`;
+    }
+
+    return usermessage;
+
 }
