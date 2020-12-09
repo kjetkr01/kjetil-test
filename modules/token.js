@@ -5,7 +5,8 @@ const tokenSecret = process.env.tokenSecret || require("../localenv").tokenSecre
 
 function createToken(userInfo) {
 
-    const token = jwt.sign(userInfo, tokenSecret, {expiresIn: '15s'});
+    // evt endre til lenger
+    const token = jwt.sign(userInfo, tokenSecret, {expiresIn: '1d'});
 
     return token;
 
