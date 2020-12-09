@@ -21,7 +21,7 @@ async function validateToken() {
 
             console.log("invalid token");
             localStorage.clear();
-            location.href = "/login.html";
+            location.href = "/test-login.html";
         }
     }else{
         console.log("no token/user, skipped");
