@@ -18,9 +18,11 @@ async function callServerAPI(body, url) {
     }
 
     const response = await fetch(url, config);
-    //const data = await response.json();
+    const data = await response.json();
     //console.log(response.status);
+    
     //return { "response": response, "data": data };
+    return data;
 
 }
 

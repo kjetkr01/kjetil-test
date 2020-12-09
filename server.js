@@ -6,10 +6,15 @@ const port = (process.env.PORT || 8080);
 server.set('port', port);
 server.use(express.static('public'));
 
-/*
-server.use(bodyParser.urlencoded({ limit: "25mb", extended: true, parameterLimit: 1000000 }));
-server.use(bodyParser.json({ limit: "25mb" }));
-*/
+
+//
+const user = require("./modules/user");
+
+//
+
+server.use(bodyParser.urlencoded({ limit: "5mb", extended: true, parameterLimit: 1000000 }));
+server.use(bodyParser.json({ limit: "5mb" }));
+
 
 // ----------------------------- globale variabler ----------------------- //
 
@@ -21,32 +26,25 @@ const minCharLength = 3;
 // -------------------------------  ask for access / new user ---------------------- //
 
 server.post("/access", async function (req, res) {
-     //const username = req.body.username;
-     //const password = req.body.password;
+     const username = req.body.username;
+     const password = req.body.password;
+     const displayname = req.body.displayname;
 
-     console.log(req.body)
+     if (username && password && displayname) {
 
-     /*if (username.length >= minCharLength && password.length >= minCharLength) {
+          const newUser = new user(username, password, displayname);
+          const resp = await newUser.addToPendingList();
 
-          if (username.length > maxCharLength || password.length > maxCharLength) {
-               res.status(403).json(`Username or password is exceeding ${maxCharLength} characters!`).end();
+          if (resp === null) {
+               res.status(401).json("Brukernavnet er opptatt!").end();
           } else {
-
-               //const newUser = new user(username, password);
-               //const resp = await newUser.create();
-               let resp = 0;
-
-               if (resp === null) {
-                    res.status(401).json("Username is taken!").end();
-               } else {
-                    res.status(200).json("Account created!").end();
-               }
+               res.status(200).json("Du har nå bedt om tilgang!").end();
           }
-     } else {
-          res.status(403).json(`Username or password is too short, min length is ${minCharLength} characters!`).end();
-     }*/
 
-     res.status(200).end();
+     } else {
+          res.status(403).json(`Feil, prøv igjen`).end();
+     }
+
 });
 
 //
