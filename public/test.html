@@ -60,7 +60,7 @@
       <button onClick="loadPage('access')">access (ajax)</button>
       <br>
       -->
-      
+
       <p id="testmessage"></p>
 
       <button onClick="location.href = 'test-login.html'">login-test</button>
@@ -95,11 +95,15 @@
 
          testmessagediv.innerHTML = "";
 
-         for (let i = 0; i < resp.length; i++) {
-            testmessagediv.innerHTML += "Brukernavn: " + resp[i].username + "<br>";
-         }
+         if (resp[0].username) {
 
-         testmessagediv.innerHTML += "Det er totalt " + resp.length + " brukere!";
+            for (let i = 0; i < resp.length; i++) {
+               testmessagediv.innerHTML += "Brukernavn: " + resp[i].username + "<br>";
+            }
+
+            testmessagediv.innerHTML += "Det er totalt " + resp.length + " brukere!";
+
+         }
 
       }
    }
@@ -120,11 +124,15 @@
 
          testmessagediv2.innerHTML = "";
 
-         for (let i = 0; i < resp.length; i++) {
-            testmessagediv2.innerHTML += "Brukernavn: " + resp[i].username + "<br>";
-         }
+         if (resp[0].username) {
 
-         testmessagediv2.innerHTML += "Det er totalt " + resp.length + " forespørseler (brukere)!";
+            for (let i = 0; i < resp.length; i++) {
+               testmessagediv2.innerHTML += "Brukernavn: " + resp[i].username + "<br>";
+            }
+
+            testmessagediv2.innerHTML += "Det er totalt " + resp.length + " forespørseler (brukere)!";
+
+         }
 
       }
    }
