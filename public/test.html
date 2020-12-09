@@ -70,6 +70,8 @@
          <input type="submit">
       </form>
 
+      <p id="askForAccesMsg"></p>
+
    </div>
 
 </body>
@@ -89,7 +91,11 @@
       const confirmPsw = document.getElementById("confirmPsw").value;
 
       let resp = await validate(displayname, username, psw, confirmPsw);
-      console.log(resp)
+
+      //console.log(resp)
+
+      const askForAccesMsg = document.getElementById("askForAccesMsg");
+      askForAccesMsg.innerHTML = resp;
 
    });
 

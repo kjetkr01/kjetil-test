@@ -12,16 +12,20 @@ class StorageHandler {
         };
     }
 
-    //  -------------------------------  create new user  ------------------------------- //
+    //  -------------------------------  ask for access / create new user  ------------------------------- //
 
     async addUserToPendingList(username, password, displayname) {
         const client = new pg.Client(this.credentials);
         let results = null;
         try {
             await client.connect();
+
+            // checks if username is already taken in pending_users table
             results = await client.query('SELECT username from "pending_users" where username=$1', [username]);
 
             if (results.rows.length === 0) {
+
+                // checks if username is already taken in users table
                 results = await client.query('SELECT username from "users" where username=$1', [username]);
 
                 if (results.rows.length === 0) {
