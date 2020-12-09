@@ -25,7 +25,7 @@ async function validateToken() {
         }
     }else{
         console.log("no token/user, skipped");
-        location.href = "/test-loginlogin.html";
+        location.href = "/test-login.html";
     }
 }
 
