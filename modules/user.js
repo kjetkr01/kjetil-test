@@ -23,7 +23,7 @@ class User {
 
 }
 
-async function validate(username, password) {
+async function validateUser(username, password) {
     try {
         let isValid = false;
         password = crypto.createHmac('sha256', secret)
@@ -39,5 +39,25 @@ async function validate(username, password) {
     }
 }
 
+async function getListOfUsers() {
+    try {
+        const resp = await database.getListOfAllUsers();
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function getListOfPendingUsers(username) {
+    try {
+        const resp = await database.getListOfPendingUsers(username);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 module.exports = User;
-module.exports.validate = validate;
+module.exports.validateUser = validateUser;
+module.exports.getListOfUsers = getListOfUsers;
+module.exports.getListOfPendingUsers = getListOfPendingUsers;
