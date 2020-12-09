@@ -4,15 +4,21 @@ async function validateToken() {
     const token = localStorage.getItem("authToken");
     const user = localStorage.getItem("user");
 
-    const body = { "authToken": token, "userInfo": user };
-    const url = `/validate`;
+    if (token && user) {
 
-    const resp = await callServerAPI(body, url);
+        const body = { "authToken": token, "userInfo": user };
+        const url = `/validate`;
 
-    if(resp){
-        
-        console.log("invalid token")
-        //location.href = "/login.html";
+        const resp = await callServerAPI(body, url);
+
+        if (resp) {
+
+            console.log("invalid token");
+            localStorage.clear();
+            //location.href = "/login.html";
+        }
+    }else{
+        console.log("no token/user, skipped");
     }
 }
 
@@ -155,7 +161,7 @@ function whatToTrainToday(program) {
             break;
     }
 
-    if(program[dayTxt]){
+    if (program[dayTxt]) {
         usermessage = `I dag (${dayTxt}) skal du trene ${program[dayTxt]}.`;
     }
 
