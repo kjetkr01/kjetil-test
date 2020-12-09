@@ -28,3 +28,12 @@
             margin: 1vh 1vw;
             
 }
+#askForAccesMsg{
+                display: flex;
+                position: fixed;
+                color: white;
+                margin: auto;
+                top: 58vh;
+                left: 38%;
+                
+}
