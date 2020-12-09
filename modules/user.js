@@ -39,5 +39,15 @@ async function validateUser(username, password) {
     }
 }
 
+async function getListOfUsers() {
+    try {
+        const resp = await database.getListOfAllUsers();
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 module.exports = User;
 module.exports.validateUser = validateUser;
+module.exports.getListOfUsers = getListOfUsers;

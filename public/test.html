@@ -59,6 +59,10 @@
       <br>
       <p id="testmessage"></p>
 
+      <button onClick="location.href = 'test-login.html'">login-test</button>
+      <button onClick="test()">test</button>
+      <p id="testmessagediv"></p>
+
       <p id="showLocalStorage"></p>
 
    </div>
@@ -68,6 +72,28 @@
 <script>
 
 
+   async function test() {
+
+      const token = localStorage.getItem("authToken");
+      const user = localStorage.getItem("user");
+
+      if (token && user) {
+
+         const body = { "authToken": token, "userInfo": user };
+         const url = `/list/users`;
+
+         const resp = await callServerAPI(body, url);
+
+         const testmessagediv = document.getElementById("testmessagediv");
+
+         testmessagediv.innerHTML = "";
+
+         for(let i = 0; i < resp.length; i++){
+            testmessagediv.innerHTML += "Username " + resp[i].username + "<br>";
+         }
+
+      }
+   }
 
    let stopIntervalsTest = true; // stop auto update
 
@@ -113,7 +139,7 @@
    }
 
    // show localstorage list
-   
+
    showLocalStorageList()
    function showLocalStorageList() {
 

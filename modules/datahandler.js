@@ -76,6 +76,27 @@ class StorageHandler {
     }
 
     //
+
+
+    //  -------------------------------  get a list of all users in application  ------------------------------- //
+
+    async getListOfAllUsers() {
+        const client = new pg.Client(this.credentials);
+        let results = null;
+        try {
+            await client.connect();
+            // evt legge til lifts og andre ting brukeren trenger å motta
+            results = await client.query('SELECT "id","username","displayname" FROM "public"."users"');
+            results = (results.rows.length > 0) ? results.rows : null;
+            client.end();
+        } catch (err) {
+            console.log(err);
+        }
+
+        return results;
+    }
+
+    //
 }
 
 module.exports = new StorageHandler(dbCredentials);

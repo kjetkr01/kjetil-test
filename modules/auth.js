@@ -16,8 +16,9 @@ const authenticator = async (req, res, next) => {
 
     if (!resp) {
       return res.status(403).json("invalid token").end();
+    } else {
+      next();
     }
-    next();
 
   } catch (err) {
     res.status(403).json("invalid user").end();
