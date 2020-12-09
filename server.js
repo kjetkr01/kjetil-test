@@ -13,6 +13,7 @@ const auth = require("./modules/auth");
 const user = require("./modules/user");
 const validateUser = require("./modules/user").validateUser;
 const getListOfUsers = require("./modules/user").getListOfUsers;
+const getListOfPendingUsers = require("./modules/user").getListOfPendingUsers;
 
 const createToken = require("./modules/token").createToken;
 const validateToken = require("./modules/token").validateToken;
@@ -92,13 +93,40 @@ server.post("/autenticate", async function (req, res) {
 
 // -------------------------------  get list of users ---------------------- //
 
-server.post("/list/users", auth, async (req, res) => {
+server.post("/users/list/all", auth, async (req, res) => {
 
      const listOfUsers = await getListOfUsers();
 
      if (listOfUsers) {
 
           res.status(200).json(listOfUsers).end();
+
+     } else {
+          res.status(403).json(`Feil, prøv igjen`).end();
+     }
+
+});
+
+//
+
+
+// -------------------------------  get list of pending users (requests) ---------------------- //
+
+server.post("/users/list/pending", auth, async (req, res) => {
+
+     //kun for admins...
+
+     let username = req.body.userInfo;
+     username = JSON.parse(username);
+     username = username.username;
+
+     const listOfPendingUsers = await getListOfPendingUsers(username);
+
+     // list of pending status ??
+
+     if (listOfPendingUsers) {
+
+          res.status(200).json(listOfPendingUsers).end();
 
      } else {
           res.status(403).json(`Feil, prøv igjen`).end();

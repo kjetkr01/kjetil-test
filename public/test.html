@@ -60,8 +60,11 @@
       <p id="testmessage"></p>
 
       <button onClick="location.href = 'test-login.html'">login-test</button>
-      <button onClick="test()">test</button>
+      <button onClick="test()">liste med alle brukere</button>
       <p id="testmessagediv"></p>
+
+      <button onClick="test2()">liste med alle forespørseler (brukere)</button>
+      <p id="testmessagediv2"></p>
 
       <p id="showLocalStorage"></p>
 
@@ -80,7 +83,7 @@
       if (token && user) {
 
          const body = { "authToken": token, "userInfo": user };
-         const url = `/list/users`;
+         const url = `/users/list/all`;
 
          const resp = await callServerAPI(body, url);
 
@@ -88,9 +91,36 @@
 
          testmessagediv.innerHTML = "";
 
-         for(let i = 0; i < resp.length; i++){
-            testmessagediv.innerHTML += "Username " + resp[i].username + "<br>";
+         for (let i = 0; i < resp.length; i++) {
+            testmessagediv.innerHTML += "Brukernavn: " + resp[i].username + "<br>";
          }
+
+         testmessagediv.innerHTML += "Det er totalt " + resp.length + " brukere!";
+
+      }
+   }
+
+   async function test2() {
+
+      const token = localStorage.getItem("authToken");
+      const user = localStorage.getItem("user");
+
+      if (token && user) {
+
+         const body = { "authToken": token, "userInfo": user };
+         const url = `/users/list/pending`;
+
+         const resp = await callServerAPI(body, url);
+
+         const testmessagediv2 = document.getElementById("testmessagediv2");
+
+         testmessagediv2.innerHTML = "";
+
+         for (let i = 0; i < resp.length; i++) {
+            testmessagediv2.innerHTML += "Brukernavn: " + resp[i].username + "<br>";
+         }
+
+         testmessagediv2.innerHTML += "Det er totalt " + resp.length + " forespørseler (brukere)!";
 
       }
    }

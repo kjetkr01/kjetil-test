@@ -1,3 +1,4 @@
+const { response } = require("express");
 const pg = require("pg");
 const dbCredentials = process.env.DATABASE_URL || require("../localenv").credentials;
 
@@ -89,6 +90,40 @@ class StorageHandler {
             results = await client.query('SELECT "id","username","displayname" FROM "public"."users"');
             results = (results.rows.length > 0) ? results.rows : null;
             client.end();
+        } catch (err) {
+            console.log(err);
+        }
+
+        return results;
+    }
+
+    //
+
+    //  -------------------------------  get a list of all pending users in application  ------------------------------- //
+
+    async getListOfPendingUsers(username) {
+
+        const client = new pg.Client(this.credentials);
+        let results = null;
+        try {
+            await client.connect();
+
+            results = await client.query('SELECT username from "users" where username=$1 AND isadmin=true', [username]);
+
+            if (results.rows.length !== 0) {
+
+                // evt legge til lifts og andre ting admin trenger å motta
+                results = await client.query('SELECT "id","username","displayname" FROM "public"."pending_users"');
+                results = (results.rows.length > 0) ? results.rows : null;
+                client.end();
+
+            } else {
+
+                results = null;
+                client.end();
+
+            }
+
         } catch (err) {
             console.log(err);
         }
