@@ -11,70 +11,75 @@ async function validate(displayname, username, password, confirmpassword) {
     let message = "";
     let errorMsg = `må være lengre enn ${minCharLength} tegn og kortere enn ${maxCharLength} tegn`;
 
-    if (password === confirmpassword) {
+    if (displayname && username && password && confirmpassword) {
 
-        if (displayname.length >= minCharLength && displayname.length <= maxCharLength) {
+        if (password === confirmpassword) {
 
-            if (username.length >= minCharLength && username.length <= maxCharLength) {
+            if (displayname.length >= minCharLength && displayname.length <= maxCharLength) {
 
-                for (let i = 0; i < blacklistedChars.length; i++) {
+                if (username.length >= minCharLength && username.length <= maxCharLength) {
 
-                    if (username.includes(blacklistedChars[i])) {
+                    for (let i = 0; i < blacklistedChars.length; i++) {
 
-                        listOfBlacklistedChars += blacklistedChars[i];
+                        if (username.includes(blacklistedChars[i])) {
 
-                        checkTries++;
+                            listOfBlacklistedChars += blacklistedChars[i];
 
+                            checkTries++;
+
+                        } else {
+
+                        }
+                    }
+
+                    if (checkTries === 0) {
+
+                        let splitDisplayName = displayname.split(" ");
+                        let fixedDisplayname = "";
+
+                        for (let i = 0; i < splitDisplayName.length; i++) {
+
+                            function upperCaseFirstLetter(string) {
+                                return string.charAt(0).toUpperCase() + string.slice(1);
+                            }
+
+                            function lowerCaseAllWordsExceptFirstLetters(string) {
+                                return string.replace(/\S*/g, function (word) {
+                                    return word.charAt(0) + word.slice(1).toLowerCase();
+                                });
+                            }
+
+                            fixedDisplayname += upperCaseFirstLetter(lowerCaseAllWordsExceptFirstLetters(splitDisplayName[i])) + " ";
+
+                        }
+
+                        fixedDisplayname = fixedDisplayname.trimRight();
+
+                        //console.log(fixedDisplayname)
+
+                        const body = { "username": username, "password": password, "displayname": fixedDisplayname };
+                        const url = `/access`;
+
+                        const resp = await callServerAPI(body, url);
+                        message = resp;//"godkjent";
                     } else {
-
-                    }
-                }
-
-                if (checkTries === 0) {
-
-
-                    let splitDisplayName = displayname.split(" ");
-                    let fixedDisplayname = "";
-
-                    for (let i = 0; i < splitDisplayName.length; i++) {
-
-                        function upperCaseFirstLetter(string) {
-                            return string.charAt(0).toUpperCase() + string.slice(1);
-                        }
-
-                        function lowerCaseAllWordsExceptFirstLetters(string) {
-                            return string.replace(/\S*/g, function (word) {
-                                return word.charAt(0) + word.slice(1).toLowerCase();
-                            });
-                        }
-
-                        fixedDisplayname += upperCaseFirstLetter(lowerCaseAllWordsExceptFirstLetters(splitDisplayName[i])) + " ";
-
+                        message = `Brukernavnet kan ikke inneholde mellomrom eller følgende tegn: ${listOfBlacklistedChars}`;
                     }
 
-                    fixedDisplayname = fixedDisplayname.trimRight();
-
-                    //console.log(fixedDisplayname)
-
-                    const body = { "username": username, "password": password, "displayname": fixedDisplayname };
-                    const url = `/access`;
-
-                    const resp = await callServerAPI(body, url);
-                    message = resp;//"godkjent";
                 } else {
-                    message = `Brukernavnet kan ikke inneholde mellomrom eller følgende tegn: ${listOfBlacklistedChars}`;
+                    message = `Brukernavnet ${errorMsg}`;
                 }
 
             } else {
-                message = `Brukernavnet ${errorMsg}`;
+                message = `Visningsnavnet ${errorMsg}`;
             }
 
         } else {
-            message = `Visningsnavnet ${errorMsg}`;
+            message = "Passordene stemmer ikke.";
         }
 
     } else {
-        message = "Passordene stemmer ikke.";
+        message = "Vennligst fyll ut alle feltene!";
     }
 
     return message;
