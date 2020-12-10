@@ -1,6 +1,6 @@
 {
-    "name": "Kjetil - Test App",
-    "short_name": "Kjetil - Test",
+    "name": "Treningsstatestikk - Test App",
+    "short_name": "Treningsstatestikk",
     "lang": "nb-NO",
     "start_url": "/index.html",
     "display": "standalone",
