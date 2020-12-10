@@ -7,25 +7,33 @@ async function validateToken() {
         return;
     }
 
-    const token = localStorage.getItem("authToken");
-    const user = localStorage.getItem("user");
+    const currentPage = window.location.pathname;
 
-    if (token && user) {
-
-        const body = { "authToken": token, "userInfo": user };
-        const url = `/validate`;
-
-        const resp = await callServerAPI(body, url);
-
-        if (resp) {
-
-            console.log("invalid token");
-            localStorage.clear();
-            //location.href = "/test-login.html";
-        }
+    //blacklists login pages
+    if (currentPage === "/test-login.html" || currentPage === "/login.html") {
+        console.log("return")
     } else {
-        console.log("no token/user, skipped");
-        //location.href = "/test-login.html";
+
+        const token = localStorage.getItem("authToken");
+        const user = localStorage.getItem("user");
+
+        if (token && user) {
+
+            const body = { "authToken": token, "userInfo": user };
+            const url = `/validate`;
+
+            const resp = await callServerAPI(body, url);
+
+            if (resp) {
+
+                console.log("invalid token");
+                localStorage.clear();
+                location.href = "/login.html";
+            }
+        } else {
+            console.log("no token/user, skipped");
+            location.href = "/login.html";
+        }
     }
 }
 
