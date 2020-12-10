@@ -11,7 +11,9 @@ async function validateToken() {
 
     //blacklists login pages
     if (currentPage === "/test-login.html" || currentPage === "/login.html") {
-        console.log("return")
+        
+        console.log("blacklisted page, skipped");
+
     } else {
 
         const token = localStorage.getItem("authToken");
