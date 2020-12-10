@@ -9,9 +9,9 @@
 
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Kjetil - Test">
-    <meta name="apple-mobile-web-app-title" content="Kjetil - Test">
-    <meta name="msapplication-starturl" content="/index.html">
+    <meta name="application-name" content="Treningsstatestikk">
+    <meta name="apple-mobile-web-app-title" content="Treningsstatestikk">
+    <meta name="msapplication-starturl" content="/">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="icon" type="image/png" sizes="192x192" href="images/appIcon.png">
@@ -23,7 +23,7 @@
     <script src="scripts/global.js" type="text/javascript"></script>
     <script src="scripts/validateInfo.js" type="text/javascript"></script>
     <script src="scripts/script.js" type="text/javascript"></script>
-    
+
 </head>
 
 <body>
@@ -66,26 +66,26 @@
 
 <script>
 
-// ask for access
-const askForAccess = document.getElementById("askForAccess");
+    // ask for access
+    const askForAccess = document.getElementById("askForAccess");
 
-askForAccess.addEventListener("submit", async function (evt) {
+    askForAccess.addEventListener("submit", async function (evt) {
 
-   evt.preventDefault();
+        evt.preventDefault();
 
-   const displayname = document.getElementById("displayname").value;
-   const username = document.getElementById("username").value;
-   const psw = document.getElementById("psw").value;
-   const confirmPsw = document.getElementById("confirmPsw").value;
+        const displayname = document.getElementById("displayname").value;
+        const username = document.getElementById("username").value;
+        const psw = document.getElementById("psw").value;
+        const confirmPsw = document.getElementById("confirmPsw").value;
 
-   let resp = await validate(displayname, username, psw, confirmPsw);
+        let resp = await validate(displayname, username, psw, confirmPsw);
 
-   //console.log(resp)
+        //console.log(resp)
 
-   const askForAccesMsg = document.getElementById("askForAccesMsg");
-   askForAccesMsg.innerHTML = resp;
+        const askForAccesMsg = document.getElementById("askForAccesMsg");
+        askForAccesMsg.innerHTML = resp;
 
-});
+    });
 
 //
 
