@@ -1,14 +1,15 @@
 {
-    "name": "Treningsstatestikk - Test App",
-    "short_name": "Treningsstatestikk",
-    "lang": "nb-NO",
-    "start_url": "/index.html",
-    "display": "standalone",
-    "icons": [
-      {
-        "src": "images/appIcon.png",
-        "sizes": "192x192",
-        "type": "image/png"
-      }
-    ]
-  }
+  "name": "Treningsstatestikk - Test App",
+  "short_name": "Treningsstatestikk",
+  "lang": "nb-NO",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "images/appIcon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
