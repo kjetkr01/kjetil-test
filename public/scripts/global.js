@@ -13,6 +13,7 @@ async function validateToken() {
     if (currentPage === "/test-login.html" || currentPage === "/login.html") {
         
         console.log("blacklisted page, skipped");
+        return;
 
     } else {
 
