@@ -104,6 +104,8 @@
       }
    }
 
+   // list of pending users
+
    async function test2() {
 
       const token = localStorage.getItem("authToken");
@@ -123,7 +125,11 @@
          if (resp[0].username) {
 
             for (let i = 0; i < resp.length; i++) {
-               testmessagediv2.innerHTML += "Brukernavn: " + resp[i].username + "<br>";
+               testmessagediv2.innerHTML += `
+               Brukernavn:${resp[i].username}
+               <button onClick='acceptPendingUser("${resp[i].username}", true)'>Godta</button>
+               <button onClick='acceptPendingUser("${resp[i].username}", false)'>Avslå</button>
+               <br>`;
             }
 
             testmessagediv2.innerHTML += "Det er totalt " + resp.length + " forespørseler (brukere)!";
@@ -133,18 +139,48 @@
       }
    }
 
-   let stopIntervalsTest = true; // stop auto update
-
-   let autoUpdate = setInterval(() => {
-
-      if (stopIntervalsTest) {
-         clearInterval(autoUpdate);
+   async function acceptPendingUser(username, acceptOrDeny) {
+      if(!username || acceptOrDeny === ""){
          return;
       }
 
-      let test1 = isGymOpen();
-      let test2 = partOfDayMessage("Kjetil");
-      document.getElementById("testmessage").innerHTML = `
+      let statusMsg = "godta";
+      
+      if(!acceptOrDeny){
+         statusMsg = "avslå";
+      }
+
+      const confirmPress = confirm("Er du sikker på at du vil " + statusMsg + " " + username + " sin forespørsel?");
+      if (confirmPress === true) {
+
+         //const results = await callServerAPI(body, url);
+
+         //"results.response.status"
+
+         let resp = 200;
+
+         if (resp === 200) {
+            alert("Accepted " + username);
+         } else {
+            alert("Denied " + username);
+         }
+      }
+   }
+
+      //
+
+      let stopIntervalsTest = true; // stop auto update
+
+      let autoUpdate = setInterval(() => {
+
+         if (stopIntervalsTest) {
+            clearInterval(autoUpdate);
+            return;
+         }
+
+         let test1 = isGymOpen();
+         let test2 = partOfDayMessage("Kjetil");
+         document.getElementById("testmessage").innerHTML = `
       ${test1.message}
       <br>
       ${test1.timeLeft}
@@ -152,7 +188,7 @@
       ${test2}
       `;
 
-   }, 1000);
+      }, 1000);
 
 
 
@@ -160,42 +196,42 @@
 
 
 
-   // til testing / ekstra ting
+      // til testing / ekstra ting
 
-   updateTime()
-   function updateTime() {
-      let d = new Date();
-      document.getElementById("updateTime").innerHTML = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      updateTime()
+      function updateTime() {
+         let d = new Date();
+         document.getElementById("updateTime").innerHTML = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-      const html = `
+         const html = `
       Screensize:
       <br>
       H: ${window.screen.availHeight} px<br>
       W: ${window.screen.availWidth} px
       `;
-      document.getElementById("info").innerHTML = html;
-   }
-
-   // show localstorage list
-
-   showLocalStorageList()
-   function showLocalStorageList() {
-
-      let keys = Object.keys(localStorage);
-      const showLocalStorage = document.getElementById("showLocalStorage");
-      showLocalStorage.innerHTML = "";
-
-      if (keys.length > 0) {
-         showLocalStorage.innerHTML = "Localstorage items: <br><br>";
-         for (let i = 0; i < keys.length; i++) {
-            showLocalStorage.innerHTML += keys[i] + ": " + localStorage.getItem(keys[i]) + "<br>";
-         }
-
-         showLocalStorage.innerHTML += "<br> <button onClick='localStorage.clear()'>Clear localstorage</button>"
-
+         document.getElementById("info").innerHTML = html;
       }
 
-   }
+      // show localstorage list
+
+      showLocalStorageList()
+      function showLocalStorageList() {
+
+         let keys = Object.keys(localStorage);
+         const showLocalStorage = document.getElementById("showLocalStorage");
+         showLocalStorage.innerHTML = "";
+
+         if (keys.length > 0) {
+            showLocalStorage.innerHTML = "Localstorage items: <br><br>";
+            for (let i = 0; i < keys.length; i++) {
+               showLocalStorage.innerHTML += keys[i] + ": " + localStorage.getItem(keys[i]) + "<br>";
+            }
+
+            showLocalStorage.innerHTML += "<br> <button onClick='localStorage.clear()'>Clear localstorage</button>"
+
+         }
+
+      }
 
    //
 
