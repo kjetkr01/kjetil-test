@@ -128,50 +128,56 @@ async function whatToTrainToday() {
         return;
     }
 
-    const body = { "authToken": token, "userInfo": user };
-    const url = `/user/whatToTrainToday`;
-
-    const resp = await callServerAPI(body, url);
-
     let dayTxt = "";
     let usermessage = "";
 
-    if (resp && Object.keys(resp).length === 7) {
+    if (token && user) {
 
-        let program = resp;
+        const body = { "authToken": token, "userInfo": user };
+        const url = `/user/whatToTrainToday`;
 
-        const day = new Date().getDay();
+        const resp = await callServerAPI(body, url);
 
-        switch (day) {
-            case 0:
-                dayTxt = "Søndag";
-                break;
-            case 1:
-                dayTxt = "Mandag";
-                break;
-            case 2:
-                dayTxt = "Tirsdag";
-                break;
-            case 3:
-                dayTxt = "Onsdag";
-                break;
-            case 4:
-                dayTxt = "Torsdag";
-                break;
-            case 5:
-                dayTxt = "Fredag";
-                break;
-            case 6:
-                dayTxt = "Lørdag";
-                break;
+        if (resp && Object.keys(resp).length === 7) {
+
+            let program = resp;
+
+            const day = new Date().getDay();
+
+            switch (day) {
+                case 0:
+                    dayTxt = "Søndag";
+                    break;
+                case 1:
+                    dayTxt = "Mandag";
+                    break;
+                case 2:
+                    dayTxt = "Tirsdag";
+                    break;
+                case 3:
+                    dayTxt = "Onsdag";
+                    break;
+                case 4:
+                    dayTxt = "Torsdag";
+                    break;
+                case 5:
+                    dayTxt = "Fredag";
+                    break;
+                case 6:
+                    dayTxt = "Lørdag";
+                    break;
+            }
+
+            if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
+                usermessage = `I dag (${dayTxt}) skal du trene ${program[dayTxt]}.`;
+            } else {
+                usermessage = `I dag (${dayTxt}) har du fri.`;
+            }
+
         }
 
-        if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
-            usermessage = `I dag (${dayTxt}) skal du trene ${program[dayTxt]}.`;
-        } else {
-            usermessage = `I dag (${dayTxt}) har du fri.`;
-        }
-
+    } else {
+        console.log("Invalid token, username skipped whatToTrainToday")
     }
 
     return usermessage;
