@@ -39,7 +39,7 @@ if (user) {
 window.onload = validateToken;
 async function validateToken() {
 
-    const enabled = false;
+    const enabled = true;
 
     if(!enabled){
         console.log("validate token is disabled!");
@@ -82,6 +82,7 @@ async function validateToken() {
             } else {
                 console.log("invalid token");
                 localStorage.clear();
+                sessionStorage.clear();
                 //location.href = "/login.html";
             }
 
