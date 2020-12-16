@@ -75,11 +75,22 @@ function isGymOpen() {
 }
 
 
-// usage : partOfDayMessage("Kjetil")
+// usage : partOfDayMessage("Kjetil Kristiansen")
 
-function partOfDayMessage(firstName) {
+function partOfDayMessage(displayName) {
 
+    let usermessage = "";
+    let messageWithName = true;
     let partOfDay = "";
+    let firstName = "";
+
+    if (!displayName || displayName.length < 3) {
+        messageWithName = false;
+    } else {
+        firstName = displayName.split(" ");
+        firstName = firstName[0];
+    }
+
 
     const today = new Date();
 
@@ -98,7 +109,11 @@ function partOfDayMessage(firstName) {
         partOfDay = "kveld";
     }
 
-    const usermessage = `God ${partOfDay}, ${firstName}.`;
+    if (messageWithName) {
+        usermessage = `God ${partOfDay}, ${firstName}.`;
+    } else {
+        usermessage = `God ${partOfDay}.`;
+    }
 
     return usermessage;
 }

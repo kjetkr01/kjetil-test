@@ -49,14 +49,6 @@
 
       <br><br>
 
-      <!--
-         Trenger ikke dette allikevel?
-      <button onClick="loadPage('index')">index (ajax)</button>
-      <button onClick="loadPage('login')">login (ajax)</button>
-      <button onClick="loadPage('access')">access (ajax)</button>
-      <br>
-      -->
-
       <p id="testmessage"></p>
 
       <button onClick="location.href = 'test-login.html'">login-test</button>
@@ -77,8 +69,8 @@
 
    async function test() {
 
-      const token = localStorage.getItem("authToken");
-      const user = localStorage.getItem("user");
+      //const token = localStorage.getItem("authToken");
+      //const user = localStorage.getItem("user");
 
       if (token && user) {
 
@@ -110,8 +102,8 @@
 
    async function getListOfPendingUsers() {
 
-      const token = localStorage.getItem("authToken");
-      const user = localStorage.getItem("user");
+      //const token = localStorage.getItem("authToken");
+      //const user = localStorage.getItem("user");
 
       if (token && user) {
 
@@ -159,8 +151,8 @@
       const confirmPress = confirm("Er du sikker på at du vil " + statusMsg + " " + username + " sin forespørsel?");
       if (confirmPress === true) {
 
-         const token = localStorage.getItem("authToken");
-         const user = localStorage.getItem("user");
+         //const token = localStorage.getItem("authToken");
+         //const user = localStorage.getItem("user");
 
          const body = { "authToken": token, "userInfo": user, "pendingUser": username, "acceptOrDeny": acceptOrDeny };
          const url = `/users/pending/${username}/${acceptOrDeny}`;
@@ -179,7 +171,7 @@
 
    //
 
-   let stopIntervalsTest = true; // stop auto update
+   let stopIntervalsTest = false; // stop auto update
 
    let autoUpdate = setInterval(() => {
 
@@ -189,7 +181,7 @@
       }
 
       let test1 = isGymOpen();
-      let test2 = partOfDayMessage("Kjetil");
+      let test2 = partOfDayMessage(userDisplayname);
       document.getElementById("testmessage").innerHTML = `
       ${test1.message}
       <br>
