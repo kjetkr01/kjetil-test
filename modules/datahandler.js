@@ -214,6 +214,8 @@ class StorageHandler {
             console.log(err);
         }
 
+        client.end();
+
         return results;
     }
 
@@ -236,12 +238,15 @@ class StorageHandler {
             if (results.rows[0] !== undefined) {
                 program = results.rows[0].trainingsplit;
                 results = true;
+                client.end();
             }
 
         } catch (err) {
+            client.end();
             console.log(err);
         }
 
+        client.end();
         return { "status": results, "program": program };
     }
 
@@ -266,15 +271,20 @@ class StorageHandler {
                     results = await client.query('SELECT "username","displayname","trainingsplit","lifts","goals","info" from "users" where username=$1', [viewingUser]);
                     userDetails = results.rows[0];
                     results = true;
-                }else{
+                } else {
                     results = true;
                     userDetails = false;
                 }
+
+                client.end();
             }
 
         } catch (err) {
+            client.end();
             console.log(err);
         }
+
+        client.end();
 
         return { "status": results, "userDetails": userDetails };
     }
