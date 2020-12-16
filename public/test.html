@@ -52,8 +52,8 @@
       <p id="testmessage"></p>
 
       <button onClick="location.href = 'test-login.html'">login-test</button>
-      <button onClick="test()">liste med alle brukere</button>
-      <p id="testmessagediv"></p>
+      <button onClick="getListOfAllUsers()">liste med alle brukere</button>
+      <p id="getListOfAllUsersDiv"></p>
 
       <button onClick="getListOfPendingUsers()">liste med alle forespørseler (brukere)</button>
       <div id="listOfPendingUsersDiv"></div>
@@ -67,7 +67,7 @@
 <script>
 
 
-   async function test() {
+   async function getListOfAllUsers() {
 
       //const token = localStorage.getItem("authToken");
       //const user = localStorage.getItem("user");
@@ -79,20 +79,22 @@
 
          const resp = await callServerAPI(body, url);
 
-         const testmessagediv = document.getElementById("testmessagediv");
+         const getListOfAllUsersDiv = document.getElementById("getListOfAllUsersDiv");
 
-         testmessagediv.innerHTML = "";
+         getListOfAllUsersDiv.innerHTML = "";
 
          if (resp[0].username) {
 
             for (let i = 0; i < resp.length; i++) {
-               testmessagediv.innerHTML += "Brukernavn: " + resp[i].username + "<br>";
+               getListOfAllUsersDiv.innerHTML += `<div onClick="console.log('Clicked on ${resp[i].username}')">
+                  Brukernavn: ${resp[i].username}
+                  </div>`;
             }
 
-            testmessagediv.innerHTML += "Det er totalt " + resp.length + " brukere!";
+            getListOfAllUsersDiv.innerHTML += "Det er totalt " + resp.length + " brukere!";
 
          } else {
-            testmessagediv2.innerHTML += "Det er ingen brukere!";
+            getListOfAllUsersDiv.innerHTML += "Det er ingen brukere!";
          }
 
       }
@@ -119,11 +121,11 @@
          if (resp[0].username) {
 
             for (let i = 0; i < resp.length; i++) {
-               listOfPendingUsersDiv.innerHTML += `
+               listOfPendingUsersDiv.innerHTML += `<div>
                Navn:${resp[i].displayname} Brukernavn: ${resp[i].username}
                <button onClick='acceptPendingUser("${resp[i].username}", true)'>Godta</button>
                <button onClick='acceptPendingUser("${resp[i].username}", false)'>Avslå</button>
-               <br>`;
+               </div>`;
             }
 
             listOfPendingUsersDiv.innerHTML += "Det er totalt " + resp.length + " forespørseler (brukere)!";

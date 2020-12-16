@@ -1,12 +1,33 @@
 // global variables
-//var user, token, userDisplayname;
 
 const token = localStorage.getItem("authToken");
 const user = localStorage.getItem("user");
-let userDisplayname = JSON.parse(user);
-userDisplayname = userDisplayname.displayname;
+let userDisplayname;
 
-console.log(token)
+//
+
+// fixed global variables
+
+if (user) {
+    userDisplayname = JSON.parse(user);
+    userDisplayname = userDisplayname.displayname;
+}
+
+//
+
+// check if token / user exists
+
+if (token) {
+    console.log("Token: " + token)
+} else {
+    console.log("No token!");
+}
+
+if (user) {
+    console.log("Logged in as: " + userDisplayname)
+} else {
+    console.log("Not logged in!");
+}
 
 //
 
