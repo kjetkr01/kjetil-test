@@ -169,7 +169,7 @@ class StorageHandler {
                             const settings = {
                                 "leaderboards": true,
                                 "publicProfile": true,
-                                "showGymCloseTime": false,
+                                "showGymCloseTime": true,
                                 "extraStats": false,
                             };
 
@@ -243,6 +243,40 @@ class StorageHandler {
         }
 
         return { "status": results, "program": program };
+    }
+
+    //
+
+    //  -------------------------------  get userdetails (view userPage)  ------------------------------- //
+
+    async getUserDetails(viewingUser) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        let userDetails = {};
+
+        try {
+            await client.connect();
+
+            results = await client.query('SELECT settings from "users" where username=$1', [viewingUser]);
+
+            if (results.rows[0] !== undefined) {
+
+                if (results.rows[0].settings.publicProfile === true) {
+                    results = await client.query('SELECT "username","displayname","trainingsplit","lifts","goals","info" from "users" where username=$1', [viewingUser]);
+                    userDetails = results.rows[0];
+                    results = true;
+                }else{
+                    results = true;
+                    userDetails = false;
+                }
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
+
+        return { "status": results, "userDetails": userDetails };
     }
 
     //

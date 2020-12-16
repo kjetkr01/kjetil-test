@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Laster...</title>
+
+    <meta charset="utf-8" />
+
+    <!-- manifest -->
+
+    <link rel="manifest" href="manifest.json">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Treningsstatestikk">
+    <meta name="apple-mobile-web-app-title" content="Treningsstatestikk">
+    <meta name="msapplication-starturl" content="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+
+    <!-- -->
+
+    <script src="scripts/global.js" type="text/javascript"></script>
+    <script src="scripts/validateInfo.js" type="text/javascript"></script>
+    <script src="scripts/script.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+    <div id="displayname"></div>
+    <div id="age"></div>
+    <div id="height"></div>
+    <div id="weight"></div>
+    <div id="workoutToday"></div>
+
+</body>
+
+<script>
+
+    //localStorage.setItem("ViewingUser", "kjetkr01");
+
+    const viewingUser = localStorage.getItem("ViewingUser");
+
+    if (viewingUser) {
+        getUserDetails()
+    } else {
+        location.href = "test.html";
+    }
+
+    async function getUserDetails() {
+
+        if (token && user) {
+
+            const body = { "authToken": token, "userInfo": user, "viewingUser": viewingUser };
+            const url = `/users/details/${viewingUser}`;
+
+            const resp = await callServerAPI(body, url);
+
+            if (Object.entries(resp).length < 7) {
+                document.title = viewingUser + " sin profil";
+                displayInformation(resp);
+            } else {
+                alert(resp);
+                location.href = "test.html";
+            }
+
+        }
+
+    }
+
+    function displayInformation(info) {
+
+        const displayname = info.displayname;
+        const age = info.info.age;
+        const height = info.info.height
+        const weight = info.info.weight;
+        const program = info.trainingsplit;
+
+
+        if (displayname) {
+            document.getElementById("displayname").innerHTML = displayname;
+        }
+        if (age) {
+            document.getElementById("age").innerHTML = age + " år"
+        }
+        if (height) {
+            document.getElementById("height").innerHTML = height + " cm"
+        }
+        if (weight) {
+            document.getElementById("weight").innerHTML = weight + " kg"
+        }
+        if (program) {
+
+            let dayTxt = "";
+            let usermessage = "";
+
+            const day = new Date().getDay();
+
+            switch (day) {
+                case 0:
+                    dayTxt = "Søndag";
+                    break;
+                case 1:
+                    dayTxt = "Mandag";
+                    break;
+                case 2:
+                    dayTxt = "Tirsdag";
+                    break;
+                case 3:
+                    dayTxt = "Onsdag";
+                    break;
+                case 4:
+                    dayTxt = "Torsdag";
+                    break;
+                case 5:
+                    dayTxt = "Fredag";
+                    break;
+                case 6:
+                    dayTxt = "Lørdag";
+                    break;
+            }
+
+            if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
+                usermessage = `Trener i dag: ${program[dayTxt]}.`;
+            } else {
+                usermessage = `Trener ikke i dag.`;
+            }
+
+            document.getElementById("workoutToday").innerHTML = usermessage;
+
+        }
+
+    }
+
+</script>
+
+</html>

@@ -16,6 +16,7 @@ const getListOfUsers = require("./modules/user").getListOfUsers;
 const getListOfPendingUsers = require("./modules/user").getListOfPendingUsers;
 const acceptOrDenyUser = require("./modules/user").acceptOrDenyUser;
 const getWorkoutSplit = require("./modules/user").getWorkoutSplit;
+const getUserDetails = require("./modules/user").getUserDetails;
 
 const createToken = require("./modules/token").createToken;
 const validateToken = require("./modules/token").validateToken;
@@ -183,6 +184,36 @@ server.post("/user/whatToTrainToday", auth, async (req, res) => {
                res.status(200).json(resp.program).end();
           } else {
                res.status(403).json(`Feil, prøv igjen`).end();
+          }
+     } else {
+          res.status(403).json(`Feil, prøv igjen`).end();
+     }
+});
+
+//
+
+// -------------------------------  get user details (view userPage) ---------------------- //
+
+server.post("/users/details/:user", auth, async (req, res) => {
+
+     let username = req.body.userInfo;
+     username = JSON.parse(username);
+     username = username.username;
+
+     const viewingUser = req.body.viewingUser
+
+     if (username && viewingUser) {
+
+          const resp = await getUserDetails(viewingUser);
+
+          if (resp.status === true) {
+               if (resp.userDetails !== false) {
+                    res.status(200).json(resp.userDetails).end();
+               } else {
+                    res.status(403).json(`${viewingUser} sin profilen er privat!`).end();
+               }
+          } else {
+               res.status(403).json(`Brukeren finnes ikke!`).end();
           }
      } else {
           res.status(403).json(`Feil, prøv igjen`).end();

@@ -1,8 +1,11 @@
 // global variables
 
 const token = localStorage.getItem("authToken");
-const user = sessionStorage.getItem("user");
+const user = localStorage.getItem("user");
 let userDisplayname;
+
+let lastUpdatedTime = new Date();
+lastUpdatedTime = lastUpdatedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
 //
 
@@ -72,7 +75,6 @@ async function validateToken() {
             } else {
                 console.log("invalid token");
                 localStorage.clear();
-                sessionStorage.clear();
                 //location.href = "/login.html";
             }
 

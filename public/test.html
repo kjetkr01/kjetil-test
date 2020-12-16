@@ -86,7 +86,7 @@
          if (resp[0].username) {
 
             for (let i = 0; i < resp.length; i++) {
-               getListOfAllUsersDiv.innerHTML += `<div onClick="console.log('Clicked on ${resp[i].username}')">
+               getListOfAllUsersDiv.innerHTML += `<div onClick="viewUser('${resp[i].username}')">
                   Brukernavn: ${resp[i].username}
                   </div>`;
             }
@@ -98,6 +98,15 @@
          }
 
       }
+   }
+
+   function viewUser(viewUser) {
+
+      if (viewUser) {
+         localStorage.setItem("ViewingUser", viewUser);
+         location.href = "test-view_user.html";
+      }
+
    }
 
    // list of pending users
@@ -137,6 +146,8 @@
       }
    }
 
+   //
+
    test();
    async function test() {
 
@@ -147,6 +158,8 @@
       }
 
    }
+
+   // acceptOrDeny users
 
    async function acceptPendingUser(username, acceptOrDeny) {
       if (!username || acceptOrDeny === "") {
@@ -205,12 +218,15 @@
 
    }, 1000);
 
+
+
+
+
    // til testing / ekstra ting
 
    updateTime()
    function updateTime() {
-      let d = new Date();
-      document.getElementById("updateTime").innerHTML = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      document.getElementById("updateTime").innerHTML = lastUpdatedTime;
 
       const html = `
       Screensize:

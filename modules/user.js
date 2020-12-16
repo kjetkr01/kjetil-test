@@ -75,9 +75,19 @@ async function getWorkoutSplit(username) {
     }
 }
 
+async function getUserDetails(viewingUser) {
+    try {
+        const resp = await database.getUserDetails(viewingUser);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 module.exports = User;
 module.exports.validateUser = validateUser;
 module.exports.getListOfUsers = getListOfUsers;
 module.exports.getListOfPendingUsers = getListOfPendingUsers;
 module.exports.acceptOrDenyUser = acceptOrDenyUser;
 module.exports.getWorkoutSplit = getWorkoutSplit;
+module.exports.getUserDetails = getUserDetails;
