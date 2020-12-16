@@ -187,7 +187,7 @@ class StorageHandler {
                             const goals = {};
                             const info = { "age": "", "height": "", "weight": "" };
 
-                            await client.query('INSERT INTO "public"."users"("username", "password", "displayname", "settings", "trainingSplit", "lifts", "goals", "info", "isadmin") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;', [newUserUsername, newUserPassword, newUserDisplayname, settings, trainingSplit, lifts, goals, info, false]);
+                            await client.query('INSERT INTO "public"."users"("username", "password", "displayname", "settings", "trainingsplit", "lifts", "goals", "info", "isadmin") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;', [newUserUsername, newUserPassword, newUserDisplayname, settings, trainingSplit, lifts, goals, info, false]);
                             results = true;
                         }
 
@@ -215,6 +215,34 @@ class StorageHandler {
         }
 
         return results;
+    }
+
+    //
+
+
+    //  -------------------------------  get workoutSplit (user)  ------------------------------- //
+
+    async getWorkoutSplit(username) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        let program = {};
+
+        try {
+            await client.connect();
+
+            results = await client.query('SELECT trainingsplit from "users" where username=$1', [username]);
+
+            if (results.rows[0] !== undefined) {
+                program = results.rows[0].trainingsplit;
+                results = true;
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
+
+        return { "status": results, "program": program };
     }
 
     //

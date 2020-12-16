@@ -15,6 +15,7 @@ const validateUser = require("./modules/user").validateUser;
 const getListOfUsers = require("./modules/user").getListOfUsers;
 const getListOfPendingUsers = require("./modules/user").getListOfPendingUsers;
 const acceptOrDenyUser = require("./modules/user").acceptOrDenyUser;
+const getWorkoutSplit = require("./modules/user").getWorkoutSplit;
 
 const createToken = require("./modules/token").createToken;
 const validateToken = require("./modules/token").validateToken;
@@ -159,6 +160,32 @@ server.post("/users/pending/:user/:acceptOrDeny", auth, async (req, res) => {
           } else {
                res.status(403).json(`Feil, prøv igjen`).end();
           }
+     } else {
+          res.status(403).json(`Feil, prøv igjen`).end();
+     }
+});
+
+//
+
+// -------------------------------  whatToTrainToday (user) ---------------------- //
+
+server.post("/user/whatToTrainToday", auth, async (req, res) => {
+
+     let username = req.body.userInfo;
+     username = JSON.parse(username);
+     username = username.username;
+
+     if (username) {
+
+          const resp = await getWorkoutSplit(username);
+
+          if (resp.status === true) {
+               res.status(200).json(resp.program).end();
+          } else {
+               res.status(403).json(`Feil, prøv igjen`).end();
+          }
+     } else {
+          res.status(403).json(`Feil, prøv igjen`).end();
      }
 });
 
@@ -171,6 +198,8 @@ server.post("/validate", auth, async (req, res) => {
      const currentUser = JSON.parse(req.body.userInfo);
 
      console.log("valid, current user: " + currentUser.username); // test / grei log i terminal
+
+     res.status(200).json("Ok").end();
 
 });
 

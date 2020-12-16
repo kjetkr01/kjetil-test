@@ -59,13 +59,13 @@
       <div id="listOfPendingUsersDiv"></div>
 
       <p id="showLocalStorage"></p>
+      <p id="showSessionStorage"></p>
 
    </div>
 
 </body>
 
 <script>
-
 
    async function getListOfAllUsers() {
 
@@ -137,6 +137,17 @@
       }
    }
 
+   test();
+   async function test() {
+
+      let resp = await whatToTrainToday();
+
+      if (resp.length > 0) {
+         console.log(resp);
+      }
+
+   }
+
    async function acceptPendingUser(username, acceptOrDeny) {
       if (!username || acceptOrDeny === "") {
          return;
@@ -194,12 +205,6 @@
 
    }, 1000);
 
-
-
-
-
-
-
    // til testing / ekstra ting
 
    updateTime()
@@ -218,7 +223,7 @@
 
    // show localstorage list
 
-   showLocalStorageList()
+   showLocalStorageList();
    function showLocalStorageList() {
 
       let keys = Object.keys(localStorage);
@@ -231,10 +236,31 @@
             showLocalStorage.innerHTML += keys[i] + ": " + localStorage.getItem(keys[i]) + "<br>";
          }
 
-         showLocalStorage.innerHTML += "<br> <button onClick='localStorage.clear()'>Clear localstorage</button>"
+         showLocalStorage.innerHTML += "<br> <button onClick='localStorage.clear()'>Clear localStorage</button>";
 
       }
+   }
 
+   //
+
+   // show localstorage list
+
+   showSessionStorageList();
+   function showSessionStorageList() {
+
+      let keys = Object.keys(sessionStorage);
+      const showSessionStorage = document.getElementById("showSessionStorage");
+      showSessionStorage.innerHTML = "";
+
+      if (keys.length > 0) {
+         showSessionStorage.innerHTML = "SessionStorage items: <br><br>";
+         for (let i = 0; i < keys.length; i++) {
+            showSessionStorage.innerHTML += keys[i] + ": " + localStorage.getItem(keys[i]) + "<br>";
+         }
+
+         showSessionStorage.innerHTML += "<br> <button onClick='sessionStorage.clear()'>Clear sessionStorage</button>";
+
+      }
    }
 
    //

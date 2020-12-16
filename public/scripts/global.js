@@ -1,7 +1,7 @@
 // global variables
 
 const token = localStorage.getItem("authToken");
-const user = localStorage.getItem("user");
+const user = sessionStorage.getItem("user");
 let userDisplayname;
 
 //
@@ -65,12 +65,17 @@ async function validateToken() {
 
             const resp = await callServerAPI(body, url);
 
-            if (resp) {
+            if (resp === "Ok") {
 
+                console.log("Token is valid");
+
+            } else {
                 console.log("invalid token");
                 localStorage.clear();
+                sessionStorage.clear();
                 //location.href = "/login.html";
             }
+
         } else {
             console.log("no token/user, skipped");
             //location.href = "/login.html";

@@ -66,8 +66,18 @@ async function acceptOrDenyUser(username, pendingUser, acceptOrDeny) {
     }
 }
 
+async function getWorkoutSplit(username) {
+    try {
+        const resp = await database.getWorkoutSplit(username);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 module.exports = User;
 module.exports.validateUser = validateUser;
 module.exports.getListOfUsers = getListOfUsers;
 module.exports.getListOfPendingUsers = getListOfPendingUsers;
 module.exports.acceptOrDenyUser = acceptOrDenyUser;
+module.exports.getWorkoutSplit = getWorkoutSplit;
