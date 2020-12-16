@@ -154,7 +154,7 @@ server.post("/users/pending/:user/:acceptOrDeny", auth, async (req, res) => {
 
           const resp = await acceptOrDenyUser(username, pendingUser, acceptOrDeny);
 
-          if (resp) {
+          if (resp === true) {
                res.status(200).json("Ok").end();
           } else {
                res.status(403).json(`Feil, prøv igjen`).end();

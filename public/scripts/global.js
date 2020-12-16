@@ -11,7 +11,7 @@ async function validateToken() {
 
     //blacklists login pages
     if (currentPage === "/test-login.html" || currentPage === "/login.html") {
-        
+
         console.log("blacklisted page, skipped");
         return;
 

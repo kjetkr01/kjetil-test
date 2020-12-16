@@ -146,22 +146,26 @@ class StorageHandler {
 
             if (results.rows.length !== 0) {
 
-                if (acceptOrDeny) {
+                results = await client.query('SELECT username from "users" where username=$1', [pendingUser]);
+
+                if (results.rows.length === 0) {
+
                     const newUser = await client.query('SELECT * from "pending_users" where username=$1', [pendingUser]);
 
                     if (newUser.rows[0] === undefined) {
-                        return;
+                        results = false;
+                        return results;
                     }
 
-                    const newUserUsername = newUser.rows[0].username;
-                    const newUserPassword = newUser.rows[0].password;
-                    const newUserDisplayname = newUser.rows[0].displayname;
+                    if (acceptOrDeny) {
 
-                    if (newUserUsername && newUserPassword && newUserDisplayname) {
+                        const newUserUsername = newUser.rows[0].username;
+                        const newUserPassword = newUser.rows[0].password;
+                        const newUserDisplayname = newUser.rows[0].displayname;
 
-                        results = await client.query('SELECT username from "users" where username=$1', [newUserUsername]);
+                        if (newUserUsername && newUserPassword && newUserDisplayname) {
 
-                        if (results.rows.length === 0) {
+
                             const settings = {
                                 "leaderboards": true,
                                 "publicProfile": true,
@@ -181,26 +185,27 @@ class StorageHandler {
 
                             const lifts = {};
                             const goals = {};
-                            const info = {"age": "", "height": "", "weight": ""};
+                            const info = { "age": "", "height": "", "weight": "" };
 
                             await client.query('INSERT INTO "public"."users"("username", "password", "displayname", "settings", "trainingSplit", "lifts", "goals", "info", "isadmin") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;', [newUserUsername, newUserPassword, newUserDisplayname, settings, trainingSplit, lifts, goals, info, false]);
                             results = true;
                         }
+
+                    } else {
+                        results = true;
                     }
 
-                } else {
-                    results = true;
-                }
+                    if (results) {
+                        await client.query('DELETE from "pending_users" where username=$1', [pendingUser]);
+                    }
 
-                if (results) {
-                    await client.query('DELETE from "pending_users" where username=$1', [pendingUser]);
                 }
 
                 client.end();
 
             } else {
 
-                results = null;
+                results = false;
                 client.end();
 
             }

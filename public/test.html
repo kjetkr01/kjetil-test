@@ -63,8 +63,8 @@
       <button onClick="test()">liste med alle brukere</button>
       <p id="testmessagediv"></p>
 
-      <button onClick="test2()">liste med alle forespørseler (brukere)</button>
-      <p id="testmessagediv2"></p>
+      <button onClick="getListOfPendingUsers()">liste med alle forespørseler (brukere)</button>
+      <div id="listOfPendingUsersDiv"></div>
 
       <p id="showLocalStorage"></p>
 
@@ -99,7 +99,7 @@
 
             testmessagediv.innerHTML += "Det er totalt " + resp.length + " brukere!";
 
-         }else{
+         } else {
             testmessagediv2.innerHTML += "Det er ingen brukere!";
          }
 
@@ -108,7 +108,7 @@
 
    // list of pending users
 
-   async function test2() {
+   async function getListOfPendingUsers() {
 
       const token = localStorage.getItem("authToken");
       const user = localStorage.getItem("user");
@@ -120,26 +120,26 @@
 
          const resp = await callServerAPI(body, url);
 
-         const testmessagediv2 = document.getElementById("testmessagediv2");
+         const listOfPendingUsersDiv = document.getElementById("listOfPendingUsersDiv");
 
-         testmessagediv2.innerHTML = "";
+         listOfPendingUsersDiv.innerHTML = "";
 
          if (resp[0].username) {
 
             for (let i = 0; i < resp.length; i++) {
-               testmessagediv2.innerHTML += `
-               Brukernavn:${resp[i].username}
+               listOfPendingUsersDiv.innerHTML += `
+               Navn:${resp[i].displayname} Brukernavn: ${resp[i].username}
                <button onClick='acceptPendingUser("${resp[i].username}", true)'>Godta</button>
                <button onClick='acceptPendingUser("${resp[i].username}", false)'>Avslå</button>
                <br>`;
             }
 
-            testmessagediv2.innerHTML += "Det er totalt " + resp.length + " forespørseler (brukere)!";
+            listOfPendingUsersDiv.innerHTML += "Det er totalt " + resp.length + " forespørseler (brukere)!";
 
-         }else{
-            testmessagediv2.innerHTML += "Det er ingen forespørseler!";
+         } else {
+            listOfPendingUsersDiv.innerHTML = "Det er ingen forespørseler!";
          }
-
+         
       }
    }
 
@@ -162,7 +162,7 @@
          const token = localStorage.getItem("authToken");
          const user = localStorage.getItem("user");
 
-         const body = { "authToken": token, "userInfo": user, "pendingUser": username, "acceptOrDeny": acceptOrDeny};
+         const body = { "authToken": token, "userInfo": user, "pendingUser": username, "acceptOrDeny": acceptOrDeny };
          const url = `/users/pending/${username}/${acceptOrDeny}`;
 
          const results = await callServerAPI(body, url);
