@@ -14,6 +14,7 @@ const user = require("./modules/user");
 const validateUser = require("./modules/user").validateUser;
 const getListOfUsers = require("./modules/user").getListOfUsers;
 const getListOfPendingUsers = require("./modules/user").getListOfPendingUsers;
+const acceptOrDenyUser = require("./modules/user").acceptOrDenyUser;
 
 const createToken = require("./modules/token").createToken;
 const validateToken = require("./modules/token").validateToken;
@@ -132,6 +133,33 @@ server.post("/users/list/pending", auth, async (req, res) => {
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 
+});
+
+//
+
+// -------------------------------  accept or deny pending user ---------------------- //
+
+server.post("/users/pending/:user/:acceptOrDeny", auth, async (req, res) => {
+
+     //kun for admins...
+
+     let username = req.body.userInfo;
+     username = JSON.parse(username);
+     username = username.username;
+
+     const pendingUser = req.body.pendingUser;
+     const acceptOrDeny = req.body.acceptOrDeny;
+
+     if (username && pendingUser) {
+
+          const resp = await acceptOrDenyUser(username, pendingUser, acceptOrDeny);
+
+          if (resp) {
+               res.status(200).json("Ok").end();
+          } else {
+               res.status(403).json(`Feil, prøv igjen`).end();
+          }
+     }
 });
 
 //
