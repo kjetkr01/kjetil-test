@@ -39,13 +39,6 @@ if (user) {
 window.onload = validateToken;
 async function validateToken() {
 
-    const enabled = true;
-
-    if(!enabled){
-        console.log("validate token is disabled!");
-        return;
-    }
-
     if (!window.navigator.onLine) {
         console.log("Offline mode is enabled, server fetching is disabled!");
         return;
