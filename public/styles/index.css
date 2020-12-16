@@ -1,33 +1,35 @@
+#container{
+        margin: 0;
+        padding: 0;
+        height: 90vh;
+}
 #hei_melding{
+             
              background: none;
              font-family: Arial, Helvetica, sans-serif;
              color: white;
              font-weight: bold;
              font-size: 22px;
-             padding-left: 11vw;
-}
-.container{
-           display: flex;
-           margin-top: 10vh;
-           align-items: center;
 }            
 #gym_open{
           font-family: Arial, Helvetica, sans-serif;
           color: white;
-          margin: auto;
-          display: flex;
+          
 }
 #time_left{
+           
            font-family: Arial, Helvetica, sans-serif;
            color: white;
-           top: 12vw;
-           display: flex;
+           margin-top: 10px;
 }
 #board{
+       
+       border-radius: 10px;
+       padding: 10px;
        background-color: rgb(29, 29, 29);
        color: white;
        font-family: Arial, Helvetica, sans-serif;
-       margin: auto;
        overflow-y: scroll;
-       text-align: center; 
+       max-width: 20%;
+       max-height: 10%;
 }
