@@ -210,7 +210,7 @@ server.post("/users/details/:user", auth, async (req, res) => {
                if (resp.userDetails !== false) {
                     res.status(200).json(resp.userDetails).end();
                } else {
-                    res.status(403).json(`${viewingUser} sin profilen er privat!`).end();
+                    res.status(403).json(`${viewingUser} sin profil er privat!`).end();
                }
           } else {
                res.status(403).json(`Brukeren finnes ikke!`).end();
