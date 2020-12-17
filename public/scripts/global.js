@@ -12,8 +12,16 @@ lastUpdatedTime = lastUpdatedTime.toLocaleTimeString([], { hour: '2-digit', minu
 // fixed global variables
 
 if (user) {
+    try{
+
     userDisplayname = JSON.parse(user);
     userDisplayname = userDisplayname.displayname;
+
+    }catch(err){
+
+        console.log("invalid user object");
+
+    }
 }
 
 //
