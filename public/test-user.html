@@ -37,7 +37,7 @@
     <div id="height"></div>
     <div id="weight"></div>
     <div id="workoutToday"></div>
-    <div id="showLifts"></div>
+    <div id="infoDiv"></div>
 
     <div id="showTotalLift"></div>
 
@@ -48,6 +48,16 @@
 <script>
 
     //localStorage.setItem("ViewingUser", "kjetkr01");
+
+    let info = "";
+
+    let displayname = "";
+    let age = "";
+    let height = "";
+    let weight = "";
+    let program = "";
+    let lifts = "";
+    let goals = "";
 
     const viewingUser = sessionStorage.getItem("ViewingUser");
 
@@ -68,7 +78,8 @@
 
             if (Object.entries(resp).length < 7) {
                 document.title = viewingUser + " sin profil";
-                displayInformation(resp);
+                info = resp;
+                displayInformation();
             } else {
                 alert(resp);
                 location.href = "test.html";
@@ -78,15 +89,19 @@
 
     }
 
-    function displayInformation(info) {
+    function displayInformation() {
 
-        const displayname = info.displayname;
-        const age = info.info.age;
-        const height = info.info.height
-        const weight = info.info.weight;
-        const program = info.trainingsplit;
-        const lifts = info.lifts;
-        const goals = info.goals;
+        if (!info) {
+            return;
+        }
+
+        displayname = info.displayname;
+        age = info.info.age;
+        height = info.info.height
+        weight = info.info.weight;
+        program = info.trainingsplit;
+        lifts = info.lifts;
+        goals = info.goals;
 
 
         if (displayname) {
@@ -140,12 +155,86 @@
 
             document.getElementById("workoutToday").innerHTML = usermessage;
 
+            changeInfoDivContent("lifts")
+
         }
+
+
+
+    }
+
+    function changeInfoDivContent(content) {
+
+        if (content === "lifts" || content === "goal" || content === "plan") {
+
+            document.getElementById("infoDiv").innerHTML = "";
+            document.getElementById("showTotalLift").innerHTML = "";
+
+            switch (content) {
+                case "lifts":
+                    displayLifts();
+                    updateButtons(content);
+                    break;
+                case "goal":
+                    displayGoals();
+                    updateButtons(content);
+                    break;
+                case "plan":
+                    displayProgram();
+                    updateButtons(content);
+                    break;
+            }
+
+        }
+
+    }
+
+    function updateButtons(current) {
+
+        if (!current) {
+            return;
+        }
+
+        let liftsEnabled = true;
+        let goalsEnabled = true;
+        let programEnabled = true;
+
+        switch (current) {
+            case "lifts":
+                liftsEnabled = false;
+                break;
+            case "goal":
+                goalsEnabled = false;
+                break;
+            case "plan":
+                programEnabled = false;
+                break;
+        }
+
+        // buttons
+
+        document.getElementById("buttons").innerHTML = "";
+
+        if (Object.entries(lifts).length > 0 && liftsEnabled === true) {
+            document.getElementById("buttons").innerHTML += `<button onClick="changeInfoDivContent('lifts')">Løft</button>`;
+        }
+
+        if (Object.entries(goals).length > 0 && goalsEnabled === true) {
+            document.getElementById("buttons").innerHTML += `<button onClick="changeInfoDivContent('goal')">Mål</button>`;
+        }
+
+        if (Object.entries(program).length > 0 && programEnabled === true) {
+            document.getElementById("buttons").innerHTML += `<button onClick="changeInfoDivContent('plan')">Treningsplan</button>`;
+        }
+
+    }
+
+    function displayLifts() {
 
         if (Object.entries(lifts).length > 0) {
 
             let keys = Object.keys(lifts);
-            const showLifts = document.getElementById("showLifts");
+            const showLifts = document.getElementById("infoDiv");
             showLifts.innerHTML = "";
 
             if (keys.length > 0) {
@@ -208,21 +297,87 @@
                 }
 
                 let liftsTestDef = { "Benkpress": { "ORM": "50", "PRdate": "17.12.2020" }, "Knebøy": { "ORM": "75,5", "PRdate": "17.12.2020" }, "Markløft": { "ORM": "121,25", "PRdate": "17.12.2020" } };
+            }
+        }
+
+    }
+
+    function displayGoals() {
+
+        if (Object.entries(goals).length > 0) {
+
+            let keys = Object.keys(goals);
+            const showLifts = document.getElementById("infoDiv");
+            showLifts.innerHTML = "";
+
+            if (keys.length > 0) {
+                showLifts.innerHTML = "Mål: <br><br>";
+                for (let i = 0; i < keys.length; i++) {
+
+                    let liftKeys = goals[keys[i]];
+
+                    if (liftKeys.goal !== "0" && liftKeys.goal !== 0 && liftKeys.goal !== "") {
+
+                        let msg = `${keys[i]} : ${liftKeys.goal} kg<br>`;
+
+                        let prDateArr = liftKeys.Goaldate.split(".");
+
+                        if (prDateArr.length === 3) {
+
+                            if (prDateArr[0] > 0 && prDateArr[0] <= 31 && prDateArr[0].length <= 2 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2 && prDateArr[2].length === 4) {
+
+                                const d = new Date();
+
+                                const prDate = new Date(prDateArr[2], (prDateArr[1] - 1), prDateArr[0]);
+
+                                function calcTime() {
+                                    let daysSinceTime = (d - prDate) / (1000 * 3600 * 24);
+                                    return parseInt(daysSinceTime);
+                                }
+
+                                msg = `${keys[i]} : ${liftKeys.goal} kg Dato: ${liftKeys.Goaldate} Dager siden: ${calcTime()}<br>`;
+
+                            }
+
+                        }
+
+                        showLifts.innerHTML += msg;
+                    }
+                }
+
                 let goalsTestDef = { "Benkpress": { "goal": "50", "Goaldate": "17.12.2020" }, "Knebøy": { "goal": "75,5", "Goaldate": "17.12.2020" }, "Markløft": { "goal": "121,25", "Goaldate": "17.12.2020" } };
             }
         }
 
+    }
 
-        // buttons
+    function displayProgram() {
 
-        document.getElementById("buttons").innerHTML = "";
-
-        if (Object.entries(goals).length > 0) {
-            document.getElementById("buttons").innerHTML += `<button>Mål</button>`;
-        }
+        console.log(program)
 
         if (Object.entries(program).length > 0) {
-            document.getElementById("buttons").innerHTML += `<button>Treningsplan</button>`;
+
+            let keys = Object.keys(program);
+            const showLifts = document.getElementById("infoDiv");
+            showLifts.innerHTML = "";
+
+            if (keys.length > 0) {
+                showLifts.innerHTML = "Treningsplan: <br><br>";
+                for (let i = 0; i < keys.length; i++) {
+
+                    let liftKeys = program[keys[i]];
+
+                    console.log(liftKeys)
+
+                    if (liftKeys !== "0" && liftKeys !== 0 && liftKeys !== "") {
+
+                        let msg = `${keys[i]}: ${liftKeys}<br>`;
+
+                        showLifts.innerHTML += msg;
+                    }
+                }
+
+            }
         }
 
     }

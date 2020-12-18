@@ -231,8 +231,11 @@
       const html = `
       Screensize:
       <br>
-      H: ${window.screen.availHeight} px<br>
-      W: ${window.screen.availWidth} px
+      availH: ${window.screen.availHeight} px<br>
+      availW: ${window.screen.availWidth} px<br>
+
+      innerH: ${window.innerHeight} px<br>
+      innerW: ${window.innerWidth} px
       `;
       document.getElementById("info").innerHTML = html;
    }

@@ -19,7 +19,6 @@ const getWorkoutSplit = require("./modules/user").getWorkoutSplit;
 const getUserDetails = require("./modules/user").getUserDetails;
 
 const createToken = require("./modules/token").createToken;
-const validateToken = require("./modules/token").validateToken;
 
 
 //
