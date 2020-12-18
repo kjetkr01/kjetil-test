@@ -30,7 +30,7 @@
 
 <body>
 
-   <button onClick="location.href = 'test.html'">Tilbake</button>
+   <button onClick="redirectToHome();">Tilbake (hjem)</button>
 
    <div id="displayname"></div>
    <div id="age"></div>
@@ -47,8 +47,6 @@
 
 <script>
 
-   //localStorage.setItem("ViewingUser", "kjetkr01");
-
    let info = "";
 
    let displayname = "";
@@ -61,6 +59,8 @@
 
    let myUsername = "";
 
+   const infoDiv = document.getElementById("infoDiv");
+
    if (user) {
 
       try {
@@ -69,10 +69,10 @@
          getUserDetails();
       } catch (err) {
          alert(err);
-         location.href = "test.html";
+         redirectToHome();
       }
    } else {
-      location.href = "test.html";
+      redirectToHome();
    }
 
    async function getUserDetails() {
@@ -90,7 +90,7 @@
             displayInformation();
          } else {
             alert(resp);
-            location.href = "test.html";
+            redirectToHome();
          }
 
       }
@@ -207,50 +207,36 @@
          return;
       }
 
-      let liftsEnabled = true;
-      let goalsEnabled = true;
-      let programEnabled = true;
-      let requestsEnabled = true;
-
-      switch (current) {
-         case "lifts":
-            liftsEnabled = false;
-            break;
-         case "goal":
-            goalsEnabled = false;
-            break;
-         case "plan":
-            programEnabled = false;
-            break;
-         case "requests":
-            requestsEnabled = false;
-            break;
-      }
-
       // buttons
 
       document.getElementById("buttons").innerHTML = "";
 
-      if (Object.entries(lifts).length > 0 && liftsEnabled === true) {
+      if (current === "lifts") {
+         document.getElementById("buttons").innerHTML += `<button style='color:red;' onClick="changeInfoDivContent('lifts')">Løft</button>`;
+      } else {
          document.getElementById("buttons").innerHTML += `<button onClick="changeInfoDivContent('lifts')">Løft</button>`;
       }
 
-      if (Object.entries(goals).length > 0 && goalsEnabled === true) {
+      if (current === "goal") {
+         document.getElementById("buttons").innerHTML += `<button style='color:red;' onClick="changeInfoDivContent('goal')">Mål</button>`;
+      } else {
          document.getElementById("buttons").innerHTML += `<button onClick="changeInfoDivContent('goal')">Mål</button>`;
       }
 
-      if (Object.entries(program).length > 0 && programEnabled === true) {
+      if (current === "plan") {
+         document.getElementById("buttons").innerHTML += `<button style='color:red;' onClick="changeInfoDivContent('plan')">Treningsplan</button>`;
+      } else {
          document.getElementById("buttons").innerHTML += `<button onClick="changeInfoDivContent('plan')">Treningsplan</button>`;
       }
 
 
-      document.getElementById("buttons").innerHTML += `<button onClick="location.href='test-settings.html'">Instillinger</button>`;
+      document.getElementById("buttons").innerHTML += `<button onClick="redirectToSettings();">Instillinger</button>`;
       document.getElementById("buttons").innerHTML += `<button onClick="logOut()">Logg ut</button>`;
 
 
-      if (info.isadmin === true && info.isadmin && requestsEnabled) {
+      if (info.isadmin === true && info.isadmin) {
 
-         let btnTxt = "Forespørsler (0)";
+         let btnTxt = "Forespørsler";
 
          if (token && user) {
 
@@ -264,7 +250,12 @@
             }
          }
 
-         document.getElementById("buttons").innerHTML += `<button onClick="changeInfoDivContent('requests')">${btnTxt}</button>`;
+         if (current === "requests") {
+            document.getElementById("buttons").innerHTML += `<button style='color:red;' onClick="changeInfoDivContent('requests')">${btnTxt}</button>`;
+         } else {
+            document.getElementById("buttons").innerHTML += `<button onClick="changeInfoDivContent('requests')">${btnTxt}</button>`;
+         }
+
       }
 
    }
@@ -274,11 +265,10 @@
       if (Object.entries(lifts).length > 0) {
 
          let keys = Object.keys(lifts);
-         const showLifts = document.getElementById("infoDiv");
-         showLifts.innerHTML = "";
+         infoDiv.innerHTML = "";
 
          if (keys.length > 0) {
-            showLifts.innerHTML = "Løft: <br><br>";
+            infoDiv.innerHTML = "Løft: <br><br>";
             for (let i = 0; i < keys.length; i++) {
 
                let liftKeys = lifts[keys[i]];
@@ -308,7 +298,7 @@
 
                   }
 
-                  showLifts.innerHTML += msg;
+                  infoDiv.innerHTML += msg;
                }
             }
 
@@ -336,7 +326,7 @@
 
             }
 
-            let liftsTestDef = { "Benkpress": { "ORM": "50", "PRdate": "17.12.2020" }, "Knebøy": { "ORM": "75,5", "PRdate": "17.12.2020" }, "Markløft": { "ORM": "121,25", "PRdate": "17.12.2020" } };
+            let liftsTestDef = { "Benkpress": { "ORM": "50", "PRdate": "17.12.2020" }, "Knebøy": { "ORM": "75.5", "PRdate": "17.12.2020" }, "Markløft": { "ORM": "121.25", "PRdate": "17.12.2020" } };
          }
       }
 
@@ -347,18 +337,17 @@
       if (Object.entries(goals).length > 0) {
 
          let keys = Object.keys(goals);
-         const showLifts = document.getElementById("infoDiv");
-         showLifts.innerHTML = "";
+         infoDiv.innerHTML = "";
 
          if (keys.length > 0) {
-            showLifts.innerHTML = "Mål: <br><br>";
+            infoDiv.innerHTML = "Mål: <br><br>";
             for (let i = 0; i < keys.length; i++) {
 
                let liftKeys = goals[keys[i]];
 
                if (liftKeys.goal !== "0" && liftKeys.goal !== 0 && liftKeys.goal !== "") {
 
-                  let msg = `${keys[i]} : ${liftKeys.goal} kg<br>`;
+                  let msg = "";
 
                   let prDateArr = liftKeys.Goaldate.split(".");
 
@@ -375,17 +364,37 @@
                            return parseInt(daysSinceTime);
                         }
 
-                        msg = `${keys[i]} : ${liftKeys.goal} kg Dato: ${liftKeys.Goaldate} Dager siden: ${calcTime()}<br>`;
+                        if (liftKeys.goal && lifts[keys[i]]) {
 
+                           let PRnum = parseFloat(lifts[keys[i]].ORM);
+                           let goalnum = parseFloat(liftKeys.goal);
+
+                           if (PRnum < goalnum) {
+                              let untilGoalCalcKG = goalnum;
+
+                              if (PRnum !== 0) {
+                                 untilGoalCalcKG = goalnum - PRnum;
+                              }
+
+                              let untilGoal = `${untilGoalCalcKG} kg`;
+
+                              msg = `${keys[i]} : ${liftKeys.goal} kg Ifra målet: ${untilGoal} Dato: ${liftKeys.Goaldate} Dager siden: ${calcTime()}<br>`;
+                           } else {
+                              msg = `${keys[i]} : ${liftKeys.goal} kg Dato: ${liftKeys.Goaldate} Dager siden: ${calcTime()}<br>`;
+                           }
+
+                        } else {
+                           msg = `${keys[i]} : ${liftKeys.goal} kg Dato: ${liftKeys.Goaldate} Dager siden: ${calcTime()}<br>`;
+                        }
                      }
 
                   }
 
-                  showLifts.innerHTML += msg;
+                  infoDiv.innerHTML += msg;
                }
             }
 
-            let goalsTestDef = { "Benkpress": { "goal": "50", "Goaldate": "17.12.2020" }, "Knebøy": { "goal": "75,5", "Goaldate": "17.12.2020" }, "Markløft": { "goal": "121,25", "Goaldate": "17.12.2020" } };
+            let goalsTestDef = { "Benkpress": { "goal": "50", "Goaldate": "17.12.2020" }, "Knebøy": { "goal": "75.5", "Goaldate": "17.12.2020" }, "Markløft": { "goal": "121.25", "Goaldate": "17.12.2020" } };
          }
       }
 
@@ -396,11 +405,10 @@
       if (Object.entries(program).length > 0) {
 
          let keys = Object.keys(program);
-         const showLifts = document.getElementById("infoDiv");
-         showLifts.innerHTML = "";
+         infoDiv.innerHTML = "";
 
          if (keys.length > 0) {
-            showLifts.innerHTML = "Treningsplan: <br><br>";
+            infoDiv.innerHTML = "Treningsplan: <br><br>";
             for (let i = 0; i < keys.length; i++) {
 
                let liftKeys = program[keys[i]];
@@ -409,7 +417,7 @@
 
                   let msg = `${keys[i]}: ${liftKeys}<br>`;
 
-                  showLifts.innerHTML += msg;
+                  infoDiv.innerHTML += msg;
                }
             }
 
@@ -422,28 +430,29 @@
 
       if (token && user) {
 
+         infoDiv.innerHTML = "Laster...";
+
          const body = { "authToken": token, "userInfo": user };
          const url = `/users/list/pending`;
 
          const resp = await callServerAPI(body, url);
 
-         const showLifts = document.getElementById("infoDiv");
-         showLifts.innerHTML = "";
+         infoDiv.innerHTML = "Forespørsler: <br><br>";
 
          if (resp[0].username) {
 
             for (let i = 0; i < resp.length; i++) {
-               showLifts.innerHTML += `<div>
+               infoDiv.innerHTML += `<div>
                Navn:${resp[i].displayname} Brukernavn: ${resp[i].username}
                <button onClick='acceptPendingUser("${resp[i].username}", true)'>Godta</button>
                <button onClick='acceptPendingUser("${resp[i].username}", false)'>Avslå</button>
                </div>`;
             }
 
-            showLifts.innerHTML += "Det er totalt " + resp.length + " forespørseler (brukere)!";
+            infoDiv.innerHTML += "Det er totalt " + resp.length + " forespørseler (brukere)!";
 
          } else {
-            showLifts.innerHTML = "Det er ingen forespørseler!";
+            infoDiv.innerHTML = "Det er ingen forespørseler!";
          }
 
       }

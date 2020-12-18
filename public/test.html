@@ -53,10 +53,7 @@
 
       <button onClick="location.href = 'test-login.html'">login-test</button>
       <button onClick="location.href = 'test-account.html'">account-test</button>
-      <button onClick="getListOfAllUsers()">liste med alle brukere</button>
-      <p id="getListOfAllUsersDiv"></p>
-
-      <div id="listOfPendingUsersDiv"></div>
+      <button onClick="location.href = 'test-users.html'">users-test</button>
 
       <p id="showLocalStorage"></p>
       <p id="showSessionStorage"></p>
@@ -66,48 +63,6 @@
 </body>
 
 <script>
-
-   async function getListOfAllUsers() {
-
-      //const token = localStorage.getItem("authToken");
-      //const user = localStorage.getItem("user");
-
-      if (token && user) {
-
-         const body = { "authToken": token, "userInfo": user };
-         const url = `/users/list/all`;
-
-         const resp = await callServerAPI(body, url);
-
-         const getListOfAllUsersDiv = document.getElementById("getListOfAllUsersDiv");
-
-         getListOfAllUsersDiv.innerHTML = "";
-
-         if (resp[0].username) {
-
-            for (let i = 0; i < resp.length; i++) {
-               getListOfAllUsersDiv.innerHTML += `<div onClick="viewUser('${resp[i].username}')">
-                  Brukernavn: ${resp[i].username}
-                  </div>`;
-            }
-
-            getListOfAllUsersDiv.innerHTML += "Det er totalt " + resp.length + " brukere!";
-
-         } else {
-            getListOfAllUsersDiv.innerHTML += "Det er ingen brukere!";
-         }
-
-      }
-   }
-
-   function viewUser(viewUser) {
-
-      if (viewUser) {
-         sessionStorage.setItem("ViewingUser", viewUser);
-         location.href = "test-user.html";
-      }
-
-   }
 
    let stopIntervalsTest = true; // stop auto update
 

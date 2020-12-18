@@ -12,12 +12,12 @@ lastUpdatedTime = lastUpdatedTime.toLocaleTimeString([], { hour: '2-digit', minu
 // fixed global variables
 
 if (user) {
-    try{
+    try {
 
-    userDisplayname = JSON.parse(user);
-    userDisplayname = userDisplayname.displayname;
+        userDisplayname = JSON.parse(user);
+        userDisplayname = userDisplayname.displayname;
 
-    }catch(err){
+    } catch (err) {
 
         console.log("invalid user object");
 
@@ -84,12 +84,12 @@ async function validateToken() {
                 console.log("invalid token");
                 localStorage.clear();
                 sessionStorage.clear();
-                //location.href = "/login.html";
+                //redirectToLogin();
             }
 
         } else {
             console.log("no token/user, skipped");
-            //location.href = "/login.html";
+            //redirectToLogin();
         }
     }
 }
@@ -121,3 +121,38 @@ async function callServerAPI(body, url) {
     return data;
 
 }
+
+// redirect functions
+
+function redirectToLogin() {
+
+    location.href = "/login.html";
+
+}
+
+function redirectToHome() {
+
+    location.href = "test.html";
+
+}
+
+function redirectToUsers() {
+
+    location.href = "test-users.html";
+
+}
+
+function redirectToUser() {
+
+    location.href = "test-user.html";
+
+}
+
+function redirectToSettings() {
+
+    location.href = 'test-settings.html';
+
+}
+
+
+//
