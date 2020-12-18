@@ -76,7 +76,7 @@
 
             const resp = await callServerAPI(body, url);
 
-            if (Object.entries(resp).length < 7) {
+            if (Object.entries(resp).length < 8) {
                 document.title = viewingUser + " sin profil";
                 info = resp;
                 displayInformation();
@@ -353,8 +353,6 @@
 
     function displayProgram() {
 
-        console.log(program)
-
         if (Object.entries(program).length > 0) {
 
             let keys = Object.keys(program);
@@ -366,8 +364,6 @@
                 for (let i = 0; i < keys.length; i++) {
 
                     let liftKeys = program[keys[i]];
-
-                    console.log(liftKeys)
 
                     if (liftKeys !== "0" && liftKeys !== 0 && liftKeys !== "") {
 

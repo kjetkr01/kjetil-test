@@ -118,11 +118,17 @@ server.post("/users/list/pending", auth, async (req, res) => {
 
      //kun for admins...
 
+     let onlyNumbers = false;
+
+     if (req.body.onlyNumbers) {
+          onlyNumbers = true;
+     }
+
      let username = req.body.userInfo;
      username = JSON.parse(username);
      username = username.username;
 
-     const listOfPendingUsers = await getListOfPendingUsers(username);
+     const listOfPendingUsers = await getListOfPendingUsers(username, onlyNumbers);
 
      // list of pending status ??
 

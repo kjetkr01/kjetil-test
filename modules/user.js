@@ -48,9 +48,9 @@ async function getListOfUsers() {
     }
 }
 
-async function getListOfPendingUsers(username) {
+async function getListOfPendingUsers(username, onlyNumbers) {
     try {
-        const resp = await database.getListOfPendingUsers(username);
+        const resp = await database.getListOfPendingUsers(username, onlyNumbers);
         return resp;
     } catch (error) {
         console.error(error);

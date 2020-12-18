@@ -101,7 +101,7 @@ class StorageHandler {
 
     //  -------------------------------  get a list of all pending users in application  ------------------------------- //
 
-    async getListOfPendingUsers(username) {
+    async getListOfPendingUsers(username, onlyNumbers) {
 
         const client = new pg.Client(this.credentials);
         let results = null;
@@ -112,8 +112,12 @@ class StorageHandler {
 
             if (results.rows.length !== 0) {
 
-                // evt legge til lifts og andre ting admin trenger å motta
-                results = await client.query('SELECT "id","username","displayname" FROM "public"."pending_users"');
+                if (onlyNumbers === true) {
+                    results = await client.query('SELECT "id" FROM "public"."pending_users"');
+                } else {
+                    results = await client.query('SELECT "id","username","displayname" FROM "public"."pending_users"');
+                }
+
                 results = (results.rows.length > 0) ? results.rows : null;
                 client.end();
 
@@ -268,7 +272,7 @@ class StorageHandler {
             if (results.rows[0] !== undefined) {
 
                 if (results.rows[0].settings.publicProfile === true) {
-                    results = await client.query('SELECT "username","displayname","trainingsplit","lifts","goals","info" from "users" where username=$1', [viewingUser]);
+                    results = await client.query('SELECT "username","displayname","trainingsplit","lifts","goals","info","isadmin" from "users" where username=$1', [viewingUser]);
                     userDetails = results.rows[0];
                     results = true;
                 } else {

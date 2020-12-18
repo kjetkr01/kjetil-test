@@ -2,7 +2,7 @@
 <html>
 
 <head>
-   <title>Min konto</title>
+   <title>Laster...</title>
 
    <meta charset="utf-8" />
 
@@ -30,9 +30,464 @@
 
 <body>
 
+   <button onClick="location.href = 'test.html'">Tilbake</button>
+
+   <div id="displayname"></div>
+   <div id="age"></div>
+   <div id="height"></div>
+   <div id="weight"></div>
+   <div id="workoutToday"></div>
+   <div id="infoDiv"></div>
+
+   <div id="showTotalLift"></div>
+
+   <div id="buttons"></div>
+
 </body>
 
 <script>
+
+   //localStorage.setItem("ViewingUser", "kjetkr01");
+
+   let info = "";
+
+   let displayname = "";
+   let age = "";
+   let height = "";
+   let weight = "";
+   let program = "";
+   let lifts = "";
+   let goals = "";
+
+   let myUsername = "";
+
+   if (user) {
+
+      try {
+         myUsername = JSON.parse(user);
+         myUsername = myUsername.username;
+         getUserDetails();
+      } catch (err) {
+         alert(err);
+         location.href = "test.html";
+      }
+   } else {
+      location.href = "test.html";
+   }
+
+   async function getUserDetails() {
+
+      if (token && user) {
+
+         const body = { "authToken": token, "userInfo": user, "viewingUser": myUsername };
+         const url = `/users/details/${myUsername}`;
+
+         const resp = await callServerAPI(body, url);
+
+         if (Object.entries(resp).length < 8) {
+            document.title = "Min konto";
+            info = resp;
+            displayInformation();
+         } else {
+            alert(resp);
+            location.href = "test.html";
+         }
+
+      }
+
+   }
+
+   function displayInformation() {
+
+      if (!info) {
+         return;
+      }
+
+      displayname = info.displayname;
+      age = info.info.age;
+      height = info.info.height
+      weight = info.info.weight;
+      program = info.trainingsplit;
+      lifts = info.lifts;
+      goals = info.goals;
+
+
+      if (displayname) {
+         document.getElementById("displayname").innerHTML = displayname;
+      }
+      if (age) {
+         document.getElementById("age").innerHTML = age + " år"
+      }
+      if (height) {
+         document.getElementById("height").innerHTML = height + " cm"
+      }
+      if (weight) {
+         document.getElementById("weight").innerHTML = weight + " kg"
+      }
+      if (program) {
+
+         let dayTxt = "";
+         let usermessage = "";
+
+         const day = new Date().getDay();
+
+         switch (day) {
+            case 0:
+               dayTxt = "Søndag";
+               break;
+            case 1:
+               dayTxt = "Mandag";
+               break;
+            case 2:
+               dayTxt = "Tirsdag";
+               break;
+            case 3:
+               dayTxt = "Onsdag";
+               break;
+            case 4:
+               dayTxt = "Torsdag";
+               break;
+            case 5:
+               dayTxt = "Fredag";
+               break;
+            case 6:
+               dayTxt = "Lørdag";
+               break;
+         }
+
+         if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
+            usermessage = `Trener i dag: ${program[dayTxt]}.`;
+         } else {
+            usermessage = `Trener ikke i dag.`;
+         }
+
+         document.getElementById("workoutToday").innerHTML = usermessage;
+
+         changeInfoDivContent("lifts")
+
+      }
+
+
+
+   }
+
+   function changeInfoDivContent(content) {
+
+      if (content === "lifts" || content === "goal" || content === "plan" || content === "requests") {
+
+         document.getElementById("infoDiv").innerHTML = "";
+         document.getElementById("showTotalLift").innerHTML = "";
+
+         switch (content) {
+            case "lifts":
+               displayLifts();
+               updateButtons(content);
+               break;
+            case "goal":
+               displayGoals();
+               updateButtons(content);
+               break;
+            case "plan":
+               displayProgram();
+               updateButtons(content);
+               break;
+            case "requests":
+               displayRequests();
+               updateButtons(content);
+               break;
+         }
+
+      }
+
+   }
+
+   async function updateButtons(current) {
+
+      if (!current) {
+         return;
+      }
+
+      let liftsEnabled = true;
+      let goalsEnabled = true;
+      let programEnabled = true;
+      let requestsEnabled = true;
+
+      switch (current) {
+         case "lifts":
+            liftsEnabled = false;
+            break;
+         case "goal":
+            goalsEnabled = false;
+            break;
+         case "plan":
+            programEnabled = false;
+            break;
+         case "requests":
+            requestsEnabled = false;
+            break;
+      }
+
+      // buttons
+
+      document.getElementById("buttons").innerHTML = "";
+
+      if (Object.entries(lifts).length > 0 && liftsEnabled === true) {
+         document.getElementById("buttons").innerHTML += `<button onClick="changeInfoDivContent('lifts')">Løft</button>`;
+      }
+
+      if (Object.entries(goals).length > 0 && goalsEnabled === true) {
+         document.getElementById("buttons").innerHTML += `<button onClick="changeInfoDivContent('goal')">Mål</button>`;
+      }
+
+      if (Object.entries(program).length > 0 && programEnabled === true) {
+         document.getElementById("buttons").innerHTML += `<button onClick="changeInfoDivContent('plan')">Treningsplan</button>`;
+      }
+
+
+      document.getElementById("buttons").innerHTML += `<button onClick="location.href='test-settings.html'">Instillinger</button>`;
+      document.getElementById("buttons").innerHTML += `<button onClick="logOut()">Logg ut</button>`;
+
+
+      if (info.isadmin === true && info.isadmin && requestsEnabled) {
+
+         let btnTxt = "Forespørsler (0)";
+
+         if (token && user) {
+
+            const body = { "authToken": token, "userInfo": user, "onlyNumbers": true };
+            const url = `/users/list/pending`;
+
+            const resp = await callServerAPI(body, url);
+
+            if (resp[0].id) {
+               btnTxt = `Forespørsler (${resp.length})`;
+            }
+         }
+
+         document.getElementById("buttons").innerHTML += `<button onClick="changeInfoDivContent('requests')">${btnTxt}</button>`;
+      }
+
+   }
+
+   function displayLifts() {
+
+      if (Object.entries(lifts).length > 0) {
+
+         let keys = Object.keys(lifts);
+         const showLifts = document.getElementById("infoDiv");
+         showLifts.innerHTML = "";
+
+         if (keys.length > 0) {
+            showLifts.innerHTML = "Løft: <br><br>";
+            for (let i = 0; i < keys.length; i++) {
+
+               let liftKeys = lifts[keys[i]];
+
+               if (liftKeys.ORM !== "0" && liftKeys.ORM !== 0 && liftKeys.ORM !== "") {
+
+                  let msg = `${keys[i]} : ${liftKeys.ORM} kg<br>`;
+
+                  let prDateArr = liftKeys.PRdate.split(".");
+
+                  if (prDateArr.length === 3) {
+
+                     if (prDateArr[0] > 0 && prDateArr[0] <= 31 && prDateArr[0].length <= 2 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2 && prDateArr[2].length === 4) {
+
+                        const d = new Date();
+
+                        const prDate = new Date(prDateArr[2], (prDateArr[1] - 1), prDateArr[0]);
+
+                        function calcTime() {
+                           let daysSinceTime = (d - prDate) / (1000 * 3600 * 24);
+                           return parseInt(daysSinceTime);
+                        }
+
+                        msg = `${keys[i]} : ${liftKeys.ORM} kg Dato: ${liftKeys.PRdate} Dager siden: ${calcTime()}<br>`;
+
+                     }
+
+                  }
+
+                  showLifts.innerHTML += msg;
+               }
+            }
+
+            if (lifts.Benkpress && lifts.Knebøy && lifts.Markløft) {
+
+               let Benkpress = lifts.Benkpress.ORM;
+               let Knebøy = lifts.Knebøy.ORM;
+               let Markløft = lifts.Markløft.ORM;
+
+               if (Benkpress !== "0" && Benkpress !== 0 && Benkpress !== "") {
+                  if (Knebøy !== "0" && Knebøy !== 0 && Knebøy !== "") {
+                     if (Markløft !== "0" && Markløft !== 0 && Markløft !== "") {
+
+                        Benkpress = parseFloat(Benkpress);
+                        Knebøy = parseFloat(Knebøy);
+                        Markløft = parseFloat(Markløft);
+
+                        const totalORM = (Benkpress + Knebøy + Markløft);
+
+                        document.getElementById("showTotalLift").innerHTML = `PR Total: <br> ${totalORM.toFixed(2)} KG | ${(totalORM * 2.2).toFixed(2)} LBS`;
+
+                     }
+                  }
+               }
+
+            }
+
+            let liftsTestDef = { "Benkpress": { "ORM": "50", "PRdate": "17.12.2020" }, "Knebøy": { "ORM": "75,5", "PRdate": "17.12.2020" }, "Markløft": { "ORM": "121,25", "PRdate": "17.12.2020" } };
+         }
+      }
+
+   }
+
+   function displayGoals() {
+
+      if (Object.entries(goals).length > 0) {
+
+         let keys = Object.keys(goals);
+         const showLifts = document.getElementById("infoDiv");
+         showLifts.innerHTML = "";
+
+         if (keys.length > 0) {
+            showLifts.innerHTML = "Mål: <br><br>";
+            for (let i = 0; i < keys.length; i++) {
+
+               let liftKeys = goals[keys[i]];
+
+               if (liftKeys.goal !== "0" && liftKeys.goal !== 0 && liftKeys.goal !== "") {
+
+                  let msg = `${keys[i]} : ${liftKeys.goal} kg<br>`;
+
+                  let prDateArr = liftKeys.Goaldate.split(".");
+
+                  if (prDateArr.length === 3) {
+
+                     if (prDateArr[0] > 0 && prDateArr[0] <= 31 && prDateArr[0].length <= 2 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2 && prDateArr[2].length === 4) {
+
+                        const d = new Date();
+
+                        const prDate = new Date(prDateArr[2], (prDateArr[1] - 1), prDateArr[0]);
+
+                        function calcTime() {
+                           let daysSinceTime = (d - prDate) / (1000 * 3600 * 24);
+                           return parseInt(daysSinceTime);
+                        }
+
+                        msg = `${keys[i]} : ${liftKeys.goal} kg Dato: ${liftKeys.Goaldate} Dager siden: ${calcTime()}<br>`;
+
+                     }
+
+                  }
+
+                  showLifts.innerHTML += msg;
+               }
+            }
+
+            let goalsTestDef = { "Benkpress": { "goal": "50", "Goaldate": "17.12.2020" }, "Knebøy": { "goal": "75,5", "Goaldate": "17.12.2020" }, "Markløft": { "goal": "121,25", "Goaldate": "17.12.2020" } };
+         }
+      }
+
+   }
+
+   function displayProgram() {
+
+      if (Object.entries(program).length > 0) {
+
+         let keys = Object.keys(program);
+         const showLifts = document.getElementById("infoDiv");
+         showLifts.innerHTML = "";
+
+         if (keys.length > 0) {
+            showLifts.innerHTML = "Treningsplan: <br><br>";
+            for (let i = 0; i < keys.length; i++) {
+
+               let liftKeys = program[keys[i]];
+
+               if (liftKeys !== "0" && liftKeys !== 0 && liftKeys !== "") {
+
+                  let msg = `${keys[i]}: ${liftKeys}<br>`;
+
+                  showLifts.innerHTML += msg;
+               }
+            }
+
+         }
+      }
+
+   }
+
+   async function displayRequests() {
+
+      if (token && user) {
+
+         const body = { "authToken": token, "userInfo": user };
+         const url = `/users/list/pending`;
+
+         const resp = await callServerAPI(body, url);
+
+         const showLifts = document.getElementById("infoDiv");
+         showLifts.innerHTML = "";
+
+         if (resp[0].username) {
+
+            for (let i = 0; i < resp.length; i++) {
+               showLifts.innerHTML += `<div>
+               Navn:${resp[i].displayname} Brukernavn: ${resp[i].username}
+               <button onClick='acceptPendingUser("${resp[i].username}", true)'>Godta</button>
+               <button onClick='acceptPendingUser("${resp[i].username}", false)'>Avslå</button>
+               </div>`;
+            }
+
+            showLifts.innerHTML += "Det er totalt " + resp.length + " forespørseler (brukere)!";
+
+         } else {
+            showLifts.innerHTML = "Det er ingen forespørseler!";
+         }
+
+      }
+
+   }
+
+   // acceptOrDeny users
+
+   async function acceptPendingUser(username, acceptOrDeny) {
+      if (!username || acceptOrDeny === "") {
+         return;
+      }
+
+      let statusMsg = "godta";
+      let statusMsg2 = "Du har nå godtatt forespørselen til: ";
+
+      if (!acceptOrDeny) {
+         statusMsg = "avslå";
+         statusMsg2 = "Du har nå avslått forespørselen til: ";
+      }
+
+      const confirmPress = confirm("Er du sikker på at du vil " + statusMsg + " " + username + " sin forespørsel?");
+      if (confirmPress === true) {
+
+         const body = { "authToken": token, "userInfo": user, "pendingUser": username, "acceptOrDeny": acceptOrDeny };
+         const url = `/users/pending/${username}/${acceptOrDeny}`;
+
+         const results = await callServerAPI(body, url);
+
+         if (results === "Ok") {
+            alert(statusMsg2 + username);
+         } else {
+            alert("Feil, brukeren finnes ikke!");
+         }
+
+         displayRequests();
+      }
+   }
+
+   function logOut() {
+      localStorage.clear();
+      sessionStorage.clear();
+      location.reload();
+   }
 
 </script>
 
