@@ -66,7 +66,7 @@ class StorageHandler {
         try {
             await client.connect();
             // evt legge til lifts og andre ting brukeren trenger å motta
-            results = await client.query('SELECT "id","username","displayname" FROM "public"."users" WHERE username=$1 AND password=$2', [username, password]);
+            results = await client.query('SELECT "id","username","password","displayname" FROM "public"."users" WHERE username=$1 AND password=$2', [username, password]);
             results = (results.rows.length > 0) ? results.rows[0] : null;
             client.end();
         } catch (err) {
@@ -291,6 +291,25 @@ class StorageHandler {
         client.end();
 
         return { "status": results, "userDetails": userDetails };
+    }
+
+    //
+
+    //  -------------------------------  login / validate userinfo from token (refresh token)  ------------------------------- //
+
+    async validateUserInfoFromToken(username, password) {
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        try {
+            await client.connect();
+            results = await client.query('SELECT "id","username","password","displayname" FROM "public"."users" WHERE username=$1 AND password=$2', [username, password]);
+            results = (results.rows.length > 0) ? results.rows[0] : false;
+            client.end();
+        } catch (err) {
+            console.log(err);
+        }
+
+        return results;
     }
 
     //

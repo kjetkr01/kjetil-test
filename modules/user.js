@@ -1,4 +1,4 @@
-const database = require("./datahandler")
+const database = require("./datahandler");
 const crypto = require('crypto');
 const secret = process.env.hashSecret || require("../localenv").hashSecret;
 
@@ -84,6 +84,15 @@ async function getUserDetails(viewingUser) {
     }
 }
 
+async function validateUserInfoFromToken(username, password) {
+    try {
+        const resp = await database.validateUserInfoFromToken(username, password);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 module.exports = User;
 module.exports.validateUser = validateUser;
 module.exports.getListOfUsers = getListOfUsers;
@@ -91,3 +100,4 @@ module.exports.getListOfPendingUsers = getListOfPendingUsers;
 module.exports.acceptOrDenyUser = acceptOrDenyUser;
 module.exports.getWorkoutSplit = getWorkoutSplit;
 module.exports.getUserDetails = getUserDetails;
+module.exports.validateUserInfoFromToken = validateUserInfoFromToken;
