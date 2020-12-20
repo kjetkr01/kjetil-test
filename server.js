@@ -19,6 +19,7 @@ const getWorkoutSplit = require("./modules/user").getWorkoutSplit;
 const getUserDetails = require("./modules/user").getUserDetails;
 
 const createToken = require("./modules/token").createToken;
+const refreshToken = require("./modules/token").refreshToken;
 
 
 //
@@ -77,9 +78,15 @@ server.post("/autenticate", async function (req, res) {
           const requestUser = await validateUser(username, password);
           const isValid = requestUser.isValid;
 
+          const userInfo = {
+               "id": requestUser.userInfo.id,
+               "username": requestUser.userInfo.username,
+               "displayname": requestUser.userInfo.displayname
+          }
+
           if (isValid) {
                const sessionToken = createToken(requestUser.userInfo);
-               res.status(200).json({ "authToken": sessionToken, "user": requestUser.userInfo }).end();
+               res.status(200).json({ "authToken": sessionToken, "user": userInfo }).end();
           } else {
                res.status(403).json("Brukernavn eller passord er feil!").end();
           }
@@ -237,6 +244,31 @@ server.post("/validate", auth, async (req, res) => {
 
      res.status(200).json("Ok").end();
 
+});
+
+//
+
+// refresh token // create new
+
+server.post("/user/refreshtoken", async (req, res) => {
+
+     if (!req.body.authToken || !req.body.userInfo) {
+          res.status(403).json("invalid token").end();
+     } else {
+
+          const userInfo = JSON.parse(req.body.userInfo);
+          const token = req.body.authToken;
+
+          const resp = await refreshToken(token, userInfo);
+
+          console.log(resp)
+
+          if (resp.isTokenValid === true && resp.authToken) {
+               res.status(200).json({ "authToken": resp.authToken, "user": userInfo }).end();
+          } else {
+               res.status(403).json("invalid token").end();
+          }
+     }
 });
 
 //
