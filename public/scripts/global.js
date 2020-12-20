@@ -76,15 +76,35 @@ async function validateToken() {
 
             const resp = await callServerAPI(body, url);
 
+            console.log(resp)
+
             if (resp === "Ok") {
 
                 console.log("Token is valid");
 
             } else {
-                console.log("invalid token");
-                localStorage.clear();
-                sessionStorage.clear();
-                //redirectToLogin();
+
+                console.log("invalid token, attempting to refresh");
+
+                const body = { "authToken": token, "userInfo": user };
+                const url = `/user/refreshtoken`;
+
+                const resp = await callServerAPI(body, url);
+
+                if (resp !== "invalid token") {
+
+                    console.log("refreshed token");
+                    localStorage.setItem("authToken", resp.authToken);
+                    localStorage.setItem("user", JSON.stringify(resp.user));
+                    location.reload();
+
+                } else {
+
+                    console.log("invalid token");
+                    localStorage.clear();
+                    sessionStorage.clear();
+                    redirectToLogin();
+                }
             }
 
         } else {
