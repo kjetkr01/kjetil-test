@@ -75,18 +75,27 @@ async function getWorkoutSplit(username) {
     }
 }
 
-async function getUserDetails(viewingUser) {
+async function getUserDetails(viewingUser, username) {
     try {
-        const resp = await database.getUserDetails(viewingUser);
+        const resp = await database.getUserDetails(viewingUser, username);
         return resp;
     } catch (error) {
         console.error(error);
     }
 }
 
-async function validateUserInfoFromToken(username, password) {
+async function getUserSettingsAndInfo(username) {
     try {
-        const resp = await database.validateUserInfoFromToken(username, password);
+        const resp = await database.getUserSettingsAndInfo(username);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function updateUserSetting(username, setting, value) {
+    try {
+        const resp = await database.updateUserSetting(username, setting, value);
         return resp;
     } catch (error) {
         console.error(error);
@@ -100,4 +109,5 @@ module.exports.getListOfPendingUsers = getListOfPendingUsers;
 module.exports.acceptOrDenyUser = acceptOrDenyUser;
 module.exports.getWorkoutSplit = getWorkoutSplit;
 module.exports.getUserDetails = getUserDetails;
-module.exports.validateUserInfoFromToken = validateUserInfoFromToken;
+module.exports.getUserSettingsAndInfo = getUserSettingsAndInfo;
+module.exports.updateUserSetting = updateUserSetting;

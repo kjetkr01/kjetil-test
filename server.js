@@ -17,9 +17,10 @@ const getListOfPendingUsers = require("./modules/user").getListOfPendingUsers;
 const acceptOrDenyUser = require("./modules/user").acceptOrDenyUser;
 const getWorkoutSplit = require("./modules/user").getWorkoutSplit;
 const getUserDetails = require("./modules/user").getUserDetails;
+const getUserSettingsAndInfo = require("./modules/user").getUserSettingsAndInfo;
+const updateUserSetting = require("./modules/user").updateUserSetting;
 
 const createToken = require("./modules/token").createToken;
-const refreshToken = require("./modules/token").refreshToken;
 
 
 //
@@ -216,7 +217,7 @@ server.post("/users/details/:user", auth, async (req, res) => {
 
      if (username && viewingUser) {
 
-          const resp = await getUserDetails(viewingUser);
+          const resp = await getUserDetails(viewingUser, username);
 
           if (resp.status === true) {
                if (resp.userDetails !== false) {
@@ -234,6 +235,64 @@ server.post("/users/details/:user", auth, async (req, res) => {
 
 //
 
+// get user settings and info
+
+server.post("/user/details/settingsInfo", auth, async (req, res) => {
+
+     const currentUser = JSON.parse(req.body.userInfo);
+
+     if (currentUser.username) {
+
+          const resp = await getUserSettingsAndInfo(currentUser.username);
+
+          if (resp.status === true) {
+               res.status(200).json(resp.userDetails).end();
+          } else {
+               res.status(403).json("error, try again").end();
+          }
+
+     } else {
+          res.status(403).json("invalid user").end();
+     }
+
+});
+
+//
+
+// update user settings
+
+server.post("/user/update/settings/:setting", auth, async (req, res) => {
+
+     const currentUser = JSON.parse(req.body.userInfo);
+     const setting = req.body.updateSetting;
+     const value = req.body.value;
+
+     //accepter bare "godkjente" settings
+
+     if (currentUser.username && setting && value === true || value === false) {
+
+          if (setting === "leaderboards" || setting === "publicProfile" || setting === "showGymCloseTime") {
+
+               const resp = await updateUserSetting(currentUser.username, setting, value);
+
+               if (resp === true) {
+                    res.status(200).json(`updated setting`).end();
+               } else {
+                    res.status(403).json("error, try again").end();
+               }
+
+          } else {
+               res.status(403).json("invalid setting").end();
+          }
+
+     } else {
+          res.status(403).json("invalid user").end();
+     }
+
+});
+
+//
+
 // test
 
 server.post("/validate", auth, async (req, res) => {
@@ -244,31 +303,6 @@ server.post("/validate", auth, async (req, res) => {
 
      res.status(200).json("Ok").end();
 
-});
-
-//
-
-// refresh token // create new
-
-server.post("/user/refreshtoken", async (req, res) => {
-
-     if (!req.body.authToken || !req.body.userInfo) {
-          res.status(403).json("invalid token").end();
-     } else {
-
-          const userInfo = JSON.parse(req.body.userInfo);
-          const token = req.body.authToken;
-
-          const resp = await refreshToken(token, userInfo);
-
-          console.log(resp)
-
-          if (resp.isTokenValid === true && resp.authToken) {
-               res.status(200).json({ "authToken": resp.authToken, "user": userInfo }).end();
-          } else {
-               res.status(403).json("invalid token").end();
-          }
-     }
 });
 
 //

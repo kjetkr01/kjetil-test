@@ -171,10 +171,9 @@ class StorageHandler {
 
 
                             const settings = {
-                                "leaderboards": true,
-                                "publicProfile": true,
-                                "showGymCloseTime": true,
-                                "extraStats": false,
+                                "leaderboards": { "name": "Ledertavler", "value": true },
+                                "publicProfile": { "name": "Offentlig profil", "value": true },
+                                "showGymCloseTime": { "name": "Åpningstider", "value": true },
                             };
 
                             const trainingSplit = {
@@ -258,7 +257,7 @@ class StorageHandler {
 
     //  -------------------------------  get userdetails (view userPage)  ------------------------------- //
 
-    async getUserDetails(viewingUser) {
+    async getUserDetails(viewingUser, username) {
 
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -271,7 +270,8 @@ class StorageHandler {
 
             if (results.rows[0] !== undefined) {
 
-                if (results.rows[0].settings.publicProfile === true) {
+                //if owner then access anyways
+                if (results.rows[0].settings.publicProfile.value === true || viewingUser === username) {
                     results = await client.query('SELECT "username","displayname","trainingsplit","lifts","goals","info","isadmin" from "users" where username=$1', [viewingUser]);
                     userDetails = results.rows[0];
                     results = true;
@@ -295,19 +295,63 @@ class StorageHandler {
 
     //
 
-    //  -------------------------------  login / validate userinfo from token (refresh token)  ------------------------------- //
+    //  -------------------------------  get userdetails (private settings page)  ------------------------------- //
 
-    async validateUserInfoFromToken(username, password) {
+    async getUserSettingsAndInfo(username) {
+
         const client = new pg.Client(this.credentials);
         let results = false;
+        let userDetails = {};
+
         try {
             await client.connect();
-            results = await client.query('SELECT "id","username","password","displayname" FROM "public"."users" WHERE username=$1 AND password=$2', [username, password]);
-            results = (results.rows.length > 0) ? results.rows[0] : false;
+
+            results = await client.query('SELECT "settings" from "users" where username=$1', [username]);
+            userDetails = results.rows[0];
+            results = true;
+
             client.end();
+
         } catch (err) {
+            client.end();
             console.log(err);
         }
+
+        client.end();
+
+        return { "status": results, "userDetails": userDetails };
+    }
+
+    //
+
+    //  -------------------------------  update userdetails (private settings page)  ------------------------------- //
+
+    async updateUserSetting(username, setting, value) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+
+        try {
+            await client.connect();
+
+            results = await client.query('SELECT "settings" from "users" where username=$1', [username]);
+
+            const newSettings = results.rows[0].settings;
+
+            newSettings[setting].value = value;
+
+            await client.query("UPDATE users SET settings=$1 WHERE username=$2", [newSettings, username]);
+
+            results = true;
+
+            client.end();
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
 
         return results;
     }
