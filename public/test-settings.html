@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Innstillinger</title>
+
+   <meta charset="utf-8" />
+
+   <!-- manifest -->
+
+   <link rel="manifest" href="manifest.json">
+
+   <meta name="mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="application-name" content="Treningsstatestikk">
+   <meta name="apple-mobile-web-app-title" content="Treningsstatestikk">
+   <meta name="msapplication-starturl" content="/">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+   <link rel="icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+   <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+
+   <!-- -->
+
+   <script src="scripts/global.js" type="text/javascript"></script>
+   <script src="scripts/validateInfo.js" type="text/javascript"></script>
+   <script src="scripts/script.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+   <button onClick="redirectToAccount();">Tilbake (min konto)</button>
+
+   <h2>Innstillinger:</h2>
+
+   <div id="showSettings"></div>
+
+   <div id="infoDiv"></div>
+
+</body>
+
+<script>
+
+   let info = "";
+   let settings = "";
+
+   if (user) {
+      try {
+         myUsername = JSON.parse(user);
+         myUsername = myUsername.username;
+         getUserDetails();
+      } catch (err) {
+         alert(err);
+         redirectToHome();
+      }
+   } else {
+      redirectToHome();
+   }
+
+   async function getUserDetails() {
+
+      if (token && user) {
+
+         const body = { "authToken": token, "userInfo": user, "viewingUser": myUsername };
+         const url = `/user/details/settingsInfo`;
+
+         const resp = await callServerAPI(body, url);
+
+         if (Object.entries(resp).length < 8) {
+            info = resp;
+            displayInformation();
+         } else {
+            alert(resp);
+            redirectToHome();
+         }
+
+      }
+
+   }
+
+   function displayInformation() {
+
+      if (!info || !info.settings) {
+         return;
+      }
+
+      settings = info.settings;
+
+      const keys = Object.keys(settings);
+      const showSettingsDiv = document.getElementById("showSettings");
+      showSettingsDiv.innerHTML = "";
+
+      if (keys.length > 0) {
+         for (let i = 0; i < keys.length; i++) {
+            if (settings[keys[i]].value === true) {
+               showSettingsDiv.innerHTML += `<div>${settings[keys[i]].name}<input type="checkbox" id="${keys[i]}Box" checked onClick="updateSetting('${keys[i]}', false)"></div>`;
+            } else {
+               showSettingsDiv.innerHTML += `<div>${settings[keys[i]].name}<input type="checkbox" id="${keys[i]}Box" onClick="updateSetting('${keys[i]}', true)"></div>`;
+            }
+         }
+      }
+   }
+
+   async function updateSetting(setting, value) {
+
+      if (!setting || value !== true && value !== false) {
+         return;
+      } else {
+
+         if (token && user) {
+
+            const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
+            const url = `/user/update/settings/${setting}`;
+
+            const resp = await callServerAPI(body, url);
+
+            if (resp === "updated setting") {
+               if (value === true) {
+                  document.getElementById("infoDiv").innerHTML = `${settings[setting].name} er nå slått på!`;
+               } else {
+                  document.getElementById("infoDiv").innerHTML = `${settings[setting].name} er nå slått av!`;
+               }
+               getUserDetails();
+            } else {
+               document.getElementById("infoDiv").innerHTML = `En feil har oppstått, innstillingen "${setting}" ble ikke oppdatert.`;
+            }
+            setTimeout(function () {
+               document.getElementById("infoDiv").innerHTML = "";
+            }, 3000);
+         }
+      }
+   }
+
+</script>
+
+</html>

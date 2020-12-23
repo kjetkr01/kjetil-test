@@ -1,16 +1,27 @@
 // global variables
 
 const token = localStorage.getItem("authToken");
-const user = sessionStorage.getItem("user");
+const user = localStorage.getItem("user");
 let userDisplayname;
+
+let lastUpdatedTime = new Date();
+lastUpdatedTime = lastUpdatedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
 //
 
 // fixed global variables
 
 if (user) {
-    userDisplayname = JSON.parse(user);
-    userDisplayname = userDisplayname.displayname;
+    try {
+
+        userDisplayname = JSON.parse(user);
+        userDisplayname = userDisplayname.displayname;
+
+    } catch (err) {
+
+        console.log("invalid user object");
+
+    }
 }
 
 //
@@ -66,19 +77,17 @@ async function validateToken() {
             const resp = await callServerAPI(body, url);
 
             if (resp === "Ok") {
-
                 console.log("Token is valid");
-
             } else {
                 console.log("invalid token");
                 localStorage.clear();
                 sessionStorage.clear();
-                //location.href = "/login.html";
+                //redirectToLogin();
             }
 
         } else {
             console.log("no token/user, skipped");
-            //location.href = "/login.html";
+            //redirectToLogin();
         }
     }
 }
@@ -110,3 +119,44 @@ async function callServerAPI(body, url) {
     return data;
 
 }
+
+// redirect functions
+
+function redirectToLogin() {
+
+    location.href = "/login.html";
+
+}
+
+function redirectToHome() {
+
+    location.href = "test.html";
+
+}
+
+function redirectToUsers() {
+
+    location.href = "test-users.html";
+
+}
+
+function redirectToUser() {
+
+    location.href = "test-user.html";
+
+}
+
+function redirectToSettings() {
+
+    location.href = 'test-settings.html';
+
+}
+
+function redirectToAccount() {
+
+    location.href = "test-account.html";
+
+}
+
+
+//

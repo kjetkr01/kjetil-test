@@ -52,11 +52,8 @@
       <p id="testmessage"></p>
 
       <button onClick="location.href = 'test-login.html'">login-test</button>
-      <button onClick="getListOfAllUsers()">liste med alle brukere</button>
-      <p id="getListOfAllUsersDiv"></p>
-
-      <button onClick="getListOfPendingUsers()">liste med alle forespørseler (brukere)</button>
-      <div id="listOfPendingUsersDiv"></div>
+      <button onClick="location.href = 'test-account.html'">account-test</button>
+      <button onClick="location.href = 'test-users.html'">users-test</button>
 
       <p id="showLocalStorage"></p>
       <p id="showSessionStorage"></p>
@@ -67,124 +64,7 @@
 
 <script>
 
-   async function getListOfAllUsers() {
-
-      //const token = localStorage.getItem("authToken");
-      //const user = localStorage.getItem("user");
-
-      if (token && user) {
-
-         const body = { "authToken": token, "userInfo": user };
-         const url = `/users/list/all`;
-
-         const resp = await callServerAPI(body, url);
-
-         const getListOfAllUsersDiv = document.getElementById("getListOfAllUsersDiv");
-
-         getListOfAllUsersDiv.innerHTML = "";
-
-         if (resp[0].username) {
-
-            for (let i = 0; i < resp.length; i++) {
-               getListOfAllUsersDiv.innerHTML += `<div onClick="console.log('Clicked on ${resp[i].username}')">
-                  Brukernavn: ${resp[i].username}
-                  </div>`;
-            }
-
-            getListOfAllUsersDiv.innerHTML += "Det er totalt " + resp.length + " brukere!";
-
-         } else {
-            getListOfAllUsersDiv.innerHTML += "Det er ingen brukere!";
-         }
-
-      }
-   }
-
-   // list of pending users
-
-   async function getListOfPendingUsers() {
-
-      //const token = localStorage.getItem("authToken");
-      //const user = localStorage.getItem("user");
-
-      if (token && user) {
-
-         const body = { "authToken": token, "userInfo": user };
-         const url = `/users/list/pending`;
-
-         const resp = await callServerAPI(body, url);
-
-         const listOfPendingUsersDiv = document.getElementById("listOfPendingUsersDiv");
-
-         listOfPendingUsersDiv.innerHTML = "";
-
-         if (resp[0].username) {
-
-            for (let i = 0; i < resp.length; i++) {
-               listOfPendingUsersDiv.innerHTML += `<div>
-               Navn:${resp[i].displayname} Brukernavn: ${resp[i].username}
-               <button onClick='acceptPendingUser("${resp[i].username}", true)'>Godta</button>
-               <button onClick='acceptPendingUser("${resp[i].username}", false)'>Avslå</button>
-               </div>`;
-            }
-
-            listOfPendingUsersDiv.innerHTML += "Det er totalt " + resp.length + " forespørseler (brukere)!";
-
-         } else {
-            listOfPendingUsersDiv.innerHTML = "Det er ingen forespørseler!";
-         }
-
-      }
-   }
-
-   test();
-   async function test() {
-
-      let resp = await whatToTrainToday();
-
-      if (resp.length > 0) {
-         console.log(resp);
-      }
-
-   }
-
-   async function acceptPendingUser(username, acceptOrDeny) {
-      if (!username || acceptOrDeny === "") {
-         return;
-      }
-
-      let statusMsg = "godta";
-      let statusMsg2 = "Du har nå godtatt forespørselen til: ";
-
-      if (!acceptOrDeny) {
-         statusMsg = "avslå";
-         statusMsg2 = "Du har nå avslått forespørselen til: ";
-      }
-
-      const confirmPress = confirm("Er du sikker på at du vil " + statusMsg + " " + username + " sin forespørsel?");
-      if (confirmPress === true) {
-
-         //const token = localStorage.getItem("authToken");
-         //const user = localStorage.getItem("user");
-
-         const body = { "authToken": token, "userInfo": user, "pendingUser": username, "acceptOrDeny": acceptOrDeny };
-         const url = `/users/pending/${username}/${acceptOrDeny}`;
-
-         const results = await callServerAPI(body, url);
-
-         if (results === "Ok") {
-            alert(statusMsg2 + username);
-         } else {
-            alert("Feil, brukeren finnes ikke!");
-         }
-
-         getListOfPendingUsers();
-      }
-   }
-
-   //
-
-   let stopIntervalsTest = false; // stop auto update
+   let stopIntervalsTest = true; // stop auto update
 
    let autoUpdate = setInterval(() => {
 
@@ -205,18 +85,24 @@
 
    }, 1000);
 
+
+
+
+
    // til testing / ekstra ting
 
    updateTime()
    function updateTime() {
-      let d = new Date();
-      document.getElementById("updateTime").innerHTML = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      document.getElementById("updateTime").innerHTML = lastUpdatedTime;
 
       const html = `
       Screensize:
       <br>
-      H: ${window.screen.availHeight} px<br>
-      W: ${window.screen.availWidth} px
+      availH: ${window.screen.availHeight} px<br>
+      availW: ${window.screen.availWidth} px<br>
+
+      innerH: ${window.innerHeight} px<br>
+      innerW: ${window.innerWidth} px
       `;
       document.getElementById("info").innerHTML = html;
    }
@@ -255,7 +141,7 @@
       if (keys.length > 0) {
          showSessionStorage.innerHTML = "SessionStorage items: <br><br>";
          for (let i = 0; i < keys.length; i++) {
-            showSessionStorage.innerHTML += keys[i] + ": " + localStorage.getItem(keys[i]) + "<br>";
+            showSessionStorage.innerHTML += keys[i] + ": " + sessionStorage.getItem(keys[i]) + "<br>";
          }
 
          showSessionStorage.innerHTML += "<br> <button onClick='sessionStorage.clear()'>Clear sessionStorage</button>";

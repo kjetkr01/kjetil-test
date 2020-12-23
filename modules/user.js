@@ -1,4 +1,4 @@
-const database = require("./datahandler")
+const database = require("./datahandler");
 const crypto = require('crypto');
 const secret = process.env.hashSecret || require("../localenv").hashSecret;
 
@@ -48,9 +48,9 @@ async function getListOfUsers() {
     }
 }
 
-async function getListOfPendingUsers(username) {
+async function getListOfPendingUsers(username, onlyNumbers) {
     try {
-        const resp = await database.getListOfPendingUsers(username);
+        const resp = await database.getListOfPendingUsers(username, onlyNumbers);
         return resp;
     } catch (error) {
         console.error(error);
@@ -75,9 +75,39 @@ async function getWorkoutSplit(username) {
     }
 }
 
+async function getUserDetails(viewingUser, username) {
+    try {
+        const resp = await database.getUserDetails(viewingUser, username);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function getUserSettingsAndInfo(username) {
+    try {
+        const resp = await database.getUserSettingsAndInfo(username);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function updateUserSetting(username, setting, value) {
+    try {
+        const resp = await database.updateUserSetting(username, setting, value);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 module.exports = User;
 module.exports.validateUser = validateUser;
 module.exports.getListOfUsers = getListOfUsers;
 module.exports.getListOfPendingUsers = getListOfPendingUsers;
 module.exports.acceptOrDenyUser = acceptOrDenyUser;
 module.exports.getWorkoutSplit = getWorkoutSplit;
+module.exports.getUserDetails = getUserDetails;
+module.exports.getUserSettingsAndInfo = getUserSettingsAndInfo;
+module.exports.updateUserSetting = updateUserSetting;

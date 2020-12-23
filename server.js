@@ -16,9 +16,11 @@ const getListOfUsers = require("./modules/user").getListOfUsers;
 const getListOfPendingUsers = require("./modules/user").getListOfPendingUsers;
 const acceptOrDenyUser = require("./modules/user").acceptOrDenyUser;
 const getWorkoutSplit = require("./modules/user").getWorkoutSplit;
+const getUserDetails = require("./modules/user").getUserDetails;
+const getUserSettingsAndInfo = require("./modules/user").getUserSettingsAndInfo;
+const updateUserSetting = require("./modules/user").updateUserSetting;
 
 const createToken = require("./modules/token").createToken;
-const validateToken = require("./modules/token").validateToken;
 
 
 //
@@ -77,9 +79,15 @@ server.post("/autenticate", async function (req, res) {
           const requestUser = await validateUser(username, password);
           const isValid = requestUser.isValid;
 
+          const userInfo = {
+               "id": requestUser.userInfo.id,
+               "username": requestUser.userInfo.username,
+               "displayname": requestUser.userInfo.displayname
+          }
+
           if (isValid) {
                const sessionToken = createToken(requestUser.userInfo);
-               res.status(200).json({ "authToken": sessionToken, "user": requestUser.userInfo }).end();
+               res.status(200).json({ "authToken": sessionToken, "user": userInfo }).end();
           } else {
                res.status(403).json("Brukernavn eller passord er feil!").end();
           }
@@ -118,11 +126,17 @@ server.post("/users/list/pending", auth, async (req, res) => {
 
      //kun for admins...
 
+     let onlyNumbers = false;
+
+     if (req.body.onlyNumbers) {
+          onlyNumbers = true;
+     }
+
      let username = req.body.userInfo;
      username = JSON.parse(username);
      username = username.username;
 
-     const listOfPendingUsers = await getListOfPendingUsers(username);
+     const listOfPendingUsers = await getListOfPendingUsers(username, onlyNumbers);
 
      // list of pending status ??
 
@@ -187,6 +201,94 @@ server.post("/user/whatToTrainToday", auth, async (req, res) => {
      } else {
           res.status(403).json(`Feil, prøv igjen`).end();
      }
+});
+
+//
+
+// -------------------------------  get user details (view userPage) ---------------------- //
+
+server.post("/users/details/:user", auth, async (req, res) => {
+
+     let username = req.body.userInfo;
+     username = JSON.parse(username);
+     username = username.username;
+
+     const viewingUser = req.body.viewingUser
+
+     if (username && viewingUser) {
+
+          const resp = await getUserDetails(viewingUser, username);
+
+          if (resp.status === true) {
+               if (resp.userDetails !== false) {
+                    res.status(200).json(resp.userDetails).end();
+               } else {
+                    res.status(403).json(`${viewingUser} sin profil er privat!`).end();
+               }
+          } else {
+               res.status(403).json(`Brukeren finnes ikke!`).end();
+          }
+     } else {
+          res.status(403).json(`Feil, prøv igjen`).end();
+     }
+});
+
+//
+
+// get user settings and info
+
+server.post("/user/details/settingsInfo", auth, async (req, res) => {
+
+     const currentUser = JSON.parse(req.body.userInfo);
+
+     if (currentUser.username) {
+
+          const resp = await getUserSettingsAndInfo(currentUser.username);
+
+          if (resp.status === true) {
+               res.status(200).json(resp.userDetails).end();
+          } else {
+               res.status(403).json("error, try again").end();
+          }
+
+     } else {
+          res.status(403).json("invalid user").end();
+     }
+
+});
+
+//
+
+// update user settings
+
+server.post("/user/update/settings/:setting", auth, async (req, res) => {
+
+     const currentUser = JSON.parse(req.body.userInfo);
+     const setting = req.body.updateSetting;
+     const value = req.body.value;
+
+     //accepter bare "godkjente" settings
+
+     if (currentUser.username && setting && value === true || value === false) {
+
+          if (setting === "leaderboards" || setting === "publicProfile" || setting === "showGymCloseTime") {
+
+               const resp = await updateUserSetting(currentUser.username, setting, value);
+
+               if (resp === true) {
+                    res.status(200).json(`updated setting`).end();
+               } else {
+                    res.status(403).json("error, try again").end();
+               }
+
+          } else {
+               res.status(403).json("invalid setting").end();
+          }
+
+     } else {
+          res.status(403).json("invalid user").end();
+     }
+
 });
 
 //
