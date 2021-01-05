@@ -116,18 +116,18 @@
             const resp = await callServerAPI(body, url);
 
             if (resp === "updated setting") {
-               if (value === true) {
+               /*if (value === true) {
                   document.getElementById("infoDiv").innerHTML = `${settings[setting].name} er nå slått på!`;
                } else {
                   document.getElementById("infoDiv").innerHTML = `${settings[setting].name} er nå slått av!`;
-               }
-               getUserDetails();
+               }*/
+               //getUserDetails();
             } else {
                document.getElementById("infoDiv").innerHTML = `En feil har oppstått, innstillingen "${setting}" ble ikke oppdatert.`;
-            }
-            setTimeout(function () {
+               setTimeout(function () {
                document.getElementById("infoDiv").innerHTML = "";
             }, 3000);
+            }
          }
       }
    }

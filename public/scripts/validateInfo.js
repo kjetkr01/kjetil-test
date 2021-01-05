@@ -8,11 +8,6 @@ const maxCharLength = 20;
 // usage: " validate("My Displayname", "myusername", "mypassword", "mypassword"); "
 async function validate(displayname, username, password, confirmpassword) {
 
-    let checkTries = 0;
-    let listOfBlacklistedChars = "";
-
-    const blacklistedChars = ["|", "§", "!", "#", "¤", "%", "&", "/", "(", ")", " ", "=", "?", "+", "`", "<", ">", "^", "¨", "'", "*", ";", ":"];
-
     let message = "";
     let errorMsg = `må være lengre enn ${minCharLength} tegn og kortere enn ${maxCharLength} tegn`;
 
@@ -24,20 +19,9 @@ async function validate(displayname, username, password, confirmpassword) {
 
                 if (username.length >= minCharLength && username.length <= maxCharLength) {
 
-                    for (let i = 0; i < blacklistedChars.length; i++) {
+                    const letters = /^[A-Za-z0-9]+$/;
 
-                        if (username.includes(blacklistedChars[i])) {
-
-                            listOfBlacklistedChars += blacklistedChars[i];
-
-                            checkTries++;
-
-                        } else {
-
-                        }
-                    }
-
-                    if (checkTries === 0) {
+                    if (username.match(letters)) {
 
                         let splitDisplayName = displayname.split(" ");
                         let fixedDisplayname = "";
@@ -68,7 +52,7 @@ async function validate(displayname, username, password, confirmpassword) {
                         const resp = await callServerAPI(body, url);
                         message = resp;//"godkjent";
                     } else {
-                        message = `Brukernavnet kan ikke inneholde mellomrom eller følgende tegn: ${listOfBlacklistedChars}`;
+                        message = `Brukernavnet kan ikke inneholde mellomrom og kan kun inneholde bokstaver og tall!`;
                     }
 
                 } else {
