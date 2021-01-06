@@ -380,7 +380,7 @@ server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
                }
 
                const resp = {
-                    "currentDay": dayTxt,
+                    "currentDay": dayTxt.toLocaleLowerCase(),
                     "todaysWorkout": workoutTxt
                }
 
