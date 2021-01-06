@@ -6,7 +6,7 @@ const port = (process.env.PORT || 8080);
 server.set('port', port);
 server.use(express.static('public'));
 
-//
+// user api calls
 
 const auth = require("./modules/auth");
 
@@ -22,6 +22,11 @@ const updateUserSetting = require("./modules/user").updateUserSetting;
 
 const createToken = require("./modules/token").createToken;
 
+// api only
+
+const getWorkoutPlanAPI = require("./modules/API").getWorkoutPlanAPI;
+
+//
 
 //
 
@@ -307,11 +312,89 @@ server.post("/validate", auth, async (req, res) => {
 
 //
 
-// redirects user if url does not exist
+// get list of different api
 
-server.get("*", function (req, res) {
-     res.redirect("/");
+server.get("/api", function (req, res) {
+     const resp = [
+          "API1: /getWorkoutInfo/:user/:key",
+          "API2: /api"
+     ];
+     res.status(200).json(resp).end();
 });
+
+//
+
+// api
+
+server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
+
+     const url = req.url;
+     const urlInfo = url.split("/");
+
+     if (urlInfo[1] === "getWorkoutInfo" && urlInfo[2].length < maxCharLength && urlInfo[3].length < maxCharLength) {
+          const user = urlInfo[2];
+          const key = urlInfo[3];
+
+          const getWorkoutPlanInfo = await getWorkoutPlanAPI(user, key);
+
+          if (getWorkoutPlanInfo.status === true) {
+
+               const day = new Date().getDay();
+               const program = getWorkoutPlanInfo.info.trainingsplit;
+               let firstName = getWorkoutPlanInfo.info.displayname
+               firstName = firstName.split(" ");
+               firstName = firstName[0];
+
+               let dayTxt = "";
+               let workoutTxt = "";
+
+               switch (day) {
+                    case 0:
+                         dayTxt = "Søndag";
+                         break;
+                    case 1:
+                         dayTxt = "Mandag";
+                         break;
+                    case 2:
+                         dayTxt = "Tirsdag";
+                         break;
+                    case 3:
+                         dayTxt = "Onsdag";
+                         break;
+                    case 4:
+                         dayTxt = "Torsdag";
+                         break;
+                    case 5:
+                         dayTxt = "Fredag";
+                         break;
+                    case 6:
+                         dayTxt = "Lørdag";
+                         break;
+               }
+
+               if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
+                    console.log(program[dayTxt])
+                    workoutTxt = `Trener ${firstName} ${program[dayTxt]}`;
+               } else {
+                    workoutTxt = `Trener ikke ${firstName}`;
+               }
+
+               const resp = {
+                    "currentDay": dayTxt,
+                    "todaysWorkout": workoutTxt
+               }
+
+               res.status(200).json(resp).end();
+
+          } else {
+               res.status(403).json(`Feil, prøv igjen`).end();
+          }
+
+     } else {
+          res.status(403).json(`Feil, prøv igjen`).end();
+     }
+})
+
 
 //
 

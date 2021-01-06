@@ -357,6 +357,68 @@ class StorageHandler {
     }
 
     //
+
+    // api only calls
+
+    //  -------------------------------  getWorkoutPlanAPI  ------------------------------- //
+
+    async getWorkoutPlanAPI(user, key) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        let info = {};
+
+        try {
+            await client.connect();
+
+            results = await client.query('SELECT "user" from "api_keys" where key=$1', [key]);
+
+            if (results.rows.length === 0) {
+
+                results = false;
+
+            } else {
+
+                results = await client.query('SELECT "settings" from "users" where username=$1', [user]);
+
+                if (results.rows.length === 0) {
+                    results = false;
+                } else {
+                    const userHasPublicProfile = results.rows[0].settings.publicProfile.value
+
+                    if (userHasPublicProfile === true) {
+                        results = await client.query('SELECT "trainingsplit","displayname" from "users" where username=$1', [user]);
+
+                        if (results.rows.length === 0) {
+                            results = false;
+                        } else {
+                            info = results.rows[0]
+                            results = true;
+                        }
+
+                    } else {
+                        results = false;
+                    }
+
+                }
+
+            }
+
+            client.end();
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+
+        return { "status": results, "info": info };
+    }
+
+    //
+
+    //
 }
 
 module.exports = new StorageHandler(dbCredentials);
