@@ -387,11 +387,11 @@ server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
                res.status(200).json(resp).end();
 
           } else {
-               res.status(403).json(`Feil, prøv igjen`).end();
+               res.status(403).json(`ingen tilgang`).end();
           }
 
      } else {
-          res.status(403).json(`Feil, prøv igjen`).end();
+          res.status(403).json(`ingen tilgang`).end();
      }
 })
 
