@@ -2,7 +2,7 @@
 
 const token = localStorage.getItem("authToken");
 const user = localStorage.getItem("user");
-let userDisplayname;
+let userDisplayname, showGymCloseTime;
 
 let lastUpdatedTime = new Date();
 lastUpdatedTime = lastUpdatedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -15,6 +15,7 @@ if (user) {
     try {
 
         userDisplayname = JSON.parse(user);
+        showGymCloseTime = userDisplayname.showGymCloseTime;
         userDisplayname = userDisplayname.displayname;
 
     } catch (err) {

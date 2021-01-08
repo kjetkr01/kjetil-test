@@ -66,7 +66,7 @@ class StorageHandler {
         try {
             await client.connect();
             // evt legge til lifts og andre ting brukeren trenger å motta
-            results = await client.query('SELECT "id","username","password","displayname" FROM "public"."users" WHERE username=$1 AND password=$2', [username, password]);
+            results = await client.query('SELECT "username","displayname","settings" FROM "public"."users" WHERE username=$1 AND password=$2', [username, password]);
             results = (results.rows.length > 0) ? results.rows[0] : null;
             client.end();
         } catch (err) {
@@ -306,7 +306,7 @@ class StorageHandler {
         try {
             await client.connect();
 
-            results = await client.query('SELECT "settings" from "users" where username=$1', [username]);
+            results = await client.query('SELECT "username","displayname","settings" from "users" where username=$1', [username]);
             userDetails = results.rows[0];
             results = true;
 
@@ -380,7 +380,7 @@ class StorageHandler {
 
             } else {
 
-                if(results.rows[0].user === user){
+                if (results.rows[0].user === user) {
                     isOwner = true;
                 }
 
@@ -391,7 +391,7 @@ class StorageHandler {
                 } else {
                     const userHasPublicProfile = results.rows[0].settings.publicProfile.value
 
-                    if (userHasPublicProfile === true) {
+                    if (userHasPublicProfile === true || isOwner === true) {
                         results = await client.query('SELECT "trainingsplit","displayname" from "users" where username=$1', [user]);
 
                         if (results.rows.length === 0) {
@@ -418,7 +418,7 @@ class StorageHandler {
 
         client.end();
 
-        return { "status": results, "info": info, "isOwner": isOwner};
+        return { "status": results, "info": info, "isOwner": isOwner };
     }
 
     //

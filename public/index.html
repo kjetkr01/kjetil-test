@@ -49,35 +49,35 @@
 
     <article>
 
-    <div id="container">
+        <div id="container">
 
-        <div id="hei_melding"></div>
-        <div id="whatToTrainToday"></div>
-        <div id="gym_open"></div>
-        <div id="time_left"></div>
-    
-        <table id="board">
+            <div id="hei_melding"></div>
+            <div id="whatToTrainToday"></div>
+            <div id="gym_open"></div>
+            <div id="time_left"></div>
 
-            <tr>
-                <th>Navn</th>
-                <th>Trener</th>
-            </tr>
-            <tr>
+            <table id="board">
+
+                <tr>
+                    <th>Navn</th>
+                    <th>Trener</th>
+                </tr>
+                <tr>
+                    <td>Kjetil Kristiansen</td>
+                    <td>Bryst og triceps</td>
+                </tr>
+                <tr>
+                    <td>Kjetil Kristiansen</td>
+                    <td>Bryst og triceps</td>
+                </tr>
                 <td>Kjetil Kristiansen</td>
                 <td>Bryst og triceps</td>
-            </tr>
-            <tr>
-                <td>Kjetil Kristiansen</td>
-                <td>Bryst og triceps</td>
-            </tr>
-            <td>Kjetil Kristiansen</td>
-            <td>Bryst og triceps</td>
 
-        </table>
-    </div>
+            </table>
+        </div>
 
     </article>
-    
+
 
     <footer>
         Laget av Kjetkr01 og Simonso
@@ -88,11 +88,15 @@
 <script>
 
     let gymopen = isGymOpen();
-    document.getElementById("gym_open").innerHTML = gymopen.message
-    document.getElementById("time_left").innerHTML = gymopen.timeLeft
+    if (gymopen) {
+        document.getElementById("gym_open").innerHTML = gymopen.message
+        document.getElementById("time_left").innerHTML = gymopen.timeLeft
+    }
 
     let partofdaymsg = partOfDayMessage(userDisplayname);
-    document.getElementById("hei_melding").innerHTML = partofdaymsg
+    if (partofdaymsg) {
+        document.getElementById("hei_melding").innerHTML = partofdaymsg
+    }
 
     checkTrainingSplit()
     async function checkTrainingSplit() {

@@ -67,11 +67,12 @@
 
          const resp = await callServerAPI(body, url);
 
-         if (Object.entries(resp).length < 8) {
+         if (resp.settings && resp.userInfo) {
             info = resp;
+            localStorage.setItem("user", JSON.stringify(resp.userInfo));
             displayInformation();
          } else {
-            alert(resp);
+            alert("Feil, prøv igjen");
             redirectToHome();
          }
 
@@ -115,6 +116,8 @@
 
             const resp = await callServerAPI(body, url);
 
+            console.log(resp)
+
             if (resp === "updated setting") {
                /*if (value === true) {
                   document.getElementById("infoDiv").innerHTML = `${settings[setting].name} er nå slått på!`;
@@ -125,8 +128,8 @@
             } else {
                document.getElementById("infoDiv").innerHTML = `En feil har oppstått, innstillingen "${setting}" ble ikke oppdatert.`;
                setTimeout(function () {
-               document.getElementById("infoDiv").innerHTML = "";
-            }, 3000);
+                  document.getElementById("infoDiv").innerHTML = "";
+               }, 3000);
             }
          }
       }

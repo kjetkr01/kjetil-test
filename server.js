@@ -85,9 +85,9 @@ server.post("/autenticate", async function (req, res) {
           const isValid = requestUser.isValid;
 
           const userInfo = {
-               "id": requestUser.userInfo.id,
                "username": requestUser.userInfo.username,
-               "displayname": requestUser.userInfo.displayname
+               "displayname": requestUser.userInfo.displayname,
+               "showGymCloseTime": requestUser.userInfo.settings.showGymCloseTime.value
           }
 
           if (isValid) {
@@ -250,8 +250,14 @@ server.post("/user/details/settingsInfo", auth, async (req, res) => {
 
           const resp = await getUserSettingsAndInfo(currentUser.username);
 
+          const userInfo = {
+               "username": resp.userDetails.username,
+               "displayname": resp.userDetails.displayname,
+               "showGymCloseTime": resp.userDetails.settings.showGymCloseTime.value
+          }
+
           if (resp.status === true) {
-               res.status(200).json(resp.userDetails).end();
+               res.status(200).json({ "settings": resp.userDetails.settings, "userInfo": userInfo}).end();
           } else {
                res.status(403).json("error, try again").end();
           }
