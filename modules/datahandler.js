@@ -366,6 +366,7 @@ class StorageHandler {
 
         const client = new pg.Client(this.credentials);
         let results = false;
+        let isOwner = false;
         let info = {};
 
         try {
@@ -378,6 +379,10 @@ class StorageHandler {
                 results = false;
 
             } else {
+
+                if(results.rows[0].user === user){
+                    isOwner = true;
+                }
 
                 results = await client.query('SELECT "settings" from "users" where username=$1', [user]);
 
@@ -413,7 +418,7 @@ class StorageHandler {
 
         client.end();
 
-        return { "status": results, "info": info };
+        return { "status": results, "info": info, "isOwner": isOwner};
     }
 
     //

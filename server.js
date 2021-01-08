@@ -372,11 +372,21 @@ server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
                          break;
                }
 
-               if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
-                    console.log(program[dayTxt])
-                    workoutTxt = `Trener ${firstName} ${program[dayTxt]}`;
+               if (getWorkoutPlanInfo.isOwner === true) {
+
+                    if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
+                         workoutTxt = `Skal du trene ${program[dayTxt]}`;
+                    } else {
+                         workoutTxt = `Skal du ikke trene`;
+                    }
+
                } else {
-                    workoutTxt = `Trener ikke ${firstName}`;
+
+                    if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
+                         workoutTxt = `Trener ${firstName} ${program[dayTxt]}`;
+                    } else {
+                         workoutTxt = `Trener ikke ${firstName}`;
+                    }
                }
 
                const resp = {
