@@ -259,7 +259,7 @@ server.post("/user/details/settingsInfo", auth, async (req, res) => {
           }
 
           if (resp.status === true) {
-               res.status(200).json({ "settings": resp.userDetails.settings, "userInfo": userInfo}).end();
+               res.status(200).json({ "settings": resp.userDetails.settings, "userInfo": userInfo }).end();
           } else {
                res.status(403).json("error, try again").end();
           }
