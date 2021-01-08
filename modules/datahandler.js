@@ -66,7 +66,7 @@ class StorageHandler {
         try {
             await client.connect();
             // evt legge til lifts og andre ting brukeren trenger å motta
-            results = await client.query('SELECT "username","displayname","settings" FROM "public"."users" WHERE username=$1 AND password=$2', [username, password]);
+            results = await client.query('SELECT "id","username","password","displayname","settings" FROM "public"."users" WHERE username=$1 AND password=$2', [username, password]);
             results = (results.rows.length > 0) ? results.rows[0] : null;
             client.end();
         } catch (err) {
@@ -306,7 +306,7 @@ class StorageHandler {
         try {
             await client.connect();
 
-            results = await client.query('SELECT "username","displayname","settings" from "users" where username=$1', [username]);
+            results = await client.query('SELECT "id","username","displayname","settings" from "users" where username=$1', [username]);
             userDetails = results.rows[0];
             results = true;
 

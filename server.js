@@ -85,6 +85,7 @@ server.post("/autenticate", async function (req, res) {
           const isValid = requestUser.isValid;
 
           const userInfo = {
+               "id": requestUser.userInfo.id,
                "username": requestUser.userInfo.username,
                "displayname": requestUser.userInfo.displayname,
                "showGymCloseTime": requestUser.userInfo.settings.showGymCloseTime.value
@@ -251,6 +252,7 @@ server.post("/user/details/settingsInfo", auth, async (req, res) => {
           const resp = await getUserSettingsAndInfo(currentUser.username);
 
           const userInfo = {
+               "id": resp.userDetails.id,
                "username": resp.userDetails.username,
                "displayname": resp.userDetails.displayname,
                "showGymCloseTime": resp.userDetails.settings.showGymCloseTime.value
