@@ -25,4 +25,7 @@ body{
   --main-text-shadow: 1px 1px rgb(0, 0, 0, 0.2);
   --main-border: 1px solid black;
 
+  --global-borderRadiusForContentTop: 15px 15px 0 0;
+  --global-borderRadiusForContentBottom: 0 0 15px 15px;
+
 }

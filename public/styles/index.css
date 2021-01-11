@@ -30,7 +30,7 @@
                              "footermenuG footermenuG footermenuG footermenuG footermenuG footermenuG footermenuG"
                              "c2r3 c2r3 c2r3 c2r3 c2r3 c2r3 c2r3";
                              
-          grid-template-rows: 1vw 30px 1vw 5% 5% 5% 5% 5% 7.5% 1fr 5% 25px 7.5% 5% 1vw 30px 1vw; /*nedover*/
+          grid-template-rows: 2vw 30px 2vw 5% 5% 5% 5% 5% 7.5% 1fr 5% 25px 7.5% 5% 2vw 30px 2vw; /*nedover*/
           grid-template-columns: 1vw 1vw 3vw 1fr 3vw 1vw 1vw; /*bortover*/
       }
 
@@ -41,6 +41,10 @@
         color: var(--main-textColor);
         text-decoration: none;
      }
+
+     a:hover{
+      color: rgb(0, 255, 170);              
+}
 
       /* */
       
