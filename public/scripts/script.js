@@ -3,7 +3,7 @@
 function isGymOpen() {
 
     if (showGymCloseTime === true) {
-        console.log("showing gym close time")
+        console.log("showing gym close time");
 
         // new version
 

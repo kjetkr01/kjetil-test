@@ -126,7 +126,7 @@
 
       <div id="footermenuG">
          <table id="footermenu">
-            
+
          </table>
       </div>
 
@@ -138,10 +138,16 @@
 
 <script>
 
-   const gymopen = isGymOpen();
-   if (gymopen) {
-      document.getElementById("gymtime").innerHTML = gymopen.message
-      document.getElementById("gymtimesmall").innerHTML = gymopen.timeLeft
+   isGymOpenUpdater();
+   function isGymOpenUpdater() {
+
+      const gymopen = isGymOpen();
+      if (gymopen) {
+         document.getElementById("gymtime").innerHTML = gymopen.message
+         document.getElementById("gymtimesmall").innerHTML = gymopen.timeLeft
+
+         setTimeout(isGymOpenUpdater, 30000);
+      }
    }
 
    const partofdaymsg = partOfDayMessage(userDisplayname);
