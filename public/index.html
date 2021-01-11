@@ -2,119 +2,197 @@
 <html>
 
 <head>
-    <title>Hjem</title>
+   <title>Hjem</title>
 
-    <meta charset="utf-8" />
+   <meta charset="utf-8" />
 
-    <!-- manifest -->
+   <!-- manifest -->
 
-    <link rel="manifest" href="manifest.json">
+   <link rel="manifest" href="manifest.json">
 
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Treningsstatestikk">
-    <meta name="apple-mobile-web-app-title" content="Treningsstatestikk">
-    <meta name="msapplication-starturl" content="/">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta name="mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="application-name" content="Treningsstatestikk">
+   <meta name="apple-mobile-web-app-title" content="Treningsstatestikk">
+   <meta name="msapplication-starturl" content="/">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="icon" type="image/png" sizes="192x192" href="images/appIcon.png">
-    <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+   <link rel="icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+   <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="images/appIcon.png">
 
-    <!-- -->
+   <!-- -->
 
-    <link rel="stylesheet" href="styles/global.css">
-    <link rel="stylesheet" href="styles/index.css">
+   <link rel="stylesheet" href="styles/global.css">
+   <link rel="stylesheet" href="styles/index.css">
 
-    <script src="scripts/global.js" type="text/javascript"></script>
-    <script src="scripts/validateInfo.js" type="text/javascript"></script>
-    <script src="scripts/script.js" type="text/javascript"></script>
+   <script src="scripts/global.js" type="text/javascript"></script>
+   <script src="scripts/validateInfo.js" type="text/javascript"></script>
+   <script src="scripts/script.js" type="text/javascript"></script>
 
 </head>
 
 
 <body>
 
-    <header>
+   <section id="homePage">
 
-        <nav>
-            <ul class="nav_links">
-                <li><a href="index.html">Hjem</a></li>
-                <li><a href="access.html">Lag konto</a></li>
-                <li><a href="login.html">Logg inn</a></li>
-            </ul>
-        </nav>
+      <!-- spacing items-->
 
-    </header>
+      <div id="e1r1"></div>
+      <div id="e2r1"></div>
+      <div id="e3r1"></div>
+      <div id="e4r1"></div>
+
+      <div id="e1r2"></div>
+      <div id="e2r2"></div>
+      <div id="e3r2"></div>
+      <div id="e4r2"></div>
+
+      <!-- -->
+
+      <!-- content items-->
+
+      <div id="c1r1"></div>
+      <div id="c2r1"></div>
+      <div id="c3r1"></div>
+      <div id="c4r1"></div>
+
+      <div id="c1r2"></div>
+      <div id="c2r2"></div>
+      <div id="c3r2"></div>
+      <div id="c4r2"></div>
+      <div id="c5r2"></div>
+
+      <div id="c1r3"></div>
+      <div id="c2r3"></div>
+      <div id="c3r3"></div>
+      <div id="c4r3"></div>
 
 
-    <article>
+      <!-- -->
 
-        <div id="container">
+      <!-- element content items-->
 
-            <div id="hei_melding"></div>
-            <div id="whatToTrainToday"></div>
-            <div id="gym_open"></div>
-            <div id="time_left"></div>
+      <!-- header -->
 
-            <table id="board"></table>
-        </div>
+      <div id="Glinks">
+         <p id="links">
+            <a href="index.html">Hjem</a>
+            <a href="access.html" style="padding-left: 10px;">Lag konto</a>
+            <a href="login.html" style="padding-left: 10px;">Logg inn</a>
+         </p>
+      </div>
 
-    </article>
+      <!-- -->
 
+      <!-- content/middle -->
 
-    <footer>
-        Footer
-    </footer>
+      <div id="usermsg1G">
+         <p id="usermsg1">
+
+         </p>
+      </div>
+
+      <div id="usermsg2G">
+         <p id="usermsg2">
+
+         </p>
+      </div>
+
+      <div id="usermsg3G">
+         <p id="usermsg3">
+            Hvem trener i dag?
+         </p>
+      </div>
+
+      <div id="boardG">
+         <table id="board">
+
+         </table>
+      </div>
+
+      <div id="gymtimeG">
+         <p id="gymtime">
+            Treningssenteret er åpent!
+         </p>
+      </div>
+
+      <div id="gymtimesmallG">
+         <p id="gymtimesmall">
+            Stenger om 2t og 30 min
+         </p>
+      </div>
+
+      <!-- -->
+
+      <!-- footer -->
+
+      <div id="footermenuG">
+         <table id="footermenu">
+            <!-- icons
+            <tr>
+               <td><img id="footerIconHome" draggable="false" src="images/homeIcon.svg" alt="Hjem"></td>
+               <td><img id="footerIconLeaderboards" draggable="false" src="images/leaderboardsIcon.svg"
+                     alt="Ledertavler"></td>
+               <td><img id="footerIconUsers" draggable="false" src="images/usersIcon.svg" alt="Brukere"></td>
+            </tr>
+         -->
+         </table>
+      </div>
+
+      <!-- -->
+
+   </section>
 
 </body>
 
 <script>
 
-    const gymopen = isGymOpen();
-    if (gymopen) {
-        document.getElementById("gym_open").innerHTML = gymopen.message
-        document.getElementById("time_left").innerHTML = gymopen.timeLeft
-    }
+   const gymopen = isGymOpen();
+   if (gymopen) {
+      document.getElementById("gymtime").innerHTML = gymopen.message
+      document.getElementById("gymtimesmall").innerHTML = gymopen.timeLeft
+   }
 
-    const partofdaymsg = partOfDayMessage(userDisplayname);
-    if (partofdaymsg) {
-        document.getElementById("hei_melding").innerHTML = partofdaymsg
-    }
+   const partofdaymsg = partOfDayMessage(userDisplayname);
+   if (partofdaymsg) {
+      document.getElementById("usermsg1").innerHTML = partofdaymsg
+   }
 
-    checkTrainingSplit();
-    async function checkTrainingSplit() {
+   checkTrainingSplit();
+   async function checkTrainingSplit() {
 
-        const resp = await whatToTrainToday();
+      const resp = await whatToTrainToday();
 
-        if (resp.length > 0) {
-            document.getElementById("whatToTrainToday").innerHTML = resp;
-        }
+      if (resp.length > 0) {
+         document.getElementById("usermsg2").innerHTML = resp;
+      }
 
-    }
+   }
 
-    checkWhoIsWorkingOutToday();
-    async function checkWhoIsWorkingOutToday() {
+   checkWhoIsWorkingOutToday();
+   async function checkWhoIsWorkingOutToday() {
 
-        const board = document.getElementById("board");
-        const resp = await whoIsWorkingOutToday();
+      const board = document.getElementById("board");
+      const resp = await whoIsWorkingOutToday();
 
-        if (resp) {
-            board.innerHTML = `
+      if (resp) {
+         board.innerHTML = `
         <tr>
         <th>Navn</th>
         <th>Trener</th>
         </tr>`;
 
-            for (let i = 0; i < Object.entries(resp).length; i++) {
-                board.innerHTML += `
+         for (let i = 0; i < Object.entries(resp).length; i++) {
+            board.innerHTML += `
         <tr>
         <td>${resp[i].userFullName}</td>
         <td>${resp[i].todaysWorkout}</td>
         </tr>`;
-            }
-        }
+         }
+      }
 
-    }
+   }
 
 </script>
 

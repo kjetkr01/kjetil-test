@@ -1,37 +1,334 @@
-#container{
+/*template:
+      https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
+      */
+      
+      #homePage {
         display: grid;
-        grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
-        margin: 0;
-        padding: 0;
-        height: 80vh;
-}
-#hei_melding{
-             
-             background: none;
-             font-family: Arial, Helvetica, sans-serif;
-             color: white;
-             font-weight: bold;
-             font-size: 22px;
-}            
-#gym_open{
-          font-family: Arial, Helvetica, sans-serif;
-          color: white;
-          
-}
-#time_left{
-           
-           font-family: Arial, Helvetica, sans-serif;
-           color: white;
-           margin-top: 10px;
-}
-#board{
-       
-       border-radius: 10px;
-       padding: 10px;
-       background-color: rgb(29, 29, 29);
-       color: white;
-       font-family: Arial, Helvetica, sans-serif;
-       overflow-y: scroll;
-       max-width: 20%;
-       max-height: 10%;
-}
+        width: 100vw;
+        height: 100vh;
+        
+        grid-template-areas: 
+                             "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
+                             "c2r1 c2r1 Glinks Glinks Glinks Glinks c3r1"
+                             "c4r1 c4r1 c4r1 c4r1 c4r1 c4r1 c4r1"
+                             
+                             "e2r1 e1r2 e1r2 e1r2 e1r2 e1r2 e4r1"
+      
+                             "e2r1 e2r2 usermsg1G usermsg1G usermsg1G e4r2 e4r1"
+                             "e2r1 e2r2 c1r2 c1r2 c1r2 e4r2 e4r1"
+                             "e2r1 e2r2 usermsg2G usermsg2G usermsg2G e4r2 e4r1"
+                             "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
+                             "e2r1 e2r2 usermsg3G usermsg3G usermsg3G e4r2 e4r1"
+                             "e2r1 e2r2 c3r2 boardG c4r2 e4r2 e4r1"
+                             "e2r1 e2r2 c5r2 c5r2 c5r2 e4r2 e4r1"
+                             "e2r1 e2r2 gymtimeG gymtimeG gymtimeG e4r2 e4r1"
+                             "e2r1 e2r2 gymtimesmallG gymtimesmallG gymtimesmallG e4r2 e4r1"
+      
+                             "e2r1 e3r2 e3r2 e3r2 e3r2 e3r2 e4r1"
+      
+                             "c1r3 c1r3 c1r3 c1r3 c1r3 c1r3 c1r3"
+                             "c2r3 footermenuG footermenuG footermenuG footermenuG footermenuG c4r3"
+                             "c3r3 c3r3 c3r3 c3r3 c3r3 c3r3 c3r3";
+                             
+          grid-template-rows: 5px 60px 5px 5% 5% 5% 5% 5% 7.5% 1fr 5% 25px 7.5% 5% 5px 60px 5px; /*nedover*/
+          grid-template-columns: 5px 4% 20px 1fr 20px 4% 5px; /*bortover*/
+      }
+
+      /* a */
+
+      a{
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--main-textColor);
+        text-decoration: none;
+     }
+
+      /* */
+      
+      /* grid for elements */
+      
+      #homePage > #Glinks {
+        grid-area: Glinks;
+        background-color: var(--main-themeColor);
+      }
+      
+      
+      #homePage > #usermsg1G {
+        grid-area: usermsg1G;
+        background-color: var(--main-background-color);
+        border-left: var(--main-border);
+        border-right: var(--main-border);
+        border-top: var(--main-border);
+        border-radius: var(--global-borderRadiusForContentTop);
+        padding: 7.5px;
+      }
+      
+      #homePage > #usermsg2G {
+        grid-area: usermsg2G;
+        background-color: var(--main-background-color);
+        border-left: var(--main-border);
+        border-right: var(--main-border);
+        padding: 7.5px;
+      }
+      
+      #homePage > #usermsg3G {
+        grid-area: usermsg3G;
+        background-color: var(--main-background-color);
+        border-left: var(--main-border);
+        border-right: var(--main-border);
+      }
+      
+      #homePage > #boardG {
+        grid-area: boardG;
+        background-color: var(--main-background-color);
+        overflow-y: scroll;
+        /*border: var(--global-border);*/
+        min-height: 50px;
+      }
+      
+      #homePage > #gymtimeG {
+        grid-area: gymtimeG;
+        background-color: var(--main-background-color);
+        border-left: var(--main-border);
+        border-right: var(--main-border);
+      }
+      
+      #homePage > #gymtimesmallG {
+        grid-area: gymtimesmallG;
+        background-color: var(--main-background-color);
+        border-left: var(--main-border);
+        border-right: var(--main-border);
+        border-bottom: var(--main-border);
+        border-radius: var(--global-borderRadiusForContentBottom);
+      }
+      
+      #homePage > #footermenuG {
+        grid-area: footermenuG;
+        background-color: var(--main-themeColor);
+      }
+      
+      
+      /* elements */
+      
+      /* header */
+      
+      #Glinks > #links {
+        position: absolute;
+        font-size: 18px;
+        left: 15px; /* evt bruke dette til å flytte title teksten */
+        text-align: center;
+      }
+      
+      /* */
+      
+      /* content/middle */
+      
+      #usermsg1G > #usermsg1 {
+        position: absolute;
+        font-size: 22px;
+        font-weight: bold;
+        color: var(--main-textColor);
+        margin: 10px;
+        margin-left: var(--global-margin-left);
+      }
+      
+      #usermsg2G > #usermsg2 {
+        position: absolute;
+        font-size: 16px;
+        color: var(--main-textColor);
+        margin: 10px;
+        margin-left: var(--global-margin-left);
+      }
+      
+      #usermsg3G > #usermsg3 {
+        font-weight: bold;
+        color: var(--main-textColor);
+        width: 100%;
+        font-size: 20px;
+        text-align: center;
+      }
+      
+      #boardG > #board {
+        color: var(--main-textColor);
+        width: 100%;
+        text-align: center;
+      }
+      
+      /* test? */
+      tr.separated td {
+        /* set border style for separated rows */
+        border-bottom: 1px solid;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        font-size: 16px;
+      } 
+      
+      table {
+        border-collapse: collapse;
+      }
+      
+      th {
+        position: sticky;
+        top: 0;
+        background-color: var(--main-background-color);
+      }
+      
+      /* slutt av test */
+      
+      #gymtimeG > #gymtime {
+        width: 100%;
+        color: var(--main-textColor);
+        font-size: 18px;
+        text-align: center;
+      }
+      
+      #gymtimesmallG > #gymtimesmall {
+        width: 100%;
+        color: var(--main-textColor);
+        font-size: 14px;
+        text-align: center;
+      }
+      
+      /* */
+      
+      /* footer */
+      
+      #footermenuG > #footermenu {
+        width: 100%;
+        text-align: center;
+      }
+      
+      /* */
+      
+      
+      
+      
+      
+      /* finished */
+      
+      /*empty space padding*/
+      
+      #homePage > #e1r1 {
+        grid-area: e1r1;
+        }
+        
+        #homePage > #e2r1 {
+        grid-area: e2r1;
+        }
+        
+        #homePage > #e3r1 {
+        grid-area: e3r1;
+        }
+        
+        #homePage > #e4r1 {
+        grid-area: e4r1;
+        }
+        
+        /**/
+        
+        #homePage > #e1r2 {
+        grid-area: e1r2;
+        }
+        
+        #homePage > #e2r2 {
+        grid-area: e2r2;
+        }
+        
+        #homePage > #e3r2 {
+        grid-area: e3r2;
+        }
+        
+        #homePage > #e4r2 {
+        grid-area: e4r2;
+        }
+        
+        /* */
+        
+        /* content */
+        
+        /* header */
+        
+        #homePage > #c1r1 {
+          grid-area: c1r1;
+        }
+        
+        #homePage > #c2r1 {
+          grid-area: c2r1;
+        }
+        
+        #homePage > #c3r1 {
+          grid-area: c3r1;
+        }
+        
+        #homePage > #c4r1 {
+          grid-area: c4r1;
+        }
+        
+        #homePage > #c5r1 {
+          grid-area: c5r1;
+          border-bottom: var(--main-border);
+        }
+        
+        #c1r1, #c2r1, #c3r1, #c4r1, #c5r1 {
+          background-color: var(--main-themeColor);
+      }
+      
+      /* content/middle */
+      
+      #homePage > #c1r2 {
+        grid-area: c1r2;
+        border-left: var(--main-border);
+        border-right: var(--main-border);
+      }
+      
+      #homePage > #c2r2 {
+        grid-area: c2r2;
+        border-left: var(--main-border);
+        border-right: var(--main-border);
+        
+      }
+      
+      #homePage > #c3r2 {
+        grid-area: c3r2;
+        border-left: var(--main-border);
+      }
+      
+      #homePage > #c4r2 {
+        grid-area: c4r2;
+        border-right: var(--main-border);
+      }
+      
+      #homePage > #c5r2 {
+        grid-area: c5r2;
+        border-left: var(--main-border);
+        border-right: var(--main-border);
+      }
+      
+      
+      #c1r2, #c2r2, #c3r2, #c4r2, #c5r2 {
+        background-color: var(--main-background-color);
+      }
+      
+      /* footer */
+      
+      #homePage > #c1r3 {
+        grid-area: c1r3;
+        border-top: var(--main-border);
+        }
+        
+        #homePage > #c2r3 {
+          grid-area: c2r3;
+        }
+      
+        #homePage > #c3r3 {
+          grid-area: c3r3;
+        }
+      
+        #homePage > #c4r3 {
+          grid-area: c4r3;
+        }
+        
+        #c1r3, #c2r3, #c3r3, #c4r3 {
+          background-color: var(--main-themeColor);
+        }
+        
+        /* */
