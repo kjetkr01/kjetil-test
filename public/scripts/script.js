@@ -168,7 +168,7 @@ async function whatToTrainToday() {
             }
 
             if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
-                usermessage = `I dag (${dayTxt}) skal du trene ${program[dayTxt]}.`;
+                usermessage = `I dag (${dayTxt.toLowerCase()}) skal du trene ${program[dayTxt]}.`;
             } else {
                 usermessage = `I dag (${dayTxt}) har du fri.`;
             }

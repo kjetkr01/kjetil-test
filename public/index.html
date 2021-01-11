@@ -54,8 +54,6 @@
 
       <div id="c1r1"></div>
       <div id="c2r1"></div>
-      <div id="c3r1"></div>
-      <div id="c4r1"></div>
 
       <div id="c1r2"></div>
       <div id="c2r2"></div>
@@ -65,8 +63,6 @@
 
       <div id="c1r3"></div>
       <div id="c2r3"></div>
-      <div id="c3r3"></div>
-      <div id="c4r3"></div>
 
 
       <!-- -->
@@ -76,11 +72,18 @@
       <!-- header -->
 
       <div id="Glinks">
-         <p id="links">
+         <!--
             <a href="index.html">Hjem</a>
-            <a href="access.html" style="padding-left: 10px;">Lag konto</a>
-            <a href="login.html" style="padding-left: 10px;">Logg inn</a>
-         </p>
+            <a href="access.html">Lag konto</a>
+            <a href="login.html">Logg inn</a>
+            -->
+         <table id="links">
+            <tr>
+               <td><a href="index.html">Hjem</a></td>
+               <td><a href="access.html">Lag konto</a></td>
+               <td><a href="login.html">Logg inn</a></td>
+            </tr>
+         </table>
       </div>
 
       <!-- -->
@@ -101,7 +104,7 @@
 
       <div id="usermsg3G">
          <p id="usermsg3">
-            Hvem trener i dag?
+
          </p>
       </div>
 
@@ -113,13 +116,13 @@
 
       <div id="gymtimeG">
          <p id="gymtime">
-            Treningssenteret er åpent!
+
          </p>
       </div>
 
       <div id="gymtimesmallG">
          <p id="gymtimesmall">
-            Stenger om 2t og 30 min
+
          </p>
       </div>
 
@@ -174,9 +177,12 @@
    async function checkWhoIsWorkingOutToday() {
 
       const board = document.getElementById("board");
+      const usermsg3 = document.getElementById("usermsg3");
       const resp = await whoIsWorkingOutToday();
 
-      if (resp) {
+      if (Object.entries(resp).length > 0) {
+         usermsg3.innerHTML = `I dag trener ${Object.entries(resp).length} personer!`;
+
          board.innerHTML = `
         <tr>
         <th>Navn</th>
@@ -190,6 +196,8 @@
         <td>${resp[i].todaysWorkout}</td>
         </tr>`;
          }
+      } else {
+         usermsg3.innerHTML = `I dag er det ingen som trener!`;
       }
 
    }

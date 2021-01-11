@@ -9,8 +9,8 @@
         
         grid-template-areas: 
                              "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
-                             "c2r1 c2r1 Glinks Glinks Glinks Glinks c3r1"
-                             "c4r1 c4r1 c4r1 c4r1 c4r1 c4r1 c4r1"
+                             "Glinks Glinks Glinks Glinks Glinks Glinks Glinks"
+                             "c2r1 c2r1 c2r1 c2r1 c2r1 c2r1 c2r1"
                              
                              "e2r1 e1r2 e1r2 e1r2 e1r2 e1r2 e4r1"
       
@@ -27,11 +27,11 @@
                              "e2r1 e3r2 e3r2 e3r2 e3r2 e3r2 e4r1"
       
                              "c1r3 c1r3 c1r3 c1r3 c1r3 c1r3 c1r3"
-                             "c2r3 footermenuG footermenuG footermenuG footermenuG footermenuG c4r3"
-                             "c3r3 c3r3 c3r3 c3r3 c3r3 c3r3 c3r3";
+                             "footermenuG footermenuG footermenuG footermenuG footermenuG footermenuG footermenuG"
+                             "c2r3 c2r3 c2r3 c2r3 c2r3 c2r3 c2r3";
                              
-          grid-template-rows: 5px 60px 5px 5% 5% 5% 5% 5% 7.5% 1fr 5% 25px 7.5% 5% 5px 60px 5px; /*nedover*/
-          grid-template-columns: 5px 4% 20px 1fr 20px 4% 5px; /*bortover*/
+          grid-template-rows: 1vw 30px 1vw 5% 5% 5% 5% 5% 7.5% 1fr 5% 25px 7.5% 5% 1vw 30px 1vw; /*nedover*/
+          grid-template-columns: 1vw 1vw 3vw 1fr 3vw 1vw 1vw; /*bortover*/
       }
 
       /* a */
@@ -112,9 +112,9 @@
       /* header */
       
       #Glinks > #links {
-        position: absolute;
+        color: var(--main-textColor);
         font-size: 18px;
-        left: 15px; /* evt bruke dette til å flytte title teksten */
+        width: 100%;
         text-align: center;
       }
       
@@ -255,20 +255,12 @@
           grid-area: c2r1;
         }
         
-        #homePage > #c3r1 {
-          grid-area: c3r1;
-        }
-        
-        #homePage > #c4r1 {
-          grid-area: c4r1;
-        }
-        
         #homePage > #c5r1 {
           grid-area: c5r1;
           border-bottom: var(--main-border);
         }
         
-        #c1r1, #c2r1, #c3r1, #c4r1, #c5r1 {
+        #c1r1, #c2r1, #c5r1 {
           background-color: var(--main-themeColor);
       }
       
@@ -318,16 +310,8 @@
         #homePage > #c2r3 {
           grid-area: c2r3;
         }
-      
-        #homePage > #c3r3 {
-          grid-area: c3r3;
-        }
-      
-        #homePage > #c4r3 {
-          grid-area: c4r3;
-        }
         
-        #c1r3, #c2r3, #c3r3, #c4r3 {
+        #c1r3, #c2r3 {
           background-color: var(--main-themeColor);
         }
         
