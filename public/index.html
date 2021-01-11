@@ -56,24 +56,7 @@
             <div id="gym_open"></div>
             <div id="time_left"></div>
 
-            <table id="board">
-
-                <tr>
-                    <th>Navn</th>
-                    <th>Trener</th>
-                </tr>
-                <tr>
-                    <td>Kjetil Kristiansen</td>
-                    <td>Bryst og triceps</td>
-                </tr>
-                <tr>
-                    <td>Kjetil Kristiansen</td>
-                    <td>Bryst og triceps</td>
-                </tr>
-                <td>Kjetil Kristiansen</td>
-                <td>Bryst og triceps</td>
-
-            </table>
+            <table id="board"></table>
         </div>
 
     </article>
@@ -87,24 +70,48 @@
 
 <script>
 
-    let gymopen = isGymOpen();
+    const gymopen = isGymOpen();
     if (gymopen) {
         document.getElementById("gym_open").innerHTML = gymopen.message
         document.getElementById("time_left").innerHTML = gymopen.timeLeft
     }
 
-    let partofdaymsg = partOfDayMessage(userDisplayname);
+    const partofdaymsg = partOfDayMessage(userDisplayname);
     if (partofdaymsg) {
         document.getElementById("hei_melding").innerHTML = partofdaymsg
     }
 
-    checkTrainingSplit()
+    checkTrainingSplit();
     async function checkTrainingSplit() {
 
-        let whattotraintoday = await whatToTrainToday();
+        const resp = await whatToTrainToday();
 
-        if (whattotraintoday.length > 0) {
-            document.getElementById("whatToTrainToday").innerHTML = whattotraintoday;
+        if (resp.length > 0) {
+            document.getElementById("whatToTrainToday").innerHTML = resp;
+        }
+
+    }
+
+    checkWhoIsWorkingOutToday();
+    async function checkWhoIsWorkingOutToday() {
+
+        const board = document.getElementById("board");
+        const resp = await whoIsWorkingOutToday();
+
+        if (resp) {
+            board.innerHTML = `
+        <tr>
+        <th>Navn</th>
+        <th>Trener</th>
+        </tr>`;
+
+            for (let i = 0; i < Object.entries(resp).length; i++) {
+                board.innerHTML += `
+        <tr>
+        <td>${resp[i].userFullName}</td>
+        <td>${resp[i].todaysWorkout}</td>
+        </tr>`;
+            }
         }
 
     }

@@ -19,6 +19,7 @@ const getWorkoutSplit = require("./modules/user").getWorkoutSplit;
 const getUserDetails = require("./modules/user").getUserDetails;
 const getUserSettingsAndInfo = require("./modules/user").getUserSettingsAndInfo;
 const updateUserSetting = require("./modules/user").updateUserSetting;
+const getListOfAllUsersWorkoutToday = require("./modules/user").getListOfAllUsersWorkoutToday;
 
 const createToken = require("./modules/token").createToken;
 
@@ -300,6 +301,22 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
 
      } else {
           res.status(403).json("invalid user").end();
+     }
+
+});
+
+//
+
+// get list of all people who are working out today (only public users)
+
+server.post("/whoIsWorkingOutToday", auth, async (req, res) => {
+
+     const resp = await getListOfAllUsersWorkoutToday();
+
+     if (resp.status === true) {
+          res.status(200).json(resp.info).end();
+     } else {
+          res.status(403).json("error, try again").end();
      }
 
 });

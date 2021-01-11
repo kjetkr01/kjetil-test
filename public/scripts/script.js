@@ -96,7 +96,6 @@ function partOfDayMessage(displayName) {
         firstName = firstName[0];
     }
 
-
     const today = new Date();
 
     const hours = today.getHours();
@@ -128,11 +127,6 @@ function partOfDayMessage(displayName) {
 
 async function whatToTrainToday() {
 
-    if (!window.navigator.onLine) {
-        console.log("Offline mode is enabled, server fetching is disabled!");
-        return;
-    }
-
     let dayTxt = "";
     let usermessage = "";
 
@@ -143,7 +137,7 @@ async function whatToTrainToday() {
 
         const resp = await callServerAPI(body, url);
 
-        if (resp && Object.keys(resp).length === 7) {
+        if (resp) {
 
             let program = resp;
 
@@ -186,5 +180,30 @@ async function whatToTrainToday() {
     }
 
     return usermessage;
+
+}
+
+//
+
+async function whoIsWorkingOutToday() {
+
+    let info = {};
+
+    if (token && user) {
+
+        const body = { "authToken": token, "userInfo": user };
+        const url = `/whoIsWorkingOutToday`;
+
+        const resp = await callServerAPI(body, url);
+
+        if (resp) {
+            info = resp;
+        }
+
+    } else {
+        console.log("Invalid token, username skipped whoIsWorkingOutToday")
+    }
+
+    return info;
 
 }

@@ -49,7 +49,9 @@ window.onload = validateToken;
 async function validateToken() {
 
     if (!window.navigator.onLine) {
-        console.log("Offline mode is enabled, server fetching is disabled!");
+        const offlineMsg = "Offline mode is enabled, server fetching is disabled!";
+        alert(offlineMsg)
+        console.log(offlineMsg);
         return;
     }
 
@@ -63,13 +65,6 @@ async function validateToken() {
 
     } else {
 
-        /*
-        token = localStorage.getItem("authToken");
-        user = localStorage.getItem("user");
-        userDisplayname = JSON.parse(user);
-        userDisplayname = userDisplayname.displayname;
-        */
-
         if (token && user) {
 
             const body = { "authToken": token, "userInfo": user };
@@ -77,7 +72,7 @@ async function validateToken() {
 
             const resp = await callServerAPI(body, url);
 
-            if (resp === "Ok") {
+            if (resp) {
                 console.log("Token is valid");
             } else {
                 console.log("invalid token");
@@ -96,7 +91,9 @@ async function validateToken() {
 async function callServerAPI(body, url) {
 
     if (!window.navigator.onLine) {
-        console.log("Offline mode is enabled, server fetching is disabled!");
+        const offlineMsg = "Offline mode is enabled, server fetching is disabled!";
+        alert(offlineMsg)
+        console.log(offlineMsg);
         return;
     }
 
@@ -116,8 +113,13 @@ async function callServerAPI(body, url) {
     const data = await response.json();
     //console.log(response.status);
 
+    if (response.status === 200) {
+        return data;
+    } else {
+        console.log("not returning data, recieved status:" + response.status)
+    }
+
     //return { "response": response, "data": data };
-    return data;
 
 }
 

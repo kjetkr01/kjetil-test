@@ -358,6 +358,71 @@ class StorageHandler {
 
     //
 
+    //  -------------------------------  get list of all public users that are working out today  ------------------------------- //
+
+    async getListOfAllUsersWorkoutToday() {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        let info = {};
+
+        try {
+            await client.connect();
+
+            results = await client.query('SELECT "displayname","settings","trainingsplit" from "users"');
+
+            const day = new Date().getDay();
+            let dayTxt = "";
+            let counter = 0;
+
+            switch (day) {
+                case 0:
+                    dayTxt = "Søndag";
+                    break;
+                case 1:
+                    dayTxt = "Mandag";
+                    break;
+                case 2:
+                    dayTxt = "Tirsdag";
+                    break;
+                case 3:
+                    dayTxt = "Onsdag";
+                    break;
+                case 4:
+                    dayTxt = "Torsdag";
+                    break;
+                case 5:
+                    dayTxt = "Fredag";
+                    break;
+                case 6:
+                    dayTxt = "Lørdag";
+                    break;
+            }
+
+            for (let i = 0; i < results.rows.length; i++) {
+                const todaysWorkout = results.rows[i].trainingsplit[dayTxt];
+                if (results.rows[i].settings.publicProfile.value === true && todaysWorkout.length > 0 && todaysWorkout !== "Fri") {
+                    info[counter] = { "userFullName": results.rows[i].displayname, "todaysWorkout": todaysWorkout };
+                    counter++;
+                }
+            }
+
+            results = true;
+
+            client.end();
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+
+        return { "status": results, "info": info };
+    }
+
+    //
+
     // api only calls
 
     //  -------------------------------  getWorkoutPlanAPI  ------------------------------- //

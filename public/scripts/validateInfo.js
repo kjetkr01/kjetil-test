@@ -50,7 +50,12 @@ async function validate(displayname, username, password, confirmpassword) {
                         const url = `/access`;
 
                         const resp = await callServerAPI(body, url);
-                        message = resp;//"godkjent";
+                        if (resp) {
+                            message = resp;//"godkjent";
+                        } else {
+                            message = "En feil har oppstått!";
+                        }
+
                     } else {
                         message = `Brukernavnet kan ikke inneholde mellomrom og kan kun inneholde bokstaver og tall!`;
                     }

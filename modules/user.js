@@ -102,6 +102,15 @@ async function updateUserSetting(username, setting, value) {
     }
 }
 
+async function getListOfAllUsersWorkoutToday() {
+    try {
+        const resp = await database.getListOfAllUsersWorkoutToday();
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 module.exports = User;
 module.exports.validateUser = validateUser;
 module.exports.getListOfUsers = getListOfUsers;
@@ -111,3 +120,4 @@ module.exports.getWorkoutSplit = getWorkoutSplit;
 module.exports.getUserDetails = getUserDetails;
 module.exports.getUserSettingsAndInfo = getUserSettingsAndInfo;
 module.exports.updateUserSetting = updateUserSetting;
+module.exports.getListOfAllUsersWorkoutToday = getListOfAllUsersWorkoutToday;
