@@ -340,8 +340,8 @@ server.post("/validate", auth, async (req, res) => {
 
 server.get("/api", function (req, res) {
      const resp = [
-          "API1: /getWorkoutInfo/:user/:key",
-          "API2: /api"
+          "/getWorkoutInfo/:user/:key",
+          "/api"
      ];
      res.status(200).json(resp).end();
 });
