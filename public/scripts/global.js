@@ -184,6 +184,12 @@ function displayLinks(dID) {
                             break;
                     }
 
+                } else {
+                    htmlInfo = `
+                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw; color:${activeColor}">${homeName}</a>
+                            <a href=${leaderboardsURL}>${leaderboardsName}</a>
+                            <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
+                            `;
                 }
 
             } else {
