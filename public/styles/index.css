@@ -1,349 +1,425 @@
 /*template:
-      https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
-      */
-      
-      #homePage {
-        display: grid;
-        width: 100vw;
-        height: 100vh;
-        
-        grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
-                             "Glinks Glinks Glinks Glinks Glinks Glinks Glinks"
-                             "c2r1 c2r1 c2r1 c2r1 c2r1 c2r1 c2r1"
-                             
-                             "e2r1 e1r2 e1r2 e1r2 e1r2 e1r2 e4r1"
-      
-                             "e2r1 e2r2 usermsg1G usermsg1G usermsg1G e4r2 e4r1"
-                             "e2r1 e2r2 c1r2 c1r2 c1r2 e4r2 e4r1"
-                             "e2r1 e2r2 usermsg2G usermsg2G usermsg2G e4r2 e4r1"
-                             "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
-                             "e2r1 e2r2 usermsg3G usermsg3G usermsg3G e4r2 e4r1"
-                             "e2r1 e2r2 c3r2 boardG c4r2 e4r2 e4r1"
-                             "e2r1 e2r2 c5r2 c5r2 c5r2 e4r2 e4r1"
-                             "e2r1 e2r2 gymtimeG gymtimeG gymtimeG e4r2 e4r1"
-                             "e2r1 e2r2 gymtimesmallG gymtimesmallG gymtimesmallG e4r2 e4r1"
-      
-                             "e2r1 e3r2 e3r2 e3r2 e3r2 e3r2 e4r1"
-      
-                             "c1r3 c1r3 c1r3 c1r3 c1r3 c1r3 c1r3"
-                             "Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu"
-                             "c2r3 c2r3 c2r3 c2r3 c2r3 c2r3 c2r3";
-                             
-          /*grid-template-rows: 5px 30px 5px 15px 35px 30px 120px 30px 60px 1fr 60px 25px 30px 15px 5px 30px 5px; nedover*/
-          /* nye: 30px 30px 25px 15px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 25px 30px 30px */
-          /* gammel: 5px 30px 5px 15px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 5px 30px 5px */
-          grid-template-rows: 30px 30px 25px 15px 1fr 10px 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 25px 30px 30px; /*nedover*/
-          grid-template-columns: 5px 10px 30px 1fr 30px 10px 5px; /*bortover*/
-      }
+https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
+*/
 
-      /* a */
+#homePage {
+display: grid;
+width: 100vw;
+height: 100vh;
 
-      a{
-        font-family: Arial, Helvetica, sans-serif;
-        color: var(--main-textColor);
-        text-decoration: none;
-     }
+grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
+            "Glinks Glinks Glinks Glinks Glinks Glinks Glinks"
+            "c2r1 c2r1 c2r1 c2r1 c2r1 c2r1 c2r1"
+            
+            "e2r1 e1r2 e1r2 e1r2 e1r2 e1r2 e4r1"
 
-     a:hover{
-      color: rgb(0, 255, 170);              
+            "e2r1 e2r2 usermsg1G usermsg1G usermsg1G e4r2 e4r1"
+            "e2r1 e2r2 c1r2 c1r2 c1r2 e4r2 e4r1"
+            "e2r1 e2r2 usermsg2G usermsg2G usermsg2G e4r2 e4r1"
+            "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
+            "e2r1 e2r2 usermsg3G usermsg3G usermsg3G e4r2 e4r1"
+            "e2r1 e2r2 c3r2 boardG c4r2 e4r2 e4r1"
+            "e2r1 e2r2 c5r2 c5r2 c5r2 e4r2 e4r1"
+            "e2r1 e2r2 gymtimeG gymtimeG gymtimeG e4r2 e4r1"
+            "e2r1 e2r2 gymtimesmallG gymtimesmallG gymtimesmallG e4r2 e4r1"
+
+            "e2r1 e3r2 e3r2 e3r2 e3r2 e3r2 e4r1"
+
+            "c1r3 c1r3 c1r3 c1r3 c1r3 c1r3 c1r3"
+            "Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu"
+            "c2r3 c2r3 c2r3 c2r3 c2r3 c2r3 c2r3";
+            
+/*grid-template-rows: 5px 30px 5px 15px 35px 30px 120px 30px 60px 1fr 60px 25px 30px 15px 5px 30px 5px; nedover*/
+/* nye: 30px 30px 25px 15px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 25px 30px 30px */
+/* gammel: 5px 30px 5px 15px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 5px 30px 5px */
+grid-template-rows: 30px 30px 25px 15px 1fr 10px 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 25px 30px 30px; /*nedover*/
+grid-template-columns: 5px 10px 30px 1fr 30px 10px 5px; /*bortover*/
 }
 
-/* mobile */
+/* a */
+
+a{
+font-family: Arial, Helvetica, sans-serif;
+color: var(--main-textColor);
+text-decoration: none;
+}
+
+a:hover{
+color: rgb(0, 255, 170);              
+}
+
+/* mobile query */
+
 @media only screen and (max-width: 768px) {
-  
-  #homePage > #Glinks {
-    grid-area: Gfootermenu;
-    background-color: var(--main-themeColor);
-  }
 
-  #homePage > #Gfootermenu {
-    grid-area: Glinks;
-    background-color: var(--main-themeColor);
-  }
+/* header */
+
+#homePage > #Glinks {
+grid-area: Gfootermenu;
+background-color: var(--main-themeColor);
+}
+
+#Glinks > #links {
+color: var(--main-textColor);
+font-size: 18px;
+width: 100%;
+text-align: center;
+}
+
+/* content/middle */
+
+#usermsg1G > #usermsg1 {
+position: absolute;
+font-size: 22px;
+font-weight: bold;
+color: var(--main-textColor);
+margin: 10px;
+margin-left: var(--global-margin-left);
+}
+
+#usermsg2G > #usermsg2 {
+position: absolute;
+font-size: 16px;
+color: var(--main-textColor);
+margin: 10px;
+margin-left: var(--global-margin-left);
+}
+
+#usermsg3G > #usermsg3 {
+font-weight: bold;
+color: var(--main-textColor);
+width: 100%;
+font-size: 20px;
+text-align: center;
+}
+
+#boardG > #board {
+color: var(--main-textColor);
+width: 100%;
+text-align: center;
+}
+
+/* for at table ser riktig ut */
+tr.separated td {
+border-bottom: 1px solid;
+padding-top: 15px;
+padding-bottom: 15px;
+font-size: 16px;
+} 
+
+table {
+border-collapse: collapse;
+}
+
+th {
+position: sticky;
+top: 0;
+background-color: var(--main-background-color);
+}
+
+/* slutt av table */
+
+#gymtimeG > #gymtime {
+width: 100%;
+color: var(--main-textColor);
+font-size: 18px;
+text-align: center;
+}
+
+#gymtimesmallG > #gymtimesmall {
+width: 100%;
+color: var(--main-textColor);
+font-size: 14px;
+text-align: center;
+}
+
+/* footer */
+
+#homePage > #Gfootermenu {
+grid-area: Glinks;
+background-color: var(--main-themeColor);
+}
+
+#Gfootermenu > #footermenu {
+width: 100%;
+text-align: center;
+}
 
 }
 
-/* */
+/* end of mobile media query */
 
 
-/* desktop */
+/* desktop media query */
 
 @media only screen and (min-width: 768px) {
-  
-  #homePage > #Glinks {
-    grid-area: Glinks;
-    background-color: var(--main-themeColor);
-  }
 
-  #homePage > #Gfootermenu {
-    grid-area: Gfootermenu;
-    background-color: var(--main-themeColor);
-  }
+/* header */
+
+#homePage > #Glinks {
+grid-area: Glinks;
+background-color: var(--main-themeColor);
+}
+
+#Glinks > #links {
+color: var(--main-textColor);
+font-size: 18px;
+width: 100%;
+text-align: center;
+}
+
+/* content/middle */
+
+#usermsg1G > #usermsg1 {
+position: absolute;
+font-size: 22px;
+font-weight: bold;
+color: var(--main-textColor);
+margin: 10px;
+margin-left: var(--global-margin-left);
+}
+
+#usermsg2G > #usermsg2 {
+position: absolute;
+font-size: 16px;
+color: var(--main-textColor);
+margin: 10px;
+margin-left: var(--global-margin-left);
+}
+
+#usermsg3G > #usermsg3 {
+font-weight: bold;
+color: var(--main-textColor);
+width: 100%;
+font-size: 20px;
+text-align: center;
+}
+
+#boardG > #board {
+color: var(--main-textColor);
+width: 100%;
+text-align: center;
+}
+
+/* for at table ser riktig ut */
+tr.separated td {
+border-bottom: 1px solid;
+padding-top: 15px;
+padding-bottom: 15px;
+font-size: 16px;
+} 
+
+table {
+border-collapse: collapse;
+}
+
+th {
+position: sticky;
+top: 0;
+background-color: var(--main-background-color);
+}
+
+/* slutt av table */
+
+#gymtimeG > #gymtime {
+width: 100%;
+color: var(--main-textColor);
+font-size: 18px;
+text-align: center;
+}
+
+#gymtimesmallG > #gymtimesmall {
+width: 100%;
+color: var(--main-textColor);
+font-size: 14px;
+text-align: center;
+}
+
+/* footer */
+
+#homePage > #Gfootermenu {
+grid-area: Gfootermenu;
+background-color: var(--main-themeColor);
+}
+
+#Gfootermenu > #footermenu {
+width: 100%;
+text-align: center;
+}
 
 }
 
 /* */
 
-      /* */
-      
-      /* grid for elements */
-      
-      #homePage > #usermsg1G {
-        min-height: 30px;
-        grid-area: usermsg1G;
-        background-color: var(--main-background-color);
-        border-left: var(--main-border);
-        border-right: var(--main-border);
-        border-top: var(--main-border);
-        border-radius: var(--global-borderRadiusForContentTop);
-        padding: 7.5px;
-      }
-      
-      #homePage > #usermsg2G {
-        min-height: 20px;
-        grid-area: usermsg2G;
-        background-color: var(--main-background-color);
-        border-left: var(--main-border);
-        border-right: var(--main-border);
-        padding: 7.5px;
-      }
-      
-      #homePage > #usermsg3G {
-        min-height: 30px;
-        grid-area: usermsg3G;
-        background-color: var(--main-background-color);
-        border-left: var(--main-border);
-        border-right: var(--main-border);
-      }
-      
-      #homePage > #boardG {
-        grid-area: boardG;
-        background-color: var(--main-background-color);
-        overflow-y: scroll;
-        /*border: var(--global-border);*/
-        min-height: 50px;
-      }
-      
-      #homePage > #gymtimeG {
-        min-height: 30px;
-        grid-area: gymtimeG;
-        background-color: var(--main-background-color);
-        border-left: var(--main-border);
-        border-right: var(--main-border);
-      }
-      
-      #homePage > #gymtimesmallG {
-        min-height: 30px;
-        grid-area: gymtimesmallG;
-        background-color: var(--main-background-color);
-        border-left: var(--main-border);
-        border-right: var(--main-border);
-        border-bottom: var(--main-border);
-        border-radius: var(--global-borderRadiusForContentBottom);
-      }
-      
-      /* elements */
-      
-      /* header */
-      
-      #Glinks > #links {
-        color: var(--main-textColor);
-        font-size: 18px;
-        width: 100%;
-        text-align: center;
-      }
-      
-      /* */
-      
-      /* content/middle */
-      
-      #usermsg1G > #usermsg1 {
-        position: absolute;
-        font-size: 22px;
-        font-weight: bold;
-        color: var(--main-textColor);
-        margin: 10px;
-        margin-left: var(--global-margin-left);
-      }
-      
-      #usermsg2G > #usermsg2 {
-        position: absolute;
-        font-size: 16px;
-        color: var(--main-textColor);
-        margin: 10px;
-        margin-left: var(--global-margin-left);
-      }
-      
-      #usermsg3G > #usermsg3 {
-        font-weight: bold;
-        color: var(--main-textColor);
-        width: 100%;
-        font-size: 20px;
-        text-align: center;
-      }
-      
-      #boardG > #board {
-        color: var(--main-textColor);
-        width: 100%;
-        text-align: center;
-      }
-      
-      /* test? */
-      tr.separated td {
-        /* set border style for separated rows */
-        border-bottom: 1px solid;
-        padding-top: 15px;
-        padding-bottom: 15px;
-        font-size: 16px;
-      } 
-      
-      table {
-        border-collapse: collapse;
-      }
-      
-      th {
-        position: sticky;
-        top: 0;
-        background-color: var(--main-background-color);
-      }
-      
-      /* slutt av test */
-      
-      #gymtimeG > #gymtime {
-        width: 100%;
-        color: var(--main-textColor);
-        font-size: 18px;
-        text-align: center;
-      }
-      
-      #gymtimesmallG > #gymtimesmall {
-        width: 100%;
-        color: var(--main-textColor);
-        font-size: 14px;
-        text-align: center;
-      }
-      
-      /* */
-      
-      /* footer */
-      
-      #Gfootermenu > #footermenu {
-        width: 100%;
-        text-align: center;
-      }
-      
-      /* */
-      
-      /*empty space padding*/
-      
-      #homePage > #e1r1 {
-        grid-area: e1r1;
-        }
-        
-        #homePage > #e2r1 {
-        grid-area: e2r1;
-        }
-        
-        #homePage > #e3r1 {
-        grid-area: e3r1;
-        }
-        
-        #homePage > #e4r1 {
-        grid-area: e4r1;
-        }
-        
-        /**/
-        
-        #homePage > #e1r2 {
-        grid-area: e1r2;
-        }
-        
-        #homePage > #e2r2 {
-        grid-area: e2r2;
-        }
-        
-        #homePage > #e3r2 {
-        grid-area: e3r2;
-        }
-        
-        #homePage > #e4r2 {
-        grid-area: e4r2;
-        }
-        
-        /* */
-        
-        /* content */
-        
-        /* header */
-        
-        #homePage > #c1r1 {
-          grid-area: c1r1;
-        }
-        
-        #homePage > #c2r1 {
-          grid-area: c2r1;
-        }
-        
-        #homePage > #c5r1 {
-          grid-area: c5r1;
-          border-bottom: var(--main-border);
-        }
-        
-        #c1r1, #c2r1, #c5r1 {
-          background-color: var(--main-themeColor);
-      }
-      
-      /* content/middle */
-      
-      #homePage > #c1r2 {
-        grid-area: c1r2;
-        border-left: var(--main-border);
-        border-right: var(--main-border);
-      }
-      
-      #homePage > #c2r2 {
-        min-height: 25px;
-        grid-area: c2r2;
-        border-left: var(--main-border);
-        border-right: var(--main-border);
-        
-      }
-      
-      #homePage > #c3r2 {
-        grid-area: c3r2;
-        border-left: var(--main-border);
-      }
-      
-      #homePage > #c4r2 {
-        grid-area: c4r2;
-        border-right: var(--main-border);
-      }
-      
-      #homePage > #c5r2 {
-        min-height: 15px;
-        grid-area: c5r2;
-        border-left: var(--main-border);
-        border-right: var(--main-border);
-      }
-      
-      
-      #c1r2, #c2r2, #c3r2, #c4r2, #c5r2 {
-        background-color: var(--main-background-color);
-      }
-      
-      /* footer */
-      
-      #homePage > #c1r3 {
-        grid-area: c1r3;
-        border-top: var(--main-border);
-        }
-        
-        #homePage > #c2r3 {
-          grid-area: c2r3;
-        }
-        
-        #c1r3, #c2r3 {
-          background-color: var(--main-themeColor);
-        }
-        
-        /* */
+/* grid for elements */
+
+#homePage > #usermsg1G {
+min-height: 30px;
+grid-area: usermsg1G;
+background-color: var(--main-background-color);
+border-left: var(--main-border);
+border-right: var(--main-border);
+border-top: var(--main-border);
+border-radius: var(--global-borderRadiusForContentTop);
+padding: 7.5px;
+}
+
+#homePage > #usermsg2G {
+min-height: 20px;
+grid-area: usermsg2G;
+background-color: var(--main-background-color);
+border-left: var(--main-border);
+border-right: var(--main-border);
+padding: 7.5px;
+}
+
+#homePage > #usermsg3G {
+min-height: 30px;
+grid-area: usermsg3G;
+background-color: var(--main-background-color);
+border-left: var(--main-border);
+border-right: var(--main-border);
+}
+
+#homePage > #boardG {
+grid-area: boardG;
+background-color: var(--main-background-color);
+overflow-y: scroll;
+min-height: 50px;
+}
+
+#homePage > #gymtimeG {
+min-height: 30px;
+grid-area: gymtimeG;
+background-color: var(--main-background-color);
+border-left: var(--main-border);
+border-right: var(--main-border);
+}
+
+#homePage > #gymtimesmallG {
+min-height: 30px;
+grid-area: gymtimesmallG;
+background-color: var(--main-background-color);
+border-left: var(--main-border);
+border-right: var(--main-border);
+border-bottom: var(--main-border);
+border-radius: var(--global-borderRadiusForContentBottom);
+}
+
+/* elements */
+
+/* */
+
+/*empty space padding*/
+
+#homePage > #e1r1 {
+grid-area: e1r1;
+}
+
+#homePage > #e2r1 {
+grid-area: e2r1;
+}
+
+#homePage > #e3r1 {
+grid-area: e3r1;
+}
+
+#homePage > #e4r1 {
+grid-area: e4r1;
+}
+
+/**/
+
+#homePage > #e1r2 {
+grid-area: e1r2;
+}
+
+#homePage > #e2r2 {
+grid-area: e2r2;
+}
+
+#homePage > #e3r2 {
+grid-area: e3r2;
+}
+
+#homePage > #e4r2 {
+grid-area: e4r2;
+}
+
+/* */
+
+/* content */
+
+/* header */
+
+#homePage > #c1r1 {
+grid-area: c1r1;
+}
+
+#homePage > #c2r1 {
+grid-area: c2r1;
+}
+
+#homePage > #c5r1 {
+grid-area: c5r1;
+border-bottom: var(--main-border);
+}
+
+#c1r1, #c2r1, #c5r1 {
+background-color: var(--main-themeColor);
+}
+
+/* content/middle */
+
+#homePage > #c1r2 {
+grid-area: c1r2;
+border-left: var(--main-border);
+border-right: var(--main-border);
+}
+
+#homePage > #c2r2 {
+min-height: 25px;
+grid-area: c2r2;
+border-left: var(--main-border);
+border-right: var(--main-border);
+
+}
+
+#homePage > #c3r2 {
+grid-area: c3r2;
+border-left: var(--main-border);
+}
+
+#homePage > #c4r2 {
+grid-area: c4r2;
+border-right: var(--main-border);
+}
+
+#homePage > #c5r2 {
+min-height: 15px;
+grid-area: c5r2;
+border-left: var(--main-border);
+border-right: var(--main-border);
+}
+
+
+#c1r2, #c2r2, #c3r2, #c4r2, #c5r2 {
+background-color: var(--main-background-color);
+}
+
+/* footer */
+
+#homePage > #c1r3 {
+grid-area: c1r3;
+border-top: var(--main-border);
+}
+
+#homePage > #c2r3 {
+grid-area: c2r3;
+}
+
+#c1r3, #c2r3 {
+background-color: var(--main-themeColor);
+}
+
+/* */

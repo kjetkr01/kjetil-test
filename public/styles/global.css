@@ -1,31 +1,31 @@
 *{
-  margin: 0;
-  padding: 0;
+margin: 0;
+padding: 0;
 }
 
 body{
-  background-image: 
-  linear-gradient(rgba(26, 26, 26, 0.7),rgba(82, 82, 82, 0.7)), 
-  url(../images/background-smallBlur.png);     
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+background-image: 
+linear-gradient(rgba(26, 26, 26, 0.7),rgba(82, 82, 82, 0.7)), 
+url(../images/background-smallBlur.png);     
+background-size: cover;
+background-repeat: no-repeat;
+background-attachment: fixed;
 
-  font-family: Arial, Helvetica, sans-serif;
-  color: white;
-  text-decoration: none;
+font-family: Arial, Helvetica, sans-serif;
+color: white;
+text-decoration: none;
 }
 
 :root {
 
-  /* global variables */
-  --main-themeColor:  rgb(17, 17, 17);
-  --main-background-color: rgb(29, 29, 29);
-  --main-textColor: white;
-  --main-text-shadow: 1px 1px rgb(0, 0, 0, 0.2);
-  --main-border: 1px solid black;
+/* global variables */
+--main-themeColor:  rgb(17, 17, 17);
+--main-background-color: rgb(29, 29, 29);
+--main-textColor: white;
+--main-text-shadow: 1px 1px rgb(0, 0, 0, 0.2);
+--main-border: 1px solid black;
 
-  --global-borderRadiusForContentTop: 15px 15px 0 0;
-  --global-borderRadiusForContentBottom: 0 0 15px 15px;
+--global-borderRadiusForContentTop: 15px 15px 0 0;
+--global-borderRadiusForContentBottom: 0 0 15px 15px;
 
 }

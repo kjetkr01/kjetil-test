@@ -134,6 +134,7 @@ function displayLinks(dID) {
         if (documentID) {
 
             const activeColor = "rgb(0, 255, 170)";
+            const fontSize = 18;
 
             let htmlInfo = "";
 
@@ -156,39 +157,39 @@ function displayLinks(dID) {
                     switch (getCurrentPage) {
                         case homeURL:
                             htmlInfo = `
-                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw; color:${activeColor}">${homeName}</a>
-                            <a href=${leaderboardsURL}>${leaderboardsName}</a>
-                            <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
+                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw; color:${activeColor}; font-size:${fontSize}px;">${homeName}</a>
+                            <a href=${leaderboardsURL} style="font-size:${fontSize}px;">${leaderboardsName}</a>
+                            <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px; font-size:${fontSize}px;">${accountName}</a>
                             `;
                             break;
                         case leaderboardsURL:
                             htmlInfo = `
-                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw;">${homeName}</a>
-                            <a href=${leaderboardsURL} style="color:${activeColor}">${leaderboardsName}</a>
-                            <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
+                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw; font-size:${fontSize}px;">${homeName}</a>
+                            <a href=${leaderboardsURL} style="color:${activeColor}; font-size:${fontSize}px;">${leaderboardsName}</a>
+                            <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px; font-size:${fontSize}px;">${accountName}</a>
                             `;
                             break;
                         case accountURL:
                             htmlInfo = `
-                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw;">${homeName}</a>
-                            <a href=${leaderboardsURL}>${leaderboardsName}</a>
-                            <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px; color:${activeColor}">${accountName}</a>
+                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw; font-size:${fontSize}px;">${homeName}</a>
+                            <a href=${leaderboardsURL} style="font-size:${fontSize}px;">${leaderboardsName}</a>
+                            <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px; color:${activeColor}; font-size:${fontSize}px;">${accountName}</a>
                             `;
                             break;
                         default:
                             htmlInfo = `
-                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw;">${homeName}</a>
-                            <a href=${leaderboardsURL}>${leaderboardsName}</a>
-                            <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
+                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw; font-size:${fontSize}px;">${homeName}</a>
+                            <a href=${leaderboardsURL} style="font-size:${fontSize}px;">${leaderboardsName}</a>
+                            <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px; font-size:${fontSize}px;">${accountName}</a>
                             `;
                             break;
                     }
 
                 } else {
                     htmlInfo = `
-                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw; color:${activeColor}">${homeName}</a>
-                            <a href=${leaderboardsURL}>${leaderboardsName}</a>
-                            <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
+                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw; color:${activeColor}; font-size:${fontSize}px;">${homeName}</a>
+                            <a href=${leaderboardsURL} style="font-size:${fontSize}px;">${leaderboardsName}</a>
+                            <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px; font-size:${fontSize}px;">${accountName}</a>
                             `;
                 }
 
@@ -199,20 +200,20 @@ function displayLinks(dID) {
                     switch (getCurrentPage) {
                         case accessURL:
                             htmlInfo = `
-                            <a href=${accessURL} style="margin-left:5px; margin-right:3.5vw; color:${activeColor}">${accessName}</a>
-                            <a href=${loginURL} style="margin-left:3.5vw; margin-right:5px;">${loginName}</a>
+                            <a href=${accessURL} style="margin-left:5px; margin-right:3.5vw; color:${activeColor}; font-size:${fontSize}px;">${accessName}</a>
+                            <a href=${loginURL} style="margin-left:3.5vw; margin-right:5px; font-size:${fontSize}px;">${loginName}</a>
                             `;
                             break;
                         case loginURL:
                             htmlInfo = `
-                            <a href=${accessURL} style="margin-left:5px; margin-right:3.5vw;">${accessName}</a>
-                            <a href=${loginURL} style="margin-left:3.5vw; margin-right:5px; color:${activeColor}">${loginName}</a>
+                            <a href=${accessURL} style="margin-left:5px; margin-right:3.5vw; font-size:${fontSize}px;">${accessName}</a>
+                            <a href=${loginURL} style="margin-left:3.5vw; margin-right:5px; color:${activeColor}; font-size:${fontSize}px;">${loginName}</a>
                             `;
                             break;
                         default:
                             htmlInfo = `
-                            <a href=${accessURL} style="margin-left:5px; margin-right:3.5vw;">${accessName}</a>
-                            <a href=${loginURL} style="margin-left:3.5vw; margin-right:5px;">${loginName}</a>
+                            <a href=${accessURL} style="margin-left:5px; margin-right:3.5vw; font-size:${fontSize}px;">${accessName}</a>
+                            <a href=${loginURL} style="margin-left:3.5vw; margin-right:5px; font-size:${fontSize}px;">${loginName}</a>
                             `;
                             break;
                     }
