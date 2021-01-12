@@ -165,31 +165,31 @@ function redirectToLogin() {
 
 function redirectToHome() {
 
-    location.href = "test.html";
+    location.href = "index.html";
 
 }
 
 function redirectToUsers() {
 
-    location.href = "test-users.html";
+    location.href = "users.html";
 
 }
 
 function redirectToUser() {
 
-    location.href = "test-user.html";
+    location.href = "user.html";
 
 }
 
 function redirectToSettings() {
 
-    location.href = 'test-settings.html';
+    location.href = 'settings.html';
 
 }
 
 function redirectToAccount() {
 
-    location.href = "test-account.html";
+    location.href = "account.html";
 
 }
 
