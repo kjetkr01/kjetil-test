@@ -58,7 +58,7 @@ async function validateToken() {
     const currentPage = window.location.pathname;
 
     //blacklists login pages
-    if (currentPage === "/test-login.html" || currentPage === "/login.html") {
+    if (currentPage === "/access.html" || currentPage === "/login.html") {
 
         console.log("blacklisted page, skipped");
         return;
@@ -133,18 +133,74 @@ function displayLinks(dID) {
 
         if (documentID) {
 
+            const activeColor = "rgb(0, 255, 170)";
+
+            let htmlInfo = "";
+
+            const homeURL = "index.html", homeName = "Hjem";
+            const leaderboardsURL = "leaderboards.html", leaderboardsName = "Ledertavler";
+            const accountURL = "account.html", accountName = "Min Konto";
+
+            const accessURL = "access.html", accessName = "Be om tilgang";
+            const loginURL = "login.html", loginName = "Logg inn";
+
+            const getCurrentPage = window.location.href.split("/").pop();
+
+            console.log(getCurrentPage)
+
             if (token && user) {
-                documentID.innerHTML = `
-            <a href="index.html" style="margin-left:5px; margin-right:3.5vw;">Hjem</a>
-            <a href="leaderboards.html">Ledertavler</a>
-            <a href="account.html" style="margin-left:3.5vw; margin-right:5px;">Min konto</a>
-            `;
+
+                if (getCurrentPage) {
+
+                    switch (getCurrentPage) {
+                        case homeURL:
+                            htmlInfo = `
+                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw; color:${activeColor}">${homeName}</a>
+                            <a href=${leaderboardsURL}>${leaderboardsName}</a>
+                            <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
+                            `;
+                            break;
+                        case leaderboardsURL:
+                            htmlInfo = `
+                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw;">${homeName}</a>
+                            <a href=${leaderboardsURL} style="color:${activeColor}">${leaderboardsName}</a>
+                            <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
+                            `;
+                            break;
+                        case accountURL:
+                            htmlInfo = `
+                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw;">${homeName}</a>
+                            <a href=${leaderboardsURL}>${leaderboardsName}</a>
+                            <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px; color:${activeColor}">${accountName}</a>
+                            `;
+                            break;
+                    }
+
+                }
+
             } else {
-                documentID.innerHTML = `
-            <a href="access.html" style="margin-left:5px; margin-right:3.5vw;">Be om tilgang</a>
-            <a href="login.html" style="margin-left:3.5vw; margin-right:5px;">Logg inn</a>
-            `;
+
+                if (getCurrentPage) {
+
+                    switch (getCurrentPage) {
+                        case accessURL:
+                            htmlInfo = `
+                            <a href=${accessURL} style="margin-left:5px; margin-right:3.5vw; color:${activeColor}">${accessName}</a>
+                            <a href=${loginURL} style="margin-left:3.5vw; margin-right:5px;">${loginName}</a>
+                            `;
+                            break;
+                        case loginURL:
+                            htmlInfo = `
+                            <a href=${accessURL} style="margin-left:5px; margin-right:3.5vw;">${accessName}</a>
+                            <a href=${loginURL} style="margin-left:3.5vw; margin-right:5px; color:${activeColor}">${loginName}</a>
+                            `;
+                            break;
+                    }
+
+                }
             }
+
+            documentID.innerHTML = htmlInfo;
 
         } else {
             console.log("error ID: " + dID + " does not exist!");
