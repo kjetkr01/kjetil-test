@@ -190,9 +190,9 @@ function displayLinks(dID) {
 
                     function displayIcons() {
                         htmlInfo = `
-                            <a href=${homeURL} style="margin-left:5px; margin-right:10vw;"><img class="footerIcons" src="images/homeIcon.svg" alt="${homeName}"></a>
-                            <a href=${leaderboardsURL} style="margin-left:5px; margin-right:10vw;"><img class="footerIcons" src="images/leaderboardsIcon.svg" alt="${leaderboardsName}"></a>
-                            <a href=${accountURL} style="margin-left:5px; margin-right:10vw;"><img class="footerIcons" src="images/accountIcon.svg" alt="${accountName}"></a>
+                            <a href=${homeURL}><img class="footerIcons" src="images/homeIcon.svg" alt="${homeName}"></a>
+                            <a href=${leaderboardsURL} style="margin-right:10vw; margin-left:10vw;"><img class="footerIcons" src="images/leaderboardsIcon.svg" alt="${leaderboardsName}"></a>
+                            <a href=${accountURL}><img class="footerIcons" src="images/accountIcon.svg" alt="${accountName}"></a>
                             `;
 
                         documentID.innerHTML = htmlInfo;
