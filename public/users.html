@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Brukere</title>
+
+    <meta charset="utf-8" />
+
+    <!-- manifest -->
+
+    <link rel="manifest" href="manifest.json">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Treningsstatestikk">
+    <meta name="apple-mobile-web-app-title" content="Treningsstatestikk">
+    <meta name="msapplication-starturl" content="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+
+    <!-- -->
+
+    <script src="scripts/global.js" type="text/javascript"></script>
+    <script src="scripts/validateInfo.js" type="text/javascript"></script>
+    <script src="scripts/script.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+    <button onClick="redirectToHome();">Tilbake (hjem)</button>
+
+    <h2>Navn:</h2>
+    <div id="ListOfAllUsersDiv"></div>
+
+</body>
+
+<script>
+
+    getListOfAllUsers();
+    async function getListOfAllUsers() {
+
+        if (token && user) {
+
+            const body = { "authToken": token, "userInfo": user };
+            const url = `/users/list/all`;
+
+            const resp = await callServerAPI(body, url);
+
+            const getListOfAllUsersDiv = document.getElementById("ListOfAllUsersDiv");
+
+            getListOfAllUsersDiv.innerHTML = "";
+
+            if (resp[0].username) {
+
+                for (let i = 0; i < resp.length; i++) {
+                    getListOfAllUsersDiv.innerHTML += `<div onClick="viewUser('${resp[i].username}')">
+                    ${resp[i].username}
+                    </div>`;
+                }
+
+                getListOfAllUsersDiv.innerHTML += "Totalt " + resp.length + " brukere!";
+
+            } else {
+                getListOfAllUsersDiv.innerHTML += "Det er ingen brukere!";
+            }
+
+        }
+    }
+
+    function viewUser(viewUser) {
+
+        if (viewUser) {
+            sessionStorage.setItem("ViewingUser", viewUser);
+            redirectToUser();
+        }
+
+    }
+
+</script>
+
+</html>

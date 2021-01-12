@@ -1,60 +1,31 @@
 *{
-  margin: 0%;
-  padding: 0%;  
+  margin: 0;
+  padding: 0;
 }
+
 body{
   background-image: 
-  linear-gradient(rgba(7, 7, 7, 0.7),rgba(82, 82, 82, 0.7)), 
+  linear-gradient(rgba(26, 26, 26, 0.7),rgba(82, 82, 82, 0.7)), 
   url(../images/background-smallBlur.png);     
-  height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  text-decoration: none;
 }
-header{
-    display: flex;
-    background-color: rgb(17, 17, 17);
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px 10%;
-    position: fixed;
-    width: 100vw;
-    top: 0;
-}
-li, a{
-   font-family: Arial, Helvetica, sans-serif;
-   color: white;
-   text-decoration: none;
-}
-.nav_links{
-        list-style: none;
-}
-.nav_links li{
-           display: inline-block;
-           padding: 0px 20px;
-}
-.nav_links li a{
-             transition: all 0,3s ease 0s;               
-}
-.nav_links li a:hover{
-                   color: rgb(0, 255, 170);              
-}
-img{
- display: flex;
- align-items: center;
- 
-}
-article{
-     
-}
-footer{
-    background-color: rgb(17, 17, 17);
-    display: flex;
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    padding: 30px 10%;
-    justify-content: space-between;
-    clear: both;
-    position: fixed;
-    bottom: 0;
-    width: 100vw;
+
+:root {
+
+  /* global variables */
+  --main-themeColor:  rgb(17, 17, 17);
+  --main-background-color: rgb(29, 29, 29);
+  --main-textColor: white;
+  --main-text-shadow: 1px 1px rgb(0, 0, 0, 0.2);
+  --main-border: 1px solid black;
+
+  --global-borderRadiusForContentTop: 15px 15px 0 0;
+  --global-borderRadiusForContentBottom: 0 0 15px 15px;
+
 }

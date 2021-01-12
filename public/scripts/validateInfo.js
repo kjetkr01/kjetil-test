@@ -1,77 +1,128 @@
-// usage: " validate("Kjetil Kristiansen", "kjetkr01", "123", "123"); "
-function validate(displayname, username, password, confirmpassword) {
+// global variables
 
-    const minCharLength = 3;
-    const maxCharLength = 20;
-    let checkTries = 0;
-    let listOfBlacklistedChars = "";
+const minCharLength = 3;
+const maxCharLength = 20;
 
-    const blacklistedChars = ["|", "§", "!", "#", "¤", "%", "&", "/", "(", ")", " ", "=", "?", "+", "`", "<", ">", "^", "¨", "'", "*", ";", ":"];
+//
+
+// usage: " validate("My Displayname", "myusername", "mypassword", "mypassword"); "
+async function validate(displayname, username, password, confirmpassword) {
 
     let message = "";
     let errorMsg = `må være lengre enn ${minCharLength} tegn og kortere enn ${maxCharLength} tegn`;
 
-    if (password === confirmpassword) {
+    if (displayname && username && password && confirmpassword) {
 
-        if (displayname.length > minCharLength && displayname.length < maxCharLength) {
+        if (password === confirmpassword) {
 
-            if (username.length > minCharLength && username.length < maxCharLength) {
+            if (displayname.length >= minCharLength && displayname.length <= maxCharLength) {
 
-                for (let i = 0; i < blacklistedChars.length; i++) {
+                if (username.length >= minCharLength && username.length <= maxCharLength) {
 
-                    if (username.includes(blacklistedChars[i])) {
+                    const letters = /^[A-Za-z0-9]+$/;
 
-                        listOfBlacklistedChars += blacklistedChars[i];
+                    if (username.match(letters)) {
 
-                        checkTries++;
+                        let splitDisplayName = displayname.split(" ");
+                        let fixedDisplayname = "";
+
+                        for (let i = 0; i < splitDisplayName.length; i++) {
+
+                            function upperCaseFirstLetter(string) {
+                                return string.charAt(0).toUpperCase() + string.slice(1);
+                            }
+
+                            function lowerCaseAllWordsExceptFirstLetters(string) {
+                                return string.replace(/\S*/g, function (word) {
+                                    return word.charAt(0) + word.slice(1).toLowerCase();
+                                });
+                            }
+
+                            fixedDisplayname += upperCaseFirstLetter(lowerCaseAllWordsExceptFirstLetters(splitDisplayName[i])) + " ";
+
+                        }
+
+                        fixedDisplayname = fixedDisplayname.trimRight();
+
+                        //console.log(fixedDisplayname)
+
+                        const body = { "username": username, "password": password, "displayname": fixedDisplayname };
+                        const url = `/access`;
+
+                        const resp = await callServerAPI(body, url);
+                        if (resp) {
+                            message = resp;//"godkjent";
+                        } else {
+                            message = "En feil har oppstått!";
+                        }
 
                     } else {
-
-                    }
-                }
-
-                if (checkTries === 0) {
-
-
-                    let splitDisplayName = displayname.split(" ");
-                    let fixedDisplayname = "";
-
-                    for (let i = 0; i < splitDisplayName.length; i++) {
-
-                        function upperCaseFirstLetter(string) {
-                            return string.charAt(0).toUpperCase() + string.slice(1);
-                        }
-
-                        function lowerCaseAllWordsExceptFirstLetters(string) {
-                            return string.replace(/\S*/g, function (word) {
-                                return word.charAt(0) + word.slice(1).toLowerCase();
-                            });
-                        }
-
-                        fixedDisplayname += upperCaseFirstLetter(lowerCaseAllWordsExceptFirstLetters(splitDisplayName[i])) + " ";
-
+                        message = `Brukernavnet kan ikke inneholde mellomrom og kan kun inneholde bokstaver og tall!`;
                     }
 
-                    fixedDisplayname = fixedDisplayname.trimRight();
-
-                    //console.log(fixedDisplayname)
-
-                    //callServerAPI?
-                    message = "godkjent";
                 } else {
-                    message = `Brukernavnet kan ikke inneholde mellomrom eller følgende tegn: ${listOfBlacklistedChars}`;
+                    message = `Brukernavnet ${errorMsg}`;
                 }
 
             } else {
-                message = `Brukernavnet ${errorMsg}`;
+                message = `Visningsnavnet ${errorMsg}`;
             }
 
         } else {
-            message = `Visningsnavnet ${errorMsg}`;
+            message = "Passordene stemmer ikke.";
         }
 
     } else {
-        message = "Passordene stemmer ikke.";
+        message = "Vennligst fyll ut alle feltene!";
+    }
+
+    return message;
+
+}
+
+// usage: " login("myusername", "mypassword"); "
+async function login(username, password, rmbrMe) {
+
+    let message = "";
+    let errorMsg = `må være lengre enn ${minCharLength} tegn og kortere enn ${maxCharLength} tegn`;
+
+    if (username && password) {
+
+        if (username.length >= minCharLength && username.length <= maxCharLength) {
+
+            const body = { "authorization": "Basic " + window.btoa(`${username}:${password}`) };
+
+            const url = `/autenticate`;
+
+            const resp = await callServerAPI(body, url);
+
+            if (resp) {
+
+                if (resp.authToken) {
+
+                    if (rmbrMe === true) {
+                        localStorage.setItem("authToken", resp.authToken);
+                        localStorage.setItem("user", JSON.stringify(resp.user));
+                    } else {
+                        sessionStorage.setItem("authToken", resp.authToken);
+                        sessionStorage.setItem("user", JSON.stringify(resp.user));
+                    }
+
+                    message = "Login successful";
+                }else{
+                    message = "Det har oppstått en feil.";
+                }
+
+            } else {
+                message = "Brukernavnet eller passordet er feil!";
+            }
+
+        } else {
+            message = `Brukernavnet ${errorMsg}`;
+        }
+
+    } else {
+        message = "Vennligst fyll ut alle feltene!";
     }
 
     return message;

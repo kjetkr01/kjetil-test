@@ -1,191 +1,197 @@
-function isGymOpen() {
+// global variables
 
-    // new version
+const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");// eller session
+const user = localStorage.getItem("user") || sessionStorage.getItem("user"); // eller session
+let userDisplayname, showGymCloseTime;
 
-    const now = new Date().getTime();
+let lastUpdatedTime = new Date();
+lastUpdatedTime = lastUpdatedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    const today = new Date();
-    const hours = today.getHours();
+//
 
-    const endMonthAndDay = "Dec 8";
-    const endYear = "2022";
+// fixed global variables
 
-    const closeTimeCheck = 23; // close time
-    const openTimeCheck = 6; // open time
+if (user) {
+    try {
 
-    const closeTime = new Date(`${endMonthAndDay}, ${endYear} ${closeTimeCheck}:00:00`).getTime();
-    const openTime = new Date(`${endMonthAndDay}, ${endYear} ${openTimeCheck}:00:00`).getTime();
+        userDisplayname = JSON.parse(user);
+        showGymCloseTime = userDisplayname.showGymCloseTime;
+        userDisplayname = userDisplayname.displayname;
 
-    let isOpenMessage = "";
-    let timeLeftMessage = "";
-    let timeLeftString = "";
+    } catch (err) {
 
-    let hoursLeft = 0;
-    let minutesLeft = 0;
+        console.log("invalid user object");
 
-    if (today.getTime() > openTime) {
+    }
+}
 
-        isOpenMessage = ``;
-        timeLeftMessage = ``;
+//
+
+// check if token / user exists
+
+if (token) {
+    console.log("Token: " + token)
+} else {
+    console.log("No token!");
+}
+
+if (user) {
+    console.log("Logged in as: " + userDisplayname)
+} else {
+    console.log("Not logged in!");
+}
+
+//
+
+
+//auto redirect to login if token is invalid
+window.onload = validateToken;
+async function validateToken() {
+
+    if (!window.navigator.onLine) {
+        const offlineMsg = "Offline mode is enabled, server fetching is disabled!";
+        alert(offlineMsg)
+        console.log(offlineMsg);
+        return;
+    }
+
+    const currentPage = window.location.pathname;
+
+    //blacklists login pages
+    if (currentPage === "/test-login.html" || currentPage === "/login.html") {
+
+        console.log("blacklisted page, skipped");
+        return;
 
     } else {
 
-        if (hours > openTimeCheck && hours < closeTimeCheck) {
+        if (token && user) {
 
-            const distance = closeTime - now;
+            const body = { "authToken": token, "userInfo": user };
+            const url = `/validate`;
 
-            hoursLeft = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            minutesLeft = Math.ceil((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const resp = await callServerAPI(body, url);
 
-            if (hoursLeft < 1) {
-                timeLeftString = `${minutesLeft} min`;
-            } else if (minutesLeft < 0) {
-                timeLeftString = `${hoursLeft} t`;
+            if (resp) {
+                console.log("Token is valid");
             } else {
-                timeLeftString = `${hoursLeft} t og ${minutesLeft} min`;
+                console.log("invalid token");
+                localStorage.clear();
+                sessionStorage.clear();
+                redirectToLogin();
             }
-
-            isOpenMessage = `Treningssenteret er åpent!`;
-            timeLeftMessage = `Stenger om ${timeLeftString}`;
 
         } else {
-
-            const distance = openTime - now;
-
-            hoursLeft = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            minutesLeft = Math.ceil((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-            if (hoursLeft < 1) {
-                timeLeftString = `${minutesLeft} min`;
-            } else if (minutesLeft < 0) {
-                timeLeftString = `${hoursLeft} t`;
-            } else {
-                timeLeftString = `${hoursLeft} t og ${minutesLeft} min`;
-            }
-
-            isOpenMessage = `Treningssenteret er stengt!`;
-            timeLeftMessage = `Åpner om ${timeLeftString}`;
+            console.log("no token/user, skipped");
+            redirectToLogin();
         }
+    }
+}
 
+async function callServerAPI(body, url) {
+
+    if (!window.navigator.onLine) {
+        const offlineMsg = "Offline mode is enabled, server fetching is disabled!";
+        alert(offlineMsg)
+        console.log(offlineMsg);
+        return;
     }
 
+    if (!body || !url) {
+        return;
+    }
 
+    const config = {
+        method: "POST",
+        headers: {
+            "content-type": "application/json"
+        },
+        body: JSON.stringify(body)
+    }
 
-    //
+    const response = await fetch(url, config);
+    const data = await response.json();
+    //console.log(response.status);
 
-
-
-    /* old version
-
-    const openTime = 6; // 6
-    const closeTime = 23; // 23
-
-    const today = new Date();
-
-    let isOpenMessage = "";
-    let timeLeftMessage = "";
-    let timeLeftString = "";
-
-    let hoursLeft = 0;
-    let minutesLeft = 0;
-
-    let hours = today.getHours();
-
-
-    hours = 1;
-
-    const minutes = today.getMinutes();
-
-    const total = (hours * 60) + minutes;
-
-    let checkTime = closeTime * 60;
-    let calc = checkTime - total;
-
-    if (calc > 0 && hours >= openTime) {
-        console.log("åpent")
-
-        calc = calc / 60;
-        hoursLeft = Math.trunc(calc);
-        minutesLeft = Math.round((calc - hoursLeft) * 60);
-
-        if (hoursLeft < 1) {
-            timeLeftString = `${minutesLeft} min`;
-        } else if (minutesLeft < 0) {
-            timeLeftString = `${hoursLeft} t`;
-        } else {
-            timeLeftString = `${hoursLeft} t og ${minutesLeft} min`;
-        }
-
-        isOpenMessage = `Treningssenteret er åpent!`;
-        timeLeftMessage = `Stenger om ${timeLeftString}`;
-
+    if (response.status === 200) {
+        return data;
     } else {
-        console.log("stengt")
-
-        checkTime = openTime * 60;
-        calc = total - checkTime;
-
-        calc = calc / 60;
-
-        if (hours >= 0) {
-
-            // etter 0
-            hoursLeft = Math.trunc(calc - 24);
-            minutesLeft = Math.round((hoursLeft - (calc - 24)) * 60);
-
-        } else {
-
-            //før 0
-            hoursLeft = Math.trunc(24 - calc);
-            minutesLeft = Math.round(calc - hoursLeft * 60);
-
-        }
-
-
-
-
-        console.log(hoursLeft + ":" + minutesLeft)
-
-        if (hoursLeft < 1) {
-            timeLeftString = `${minutesLeft} min`;
-        } else if (minutesLeft < 0) {
-            timeLeftString = `${hoursLeft} t`;
-        } else {
-            timeLeftString = `${hoursLeft} t og ${minutesLeft} min`;
-        }
-
-        isOpenMessage = `Treningssenteret er stengt!`;
-        timeLeftMessage = `Åpner om ${timeLeftString}`;
+        console.log("not returning data, recieved status:" + response.status)
     }
 
-    */
+    //return { "response": response, "data": data };
 
-    return { "message": isOpenMessage, "timeLeft": timeLeftMessage };
+}
+
+// show different links based if user is logged in or not
+
+function displayLinks(dID) {
+
+    if (dID) {
+
+        const documentID = document.getElementById(dID);
+
+        if (documentID) {
+
+            if (token && user) {
+                documentID.innerHTML = `
+            <a href="index.html" style="margin-left:5px; margin-right:3.5vw;">Hjem</a>
+            <a href="leaderboards.html">Ledertavler</a>
+            <a href="account.html" style="margin-left:3.5vw; margin-right:5px;">Min konto</a>
+            `;
+            } else {
+                documentID.innerHTML = `
+            <a href="access.html" style="margin-left:5px; margin-right:3.5vw;">Be om tilgang</a>
+            <a href="login.html" style="margin-left:3.5vw; margin-right:5px;">Logg inn</a>
+            `;
+            }
+
+        } else {
+            console.log("error ID: " + dID + " does not exist!");
+        }
+    }
+
+}
+
+//
+
+// redirect functions
+
+function redirectToLogin() {
+
+    location.href = "/login.html";
+
+}
+
+function redirectToHome() {
+
+    location.href = "index.html";
+
+}
+
+function redirectToUsers() {
+
+    location.href = "users.html";
+
+}
+
+function redirectToUser() {
+
+    location.href = "user.html";
+
+}
+
+function redirectToSettings() {
+
+    location.href = 'settings.html';
+
+}
+
+function redirectToAccount() {
+
+    location.href = "account.html";
+
 }
 
 
-function partOfDayMessage(firstName) {
-
-    let partOfDay = "";
-
-    const today = new Date();
-
-    const hours = today.getHours();
-
-    if (hours >= 0 && hours <= 5) {
-        partOfDay = "natt";
-    }
-    else if (hours > 5 && hours <= 10) {
-        partOfDay = "morgen";
-    }
-    else if (hours > 10 && hours <= 18) {
-        partOfDay = "ettermiddag";
-    }
-    else if (hours > 18 && hours <= 24) {
-        partOfDay = "kveld";
-    }
-
-    const usermessage = `God ${partOfDay}, ${firstName}.`;
-
-    return usermessage;
-}
+//
