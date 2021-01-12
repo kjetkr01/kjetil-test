@@ -30,8 +30,8 @@
                              "footermenuG footermenuG footermenuG footermenuG footermenuG footermenuG footermenuG"
                              "c2r3 c2r3 c2r3 c2r3 c2r3 c2r3 c2r3";
                              
-          grid-template-rows: 5px 30px 5px 30px 35px 30px 120px 30px 60px 1fr 60px 25px 30px 30px 5px 30px 5px; /*nedover*/
-          grid-template-columns: 5px 30px 30px 1fr 30px 30px 5px; /*bortover*/
+          grid-template-rows: 5px 30px 5px 15px 35px 30px 120px 30px 60px 1fr 60px 25px 30px 15px 5px 30px 5px; /*nedover*/
+          grid-template-columns: 5px 10px 30px 1fr 30px 10px 5px; /*bortover*/
       }
 
       /* a */
