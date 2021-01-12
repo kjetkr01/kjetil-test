@@ -32,7 +32,7 @@
           /*grid-template-rows: 5px 30px 5px 15px 35px 30px 120px 30px 60px 1fr 60px 25px 30px 15px 5px 30px 5px; nedover*/
           /* nye: 30px 30px 25px 15px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 25px 30px 30px */
           /* gammel: 5px 30px 5px 15px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 5px 30px 5px */
-          grid-template-rows: 30px 30px 25px 15px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 25px 30px 30px; /*nedover*/
+          grid-template-rows: 30px 30px 25px 15px 1fr 10px 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 25px 30px 30px; /*nedover*/
           grid-template-columns: 5px 10px 30px 1fr 30px 10px 5px; /*bortover*/
       }
 
@@ -70,7 +70,7 @@
       }
       
       #homePage > #usermsg2G {
-        min-height: 30px;
+        min-height: 20px;
         grid-area: usermsg2G;
         background-color: var(--main-background-color);
         border-left: var(--main-border);
@@ -284,6 +284,7 @@
       }
       
       #homePage > #c2r2 {
+        min-height: 25px;
         grid-area: c2r2;
         border-left: var(--main-border);
         border-right: var(--main-border);
@@ -301,6 +302,7 @@
       }
       
       #homePage > #c5r2 {
+        min-height: 15px;
         grid-area: c5r2;
         border-left: var(--main-border);
         border-right: var(--main-border);

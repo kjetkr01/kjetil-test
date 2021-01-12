@@ -135,14 +135,14 @@ function displayLinks(dID) {
 
             if (token && user) {
                 documentID.innerHTML = `
-            <a href="index.html" style="margin-left:5px; margin-right:2.5vw;">Hjem</a>
+            <a href="index.html" style="margin-left:5px; margin-right:3.5vw;">Hjem</a>
             <a href="leaderboards.html">Ledertavler</a>
-            <a href="account.html" style="margin-left:2.5vw; margin-right:5px;">Min konto</a>
+            <a href="account.html" style="margin-left:3.5vw; margin-right:5px;">Min konto</a>
             `;
             } else {
                 documentID.innerHTML = `
-            <a href="access.html" style="margin-left:5px; margin-right:2.5vw;">Be om tilgang</a>
-            <a href="login.html" style="margin-left:2.5vw; margin-right:5px;">Logg inn</a>
+            <a href="access.html" style="margin-left:5px; margin-right:3.5vw;">Be om tilgang</a>
+            <a href="login.html" style="margin-left:3.5vw; margin-right:5px;">Logg inn</a>
             `;
             }
 
