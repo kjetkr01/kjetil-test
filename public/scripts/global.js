@@ -78,12 +78,12 @@ async function validateToken() {
                 console.log("invalid token");
                 localStorage.clear();
                 sessionStorage.clear();
-                //redirectToLogin();
+                redirectToLogin();
             }
 
         } else {
             console.log("no token/user, skipped");
-            //redirectToLogin();
+            redirectToLogin();
         }
     }
 }
