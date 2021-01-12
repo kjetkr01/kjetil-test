@@ -125,6 +125,13 @@ async function callServerAPI(body, url) {
 
 // show different links based if user is logged in or not
 
+let currentdID = "";
+
+window.addEventListener("resize", function () {
+    console.log("Updated page, resize")
+    displayLinks(currentdID);
+});
+
 function displayLinks(dID) {
 
     if (dID) {
@@ -132,6 +139,8 @@ function displayLinks(dID) {
         const documentID = document.getElementById(dID);
 
         if (documentID) {
+
+            currentdID = dID;
 
             const activeColor = "rgb(0, 255, 170)";
 
@@ -153,35 +162,80 @@ function displayLinks(dID) {
 
                 if (getCurrentPage) {
 
-                    switch (getCurrentPage) {
-                        case homeURL:
+                    // start interval for sjekk?
+
+                    if (window.innerWidth < 768) {
+
+                        let icon1Loaded = false;
+                        let icon2Loaded = false;
+                        let icon3Loaded = false;
+
+                        const homeImg = new Image();
+                        homeImg.src = "images/homeIcon.svg";
+
+                        const leaderboardsImg = new Image();
+                        leaderboardsImg.src = "images/leaderboardsIcon.svg";
+
+                        const accountImg = new Image();
+                        accountImg.src = "images/accountIcon.svg";
+
+                        homeImg.onload = function () { icon1Loaded = true };
+                        leaderboardsImg.onload = function () { icon2Loaded = true };
+                        accountImg.onload = function () { icon3Loaded = true };
+
+                        const checkIfImagesIsLoaded = setInterval(() => {
+                            if (icon1Loaded === true && icon2Loaded === true && icon3Loaded === true) {
+                                displayIcons();
+                                clearInterval(checkIfImagesIsLoaded);
+                            }
+                        }, 100);
+
+                        function displayIcons() {
                             htmlInfo = `
+                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw;"><img src="images/homeIcon.svg" alt="${homeName}"></a>
+                            <a href=${leaderboardsURL} style="margin-left:5px; margin-right:3.5vw;"><img src="images/leaderboardsIcon.svg" alt="${leaderboardsName}"></a>
+                            <a href=${accountURL} style="margin-left:5px; margin-right:3.5vw;"><img src="images/accountIcon.svg" alt="${accountName}"></a>
+                            `;
+
+                            documentID.innerHTML = htmlInfo;
+                        }
+
+
+                    } else {
+
+                        switch (getCurrentPage) {
+                            case homeURL:
+                                htmlInfo = `
                             <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw; color:${activeColor};">${homeName}</a>
-                            <a href=${leaderboardsURL}">${leaderboardsName}</a>
+                            <a href=${leaderboardsURL}>${leaderboardsName}</a>
                             <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
                             `;
-                            break;
-                        case leaderboardsURL:
-                            htmlInfo = `
+                                break;
+                            case leaderboardsURL:
+                                htmlInfo = `
                             <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw;">${homeName}</a>
                             <a href=${leaderboardsURL} style="color:${activeColor};">${leaderboardsName}</a>
                             <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
                             `;
-                            break;
-                        case accountURL:
-                            htmlInfo = `
+                                break;
+                            case accountURL:
+                                htmlInfo = `
                             <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw;">${homeName}</a>
                             <a href=${leaderboardsURL}>${leaderboardsName}</a>
                             <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px; color:${activeColor};">${accountName}</a>
                             `;
-                            break;
-                        default:
-                            htmlInfo = `
+                                break;
+                            default:
+                                htmlInfo = `
                             <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw;">${homeName}</a>
                             <a href=${leaderboardsURL}>${leaderboardsName}</a>
                             <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
                             `;
-                            break;
+                                break;
+                        }
+
+                        documentID.innerHTML = htmlInfo;
+
                     }
 
                 } else {
@@ -190,6 +244,8 @@ function displayLinks(dID) {
                             <a href=${leaderboardsURL}>${leaderboardsName}</a>
                             <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
                             `;
+
+                    documentID.innerHTML = htmlInfo;
                 }
 
             } else {
@@ -217,10 +273,10 @@ function displayLinks(dID) {
                             break;
                     }
 
+                    documentID.innerHTML = htmlInfo;
+
                 }
             }
-
-            documentID.innerHTML = htmlInfo;
 
         } else {
             console.log("error ID: " + dID + " does not exist!");
