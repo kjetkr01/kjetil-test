@@ -8,27 +8,27 @@ width: 100vw;
 height: 100vh;
 
 grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
-            "Glinks Glinks Glinks Glinks Glinks Glinks Glinks"
-            "c2r1 c2r1 c2r1 c2r1 c2r1 c2r1 c2r1"
-            
-            "e2r1 e1r2 e1r2 e1r2 e1r2 e1r2 e4r1"
+"Glinks Glinks Glinks Glinks Glinks Glinks Glinks"
+"c2r1 c2r1 c2r1 c2r1 c2r1 c2r1 c2r1"
 
-            "e2r1 e2r2 usermsg1G usermsg1G usermsg1G e4r2 e4r1"
-            "e2r1 e2r2 c1r2 c1r2 c1r2 e4r2 e4r1"
-            "e2r1 e2r2 usermsg2G usermsg2G usermsg2G e4r2 e4r1"
-            "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
-            "e2r1 e2r2 usermsg3G usermsg3G usermsg3G e4r2 e4r1"
-            "e2r1 e2r2 c3r2 boardG c4r2 e4r2 e4r1"
-            "e2r1 e2r2 c5r2 c5r2 c5r2 e4r2 e4r1"
-            "e2r1 e2r2 gymtimeG gymtimeG gymtimeG e4r2 e4r1"
-            "e2r1 e2r2 gymtimesmallG gymtimesmallG gymtimesmallG e4r2 e4r1"
+"e2r1 e1r2 e1r2 e1r2 e1r2 e1r2 e4r1"
 
-            "e2r1 e3r2 e3r2 e3r2 e3r2 e3r2 e4r1"
+"e2r1 e2r2 usermsg1G usermsg1G usermsg1G e4r2 e4r1"
+"e2r1 e2r2 c1r2 c1r2 c1r2 e4r2 e4r1"
+"e2r1 e2r2 usermsg2G usermsg2G usermsg2G e4r2 e4r1"
+"e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
+"e2r1 e2r2 usermsg3G usermsg3G usermsg3G e4r2 e4r1"
+"e2r1 e2r2 c3r2 boardG c4r2 e4r2 e4r1"
+"e2r1 e2r2 c5r2 c5r2 c5r2 e4r2 e4r1"
+"e2r1 e2r2 gymtimeG gymtimeG gymtimeG e4r2 e4r1"
+"e2r1 e2r2 gymtimesmallG gymtimesmallG gymtimesmallG e4r2 e4r1"
 
-            "c1r3 c1r3 c1r3 c1r3 c1r3 c1r3 c1r3"
-            "Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu"
-            "c2r3 c2r3 c2r3 c2r3 c2r3 c2r3 c2r3";
-            
+"e2r1 e3r2 e3r2 e3r2 e3r2 e3r2 e4r1"
+
+"c1r3 c1r3 c1r3 c1r3 c1r3 c1r3 c1r3"
+"Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu"
+"c2r3 c2r3 c2r3 c2r3 c2r3 c2r3 c2r3";
+
 /*grid-template-rows: 5px 30px 5px 15px 35px 30px 120px 30px 60px 1fr 60px 25px 30px 15px 5px 30px 5px; nedover*/
 /* nye: 30px 30px 25px 15px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 25px 30px 30px */
 /* gammel: 5px 30px 5px 15px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 5px 30px 5px */
@@ -53,6 +53,12 @@ color: rgb(0, 255, 170);
 @media only screen and (max-width: 768px) {
 
 /* header */
+
+.footerIcons{
+-webkit-filter: invert(1);
+filter: invert(1);
+image-rendering: auto;
+}
 
 #homePage > #Glinks {
 grid-area: Gfootermenu;
