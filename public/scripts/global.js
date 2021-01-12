@@ -30,13 +30,13 @@ if (user) {
 // check if token / user exists
 
 if (token) {
-    console.log("Token: " + token)
+    console.log("Token: " + token);
 } else {
     console.log("No token!");
 }
 
 if (user) {
-    console.log("Logged in as: " + userDisplayname)
+    console.log("Logged in as: " + userDisplayname);
 } else {
     console.log("Not logged in!");
 }
@@ -50,7 +50,7 @@ async function validateToken() {
 
     if (!window.navigator.onLine) {
         const offlineMsg = "Offline mode is enabled, server fetching is disabled!";
-        alert(offlineMsg)
+        alert(offlineMsg);
         console.log(offlineMsg);
         return;
     }
@@ -92,7 +92,7 @@ async function callServerAPI(body, url) {
 
     if (!window.navigator.onLine) {
         const offlineMsg = "Offline mode is enabled, server fetching is disabled!";
-        alert(offlineMsg)
+        alert(offlineMsg);
         console.log(offlineMsg);
         return;
     }
@@ -144,9 +144,10 @@ function displayLinks(dID) {
             const accessURL = "access.html", accessName = "Be om tilgang";
             const loginURL = "login.html", loginName = "Logg inn";
 
-            const getCurrentPage = window.location.href.split("/").pop();
+            const currentPageURL = window.location.href;
+            const getCurrentPage = currentPageURL.split("/").pop();
 
-            console.log(getCurrentPage)
+            console.log("Current Page:" + getCurrentPage);
 
             if (token && user) {
 
@@ -174,6 +175,13 @@ function displayLinks(dID) {
                             <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px; color:${activeColor}">${accountName}</a>
                             `;
                             break;
+                        default:
+                            htmlInfo = `
+                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw;">${homeName}</a>
+                            <a href=${leaderboardsURL}>${leaderboardsName}</a>
+                            <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
+                            `;
+                            break;
                     }
 
                 }
@@ -193,6 +201,12 @@ function displayLinks(dID) {
                             htmlInfo = `
                             <a href=${accessURL} style="margin-left:5px; margin-right:3.5vw;">${accessName}</a>
                             <a href=${loginURL} style="margin-left:3.5vw; margin-right:5px; color:${activeColor}">${loginName}</a>
+                            `;
+                            break;
+                        default:
+                            htmlInfo = `
+                            <a href=${accessURL} style="margin-left:5px; margin-right:3.5vw;">${accessName}</a>
+                            <a href=${loginURL} style="margin-left:3.5vw; margin-right:5px;">${loginName}</a>
                             `;
                             break;
                     }
