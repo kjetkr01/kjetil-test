@@ -134,16 +134,16 @@ function displayLinks(dID) {
         if (documentID) {
 
             if (token && user) {
-                documentID.innerHTML = `<tr>
-            <td><a href="index.html">Hjem</a></td>
-            <td><a href="leaderboards.html">Ledertavler</a></td>
-            <td><a href="account.html">Min konto</a></td>
-         </tr>`;
+                documentID.innerHTML = `
+            <a href="index.html">Hjem</a>
+            <a href="leaderboards.html" style="margin-left:22vw; margin-right:22vw;">Ledertavler</a>
+            <a href="account.html">Min konto</a>
+            `;
             } else {
-                documentID.innerHTML = `<tr>
-            <td><a href="access.html">Be om tilgang</a></td>
-            <td><a href="login.html">Logg inn</a></td>
-         </tr>`;
+                documentID.innerHTML = `
+            <a href="access.html" style="margin-right:22vw;">Be om tilgang</a>
+            <a href="login.html">Logg inn</a>
+            `;
             }
 
         } else {

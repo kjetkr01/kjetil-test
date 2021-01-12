@@ -59,6 +59,7 @@
       
       
       #homePage > #usermsg1G {
+        min-height: 30px;
         grid-area: usermsg1G;
         background-color: var(--main-background-color);
         border-left: var(--main-border);
@@ -69,6 +70,7 @@
       }
       
       #homePage > #usermsg2G {
+        min-height: 30px;
         grid-area: usermsg2G;
         background-color: var(--main-background-color);
         border-left: var(--main-border);
@@ -77,6 +79,7 @@
       }
       
       #homePage > #usermsg3G {
+        min-height: 30px;
         grid-area: usermsg3G;
         background-color: var(--main-background-color);
         border-left: var(--main-border);
@@ -92,6 +95,7 @@
       }
       
       #homePage > #gymtimeG {
+        min-height: 30px;
         grid-area: gymtimeG;
         background-color: var(--main-background-color);
         border-left: var(--main-border);
@@ -99,6 +103,7 @@
       }
       
       #homePage > #gymtimesmallG {
+        min-height: 30px;
         grid-area: gymtimesmallG;
         background-color: var(--main-background-color);
         border-left: var(--main-border);
