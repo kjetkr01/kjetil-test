@@ -123,6 +123,38 @@ async function callServerAPI(body, url) {
 
 }
 
+// show different links based if user is logged in or not
+
+function displayLinks(dID) {
+
+    if (dID) {
+
+        const documentID = document.getElementById(dID);
+
+        if (documentID) {
+
+            if (token && user) {
+                documentID.innerHTML = `<tr>
+            <td><a href="index.html">Hjem</a></td>
+            <td><a href="leaderboards.html">Ledertavler</a></td>
+            <td><a href="account.html">Min konto</a></td>
+         </tr>`;
+            } else {
+                documentID.innerHTML = `<tr>
+            <td><a href="access.html">Lag konto</a></td>
+            <td><a href="login.html">Logg inn</a></td>
+         </tr>`;
+            }
+
+        } else {
+            console.log("error ID: " + dID + " does not exist!");
+        }
+    }
+
+}
+
+//
+
 // redirect functions
 
 function redirectToLogin() {
