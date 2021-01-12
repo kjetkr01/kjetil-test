@@ -83,11 +83,11 @@
 
          const resp = await callServerAPI(body, url);
 
-         if (Object.entries(resp).length < 8) {
+         if (resp) {
             info = resp;
             displayInformation();
          } else {
-            alert(resp);
+            alert("En feil har oppstått");
             redirectToHome();
          }
 
@@ -169,7 +169,7 @@
 
    function changeInfoDivContent(content) {
 
-      if (content === "lifts" || content === "goal" || content === "plan" || content === "requests") {
+      if (content === "lifts" || content === "goal" || content === "plan" || content === "requests" || content === "apikey") {
 
          document.getElementById("infoDiv").innerHTML = "";
          document.getElementById("showTotalLift").innerHTML = "";
@@ -189,6 +189,10 @@
                break;
             case "requests":
                displayRequests();
+               updateButtons(content);
+               break;
+            case "apikey":
+               displayApiKey();
                updateButtons(content);
                break;
          }
@@ -252,6 +256,18 @@
             document.getElementById("buttons").innerHTML += `<button style='color:red;' onClick="changeInfoDivContent('requests')">${btnTxt}</button>`;
          } else {
             document.getElementById("buttons").innerHTML += `<button onClick="changeInfoDivContent('requests')">${btnTxt}</button>`;
+         }
+
+      }
+
+      if (info.apikey) {
+
+         let btnTxt = "API Key";
+
+         if (current === "apikey") {
+            document.getElementById("buttons").innerHTML += `<button style='color:red;' onClick="changeInfoDivContent('apikey')">${btnTxt}</button>`;
+         } else {
+            document.getElementById("buttons").innerHTML += `<button onClick="changeInfoDivContent('apikey')">${btnTxt}</button>`;
          }
 
       }
@@ -424,6 +440,20 @@
 
    }
 
+   function displayApiKey() {
+
+      if (info.apikey) {
+
+         infoDiv.innerHTML = "";
+
+         infoDiv.innerHTML = "Din API Key er: <br><br>";
+
+         infoDiv.innerHTML += `${info.apikey}`;
+
+      }
+
+   }
+
    async function displayRequests() {
 
       if (token && user) {
@@ -451,7 +481,7 @@
 
                infoDiv.innerHTML += "Det er totalt " + resp.length + " forespørseler (brukere)!";
 
-            }else{
+            } else {
                infoDiv.innerHTML = "Det har oppstått en feil!";
             }
 

@@ -273,8 +273,24 @@ class StorageHandler {
 
                 //if owner then access anyways
                 if (results.rows[0].settings.publicProfile.value === true || viewingUser === username) {
-                    results = await client.query('SELECT "username","displayname","trainingsplit","lifts","goals","info","isadmin" from "users" where username=$1', [viewingUser]);
-                    userDetails = results.rows[0];
+                    if (viewingUser === username) {
+                        results = await client.query('SELECT "username","displayname","trainingsplit","lifts","goals","info","isadmin" from "users" where username=$1', [username]);
+
+                        if (results.rows[0]) {
+                            results = results.rows[0];
+
+                            const hasAccessToApi = await client.query('SELECT "key" from "api_keys" where username=$1', [username]);
+
+                            if (hasAccessToApi.rows[0] !== undefined) {
+                                results.apikey = hasAccessToApi.rows[0].key;
+                            }
+                        }
+
+                    } else {
+                        results = await client.query('SELECT "username","displayname","trainingsplit","lifts","goals","info" from "users" where username=$1', [viewingUser]);
+                        results = results.rows[0];
+                    }
+                    userDetails = results;
                     results = true;
                 } else {
                     results = true;
@@ -438,7 +454,7 @@ class StorageHandler {
         try {
             await client.connect();
 
-            results = await client.query('SELECT "user" from "api_keys" where key=$1', [key]);
+            results = await client.query('SELECT "username" from "api_keys" where key=$1', [key]);
 
             if (results.rows.length === 0) {
 
