@@ -440,7 +440,7 @@
 
    }
 
-   function displayApiKey() {
+   async function displayApiKey() {
 
       if (info.apikey) {
 
@@ -448,7 +448,32 @@
 
          infoDiv.innerHTML = "Din API Key er: <br><br>";
 
-         infoDiv.innerHTML += `${info.apikey}`;
+         const config = {
+            method: "GET",
+            headers: {
+               "content-type": "application/json"
+            }
+         }
+
+         infoDiv.innerHTML += `
+         <div>${info.apikey}</div>
+         `;
+
+         const response = await fetch("/api", config);
+         const data = await response.json();
+
+         if (data) {
+            infoDiv.innerHTML += `
+               <div>Liste med alle APIer</div>
+               `;
+            for (let i = 0; i < data.length; i++) {
+               infoDiv.innerHTML += `
+               <div>${data[i]}</div>
+               `;
+            }
+         }
+
+
 
       }
 
