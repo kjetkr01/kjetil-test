@@ -171,9 +171,10 @@ class StorageHandler {
 
 
                             const settings = {
-                                "leaderboards": { "name": "Ledertavler", "value": true },
                                 "publicProfile": { "name": "Offentlig profil", "value": true },
                                 "showGymCloseTime": { "name": "Åpningstider", "value": true },
+                                "displayLeaderboards": { "name": "Ledertavler", "value": true },
+                                "displayWorkoutList": { "name": "Vis meg på hvem som trener i dag listen", "value": true },
                             };
 
                             const trainingSplit = {
@@ -401,7 +402,7 @@ class StorageHandler {
 
             for (let i = 0; i < results.rows.length; i++) {
                 const todaysWorkout = results.rows[i].trainingsplit[dayTxt];
-                if (results.rows[i].settings.publicProfile.value === true && todaysWorkout.length > 0 && todaysWorkout !== "Fri") {
+                if (results.rows[i].settings.displayWorkoutList.value === true && todaysWorkout.length > 0 && todaysWorkout !== "Fri") {
                     info[counter] = { "userFullName": results.rows[i].displayname, "todaysWorkout": todaysWorkout };
                     counter++;
                 }

@@ -284,7 +284,7 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
 
      if (currentUser.username && setting && value === true || value === false) {
 
-          if (setting === "leaderboards" || setting === "publicProfile" || setting === "showGymCloseTime") {
+          if (setting === "publicProfile" || setting === "showGymCloseTime" || setting === "displayLeaderboards" || setting === "displayWorkoutList") {
 
                const resp = await updateUserSetting(currentUser.username, setting, value);
 

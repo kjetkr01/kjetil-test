@@ -241,8 +241,10 @@
 
             const resp = await callServerAPI(body, url);
 
-            if (resp[0].id) {
-               btnTxt = `Forespørsler (${resp.length})`;
+            if (resp) {
+               if (resp[0].id) {
+                  btnTxt = `Forespørsler (${resp.length})`;
+               }
             }
          }
 
@@ -435,17 +437,23 @@
 
          infoDiv.innerHTML = "Forespørsler: <br><br>";
 
-         if (resp[0].username) {
+         if (resp) {
 
-            for (let i = 0; i < resp.length; i++) {
-               infoDiv.innerHTML += `<div>
+            if (resp[0].username) {
+
+               for (let i = 0; i < resp.length; i++) {
+                  infoDiv.innerHTML += `<div>
                Navn:${resp[i].displayname} Brukernavn: ${resp[i].username}
                <button onClick='acceptPendingUser("${resp[i].username}", true)'>Godta</button>
                <button onClick='acceptPendingUser("${resp[i].username}", false)'>Avslå</button>
                </div>`;
-            }
+               }
 
-            infoDiv.innerHTML += "Det er totalt " + resp.length + " forespørseler (brukere)!";
+               infoDiv.innerHTML += "Det er totalt " + resp.length + " forespørseler (brukere)!";
+
+            }else{
+               infoDiv.innerHTML = "Det har oppstått en feil!";
+            }
 
          } else {
             infoDiv.innerHTML = "Det er ingen forespørseler!";
