@@ -191,7 +191,7 @@ function displayLinks(dID) {
                     function displayIcons() {
                         htmlInfo = `
                             <a href=${homeURL}><img class="footerIcons" src="images/homeIcon.svg" alt="${homeName}"></a>
-                            <a href=${leaderboardsURL} style="margin-right:10vw; margin-left:10vw;"><img class="footerIcons" src="images/leaderboardsIcon.svg" alt="${leaderboardsName}"></a>
+                            <a href=${leaderboardsURL} style="margin-right:20vw; margin-left:20vw;"><img class="footerIcons" src="images/leaderboardsIcon.svg" alt="${leaderboardsName}"></a>
                             <a href=${accountURL}><img class="footerIcons" src="images/accountIcon.svg" alt="${accountName}"></a>
                             `;
 
