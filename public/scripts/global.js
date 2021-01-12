@@ -141,7 +141,7 @@ function displayLinks(dID) {
          </tr>`;
             } else {
                 documentID.innerHTML = `<tr>
-            <td><a href="access.html">Lag konto</a></td>
+            <td><a href="access.html">Be om tilgang</a></td>
             <td><a href="login.html">Logg inn</a></td>
          </tr>`;
             }
