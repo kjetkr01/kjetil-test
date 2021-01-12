@@ -2,7 +2,7 @@
 <html>
 
 <head>
-   <title>Laster...</title>
+   <title>Min konto</title>
 
    <meta charset="utf-8" />
 
@@ -84,7 +84,6 @@
          const resp = await callServerAPI(body, url);
 
          if (Object.entries(resp).length < 8) {
-            document.title = "Min konto";
             info = resp;
             displayInformation();
          } else {
