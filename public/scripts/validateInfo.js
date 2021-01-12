@@ -81,7 +81,7 @@ async function validate(displayname, username, password, confirmpassword) {
 }
 
 // usage: " login("myusername", "mypassword"); "
-async function login(username, password) {
+async function login(username, password, rmbrMe) {
 
     let message = "";
     let errorMsg = `må være lengre enn ${minCharLength} tegn og kortere enn ${maxCharLength} tegn`;
@@ -94,16 +94,27 @@ async function login(username, password) {
 
             const url = `/autenticate`;
 
-            let resp = await callServerAPI(body, url);
+            const resp = await callServerAPI(body, url);
 
-            if (resp.authToken) {
-                //localstorage / sessionstorage token? resp.authToken
-                localStorage.setItem("authToken", resp.authToken);
-                localStorage.setItem("user", JSON.stringify(resp.user));
-                //localstorage / sessionstorage user object? resp.user
-                message = "Login successful";
+            if (resp) {
+
+                if (resp.authToken) {
+
+                    if (rmbrMe === true) {
+                        localStorage.setItem("authToken", resp.authToken);
+                        localStorage.setItem("user", JSON.stringify(resp.user));
+                    } else {
+                        sessionStorage.setItem("authToken", resp.authToken);
+                        sessionStorage.setItem("user", JSON.stringify(resp.user));
+                    }
+
+                    message = "Login successful";
+                }else{
+                    message = "Det har oppstått en feil.";
+                }
+
             } else {
-                message = resp;
+                message = "Brukernavnet eller passordet er feil!";
             }
 
         } else {

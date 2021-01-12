@@ -69,7 +69,13 @@
 
          if (resp.settings && resp.userInfo) {
             info = resp;
-            localStorage.setItem("user", JSON.stringify(resp.userInfo));
+
+            if (localStorage.getItem("user")) {
+               localStorage.setItem("user", JSON.stringify(resp.userInfo));
+            } else {
+               sessionStorage.setItem("user", JSON.stringify(resp.userInfo));
+            }
+
             displayInformation();
          } else {
             alert("Feil, prøv igjen");

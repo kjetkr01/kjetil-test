@@ -85,14 +85,13 @@ server.post("/autenticate", async function (req, res) {
           const requestUser = await validateUser(username, password);
           const isValid = requestUser.isValid;
 
-          const userInfo = {
-               "id": requestUser.userInfo.id,
-               "username": requestUser.userInfo.username,
-               "displayname": requestUser.userInfo.displayname,
-               "showGymCloseTime": requestUser.userInfo.settings.showGymCloseTime.value
-          }
-
           if (isValid) {
+               const userInfo = {
+                    "id": requestUser.userInfo.id,
+                    "username": requestUser.userInfo.username,
+                    "displayname": requestUser.userInfo.displayname,
+                    "showGymCloseTime": requestUser.userInfo.settings.showGymCloseTime.value
+               }
                const sessionToken = createToken(requestUser.userInfo);
                res.status(200).json({ "authToken": sessionToken, "user": userInfo }).end();
           } else {

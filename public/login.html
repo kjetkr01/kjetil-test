@@ -36,6 +36,7 @@
 
         <input id="username" placeholder="Brukernavn" type="text" required="true">
         <input id="psw" placeholder="Passord" type="password" required="true">
+        <input type="checkbox" id="rmbrMe">Husk meg
 
         <input type="submit" value="Logg inn">
     </form>
@@ -54,18 +55,17 @@
     loginForm.addEventListener("submit", async function (evt) {
 
         evt.preventDefault();
+        const rmbrMe = document.getElementById("rmbrMe").checked;
 
         const username = document.getElementById("username").value;
         const psw = document.getElementById("psw").value;
 
-        const resp = await login(username, psw);
-
-        //console.log(resp)
+        const resp = await login(username, psw, rmbrMe);
 
         const loginMsg = document.getElementById("loginMsg");
         loginMsg.innerHTML = resp;
 
-        /* kan ta bort denne, er kun til testing: */ if (resp === "Login successful") { redirectToHome(); } /* */
+        if (resp === "Login successful") { redirectToHome(); }
 
     });
 

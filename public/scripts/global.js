@@ -1,7 +1,7 @@
 // global variables
 
-const token = localStorage.getItem("authToken");
-const user = localStorage.getItem("user");
+const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");// eller session
+const user = localStorage.getItem("user") || sessionStorage.getItem("user"); // eller session
 let userDisplayname, showGymCloseTime;
 
 let lastUpdatedTime = new Date();
