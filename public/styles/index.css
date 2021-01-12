@@ -26,7 +26,7 @@
                              "e2r1 e3r2 e3r2 e3r2 e3r2 e3r2 e4r1"
       
                              "c1r3 c1r3 c1r3 c1r3 c1r3 c1r3 c1r3"
-                             "footermenuG footermenuG footermenuG footermenuG footermenuG footermenuG footermenuG"
+                             "Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu"
                              "c2r3 c2r3 c2r3 c2r3 c2r3 c2r3 c2r3";
                              
           /*grid-template-rows: 5px 30px 5px 15px 35px 30px 120px 30px 60px 1fr 60px 25px 30px 15px 5px 30px 5px; nedover*/
@@ -48,15 +48,45 @@
       color: rgb(0, 255, 170);              
 }
 
+/* mobile */
+@media only screen and (max-width: 768px) {
+  
+  #homePage > #Glinks {
+    grid-area: Gfootermenu;
+    background-color: var(--main-themeColor);
+  }
+
+  #homePage > #Gfootermenu {
+    grid-area: Glinks;
+    background-color: var(--main-themeColor);
+  }
+
+}
+
+/* */
+
+
+/* desktop */
+
+@media only screen and (min-width: 768px) {
+  
+  #homePage > #Glinks {
+    grid-area: Glinks;
+    background-color: var(--main-themeColor);
+  }
+
+  #homePage > #Gfootermenu {
+    grid-area: Gfootermenu;
+    background-color: var(--main-themeColor);
+  }
+
+}
+
+/* */
+
       /* */
       
       /* grid for elements */
-      
-      #homePage > #Glinks {
-        grid-area: Glinks;
-        background-color: var(--main-themeColor);
-      }
-      
       
       #homePage > #usermsg1G {
         min-height: 30px;
@@ -111,12 +141,6 @@
         border-bottom: var(--main-border);
         border-radius: var(--global-borderRadiusForContentBottom);
       }
-      
-      #homePage > #footermenuG {
-        grid-area: footermenuG;
-        background-color: var(--main-themeColor);
-      }
-      
       
       /* elements */
       
@@ -203,18 +227,12 @@
       
       /* footer */
       
-      #footermenuG > #footermenu {
+      #Gfootermenu > #footermenu {
         width: 100%;
         text-align: center;
       }
       
       /* */
-      
-      
-      
-      
-      
-      /* finished */
       
       /*empty space padding*/
       
