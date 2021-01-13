@@ -29,10 +29,8 @@ grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
 "Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu"
 "c2r3 c2r3 c2r3 c2r3 c2r3 c2r3 c2r3";
 
-/*grid-template-rows: 5px 30px 5px 15px 35px 30px 120px 30px 60px 1fr 60px 25px 30px 15px 5px 30px 5px; nedover*/
-/* nye: 30px 30px 25px 15px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 25px 30px 30px */
-/* gammel: 5px 30px 5px 15px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 5px 30px 5px */
-grid-template-rows: 30px auto 30px 15px 1fr 10px 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 30px auto 30px; /*nedover*/
+/* gammel: 25px 30px 30px 15px 1fr 10px 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 20px 30px 40px */
+grid-template-rows: 3vh auto 3vh 15px 1fr 10px 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 2.5vh auto 3.5vh; /*nedover*/
 grid-template-columns: 5px 10px 30px 1fr 30px 10px 5px; /*bortover*/
 }
 
