@@ -112,30 +112,13 @@
 
     </section>
 
-
-
-    <!--
-
-    <form id="loginForm">
-
-        <input id="username" placeholder="Brukernavn" type="text" required="true">
-        <input id="psw" placeholder="Passord" type="password" required="true">
-        <input type="checkbox" id="rmbrMe">Husk meg
-
-        <input type="submit" value="Logg inn">
-    </form>
-
-    <p id="loginMsg"></p>
-
-    -->
-
 </body>
 
 <script>
 
-    addEventListener("keypress", function(evt){
+    addEventListener("keypress", function (evt) {
 
-        if(evt.keyCode === 13){
+        if (evt.keyCode === 13) {
             loginUser();
         }
 
@@ -154,11 +137,12 @@
 
             const resp = await login(username, psw, rmbrMe);
 
-            if (resp === "Login successful") { redirectToHome(); }
-
-            const respmsg = document.getElementById("respmsg");
-            respmsg.innerHTML = resp;
-
+            if (resp === "Login successful") {
+                redirectToHome();
+            } else {
+                const respmsg = document.getElementById("respmsg");
+                respmsg.innerHTML = resp;
+            }
         }
 
     };
