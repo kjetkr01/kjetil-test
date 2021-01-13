@@ -58,6 +58,8 @@ color: rgb(0, 255, 170);
 -webkit-filter: invert(1);
 filter: invert(1);
 image-rendering: auto;
+max-height: 32px;
+max-width: 32px;
 }
 
 #homePage > #Glinks {
