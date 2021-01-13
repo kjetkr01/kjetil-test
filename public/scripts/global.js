@@ -202,9 +202,9 @@ function displayLinks(dID) {
 
                     function displayIcons() {
                         htmlInfo = `
-                            <a href=${homeURL}><img class="footerIcons" src="images/homeIcon.svg" alt="${homeName}"></a>
-                            <a href=${leaderboardsURL} style="margin-right:24vw; margin-left:24vw;"><img class="footerIcons" src="images/leaderboardsIcon.svg" alt="${leaderboardsName}"></a>
-                            <a href=${accountURL}><img class="footerIcons" src="images/accountIcon.svg" alt="${accountName}"></a>
+                            <a href=${homeURL}><img class="footerIcons" src="images/homeIcon.svg" draggable="false" alt="${homeName}"></a>
+                            <a href=${leaderboardsURL} style="margin-right:24vw; margin-left:24vw;"><img class="footerIcons" src="images/leaderboardsIcon.svg" draggable="false" alt="${leaderboardsName}"></a>
+                            <a href=${accountURL}><img class="footerIcons" src="images/accountIcon.svg" draggable="false" alt="${accountName}"></a>
                             `;
 
                         footermenu.innerHTML = document.title;
@@ -220,30 +220,30 @@ function displayLinks(dID) {
                     switch (getCurrentPage) {
                         case homeURL:
                             htmlInfo = `
-                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw; color:${activeColor};">${homeName}</a>
-                            <a href=${leaderboardsURL}>${leaderboardsName}</a>
-                            <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
+                            <a href=${homeURL} draggable="false" style="margin-left:5px; margin-right:3.5vw; color:${activeColor};">${homeName}</a>
+                            <a href=${leaderboardsURL} draggable="false">${leaderboardsName}</a>
+                            <a href=${accountURL} draggable="false" style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
                             `;
                             break;
                         case leaderboardsURL:
                             htmlInfo = `
-                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw;">${homeName}</a>
-                            <a href=${leaderboardsURL} style="color:${activeColor};">${leaderboardsName}</a>
-                            <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
+                            <a href=${homeURL} draggable="false" style="margin-left:5px; margin-right:3.5vw;">${homeName}</a>
+                            <a href=${leaderboardsURL} draggable="false" style="color:${activeColor};">${leaderboardsName}</a>
+                            <a href=${accountURL} draggable="false" style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
                             `;
                             break;
                         case accountURL:
                             htmlInfo = `
-                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw;">${homeName}</a>
-                            <a href=${leaderboardsURL}>${leaderboardsName}</a>
-                            <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px; color:${activeColor};">${accountName}</a>
+                            <a href=${homeURL} draggable="false" style="margin-left:5px; margin-right:3.5vw;">${homeName}</a>
+                            <a href=${leaderboardsURL} draggable="false">${leaderboardsName}</a>
+                            <a href=${accountURL} draggable="false" style="margin-left:3.5vw; margin-right:5px; color:${activeColor};">${accountName}</a>
                             `;
                             break;
                         default:
                             htmlInfo = `
-                            <a href=${homeURL} style="margin-left:5px; margin-right:3.5vw;">${homeName}</a>
-                            <a href=${leaderboardsURL}>${leaderboardsName}</a>
-                            <a href=${accountURL} style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
+                            <a href=${homeURL} draggable="false" style="margin-left:5px; margin-right:3.5vw;">${homeName}</a>
+                            <a href=${leaderboardsURL} draggable="false">${leaderboardsName}</a>
+                            <a href=${accountURL} draggable="false" style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
                             `;
                             break;
                     }
@@ -259,20 +259,20 @@ function displayLinks(dID) {
                     switch (getCurrentPage) {
                         case accessURL:
                             htmlInfo = `
-                            <a href=${accessURL} style="margin-left:5px; margin-right:3.5vw; color:${activeColor};">${accessName}</a>
-                            <a href=${loginURL} style="margin-left:3.5vw; margin-right:5px;">${loginName}</a>
+                            <a href=${accessURL} draggable="false" style="margin-left:5px; margin-right:3.5vw; color:${activeColor};">${accessName}</a>
+                            <a href=${loginURL} draggable="false" style="margin-left:3.5vw; margin-right:5px;">${loginName}</a>
                             `;
                             break;
                         case loginURL:
                             htmlInfo = `
-                            <a href=${accessURL} style="margin-left:5px; margin-right:3.5vw;">${accessName}</a>
-                            <a href=${loginURL} style="margin-left:3.5vw; margin-right:5px; color:${activeColor};">${loginName}</a>
+                            <a href=${accessURL} draggable="false" style="margin-left:5px; margin-right:3.5vw;">${accessName}</a>
+                            <a href=${loginURL} draggable="false" style="margin-left:3.5vw; margin-right:5px; color:${activeColor};">${loginName}</a>
                             `;
                             break;
                         default:
                             htmlInfo = `
-                            <a href=${accessURL} style="margin-left:5px; margin-right:3.5vw;">${accessName}</a>
-                            <a href=${loginURL} style="margin-left:3.5vw; margin-right:5px;">${loginName}</a>
+                            <a href=${accessURL} draggable="false" style="margin-left:5px; margin-right:3.5vw;">${accessName}</a>
+                            <a href=${loginURL} draggable="false" style="margin-left:3.5vw; margin-right:5px;">${loginName}</a>
                             `;
                             break;
                     }
