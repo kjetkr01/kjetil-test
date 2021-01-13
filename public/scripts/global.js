@@ -172,8 +172,6 @@ function displayLinks(dID) {
 
             if (token && user) {
 
-                // start interval for sjekk?
-
                 if (window.innerWidth < 769) {
 
                     let icon1Loaded = false;

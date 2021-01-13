@@ -5,7 +5,7 @@ padding: 0;
 
 body{
 background-image: 
-linear-gradient(rgba(26, 26, 26, 0.7),rgba(82, 82, 82, 0.7)), 
+linear-gradient(rgba(26, 26, 26, 0.7),rgb(27, 27, 27, 1.0)), 
 url(../images/background-smallBlur.png);     
 background-size: cover;
 background-repeat: no-repeat;
@@ -23,7 +23,7 @@ text-decoration: none;
 --main-background-color: rgba(29, 29, 29, 0.7);
 --main-textColor: white;
 --main-text-shadow: 1px 1px rgb(0, 0, 0, 0.2);
---main-border: 1.25px solid rgb(0, 255, 170);
+--main-border: 1.25px solid white;/*rgb(0, 255, 170)*/;
 
 --global-margin-left: 12.5px;
 
