@@ -126,11 +126,19 @@ async function callServerAPI(body, url) {
 // show different links based if user is logged in or not
 
 let currentdID = "";
+let savedWidth = window.innerWidth;
 
-window.addEventListener("resize", function () {
+/*window.addEventListener("resize", function () {
     console.log("Updated page, resize")
     displayLinks(currentdID);
-});
+});*/
+
+setInterval(() => {
+    if (savedWidth !== window.innerWidth) {
+        console.log("Updated page, resize");
+        displayLinks(currentdID);
+    }
+}, 100);
 
 function displayLinks(dID) {
 
@@ -139,6 +147,8 @@ function displayLinks(dID) {
         const documentID = document.getElementById(dID);
 
         if (documentID) {
+
+            savedWidth = window.innerWidth;
 
             currentdID = dID;
 
@@ -164,7 +174,7 @@ function displayLinks(dID) {
 
                 // start interval for sjekk?
 
-                if (window.innerWidth < 768) {
+                if (window.innerWidth < 769) {
 
                     let icon1Loaded = false;
                     let icon2Loaded = false;
