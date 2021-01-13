@@ -147,8 +147,10 @@ background-color: var(--main-themeColor);
 }
 
 #Gfootermenu > #footermenu {
-width: 100%;
-text-align: center;
+color: var(--main-textColor);
+font-size: 30px;
+margin-left: 4vw;
+
 }
 
 }

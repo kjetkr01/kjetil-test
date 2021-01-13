@@ -156,6 +156,8 @@ function displayLinks(dID) {
             const currentPageURL = window.location.href;
             const getCurrentPage = currentPageURL.split("/").pop();
 
+            const footermenu = document.getElementById("footermenu");
+
             console.log("Current Page:" + getCurrentPage);
 
             if (token && user) {
@@ -195,13 +197,15 @@ function displayLinks(dID) {
                             <a href=${accountURL}><img class="footerIcons" src="images/accountIcon.svg" alt="${accountName}"></a>
                             `;
 
-                        document.getElementById("footermenu").innerHTML = document.title;
+                        footermenu.innerHTML = document.title;
 
                         documentID.innerHTML = htmlInfo;
                     }
 
 
                 } else {
+
+                    footermenu.innerHTML = "";
 
                     switch (getCurrentPage) {
                         case homeURL:

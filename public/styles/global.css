@@ -25,7 +25,7 @@ text-decoration: none;
 --main-text-shadow: 1px 1px rgb(0, 0, 0, 0.2);
 --main-border: 1px solid black;
 
---global-margin-left: 15px;
+--global-margin-left: 12.5px;
 
 --global-borderRadiusForContentTop: 15px 15px 0 0;
 --global-borderRadiusForContentBottom: 0 0 15px 15px;
