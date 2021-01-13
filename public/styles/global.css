@@ -20,7 +20,7 @@ text-decoration: none;
 
 /* global variables */
 --main-themeColor:  rgb(17, 17, 17);
---main-background-color: rgb(29, 29, 29);
+--main-background-color: rgba(29, 29, 29, 0.7);
 --main-textColor: white;
 --main-text-shadow: 1px 1px rgb(0, 0, 0, 0.2);
 --main-border: 1.25px solid rgb(0, 255, 170);

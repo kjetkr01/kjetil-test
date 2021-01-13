@@ -126,7 +126,7 @@ border-collapse: collapse;
 th {
 position: sticky;
 top: 0;
-background-color: var(--main-background-color);
+/*background-color: var(--main-background-color);*/
 }
 
 /* slutt av table */
@@ -228,7 +228,7 @@ border-collapse: collapse;
 th {
 position: sticky;
 top: 0;
-background-color: var(--main-background-color);
+/*background-color: var(--main-background-color);*/
 }
 
 /* slutt av table */
