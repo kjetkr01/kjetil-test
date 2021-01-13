@@ -1,0 +1,246 @@
+* {
+color: var(--main-textColor);
+text-align: center;
+}
+
+/*template:
+https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
+*/
+
+#loginPage {
+display: grid;
+width: 100vw;
+height: 100vh;
+
+grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1"
+"Glinks Glinks Glinks Glinks Glinks"
+"c2r1 c2r1 c2r1 c2r1 c2r1"
+
+"e1r1 e1r1 e1r1 e1r1 e1r1"
+
+"e2r1 logoG logoG logoG e4r1"
+"e2r1 c1r2 c1r2 c1r2 e4r1"
+"e2r1 inp1G inp1G inp1G e4r1"
+"e2r1 c2r2 c2r2 c2r2 e4r1"
+"e2r1 inp2G inp2G inp2G e4r1"
+"e2r1 c3r2 c3r2 c3r2 e4r1"
+"e2r1 rmbrmebtnG rmbrmebtnG rmbrmebtnG e4r1"
+"e2r1 respmsgG respmsgG respmsgG e4r1"
+"e2r1 loginbtnG loginbtnG loginbtnG e4r1"
+"e2r1 noaccbtnG noaccbtnG noaccbtnG e4r1"
+
+"e3r1 e3r1 e3r1 e3r1 e3r1"
+
+"c1r3 c1r3 c1r3 c1r3 c1r3"
+"Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu"
+"c2r3 c2r3 c2r3 c2r3 c2r3";
+
+grid-template-rows: 3vh auto 3vh 1fr 20% 2.5% 5% 2.5% 5% 2.5% 5% 5% 45px 7.5% 1fr 3vh auto 3vh; /*nedover*/
+grid-template-columns: 25px 1fr 1fr 1fr 25px; /*bortover*/
+}
+
+/* elements */
+
+#loginPage > #Glinks {
+grid-area: Glinks;
+background-color: var(--main-themeColor);
+}
+
+#Glinks > #links {
+color: var(--main-textColor);
+font-size: 18px;
+width: 100%;
+text-align: center;
+}
+
+#logoG > #logo {
+margin-top: 15px;
+width: 80%;
+height: 80%;
+object-fit: contain;
+image-rendering: auto;
+}
+
+#inp1G > #inp1, #inp2 {
+    font-size: 18px;
+width: 70%;
+height: 90%;
+border: var(--main-border);
+border-radius: 5px;
+background-color: var(--main-themeColor);
+
+}
+
+#loginPage > #Gfootermenu {
+    grid-area: Gfootermenu;
+    background-color: var(--main-themeColor);
+    }
+    
+    #Gfootermenu > #footermenu {
+    color: var(--main-textColor);
+    font-size: 30px;
+    margin-left: 25px;
+    font-weight: bold;
+    }
+
+/*
+#inp2G > #inp2 {
+
+}
+*/
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+color: var(--main-textColor);
+opacity: 1; /* Firefox */
+text-align: center;
+}
+
+#rmbrmebtnG > #rmbrMe {
+cursor: pointer;
+height: 17.5px;
+width: 17.5px;
+
+}
+
+#respmsgG > #respmsg {
+font-size: 18px;
+}
+
+#loginbtnG > #loginbtn {
+cursor: pointer;
+font-size: 24px;
+font-weight: bold;
+padding: 5px;
+border: var(--main-border);
+border-radius: 5px;
+background-color: var(--main-themeColor);
+}
+
+#noaccbtnG > #noaccbtn {
+cursor: pointer;
+font-size: 18px;
+}
+
+
+/* grid for elements */
+
+#loginPage > #logoG {
+grid-area: logoG;
+background-color: var(--main-background-color);
+border-left: var(--main-border);
+border-right: var(--main-border);
+border-top: var(--main-border);
+border-radius: var(--global-borderRadiusForContentTop);
+}
+
+#loginPage > #inp1G {
+grid-area: inp1G;
+background-color: var(--main-background-color);
+border-left: var(--main-border);
+border-right: var(--main-border);
+}
+
+#loginPage > #inp2G {
+grid-area: inp2G;
+background-color: var(--main-background-color);
+border-left: var(--main-border);
+border-right: var(--main-border);
+}
+
+#loginPage > #rmbrmebtnG{
+grid-area: rmbrmebtnG;
+background-color: var(--main-background-color);
+border-left: var(--main-border);
+border-right: var(--main-border);
+}
+
+#loginPage > #respmsgG {
+grid-area: respmsgG;
+background-color: var(--main-background-color);
+border-left: var(--main-border);
+border-right: var(--main-border);
+}
+
+#loginPage > #loginbtnG {
+grid-area: loginbtnG;
+background-color: var(--main-background-color);
+border-left: var(--main-border);
+border-right: var(--main-border);
+}
+
+#loginPage > #noaccbtnG {
+grid-area: noaccbtnG;
+background-color: var(--main-background-color);
+border-left: var(--main-border);
+border-right: var(--main-border);
+border-bottom: var(--main-border);
+border-radius: var(--global-borderRadiusForContentBottom);
+}
+
+/* content */
+
+#loginPage > #c1r1 {
+grid-area: c1r1;
+}
+
+#loginPage > #c2r1 {
+grid-area: c2r1;
+border-bottom: var(--main-border);
+}
+
+#c1r1, #c2r1{
+background-color: var(--main-themeColor);
+}
+
+#loginPage > #c1r2 {
+grid-area: c1r2;
+background-color: var(--main-background-color);
+border-left: var(--main-border);
+border-right: var(--main-border);
+}
+
+#loginPage > #c2r2 {
+grid-area: c2r2;
+background-color: var(--main-background-color);
+border-left: var(--main-border);
+border-right: var(--main-border);
+}
+
+#loginPage > #c3r2 {
+grid-area: c3r2;
+background-color: var(--main-background-color);
+border-left: var(--main-border);
+border-right: var(--main-border);
+}
+
+#loginPage > #c1r3 {
+    grid-area: c1r3;
+    border-top: var(--main-border);
+    }
+    
+    #loginPage > #c2r3 {
+    grid-area: c2r3;
+    }
+    
+    #c1r3, #c2r3 {
+    background-color: var(--main-themeColor);
+    }
+
+
+/* empty space */
+
+#loginPage > #e1r1 {
+grid-area: e1r1;
+}
+
+#loginPage > #e2r1 {
+grid-area: e2r1;
+}
+
+#loginPage > #e3r1 {
+grid-area: e3r1;
+}
+
+#loginPage > #e4r1 {
+grid-area: e4r1;
+}

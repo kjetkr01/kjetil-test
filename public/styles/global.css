@@ -31,3 +31,44 @@ text-decoration: none;
 --global-borderRadiusForContentBottom: 0 0 15px 15px;
 
 }
+
+a{
+font-family: Arial, Helvetica, sans-serif;
+color: var(--main-textColor);
+text-decoration: none;
+
+-webkit-touch-callout: none; /* iOS Safari */
+-webkit-user-select: none; /* Safari */
+-khtml-user-select: none; /* Konqueror HTML */
+-moz-user-select: none; /* Old versions of Firefox */
+-ms-user-select: none; /* Internet Explorer/Edge */
+user-select: none; /* Non-prefixed version, currently
+supported by Chrome, Edge, Opera and Firefox */
+}
+
+a:hover{
+color: rgb(0, 255, 170);              
+}
+
+/* for at table ser riktig ut */
+/*tr.separated td {
+border-bottom: 1px solid;
+padding-top: 15px;
+padding-bottom: 15px;
+}*/
+
+table {
+border-collapse: collapse;
+}
+
+th {
+position: sticky;
+top: 0;
+/*background-color: var(--main-background-color);*/
+}
+
+#rmbrmebtnG > #rmbrMeTxt{
+font-size: 18px;
+}
+
+/* slutt på table */

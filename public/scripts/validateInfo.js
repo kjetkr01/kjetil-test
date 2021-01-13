@@ -100,6 +100,9 @@ async function login(username, password, rmbrMe) {
 
                 if (resp.authToken) {
 
+                    localStorage.clear();
+                    sessionStorage.clear();
+
                     if (rmbrMe === true) {
                         localStorage.setItem("authToken", resp.authToken);
                         localStorage.setItem("user", JSON.stringify(resp.user));
