@@ -195,6 +195,8 @@ function displayLinks(dID) {
                             <a href=${accountURL}><img class="footerIcons" src="images/accountIcon.svg" alt="${accountName}"></a>
                             `;
 
+                        document.getElementById("footermenu").innerHTML = document.title;
+
                         documentID.innerHTML = htmlInfo;
                     }
 
