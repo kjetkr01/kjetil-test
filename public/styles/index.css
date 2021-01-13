@@ -101,6 +101,7 @@ text-align: center;
 color: var(--main-textColor);
 width: 100%;
 text-align: center;
+font-size: 16px;
 }
 
 /* for at table ser riktig ut */
@@ -108,7 +109,6 @@ tr.separated td {
 border-bottom: 1px solid;
 padding-top: 15px;
 padding-bottom: 15px;
-font-size: 16px;
 } 
 
 table {
@@ -177,7 +177,7 @@ text-align: center;
 /* content/middle */
 
 #usermsg1G > #usermsg1 {
-font-size: 22px;
+font-size: 26px;
 font-weight: bold;
 color: var(--main-textColor);
 margin: 10px;
@@ -185,7 +185,7 @@ margin-left: var(--global-margin-left);
 }
 
 #usermsg2G > #usermsg2 {
-font-size: 16px;
+font-size: 20px;
 color: var(--main-textColor);
 margin: 10px;
 margin-left: var(--global-margin-left);
@@ -195,7 +195,7 @@ margin-left: var(--global-margin-left);
 font-weight: bold;
 color: var(--main-textColor);
 width: 100%;
-font-size: 20px;
+font-size: 22px;
 text-align: center;
 }
 
@@ -203,6 +203,7 @@ text-align: center;
 color: var(--main-textColor);
 width: 100%;
 text-align: center;
+font-size: 22px;
 }
 
 /* for at table ser riktig ut */
@@ -210,7 +211,6 @@ tr.separated td {
 border-bottom: 1px solid;
 padding-top: 15px;
 padding-bottom: 15px;
-font-size: 16px;
 } 
 
 table {
@@ -228,14 +228,14 @@ background-color: var(--main-background-color);
 #gymtimeG > #gymtime {
 width: 100%;
 color: var(--main-textColor);
-font-size: 18px;
+font-size: 20px;
 text-align: center;
 }
 
 #gymtimesmallG > #gymtimesmall {
 width: 100%;
 color: var(--main-textColor);
-font-size: 14px;
+font-size: 16px;
 text-align: center;
 }
 
