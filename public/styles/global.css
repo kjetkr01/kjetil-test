@@ -74,5 +74,11 @@ font-size: 18px;
 /* slutt på table */
 
 input {
-    text-align: center;
+text-align: center;
+color: var(--main-textColor);
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+opacity: 1; /* Firefox */
+text-align: center;
 }

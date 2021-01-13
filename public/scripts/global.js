@@ -253,31 +253,33 @@ function displayLinks(dID) {
             } else {
 
                 if (getCurrentPage) {
-/*
+                    
+                    /*
                     switch (getCurrentPage) {
                         case accessURL:
                             htmlInfo = `
-                            <a href=${accessURL} draggable="false" style="margin-left:5px; margin-right:3.5vw; color:${activeColor};">${accessName}</a>
-                            <a href=${loginURL} draggable="false" style="margin-left:3.5vw; margin-right:5px;">${loginName}</a>
-                            `;
+                                <a href=${accessURL} draggable="false" style="margin-left:5px; margin-right:3.5vw; color:${activeColor};">${accessName}</a>
+                                <a href=${loginURL} draggable="false" style="margin-left:3.5vw; margin-right:5px;">${loginName}</a>
+                                `;
                             break;
                         case loginURL:
                             htmlInfo = `
-                            <a href=${accessURL} draggable="false" style="margin-left:5px; margin-right:3.5vw;">${accessName}</a>
-                            <a href=${loginURL} draggable="false" style="margin-left:3.5vw; margin-right:5px; color:${activeColor};">${loginName}</a>
-                            `;
+                                <a href=${accessURL} draggable="false" style="margin-left:5px; margin-right:3.5vw;">${accessName}</a>
+                                <a href=${loginURL} draggable="false" style="margin-left:3.5vw; margin-right:5px; color:${activeColor};">${loginName}</a>
+                                `;
                             break;
                         default:
                             htmlInfo = `
-                            <a href=${accessURL} draggable="false" style="margin-left:5px; margin-right:3.5vw;">${accessName}</a>
-                            <a href=${loginURL} draggable="false" style="margin-left:3.5vw; margin-right:5px;">${loginName}</a>
-                            `;
+                                <a href=${accessURL} draggable="false" style="margin-left:5px; margin-right:3.5vw;">${accessName}</a>
+                                <a href=${loginURL} draggable="false" style="margin-left:3.5vw; margin-right:5px;">${loginName}</a>
+                                `;
                             break;
-                    }*/
+                    }
+                    */
 
                     if (window.innerWidth < 769) {
                         footermenu.innerHTML = document.title;
-                    }else{
+                    } else {
                         footermenu.innerHTML = "";
                     }
 
