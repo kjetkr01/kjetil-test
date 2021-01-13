@@ -81,7 +81,7 @@
 
         <div id="rmbrmebtnG">
             <input id="rmbrMe" type="checkbox">
-            <p id="rmbrMeTxt">Husk meg</p>
+            <p id="rmbrMeTxt">Husk meg i 7 dager</p>
         </div>
 
         <div id="respmsgG">
@@ -97,8 +97,8 @@
         </div>
 
         <div id="noaccbtnG">
-            <p id="noaccbtn" onClick="location.href='access.html';">
-                Ingen konto? <strong>Be om tilgang</strong>
+            <p id="noaccbtn">
+                <a href="access.html" draggable="false">Ingen konto? <strong>Be om tilgang</strong></a>
             </p>
         </div>
 
@@ -116,6 +116,8 @@
 
 <script>
 
+    displayLinks("links");
+
     addEventListener("keypress", function (evt) {
 
         if (evt.keyCode === 13) {
@@ -123,8 +125,6 @@
         }
 
     });
-
-    displayLinks("links");
 
     async function loginUser() {
 

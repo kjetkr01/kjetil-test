@@ -7,8 +7,11 @@ let userDisplayname, showGymCloseTime;
 let lastUpdatedTime = new Date();
 lastUpdatedTime = lastUpdatedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+const errorText = "Det har oppstått en feil!";
 const loadingText = "Laster...";
 const errorLoadingText = "Kunne ikke laste inn innholdet.";
+
+const activeColor = "rgb(0, 255, 170)";
 
 //
 
@@ -116,7 +119,7 @@ async function callServerAPI(body, url) {
     const data = await response.json();
     //console.log(response.status);
 
-    if (response.status === 200) {
+    if (response.status === 200 || data === "Brukernavnet er opptatt!") {
         return data;
     } else {
         console.log("not returning data, recieved status:" + response.status)
@@ -154,8 +157,6 @@ function displayLinks(dID) {
             savedWidth = window.innerWidth;
 
             currentdID = dID;
-
-            const activeColor = "rgb(0, 255, 170)";
 
             let htmlInfo = "";
 

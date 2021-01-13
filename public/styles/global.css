@@ -1,6 +1,7 @@
 *{
 margin: 0;
 padding: 0;
+font-family: Arial, Helvetica, sans-serif;
 }
 
 body{
@@ -10,9 +11,6 @@ url(../images/background-smallBlur.png);
 background-size: cover;
 background-repeat: no-repeat;
 background-attachment: fixed;
-
-font-family: Arial, Helvetica, sans-serif;
-color: white;
 text-decoration: none;
 }
 
@@ -33,9 +31,9 @@ text-decoration: none;
 }
 
 a{
-font-family: Arial, Helvetica, sans-serif;
 color: var(--main-textColor);
 text-decoration: none;
+transition-duration: 0.4s; 
 
 -webkit-touch-callout: none; /* iOS Safari */
 -webkit-user-select: none; /* Safari */
@@ -47,7 +45,7 @@ supported by Chrome, Edge, Opera and Firefox */
 }
 
 a:hover{
-color: rgb(0, 255, 170);              
+color: rgb(0, 255, 170); 
 }
 
 /* for at table ser riktig ut */
@@ -81,4 +79,12 @@ color: var(--main-textColor);
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
 opacity: 1; /* Firefox */
 text-align: center;
+}
+
+.footerIcons{
+-webkit-filter: invert(1);
+filter: invert(1);
+image-rendering: auto;
+max-height: 32px;
+max-width: 32px;
 }

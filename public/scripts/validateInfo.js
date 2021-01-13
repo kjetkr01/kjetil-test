@@ -50,10 +50,11 @@ async function validate(displayname, username, password, confirmpassword) {
                         const url = `/access`;
 
                         const resp = await callServerAPI(body, url);
+                        
                         if (resp) {
                             message = resp;//"godkjent";
                         } else {
-                            message = "En feil har oppstått!";
+                            message = errorText;
                         }
 
                     } else {

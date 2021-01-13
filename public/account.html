@@ -212,19 +212,19 @@
          document.getElementById("buttons").innerHTML = "";
 
          if (current === "lifts") {
-            document.getElementById("buttons").innerHTML += `<button style='color:red;' onClick="changeInfoDivContent('lifts')">Løft</button>`;
+            document.getElementById("buttons").innerHTML += `<button style='color:${activeColor};' onClick="changeInfoDivContent('lifts')">Løft</button>`;
          } else {
             document.getElementById("buttons").innerHTML += `<button onClick="changeInfoDivContent('lifts')">Løft</button>`;
          }
 
          if (current === "goal") {
-            document.getElementById("buttons").innerHTML += `<button style='color:red;' onClick="changeInfoDivContent('goal')">Mål</button>`;
+            document.getElementById("buttons").innerHTML += `<button style='color:${activeColor};' onClick="changeInfoDivContent('goal')">Mål</button>`;
          } else {
             document.getElementById("buttons").innerHTML += `<button onClick="changeInfoDivContent('goal')">Mål</button>`;
          }
 
          if (current === "plan") {
-            document.getElementById("buttons").innerHTML += `<button style='color:red;' onClick="changeInfoDivContent('plan')">Treningsplan</button>`;
+            document.getElementById("buttons").innerHTML += `<button style='color:${activeColor};' onClick="changeInfoDivContent('plan')">Treningsplan</button>`;
          } else {
             document.getElementById("buttons").innerHTML += `<button onClick="changeInfoDivContent('plan')">Treningsplan</button>`;
          }
@@ -253,7 +253,7 @@
             }
 
             if (current === "requests") {
-               document.getElementById("buttons").innerHTML += `<button style='color:red;' onClick="changeInfoDivContent('requests')">${btnTxt}</button>`;
+               document.getElementById("buttons").innerHTML += `<button style='color:${activeColor};' onClick="changeInfoDivContent('requests')">${btnTxt}</button>`;
             } else {
                document.getElementById("buttons").innerHTML += `<button onClick="changeInfoDivContent('requests')">${btnTxt}</button>`;
             }
@@ -265,7 +265,7 @@
             let btnTxt = "API Key";
 
             if (current === "apikey") {
-               document.getElementById("buttons").innerHTML += `<button style='color:red;' onClick="changeInfoDivContent('apikey')">${btnTxt}</button>`;
+               document.getElementById("buttons").innerHTML += `<button style='color:${activeColor};' onClick="changeInfoDivContent('apikey')">${btnTxt}</button>`;
             } else {
                document.getElementById("buttons").innerHTML += `<button onClick="changeInfoDivContent('apikey')">${btnTxt}</button>`;
             }
