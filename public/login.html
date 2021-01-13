@@ -133,6 +133,14 @@
 
 <script>
 
+    addEventListener("keypress", function(evt){
+
+        if(evt.keyCode === 13){
+            loginUser();
+        }
+
+    });
+
     displayLinks("links");
 
     async function loginUser() {

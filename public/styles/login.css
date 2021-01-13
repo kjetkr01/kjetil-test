@@ -1,6 +1,5 @@
 * {
 color: var(--main-textColor);
-text-align: center;
 }
 
 /*template:
@@ -35,14 +34,26 @@ grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1"
 "Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu"
 "c2r3 c2r3 c2r3 c2r3 c2r3";
 
-grid-template-rows: 3vh auto 3vh 1fr 20% 2.5% 5% 2.5% 5% 2.5% 5% 5% 45px 7.5% 1fr 3vh auto 3vh; /*nedover*/
-grid-template-columns: 25px 1fr 1fr 1fr 25px; /*bortover*/
+grid-template-rows: 3vh auto 3vh 15px 1fr 5px 5% 25px 5% 25px 60px 5% 45px 7.5% 15px 3vh auto 3vh; /*nedover*/
+grid-template-columns: 15px 1fr 1fr 1fr 15px; /*bortover*/
 }
 
 /* elements */
 
+/* mobile query */
+
+@media only screen and (max-width: 768px) {
+
+    .footerIcons{
+        -webkit-filter: invert(1);
+        filter: invert(1);
+        image-rendering: auto;
+        max-height: 32px;
+        max-width: 32px;
+        }
+
 #loginPage > #Glinks {
-grid-area: Glinks;
+grid-area: Gfootermenu;
 background-color: var(--main-themeColor);
 }
 
@@ -62,7 +73,7 @@ image-rendering: auto;
 }
 
 #inp1G > #inp1, #inp2 {
-    font-size: 18px;
+font-size: 18px;
 width: 70%;
 height: 90%;
 border: var(--main-border);
@@ -72,16 +83,16 @@ background-color: var(--main-themeColor);
 }
 
 #loginPage > #Gfootermenu {
-    grid-area: Gfootermenu;
-    background-color: var(--main-themeColor);
-    }
-    
-    #Gfootermenu > #footermenu {
-    color: var(--main-textColor);
-    font-size: 30px;
-    margin-left: 25px;
-    font-weight: bold;
-    }
+grid-area: Glinks;
+background-color: var(--main-themeColor);
+}
+
+#Gfootermenu > #footermenu {
+color: var(--main-textColor);
+font-size: 30px;
+margin-left: 25px;
+font-weight: bold;
+}
 
 /*
 #inp2G > #inp2 {
@@ -99,7 +110,6 @@ text-align: center;
 cursor: pointer;
 height: 17.5px;
 width: 17.5px;
-
 }
 
 #respmsgG > #respmsg {
@@ -121,6 +131,94 @@ cursor: pointer;
 font-size: 18px;
 }
 
+}
+
+/* desktop query */
+
+@media only screen and (min-width: 769px) {
+
+    #loginPage > #Glinks {
+    grid-area: Glinks;
+    background-color: var(--main-themeColor);
+    }
+    
+    #Glinks > #links {
+    color: var(--main-textColor);
+    font-size: 18px;
+    width: 100%;
+    text-align: center;
+    }
+    
+    #logoG > #logo {
+    margin-top: 15px;
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    image-rendering: auto;
+    }
+    
+    #inp1G > #inp1, #inp2 {
+    font-size: 18px;
+    width: 70%;
+    height: 90%;
+    border: var(--main-border);
+    border-radius: 5px;
+    background-color: var(--main-themeColor);
+    
+    }
+    
+    #loginPage > #Gfootermenu {
+    grid-area: Gfootermenu;
+    background-color: var(--main-themeColor);
+    }
+    
+    #Gfootermenu > #footermenu {
+    color: var(--main-textColor);
+    font-size: 30px;
+    margin-left: 25px;
+    font-weight: bold;
+    }
+    
+    /*
+    #inp2G > #inp2 {
+    
+    }
+    */
+    
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: var(--main-textColor);
+    opacity: 1; /* Firefox */
+    text-align: center;
+    }
+    
+    #rmbrmebtnG > #rmbrMe {
+    cursor: pointer;
+    height: 17.5px;
+    width: 17.5px;
+    
+    }
+    
+    #respmsgG > #respmsg {
+    font-size: 18px;
+    }
+    
+    #loginbtnG > #loginbtn {
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 5px;
+    border: var(--main-border);
+    border-radius: 5px;
+    background-color: var(--main-themeColor);
+    }
+    
+    #noaccbtnG > #noaccbtn {
+    cursor: pointer;
+    font-size: 18px;
+    }
+    
+    }
+
 
 /* grid for elements */
 
@@ -138,6 +236,7 @@ grid-area: inp1G;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
 border-right: var(--main-border);
+text-align: center;
 }
 
 #loginPage > #inp2G {
@@ -145,6 +244,7 @@ grid-area: inp2G;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
 border-right: var(--main-border);
+text-align: center;
 }
 
 #loginPage > #rmbrmebtnG{
@@ -152,6 +252,7 @@ grid-area: rmbrmebtnG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
 border-right: var(--main-border);
+text-align: center;
 }
 
 #loginPage > #respmsgG {
@@ -159,6 +260,7 @@ grid-area: respmsgG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
 border-right: var(--main-border);
+text-align: center;
 }
 
 #loginPage > #loginbtnG {
@@ -166,6 +268,7 @@ grid-area: loginbtnG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
 border-right: var(--main-border);
+text-align: center;
 }
 
 #loginPage > #noaccbtnG {
@@ -175,6 +278,7 @@ border-left: var(--main-border);
 border-right: var(--main-border);
 border-bottom: var(--main-border);
 border-radius: var(--global-borderRadiusForContentBottom);
+text-align: center;
 }
 
 /* content */
@@ -214,17 +318,17 @@ border-right: var(--main-border);
 }
 
 #loginPage > #c1r3 {
-    grid-area: c1r3;
-    border-top: var(--main-border);
-    }
-    
-    #loginPage > #c2r3 {
-    grid-area: c2r3;
-    }
-    
-    #c1r3, #c2r3 {
-    background-color: var(--main-themeColor);
-    }
+grid-area: c1r3;
+border-top: var(--main-border);
+}
+
+#loginPage > #c2r3 {
+grid-area: c2r3;
+}
+
+#c1r3, #c2r3 {
+background-color: var(--main-themeColor);
+}
 
 
 /* empty space */

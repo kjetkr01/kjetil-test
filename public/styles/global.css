@@ -72,3 +72,7 @@ font-size: 18px;
 }
 
 /* slutt på table */
+
+input {
+    text-align: center;
+}

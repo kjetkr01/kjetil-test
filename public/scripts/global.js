@@ -275,6 +275,12 @@ function displayLinks(dID) {
                             break;
                     }
 
+                    if (window.innerWidth < 769) {
+                        footermenu.innerHTML = document.title;
+                    }else{
+                        footermenu.innerHTML = "";
+                    }
+
                     documentID.innerHTML = htmlInfo;
 
                 }
