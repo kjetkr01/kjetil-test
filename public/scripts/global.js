@@ -253,7 +253,7 @@ function displayLinks(dID) {
             } else {
 
                 if (getCurrentPage) {
-
+/*
                     switch (getCurrentPage) {
                         case accessURL:
                             htmlInfo = `
@@ -273,7 +273,7 @@ function displayLinks(dID) {
                             <a href=${loginURL} draggable="false" style="margin-left:3.5vw; margin-right:5px;">${loginName}</a>
                             `;
                             break;
-                    }
+                    }*/
 
                     if (window.innerWidth < 769) {
                         footermenu.innerHTML = document.title;
