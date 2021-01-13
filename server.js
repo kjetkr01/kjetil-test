@@ -341,7 +341,9 @@ server.post("/validate", auth, async (req, res) => {
 server.get("/api", function (req, res) {
      const resp = [
           "/getWorkoutInfo/:user/:key",
-          "/api"
+          "Kommer snart:",
+          "hent benk, knebøy, markløft + totalen / og / eller lifts (maks 3? / kan velge)",
+          "hent mål i ulike løft (maks 3? / kan velge)",
      ];
      res.status(200).json(resp).end();
 });

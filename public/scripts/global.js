@@ -7,6 +7,9 @@ let userDisplayname, showGymCloseTime;
 let lastUpdatedTime = new Date();
 lastUpdatedTime = lastUpdatedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+const loadingText = "Laster...";
+const errorLoadingText = "Kunne ikke laste inn innholdet.";
+
 //
 
 // fixed global variables
