@@ -47,7 +47,7 @@ text-decoration: none;
 -moz-user-select: none; /* Old versions of Firefox */
 -ms-user-select: none; /* Internet Explorer/Edge */
 user-select: none; /* Non-prefixed version, currently
-    supported by Chrome, Edge, Opera and Firefox */
+supported by Chrome, Edge, Opera and Firefox */
 }
 
 a:hover{
@@ -113,11 +113,11 @@ font-size: 16px;
 }
 
 /* for at table ser riktig ut */
-tr.separated td {
+/*tr.separated td {
 border-bottom: 1px solid;
 padding-top: 15px;
 padding-bottom: 15px;
-} 
+}*/
 
 table {
 border-collapse: collapse;
@@ -215,11 +215,11 @@ font-size: 22px;
 }
 
 /* for at table ser riktig ut */
-tr.separated td {
+/*tr.separated td {
 border-bottom: 1px solid;
 padding-top: 15px;
 padding-bottom: 15px;
-} 
+}*/
 
 table {
 border-collapse: collapse;
@@ -296,7 +296,7 @@ border-right: var(--main-border);
 #homePage > #boardG {
 grid-area: boardG;
 background-color: var(--main-background-color);
-overflow-y: scroll;
+overflow-y: auto;
 min-height: 50px;
 }
 
