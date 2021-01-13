@@ -86,6 +86,7 @@ width: 17.5px;
 
 #respmsgG > #respmsg {
 font-size: 18px;
+color: var(--main-textColor);
 }
 
 #loginbtnG > #loginbtn {
@@ -160,6 +161,7 @@ width: 17.5px;
 
 #respmsgG > #respmsg {
 font-size: 18px;
+color: var(--main-textColor);
 }
 
 #loginbtnG > #loginbtn {

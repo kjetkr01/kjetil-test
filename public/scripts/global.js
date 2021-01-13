@@ -119,7 +119,7 @@ async function callServerAPI(body, url) {
     const data = await response.json();
     //console.log(response.status);
 
-    if (response.status === 200 || data === "Brukernavnet er opptatt!") {
+    if (response.status === 200 || data.includes("opptatt") || data.includes("privat")) {
         return data;
     } else {
         console.log("not returning data, recieved status:" + response.status)
@@ -312,6 +312,12 @@ function redirectToLogin() {
 function redirectToHome() {
 
     location.href = "index.html";
+
+}
+
+function redirectToLeaderboards() {
+
+    location.href = "leaderboards.html";
 
 }
 

@@ -134,71 +134,71 @@
 
 <script>
 
-      displayLinks("links");
+   displayLinks("links");
 
-      isGymOpenUpdater();
-      function isGymOpenUpdater() {
+   isGymOpenUpdater();
+   function isGymOpenUpdater() {
 
-         const gymopen = isGymOpen();
-         if (gymopen) {
-            document.getElementById("gymtime").innerHTML = gymopen.message;
-            document.getElementById("gymtimesmall").innerHTML = gymopen.timeLeft;
+      const gymopen = isGymOpen();
+      if (gymopen) {
+         document.getElementById("gymtime").innerHTML = gymopen.message;
+         document.getElementById("gymtimesmall").innerHTML = gymopen.timeLeft;
 
-            setTimeout(isGymOpenUpdater, 30000);
-         }
+         setTimeout(isGymOpenUpdater, 30000);
+      }
+   }
+
+   const partofdaymsg = partOfDayMessage(userDisplayname);
+   if (partofdaymsg) {
+      document.getElementById("usermsg1").innerHTML = partofdaymsg
+   }
+
+   checkTrainingSplit();
+   async function checkTrainingSplit() {
+
+      document.getElementById("usermsg2").innerHTML = loadingText;
+
+      const resp = await whatToTrainToday();
+
+      if (resp.length > 0) {
+         document.getElementById("usermsg2").innerHTML = resp;
+      } else {
+         document.getElementById("usermsg2").innerHTML = errorLoadingText;
       }
 
-      const partofdaymsg = partOfDayMessage(userDisplayname);
-      if (partofdaymsg) {
-         document.getElementById("usermsg1").innerHTML = partofdaymsg
-      }
+   }
 
-      checkTrainingSplit();
-      async function checkTrainingSplit() {
+   checkWhoIsWorkingOutToday();
+   async function checkWhoIsWorkingOutToday() {
 
-         document.getElementById("usermsg2").innerHTML = loadingText;
+      const board = document.getElementById("board");
+      const usermsg3 = document.getElementById("usermsg3");
 
-         const resp = await whatToTrainToday();
+      usermsg3.innerHTML = loadingText;
 
-         if (resp.length > 0) {
-            document.getElementById("usermsg2").innerHTML = resp;
-         } else {
-            document.getElementById("usermsg2").innerHTML = errorLoadingText;
-         }
+      const resp = await whoIsWorkingOutToday();
 
-      }
+      if (Object.entries(resp).length > 0) {
+         usermsg3.innerHTML = `I dag trener ${Object.entries(resp).length} personer!`;
 
-      checkWhoIsWorkingOutToday();
-      async function checkWhoIsWorkingOutToday() {
-
-         const board = document.getElementById("board");
-         const usermsg3 = document.getElementById("usermsg3");
-
-         usermsg3.innerHTML = loadingText;
-
-         const resp = await whoIsWorkingOutToday();
-
-         if (Object.entries(resp).length > 0) {
-            usermsg3.innerHTML = `I dag trener ${Object.entries(resp).length} personer!`;
-
-            board.innerHTML = `
+         board.innerHTML = `
         <tr>
         <th>Navn</th>
         <th>Trener</th>
         </tr>`;
 
-            for (let i = 0; i < Object.entries(resp).length; i++) {
-               board.innerHTML += `
+         for (let i = 0; i < Object.entries(resp).length; i++) {
+            board.innerHTML += `
         <tr>
         <td>${resp[i].userFullName}</td>
         <td>${resp[i].todaysWorkout}</td>
         </tr>`;
-            }
-         } else {
-            usermsg3.innerHTML = `I dag er det ingen som trener!`;
          }
-
+      } else {
+         usermsg3.innerHTML = `I dag er det ingen som trener!`;
       }
+
+   }
 
 </script>
 

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Ledertavler</title>
+
+   <meta charset="utf-8" />
+
+   <!-- manifest -->
+
+   <link rel="manifest" href="manifest.json">
+
+   <meta name="mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="application-name" content="Treningsstatestikk">
+   <meta name="apple-mobile-web-app-title" content="Treningsstatestikk">
+   <meta name="msapplication-starturl" content="/">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+   <link rel="icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+   <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+
+   <!-- -->
+
+   <script src="scripts/global.js" type="text/javascript"></script>
+   <script src="scripts/validateInfo.js" type="text/javascript"></script>
+   <script src="scripts/script.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+   <p id="usersBtn"></p>
+
+</body>
+
+<script>
+
+   document.getElementById("usersBtn").innerHTML = `<button onClick='redirectToUsers();'>Liste med brukere</button>`;
+
+</script>
+
+</html>
