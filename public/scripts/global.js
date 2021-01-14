@@ -346,8 +346,6 @@ async function getUpdatedUserObject(returnInfo, myUsername) {
 
             if (returnInfo === true) {
                 return resp;
-            }else{
-                location.reload();
             }
 
         } else {
