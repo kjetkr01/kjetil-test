@@ -85,8 +85,8 @@ font-size: 16px;
 }
 
 #usernameAndWorkout{
-    background: transparent;
-    border: none !important;
+background: transparent;
+border: none !important;
 color: var(--main-textColor);
 font-size: 16px;
 }
@@ -180,8 +180,8 @@ font-size: 22px;
 }
 
 #usernameAndWorkout{
-    background: transparent;
-    border: none !important;
+background: transparent;
+border: none !important;
 color: var(--main-textColor);
 font-size: 18px;
 }
