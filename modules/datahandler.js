@@ -99,6 +99,45 @@ class StorageHandler {
 
     //
 
+    //  -------------------------------  get a list of all leaderboard users in application  ------------------------------- //
+
+    async getListOfLeaderboardsUsers(numbersOnly) {
+        const client = new pg.Client(this.credentials);
+        let results = null;
+        try {
+            await client.connect();
+            // evt legge til lifts og andre ting brukeren trenger å motta
+
+            results = await client.query('SELECT "id","username","displayname","settings" FROM "public"."users"');
+
+            let counter = 1;
+            let info = {};
+
+            for (let i = 0; i < results.rows.length; i++) {
+                if (results.rows[i].settings.displayLeaderboards.value === true) {
+                    // evt legge til løft osv?
+                    info[counter] = { "username": results.rows[i].username };
+                    counter++;
+                }
+            }
+
+            if (numbersOnly === true) {
+                results = Object.entries(info).length;
+            } else {
+                results = await client.query('SELECT "id","username","displayname" FROM "public"."users"');
+                results = (results.rows.length > 0) ? results.rows : null;
+            }
+
+            client.end();
+        } catch (err) {
+            console.log(err);
+        }
+
+        return results;
+    }
+
+    //
+
     //  -------------------------------  get a list of all pending users in application  ------------------------------- //
 
     async getListOfPendingUsers(username, onlyNumbers) {

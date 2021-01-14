@@ -39,53 +39,53 @@
 
 <script>
 
-        getListOfAllUsers();
-        async function getListOfAllUsers() {
+    getListOfAllUsers();
+    async function getListOfAllUsers() {
 
-            if (token && user) {
+        if (token && user) {
 
-                const body = { "authToken": token, "userInfo": user };
-                const url = `/users/list/all`;
+            const body = { "authToken": token, "userInfo": user };
+            const url = `/users/list/all`;
 
-                document.getElementById("ListOfAllUsersDiv").innerHTML = loadingText;
+            document.getElementById("ListOfAllUsersDiv").innerHTML = loadingText;
 
-                const resp = await callServerAPI(body, url);
+            const resp = await callServerAPI(body, url);
 
-                const getListOfAllUsersDiv = document.getElementById("ListOfAllUsersDiv");
+            const getListOfAllUsersDiv = document.getElementById("ListOfAllUsersDiv");
 
-                getListOfAllUsersDiv.innerHTML = "";
+            getListOfAllUsersDiv.innerHTML = "";
 
-                if (resp && resp[0]) {
+            if (resp && resp[0]) {
 
-                    if (resp[0].username) {
+                if (resp[0].username) {
 
-                        for (let i = 0; i < resp.length; i++) {
-                            getListOfAllUsersDiv.innerHTML += `<div onClick="viewUser('${resp[i].username}')">
+                    for (let i = 0; i < resp.length; i++) {
+                        getListOfAllUsersDiv.innerHTML += `<div onClick="viewUser('${resp[i].username}')">
                     ${resp[i].username}
                     </div>`;
-                        }
-
-                        getListOfAllUsersDiv.innerHTML += "Totalt " + resp.length + " brukere!";
-
-                    }else{
-                        getListOfAllUsersDiv.innerHTML += errorLoadingText;
                     }
 
+                    getListOfAllUsersDiv.innerHTML += "Totalt " + resp.length + " brukere!";
+
                 } else {
-                    getListOfAllUsersDiv.innerHTML += "Det er ingen brukere!";
+                    getListOfAllUsersDiv.innerHTML += errorLoadingText;
                 }
 
-            }
-        }
-
-        function viewUser(viewUser) {
-
-            if (viewUser) {
-                sessionStorage.setItem("ViewingUser", viewUser);
-                redirectToUser();
+            } else {
+                getListOfAllUsersDiv.innerHTML += "Det er ingen brukere!";
             }
 
         }
+    }
+
+    function viewUser(viewUser) {
+
+        if (viewUser) {
+            sessionStorage.setItem("ViewingUser", viewUser);
+            redirectToUser();
+        }
+
+    }
 
 </script>
 
