@@ -10,6 +10,7 @@ grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
 "e2r1 e1r2 e1r2 e1r2 e1r2 e1r2 e4r1"
 
 "e2r1 e2r2 c1r2 c1r2 c1r2 e4r2 e4r1"
+"e2r1 e2r2 backBtnG backBtnG backBtnG e4r2 e4r1"
 "e2r1 e2r2 usermsg1G usermsg1G usermsg1G e4r2 e4r1"
 "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
 "e2r1 e2r2 c3r2 listG c4r2 e4r2 e4r1"
@@ -24,7 +25,7 @@ grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
 "c2r3 c2r3 c2r3 c2r3 c2r3 c2r3 c2r3";
 
 /* gammel: 25px 30px 30px 15px 1fr 10px 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 20px 30px 40px */
-grid-template-rows: var(--global-headerRows) 15px 20px 60px 1fr 1fr 1fr 40px 15px 15px var(--global-footerRows); /*nedover*/
+grid-template-rows: var(--global-headerRows) 15px 20px 30px 60px 30px 1fr 30px 40px 15px 15px var(--global-footerRows); /*nedover*/
 grid-template-columns: 5px 10px 30px 1fr 30px 10px 5px; /*bortover*/
 }
 
@@ -47,6 +48,13 @@ text-align: center;
 }
 
 /* content/middle */
+
+#backBtnG > #backBtn {
+    color: var(--main-textColor);
+font-size: 12x;
+width: 100%;
+text-align: center;
+}
 
 #usermsg1G > #usermsg1 {
 color: var(--main-textColor);
@@ -120,6 +128,13 @@ text-align: center;
 
 /* content/middle */
 
+#backBtnG > #backBtn {
+    color: var(--main-textColor);
+font-size: 12x;
+width: 100%;
+text-align: center;
+}
+
 #usermsg1G > #usermsg1 {
 color: var(--main-textColor);
 font-size: 24px;
@@ -170,6 +185,14 @@ text-align: center;
 /* */
 
 /* grid for elements */
+
+#page > #backBtnG {
+    grid-area: backBtnG;
+    background-color: var(--main-background-color);
+    border-left: var(--main-border);
+    border-right: var(--main-border);
+    padding: 7.5px;
+    }
 
 #page > #usermsg1G {
 min-height: 30px;
