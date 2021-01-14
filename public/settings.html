@@ -62,21 +62,12 @@
 
       if (token && user) {
 
-         const body = { "authToken": token, "userInfo": user, "viewingUser": myUsername };
-         const url = `/user/details/settingsInfo`;
-
-         const resp = await callServerAPI(body, url);
+         const resp = await getUpdatedUserObject(true, myUsername);
 
          if (resp.settings && resp.userInfo) {
             info = resp;
-
-            if (localStorage.getItem("user")) {
-               localStorage.setItem("user", JSON.stringify(resp.userInfo));
-            } else {
-               sessionStorage.setItem("user", JSON.stringify(resp.userInfo));
-            }
-
             displayInformation();
+
          } else {
             alert("Feil, prøv igjen");
             redirectToHome();

@@ -21,6 +21,13 @@ if (user) {
     try {
 
         userDisplayname = JSON.parse(user);
+
+        if (!sessionStorage.getItem("updated")) {
+            console.log("updating user object");
+            getUpdatedUserObject(false, userDisplayname.username);
+            hasUpdatedInfo = true;
+        }
+
         showGymCloseTime = userDisplayname.showGymCloseTime;
         preferredColorTheme = userDisplayname.preferredColorTheme;
 
@@ -309,6 +316,41 @@ function checkColorTheme() {
             if (preferredColorTheme === "light" || preferredColorTheme === "dark") {
                 document.body.className = preferredColorTheme;
             }
+        }
+    }
+}
+
+//
+
+// get new updated user object
+async function getUpdatedUserObject(returnInfo, myUsername) {
+
+    if (token && user && myUsername) {
+
+        const body = { "authToken": token, "userInfo": user, "viewingUser": myUsername };
+        const url = `/user/details/settingsInfo`;
+
+        const resp = await callServerAPI(body, url);
+
+        if (resp.settings && resp.userInfo) {
+
+            if (localStorage.getItem("user")) {
+                localStorage.setItem("user", JSON.stringify(resp.userInfo));
+            } else {
+                sessionStorage.setItem("user", JSON.stringify(resp.userInfo));
+            }
+
+            const today = new Date();
+            const updatedTxt = today.toLocaleDateString() || true;
+            sessionStorage.setItem("updated", updatedTxt);
+
+            if (returnInfo === true) {
+                return resp;
+            }
+
+        } else {
+            alert("Feil, prøv igjen");
+            redirectToHome();
         }
     }
 }
