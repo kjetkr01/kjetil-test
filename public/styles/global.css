@@ -149,11 +149,6 @@ width: 25% ;
 /*background-color: var(--main-background-color);*/
 }
 
-#tdUsernameAndWorkout:hover {
-cursor: pointer;
-color: var(--main-hoverColor);
-}
-
 #rmbrmebtnG > #rmbrMeTxt{
 font-size: 18px;
 }

@@ -199,11 +199,20 @@
                shortenedFullName += `${splitFullName[j][0]}.`;
             }
 
-            board.innerHTML += `
+            /*board.innerHTML += `
             <div style="padding-bottom:15px;">
             <tr>
             <td id="tdUsernameAndWorkout" onClick="viewUser('${resp[i].username}')">${shortenedFullName}</td>
             <td id="tdUsernameAndWorkout" onClick="viewUser('${resp[i].username}')">${resp[i].todaysWorkout}</td>
+            </tr>
+            </div>
+            `;*/
+
+            board.innerHTML += `
+            <div style="padding-bottom:15px;">
+            <tr>
+            <td><button id="usernameAndWorkout" onClick="viewUser('${resp[i].username}')">${shortenedFullName}</button></td>
+            <td><button id="usernameAndWorkout" onClick="viewUser('${resp[i].username}')">${resp[i].todaysWorkout}</button></td>
             </tr>
             </div>
             `;
