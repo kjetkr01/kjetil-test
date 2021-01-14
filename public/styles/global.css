@@ -68,7 +68,7 @@ background-image: var(--darkMode-backgroundImage);
 
 }
 
-.darkMode {
+.dark {
     --main-themeColor:  var(--darkMode-themeColor);
 --main-background-color: var(--darkMode-background-color);
 --main-textColor: var(--darkMode-textColor);
@@ -94,7 +94,7 @@ background-image: var(--lightMode-backgroundImage);
 
 }
 
-.lightMode {
+.light {
     --main-themeColor:  var(--lightMode-themeColor);
 --main-background-color: var(--lightMode-background-color);
 --main-textColor: var(--lightMode-textColor);

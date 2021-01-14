@@ -2,7 +2,7 @@
 https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 */
 
-#homePage {
+#page {
 display: grid;
 width: 100vw;
 height: 100vh;
@@ -40,7 +40,7 @@ grid-template-columns: 5px 10px 30px 1fr 30px 10px 5px; /*bortover*/
 
 /* header */
 
-#homePage > #Glinks {
+#page > #Glinks {
 grid-area: Gfootermenu;
 background-color: var(--main-themeColor);
 }
@@ -100,7 +100,7 @@ text-align: center;
 
 /* footer */
 
-#homePage > #Gfootermenu {
+#page > #Gfootermenu {
 grid-area: Glinks;
 background-color: var(--main-themeColor);
 }
@@ -123,7 +123,7 @@ font-weight: bold;
 
 /* header */
 
-#homePage > #Glinks {
+#page > #Glinks {
 grid-area: Glinks;
 background-color: var(--main-themeColor);
 }
@@ -183,7 +183,7 @@ text-align: center;
 
 /* footer */
 
-#homePage > #Gfootermenu {
+#page > #Gfootermenu {
 grid-area: Gfootermenu;
 background-color: var(--main-themeColor);
 }
@@ -199,7 +199,7 @@ text-align: center;
 
 /* grid for elements */
 
-#homePage > #usermsg1G {
+#page > #usermsg1G {
 min-height: 30px;
 grid-area: usermsg1G;
 background-color: var(--main-background-color);
@@ -210,7 +210,7 @@ border-radius: var(--global-borderRadiusForContentTop);
 padding: 7.5px;
 }
 
-#homePage > #usermsg2G {
+#page > #usermsg2G {
 min-height: 20px;
 grid-area: usermsg2G;
 background-color: var(--main-background-color);
@@ -219,7 +219,7 @@ border-right: var(--main-border);
 padding: 7.5px;
 }
 
-#homePage > #usermsg3G {
+#page > #usermsg3G {
 min-height: 30px;
 grid-area: usermsg3G;
 background-color: var(--main-background-color);
@@ -227,14 +227,14 @@ border-left: var(--main-border);
 border-right: var(--main-border);
 }
 
-#homePage > #boardG {
+#page > #boardG {
 grid-area: boardG;
 background-color: var(--main-background-color);
 overflow-y: auto;
 min-height: 50px;
 }
 
-#homePage > #gymtimeG {
+#page > #gymtimeG {
 min-height: 30px;
 grid-area: gymtimeG;
 background-color: var(--main-background-color);
@@ -242,7 +242,7 @@ border-left: var(--main-border);
 border-right: var(--main-border);
 }
 
-#homePage > #gymtimesmallG {
+#page > #gymtimesmallG {
 min-height: 30px;
 grid-area: gymtimesmallG;
 background-color: var(--main-background-color);
@@ -258,37 +258,37 @@ border-radius: var(--global-borderRadiusForContentBottom);
 
 /*empty space padding*/
 
-#homePage > #e1r1 {
+#page > #e1r1 {
 grid-area: e1r1;
 }
 
-#homePage > #e2r1 {
+#page > #e2r1 {
 grid-area: e2r1;
 }
 
-#homePage > #e3r1 {
+#page > #e3r1 {
 grid-area: e3r1;
 }
 
-#homePage > #e4r1 {
+#page > #e4r1 {
 grid-area: e4r1;
 }
 
 /**/
 
-#homePage > #e1r2 {
+#page > #e1r2 {
 grid-area: e1r2;
 }
 
-#homePage > #e2r2 {
+#page > #e2r2 {
 grid-area: e2r2;
 }
 
-#homePage > #e3r2 {
+#page > #e3r2 {
 grid-area: e3r2;
 }
 
-#homePage > #e4r2 {
+#page > #e4r2 {
 grid-area: e4r2;
 }
 
@@ -298,16 +298,16 @@ grid-area: e4r2;
 
 /* header */
 
-#homePage > #c1r1 {
+#page > #c1r1 {
 grid-area: c1r1;
 }
 
-#homePage > #c2r1 {
+#page > #c2r1 {
 grid-area: c2r1;
 border-bottom: var(--main-border);
 }
 
-#homePage > #c5r1 {
+#page > #c5r1 {
 grid-area: c5r1;
 border-bottom: var(--main-border);
 }
@@ -318,13 +318,13 @@ background-color: var(--main-themeColor);
 
 /* content/middle */
 
-#homePage > #c1r2 {
+#page > #c1r2 {
 grid-area: c1r2;
 border-left: var(--main-border);
 border-right: var(--main-border);
 }
 
-#homePage > #c2r2 {
+#page > #c2r2 {
 min-height: 25px;
 grid-area: c2r2;
 border-left: var(--main-border);
@@ -332,17 +332,17 @@ border-right: var(--main-border);
 
 }
 
-#homePage > #c3r2 {
+#page > #c3r2 {
 grid-area: c3r2;
 border-left: var(--main-border);
 }
 
-#homePage > #c4r2 {
+#page > #c4r2 {
 grid-area: c4r2;
 border-right: var(--main-border);
 }
 
-#homePage > #c5r2 {
+#page > #c5r2 {
 min-height: 15px;
 grid-area: c5r2;
 border-left: var(--main-border);
@@ -356,12 +356,12 @@ background-color: var(--main-background-color);
 
 /* footer */
 
-#homePage > #c1r3 {
+#page > #c1r3 {
 grid-area: c1r3;
 border-top: var(--main-border);
 }
 
-#homePage > #c2r3 {
+#page > #c2r3 {
 grid-area: c2r3;
 }
 

@@ -22,9 +22,9 @@ if (user) {
 
         userDisplayname = JSON.parse(user);
         showGymCloseTime = userDisplayname.showGymCloseTime;
-        userDisplayname = userDisplayname.displayname;
+        preferredColorTheme = userDisplayname.preferredColorTheme;
 
-        console.log(123)
+        userDisplayname = userDisplayname.displayname;
 
     } catch (err) {
 
@@ -258,7 +258,7 @@ function displayLinks(dID) {
             } else {
 
                 if (getCurrentPage) {
-                    
+
                     /*
                     switch (getCurrentPage) {
                         case accessURL:
@@ -297,7 +297,20 @@ function displayLinks(dID) {
             console.log("error ID: " + dID + " does not exist!");
         }
     }
+}
 
+//
+
+// check color theme
+
+function checkColorTheme() {
+    if (user) {
+        if (preferredColorTheme) {
+            if (preferredColorTheme === "light" || preferredColorTheme === "dark") {
+                document.body.className = preferredColorTheme;
+            }
+        }
+    }
 }
 
 //

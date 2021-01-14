@@ -1,4 +1,4 @@
-#loginPage {
+#page {
 display: grid;
 width: 100vw;
 height: 100vh;
@@ -36,7 +36,7 @@ grid-template-columns: 4vw 1fr 1fr 1fr 4vw; /*bortover*/
 
 @media only screen and (max-width: 768px) {
 
-#loginPage > #Glinks {
+#page > #Glinks {
 grid-area: Gfootermenu;
 background-color: var(--main-themeColor);
 }
@@ -66,7 +66,7 @@ background-color: var(--main-themeColor);
 max-width: 250px;
 }
 
-#loginPage > #Gfootermenu {
+#page > #Gfootermenu {
 grid-area: Glinks;
 background-color: var(--main-themeColor);
 }
@@ -111,7 +111,7 @@ color: var(--main-textColor);
 
 @media only screen and (min-width: 769px) {
 
-#loginPage > #Glinks {
+#page > #Glinks {
 grid-area: Glinks;
 background-color: var(--main-themeColor);
 }
@@ -141,7 +141,7 @@ background-color: var(--main-themeColor);
 max-width: 300px;
 }
 
-#loginPage > #Gfootermenu {
+#page > #Gfootermenu {
 grid-area: Gfootermenu;
 background-color: var(--main-themeColor);
 }
@@ -185,7 +185,7 @@ color: var(--main-textColor);
 
 /* grid for elements */
 
-#loginPage > #logoG {
+#page > #logoG {
 grid-area: logoG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
@@ -194,7 +194,7 @@ border-top: var(--main-border);
 border-radius: var(--global-borderRadiusForContentTop);
 }
 
-#loginPage > #inp1G {
+#page > #inp1G {
 grid-area: inp1G;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
@@ -203,7 +203,7 @@ text-align: center;
 min-height: 25px;
 }
 
-#loginPage > #inp2G {
+#page > #inp2G {
 grid-area: inp2G;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
@@ -216,7 +216,7 @@ min-height: 25px;
 color: var(--main-textColor);
 }
 
-#loginPage > #rmbrmebtnG{
+#page > #rmbrmebtnG{
 grid-area: rmbrmebtnG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
@@ -224,7 +224,7 @@ border-right: var(--main-border);
 text-align: center;
 }
 
-#loginPage > #respmsgG {
+#page > #respmsgG {
 grid-area: respmsgG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
@@ -232,7 +232,7 @@ border-right: var(--main-border);
 text-align: center;
 }
 
-#loginPage > #loginbtnG {
+#page > #loginbtnG {
 grid-area: loginbtnG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
@@ -240,7 +240,7 @@ border-right: var(--main-border);
 text-align: center;
 }
 
-#loginPage > #noaccbtnG {
+#page > #noaccbtnG {
 grid-area: noaccbtnG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
@@ -254,11 +254,11 @@ min-height: 25px;
 
 /* content */
 
-#loginPage > #c1r1 {
+#page > #c1r1 {
 grid-area: c1r1;
 }
 
-#loginPage > #c2r1 {
+#page > #c2r1 {
 grid-area: c2r1;
 border-bottom: var(--main-border);
 }
@@ -267,33 +267,33 @@ border-bottom: var(--main-border);
 background-color: var(--main-themeColor);
 }
 
-#loginPage > #c1r2 {
+#page > #c1r2 {
 grid-area: c1r2;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
 border-right: var(--main-border);
 }
 
-#loginPage > #c2r2 {
+#page > #c2r2 {
 grid-area: c2r2;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
 border-right: var(--main-border);
 }
 
-#loginPage > #c3r2 {
+#page > #c3r2 {
 grid-area: c3r2;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
 border-right: var(--main-border);
 }
 
-#loginPage > #c1r3 {
+#page > #c1r3 {
 grid-area: c1r3;
 border-top: var(--main-border);
 }
 
-#loginPage > #c2r3 {
+#page > #c2r3 {
 grid-area: c2r3;
 }
 
@@ -304,19 +304,19 @@ background-color: var(--main-themeColor);
 
 /* empty space */
 
-#loginPage > #e1r1 {
+#page > #e1r1 {
 grid-area: e1r1;
 }
 
-#loginPage > #e2r1 {
+#page > #e2r1 {
 grid-area: e2r1;
 }
 
-#loginPage > #e3r1 {
+#page > #e3r1 {
 grid-area: e3r1;
 }
 
-#loginPage > #e4r1 {
+#page > #e4r1 {
 grid-area: e4r1;
 }
 

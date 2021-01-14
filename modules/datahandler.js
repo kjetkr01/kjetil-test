@@ -172,10 +172,10 @@ class StorageHandler {
 
                             const settings = {
                                 "publicProfile": { "name": "Offentlig profil", "value": true },
-                                "showGymCloseTime": { "name": "Åpningstider", "value": true },
+                                "showGymCloseTime": { "name": "Vis åpningstider", "value": true },
                                 "preferredColorTheme": { "name": "Utseende", "value": "auto" },
-                                "displayLeaderboards": { "name": "Ledertavler", "value": true },
-                                "displayWorkoutList": { "name": "Vis meg på hvem som trener i dag listen", "value": true },
+                                "displayLeaderboards": { "name": "Vis meg på ledertavler", "value": true },
+                                "displayWorkoutList": { "name": "Vis meg på 'hvem som trener i dag listen'", "value": true },
                             };
 
                             const trainingSplit = {
