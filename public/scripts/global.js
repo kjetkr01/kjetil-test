@@ -3,6 +3,7 @@
 const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");// eller session
 const user = localStorage.getItem("user") || sessionStorage.getItem("user"); // eller session
 let userDisplayname, showGymCloseTime;
+let isUpdatingUserObject = false;
 
 let lastUpdatedTime = new Date();
 lastUpdatedTime = lastUpdatedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -312,11 +313,19 @@ function displayLinks(dID) {
 
 function checkColorTheme() {
     if (user) {
-        if (preferredColorTheme) {
-            if (preferredColorTheme === "light" || preferredColorTheme === "dark") {
-                document.body.className = preferredColorTheme;
+
+        setInterval(() => {
+
+            if (isUpdatingUserObject === false) {
+                if (preferredColorTheme) {
+                    if (preferredColorTheme === "light" || preferredColorTheme === "dark") {
+                        document.body.className = preferredColorTheme;
+                    }
+                }
+            } else {
+                console.log("waiting for update");
             }
-        }
+        }, 100);
     }
 }
 
@@ -326,6 +335,8 @@ function checkColorTheme() {
 async function getUpdatedUserObject(returnInfo, myUsername) {
 
     if (token && user && myUsername) {
+
+        isUpdatingUserObject = true;
 
         const body = { "authToken": token, "userInfo": user, "viewingUser": myUsername };
         const url = `/user/details/settingsInfo`;
@@ -348,7 +359,11 @@ async function getUpdatedUserObject(returnInfo, myUsername) {
                 return resp;
             }
 
+            preferredColorTheme = resp.userInfo.preferredColorTheme;
+            isUpdatingUserObject = false;
+
         } else {
+            isUpdatingUserObject = false;
             alert("Feil, prøv igjen");
             redirectToHome();
         }
