@@ -344,6 +344,8 @@ async function getUpdatedUserObject(returnInfo, myUsername) {
             const updatedTxt = today.toLocaleDateString() || true;
             sessionStorage.setItem("updated", updatedTxt);
 
+            location.reload();
+
             if (returnInfo === true) {
                 return resp;
             }
