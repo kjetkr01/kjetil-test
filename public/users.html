@@ -81,20 +81,14 @@
             </p>
         </div>
 
-        <div id="usermsg1G">
-            <p id="usermsg1">
-                Brukernavn
-            </p>
-        </div>
-
         <div id="listG">
             <table id="list">
 
             </table>
         </div>
 
-        <div id="usermsg2G">
-            <p id="usermsg2">
+        <div id="usermsg1G">
+            <p id="usermsg1">
 
             </p>
         </div>
@@ -126,9 +120,9 @@
         if (token && user) {
 
             const getListOfAllUsersDiv = document.getElementById("list");
-            const usermsg2 = document.getElementById("usermsg2");
+            const usermsg1 = document.getElementById("usermsg1");
 
-            usermsg2.innerText = loadingText;
+            usermsg1.innerText = loadingText;
 
             const body = { "authToken": token, "userInfo": user };
             const url = `/users/list/all`;
@@ -149,14 +143,14 @@
                     `;
                     }
 
-                    usermsg2.innerText = "Det er totalt " + resp.length + " brukere!";
+                    usermsg1.innerText = "Det er totalt " + resp.length + " brukere!";
 
                 } else {
-                    usermsg2.innerText = errorLoadingText;
+                    usermsg1.innerText = errorLoadingText;
                 }
 
             } else {
-                usermsg2.innerText = "Det er ingen brukere!";
+                usermsg1.innerText = "Det er ingen brukere!";
             }
 
         }
