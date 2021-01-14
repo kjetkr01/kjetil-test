@@ -14,7 +14,7 @@ grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
 "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
 "e2r1 e2r2 c3r2 listG c4r2 e4r2 e4r1"
 "e2r1 e2r2 c5r2 c5r2 c5r2 e4r2 e4r1"
-"e2r1 e2r2 usersBtnG usersBtnG usersBtnG e4r2 e4r1"
+"e2r1 e2r2 usermsg2G usermsg2G usermsg2G e4r2 e4r1"
 "e2r1 e2r2 c6r2 c6r2 c6r2 e4r2 e4r1"
 
 "e2r1 e3r2 e3r2 e3r2 e3r2 e3r2 e4r1"
@@ -74,7 +74,7 @@ width: 100%;
 text-align: center;
 }
 
-#usersBtnG > #usersBtn {
+#usermsg2G > #usermsg2 {
 color: var(--main-textColor);
 font-size: 18px;
 width: 100%;
@@ -146,7 +146,7 @@ width: 100%;
 text-align: center;
 }
 
-#usersBtnG > #usersBtn {
+#usermsg2G > #usermsg2 {
 color: var(--main-textColor);
 font-size: 18px;
 width: 100%;
@@ -180,9 +180,9 @@ border-right: var(--main-border);
 padding: 7.5px;
 }
 
-#page > #usersBtnG {
+#page > #usermsg2G {
 min-height: 20px;
-grid-area: usersBtnG;
+grid-area: usermsg2G;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
 border-right: var(--main-border);

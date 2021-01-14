@@ -22,6 +22,9 @@
 
     <!-- -->
 
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/users.css">
+
     <script src="scripts/global.js" type="text/javascript"></script>
     <script src="scripts/validateInfo.js" type="text/javascript"></script>
     <script src="scripts/script.js" type="text/javascript"></script>
@@ -30,28 +33,101 @@
 
 <body>
 
-    <button onClick="redirectToLeaderboards();">Tilbake (ledertavler)</button>
+    <section id="page">
 
-    <h2>Navn:</h2>
-    <div id="ListOfAllUsersDiv"></div>
+        <!-- spacing items-->
+
+        <div id="e1r1"></div>
+        <div id="e2r1"></div>
+        <div id="e3r1"></div>
+        <div id="e4r1"></div>
+
+        <!-- -->
+
+        <!-- content items-->
+
+        <div id="c1r1"></div>
+        <div id="c2r1"></div>
+
+        <div id="c1r2"></div>
+        <div id="c2r2"></div>
+        <div id="c3r2"></div>
+        <div id="c4r2"></div>
+        <div id="c5r2"></div>
+        <div id="c6r2"></div>
+
+        <div id="c1r3"></div>
+        <div id="c2r3"></div>
+
+        <!-- -->
+
+        <!-- element content items-->
+
+        <!-- header -->
+
+        <div id="Glinks">
+            <table id="links">
+
+            </table>
+        </div>
+
+        <!-- -->
+
+        <!-- content/middle -->
+
+        <div id="usermsg1G">
+            <p id="usermsg1">
+                Navn
+            </p>
+        </div>
+
+        <div id="listG">
+            <table id="list">
+
+            </table>
+        </div>
+
+        <div id="usermsg2G">
+            <p id="usermsg2">
+
+            </p>
+        </div>
+
+        <!-- -->
+
+        <!-- footer -->
+
+        <div id="Gfootermenu">
+            <p id="footermenu">
+
+            </p>
+        </div>
+
+        <!-- -->
+
+    </section>
 
 </body>
 
 <script>
+
+    displayLinks("links");
+    checkColorTheme();
 
     getListOfAllUsers();
     async function getListOfAllUsers() {
 
         if (token && user) {
 
+            const getListOfAllUsersDiv = document.getElementById("list");
+            const usermsg2 = document.getElementById("usermsg2");
+
+            usermsg2.innerText = loadingText;
+
             const body = { "authToken": token, "userInfo": user };
             const url = `/users/list/all`;
 
-            document.getElementById("ListOfAllUsersDiv").innerHTML = loadingText;
-
             const resp = await callServerAPI(body, url);
-
-            const getListOfAllUsersDiv = document.getElementById("ListOfAllUsersDiv");
 
             getListOfAllUsersDiv.innerHTML = "";
 
@@ -60,19 +136,21 @@
                 if (resp[0].username) {
 
                     for (let i = 0; i < resp.length; i++) {
-                        getListOfAllUsersDiv.innerHTML += `<div onClick="viewUser('${resp[i].username}')">
-                    ${resp[i].username}
-                    </div>`;
+                        getListOfAllUsersDiv.innerHTML += `
+                        <tr>
+                        <td><button id="listButton" onClick="viewUser('${resp[i].username}')">${resp[i].username}</button></td>
+                    </tr>
+                    `;
                     }
 
-                    getListOfAllUsersDiv.innerHTML += "Totalt " + resp.length + " brukere!";
+                    usermsg2.innerText = "Det er totalt " + resp.length + " brukere!";
 
                 } else {
-                    getListOfAllUsersDiv.innerHTML += errorLoadingText;
+                    usermsg2.innerText = errorLoadingText;
                 }
 
             } else {
-                getListOfAllUsersDiv.innerHTML += "Det er ingen brukere!";
+                usermsg2.innerText = "Det er ingen brukere!";
             }
 
         }

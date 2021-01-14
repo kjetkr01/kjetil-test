@@ -26,7 +26,7 @@ grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1"
 "Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu"
 "c2r3 c2r3 c2r3 c2r3 c2r3";
 
-grid-template-rows: 3vh auto 3vh 1fr 1fr 5px 5% 25px 5% 25px 60px 5% 60px 7.5% 1fr 3vh auto 3vh; /*nedover*/
+grid-template-rows: var(--global-headerRows) 1fr 1fr 5px 5% 25px 5% 25px 60px 5% 60px 7.5% 1fr var(--global-footerRows); /*nedover*/
 grid-template-columns: 4vw 1fr 1fr 1fr 4vw; /*bortover*/
 }
 

@@ -50,6 +50,9 @@ url(../images/background-smallBlur.png);
 --global-borderRadiusForContentTop: 15px 15px 0 0;
 --global-borderRadiusForContentBottom: 0 0 15px 15px;
 
+--global-headerRows: 3vh auto 3vh;
+--global-footerRows: 2.5vh auto 3.5vh;
+
 /* end of variables */
 
 
