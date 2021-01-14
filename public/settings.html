@@ -112,7 +112,7 @@
                   case "auto":
                      showSettingsDiv.innerHTML += `
                <label>${settings[keys[i]].name}</label>
-               <select id="preferredColorThemeDom" onClick="checkPreferredColorTheme();">
+               <select id="preferredColorThemeDom" onChange="checkPreferredColorTheme();">
                <option value="auto" selected>Automatisk</option>
                <option value="light">Lys</option>
                <option value="dark">Mørk</option>
@@ -121,7 +121,7 @@
                   case "light":
                      showSettingsDiv.innerHTML += `
                <label>${settings[keys[i]].name}</label>
-               <select id="preferredColorThemeDom" onClick="checkPreferredColorTheme();">
+               <select id="preferredColorThemeDom" onChange="checkPreferredColorTheme();">
                <option value="auto">Automatisk</option>
                <option value="light" selected>Lys</option>
                <option value="dark">Mørk</option>
@@ -130,7 +130,7 @@
                   case "dark":
                      showSettingsDiv.innerHTML += `
                <label>${settings[keys[i]].name}</label>
-               <select id="preferredColorThemeDom" onClick="checkPreferredColorTheme();">
+               <select id="preferredColorThemeDom" onChange="checkPreferredColorTheme();">
                <option value="auto">Automatisk</option>
                <option value="light">Lys</option>
                <option value="dark" selected>Mørk</option>
