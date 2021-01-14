@@ -23,7 +23,8 @@ text-decoration: none;
 --darkMode-filter: invert(1);
 --darkMode-backgroundImage: 
 linear-gradient(rgba(26, 26, 26, 0.7),rgb(27, 27, 27, 1.0)), 
-url(../images/background-smallBlur.png); 
+url(../images/background-smallBlur.png);
+--darkMode-hoverColor: rgb(0, 255, 170);
 
 /* end of dark mode variables */
 
@@ -38,6 +39,7 @@ url(../images/background-smallBlur.png);
 --lightMode-backgroundImage: 
 linear-gradient(rgba(26, 26, 26, 0.7),rgb(97, 97, 97)), 
 url(../images/background-smallBlur.png);
+--lightMode-hoverColor: rgb(0, 255, 170);
 
 /* end of light mode variables */
 
@@ -63,19 +65,21 @@ body {
 --main-textColor: var(--darkMode-textColor);
 --main-border: var(--darkMode-border);
 --main-filter: var(--darkMode-filter);
-background-image: var(--darkMode-backgroundImage); 
+background-image: var(--darkMode-backgroundImage);
+--main-hoverColor: var(--darkMode-hoverColor);
 }
 
 }
 
 .dark {
-    --main-themeColor:  var(--darkMode-themeColor);
+--main-themeColor:  var(--darkMode-themeColor);
 --main-background-color: var(--darkMode-background-color);
 --main-textColor: var(--darkMode-textColor);
 --main-border: var(--darkMode-border);
 --main-filter: var(--darkMode-filter);
-background-image: var(--darkMode-backgroundImage); 
-  }
+background-image: var(--darkMode-backgroundImage);
+--main-hoverColor: var(--darkMode-hoverColor);
+}
 
 /* end of dark mode */
 
@@ -89,19 +93,21 @@ body {
 --main-textColor: var(--lightMode-textColor);
 --main-border: var(--lightMode-border);
 --main-filter: var(--lightMode-filter);
-background-image: var(--lightMode-backgroundImage); 
+background-image: var(--lightMode-backgroundImage);
+--main-hoverColor: var(--lightMode-hoverColor);
 }
 
 }
 
 .light {
-    --main-themeColor:  var(--lightMode-themeColor);
+--main-themeColor:  var(--lightMode-themeColor);
 --main-background-color: var(--lightMode-background-color);
 --main-textColor: var(--lightMode-textColor);
 --main-border: var(--lightMode-border);
 --main-filter: var(--lightMode-filter);
-background-image: var(--lightMode-backgroundImage); 
-  }
+background-image: var(--lightMode-backgroundImage);
+--main-hoverColor: var(--lightMode-hoverColor);
+}
 
 /* end of light mode */
 
@@ -120,7 +126,7 @@ supported by Chrome, Edge, Opera and Firefox */
 }
 
 a:hover{
-color: rgb(0, 255, 170); 
+color: var(--main-hoverColor); 
 }
 
 /* for at table ser riktig ut */
@@ -132,12 +138,20 @@ padding-bottom: 15px;
 
 table {
 border-collapse: collapse;
+table-layout: fixed ;
+width: 100% ;
 }
 
 th {
 position: sticky;
 top: 0;
+width: 25% ;
 /*background-color: var(--main-background-color);*/
+}
+
+#tdUsernameAndWorkout:hover {
+cursor: pointer;
+color: var(--main-hoverColor);
 }
 
 #rmbrmebtnG > #rmbrMeTxt{
@@ -157,9 +171,9 @@ text-align: center;
 }
 
 .footerIcons{
-    -webkit-filter: var(--main-filter);
-    filter: var(--main-filter);
-    image-rendering: auto;
-    max-height: 32px;
-    max-width: 32px;
-    }
+-webkit-filter: var(--main-filter);
+filter: var(--main-filter);
+image-rendering: auto;
+max-height: 32px;
+max-width: 32px;
+}

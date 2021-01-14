@@ -387,7 +387,7 @@ class StorageHandler {
         try {
             await client.connect();
 
-            results = await client.query('SELECT "displayname","settings","trainingsplit" FROM "users"');
+            results = await client.query('SELECT "username","displayname","settings","trainingsplit" FROM "users"');
 
             const day = new Date().getDay();
             let dayTxt = "";
@@ -420,7 +420,7 @@ class StorageHandler {
             for (let i = 0; i < results.rows.length; i++) {
                 const todaysWorkout = results.rows[i].trainingsplit[dayTxt];
                 if (results.rows[i].settings.displayWorkoutList.value === true && todaysWorkout.length > 0 && todaysWorkout !== "Fri") {
-                    info[counter] = { "userFullName": results.rows[i].displayname, "todaysWorkout": todaysWorkout };
+                    info[counter] = { "username": results.rows[i].username, "userFullName": results.rows[i].displayname, "todaysWorkout": todaysWorkout };
                     counter++;
                 }
             }
