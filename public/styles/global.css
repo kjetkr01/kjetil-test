@@ -30,8 +30,8 @@ url(../images/background-smallBlur.png);
 
 /* light mode variables */
 
---lightMode-themeColor:  rgb(226, 226, 226);
---lightMode-background-color: rgba(226, 226, 226, 0.7);
+--lightMode-themeColor:  rgb(255, 255, 255);
+--lightMode-background-color: rgba(255, 255, 255, 0.7);
 --lightMode-textColor: black;
 --lightMode-border: 1.25px solid black;
 --lightMode-filter: invert(0);
