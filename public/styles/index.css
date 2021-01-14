@@ -30,7 +30,7 @@ grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
 "c2r3 c2r3 c2r3 c2r3 c2r3 c2r3 c2r3";
 
 /* gammel: 25px 30px 30px 15px 1fr 10px 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 20px 30px 40px */
-grid-template-rows: 3vh auto 3vh 15px 1fr 10px 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 2.5vh auto 3.5vh; /*nedover*/
+grid-template-rows: 3vh auto 3vh 15px 1fr 10px 1fr 1fr 1fr 1fr 1fr 30px 30px 15px 2.5vh auto 3.5vh; /*nedover*/
 grid-template-columns: 5px 10px 30px 1fr 30px 10px 5px; /*bortover*/
 }
 
@@ -39,14 +39,6 @@ grid-template-columns: 5px 10px 30px 1fr 30px 10px 5px; /*bortover*/
 @media only screen and (max-width: 768px) {
 
 /* header */
-
-.footerIcons{
--webkit-filter: invert(1);
-filter: invert(1);
-image-rendering: auto;
-max-height: 32px;
-max-width: 32px;
-}
 
 #homePage > #Glinks {
 grid-area: Gfootermenu;
