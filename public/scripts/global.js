@@ -314,12 +314,16 @@ function displayLinks(dID) {
 function checkColorTheme() {
     if (user) {
 
-        setInterval(() => {
+        const intervalCheck = setInterval(() => {
 
             if (isUpdatingUserObject === false) {
                 if (preferredColorTheme) {
                     if (preferredColorTheme === "light" || preferredColorTheme === "dark") {
                         document.body.className = preferredColorTheme;
+                        clearInterval(intervalCheck);
+                    } else {
+                        document.body.className = "";
+                        clearInterval(intervalCheck);
                     }
                 }
             } else {
@@ -351,16 +355,18 @@ async function getUpdatedUserObject(returnInfo, myUsername) {
                 sessionStorage.setItem("user", JSON.stringify(resp.userInfo));
             }
 
+            checkColorTheme();
+
             const today = new Date();
             const updatedTxt = today.toLocaleDateString() || true;
             sessionStorage.setItem("updated", updatedTxt);
 
+            preferredColorTheme = resp.userInfo.preferredColorTheme;
+            isUpdatingUserObject = false;
+
             if (returnInfo === true) {
                 return resp;
             }
-
-            preferredColorTheme = resp.userInfo.preferredColorTheme;
-            isUpdatingUserObject = false;
 
         } else {
             isUpdatingUserObject = false;
