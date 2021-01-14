@@ -173,6 +173,7 @@ class StorageHandler {
                             const settings = {
                                 "publicProfile": { "name": "Offentlig profil", "value": true },
                                 "showGymCloseTime": { "name": "Åpningstider", "value": true },
+                                "preferredColorTheme": { "name": "Utseende", "value": "auto" },
                                 "displayLeaderboards": { "name": "Ledertavler", "value": true },
                                 "displayWorkoutList": { "name": "Vis meg på hvem som trener i dag listen", "value": true },
                             };

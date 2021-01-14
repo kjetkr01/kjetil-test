@@ -90,7 +90,8 @@ server.post("/autenticate", async function (req, res) {
                     "id": requestUser.userInfo.id,
                     "username": requestUser.userInfo.username,
                     "displayname": requestUser.userInfo.displayname,
-                    "showGymCloseTime": requestUser.userInfo.settings.showGymCloseTime.value
+                    "showGymCloseTime": requestUser.userInfo.settings.showGymCloseTime.value,
+                    "preferredColorTheme": requestUser.userInfo.settings.preferredColorTheme,
                }
                const sessionToken = createToken(requestUser.userInfo);
                res.status(200).json({ "authToken": sessionToken, "user": userInfo }).end();
@@ -255,7 +256,8 @@ server.post("/user/details/settingsInfo", auth, async (req, res) => {
                "id": resp.userDetails.id,
                "username": resp.userDetails.username,
                "displayname": resp.userDetails.displayname,
-               "showGymCloseTime": resp.userDetails.settings.showGymCloseTime.value
+               "showGymCloseTime": resp.userDetails.settings.showGymCloseTime.value,
+               "preferredColorTheme": resp.userDetails.settings.preferredColorTheme,
           }
 
           if (resp.status === true) {
@@ -282,9 +284,9 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
 
      //accepter bare "godkjente" settings
 
-     if (currentUser.username && setting && value === true || value === false) {
+     if (currentUser.username && setting && value === true || value === false || value === "auto" || value === "light" || value === "dark") {
 
-          if (setting === "publicProfile" || setting === "showGymCloseTime" || setting === "displayLeaderboards" || setting === "displayWorkoutList") {
+          if (setting === "publicProfile" || setting === "showGymCloseTime" || setting === "preferredColorTheme" || setting === "displayLeaderboards" || setting === "displayWorkoutList") {
 
                const resp = await updateUserSetting(currentUser.username, setting, value);
 

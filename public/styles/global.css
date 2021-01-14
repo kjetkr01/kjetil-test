@@ -68,8 +68,16 @@ background-image: var(--darkMode-backgroundImage);
 
 }
 
-/* end of dark mode */
+.darkMode {
+    --main-themeColor:  var(--darkMode-themeColor);
+--main-background-color: var(--darkMode-background-color);
+--main-textColor: var(--darkMode-textColor);
+--main-border: var(--darkMode-border);
+--main-filter: var(--darkMode-filter);
+background-image: var(--darkMode-backgroundImage); 
+  }
 
+/* end of dark mode */
 
 /* light mode */
 
@@ -85,6 +93,15 @@ background-image: var(--lightMode-backgroundImage);
 }
 
 }
+
+.lightMode {
+    --main-themeColor:  var(--lightMode-themeColor);
+--main-background-color: var(--lightMode-background-color);
+--main-textColor: var(--lightMode-textColor);
+--main-border: var(--lightMode-border);
+--main-filter: var(--lightMode-filter);
+background-image: var(--lightMode-backgroundImage); 
+  }
 
 /* end of light mode */
 

@@ -24,6 +24,8 @@ if (user) {
         showGymCloseTime = userDisplayname.showGymCloseTime;
         userDisplayname = userDisplayname.displayname;
 
+        console.log(123)
+
     } catch (err) {
 
         console.log("invalid user object");
@@ -48,7 +50,6 @@ if (user) {
 }
 
 //
-
 
 //auto redirect to login if token is invalid
 window.onload = validateToken;

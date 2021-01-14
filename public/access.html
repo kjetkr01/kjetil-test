@@ -138,6 +138,14 @@
 
     displayLinks("links");
 
+    addEventListener("keypress", function (evt) {
+
+        if (evt.keyCode === 13) {
+            requestAccess();
+        }
+
+    });
+
     // ask for access
 
     async function requestAccess() {
