@@ -136,18 +136,23 @@ padding-top: 15px;
 padding-bottom: 15px;
 }*/
 
+
 table {
 border-collapse: collapse;
 table-layout: fixed ;
 width: 100% ;
 }
 
+/*
 th {
 position: sticky;
 top: 0;
 width: 25% ;
-/*background-color: var(--main-background-color);*/
-}
+}*/
+
+td { 
+    padding-bottom: 15px;
+} 
 
 #rmbrmebtnG > #rmbrMeTxt{
 font-size: 18px;

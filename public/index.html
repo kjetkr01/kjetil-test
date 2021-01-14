@@ -98,6 +98,12 @@
          </p>
       </div>
 
+      <div id="boardTitleG">
+         <table id="boardTitle">
+
+         </table>
+      </div>
+
       <div id="boardG">
          <table id="board">
 
@@ -173,6 +179,7 @@
    async function checkWhoIsWorkingOutToday() {
 
       const board = document.getElementById("board");
+      const boardTitle = document.getElementById("boardTitle");
       const usermsg3 = document.getElementById("usermsg3");
 
       usermsg3.innerHTML = loadingText;
@@ -182,7 +189,10 @@
       if (Object.entries(resp).length > 0) {
          usermsg3.innerHTML = `I dag trener ${Object.entries(resp).length} personer!`;
 
-         board.innerHTML = `
+         board.innerHTML = "";
+         boardTitle.innerHTML = "";
+
+         boardTitle.innerHTML = `
         <tr>
         <th>Navn</th>
         <th>Trener</th>
@@ -209,12 +219,10 @@
             `;*/
 
             board.innerHTML += `
-            <div style="padding-bottom:15px;">
             <tr>
             <td><button id="usernameAndWorkout" onClick="viewUser('${resp[i].username}')">${shortenedFullName}</button></td>
             <td><button id="usernameAndWorkout" onClick="viewUser('${resp[i].username}')">${resp[i].todaysWorkout}</button></td>
             </tr>
-            </div>
             `;
 
             /* */

@@ -18,6 +18,7 @@ grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
 "e2r1 e2r2 usermsg2G usermsg2G usermsg2G e4r2 e4r1"
 "e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
 "e2r1 e2r2 usermsg3G usermsg3G usermsg3G e4r2 e4r1"
+"e2r1 e2r2 c3r2 boardTitleG c4r2 e4r2 e4r1"
 "e2r1 e2r2 c3r2 boardG c4r2 e4r2 e4r1"
 "e2r1 e2r2 c5r2 c5r2 c5r2 e4r2 e4r1"
 "e2r1 e2r2 gymtimeG gymtimeG gymtimeG e4r2 e4r1"
@@ -30,7 +31,7 @@ grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
 "c2r3 c2r3 c2r3 c2r3 c2r3 c2r3 c2r3";
 
 /* gammel: 25px 30px 30px 15px 1fr 10px 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 20px 30px 40px */
-grid-template-rows: 3vh auto 3vh 15px 1fr 10px 1fr 1fr 1fr 1fr 1fr 30px 30px 15px 2.5vh auto 3.5vh; /*nedover*/
+grid-template-rows: 3vh auto 3vh 15px 1fr 10px 1fr 1fr 1fr 40px 1fr 1fr 30px 30px 15px 2.5vh auto 3.5vh; /*nedover*/
 grid-template-columns: 5px 10px 30px 1fr 30px 10px 5px; /*bortover*/
 }
 
@@ -76,6 +77,13 @@ width: 100%;
 font-size: 20px;
 text-align: center;
 }
+
+#boardTitleG > #boardTitle {
+    color: var(--main-textColor);
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    }
 
 #boardG > #board {
 color: var(--main-textColor);
@@ -172,6 +180,13 @@ font-size: 22px;
 text-align: center;
 }
 
+#boardTitleG > #boardTitle {
+    color: var(--main-textColor);
+    width: 100%;
+    text-align: center;
+    font-size: 22px;
+    }
+
 #boardG > #board {
 color: var(--main-textColor);
 width: 100%;
@@ -251,11 +266,17 @@ border-left: var(--main-border);
 border-right: var(--main-border);
 }
 
+#page > #boardTitleG{
+    grid-area: boardTitleG;
+background-color: var(--main-background-color);
+min-height: 40px;
+}
+
 #page > #boardG {
 grid-area: boardG;
 background-color: var(--main-background-color);
 overflow-y: auto;
-min-height: 50px;
+min-height: 70px;
 }
 
 #page > #gymtimeG {
