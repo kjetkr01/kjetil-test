@@ -13,6 +13,7 @@ grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
 "e2r1 e2r2 displaynameG displaynameG displaynameG e4r2 e4r1"
 "e2r1 e2r2 c2r2 infoListG c3r2 e4r2 e4r1"
 "e2r1 e2r2 workoutTodayG workoutTodayG workoutTodayG e4r2 e4r1"
+"e2r1 e2r2 c4r2 listTitleG c5r2 e4r2 e4r1"
 "e2r1 e2r2 c4r2 listG c5r2 e4r2 e4r1"
 "e2r1 e2r2 showTotalLiftG showTotalLiftG showTotalLiftG e4r2 e4r1"
 "e2r1 e2r2 buttonsG buttonsG buttonsG e4r2 e4r1"
@@ -26,7 +27,7 @@ grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
 "c2r3 c2r3 c2r3 c2r3 c2r3 c2r3 c2r3";
 
 /* gammel: 25px 30px 30px 15px 1fr 10px 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 20px 30px 40px */
-grid-template-rows: var(--global-headerRows) 15px 30px auto auto 1fr auto auto 45px 40px 15px 15px var(--global-footerRows); /*nedover*/
+grid-template-rows: var(--global-headerRows) 15px 30px auto auto auto 1fr auto auto 45px 40px 15px 15px var(--global-footerRows); /*nedover*/
 grid-template-columns: 5px 10px 30px 1fr 30px 10px 5px; /*bortover*/
 }
 
@@ -143,6 +144,13 @@ width: 100%;
 text-align: center;
 }
 
+#listTitleG > #listTitle {
+    color: var(--main-textColor);
+    font-size: 24px;
+    width: 100%;
+    text-align: center;
+    }
+
 #listG > #list {
 color: var(--main-textColor);
 font-size: 18px;
@@ -223,6 +231,13 @@ grid-area: workoutTodayG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
 border-right: var(--main-border);
+padding: 7.5px;
+}
+
+#page > #listTitleG{
+    min-height: 30px;
+grid-area: listTitleG;
+background-color: var(--main-background-color);
 padding: 7.5px;
 }
 
@@ -323,14 +338,14 @@ border-right: var(--main-border);
 }
 
 #page > #c4r2 {
-    grid-area: c4r2;
-    border-left: var(--main-border);
-    }
+grid-area: c4r2;
+border-left: var(--main-border);
+}
 
-    #page > #c5r2 {
-        grid-area: c5r2;
-        border-right: var(--main-border);
-        }
+#page > #c5r2 {
+grid-area: c5r2;
+border-right: var(--main-border);
+}
 
 #page > #c6r2 {
 grid-area: c6r2;

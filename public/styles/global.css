@@ -15,6 +15,7 @@ hr {
 border: none;
 height: 1px;
 background-color: var(--main-textColor);
+margin-top: 5px;
 }
 
 /* global variables */

@@ -81,6 +81,12 @@
          </p>
       </div>
 
+      <div id="listTitleG">
+         <table id="listTitle">
+
+         </table>
+      </div>
+
       <div id="listG">
          <table id="list">
 
@@ -114,25 +120,33 @@
    displayLinks("links");
    checkColorTheme();
 
+   const listTitle = document.getElementById("listTitle");
+   const listTitleG = document.getElementById("listTitleG");
+   const list = document.getElementById("list");
+   const usermsg1 = document.getElementById("usermsg1");
+
    getListOfLeaderboard();
    async function getListOfLeaderboard() {
 
       if (token && user) {
 
+         listTitle.innerHTML = loadingText;
+         usermsg1.innerHTML = loadingText;
+
          const body = { "authToken": token, "userInfo": user };
          const url = `/users/list/all/leaderboards`;
-
-         const list = document.getElementById("list");
-
-         list.innerHTML = `<tr>
-                  <td id="listButton">${loadingText}</td>
-               </tr>`;
 
          const resp = await callServerAPI(body, url);
 
          list.innerHTML = "";
 
          if (resp.length > 0) {
+
+            listTitle.innerHTML = `<tr>
+               <th>Tavler</th>
+            </tr>`;
+
+            listTitleG.innerHTML += `<hr>`;
 
             if (resp[0] === "Benkpress" && resp[1] === "Knebøy" && resp[2] === "Markløft") {
 
@@ -157,18 +171,21 @@
                `;
             }
 
+            usermsg1.innerHTML = "Det er " + parseInt(resp.length + 1) + " ledertavler!";
+
          } else {
-            list.innerHTML += errorLoadingText;
+            usermsg1.innerHTML = errorLoadingText;
+            listTitle.innerHTML = errorLoadingText;
          }
 
       } else {
-         list.innerHTML += "Det er ingen ledertavler!";
+         listTitle.innerHTML = "Det er ingen ledertavler!";
       }
    }
 
    //
 
-   getListOfTotalUsers();
+   //getListOfTotalUsers();
    async function getListOfTotalUsers() {
 
       if (token && user) {
