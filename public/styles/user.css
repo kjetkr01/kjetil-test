@@ -186,7 +186,6 @@ text-align: center;
 /* grid for elements */
 
 #page > #displaynameG {
-min-height: 30px;
 grid-area: displaynameG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
@@ -195,14 +194,12 @@ padding: 7.5px;
 }
 
 #page > #infoListG {
-min-height: 60px;
 grid-area: infoListG;
 background-color: var(--main-background-color);
 padding: 7.5px;
 }
 
 #page > #workoutTodayG {
-min-height: 30px;
 grid-area: workoutTodayG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
@@ -211,7 +208,6 @@ padding: 7.5px;
 }
 
 #page > #listTitleG{
-min-height: 30px;
 grid-area: listTitleG;
 background-color: var(--main-background-color);
 padding: 7.5px;
@@ -225,7 +221,6 @@ min-height: 70px;
 }
 
 #page > #showTotalLiftG {
-min-height: 30px;
 grid-area: showTotalLiftG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
@@ -234,7 +229,6 @@ padding: 7.5px;
 }
 
 #page > #buttonsG {
-min-height: 30px;
 grid-area: buttonsG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
@@ -243,7 +237,6 @@ padding: 7.5px;
 }
 
 #page > #backBtnG {
-min-height: 20px;
 grid-area: backBtnG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
@@ -303,7 +296,6 @@ border-right: var(--main-border);
 }
 
 #page > #c2r2 {
-min-height: 25px;
 grid-area: c2r2;
 border-left: var(--main-border);
 }

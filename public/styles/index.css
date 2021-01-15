@@ -80,11 +80,11 @@ text-align: center;
 }
 
 #boardTitleG > #boardTitle {
-    color: var(--main-textColor);
-    width: 100%;
-    text-align: center;
-    font-size: 18px;
-    }
+color: var(--main-textColor);
+width: 100%;
+text-align: center;
+font-size: 18px;
+}
 
 #boardG > #board {
 color: var(--main-textColor);
@@ -182,11 +182,11 @@ text-align: center;
 }
 
 #boardTitleG > #boardTitle {
-    color: var(--main-textColor);
-    width: 100%;
-    text-align: center;
-    font-size: 22px;
-    }
+color: var(--main-textColor);
+width: 100%;
+text-align: center;
+font-size: 22px;
+}
 
 #boardG > #board {
 color: var(--main-textColor);
@@ -240,7 +240,6 @@ text-align: center;
 /* grid for elements */
 
 #page > #usermsg1G {
-min-height: 30px;
 grid-area: usermsg1G;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
@@ -251,7 +250,6 @@ padding: 7.5px;
 }
 
 #page > #usermsg2G {
-min-height: 20px;
 grid-area: usermsg2G;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
@@ -260,7 +258,6 @@ padding: 7.5px;
 }
 
 #page > #usermsg3G {
-min-height: 30px;
 grid-area: usermsg3G;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
@@ -268,9 +265,8 @@ border-right: var(--main-border);
 }
 
 #page > #boardTitleG{
-    grid-area: boardTitleG;
+grid-area: boardTitleG;
 background-color: var(--main-background-color);
-min-height: 40px;
 }
 
 #page > #boardG {
@@ -281,7 +277,6 @@ min-height: 70px;
 }
 
 #page > #gymtimeG {
-min-height: 30px;
 grid-area: gymtimeG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
@@ -289,7 +284,6 @@ border-right: var(--main-border);
 }
 
 #page > #gymtimesmallG {
-min-height: 30px;
 grid-area: gymtimesmallG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
@@ -371,7 +365,6 @@ border-right: var(--main-border);
 }
 
 #page > #c2r2 {
-min-height: 25px;
 grid-area: c2r2;
 border-left: var(--main-border);
 border-right: var(--main-border);
@@ -389,7 +382,6 @@ border-right: var(--main-border);
 }
 
 #page > #c5r2 {
-min-height: 15px;
 grid-area: c5r2;
 border-left: var(--main-border);
 border-right: var(--main-border);

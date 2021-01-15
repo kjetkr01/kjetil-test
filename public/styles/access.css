@@ -29,7 +29,7 @@ grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1"
 "Gfootermenu Gfootermenu Gfootermenu Gfootermenu Gfootermenu"
 "c2r3 c2r3 c2r3 c2r3 c2r3";
 
-grid-template-rows: var(--global-headerRows) 1fr 1fr 5px 5% 25px 5% 25px 5% 25px 5% 25px 5% 60px 7.5% 1fr var(--global-footerRows); /*nedover*/
+grid-template-rows: var(--global-headerRows) 1fr 60px 40px 40px 25px 40px 25px 40px 25px 40px 25px 40px 60px 40px 1fr var(--global-footerRows); /*nedover*/
 /* 21 */
 grid-template-columns: 4vw 1fr 1fr 1fr 4vw; /*bortover*/
 }
@@ -85,7 +85,6 @@ font-weight: bold;
 #respmsgG > #respmsg {
 font-size: 18px;
 color: var(--main-textColor);
-min-height: 25px;
 }
 
 #askforaccessbtnG > #askforaccessbtn {
@@ -96,13 +95,11 @@ border: var(--main-border);
 border-radius: 5px;
 background-color: var(--main-themeColor);
 color: var(--main-textColor);
-min-height: 25px;
 }
 
 #alreadyaccbtnG > #alreadyaccbtn {
 font-size: 18px;
 color: var(--main-textColor);
-min-height: 25px;
 }
 
 }
@@ -156,7 +153,6 @@ font-weight: bold;
 #respmsgG > #respmsg {
 font-size: 18px;
 color: var(--main-textColor);
-min-height: 25px;
 }
 
 #askforaccessbtnG > #askforaccessbtn {
@@ -167,13 +163,11 @@ border: var(--main-border);
 border-radius: 5px;
 background-color: var(--main-themeColor);
 color: var(--main-textColor);
-min-height: 25px;
 }
 
 #alreadyaccbtnG > #alreadyaccbtn {
 font-size: 18px;
 color: var(--main-textColor);
-min-height: 25px;
 }
 
 }
@@ -196,7 +190,6 @@ background-color: var(--main-background-color);
 border-left: var(--main-border);
 border-right: var(--main-border);
 text-align: center;
-min-height: 25px;
 }
 
 #page > #inp2G {
@@ -205,7 +198,6 @@ background-color: var(--main-background-color);
 border-left: var(--main-border);
 border-right: var(--main-border);
 text-align: center;
-min-height: 25px;
 }
 
 #page > #inp3G {
@@ -214,7 +206,6 @@ background-color: var(--main-background-color);
 border-left: var(--main-border);
 border-right: var(--main-border);
 text-align: center;
-min-height: 25px;
 }
 
 #page > #inp4G {
@@ -223,7 +214,6 @@ background-color: var(--main-background-color);
 border-left: var(--main-border);
 border-right: var(--main-border);
 text-align: center;
-min-height: 25px;
 }
 
 #page > #respmsgG {

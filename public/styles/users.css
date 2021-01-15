@@ -166,14 +166,12 @@ text-align: center;
 /* grid for elements */
 
 #page > #usermsg1G {
-min-height: 30px;
 grid-area: usermsg1G;
 background-color: var(--main-background-color);
 padding: 7.5px;
 }
 
 #page > #listTitleG {
-min-height: 30px;
 grid-area: listTitleG;
 background-color: var(--main-background-color);
 padding: 7.5px;
@@ -246,7 +244,6 @@ border-right: var(--main-border);
 }
 
 #page > #c2r2 {
-min-height: 25px;
 grid-area: c2r2;
 border-left: var(--main-border);
 
