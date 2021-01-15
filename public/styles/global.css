@@ -54,6 +54,7 @@ url(../images/background-smallBlur.png);
 /* variables */
 
 --global-margin-left: 12.5px;
+--global-margin-right: 12.5px;
 
 --global-borderRadiusForContentTop: 15px 15px 0 0;
 --global-borderRadiusForContentBottom: 0 0 15px 15px;
