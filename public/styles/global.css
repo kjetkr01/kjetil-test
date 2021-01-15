@@ -12,7 +12,9 @@ text-decoration: none;
 }
 
 #hrTest {
-  border: 1px solid var(--main-textColor);
+border: none;
+height: 1px;
+background-color: var(--main-textColor);
 }
 
 /* global variables */
