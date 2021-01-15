@@ -160,6 +160,7 @@
     const list = document.getElementById("list");
 
     if (viewingUser) {
+        document.title = viewingUser + " sin profil";
         getUserDetails()
     } else {
         redirectToUsers();
@@ -177,7 +178,6 @@
             if (resp) {
 
                 if (resp.username) {
-                    document.title = viewingUser + " sin profil";
                     info = resp;
                     displayInformation();
 
