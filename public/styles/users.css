@@ -24,7 +24,7 @@ grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
 "c2r3 c2r3 c2r3 c2r3 c2r3 c2r3 c2r3";
 
 /* gammel: 25px 30px 30px 15px 1fr 10px 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 20px 30px 40px */
-grid-template-rows: var(--global-headerRows) 15px 20px 30px 1fr 30px 35px 40px 15px 15px var(--global-footerRows); /*nedover*/
+grid-template-rows: var(--global-headerRows) 15px 20px 30px 1fr 30px 45px 40px 15px 15px var(--global-footerRows); /*nedover*/
 grid-template-columns: 5px 10px 30px 1fr 30px 10px 5px; /*bortover*/
 }
 
