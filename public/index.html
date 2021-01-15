@@ -140,6 +140,11 @@
 
 <script>
 
+let expiry = new Date();
+expiry.setTime(expiry.getTime()+(10*60*1000));
+
+   document.cookie = "visited=yes; expires=" + expiry.toLocaleDateString() + "; secure;";
+
    displayLinks("links");
    checkColorTheme();
 
