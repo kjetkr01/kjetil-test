@@ -1,7 +1,7 @@
 // global variables
 
-const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");// eller session
-const user = localStorage.getItem("user") || sessionStorage.getItem("user"); // eller session
+const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
+const user = localStorage.getItem("user") || sessionStorage.getItem("user");
 let userDisplayname, showGymCloseTime;
 let isUpdatingUserObject = false;
 
@@ -11,8 +11,6 @@ lastUpdatedTime = lastUpdatedTime.toLocaleTimeString([], { hour: '2-digit', minu
 const errorText = "Det har oppstått en feil!";
 const loadingText = "Laster...";
 const errorLoadingText = "Kunne ikke laste inn innholdet.";
-
-const activeColor = "rgb(0, 255, 170)";
 
 //
 
@@ -72,7 +70,7 @@ async function validateToken() {
             const resp = await callServerAPI(body, url);
 
             if (resp) {
-                
+
             } else {
                 localStorage.clear();
                 sessionStorage.clear();
@@ -205,7 +203,7 @@ function displayLinks(dID) {
                     switch (getCurrentPage) {
                         case homeURL:
                             htmlInfo = `
-                            <a href=${homeURL} draggable="false" style="margin-left:5px; margin-right:3.5vw; color:${activeColor};">${homeName}</a>
+                            <a href=${homeURL} draggable="false" class="activeColor" style="margin-left:5px; margin-right:3.5vw;">${homeName}</a>
                             <a href=${leaderboardsURL} draggable="false">${leaderboardsName}</a>
                             <a href=${accountURL} draggable="false" style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
                             `;
@@ -213,7 +211,7 @@ function displayLinks(dID) {
                         case leaderboardsURL:
                             htmlInfo = `
                             <a href=${homeURL} draggable="false" style="margin-left:5px; margin-right:3.5vw;">${homeName}</a>
-                            <a href=${leaderboardsURL} draggable="false" style="color:${activeColor};">${leaderboardsName}</a>
+                            <a href=${leaderboardsURL} draggable="false" class="activeColor">${leaderboardsName}</a>
                             <a href=${accountURL} draggable="false" style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
                             `;
                             break;
@@ -221,7 +219,7 @@ function displayLinks(dID) {
                             htmlInfo = `
                             <a href=${homeURL} draggable="false" style="margin-left:5px; margin-right:3.5vw;">${homeName}</a>
                             <a href=${leaderboardsURL} draggable="false">${leaderboardsName}</a>
-                            <a href=${accountURL} draggable="false" style="margin-left:3.5vw; margin-right:5px; color:${activeColor};">${accountName}</a>
+                            <a href=${accountURL} draggable="false" class="activeColor" style="margin-left:3.5vw; margin-right:5px;">${accountName}</a>
                             `;
                             break;
                         default:
@@ -245,14 +243,14 @@ function displayLinks(dID) {
                     switch (getCurrentPage) {
                         case accessURL:
                             htmlInfo = `
-                                <a href=${accessURL} draggable="false" style="margin-left:5px; margin-right:3.5vw; color:${activeColor};">${accessName}</a>
+                                <a href=${accessURL} draggable="false" class="activeColor" style="margin-left:5px; margin-right:3.5vw;">${accessName}</a>
                                 <a href=${loginURL} draggable="false" style="margin-left:3.5vw; margin-right:5px;">${loginName}</a>
                                 `;
                             break;
                         case loginURL:
                             htmlInfo = `
                                 <a href=${accessURL} draggable="false" style="margin-left:5px; margin-right:3.5vw;">${accessName}</a>
-                                <a href=${loginURL} draggable="false" style="margin-left:3.5vw; margin-right:5px; color:${activeColor};">${loginName}</a>
+                                <a href=${loginURL} draggable="false" class="activeColor" style="margin-left:3.5vw; margin-right:5px;">${loginName}</a>
                                 `;
                             break;
                         default:

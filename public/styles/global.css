@@ -31,7 +31,7 @@ margin-top: 5px;
 --darkMode-backgroundImage: 
 linear-gradient(rgba(26, 26, 26, 0.7),rgb(27, 27, 27, 1.0)), 
 url(../images/background-smallBlur.png);
---darkMode-hoverColor: rgb(0, 255, 170);
+--darkMode-ActiveAndHoverColor: rgb(0, 255, 170);
 
 /* end of dark mode variables */
 
@@ -46,7 +46,7 @@ url(../images/background-smallBlur.png);
 --lightMode-backgroundImage: 
 linear-gradient(rgba(26, 26, 26, 0.7),rgb(97, 97, 97)), 
 url(../images/background-smallBlur.png);
---lightMode-hoverColor: rgb(0, 255, 170);
+--lightMode-ActiveAndHoverColor: rgb(2, 175, 68); /* old hover color: rgb(0, 255, 170) */
 
 /* end of light mode variables */
 
@@ -79,7 +79,7 @@ font-size: 16px;
 
 #listButton:hover {
 cursor: pointer;
-color: var(--main-hoverColor);
+color: var(--main-ActiveAndHoverColor);
 }
 
 }
@@ -99,7 +99,7 @@ font-size: 22px;
 
 #listButton:hover {
 cursor: pointer;
-color: var(--main-hoverColor);
+color: var(--main-ActiveAndHoverColor);
 }
 
 }
@@ -117,7 +117,7 @@ body {
 --main-border: var(--darkMode-border);
 --main-filter: var(--darkMode-filter);
 background-image: var(--darkMode-backgroundImage);
---main-hoverColor: var(--darkMode-hoverColor);
+--main-ActiveAndHoverColor: var(--darkMode-ActiveAndHoverColor);
 }
 
 }
@@ -129,7 +129,7 @@ background-image: var(--darkMode-backgroundImage);
 --main-border: var(--darkMode-border);
 --main-filter: var(--darkMode-filter);
 background-image: var(--darkMode-backgroundImage);
---main-hoverColor: var(--darkMode-hoverColor);
+--main-ActiveAndHoverColor: var(--darkMode-ActiveAndHoverColor);
 }
 
 /* end of dark mode */
@@ -145,7 +145,7 @@ body {
 --main-border: var(--lightMode-border);
 --main-filter: var(--lightMode-filter);
 background-image: var(--lightMode-backgroundImage);
---main-hoverColor: var(--lightMode-hoverColor);
+--main-ActiveAndHoverColor: var(--lightMode-ActiveAndHoverColor);
 }
 
 }
@@ -157,7 +157,7 @@ background-image: var(--lightMode-backgroundImage);
 --main-border: var(--lightMode-border);
 --main-filter: var(--lightMode-filter);
 background-image: var(--lightMode-backgroundImage);
---main-hoverColor: var(--lightMode-hoverColor);
+--main-ActiveAndHoverColor: var(--lightMode-ActiveAndHoverColor);
 }
 
 /* end of light mode */
@@ -166,57 +166,57 @@ background-image: var(--lightMode-backgroundImage);
 
 @media only screen and (max-width: 768px) {
 
-    #page {
-        animation: var(--global-fadeIn);
-        -webkit-animation: var(--global-fadeIn);
-        -moz-animation: var(--global-fadeIn);
-        -o-animation: var(--global-fadeIn);
-        -ms-animation: var(--global-fadeIn);
-      }
-      @keyframes fadeIn {
-        0% {
-          opacity:0;
-        }
-        100% {
-          opacity:1;
-        }
-      }
-      
-      @-moz-keyframes fadeIn {
-        0% {
-          opacity:0;
-        }
-        100% {
-          opacity:1;
-        }
-      }
-      
-      @-webkit-keyframes fadeIn {
-        0% {
-          opacity:0;
-        }
-        100% {
-          opacity:1;
-        }
-      }
-      
-      @-o-keyframes fadeIn {
-        0% {
-          opacity:0;
-        }
-        100% {
-          opacity:1;
-        }
-      }
-      
-      @-ms-keyframes fadeIn {
-        0% {
-          opacity:0;
-        }
-        100% {
-          opacity:1;
-      }}
-    }
+#page {
+animation: var(--global-fadeIn);
+-webkit-animation: var(--global-fadeIn);
+-moz-animation: var(--global-fadeIn);
+-o-animation: var(--global-fadeIn);
+-ms-animation: var(--global-fadeIn);
+}
+@keyframes fadeIn {
+0% {
+opacity:0;
+}
+100% {
+opacity:1;
+}
+}
+
+@-moz-keyframes fadeIn {
+0% {
+opacity:0;
+}
+100% {
+opacity:1;
+}
+}
+
+@-webkit-keyframes fadeIn {
+0% {
+opacity:0;
+}
+100% {
+opacity:1;
+}
+}
+
+@-o-keyframes fadeIn {
+0% {
+opacity:0;
+}
+100% {
+opacity:1;
+}
+}
+
+@-ms-keyframes fadeIn {
+0% {
+opacity:0;
+}
+100% {
+opacity:1;
+}}
+}
 
 /* */
 
@@ -235,7 +235,11 @@ supported by Chrome, Edge, Opera and Firefox */
 }
 
 a:hover{
-color: var(--main-hoverColor); 
+color: var(--main-ActiveAndHoverColor); 
+}
+
+.activeColor {
+color: var(--main-ActiveAndHoverColor)
 }
 
 /* for at table ser riktig ut */
@@ -260,7 +264,7 @@ width: 25% ;
 }*/
 
 td { 
-    padding-bottom: 15px;
+padding-bottom: 15px;
 } 
 
 #rmbrmebtnG > #rmbrMeTxt{

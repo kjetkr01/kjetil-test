@@ -102,7 +102,7 @@ font-size: 16px;
 
 #usernameAndWorkout:hover {
 cursor: pointer;
-color: var(--main-hoverColor);
+color: var(--main-ActiveAndHoverColor);
 }
 
 #gymtimeG > #gymtime {
@@ -204,7 +204,7 @@ font-size: 18px;
 
 #usernameAndWorkout:hover {
 cursor: pointer;
-color: var(--main-hoverColor);
+color: var(--main-ActiveAndHoverColor);
 }
 
 #gymtimeG > #gymtime {
