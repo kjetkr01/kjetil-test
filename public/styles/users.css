@@ -89,6 +89,7 @@ background-color: var(--main-themeColor);
 color: var(--main-textColor);
 font-size: 30px;
 margin-left: 25px;
+margin-right: 25px;
 font-weight: bold;
 }
 

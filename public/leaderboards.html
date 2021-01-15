@@ -95,7 +95,7 @@
 
       <div id="usersBtnG">
          <p id="usersBtn">
-            <button id="listButton" onClick='redirectToUsers();'>Vis liste med brukere</button>
+            <button class="listButton" onClick='redirectToUsers();'>Vis liste med brukere</button>
          </p>
       </div>
 
@@ -151,7 +151,7 @@
                list.innerHTML += `
       
                <tr>
-                  <td><button id="listButton" onClick="console.log('clicked on Totalt')">Totalt</button></td>
+                  <td><button class="listButton" onClick="console.log('clicked on Totalt')">Totalt</button></td>
                </tr>
 
                `;
@@ -163,7 +163,7 @@
                list.innerHTML += `
       
                <tr>
-                  <td><button id="listButton" onClick="console.log('clicked on ${resp[i]}')">${resp[i]}</button></td>
+                  <td><button class="listButton" onClick="console.log('clicked on ${resp[i]}')">${resp[i]}</button></td>
                </tr>
 
                `;

@@ -72,14 +72,14 @@ url(../images/background-smallBlur.png);
 
 @media only screen and (max-width: 768px) {
 
-#listButton{
+.listButton{
 background: transparent;
 border: none !important;
 color: var(--main-textColor);
 font-size: 16px;
 }
 
-#listButton:hover {
+.listButton:hover {
 cursor: pointer;
 color: var(--main-ActiveAndHoverColor);
 }
@@ -92,14 +92,14 @@ color: var(--main-ActiveAndHoverColor);
 
 @media only screen and (min-width: 769px) {
 
-#listButton{
+.listButton{
 background: transparent;
 border: none !important;
 color: var(--main-textColor);
 font-size: 22px;
 }
 
-#listButton:hover {
+.listButton:hover {
 cursor: pointer;
 color: var(--main-ActiveAndHoverColor);
 }

@@ -102,12 +102,6 @@
         <div id="listG">
             <table id="list">
 
-                <!--
-                <tr>
-                    <td id="listButton">${loadingText}</td>
-                </tr>
-            -->
-
             </table>
         </div>
 
@@ -120,18 +114,12 @@
         <div id="buttonsG">
             <table id="buttons">
 
-                <!--
-                <tr>
-                    <td id="listButton">${loadingText}</td>
-                </tr>
-            -->
-
             </table>
         </div>
 
         <div id="backBtnG">
             <p id="backBtn">
-                <button id="listButton" onClick='window.history.back();'>Tilbake</button>
+                <button class="listButton" onClick='window.history.back();'>Tilbake</button>
             </p>
         </div>
 
@@ -225,6 +213,7 @@
         if (displayname) {
             document.getElementById("displayname").innerHTML = displayname;
         }
+        /* old version
         if (age) {
             infoList.innerHTML = `
             <tr>
@@ -246,6 +235,28 @@
             </tr>
             `;
         }
+        */
+
+        // new version
+
+        let infoString = "";
+
+        if (age) {
+            infoString += `<td>${age} år</td>`;
+        }
+        if (height) {
+            infoString += `<td>${height} cm</td>`;
+        }
+        if (weight) {
+            infoString += `<td>${weight} kg</td>`;
+        }
+
+        if (infoString) {
+            infoList.innerHTML = `<tr>${infoString}</tr>`;
+        }
+
+        //
+
         if (program) {
 
             let dayTxt = "";
@@ -325,37 +336,48 @@
 
         // buttons
 
-        document.getElementById("buttons").innerHTML = "";
+        const buttons = document.getElementById("buttons");
+
+        let buttonsString = "";
+
+        buttons.innerHTML = "";
 
         if (Object.entries(lifts).length > 0 && current === "lifts") {
-            document.getElementById("buttons").innerHTML += `<button class="activeColor" onClick="changelistContent('lifts')">Løft</button>`;
+            //buttons.innerHTML += `<button class="activeColor" onClick="changelistContent('lifts')">Løft</button>`;
+            buttonsString += `<td><button class="activeColor listButton" onClick="changelistContent('lifts')">Løft</button></td>`;
         } else if (Object.entries(lifts).length > 0) {
-            document.getElementById("buttons").innerHTML += `<button onClick="changelistContent('lifts')">Løft</button>`;
+            //buttons.innerHTML += `<button onClick="changelistContent('lifts')">Løft</button>`;
+            buttonsString += `<td><button class="listButton" onClick="changelistContent('lifts')">Løft</button></td>`;
         }
 
         if (Object.entries(goals).length > 0 && current === "goal") {
-            document.getElementById("buttons").innerHTML += `<button class="activeColor" onClick="changelistContent('goal')">Mål</button>`;
+            //buttons.innerHTML += `<button class="activeColor" onClick="changelistContent('goal')">Mål</button>`;
+            buttonsString += `<td><button class="activeColor listButton" onClick="changelistContent('goal')">Mål</button></td>`;
         } else if (Object.entries(goals).length > 0) {
-            document.getElementById("buttons").innerHTML += `<button onClick="changelistContent('goal')">Mål</button>`;
+            //buttons.innerHTML += `<button onClick="changelistContent('goal')">Mål</button>`;
+            buttonsString += `<td><button class="listButton" onClick="changelistContent('goal')">Mål</button></td>`;
         }
 
         if (Object.entries(program).length > 0) {
 
-            let keys = Object.keys(program);
+            /*let keys = Object.keys(program);
 
             for (let i = 0; i < Object.entries(program).length; i++) {
-                if (program[keys[i]].length > 0) {
+                if (program[keys[i]].length > 0) {*/
 
                     if (current === "plan") {
-                        document.getElementById("buttons").innerHTML += `<button class="activeColor" onClick="changelistContent('plan')">Treningsplan</button>`;
+                        //buttons.innerHTML += `<button class="activeColor" onClick="changelistContent('plan')">Treningsplan</button>`;
+                        buttonsString += `<td><button class="activeColor listButton" onClick="changelistContent('plan')">Treningsplan</button></td>`;
                     } else {
-                        document.getElementById("buttons").innerHTML += `<button onClick="changelistContent('plan')">Treningsplan</button>`;
+                        //buttons.innerHTML += `<button onClick="changelistContent('plan')">Treningsplan</button>`;
+                        buttonsString += `<td><button class="listButton" onClick="changelistContent('plan')">Treningsplan</button></td>`;
                     }
-                    return;
 
-                }
-            }
+                //}
+            //}
         }
+
+        buttons.innerHTML = `<tr>${buttonsString}</tr>`;
 
     }
 

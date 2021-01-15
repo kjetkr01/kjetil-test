@@ -95,7 +95,7 @@
 
         <div id="backBtnG">
             <p id="backBtn">
-                <button id="listButton" onClick="redirectToLeaderboards()">Tilbake</button>
+                <button class="listButton" onClick="redirectToLeaderboards()">Tilbake</button>
             </p>
         </div>
 
@@ -151,7 +151,7 @@
                     for (let i = 0; i < resp.length; i++) {
                         getListOfAllUsersDiv.innerHTML += `
                         <tr>
-                        <td><button id="listButton" onClick="viewUser('${resp[i].username}')">${resp[i].username}</button></td>
+                        <td><button class="listButton" onClick="viewUser('${resp[i].username}')">${resp[i].username}</button></td>
                     </tr>
                     `;
                     }
