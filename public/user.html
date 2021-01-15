@@ -155,6 +155,7 @@
     let goals = "";
 
     const viewingUser = sessionStorage.getItem("ViewingUser");
+    const listTitleG = document.getElementById("listTitleG");
     const listTitle = document.getElementById("listTitle");
     const list = document.getElementById("list");
 
@@ -306,7 +307,7 @@
 
         if (content === "lifts" || content === "goal" || content === "plan") {
 
-            document.getElementById("list").innerHTML = "";
+            list.innerHTML = "";
             document.getElementById("showTotalLift").innerHTML = "";
 
             switch (content) {
@@ -365,15 +366,15 @@
             for (let i = 0; i < Object.entries(program).length; i++) {
                 if (program[keys[i]].length > 0) {*/
 
-                    if (current === "plan") {
-                        //buttons.innerHTML += `<button class="activeColor" onClick="changelistContent('plan')">Treningsplan</button>`;
-                        buttonsString += `<td><button class="activeColor listButton" onClick="changelistContent('plan')">Treningsplan</button></td>`;
-                    } else {
-                        //buttons.innerHTML += `<button onClick="changelistContent('plan')">Treningsplan</button>`;
-                        buttonsString += `<td><button class="listButton" onClick="changelistContent('plan')">Treningsplan</button></td>`;
-                    }
+            if (current === "plan") {
+                //buttons.innerHTML += `<button class="activeColor" onClick="changelistContent('plan')">Treningsplan</button>`;
+                buttonsString += `<td><button class="activeColor listButton" onClick="changelistContent('plan')">Treningsplan</button></td>`;
+            } else {
+                //buttons.innerHTML += `<button onClick="changelistContent('plan')">Treningsplan</button>`;
+                buttonsString += `<td><button class="listButton" onClick="changelistContent('plan')">Treningsplan</button></td>`;
+            }
 
-                //}
+            //}
             //}
         }
 
@@ -386,17 +387,20 @@
         if (Object.entries(lifts).length > 0) {
 
             let keys = Object.keys(lifts);
-            list.innerHTML = "";
+            list.innerHTML = "<tr>";
 
             if (keys.length > 0) {
-                listTitle.innerText = "Løft:"
+
+                listTitle.innerText = "Løft:";
                 for (let i = 0; i < keys.length; i++) {
 
                     let liftKeys = lifts[keys[i]];
 
                     if (liftKeys.ORM !== "0" && liftKeys.ORM !== 0 && liftKeys.ORM !== "") {
 
-                        let msg = `${keys[i]} : ${liftKeys.ORM} kg<br>`;
+                        let msg = `
+                        <td>${keys[i]} : ${liftKeys.ORM} kg</td>
+                        `;
 
                         let prDateArr = liftKeys.PRdate.split(".");
 
@@ -413,7 +417,21 @@
                                     return parseInt(daysSinceTime);
                                 }
 
-                                msg = `${keys[i]} : ${liftKeys.ORM} kg Dato: ${liftKeys.PRdate} Dager siden: ${calcTime()}<br>`;
+                                msg = `
+                                <td>${keys[i]}: ${liftKeys.ORM} kg
+                                <br>
+                                Dato: ${liftKeys.PRdate}
+                                <br>
+                                Dager siden: ${calcTime()}</td>`;
+
+                                /*
+                                msg = `
+                                <td>${keys[i]}: <br> ${liftKeys.ORM} kg</td>
+                                
+                                <td>Dato: <br>${liftKeys.PRdate}</td>
+                                
+                                <td>Dager siden: <br>${calcTime()}</td>`;
+                                */
 
                             }
 
@@ -422,6 +440,8 @@
                         list.innerHTML += msg;
                     }
                 }
+
+                list.innerHTML += "</tr>"
 
                 if (lifts.Benkpress && lifts.Knebøy && lifts.Markløft) {
 
@@ -439,7 +459,7 @@
 
                                 const totalORM = (Benkpress + Knebøy + Markløft);
 
-                                document.getElementById("showTotalLift").innerHTML = `PR Total: <br> ${totalORM.toFixed(2)} KG | ${(totalORM * 2.2).toFixed(2)} LBS`;
+                                document.getElementById("showTotalLift").innerHTML = `PR Totalt: <br> ${totalORM.toFixed(2)} KG | ${(totalORM * 2.2).toFixed(2)} LBS`;
 
                             }
                         }
@@ -447,7 +467,6 @@
 
                 }
 
-                let liftsTestDef = { "Benkpress": { "ORM": "50", "PRdate": "17.12.2020" }, "Knebøy": { "ORM": "75.5", "PRdate": "17.12.2020" }, "Markløft": { "ORM": "121.25", "PRdate": "17.12.2020" } };
             }
         }
 
@@ -458,7 +477,7 @@
         if (Object.entries(goals).length > 0) {
 
             let keys = Object.keys(goals);
-            list.innerHTML = "";
+            list.innerHTML = "<tr>";
 
             if (keys.length > 0) {
                 listTitle.innerText = "Mål:"
@@ -468,7 +487,7 @@
 
                     if (liftKeys.goal !== "0" && liftKeys.goal !== 0 && liftKeys.goal !== "") {
 
-                        let msg = `${keys[i]} : ${liftKeys.goal} kg<br>`;
+                        let msg = `<td>${keys[i]}:<br>${liftKeys.goal} kg</td>`;
 
                         let prDateArr = liftKeys.Goaldate.split(".");
 
@@ -499,13 +518,13 @@
 
                                         let untilGoal = `${untilGoalCalcKG} kg`;
 
-                                        msg = `${keys[i]} : ${liftKeys.goal} kg Ifra målet: ${untilGoal} Dato: ${liftKeys.Goaldate} Dager siden: ${calcTime()}<br>`;
+                                        msg = `<td>${keys[i]}:<br>${liftKeys.goal} kg<br>Ifra målet:<br>${untilGoal}<br>Dato:<br>${liftKeys.Goaldate}<br>Dager siden: ${calcTime()}</td>`;
                                     } else {
-                                        msg = `${keys[i]} : ${liftKeys.goal} kg Dato: ${liftKeys.Goaldate} Dager siden: ${calcTime()}<br>`;
+                                        msg = `<td>${keys[i]}:<br>${liftKeys.goal} kg<br>Dato:<br>${liftKeys.Goaldate}<br>Dager siden:<br>${calcTime()}</td>`;
                                     }
 
                                 } else {
-                                    msg = `${keys[i]} : ${liftKeys.goal} kg Dato: ${liftKeys.Goaldate} Dager siden: ${calcTime()}<br>`;
+                                    msg = `${keys[i]}: ${liftKeys.goal} kg Dato: ${liftKeys.Goaldate} Dager siden: ${calcTime()}<br>`;
                                 }
                             }
 
@@ -515,7 +534,8 @@
                     }
                 }
 
-                let goalsTestDef = { "Benkpress": { "goal": "50", "Goaldate": "17.12.2020" }, "Knebøy": { "goal": "75.5", "Goaldate": "17.12.2020" }, "Markløft": { "goal": "121.25", "Goaldate": "17.12.2020" } };
+                list.innerHTML += "</tr>";
+
             }
         }
 
@@ -526,7 +546,7 @@
         if (Object.entries(program).length > 0) {
 
             let keys = Object.keys(program);
-            list.innerHTML = "";
+            list.innerHTML = "<tr>";
 
             if (keys.length > 0) {
                 listTitle.innerText = "Treningsplan:"
@@ -536,13 +556,15 @@
 
                     if (liftKeys !== "0" && liftKeys !== 0 && liftKeys !== "") {
 
-                        let msg = `${keys[i]}: ${liftKeys}<br>`;
+                        let msg = `<td>${keys[i]}:<br>${liftKeys}</td>`;
 
                         list.innerHTML += msg;
                     }
                 }
 
             }
+
+            list.innerHTML += "</tr>";
         }
 
     }
