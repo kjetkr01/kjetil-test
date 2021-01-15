@@ -11,6 +11,10 @@ background-attachment: fixed;
 text-decoration: none;
 }
 
+#hrTest {
+  border: 1px solid var(--main-textColor);
+}
+
 /* global variables */
 :root {
 
