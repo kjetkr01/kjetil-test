@@ -140,24 +140,30 @@
 
 <script>
 
-let expiry = new Date();
-expiry.setTime(expiry.getTime()+(10*60*1000));
-
-   document.cookie = "visited=yes; expires=" + expiry.toLocaleDateString() + "; secure;";
-
    displayLinks("links");
    checkColorTheme();
 
+   let savedMin = "";
    isGymOpenUpdater();
    function isGymOpenUpdater() {
 
-      const gymopen = isGymOpen();
-      if (gymopen) {
-         document.getElementById("gymtime").innerHTML = gymopen.message;
-         document.getElementById("gymtimesmall").innerHTML = gymopen.timeLeft;
+      if (showGymCloseTime === true) {
 
-         setTimeout(isGymOpenUpdater, 30000);
+         if (savedMin === new Date().getMinutes()) {
+            
+         } else {
+            savedMin = new Date().getMinutes();
+
+            const gymopen = isGymOpen();
+            if (gymopen) {
+               document.getElementById("gymtime").innerHTML = gymopen.message;
+               document.getElementById("gymtimesmall").innerHTML = gymopen.timeLeft;
+            }
+         }
+
+         setTimeout(isGymOpenUpdater, 1000);
       }
+
    }
 
    const partofdaymsg = partOfDayMessage(userDisplayname);

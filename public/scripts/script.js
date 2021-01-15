@@ -2,9 +2,6 @@
 
 function isGymOpen() {
 
-    if (showGymCloseTime === true) {
-        console.log("showing gym close time");
-
         //const da = new Date("Jan 13, 2021 23:30:00"); // til testing
         const da = new Date();
 
@@ -86,7 +83,6 @@ function isGymOpen() {
 
         return { "message": isOpenMessage, "timeLeft": timeLeftMessage };
 
-    }
 }
 
 

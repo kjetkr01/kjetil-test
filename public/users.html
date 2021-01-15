@@ -123,6 +123,9 @@
             const usermsg1 = document.getElementById("usermsg1");
 
             usermsg1.innerText = loadingText;
+            getListOfAllUsersDiv.innerHTML = `<tr>
+                        <td id="listButton">${loadingText}</td>
+                    </tr>`;
 
             const body = { "authToken": token, "userInfo": user };
             const url = `/users/list/all`;

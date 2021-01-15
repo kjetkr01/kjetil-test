@@ -114,6 +114,60 @@
    displayLinks("links");
    checkColorTheme();
 
+   getListOfLeaderboard();
+   async function getListOfLeaderboard() {
+
+      if (token && user) {
+
+         const body = { "authToken": token, "userInfo": user };
+         const url = `/users/list/all/leaderboards`;
+
+         const list = document.getElementById("list");
+
+         list.innerHTML = `<tr>
+                  <td id="listButton">${loadingText}</td>
+               </tr>`;
+
+         const resp = await callServerAPI(body, url);
+
+         list.innerHTML = "";
+
+         if (resp.length > 0) {
+
+            if (resp[0] === "Benkpress" && resp[1] === "Knebøy" && resp[2] === "Markløft") {
+
+               list.innerHTML += `
+      
+               <tr>
+                  <td><button id="listButton" onClick="console.log('clicked on Totalt')">Totalt</button></td>
+               </tr>
+
+               `;
+
+            }
+
+            for (let i = 0; i < resp.length; i++) {
+
+               list.innerHTML += `
+      
+               <tr>
+                  <td><button id="listButton" onClick="console.log('clicked on ${resp[i]}')">${resp[i]}</button></td>
+               </tr>
+
+               `;
+            }
+
+         } else {
+            list.innerHTML += errorLoadingText;
+         }
+
+      } else {
+         list.innerHTML += "Det er ingen ledertavler!";
+      }
+   }
+
+   //
+
    getListOfTotalUsers();
    async function getListOfTotalUsers() {
 
@@ -122,11 +176,11 @@
          const body = { "authToken": token, "userInfo": user, "numbersOnly": true };
          const url = `/users/list/all/leaderboards`;
 
-         document.getElementById("usermsg1").innerHTML = loadingText;
+         const totalLeaderboardUsers = document.getElementById("usermsg1");
+
+         totalLeaderboardUsers.innerHTML = loadingText;
 
          const resp = await callServerAPI(body, url);
-
-         const totalLeaderboardUsers = document.getElementById("usermsg1");
 
          totalLeaderboardUsers.innerHTML = "";
 
@@ -141,20 +195,6 @@
       } else {
          totalLeaderboardUsers.innerHTML += "Det er ingen brukere!";
       }
-   }
-
-   let liste = ["Totalt", "Benkpress", "Knebøy", "Markløft", "Adde mer etterhvert"];
-
-   const list = document.getElementById("list");
-
-   for (let i = 0; i < liste.length; i++) {
-      list.innerHTML += `
-      
-      <tr>
-         <td><button id="listButton">${liste[i]}</button></td>
-      </tr>
-
-      `;
    }
 
 </script>

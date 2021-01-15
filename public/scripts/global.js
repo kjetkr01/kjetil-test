@@ -43,22 +43,6 @@ if (user) {
 
 //
 
-// check if token / user exists
-
-if (token) {
-    console.log("Token: " + token);
-} else {
-    console.log("No token!");
-}
-
-if (user) {
-    console.log("Logged in as: " + userDisplayname);
-} else {
-    console.log("Not logged in!");
-}
-
-//
-
 //auto redirect to login if token is invalid
 window.onload = validateToken;
 async function validateToken() {
@@ -88,16 +72,14 @@ async function validateToken() {
             const resp = await callServerAPI(body, url);
 
             if (resp) {
-                console.log("Token is valid");
+                
             } else {
-                console.log("invalid token");
                 localStorage.clear();
                 sessionStorage.clear();
                 redirectToLogin();
             }
 
         } else {
-            console.log("no token/user, skipped");
             redirectToLogin();
         }
     }
@@ -143,14 +125,8 @@ async function callServerAPI(body, url) {
 let currentdID = "";
 let savedWidth = window.innerWidth;
 
-/*window.addEventListener("resize", function () {
-    console.log("Updated page, resize")
-    displayLinks(currentdID);
-});*/
-
 setInterval(() => {
     if (savedWidth !== window.innerWidth) {
-        console.log("Updated page, resize");
         displayLinks(currentdID);
     }
 }, 100);
@@ -180,8 +156,6 @@ function displayLinks(dID) {
             const getCurrentPage = currentPageURL.split("/").pop();
 
             const footermenu = document.getElementById("footermenu");
-
-            console.log("Current Page:" + getCurrentPage);
 
             if (token && user) {
 

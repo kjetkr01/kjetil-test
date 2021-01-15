@@ -108,15 +108,26 @@ class StorageHandler {
             await client.connect();
             // evt legge til lifts og andre ting brukeren trenger å motta
 
-            results = await client.query('SELECT "id","username","displayname","settings" FROM "public"."users"');
+            results = await client.query('SELECT "username","settings","lifts" FROM "public"."users"');
 
             let counter = 1;
+            let leaderboardsCounter = 0;
             let info = {};
+            let leaderboardsArr = [];
 
             for (let i = 0; i < results.rows.length; i++) {
                 if (results.rows[i].settings.displayLeaderboards.value === true) {
                     // evt legge til løft osv?
-                    info[counter] = { "username": results.rows[i].username };
+                    let getLeaderboard = Object.keys(results.rows[i].lifts);
+
+                    for(let j = 0; j < getLeaderboard.length; j++){
+                        if(!leaderboardsArr.includes(getLeaderboard[leaderboardsCounter]) && getLeaderboard[leaderboardsCounter]){
+                            leaderboardsArr.push(getLeaderboard[leaderboardsCounter]);
+                            leaderboardsCounter++;
+                        }
+                    }
+
+                    info[counter] = { "username": results.rows[i].username};
                     counter++;
                 }
             }
@@ -124,8 +135,7 @@ class StorageHandler {
             if (numbersOnly === true) {
                 results = Object.entries(info).length;
             } else {
-                results = await client.query('SELECT "id","username","displayname" FROM "public"."users"');
-                results = (results.rows.length > 0) ? results.rows : null;
+                results = leaderboardsArr;
             }
 
             client.end();
