@@ -66,6 +66,46 @@ url(../images/background-smallBlur.png);
 
 }
 
+/* media query mobile */
+
+@media only screen and (max-width: 768px) {
+
+#listButton{
+background: transparent;
+border: none !important;
+color: var(--main-textColor);
+font-size: 16px;
+}
+
+#listButton:hover {
+cursor: pointer;
+color: var(--main-hoverColor);
+}
+
+}
+
+/* end of mobile query */
+
+/* media query desktop */
+
+@media only screen and (min-width: 769px) {
+
+#listButton{
+background: transparent;
+border: none !important;
+color: var(--main-textColor);
+font-size: 22px;
+}
+
+#listButton:hover {
+cursor: pointer;
+color: var(--main-hoverColor);
+}
+
+}
+
+/* end of dekstop query */
+
 /* dark mode */
 
 @media (prefers-color-scheme: dark) {

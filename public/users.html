@@ -75,9 +75,15 @@
 
         <!-- content/middle -->
 
-        <div id="backBtnG">
-            <p id="backBtn">
-                <button id="listButton" onClick="redirectToLeaderboards()">Tilbake</button>
+        <div id="usermsg1G">
+            <p id="usermsg1">
+
+            </p>
+        </div>
+
+        <div id="listTitleG">
+            <p id="listTitle">
+
             </p>
         </div>
 
@@ -87,9 +93,9 @@
             </table>
         </div>
 
-        <div id="usermsg1G">
-            <p id="usermsg1">
-
+        <div id="backBtnG">
+            <p id="backBtn">
+                <button id="listButton" onClick="redirectToLeaderboards()">Tilbake</button>
             </p>
         </div>
 
@@ -120,12 +126,12 @@
         if (token && user) {
 
             const getListOfAllUsersDiv = document.getElementById("list");
+            const listTitle = document.getElementById("listTitle");
+            const listTitleG = document.getElementById("listTitleG");
             const usermsg1 = document.getElementById("usermsg1");
 
             usermsg1.innerText = loadingText;
-            getListOfAllUsersDiv.innerHTML = `<tr>
-                        <td id="listButton">${loadingText}</td>
-                    </tr>`;
+            listTitle.innerText = loadingText;
 
             const body = { "authToken": token, "userInfo": user };
             const url = `/users/list/all`;
@@ -135,6 +141,10 @@
             getListOfAllUsersDiv.innerHTML = "";
 
             if (resp && resp[0]) {
+
+                listTitle.innerHTML = `Brukernavn`;
+
+                listTitleG.innerHTML += `<hr>`;
 
                 if (resp[0].username) {
 

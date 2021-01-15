@@ -56,21 +56,10 @@ width: 100%;
 text-align: center;
 }
 
-#listButton{
-background: transparent;
-border: none !important;
-color: var(--main-textColor);
-font-size: 16px;
-}
-
-#listButton:hover {
-cursor: pointer;
-color: var(--main-hoverColor);
-}
-
 #listTitleG > #listTitle {
 color: var(--main-textColor);
 font-size: 18px;
+font-weight: bold;
 width: 100%;
 text-align: center;
 }
@@ -136,21 +125,10 @@ width: 100%;
 text-align: center;
 }
 
-#listButton{
-background: transparent;
-border: none !important;
-color: var(--main-textColor);
-font-size: 22px;
-}
-
-#listButton:hover {
-cursor: pointer;
-color: var(--main-hoverColor);
-}
-
 #listTitleG > #listTitle {
 color: var(--main-textColor);
 font-size: 20px;
+font-weight: bold;
 width: 100%;
 text-align: center;
 }
