@@ -353,9 +353,9 @@ server.post("/whoIsWorkingOutToday", auth, async (req, res) => {
 
 server.post("/validate", auth, async (req, res) => {
 
-     const currentUser = JSON.parse(req.body.userInfo);
+     //const currentUser = JSON.parse(req.body.userInfo);
 
-     console.log("valid, current user: " + currentUser.username); // test / grei log i terminal
+     //console.log("valid, current user: " + currentUser.username); // test / grei log i terminal
 
      res.status(200).json("Ok").end();
 

@@ -102,7 +102,6 @@
          <table id="boardTitle">
 
          </table>
-         <hr id="hrTest">
       </div>
 
       <div id="boardG">
@@ -210,6 +209,8 @@
         <th>Trener</th>
         </tr>
         `;
+
+        document.getElementById("boardTitleG").innerHTML += `<hr style="margin-top:5px;">`;
 
          for (let i = 0; i < Object.entries(resp).length; i++) {
             /* nytt "versjon" */

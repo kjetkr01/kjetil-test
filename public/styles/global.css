@@ -11,7 +11,7 @@ background-attachment: fixed;
 text-decoration: none;
 }
 
-#hrTest {
+hr {
 border: none;
 height: 1px;
 background-color: var(--main-textColor);
