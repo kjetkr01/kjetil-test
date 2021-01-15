@@ -167,6 +167,7 @@
     let goals = "";
 
     const viewingUser = sessionStorage.getItem("ViewingUser");
+    const listTitle = document.getElementById("listTitle");
     const list = document.getElementById("list");
 
     if (viewingUser) {
@@ -327,13 +328,13 @@
         document.getElementById("buttons").innerHTML = "";
 
         if (Object.entries(lifts).length > 0 && current === "lifts") {
-            document.getElementById("buttons").innerHTML += `<button style='color:${activeColor};' onClick="changelistContent('lifts')">Løft</button>`;
+            document.getElementById("buttons").innerHTML += `<button class="activeColor" onClick="changelistContent('lifts')">Løft</button>`;
         } else if (Object.entries(lifts).length > 0) {
             document.getElementById("buttons").innerHTML += `<button onClick="changelistContent('lifts')">Løft</button>`;
         }
 
         if (Object.entries(goals).length > 0 && current === "goal") {
-            document.getElementById("buttons").innerHTML += `<button style='color:${activeColor};' onClick="changelistContent('goal')">Mål</button>`;
+            document.getElementById("buttons").innerHTML += `<button class="activeColor" onClick="changelistContent('goal')">Mål</button>`;
         } else if (Object.entries(goals).length > 0) {
             document.getElementById("buttons").innerHTML += `<button onClick="changelistContent('goal')">Mål</button>`;
         }
@@ -346,7 +347,7 @@
                 if (program[keys[i]].length > 0) {
 
                     if (current === "plan") {
-                        document.getElementById("buttons").innerHTML += `<button style='color:${activeColor};' onClick="changelistContent('plan')">Treningsplan</button>`;
+                        document.getElementById("buttons").innerHTML += `<button class="activeColor" onClick="changelistContent('plan')">Treningsplan</button>`;
                     } else {
                         document.getElementById("buttons").innerHTML += `<button onClick="changelistContent('plan')">Treningsplan</button>`;
                     }
@@ -366,7 +367,7 @@
             list.innerHTML = "";
 
             if (keys.length > 0) {
-                list.innerHTML = "Løft: <br><br>";
+                listTitle.innerText = "Løft:"
                 for (let i = 0; i < keys.length; i++) {
 
                     let liftKeys = lifts[keys[i]];
@@ -438,7 +439,7 @@
             list.innerHTML = "";
 
             if (keys.length > 0) {
-                list.innerHTML = "Mål: <br><br>";
+                listTitle.innerText = "Mål:"
                 for (let i = 0; i < keys.length; i++) {
 
                     let liftKeys = goals[keys[i]];
@@ -506,7 +507,7 @@
             list.innerHTML = "";
 
             if (keys.length > 0) {
-                list.innerHTML = "Treningsplan: <br><br>";
+                listTitle.innerText = "Treningsplan:"
                 for (let i = 0; i < keys.length; i++) {
 
                     let liftKeys = program[keys[i]];
