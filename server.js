@@ -133,7 +133,7 @@ server.post("/users/list/all/leaderboards", auth, async (req, res) => {
 
      let numbersOnly = false;
 
-     if(req.body.numbersOnly && req.body.numbersOnly === true){
+     if (req.body.numbersOnly && req.body.numbersOnly === true) {
           numbersOnly = true;
      }
 

@@ -118,16 +118,19 @@ class StorageHandler {
             for (let i = 0; i < results.rows.length; i++) {
                 if (results.rows[i].settings.displayLeaderboards.value === true) {
                     // evt legge til løft osv?
+
                     let getLeaderboard = Object.keys(results.rows[i].lifts);
 
-                    for(let j = 0; j < getLeaderboard.length; j++){
-                        if(!leaderboardsArr.includes(getLeaderboard[leaderboardsCounter]) && getLeaderboard[leaderboardsCounter]){
+                    for (let j = 0; j < getLeaderboard.length; j++) {
+                        if (!leaderboardsArr.includes(getLeaderboard[leaderboardsCounter]) && getLeaderboard[leaderboardsCounter]) {
                             leaderboardsArr.push(getLeaderboard[leaderboardsCounter]);
                             leaderboardsCounter++;
                         }
                     }
 
-                    info[counter] = { "username": results.rows[i].username};
+                    leaderboardsCounter = 0;
+
+                    info[counter] = { "username": results.rows[i].username };
                     counter++;
                 }
             }
