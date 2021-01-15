@@ -560,8 +560,32 @@
 
                 list.innerHTML += "</tr>";
 
+                if (goals.Benkpress && goals.Knebøy && goals.Markløft) {
+
+                    let Benkpress = goals.Benkpress.goal;
+                    let Knebøy = goals.Knebøy.goal;
+                    let Markløft = goals.Markløft.goal;
+
+                    if (Benkpress !== "0" && Benkpress !== 0 && Benkpress !== "") {
+                        if (Knebøy !== "0" && Knebøy !== 0 && Knebøy !== "") {
+                            if (Markløft !== "0" && Markløft !== 0 && Markløft !== "") {
+
+                                Benkpress = parseFloat(Benkpress);
+                                Knebøy = parseFloat(Knebøy);
+                                Markløft = parseFloat(Markløft);
+
+                                const totalORM = (Benkpress + Knebøy + Markløft);
+
+                                document.getElementById("showTotalLift").innerHTML = `Mål Totalt: <br> ${totalORM.toFixed(2)} KG | ${(totalORM * 2.2).toFixed(2)} LBS`;
+
+                            }
+                        }
+                    }
+
             }
+
         }
+    }
 
     }
 
