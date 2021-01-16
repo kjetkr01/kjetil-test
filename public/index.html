@@ -140,137 +140,134 @@
 
 <script>
 
-   if (token && user) {
+   displayLinks("links");
+   checkColorTheme();
 
-      displayLinks("links");
-      checkColorTheme();
+   let savedMin = "";
+   isGymOpenUpdater();
+   function isGymOpenUpdater() {
 
-      let savedMin = "";
-      isGymOpenUpdater();
-      function isGymOpenUpdater() {
+      if (showGymCloseTime === true) {
 
-         if (showGymCloseTime === true) {
+         if (savedMin === new Date().getMinutes()) {
 
-            if (savedMin === new Date().getMinutes()) {
-
-            } else {
-               savedMin = new Date().getMinutes();
-
-               const gymopen = isGymOpen();
-               if (gymopen) {
-                  document.getElementById("gymtime").innerHTML = gymopen.message;
-                  document.getElementById("gymtimesmall").innerHTML = gymopen.timeLeft;
-               }
-            }
-
-            setTimeout(isGymOpenUpdater, 1000);
-         }
-
-      }
-
-      const partofdaymsg = partOfDayMessage(userDisplayname);
-      if (partofdaymsg) {
-         document.getElementById("usermsg1").innerHTML = partofdaymsg
-      }
-
-      checkTrainingSplit();
-      async function checkTrainingSplit() {
-
-         document.getElementById("usermsg2").innerHTML = loadingText;
-
-         const resp = await whatToTrainToday();
-
-         if (resp.length > 0) {
-            document.getElementById("usermsg2").innerHTML = resp;
          } else {
-            document.getElementById("usermsg2").innerHTML = errorLoadingText;
+            savedMin = new Date().getMinutes();
+
+            const gymopen = isGymOpen();
+            if (gymopen) {
+               document.getElementById("gymtime").innerHTML = gymopen.message;
+               document.getElementById("gymtimesmall").innerHTML = gymopen.timeLeft;
+            }
          }
 
+         setTimeout(isGymOpenUpdater, 1000);
       }
 
-      checkWhoIsWorkingOutToday();
-      async function checkWhoIsWorkingOutToday() {
+   }
 
-         const board = document.getElementById("board");
-         const boardTitle = document.getElementById("boardTitle");
-         const usermsg3 = document.getElementById("usermsg3");
+   const partofdaymsg = partOfDayMessage(userDisplayname);
+   if (partofdaymsg) {
+      document.getElementById("usermsg1").innerHTML = partofdaymsg
+   }
 
-         usermsg3.innerHTML = loadingText;
+   checkTrainingSplit();
+   async function checkTrainingSplit() {
 
-         const resp = await whoIsWorkingOutToday();
+      document.getElementById("usermsg2").innerHTML = loadingText;
 
-         if (Object.entries(resp).length > 0) {
+      const resp = await whatToTrainToday();
 
-            if(Object.entries(resp).length === 1){
-               usermsg3.innerHTML = `I dag trener ${Object.entries(resp).length} person!`;
-            }else{
-               usermsg3.innerHTML = `I dag trener ${Object.entries(resp).length} personer!`;
-            }
+      if (resp.length > 0) {
+         document.getElementById("usermsg2").innerHTML = resp;
+      } else {
+         document.getElementById("usermsg2").innerHTML = errorLoadingText;
+      }
 
-            board.innerHTML = "";
-            boardTitle.innerHTML = "";
+   }
 
-            boardTitle.innerHTML = `
+   checkWhoIsWorkingOutToday();
+   async function checkWhoIsWorkingOutToday() {
+
+      const board = document.getElementById("board");
+      const boardTitle = document.getElementById("boardTitle");
+      const usermsg3 = document.getElementById("usermsg3");
+
+      usermsg3.innerHTML = loadingText;
+
+      const resp = await whoIsWorkingOutToday();
+
+      if (Object.entries(resp).length > 0) {
+
+         if (Object.entries(resp).length === 1) {
+            usermsg3.innerHTML = `I dag trener ${Object.entries(resp).length} person!`;
+         } else {
+            usermsg3.innerHTML = `I dag trener ${Object.entries(resp).length} personer!`;
+         }
+
+         board.innerHTML = "";
+         boardTitle.innerHTML = "";
+
+         boardTitle.innerHTML = `
         <tr>
         <th>Navn</th>
         <th>Trener</th>
         </tr>
         `;
 
-            document.getElementById("boardTitleG").innerHTML += `<hr>`;
+         document.getElementById("boardTitleG").innerHTML += `<hr>`;
 
-            for (let i = 0; i < Object.entries(resp).length; i++) {
-               /* nytt "versjon" */
-               let splitFullName = resp[i].userFullName.split(" ");
-               let shortenedFullName = "";
+         for (let i = 0; i < Object.entries(resp).length; i++) {
+            /* nytt "versjon" */
+            let splitFullName = resp[i].userFullName.split(" ");
+            let shortenedFullName = "";
 
-               shortenedFullName = splitFullName[0] + " ";
-               for (let j = 1; j < splitFullName.length; j++) {
-                  shortenedFullName += `${splitFullName[j][0]}.`;
-               }
+            shortenedFullName = splitFullName[0] + " ";
+            for (let j = 1; j < splitFullName.length; j++) {
+               shortenedFullName += `${splitFullName[j][0]}.`;
+            }
 
-               /*board.innerHTML += `
-               <div style="padding-bottom:15px;">
-               <tr>
-               <td id="tdUsernameAndWorkout" onClick="viewUser('${resp[i].username}')">${shortenedFullName}</td>
-               <td id="tdUsernameAndWorkout" onClick="viewUser('${resp[i].username}')">${resp[i].todaysWorkout}</td>
-               </tr>
-               </div>
-               `;*/
+            /*board.innerHTML += `
+            <div style="padding-bottom:15px;">
+            <tr>
+            <td id="tdUsernameAndWorkout" onClick="viewUser('${resp[i].username}')">${shortenedFullName}</td>
+            <td id="tdUsernameAndWorkout" onClick="viewUser('${resp[i].username}')">${resp[i].todaysWorkout}</td>
+            </tr>
+            </div>
+            `;*/
 
-               board.innerHTML += `
+            board.innerHTML += `
             <tr>
             <td><button id="usernameAndWorkout" onClick="viewUser('${resp[i].username}')">${shortenedFullName}</button></td>
             <td><button id="usernameAndWorkout" onClick="viewUser('${resp[i].username}')">${resp[i].todaysWorkout}</button></td>
             </tr>
             `;
 
-               /* */
+            /* */
 
-               /* gammel versjon */
-               /*
-                           board.innerHTML += `
-                           <tr>
-                           <td>${resp[i].userFullName}</td>
-                           <td>${resp[i].todaysWorkout}</td>
-                           </tr>`;
-                           */
-               /* */
-            }
-         } else {
-            usermsg3.innerHTML = `I dag er det ingen som trener!`;
+            /* gammel versjon */
+            /*
+                        board.innerHTML += `
+                        <tr>
+                        <td>${resp[i].userFullName}</td>
+                        <td>${resp[i].todaysWorkout}</td>
+                        </tr>`;
+                        */
+            /* */
          }
-
+      } else {
+         usermsg3.innerHTML = `I dag er det ingen som trener!`;
       }
 
-      function viewUser(viewUser) {
+   }
 
-         if (viewUser) {
-            sessionStorage.setItem("ViewingUser", viewUser);
-            redirectToUser();
-         }
+   function viewUser(viewUser) {
 
+      if (viewUser) {
+         sessionStorage.setItem("ViewingUser", viewUser);
+         redirectToUser();
       }
+
    }
 
 </script>

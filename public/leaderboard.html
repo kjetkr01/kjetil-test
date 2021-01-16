@@ -163,14 +163,17 @@
 
             for (let i = 0; i < Object.keys(resp).length; i++) {
 
-               /*list.innerHTML += `
+               // desktop?
+               list.innerHTML += `
                <tr>
                   <td>${i + 1}. </td>
                   <td><button class="listButton" onClick="viewUser('${resp[i].username}')">${resp[i].username}</button></td>
                   <td>${resp[i][ViewingLeaderboard]} kg</td>
                </tr>
-               `;*/
+               `;
 
+               // mobile?
+               /*
                list.innerHTML += `
                <tr>
                <td>
@@ -182,6 +185,7 @@
                </td>
                </tr>
                `;
+               */
             }
 
             if (Object.keys(resp).length === 1) {
