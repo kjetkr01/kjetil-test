@@ -419,22 +419,42 @@
                                     return parseInt(daysSinceTime);
                                 }
 
+                                /*
                                 msg = `
                                 <td>${keys[i]}: ${liftKeys.ORM} kg
                                 <br>
                                 Dato: ${liftKeys.PRdate}
                                 <br>
                                 Dager siden: ${calcTime()}</td>`;
-
+                                */
                                 /*
                                 msg = `
-                                <td>${keys[i]}: <br> ${liftKeys.ORM} kg</td>
-                                
-                                <td>Dato: <br>${liftKeys.PRdate}</td>
-                                
-                                <td>Dager siden: <br>${calcTime()}</td>`;
+                                <td>
+                                ${keys[i]}:
+                                <br>
+                                PR Dato:
+                                <br>
+                                </td>
+                                <td>
+                                ${liftKeys.ORM} kg
+                                <br>
+                                ${liftKeys.PRdate}
+                                <br>
+                                ${calcTime()} dager siden
+                                </td>`;
                                 */
 
+                                msg = `
+                                <td>
+                                ${keys[i]}
+                                <br>
+                                ${liftKeys.ORM} kg
+                                </td>
+                                <td>
+                                ${liftKeys.PRdate}
+                                <br>
+                                ${calcTime()} dager siden
+                                </td>`;
                             }
 
                         }
@@ -461,7 +481,7 @@
 
                                 const totalORM = (Benkpress + Knebøy + Markløft);
 
-                                document.getElementById("showTotalLift").innerHTML = `PR Totalt: <br> ${totalORM.toFixed(2)} KG | ${(totalORM * 2.2).toFixed(2)} LBS`;
+                                document.getElementById("showTotalLift").innerHTML = `PR Totalt: <br> ${totalORM.toFixed(2)} kg | ${(totalORM * 2.2).toFixed(2)} lbs`;
 
                             }
                         }
@@ -522,6 +542,7 @@
 
                                         let untilGoal = `${untilGoalCalcKG} kg`;
 
+                                        /*
                                         msg = `
                                         <td>${keys[i]}: ${liftKeys.goal} kg
                                         <br>
@@ -531,8 +552,21 @@
                                         <br>
                                         Dager siden: ${calcTime()}</td>
                                         `;
+                                        */
+                                        msg = `
+                                        <td>
+                                        ${keys[i]}
+                                        <br>
+                                        ${liftKeys.goal} kg (+${untilGoal})
+                                        </td>
+                                        <td>
+                                        ${liftKeys.Goaldate}
+                                        <br>
+                                        ${calcTime()} dager siden
+                                        </td>`;
 
                                     } else {
+                                        /*
                                         msg = `
                                         <td>${keys[i]}: ${liftKeys.goal} kg
                                         <br>
@@ -540,17 +574,41 @@
                                         <br>
                                         Dager siden: ${calcTime()}</td>
                                         `;
+                                        */
+                                        msg = `
+                                        <td>
+                                        ${keys[i]}
+                                        <br>
+                                        ${liftKeys.goal} kg
+                                        </td>
+                                        <td>
+                                        ${liftKeys.Goaldate}
+                                        <br>
+                                        ${calcTime()} dager siden
+                                        </td>`;
 
                                     }
 
                                 } else {
+                                    /*
                                     msg = `
                                     <td>${keys[i]}: ${liftKeys.goal} kg
                                     <br>
                                     Dato: ${liftKeys.Goaldate}
                                     <br>
                                     Dager siden: ${calcTime()}</td>
-                                    `;
+                                    `;*/
+                                    msg = `
+                                    <td>
+                                    ${keys[i]}
+                                    <br>
+                                    ${liftKeys.goal} kg
+                                    </td>
+                                    <td>
+                                    ${liftKeys.Goaldate}
+                                    <br>
+                                    ${calcTime()} dager siden
+                                    </td>`;
 
                                 }
                             }
@@ -579,7 +637,7 @@
 
                                 const totalORM = (Benkpress + Knebøy + Markløft);
 
-                                document.getElementById("showTotalLift").innerHTML = `Mål Totalt: <br> ${totalORM.toFixed(2)} KG | ${(totalORM * 2.2).toFixed(2)} LBS`;
+                                document.getElementById("showTotalLift").innerHTML = `Mål Totalt: <br> ${totalORM.toFixed(2)} kg | ${(totalORM * 2.2).toFixed(2)} lbs`;
 
                             }
                         }
