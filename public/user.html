@@ -296,7 +296,7 @@
 
             document.getElementById("workoutToday").innerHTML = usermessage;
 
-            changelistContent("lifts");
+            changelistContent(sessionStorage.getItem("currentListContent"));
 
         }
 
@@ -308,6 +308,7 @@
 
             list.innerHTML = "";
             document.getElementById("showTotalLift").innerHTML = "";
+            sessionStorage.setItem("currentListContent", content);
 
             switch (content) {
                 case "lifts":
@@ -324,6 +325,8 @@
                     break;
             }
 
+        } else {
+            changelistContent("lifts");
         }
 
     }
@@ -582,10 +585,10 @@
                         }
                     }
 
-            }
+                }
 
+            }
         }
-    }
 
     }
 
@@ -605,7 +608,7 @@
                     if (liftKeys !== "0" && liftKeys !== 0 && liftKeys !== "") {
 
                         let msg = `
-                        <td>${keys[i]}: ${liftKeys}</td>
+                        <td>${keys[i]}:</td><td>${liftKeys}</td>
                         `;
 
                         list.innerHTML += msg;

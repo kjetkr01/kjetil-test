@@ -163,7 +163,7 @@
 
             for (let i = 0; i < Object.keys(resp).length; i++) {
 
-               // desktop?
+               // old
                /*
                list.innerHTML += `
                <tr>
@@ -172,7 +172,7 @@
                   <td>${resp[i][ViewingLeaderboard]} kg</td>
                </tr>
                `;*/
-
+               
                list.innerHTML += `
                <tr>
                   <td>${i + 1}.</td>
@@ -181,20 +181,7 @@
                </tr>
                `;
 
-               // mobile?
-               /*
-               list.innerHTML += `
-               <tr>
-               <td>
-               ${i + 1}.
-               <br>
-               <button class="listButton" onClick="viewUser('${resp[i].username}')">${resp[i].username}</button>
-               <br>
-               ${resp[i][ViewingLeaderboard]} kg
-               </td>
-               </tr>
-               `;
-               */
+               
             }
 
             if (Object.keys(resp).length === 1) {
