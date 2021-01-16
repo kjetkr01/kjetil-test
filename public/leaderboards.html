@@ -148,6 +148,8 @@
 
             if (resp[0] === "Benkpress" && resp[1] === "Knebøy" && resp[2] === "Markløft") {
 
+               usermsg1.innerHTML = "Det er " + parseInt(resp.length + 1) + " ledertavler!";
+
                list.innerHTML += `
       
                <tr>
@@ -156,6 +158,8 @@
 
                `;
 
+            } else {
+               usermsg1.innerHTML = "Det er " + parseInt(resp.length) + " ledertavler!";
             }
 
             for (let i = 0; i < resp.length; i++) {
@@ -168,8 +172,6 @@
 
                `;
             }
-
-            usermsg1.innerHTML = "Det er " + parseInt(resp.length + 1) + " ledertavler!";
 
          } else {
             usermsg1.innerHTML = errorLoadingText;
