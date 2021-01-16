@@ -120,9 +120,9 @@ async function updateUserSetting(username, setting, value) {
     }
 }
 
-async function getListOfAllUsersWorkoutToday() {
+async function getListOfAllUsersWorkoutToday(dayTxt) {
     try {
-        const resp = await database.getListOfAllUsersWorkoutToday();
+        const resp = await database.getListOfAllUsersWorkoutToday(dayTxt);
         return resp;
     } catch (error) {
         console.error(error);

@@ -178,7 +178,7 @@ class StorageHandler {
                             if (currentUsersLift.Benkpress.ORM !== 0 && currentUsersLift.Benkpress.ORM !== "") {
                                 if (currentUsersLift.Knebøy.ORM !== 0 && currentUsersLift.Knebøy.ORM !== "") {
                                     if (currentUsersLift.Markløft.ORM !== 0 && currentUsersLift.Markløft.ORM !== "") {
-                                        
+
                                         const totalORM = parseFloat(currentUsersLift.Benkpress.ORM) + parseFloat(currentUsersLift.Knebøy.ORM) + parseFloat(currentUsersLift.Markløft.ORM);
                                         infoList.push({ "username": results.rows[i].username, [leaderboard]: totalORM.toFixed(2) });
                                     }
@@ -498,7 +498,7 @@ class StorageHandler {
 
     //  -------------------------------  get list of all public users that are working out today  ------------------------------- //
 
-    async getListOfAllUsersWorkoutToday() {
+    async getListOfAllUsersWorkoutToday(dayTxt) {
 
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -509,33 +509,7 @@ class StorageHandler {
 
             results = await client.query('SELECT "username","displayname","settings","trainingsplit" FROM "users"');
 
-            const day = new Date().getDay();
-            let dayTxt = "";
             let counter = 0;
-
-            switch (day) {
-                case 0:
-                    dayTxt = "Søndag";
-                    break;
-                case 1:
-                    dayTxt = "Mandag";
-                    break;
-                case 2:
-                    dayTxt = "Tirsdag";
-                    break;
-                case 3:
-                    dayTxt = "Onsdag";
-                    break;
-                case 4:
-                    dayTxt = "Torsdag";
-                    break;
-                case 5:
-                    dayTxt = "Fredag";
-                    break;
-                case 6:
-                    dayTxt = "Lørdag";
-                    break;
-            }
 
             for (let i = 0; i < results.rows.length; i++) {
                 const todaysWorkout = results.rows[i].trainingsplit[dayTxt];

@@ -42,6 +42,33 @@ server.use(bodyParser.json({ limit: "5mb" }));
 const maxCharLength = 20;
 const minCharLength = 3;
 
+const day = new Date().getDay();
+let dayTxt = "";
+
+switch (day) {
+     case 0:
+          dayTxt = "Søndag";
+          break;
+     case 1:
+          dayTxt = "Mandag";
+          break;
+     case 2:
+          dayTxt = "Tirsdag";
+          break;
+     case 3:
+          dayTxt = "Onsdag";
+          break;
+     case 4:
+          dayTxt = "Torsdag";
+          break;
+     case 5:
+          dayTxt = "Fredag";
+          break;
+     case 6:
+          dayTxt = "Lørdag";
+          break;
+}
+
 //
 
 // -------------------------------  ask for access / new user ---------------------- //
@@ -364,7 +391,7 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
 
 server.post("/whoIsWorkingOutToday", auth, async (req, res) => {
 
-     const resp = await getListOfAllUsersWorkoutToday();
+     const resp = await getListOfAllUsersWorkoutToday(dayTxt);
 
      if (resp.status === true) {
           res.status(200).json(resp.info).end();
@@ -419,38 +446,12 @@ server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
 
           if (getWorkoutPlanInfo.status === true) {
 
-               const day = new Date().getDay();
                const program = getWorkoutPlanInfo.info.trainingsplit;
                let firstName = getWorkoutPlanInfo.info.displayname
                firstName = firstName.split(" ");
                firstName = firstName[0];
 
-               let dayTxt = "";
                let workoutTxt = "";
-
-               switch (day) {
-                    case 0:
-                         dayTxt = "Søndag";
-                         break;
-                    case 1:
-                         dayTxt = "Mandag";
-                         break;
-                    case 2:
-                         dayTxt = "Tirsdag";
-                         break;
-                    case 3:
-                         dayTxt = "Onsdag";
-                         break;
-                    case 4:
-                         dayTxt = "Torsdag";
-                         break;
-                    case 5:
-                         dayTxt = "Fredag";
-                         break;
-                    case 6:
-                         dayTxt = "Lørdag";
-                         break;
-               }
 
                if (getWorkoutPlanInfo.isOwner === true) {
 
