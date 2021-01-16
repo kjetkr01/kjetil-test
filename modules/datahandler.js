@@ -161,24 +161,53 @@ class StorageHandler {
 
             results = await client.query('SELECT "username","settings","lifts" FROM "public"."users"');
 
-            let counter = 1;
+            //let counter = 1;
             //let info = {};
-            let list = [];
+            let infoList = [];
 
-            for (let i = 0; i < results.rows.length; i++) {
-                if (results.rows[i].settings.displayLeaderboards.value === true && results.rows[i].lifts[leaderboard]) {
+            if (leaderboard === "Totalt") {
 
-                    if (results.rows[i].lifts[leaderboard].ORM && results.rows[i].lifts[leaderboard].ORM !== 0 && results.rows[i].lifts[leaderboard].ORM !== "") {
-                        //info[counter] = { "username": results.rows[i].username, [leaderboard]: results.rows[i].lifts[leaderboard].ORM };
-                        list.push({ "username": results.rows[i].username, [leaderboard]: parseFloat(results.rows[i].lifts[leaderboard].ORM) });
-                        counter++;
+                for (let i = 0; i < results.rows.length; i++) {
+
+                    const currentUsersLift = results.rows[i].lifts;
+
+                    if (results.rows[i].settings.displayLeaderboards.value === true && leaderboard === "Totalt") {
+
+                        if (currentUsersLift.Benkpress && currentUsersLift.Knebøy && currentUsersLift.Markløft) {
+
+                            if (currentUsersLift.Benkpress.ORM !== 0 && currentUsersLift.Benkpress.ORM !== "") {
+                                if (currentUsersLift.Knebøy.ORM !== 0 && currentUsersLift.Knebøy.ORM !== "") {
+                                    if (currentUsersLift.Markløft.ORM !== 0 && currentUsersLift.Markløft.ORM !== "") {
+                                        
+                                        const totalORM = parseFloat(currentUsersLift.Benkpress.ORM) + parseFloat(currentUsersLift.Knebøy.ORM) + parseFloat(currentUsersLift.Markløft.ORM);
+                                        infoList.push({ "username": results.rows[i].username, [leaderboard]: totalORM.toFixed(2) });
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+            } else {
+
+                for (let i = 0; i < results.rows.length; i++) {
+                    const currentUsersLift = results.rows[i].lifts;
+                    if (results.rows[i].settings.displayLeaderboards.value === true && currentUsersLift[leaderboard]) {
+
+                        if (currentUsersLift[leaderboard].ORM && currentUsersLift[leaderboard].ORM !== 0 && currentUsersLift[leaderboard].ORM !== "") {
+                            //info[counter] = { "username": results.rows[i].username, [leaderboard]: results.rows[i].lifts[leaderboard].ORM };
+                            infoList.push({ "username": results.rows[i].username, [leaderboard]: parseFloat(results.rows[i].lifts[leaderboard].ORM) });
+                            //counter++;
+                        }
+
                     }
 
                 }
             }
 
             //results = info;
-            results = list;
+            results = infoList;
 
             client.end();
         } catch (err) {
@@ -281,7 +310,7 @@ class StorageHandler {
 
                             const lifts = {};
                             const goals = {};
-                            const info = { "age": "", "height": "", "weight": "" };
+                            const info = { "age": 0, "height": 0, "weight": 0 };
 
                             await client.query('INSERT INTO "public"."users"("username", "password", "displayname", "settings", "trainingsplit", "lifts", "goals", "info", "isadmin") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;', [newUserUsername, newUserPassword, newUserDisplayname, settings, trainingSplit, lifts, goals, info, false]);
                             results = true;

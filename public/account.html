@@ -502,7 +502,11 @@
                </div>`;
                }
 
-               infoDiv.innerHTML += "Det er totalt " + resp.length + " forespørseler (brukere)!";
+               if (resp.length === 1) {
+                  infoDiv.innerHTML += "Det er " + resp.length + " forespørsel (bruker)!";
+               } else {
+                  infoDiv.innerHTML += "Det er totalt " + resp.length + " forespørseler (brukere)!";
+               }
 
             } else {
                infoDiv.innerHTML = errorLoadingText;

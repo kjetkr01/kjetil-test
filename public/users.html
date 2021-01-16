@@ -156,7 +156,11 @@
                     `;
                     }
 
-                    usermsg1.innerText = "Det er totalt " + resp.length + " brukere!";
+                    if(resp.length === 1){
+                        usermsg1.innerText = "Det er totalt " + resp.length + " bruker!";
+                    }else{
+                        usermsg1.innerText = "Det er totalt " + resp.length + " brukere!";
+                    }
 
                 } else {
                     usermsg1.innerText = errorLoadingText;

@@ -200,7 +200,12 @@
          const resp = await whoIsWorkingOutToday();
 
          if (Object.entries(resp).length > 0) {
-            usermsg3.innerHTML = `I dag trener ${Object.entries(resp).length} personer!`;
+
+            if(Object.entries(resp).length === 1){
+               usermsg3.innerHTML = `I dag trener ${Object.entries(resp).length} person!`;
+            }else{
+               usermsg3.innerHTML = `I dag trener ${Object.entries(resp).length} personer!`;
+            }
 
             board.innerHTML = "";
             boardTitle.innerHTML = "";

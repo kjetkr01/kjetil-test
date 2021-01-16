@@ -156,20 +156,31 @@
             listTitleG.innerHTML += `<hr>`;
 
             // sorts leaderboard in correct order, from highest to lowest
-            resp.sort((a, b) => (a[ViewingLeaderboard] < b[ViewingLeaderboard]) ? 1 : -1);
+            resp.sort(function (a, b) { return b[ViewingLeaderboard] - a[ViewingLeaderboard] });
+            //resp.sort((a, b) => (a[ViewingLeaderboard] < b[ViewingLeaderboard]) ? 1 : -1);
 
             //
 
             for (let i = 0; i < Object.keys(resp).length; i++) {
 
-               list.innerHTML += `
-      
+               /*list.innerHTML += `
                <tr>
                   <td>${i + 1}. </td>
                   <td><button class="listButton" onClick="viewUser('${resp[i].username}')">${resp[i].username}</button></td>
                   <td>${resp[i][ViewingLeaderboard]} kg</td>
                </tr>
+               `;*/
 
+               list.innerHTML += `
+               <tr>
+               <td>
+               ${i + 1}.
+               <br>
+               <button class="listButton" onClick="viewUser('${resp[i].username}')">${resp[i].username}</button>
+               <br>
+               ${resp[i][ViewingLeaderboard]} kg
+               </td>
+               </tr>
                `;
             }
 
