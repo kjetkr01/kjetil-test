@@ -2,7 +2,7 @@
 <html>
 
 <head>
-   <title>Ledertavler</title>
+   <title>Laster...</title>
 
    <meta charset="utf-8" />
 
@@ -23,7 +23,7 @@
    <!-- -->
 
    <link rel="stylesheet" href="styles/global.css">
-   <link rel="stylesheet" href="styles/leaderboards.css">
+   <link rel="stylesheet" href="styles/leaderboard.css">
 
    <script src="scripts/global.js" type="text/javascript"></script>
    <script src="scripts/validateInfo.js" type="text/javascript"></script>
@@ -93,9 +93,9 @@
          </table>
       </div>
 
-      <div id="usersBtnG">
-         <p id="usersBtn">
-            <button class="listButton" onClick='redirectToUsers();'>Vis liste med brukere</button>
+      <div id="backBtnG">
+         <p id="backBtn">
+            <button class="listButton" onClick="redirectToLeaderboards();">Tilbake</button>
          </p>
       </div>
 
@@ -125,7 +125,16 @@
    const list = document.getElementById("list");
    const usermsg1 = document.getElementById("usermsg1");
 
-   getListOfLeaderboard();
+   const ViewingLeaderboard = sessionStorage.getItem("ViewingLeaderboard");
+
+   if (ViewingLeaderboard) {
+      document.title = ViewingLeaderboard;
+      getListOfLeaderboard();
+   } else {
+      redirectToLeaderboards();
+   }
+
+
    async function getListOfLeaderboard() {
 
       if (token && user) {
@@ -133,61 +142,62 @@
          listTitle.innerHTML = loadingText;
          usermsg1.innerHTML = loadingText;
 
-         const body = { "authToken": token, "userInfo": user };
-         const url = `/users/list/all/leaderboards`;
+         const body = { "authToken": token, "userInfo": user, "leaderboard": ViewingLeaderboard };
+         const url = `/users/list/all/leaderboards/${ViewingLeaderboard}`;
 
          const resp = await callServerAPI(body, url);
 
          list.innerHTML = "";
 
-         if (resp.length > 0) {
+         if (Object.keys(resp).length > 0) {
 
-            listTitle.innerHTML = `Tavler`;
+            listTitle.innerHTML = ViewingLeaderboard;
 
             listTitleG.innerHTML += `<hr>`;
 
-            if (resp[0] === "Benkpress" && resp[1] === "Knebøy" && resp[2] === "Markløft") {
+            // sorts leaderboard in correct order, from highest to lowest
+            resp.sort((a, b) => (a[ViewingLeaderboard] < b[ViewingLeaderboard]) ? 1 : -1);
+
+            //
+
+            for (let i = 0; i < Object.keys(resp).length; i++) {
 
                list.innerHTML += `
       
                <tr>
-                  <td><button class="listButton" onClick="viewLeaderboard('Totalt')">Totalt</button></td>
-               </tr>
-
-               `;
-
-            }
-
-            for (let i = 0; i < resp.length; i++) {
-
-               list.innerHTML += `
-      
-               <tr>
-                  <td><button class="listButton" onClick="viewLeaderboard('${resp[i]}')">${resp[i]}</button></td>
+                  <td>${i + 1}. </td>
+                  <td><button class="listButton" onClick="viewUser('${resp[i].username}')">${resp[i].username}</button></td>
+                  <td>${resp[i][ViewingLeaderboard]} kg</td>
                </tr>
 
                `;
             }
 
-            usermsg1.innerHTML = "Det er " + parseInt(resp.length + 1) + " ledertavler!";
+            if (Object.keys(resp).length === 1) {
+               usermsg1.innerHTML = "Det er " + parseInt(Object.keys(resp).length) + " bruker på denne tavlen!";
+            } else {
+               usermsg1.innerHTML = "Det er " + parseInt(Object.keys(resp).length) + " brukere på denne tavlen!";
+            }
 
          } else {
             usermsg1.innerHTML = errorLoadingText;
             listTitle.innerHTML = errorLoadingText;
+            alert(`Ledertavlen ${ViewingLeaderboard} finnes ikke!`);
+            window.history.back();
          }
 
       } else {
-         listTitle.innerHTML = "Det er ingen ledertavler!";
+         listTitle.innerHTML = "Det er ingen brukere på denne tavlen!";
       }
    }
 
    //
 
-   function viewLeaderboard(leaderboard) {
+   function viewUser(viewUser) {
 
-      if (leaderboard) {
-         sessionStorage.setItem("ViewingLeaderboard", leaderboard);
-         redirectToLeaderboard();
+      if (viewUser) {
+         sessionStorage.setItem("ViewingUser", viewUser);
+         redirectToUser();
       }
 
    }

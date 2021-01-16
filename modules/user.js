@@ -57,6 +57,15 @@ async function getListOfLeaderboardsUsers(numbersOnly) {
     }
 }
 
+async function getListOfUsersLeaderboard(leaderboard) {
+    try {
+        const resp = await database.getListOfUsersLeaderboard(leaderboard);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function getListOfPendingUsers(username, onlyNumbers) {
     try {
         const resp = await database.getListOfPendingUsers(username, onlyNumbers);
@@ -124,6 +133,7 @@ module.exports = User;
 module.exports.validateUser = validateUser;
 module.exports.getListOfUsers = getListOfUsers;
 module.exports.getListOfLeaderboardsUsers = getListOfLeaderboardsUsers;
+module.exports.getListOfUsersLeaderboard = getListOfUsersLeaderboard;
 module.exports.getListOfPendingUsers = getListOfPendingUsers;
 module.exports.acceptOrDenyUser = acceptOrDenyUser;
 module.exports.getWorkoutSplit = getWorkoutSplit;

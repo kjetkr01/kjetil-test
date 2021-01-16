@@ -162,7 +162,7 @@
         document.title = viewingUser + " sin profil";
         getUserDetails()
     } else {
-        redirectToUsers();
+        window.history.back();
     }
 
     async function getUserDetails() {
@@ -182,13 +182,13 @@
 
                 } else {
                     alert(resp);
-                    redirectToUsers();
+                    window.history.back();
 
                 }
 
             } else {
                 alert("Brukeren " + viewingUser + " finnes ikke!");
-                redirectToUsers();
+                window.history.back();
             }
         }
 

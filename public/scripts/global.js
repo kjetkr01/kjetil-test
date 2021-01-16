@@ -370,6 +370,12 @@ function redirectToLeaderboards() {
 
 }
 
+function redirectToLeaderboard() {
+
+    location.href = "leaderboard.html";
+
+}
+
 function redirectToUsers() {
 
     location.href = "users.html";

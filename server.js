@@ -14,6 +14,7 @@ const user = require("./modules/user");
 const validateUser = require("./modules/user").validateUser;
 const getListOfUsers = require("./modules/user").getListOfUsers;
 const getListOfLeaderboardsUsers = require("./modules/user").getListOfLeaderboardsUsers;
+const getListOfUsersLeaderboard = require("./modules/user").getListOfUsersLeaderboard;
 const getListOfPendingUsers = require("./modules/user").getListOfPendingUsers;
 const acceptOrDenyUser = require("./modules/user").acceptOrDenyUser;
 const getWorkoutSplit = require("./modules/user").getWorkoutSplit;
@@ -142,6 +143,32 @@ server.post("/users/list/all/leaderboards", auth, async (req, res) => {
      if (listOfLeaderboardsUsers) {
 
           res.status(200).json(listOfLeaderboardsUsers).end();
+
+     } else {
+          res.status(403).json(`Feil, prøv igjen`).end();
+     }
+
+});
+
+//
+
+// -------------------------------  get list of users on specific leaderboard ---------------------- //
+
+server.post("/users/list/all/leaderboards/:leaderboard", auth, async (req, res) => {
+
+     const leaderboard = req.body.leaderboard;
+
+     if (leaderboard) {
+
+          const listOfUsersLeaderboard = await getListOfUsersLeaderboard(leaderboard);
+
+          if (listOfUsersLeaderboard) {
+
+               res.status(200).json(listOfUsersLeaderboard).end();
+
+          } else {
+               res.status(403).json(`Feil, prøv igjen`).end();
+          }
 
      } else {
           res.status(403).json(`Feil, prøv igjen`).end();

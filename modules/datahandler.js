@@ -151,6 +151,45 @@ class StorageHandler {
 
     //
 
+    //  -------------------------------  get a info about a specific leaderboard (users and numbers)  ------------------------------- //
+
+    async getListOfUsersLeaderboard(leaderboard) {
+        const client = new pg.Client(this.credentials);
+        let results = null;
+        try {
+            await client.connect();
+
+            results = await client.query('SELECT "username","settings","lifts" FROM "public"."users"');
+
+            let counter = 1;
+            //let info = {};
+            let list = [];
+
+            for (let i = 0; i < results.rows.length; i++) {
+                if (results.rows[i].settings.displayLeaderboards.value === true && results.rows[i].lifts[leaderboard]) {
+
+                    if (results.rows[i].lifts[leaderboard].ORM && results.rows[i].lifts[leaderboard].ORM !== 0 && results.rows[i].lifts[leaderboard].ORM !== "") {
+                        //info[counter] = { "username": results.rows[i].username, [leaderboard]: results.rows[i].lifts[leaderboard].ORM };
+                        list.push({ "username": results.rows[i].username, [leaderboard]: parseFloat(results.rows[i].lifts[leaderboard].ORM) });
+                        counter++;
+                    }
+
+                }
+            }
+
+            //results = info;
+            results = list;
+
+            client.end();
+        } catch (err) {
+            console.log(err);
+        }
+
+        return results;
+    }
+
+    //
+
     //  -------------------------------  get a list of all pending users in application  ------------------------------- //
 
     async getListOfPendingUsers(username, onlyNumbers) {
