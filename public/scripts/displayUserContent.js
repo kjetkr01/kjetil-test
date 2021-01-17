@@ -99,7 +99,11 @@ function displayInformation() {
             usermessage = `Trener ikke i dag.`;
         }
 
-        document.getElementById("workoutToday").innerHTML = usermessage;
+        const checkWorkoutTodayDiv = document.getElementById("workoutToday");
+
+        if(checkWorkoutTodayDiv){
+            checkWorkoutTodayDiv.innerHTML = usermessage;
+        }
 
         changelistContent(sessionStorage.getItem("currentListContent"));
 
