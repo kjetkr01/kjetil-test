@@ -300,7 +300,12 @@
                buttonsString = `<td><button class="listButton" onClick="changelistContent('apikey')">${btnTxt}</button></td><td id="showPendingUsersBtn">${loadingText}</td>`;
             }
 
-            buttonsString += `<td><button class="listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
+            if (current === "settings") {
+               buttonsString += `<td><button class="activeColor listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
+            } else {
+               buttonsString += `<td><button class="listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
+            }
+
             buttons.innerHTML += `<tr>${buttonsString}</tr>`;
 
          } else {
@@ -310,7 +315,12 @@
                buttonsString = `<td><button class="listButton" onClick="changelistContent('apikey')">${btnTxt}</button></td>`;
             }
 
-            buttonsString += `<td><button class="listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
+            if (current === "settings") {
+               buttonsString += `<td><button class="activeColor listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
+            } else {
+               buttonsString += `<td><button class="listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
+            }
+
             buttons.innerHTML += `<tr>${buttonsString}</tr>`;
             buttonsString = `<td></td><td><button class="listButton" onClick='window.history.back();'>Tilbake</button></td>`;
             buttonsString += `<td><button class="listButton" onClick="logOut();">Logg ut</button></td>`;
@@ -361,7 +371,13 @@
          }
 
       } else {
-         buttonsString = `<td><button class="listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
+
+         if (current === "settings") {
+            buttonsString = `<td><button class="activeColor listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
+         } else {
+            buttonsString = `<td><button class="listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
+         }
+
          buttonsString += `<td><button class="listButton" onClick='window.history.back();'>Tilbake</button></td>`;
          buttonsString += `<td><button class="listButton" onClick="logOut();">Logg ut</button></td>`;
          buttons.innerHTML += `<tr>${buttonsString}</tr>`;
