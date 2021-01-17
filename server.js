@@ -226,9 +226,15 @@ server.post("/users/list/pending", auth, async (req, res) => {
 
      // list of pending status ??
 
-     if (listOfPendingUsers) {
+     if (listOfPendingUsers !== false) {
 
-          res.status(200).json(listOfPendingUsers).end();
+          if(listOfPendingUsers && listOfPendingUsers !== true){
+               res.status(200).json(listOfPendingUsers).end();
+          }else{
+               res.status(200).json(`Det finnes ingen forespørseler!`).end();
+          }
+
+          
 
      } else {
           res.status(403).json(`Feil, prøv igjen`).end();

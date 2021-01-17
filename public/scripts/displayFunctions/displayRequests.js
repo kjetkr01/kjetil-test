@@ -11,21 +11,25 @@ async function displayRequests() {
 
         if (resp) {
 
-            if (resp[0].username) {
+            if (resp.includes("ingen forespørseler")) {
+                listTitle.innerHTML = "Det er ingen forespørseler!";
+            } else {
 
-                listTitle.innerHTML = "Forespørsler:<hr>";
+                if (resp[0].username) {
 
-                list.innerHTML.innerHTML = "<tr>";
+                    listTitle.innerHTML = "Forespørsler:<hr>";
 
-                for (let i = 0; i < resp.length; i++) {
-                    list.innerHTML += `
+                    list.innerHTML.innerHTML = "<tr>";
+
+                    for (let i = 0; i < resp.length; i++) {
+                        list.innerHTML += `
                 <td>
-                Navn:
+                Navn
                 <br>
                 ${resp[i].displayname}
                 </td>
                 <td>
-                Brukernavn:
+                Brukernavn
                 <br>
                 ${resp[i].username}
                 </td>
@@ -34,19 +38,20 @@ async function displayRequests() {
                 <button class="listButton" onClick='acceptPendingUser("${resp[i].username}", false)'>Avslå</button>
                 </td>
                 `;
-                }
+                    }
 
-                list.innerHTML += "</tr>";
-                /*
-                if (resp.length === 1) {
-                   list.innerHTML += "Det er " + resp.length + " forespørsel (bruker)!";
+                    list.innerHTML += "</tr>";
+                    /*
+                    if (resp.length === 1) {
+                       list.innerHTML += "Det er " + resp.length + " forespørsel (bruker)!";
+                    } else {
+                       list.innerHTML += "Det er totalt " + resp.length + " forespørseler (brukere)!";
+                    }
+                    */
+
                 } else {
-                   list.innerHTML += "Det er totalt " + resp.length + " forespørseler (brukere)!";
+                    listTitle.innerHTML = errorLoadingText;
                 }
-                */
-
-            } else {
-                listTitle.innerHTML = errorLoadingText;
             }
 
         } else {

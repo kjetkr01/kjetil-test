@@ -224,7 +224,7 @@ class StorageHandler {
     async getListOfPendingUsers(username, onlyNumbers) {
 
         const client = new pg.Client(this.credentials);
-        let results = null;
+        let results = false;
         try {
             await client.connect();
 
@@ -238,12 +238,12 @@ class StorageHandler {
                     results = await client.query('SELECT "id","username","displayname" FROM "public"."pending_users"');
                 }
 
-                results = (results.rows.length > 0) ? results.rows : null;
+                results = (results.rows.length > 0) ? results.rows : true;
                 client.end();
 
             } else {
 
-                results = null;
+                results = false;
                 client.end();
 
             }
