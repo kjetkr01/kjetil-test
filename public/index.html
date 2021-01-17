@@ -150,12 +150,15 @@
       const currentDay = new Date().getDay()
       if (savedDay !== currentDay) {
          savedDay = currentDay;
-         updatePartOfDayMessage();
          checkTrainingSplit();
          checkWhoIsWorkingOutToday();
       }
 
    }, 1000);
+
+   setInterval(() => {
+      updatePartOfDayMessage();
+   }, 60000);
 
    let savedMin = "";
    isGymOpenUpdater();
