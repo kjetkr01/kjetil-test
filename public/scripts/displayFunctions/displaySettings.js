@@ -4,7 +4,7 @@ function displaySettings() {
 
     if (settings) {
 
-        listTitle.innerHTML = "Innstillinger:<hr>";
+        listTitle.innerHTML = "Innstillinger<hr>";
 
         const keys = Object.keys(settings);
         list.innerHTML = "";

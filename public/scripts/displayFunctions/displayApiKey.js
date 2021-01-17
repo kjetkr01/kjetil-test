@@ -1,42 +1,37 @@
 async function displayApiKey() {
 
-      if (info.apikey) {
+   if (info.apikey) {
 
-         listTitle.innerHTML = "Din API Key er:<hr>";
+      listTitle.innerHTML = "Liste med alle APIer<hr>";
 
-         const config = {
-            method: "GET",
-            headers: {
-               "content-type": "application/json"
-            }
+      const config = {
+         method: "GET",
+         headers: {
+            "content-type": "application/json"
          }
-
-         list.innerHTML = "<tr>";
-
-         list.innerHTML += `
-            <td>${info.apikey}
-            <br>
-            <br>
-            Liste med alle APIer:</td>
-            `;
-
-         const response = await fetch("/api", config);
-         const data = await response.json();
-
-         if (data) {
-            for (let i = 0; i < data.length; i++) {
-               list.innerHTML += `
-               <td>${data[i]}</td>
-               `;
-            }
-
-            list.innerHTML += "</tr>";
-         } else {
-            list.innerHTML += errorLoadingText;
-         }
-
-
-
       }
 
+      list.innerHTML = "<tr>";
+
+      const response = await fetch("/api", config);
+      const data = await response.json();
+
+      if (data) {
+         for (let i = 0; i < data.length; i++) {
+            list.innerHTML += `
+               <td>${data[i]}</td>
+               `;
+         }
+
+         document.getElementById("showTotalLift").innerHTML = `Din API Key er:<br> ${info.apikey}`;
+
+         list.innerHTML += "</tr>";
+      } else {
+         list.innerHTML += errorLoadingText;
+      }
+
+
+
    }
+
+}

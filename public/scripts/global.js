@@ -388,12 +388,6 @@ function redirectToUser() {
 
 }
 
-function redirectToSettings() {
-
-    location.href = 'settings.html';
-
-}
-
 function redirectToAccount() {
 
     location.href = "account.html";

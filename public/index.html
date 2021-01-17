@@ -143,6 +143,20 @@
    displayLinks("links");
    checkColorTheme();
 
+   let savedDay = new Date().getDay();
+
+   setInterval(() => {
+
+      const currentDay = new Date().getDay()
+      if (savedDay !== currentDay) {
+         savedDay = currentDay;
+         updatePartOfDayMessage();
+         checkTrainingSplit();
+         checkWhoIsWorkingOutToday();
+      }
+
+   }, 1000);
+
    let savedMin = "";
    isGymOpenUpdater();
    function isGymOpenUpdater() {
@@ -166,9 +180,13 @@
 
    }
 
-   const partofdaymsg = partOfDayMessage(userDisplayname);
-   if (partofdaymsg) {
-      document.getElementById("usermsg1").innerHTML = partofdaymsg
+   updatePartOfDayMessage();
+   function updatePartOfDayMessage() {
+
+      const partofdaymsg = partOfDayMessage(userDisplayname);
+      if (partofdaymsg) {
+         document.getElementById("usermsg1").innerHTML = partofdaymsg
+      }
    }
 
    checkTrainingSplit();
@@ -187,6 +205,7 @@
    }
 
    checkWhoIsWorkingOutToday();
+   document.getElementById("boardTitleG").innerHTML += `<hr>`;
    async function checkWhoIsWorkingOutToday() {
 
       const board = document.getElementById("board");
@@ -214,8 +233,6 @@
         <th>Trener</th>
         </tr>
         `;
-
-         document.getElementById("boardTitleG").innerHTML += `<hr>`;
 
          for (let i = 0; i < Object.entries(resp).length; i++) {
             /* nytt "versjon" */

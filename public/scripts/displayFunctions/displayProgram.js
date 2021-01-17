@@ -6,7 +6,7 @@ function displayProgram() {
         list.innerHTML = "<tr>";
 
         if (keys.length > 0) {
-            listTitle.innerHTML = "Treningsplan:<hr>"
+            listTitle.innerHTML = "Treningsplan<hr>"
             for (let i = 0; i < keys.length; i++) {
 
                 let liftKeys = program[keys[i]];

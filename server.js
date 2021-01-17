@@ -228,13 +228,13 @@ server.post("/users/list/pending", auth, async (req, res) => {
 
      if (listOfPendingUsers !== false) {
 
-          if(listOfPendingUsers && listOfPendingUsers !== true){
+          if (listOfPendingUsers && listOfPendingUsers !== true) {
                res.status(200).json(listOfPendingUsers).end();
-          }else{
+          } else {
                res.status(200).json(`Det finnes ingen forespørseler!`).end();
           }
 
-          
+
 
      } else {
           res.status(403).json(`Feil, prøv igjen`).end();
@@ -326,7 +326,7 @@ server.post("/users/details/:user", auth, async (req, res) => {
 
                          res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo }).end();
                     } else {
-                         res.status(200).json(resp.userDetails).end();
+                         res.status(200).json({ "info": resp.userDetails }).end();
                     }
 
                } else {

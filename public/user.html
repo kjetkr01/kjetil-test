@@ -179,10 +179,10 @@
 
             const resp = await callServerAPI(body, url);
 
-            if (resp) {
+            if (resp.info) {
 
-                if (resp.username) {
-                    info = resp;
+                if (resp.info.username) {
+                    info = resp.info;
                     displayInformation();
 
                 } else {

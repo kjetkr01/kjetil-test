@@ -17,7 +17,7 @@ async function displayRequests() {
 
                 if (resp[0].username) {
 
-                    listTitle.innerHTML = "Forespørsler:<hr>";
+                    listTitle.innerHTML = "Forespørsler<hr>";
 
                     list.innerHTML.innerHTML = "<tr>";
 

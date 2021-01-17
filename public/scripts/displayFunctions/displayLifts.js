@@ -7,7 +7,7 @@ function displayLifts() {
 
         if (keys.length > 0) {
 
-            listTitle.innerHTML = "Løft:<hr>";
+            listTitle.innerHTML = "Løft<hr>";
             for (let i = 0; i < keys.length; i++) {
 
                 let liftKeys = lifts[keys[i]];

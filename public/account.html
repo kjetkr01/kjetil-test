@@ -266,53 +266,59 @@
       buttons.innerHTML = "";
 
       if (current === "lifts") {
-         //document.getElementById("buttons").innerHTML += `<button class="activeColor" onClick="changelistContent('lifts')">Løft</button>`;
          buttonsString += `<td><button class="activeColor listButton" onClick="changelistContent('lifts')">Løft</button></td>`;
       } else {
-         //document.getElementById("buttons").innerHTML += `<button onClick="changelistContent('lifts')">Løft</button>`;
          buttonsString += `<td><button class="listButton" onClick="changelistContent('lifts')">Løft</button></td>`;
       }
 
       if (current === "goal") {
-         //document.getElementById("buttons").innerHTML += `<button class="activeColor" onClick="changelistContent('goal')">Mål</button>`;
          buttonsString += `<td><button class="activeColor listButton" onClick="changelistContent('goal')">Mål</button></td>`;
       } else {
-         //document.getElementById("buttons").innerHTML += `<button onClick="changelistContent('goal')">Mål</button>`;
          buttonsString += `<td><button class="listButton" onClick="changelistContent('goal')">Mål</button></td>`;
       }
 
       if (current === "plan") {
-         //document.getElementById("buttons").innerHTML += `<button class="activeColor" onClick="changelistContent('plan')">Treningsplan</button>`;
          buttonsString += `<td><button class="activeColor listButton" onClick="changelistContent('plan')">Treningsplan</button></td>`;
       } else {
-         //document.getElementById("buttons").innerHTML += `<button onClick="changelistContent('plan')">Treningsplan</button>`;
          buttonsString += `<td><button class="listButton" onClick="changelistContent('plan')">Treningsplan</button></td>`;
       }
 
       buttons.innerHTML = `<tr>${buttonsString}</tr>`;
 
-      //document.getElementById("buttons").innerHTML += `<button onClick="redirectToSettings();">Instillinger</button>`;
-      //document.getElementById("buttons").innerHTML += `<button onClick="logOut()">Logg ut</button>`;
 
-      //buttonsString = `<td><button class="listButton" onClick="redirectToSettings();">Innstillinger</button></td>`;
-      buttonsString = `<td><button class="listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
-      buttonsString += `<td><button class="listButton" onClick="logOut();">Logg ut</button></td>`;
+      //buttonsString += `<td><button class="listButton" onClick="logOut();">Logg ut</button></td>`;
 
       if (info.apikey) {
 
-         let btnTxt = "API Key";
+         let btnTxt = "API";
 
-         if (current === "apikey") {
-            //document.getElementById("buttons").innerHTML += `<button class="activeColor" onClick="changelistContent('apikey')">${btnTxt}</button>`;
-            buttonsString += `<td><button class="activeColor listButton" onClick="changelistContent('apikey')">${btnTxt}</button></td>`;
+         if (info.isadmin === true && info.isadmin) {
+
+            if (current === "apikey") {
+               buttonsString = `<td><button class="activeColor listButton" onClick="changelistContent('apikey')">${btnTxt}</button></td><td id="showPendingUsersBtn">${loadingText}</td>`;
+            } else {
+               buttonsString = `<td><button class="listButton" onClick="changelistContent('apikey')">${btnTxt}</button></td><td id="showPendingUsersBtn">${loadingText}</td>`;
+            }
+
+            buttonsString += `<td><button class="listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
+            buttons.innerHTML += `<tr>${buttonsString}</tr>`;
+
          } else {
-            //document.getElementById("buttons").innerHTML += `<button onClick="changelistContent('apikey')">${btnTxt}</button>`;
-            buttonsString += `<td><button class="listButton" onClick="changelistContent('apikey')">${btnTxt}</button></td>`;
+            if (current === "apikey") {
+               buttonsString = `<td><button class="activeColor listButton" onClick="changelistContent('apikey')">${btnTxt}</button></td>`;
+            } else {
+               buttonsString = `<td><button class="listButton" onClick="changelistContent('apikey')">${btnTxt}</button></td>`;
+            }
+
+            buttonsString += `<td><button class="listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
+            buttons.innerHTML += `<tr>${buttonsString}</tr>`;
+            buttonsString = `<td></td><td><button class="listButton" onClick='window.history.back();'>Tilbake</button></td>`;
+            buttonsString += `<td><button class="listButton" onClick="logOut();">Logg ut</button></td>`;
+            buttons.innerHTML += `<tr>${buttonsString}</tr>`;
+            return;
          }
 
       }
-
-      buttons.innerHTML += `<tr>${buttonsString}</tr>`;
 
       if (info.isadmin === true && info.isadmin) {
 
@@ -320,35 +326,48 @@
 
          if (token && user) {
 
-            buttons.innerHTML += `<tr><td id="showPendingUsersBtn">${loadingText}</td> <td><button class="listButton" onClick='window.history.back();'>Tilbake</button></td></tr>`;
+            //buttons.innerHTML += `<tr><td id="showPendingUsersBtn">${loadingText}</td> <td><button class="listButton" onClick='window.history.back();'>Tilbake</button></td></tr>`;
 
-            const showPendingUsersBtn = document.getElementById("showPendingUsersBtn");
+            if (document.getElementById("showPendingUsersBtn")) {
 
-            const body = { "authToken": token, "userInfo": user, "onlyNumbers": true };
-            const url = `/users/list/pending`;
+               /*buttonsString = `<td><button class="listButton" onClick="logOut();">Logg ut</button></td>`;
+               buttonsString += `<td><button class="listButton" onClick='window.history.back();'>Tilbake</button></td>`;*/
 
-            const resp = await callServerAPI(body, url);
+               buttonsString = `<td></td><td><button class="listButton" onClick='window.history.back();'>Tilbake</button></td>`;
+               buttonsString += `<td><button class="listButton" onClick="logOut();">Logg ut</button></td>`;
+               buttons.innerHTML += `<tr>${buttonsString}</tr>`;
 
-            if (resp) {
-               if (resp[0].id) {
-                  btnTxt = `Forespørsler (${resp.length})`;
+               const showPendingUsersBtn = document.getElementById("showPendingUsersBtn");
+
+               const body = { "authToken": token, "userInfo": user, "onlyNumbers": true };
+               const url = `/users/list/pending`;
+
+               const resp = await callServerAPI(body, url);
+
+               if (resp) {
+                  if (resp[0].id) {
+                     btnTxt = `Forespørsler (${resp.length})`;
+                  }
                }
+
+               if (current === "requests") {
+                  showPendingUsersBtn.innerHTML = `<button class="activeColor listButton" onClick="changelistContent('requests')">${btnTxt}</button>`;
+               } else {
+                  showPendingUsersBtn.innerHTML = `<button class="listButton" onClick="changelistContent('requests')">${btnTxt}</button>`;
+               }
+
             }
-         }
 
-         if (current === "requests") {
-            //document.getElementById("buttons").innerHTML += `<button class="activeColor" onClick="changelistContent('requests')">${btnTxt}</button>`;
-            buttonsString = `<button class="activeColor listButton" onClick="changelistContent('requests')">${btnTxt}</button>`;
-         } else {
-            //document.getElementById("buttons").innerHTML += `<button onClick="changelistContent('requests')">${btnTxt}</button>`;
-            buttonsString = `<button class="listButton" onClick="changelistContent('requests')">${btnTxt}</button>`;
          }
-
-         showPendingUsersBtn.innerHTML = buttonsString;
 
       } else {
-         buttons.innerHTML += `<tr><td></td><td><button class="listButton" onClick='window.history.back();'>Tilbake</button></td><td></td></tr>`;
+         buttonsString = `<td><button class="listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
+         buttonsString += `<td><button class="listButton" onClick='window.history.back();'>Tilbake</button></td>`;
+         buttonsString += `<td><button class="listButton" onClick="logOut();">Logg ut</button></td>`;
+         buttons.innerHTML += `<tr>${buttonsString}</tr>`;
       }
+
+
 
    }
 
