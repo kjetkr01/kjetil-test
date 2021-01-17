@@ -13,6 +13,10 @@ function displayInformation() {
     lifts = info.lifts;
     goals = info.goals;
 
+    if(info.settings){
+        settings = info.settings;
+    }
+
     const infoList = document.getElementById("infoList");
 
     if (displayname) {

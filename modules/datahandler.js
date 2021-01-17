@@ -395,7 +395,7 @@ class StorageHandler {
                 //if owner then access anyways
                 if (results.rows[0].settings.publicProfile.value === true || viewingUser === username) {
                     if (viewingUser === username) {
-                        results = await client.query('SELECT "username","displayname","trainingsplit","lifts","goals","info","isadmin" FROM "users" WHERE username=$1', [username]);
+                        results = await client.query('SELECT "id","username","displayname","settings","trainingsplit","lifts","goals","info","isadmin" FROM "users" WHERE username=$1', [username]);
 
                         if (results.rows[0]) {
                             results = results.rows[0];

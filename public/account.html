@@ -135,6 +135,7 @@
    checkColorTheme();
 
    let info = "";
+   let settings = "";
 
    let displayname = "";
    let age = "";
@@ -167,13 +168,31 @@
 
       if (token && user) {
 
+         isUpdatingUserObject = true;
+
          const body = { "authToken": token, "userInfo": user, "viewingUser": myUsername };
          const url = `/users/details/${myUsername}`;
 
          const resp = await callServerAPI(body, url);
 
-         if (resp) {
-            info = resp;
+         if (resp.info && resp.updatedUserObject) {
+
+            if (localStorage.getItem("user")) {
+               localStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
+            } else {
+               sessionStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
+            }
+
+            checkColorTheme();
+
+            const today = new Date();
+            const updatedTxt = today.toLocaleDateString() || true;
+            sessionStorage.setItem("updated", updatedTxt);
+
+            preferredColorTheme = resp.updatedUserObject.preferredColorTheme;
+            isUpdatingUserObject = false;
+
+            info = resp.info;
             displayInformation();
          } else {
             alert("En feil har oppstått");
@@ -186,7 +205,7 @@
 
    function changelistContent(content) {
 
-      if (content === "lifts" || content === "goal" || content === "plan" || content === "requests" || content === "apikey") {
+      if (content === "lifts" || content === "goal" || content === "plan" || content === "settings" || content === "requests" || content === "apikey") {
 
          list.innerHTML = "";
          document.getElementById("showTotalLift").innerHTML = "";
@@ -203,6 +222,10 @@
                break;
             case "plan":
                displayProgram();
+               updateButtons(content);
+               break;
+            case "settings":
+               displaySettings();
                updateButtons(content);
                break;
             case "requests":
@@ -264,7 +287,8 @@
       //document.getElementById("buttons").innerHTML += `<button onClick="redirectToSettings();">Instillinger</button>`;
       //document.getElementById("buttons").innerHTML += `<button onClick="logOut()">Logg ut</button>`;
 
-      buttonsString = `<td><button class="listButton" onClick="redirectToSettings();">Innstillinger</button></td>`;
+      //buttonsString = `<td><button class="listButton" onClick="redirectToSettings();">Innstillinger</button></td>`;
+      buttonsString = `<td><button class="listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
       buttonsString += `<td><button class="listButton" onClick="logOut();">Logg ut</button></td>`;
 
       if (info.apikey) {
@@ -320,6 +344,110 @@
       }
 
    }
+
+   // display settings
+
+   function displaySettings() {
+
+      const keys = Object.keys(settings);
+      list.innerHTML = "";
+
+      if (keys.length > 0) {
+         for (let i = 0; i < keys.length; i++) {
+            if (settings[keys[i]].value === true) {
+               list.innerHTML += `<div>${settings[keys[i]].name}<input type="checkbox" id="${keys[i]}Box" checked onClick="updateSetting('${keys[i]}', false)"></div>`;
+            }
+            else if (settings[keys[i]].value === false) {
+               list.innerHTML += `<div>${settings[keys[i]].name}<input type="checkbox" id="${keys[i]}Box" onClick="updateSetting('${keys[i]}', true)"></div>`;
+            }
+            else if (settings[keys[i]].value === "auto" || settings[keys[i]].value === "light" || settings[keys[i]].value === "dark") {
+
+               switch (settings[keys[i]].value) {
+                  case "auto":
+                     list.innerHTML += `
+           <label>${settings[keys[i]].name}</label>
+           <select id="preferredColorThemeDom" onChange="checkPreferredColorTheme();">
+           <option value="auto" selected>Automatisk</option>
+           <option value="light">Lys</option>
+           <option value="dark">Mørk</option>
+           </select>`;
+                     break;
+                  case "light":
+                     list.innerHTML += `
+           <label>${settings[keys[i]].name}</label>
+           <select id="preferredColorThemeDom" onChange="checkPreferredColorTheme();">
+           <option value="auto">Automatisk</option>
+           <option value="light" selected>Lys</option>
+           <option value="dark">Mørk</option>
+           </select>`;
+                     break;
+                  case "dark":
+                     list.innerHTML += `
+           <label>${settings[keys[i]].name}</label>
+           <select id="preferredColorThemeDom" onChange="checkPreferredColorTheme();">
+           <option value="auto">Automatisk</option>
+           <option value="light">Lys</option>
+           <option value="dark" selected>Mørk</option>
+           </select>`;
+                     break;
+
+               }
+
+
+               //showSettingsDiv.innerHTML += `<div>${settings[keys[i]].name}<input type="checkbox" id="${keys[i]}Box" onClick="updateSetting('${keys[i]}', true)"></div>`;
+            }
+         }
+      }
+   }
+
+   function checkPreferredColorTheme() {
+      const preferredColorThemeDom = document.getElementById("preferredColorThemeDom");
+
+      if (preferredColorThemeDom.value !== settings.preferredColorTheme.value) {
+         if (preferredColorThemeDom.value === "auto" || preferredColorThemeDom.value === "light" || preferredColorThemeDom.value === "dark") {
+
+            updateSetting("preferredColorTheme", preferredColorThemeDom.value);
+         }
+
+      }
+
+   }
+
+   async function updateSetting(setting, value) {
+
+      if (!setting || value !== true && value !== false && value !== "auto" && value !== "light" && value !== "dark") {
+         return;
+      } else {
+
+         if (token && user) {
+
+            const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
+            const url = `/user/update/settings/${setting}`;
+
+            const resp = await callServerAPI(body, url);
+
+            console.log(resp)
+
+            if (resp === "updated setting") {
+
+               getUserDetails();
+               /*if (value === true) {
+                  document.getElementById("infoDiv").innerHTML = `${settings[setting].name} er nå slått på!`;
+               } else {
+                  document.getElementById("infoDiv").innerHTML = `${settings[setting].name} er nå slått av!`;
+               }*/
+
+            } else {
+               listTitle.innerHTML = `En feil har oppstått, innstillingen "${setting}" ble ikke oppdatert.`;
+               setTimeout(function () {
+                  listTitle.innerHTML = "";
+               }, 3000);
+            }
+         }
+      }
+   }
+
+   // end of settings
 
    async function displayApiKey() {
 

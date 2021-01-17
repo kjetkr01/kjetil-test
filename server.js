@@ -307,11 +307,18 @@ server.post("/users/details/:user", auth, async (req, res) => {
 
           if (resp.status === true) {
                if (resp.userDetails !== false) {
-                    res.status(200).json(resp.userDetails).end();
+
+                    const updatedUserInfo = {
+                         "id": resp.userDetails.id,
+                         "username": resp.userDetails.username,
+                         "displayname": resp.userDetails.displayname,
+                         "showGymCloseTime": resp.userDetails.settings.showGymCloseTime.value,
+                         "preferredColorTheme": resp.userDetails.settings.preferredColorTheme.value,
+                    }
+
+                    res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo }).end();
                } else {
-                    //res.status(403).json(`${viewingUser} sin profil er privat!`).end();
-                    let testTZ = new Date().toLocaleTimeString();
-                    res.status(403).json(`${testTZ} sin profil er privat!`).end();
+                    res.status(403).json(`${viewingUser} sin profil er privat!`).end();
                }
           } else {
                res.status(403).json(`Brukeren finnes ikke!`).end();
