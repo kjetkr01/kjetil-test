@@ -86,8 +86,6 @@ color: var(--main-textColor);
 width: 100%;
 text-align: center;
 font-size: 18px;
-margin-left: var(--global-margin-left);
-margin-right: var(--global-margin-right);
 }
 
 #boardG > #board {
@@ -196,8 +194,6 @@ color: var(--main-textColor);
 width: 100%;
 text-align: center;
 font-size: 22px;
-margin-left: var(--global-margin-left);
-margin-right: var(--global-margin-right);
 }
 
 #boardG > #board {
