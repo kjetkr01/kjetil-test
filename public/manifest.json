@@ -1,7 +1,7 @@
 {
   "name": "Treningsstatestikk - Test App",
   "short_name": "Treningsstatestikk",
-  "lang": "Norwegian Bokmål",
+  "lang": "nb-NO",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -11,8 +11,5 @@
       "sizes": "192x192",
       "type": "image/png"
     }
-  ],
-  "background_color": "#e20303",
-  "url": "https://kjetil-test.herokuapp.com/",
-  "orientation": "any"
+  ]
 }
