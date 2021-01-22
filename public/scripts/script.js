@@ -2,81 +2,87 @@
 
 function isGymOpen() {
 
-    if (showGymCloseTime === true) {
-        console.log("showing gym close time");
+    //const da = new Date("Jan 13, 2021 23:30:00"); // til testing
+    const da = new Date();
 
-        // new version
+    let currentTimeInMS = da.getTime();
 
-        const now = new Date().getTime();
+    let monthNumber = da.getMonth();
+    let day = da.getDate();
+    let year = da.getFullYear();
+    let isOpenMessage = "", timeLeftMessage = "", timeLeftString = "";
 
-        const today = new Date();
-        const hours = today.getHours();
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
 
-        const endMonthAndDay = "Dec 8";
-        const endYear = "2022";
+    const openTime = "06:00:00";
+    const closeTime = "23:30:00";
 
-        const closeTimeCheck = 23; // close time
-        const openTimeCheck = 6; // open time
+    const openTimeInMS = new Date(`${monthNames[monthNumber]} ${day}, ${year} ${openTime}`).getTime();
+    const closeTimeInMS = new Date(`${monthNames[monthNumber]} ${day}, ${year} ${closeTime}`).getTime();
 
-        const closeTime = new Date(`${endMonthAndDay}, ${endYear} ${closeTimeCheck}:00:00`).getTime();
-        const openTime = new Date(`${endMonthAndDay}, ${endYear} ${openTimeCheck}:00:00`).getTime();
+    if (currentTimeInMS >= openTimeInMS && currentTimeInMS < closeTimeInMS) {
+        //Open
 
-        let isOpenMessage = "";
-        let timeLeftMessage = "";
-        let timeLeftString = "";
+        const distance = closeTimeInMS - currentTimeInMS;
 
-        let hoursLeft = 0;
-        let minutesLeft = 0;
+        hoursLeft = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        minutesLeft = Math.ceil((distance % (1000 * 60 * 60)) / (1000 * 60));
 
-        if (today.getTime() > openTime) {
-
-            isOpenMessage = ``;
-            timeLeftMessage = ``;
-
-        } else {
-
-            if (hours > openTimeCheck && hours < closeTimeCheck) {
-
-                const distance = closeTime - now;
-
-                hoursLeft = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                minutesLeft = Math.ceil((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-                if (hoursLeft < 1) {
-                    timeLeftString = `${minutesLeft} min`;
-                } else if (minutesLeft < 0) {
-                    timeLeftString = `${hoursLeft} t`;
-                } else {
-                    timeLeftString = `${hoursLeft} t og ${minutesLeft} min`;
-                }
-
-                isOpenMessage = `Treningssenteret er åpent!`;
-                timeLeftMessage = `Stenger om ${timeLeftString}`;
-
-            } else {
-
-                const distance = openTime - now;
-
-                hoursLeft = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                minutesLeft = Math.ceil((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-                if (hoursLeft < 1) {
-                    timeLeftString = `${minutesLeft} min`;
-                } else if (minutesLeft < 0) {
-                    timeLeftString = `${hoursLeft} t`;
-                } else {
-                    timeLeftString = `${hoursLeft} t og ${minutesLeft} min`;
-                }
-
-                isOpenMessage = `Treningssenteret er stengt!`;
-                timeLeftMessage = `Åpner om ${timeLeftString}`;
-            }
-
+        if (minutesLeft === 60) {
+            hoursLeft++;
+            minutesLeft = 0;
+            timeLeftString = `${hoursLeft} t`;
+        }
+        else if (minutesLeft === 0) {
+            timeLeftString = `${hoursLeft} t`;
+        }
+        else if (hoursLeft === 0) {
+            timeLeftString = `${minutesLeft} min`;
+        }
+        else {
+            timeLeftString = `${hoursLeft} t og ${minutesLeft} min`;
         }
 
-        return { "message": isOpenMessage, "timeLeft": timeLeftMessage };
+        isOpenMessage = `Treningssenteret er åpent!`;
+        timeLeftMessage = `Stenger om ${timeLeftString}`;
 
     }
+    else {
+        //Closed
+
+        let distance = openTimeInMS - currentTimeInMS;
+
+        if (openTimeInMS < currentTimeInMS) {
+            distance = (openTimeInMS + 86400000) - currentTimeInMS;
+        }
+
+        hoursLeft = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        minutesLeft = Math.ceil((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+        if (minutesLeft === 60) {
+            hoursLeft++;
+            minutesLeft = 0;
+            timeLeftString = `${hoursLeft} t`;
+        }
+        else if (minutesLeft === 0) {
+            timeLeftString = `${hoursLeft} t`;
+        }
+        else if (hoursLeft === 0) {
+            timeLeftString = `${minutesLeft} min`;
+        }
+        else {
+            timeLeftString = `${hoursLeft} t og ${minutesLeft} min`;
+        }
+
+        isOpenMessage = `Treningssenteret er stengt!`;
+        timeLeftMessage = `Åpner om ${timeLeftString}`;
+
+    }
+
+    return { "message": isOpenMessage, "timeLeft": timeLeftMessage };
+
 }
 
 

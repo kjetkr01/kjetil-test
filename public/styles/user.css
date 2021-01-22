@@ -1,7 +1,3 @@
-/*template:
-https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
-*/
-
 #page {
 display: grid;
 width: 100vw;
@@ -13,16 +9,16 @@ grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
 
 "e2r1 e1r2 e1r2 e1r2 e1r2 e1r2 e4r1"
 
-"e2r1 e2r2 usermsg1G usermsg1G usermsg1G e4r2 e4r1"
 "e2r1 e2r2 c1r2 c1r2 c1r2 e4r2 e4r1"
-"e2r1 e2r2 usermsg2G usermsg2G usermsg2G e4r2 e4r1"
-"e2r1 e2r2 c2r2 c2r2 c2r2 e4r2 e4r1"
-"e2r1 e2r2 usermsg3G usermsg3G usermsg3G e4r2 e4r1"
-"e2r1 e2r2 c3r2 boardTitleG c4r2 e4r2 e4r1"
-"e2r1 e2r2 c3r2 boardG c4r2 e4r2 e4r1"
-"e2r1 e2r2 c5r2 c5r2 c5r2 e4r2 e4r1"
-"e2r1 e2r2 gymtimeG gymtimeG gymtimeG e4r2 e4r1"
-"e2r1 e2r2 gymtimesmallG gymtimesmallG gymtimesmallG e4r2 e4r1"
+"e2r1 e2r2 displaynameG displaynameG displaynameG e4r2 e4r1"
+"e2r1 e2r2 c2r2 infoListG c3r2 e4r2 e4r1"
+"e2r1 e2r2 workoutTodayG workoutTodayG workoutTodayG e4r2 e4r1"
+"e2r1 e2r2 c4r2 listTitleG c5r2 e4r2 e4r1"
+"e2r1 e2r2 c4r2 listG c5r2 e4r2 e4r1"
+"e2r1 e2r2 showTotalLiftG showTotalLiftG showTotalLiftG e4r2 e4r1"
+"e2r1 e2r2 buttonsG buttonsG buttonsG e4r2 e4r1"
+"e2r1 e2r2 backBtnG backBtnG backBtnG e4r2 e4r1"
+"e2r1 e2r2 c6r2 c6r2 c6r2 e4r2 e4r1"
 
 "e2r1 e3r2 e3r2 e3r2 e3r2 e3r2 e4r1"
 
@@ -31,8 +27,7 @@ grid-template-areas: "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
 "c2r3 c2r3 c2r3 c2r3 c2r3 c2r3 c2r3";
 
 /* gammel: 25px 30px 30px 15px 1fr 10px 1fr 1fr 1fr 1fr 1fr 25px 30px 15px 20px 30px 40px */
-/* grid-template-rows: var(--global-headerRows) 15px 50px 5px 50px 60px 50px 40px 1fr 60px 30px 30px 15px var(--global-footerRows); nedover */
-grid-template-rows: var(--global-headerRows) 15px auto 5px 50px 3vh 50px 40px 1fr 3vh auto 40px 15px var(--global-footerRows); /*nedover*/
+grid-template-rows: var(--global-headerRows) 15px 15px auto auto auto 50px 1fr auto auto 30px 15px 15px var(--global-footerRows); /*nedover*/
 grid-template-columns: 5px 10px 30px 1fr 30px 10px 5px; /*bortover*/
 }
 
@@ -56,72 +51,63 @@ text-align: center;
 
 /* content/middle */
 
-#usermsg1G > #usermsg1 {
-font-size: 22px;
-font-weight: bold;
-margin-top: 10px;
-color: var(--main-textColor);
-margin-left: var(--global-margin-left);
-margin-right: var(--global-margin-right);
-}
-
-#usermsg2G > #usermsg2 {
-font-size: 16px;
-color: var(--main-textColor);
-margin-left: var(--global-margin-left);
-margin-right: var(--global-margin-right);
-}
-
-#usermsg3G > #usermsg3 {
-font-weight: bold;
+#displaynameG > #displayname {
 color: var(--main-textColor);
 font-size: 20px;
-text-align: center;
 margin-left: var(--global-margin-left);
 margin-right: var(--global-margin-right);
-}
-
-#boardTitleG > #boardTitle {
-color: var(--main-textColor);
-width: 100%;
+font-weight: bold;
 text-align: center;
-font-size: 18px;
 }
 
-#boardG > #board {
-color: var(--main-textColor);
-width: 100%;
-text-align: center;
-font-size: 16px;
-}
-
-#usernameAndWorkout{
-background: transparent;
-border: none !important;
-color: var(--main-textColor);
-font-size: 16px;
-}
-
-#usernameAndWorkout:hover {
-cursor: pointer;
-color: var(--main-ActiveAndHoverColor);
-}
-
-#gymtimeG > #gymtime {
+#infoListG > #infoList {
 color: var(--main-textColor);
 font-size: 18px;
+width: 100%;
 text-align: center;
-margin-bottom: 10px;
-margin-left: var(--global-margin-left);
-margin-right: var(--global-margin-right);
 }
 
-#gymtimesmallG > #gymtimesmall {
+#workoutTodayG > #workoutToday {
 color: var(--main-textColor);
-font-size: 14px;
-text-align: center;
+font-size: 18px;
 margin-left: var(--global-margin-left);
 margin-right: var(--global-margin-right);
+text-align: center;
+}
+
+#listTitleG > #listTitle {
+color: var(--main-textColor);
+font-size: 20px;
+width: 100%;
+text-align: center;
+}
+
+#listG > #list {
+color: var(--main-textColor);
+font-size: 16px;
+width: 100%;
+text-align: center;
+}
+
+#showTotalLiftG > #showTotalLift {
+color: var(--main-textColor);
+font-size: 18px;
+margin-left: var(--global-margin-left);
+margin-right: var(--global-margin-right);
+text-align: center;
+}
+
+#buttonsG > #buttons {
+color: var(--main-textColor);
+font-size: 18px;
+text-align: center;
+}
+
+#backBtnG > #backBtn {
+color: var(--main-textColor);
+font-size: 18px;
+width: 100%;
+text-align: center;
 }
 
 /* footer */
@@ -164,72 +150,63 @@ text-align: center;
 
 /* content/middle */
 
-#usermsg1G > #usermsg1 {
-font-size: 26px;
-font-weight: bold;
-margin-top: 10px;
+#displaynameG > #displayname {
 color: var(--main-textColor);
+font-size: 24px;
 margin-left: var(--global-margin-left);
 margin-right: var(--global-margin-right);
+font-weight: bold;
+text-align: center;
 }
 
-#usermsg2G > #usermsg2 {
+#infoListG > #infoList {
+color: var(--main-textColor);
+font-size: 24px;
+width: 100%;
+text-align: center;
+}
+
+#workoutTodayG > #workoutToday {
+color: var(--main-textColor);
+font-size: 24px;
+margin-left: var(--global-margin-left);
+margin-right: var(--global-margin-right);
+text-align: center;
+}
+
+#listTitleG > #listTitle {
+color: var(--main-textColor);
+font-size: 24px;
+width: 100%;
+text-align: center;
+}
+
+#listG > #list {
+color: var(--main-textColor);
+font-size: 22px;
+width: 100%;
+text-align: center;
+}
+
+#showTotalLiftG > #showTotalLift {
+color: var(--main-textColor);
 font-size: 20px;
-color: var(--main-textColor);
 margin-left: var(--global-margin-left);
 margin-right: var(--global-margin-right);
-}
-
-#usermsg3G > #usermsg3 {
-font-weight: bold;
-color: var(--main-textColor);
-font-size: 22px;
 text-align: center;
-margin-left: var(--global-margin-left);
-margin-right: var(--global-margin-right);
 }
 
-#boardTitleG > #boardTitle {
+#buttonsG > #buttons {
 color: var(--main-textColor);
-width: 100%;
+font-size: 24px;
 text-align: center;
-font-size: 22px;
 }
 
-#boardG > #board {
-color: var(--main-textColor);
-width: 100%;
-text-align: center;
-font-size: 22px;
-}
-
-#usernameAndWorkout{
-background: transparent;
-border: none !important;
+#backBtnG > #backBtn {
 color: var(--main-textColor);
 font-size: 18px;
-}
-
-#usernameAndWorkout:hover {
-cursor: pointer;
-color: var(--main-ActiveAndHoverColor);
-}
-
-#gymtimeG > #gymtime {
-color: var(--main-textColor);
-font-size: 20px;
+width: 100%;
 text-align: center;
-margin-bottom: 10px;
-margin-left: var(--global-margin-left);
-margin-right: var(--global-margin-right);
-}
-
-#gymtimesmallG > #gymtimesmall {
-color: var(--main-textColor);
-font-size: 16px;
-text-align: center;
-margin-left: var(--global-margin-left);
-margin-right: var(--global-margin-right);
 }
 
 /* footer */
@@ -250,57 +227,63 @@ text-align: center;
 
 /* grid for elements */
 
-#page > #usermsg1G {
-grid-area: usermsg1G;
-background-color: var(--main-background-color);
-border-left: var(--main-border);
-border-right: var(--main-border);
-border-top: var(--main-border);
-border-radius: var(--global-borderRadiusForContentTop);
-padding: 7.5px;
-}
-
-#page > #usermsg2G {
-grid-area: usermsg2G;
+#page > #displaynameG {
+grid-area: displaynameG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
 border-right: var(--main-border);
 padding: 7.5px;
 }
 
-#page > #usermsg3G {
-grid-area: usermsg3G;
+#page > #infoListG {
+grid-area: infoListG;
+background-color: var(--main-background-color);
+padding: 7.5px;
+}
+
+#page > #workoutTodayG {
+grid-area: workoutTodayG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
 border-right: var(--main-border);
+padding: 7.5px;
 }
 
-#page > #boardTitleG{
-grid-area: boardTitleG;
+#page > #listTitleG{
+grid-area: listTitleG;
 background-color: var(--main-background-color);
+padding: 7.5px;
 }
 
-#page > #boardG {
-grid-area: boardG;
+#page > #listG {
+grid-area: listG;
 background-color: var(--main-background-color);
 overflow-y: auto;
 min-height: 70px;
 }
 
-#page > #gymtimeG {
-grid-area: gymtimeG;
+#page > #showTotalLiftG {
+grid-area: showTotalLiftG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
 border-right: var(--main-border);
+padding: 7.5px;
 }
 
-#page > #gymtimesmallG {
-grid-area: gymtimesmallG;
+#page > #buttonsG {
+grid-area: buttonsG;
 background-color: var(--main-background-color);
 border-left: var(--main-border);
 border-right: var(--main-border);
-border-bottom: var(--main-border);
-border-radius: var(--global-borderRadiusForContentBottom);
+padding: 7.5px;
+}
+
+#page > #backBtnG {
+grid-area: backBtnG;
+background-color: var(--main-background-color);
+border-left: var(--main-border);
+border-right: var(--main-border);
+padding: 7.5px;
 }
 
 /* elements */
@@ -327,24 +310,6 @@ grid-area: e4r1;
 
 /**/
 
-#page > #e1r2 {
-grid-area: e1r2;
-}
-
-#page > #e2r2 {
-grid-area: e2r2;
-}
-
-#page > #e3r2 {
-grid-area: e3r2;
-}
-
-#page > #e4r2 {
-grid-area: e4r2;
-}
-
-/* */
-
 /* content */
 
 /* header */
@@ -358,12 +323,7 @@ grid-area: c2r1;
 border-bottom: var(--main-border);
 }
 
-#page > #c5r1 {
-grid-area: c5r1;
-border-bottom: var(--main-border);
-}
-
-#c1r1, #c2r1, #c5r1 {
+#c1r1, #c2r1 {
 background-color: var(--main-themeColor);
 }
 
@@ -371,6 +331,8 @@ background-color: var(--main-themeColor);
 
 #page > #c1r2 {
 grid-area: c1r2;
+border-top: var(--main-border);
+border-radius: var(--global-borderRadiusForContentTop);
 border-left: var(--main-border);
 border-right: var(--main-border);
 }
@@ -378,28 +340,33 @@ border-right: var(--main-border);
 #page > #c2r2 {
 grid-area: c2r2;
 border-left: var(--main-border);
-border-right: var(--main-border);
-
 }
 
 #page > #c3r2 {
 grid-area: c3r2;
-border-left: var(--main-border);
+border-right: var(--main-border);
 }
 
 #page > #c4r2 {
 grid-area: c4r2;
-border-right: var(--main-border);
+border-left: var(--main-border);
 }
 
 #page > #c5r2 {
 grid-area: c5r2;
-border-left: var(--main-border);
 border-right: var(--main-border);
 }
 
+#page > #c6r2 {
+grid-area: c6r2;
+border-right: var(--main-border);
+border-left: var(--main-border);
+border-bottom: var(--main-border);
+border-radius: var(--global-borderRadiusForContentBottom);
+}
 
-#c1r2, #c2r2, #c3r2, #c4r2, #c5r2 {
+
+#c1r2, #c2r2, #c3r2, #c4r2, #c5r2, #c6r2 {
 background-color: var(--main-background-color);
 }
 

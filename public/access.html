@@ -13,10 +13,10 @@
 
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Treningsstatestikk">
-    <meta name="apple-mobile-web-app-title" content="Treningsstatestikk">
+    <meta name="application-name" content="Treningsstatistikk">
+    <meta name="apple-mobile-web-app-title" content="Treningsstatistikk">
     <meta name="msapplication-starturl" content="/">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0">
 
     <link rel="icon" type="image/png" sizes="192x192" href="images/appIcon.png">
     <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="images/appIcon.png">
@@ -33,65 +33,141 @@
 </head>
 
 <body>
-    <header>
 
-        <nav>
-            <ul class="nav_links">
-                <li><a href="index.html">Hjem</a></li>
-                <li><a href="access.html">Lag konto</a></li>
-                <li><a href="login.html">Logg inn</a></li>
-            </ul>
-        </nav>
+    <section id="page">
 
-    </header>
+        <!-- spacing items-->
 
-    <articale>
-        <form id="askForAccess">
+        <div id="e1r1"></div>
+        <div id="e2r1"></div>
+        <div id="e3r1"></div>
+        <div id="e4r1"></div>
 
-            <input id="displayname" placeholder="Visningsnavn" type="text" required><br>
-            <input id="username" placeholder="Brukernavn" type="text" required><br>
-            <input id="psw" placeholder="Passord" type="password" required><br>
-            <input id="confirmPsw" placeholder="Gjenta passord" type="password" required><br>
-            <input id="giveAccess" type="submit" value="Be om tilgang"><br>
+        <!-- -->
 
-        </form>
+        <!-- content items-->
 
-        <div id="askForAccesMsg"></div>
+        <div id="c1r1"></div>
+        <div id="c2r1"></div>
 
+        <div id="c1r2"></div>
+        <div id="c2r2"></div>
+        <div id="c3r2"></div>
+        <div id="c4r2"></div>
+        <div id="c5r2"></div>
 
+        <div id="c1r3"></div>
+        <div id="c2r3"></div>
 
+        <!-- -->
 
+        <!-- content/middle -->
 
-    </articale>
+        <div id="Glinks">
+            <table id="links">
 
-    <footer>
-        Footer
-    </footer>
+            </table>
+        </div>
+
+        <!-- content/middle -->
+
+        <div id="logoG">
+            <!--<img id="logo" draggable="false" src="images/logo.svg">-->
+        </div>
+
+        <div id="inp1G">
+            <input id="inp1" type="text" placeholder="Visningsnavn">
+        </div>
+
+        <div id="inp2G">
+            <input id="inp2" type="text" placeholder="Brukernavn">
+        </div>
+
+        <div id="inp3G">
+            <input id="inp3" type="password" placeholder="Passord">
+        </div>
+
+        <div id="inp4G">
+            <input id="inp4" type="password" placeholder="Gjenta passord">
+        </div>
+
+        <div id="respmsgG">
+            <p id="respmsg">
+
+            </p>
+        </div>
+
+        <div id="askforaccessbtnG">
+            <button id="askforaccessbtn" onClick="requestAccess();">
+                Be om tilgang
+            </button>
+        </div>
+
+        <div id="alreadyaccbtnG">
+            <p id="alreadyaccbtn">
+                <a href="login.html" draggable="false">Har du konto? <strong>Logg inn</strong></a>
+            </p>
+        </div>
+
+        <div id="Gfootermenu">
+            <p id="footermenu">
+
+            </p>
+        </div>
+
+        <!-- -->
+
+    </section>
+
+    <!--
+
+    <input id="displayname" placeholder="Visningsnavn" type="text">
+    <input id="username" placeholder="Brukernavn" type="text">
+    <input id="psw" placeholder="Passord" type="password">
+    <input id="confirmPsw" placeholder="Gjenta passord" type="password">
+    <button id="giveAccess" onclick="requestAccess()">
+        Be om tilgang
+    </button>
+
+    <div id="askForAccesMsg"></div>
+    --->
 
 </body>
 
 <script>
 
-    // ask for access
-    const askForAccess = document.getElementById("askForAccess");
+    displayLinks("links");
+    checkColorTheme();
 
-    askForAccess.addEventListener("submit", async function (evt) {
+    addEventListener("keypress", function (evt) {
 
-        evt.preventDefault();
-
-        const displayname = document.getElementById("displayname").value;
-        const username = document.getElementById("username").value;
-        const psw = document.getElementById("psw").value;
-        const confirmPsw = document.getElementById("confirmPsw").value;
-
-        let resp = await validate(displayname, username, psw, confirmPsw);
-
-        //console.log(resp)
-
-        const askForAccesMsg = document.getElementById("askForAccesMsg");
-        askForAccesMsg.innerHTML = resp;
+        if (evt.keyCode === 13) {
+            requestAccess();
+        }
 
     });
+
+    // ask for access
+
+    async function requestAccess() {
+
+        const displayname = document.getElementById("inp1").value;
+        const username = document.getElementById("inp2").value;
+        const psw = document.getElementById("inp3").value;
+        const confirmPsw = document.getElementById("inp4").value;
+
+        const resp = await validate(displayname, username, psw, confirmPsw);
+
+        if (resp) {
+            const respmsg = document.getElementById("respmsg");
+            respmsg.innerHTML = resp;
+        } else {
+            respmsg.innerHTML = errorText;
+        }
+
+
+
+    };
 
 //
 

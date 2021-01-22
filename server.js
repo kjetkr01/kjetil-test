@@ -13,6 +13,8 @@ const auth = require("./modules/auth");
 const user = require("./modules/user");
 const validateUser = require("./modules/user").validateUser;
 const getListOfUsers = require("./modules/user").getListOfUsers;
+const getListOfLeaderboardsUsers = require("./modules/user").getListOfLeaderboardsUsers;
+const getListOfUsersLeaderboard = require("./modules/user").getListOfUsersLeaderboard;
 const getListOfPendingUsers = require("./modules/user").getListOfPendingUsers;
 const acceptOrDenyUser = require("./modules/user").acceptOrDenyUser;
 const getWorkoutSplit = require("./modules/user").getWorkoutSplit;
@@ -39,6 +41,33 @@ server.use(bodyParser.json({ limit: "5mb" }));
 
 const maxCharLength = 20;
 const minCharLength = 3;
+
+const day = new Date().getDay();
+let dayTxt = "";
+
+switch (day) {
+     case 0:
+          dayTxt = "Søndag";
+          break;
+     case 1:
+          dayTxt = "Mandag";
+          break;
+     case 2:
+          dayTxt = "Tirsdag";
+          break;
+     case 3:
+          dayTxt = "Onsdag";
+          break;
+     case 4:
+          dayTxt = "Torsdag";
+          break;
+     case 5:
+          dayTxt = "Fredag";
+          break;
+     case 6:
+          dayTxt = "Lørdag";
+          break;
+}
 
 //
 
@@ -90,7 +119,8 @@ server.post("/autenticate", async function (req, res) {
                     "id": requestUser.userInfo.id,
                     "username": requestUser.userInfo.username,
                     "displayname": requestUser.userInfo.displayname,
-                    "showGymCloseTime": requestUser.userInfo.settings.showGymCloseTime.value
+                    "showGymCloseTime": requestUser.userInfo.settings.showGymCloseTime.value,
+                    "preferredColorTheme": requestUser.userInfo.settings.preferredColorTheme.value,
                }
                const sessionToken = createToken(requestUser.userInfo);
                res.status(200).json({ "authToken": sessionToken, "user": userInfo }).end();
@@ -125,6 +155,56 @@ server.post("/users/list/all", auth, async (req, res) => {
 
 //
 
+// -------------------------------  get list of users on leaderboard ---------------------- //
+
+server.post("/users/list/all/leaderboards", auth, async (req, res) => {
+
+     let numbersOnly = false;
+
+     if (req.body.numbersOnly && req.body.numbersOnly === true) {
+          numbersOnly = true;
+     }
+
+     const listOfLeaderboardsUsers = await getListOfLeaderboardsUsers(numbersOnly);
+
+     if (listOfLeaderboardsUsers) {
+
+          res.status(200).json(listOfLeaderboardsUsers).end();
+
+     } else {
+          res.status(403).json(`Feil, prøv igjen`).end();
+     }
+
+});
+
+//
+
+// -------------------------------  get list of users on specific leaderboard ---------------------- //
+
+server.post("/users/list/all/leaderboards/:leaderboard", auth, async (req, res) => {
+
+     const leaderboard = req.body.leaderboard;
+
+     if (leaderboard) {
+
+          const listOfUsersLeaderboard = await getListOfUsersLeaderboard(leaderboard);
+
+          if (listOfUsersLeaderboard) {
+
+               res.status(200).json(listOfUsersLeaderboard).end();
+
+          } else {
+               res.status(403).json(`Feil, prøv igjen`).end();
+          }
+
+     } else {
+          res.status(403).json(`Feil, prøv igjen`).end();
+     }
+
+});
+
+//
+
 
 // -------------------------------  get list of pending users (requests) ---------------------- //
 
@@ -146,9 +226,15 @@ server.post("/users/list/pending", auth, async (req, res) => {
 
      // list of pending status ??
 
-     if (listOfPendingUsers) {
+     if (listOfPendingUsers !== false) {
 
-          res.status(200).json(listOfPendingUsers).end();
+          if (listOfPendingUsers && listOfPendingUsers !== true) {
+               res.status(200).json(listOfPendingUsers).end();
+          } else {
+               res.status(200).json(`Det finnes ingen forespørseler!`).end();
+          }
+
+
 
      } else {
           res.status(403).json(`Feil, prøv igjen`).end();
@@ -227,7 +313,22 @@ server.post("/users/details/:user", auth, async (req, res) => {
 
           if (resp.status === true) {
                if (resp.userDetails !== false) {
-                    res.status(200).json(resp.userDetails).end();
+
+                    if (viewingUser === username) {
+
+                         const updatedUserInfo = {
+                              "id": resp.userDetails.id,
+                              "username": resp.userDetails.username,
+                              "displayname": resp.userDetails.displayname,
+                              "showGymCloseTime": resp.userDetails.settings.showGymCloseTime.value,
+                              "preferredColorTheme": resp.userDetails.settings.preferredColorTheme.value,
+                         }
+
+                         res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo }).end();
+                    } else {
+                         res.status(200).json({ "info": resp.userDetails }).end();
+                    }
+
                } else {
                     res.status(403).json(`${viewingUser} sin profil er privat!`).end();
                }
@@ -255,7 +356,8 @@ server.post("/user/details/settingsInfo", auth, async (req, res) => {
                "id": resp.userDetails.id,
                "username": resp.userDetails.username,
                "displayname": resp.userDetails.displayname,
-               "showGymCloseTime": resp.userDetails.settings.showGymCloseTime.value
+               "showGymCloseTime": resp.userDetails.settings.showGymCloseTime.value,
+               "preferredColorTheme": resp.userDetails.settings.preferredColorTheme.value,
           }
 
           if (resp.status === true) {
@@ -282,9 +384,9 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
 
      //accepter bare "godkjente" settings
 
-     if (currentUser.username && setting && value === true || value === false) {
+     if (currentUser.username && setting && value === true || value === false || value === "auto" || value === "light" || value === "dark") {
 
-          if (setting === "publicProfile" || setting === "showGymCloseTime" || setting === "displayLeaderboards" || setting === "displayWorkoutList") {
+          if (setting === "publicProfile" || setting === "showGymCloseTime" || setting === "preferredColorTheme" || setting === "displayLeaderboards" || setting === "displayWorkoutList") {
 
                const resp = await updateUserSetting(currentUser.username, setting, value);
 
@@ -310,7 +412,7 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
 
 server.post("/whoIsWorkingOutToday", auth, async (req, res) => {
 
-     const resp = await getListOfAllUsersWorkoutToday();
+     const resp = await getListOfAllUsersWorkoutToday(dayTxt);
 
      if (resp.status === true) {
           res.status(200).json(resp.info).end();
@@ -326,9 +428,9 @@ server.post("/whoIsWorkingOutToday", auth, async (req, res) => {
 
 server.post("/validate", auth, async (req, res) => {
 
-     const currentUser = JSON.parse(req.body.userInfo);
+     //const currentUser = JSON.parse(req.body.userInfo);
 
-     console.log("valid, current user: " + currentUser.username); // test / grei log i terminal
+     //console.log("valid, current user: " + currentUser.username); // test / grei log i terminal
 
      res.status(200).json("Ok").end();
 
@@ -340,8 +442,10 @@ server.post("/validate", auth, async (req, res) => {
 
 server.get("/api", function (req, res) {
      const resp = [
-          "API1: /getWorkoutInfo/:user/:key",
-          "API2: /api"
+          "/getWorkoutInfo/:user/:key",
+          "Kommer snart:",
+          "hent benk, knebøy, markløft + totalen / og / eller lifts (maks 3? / kan velge)",
+          "hent mål i ulike løft (maks 3? / kan velge)",
      ];
      res.status(200).json(resp).end();
 });
@@ -363,38 +467,12 @@ server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
 
           if (getWorkoutPlanInfo.status === true) {
 
-               const day = new Date().getDay();
                const program = getWorkoutPlanInfo.info.trainingsplit;
                let firstName = getWorkoutPlanInfo.info.displayname
                firstName = firstName.split(" ");
                firstName = firstName[0];
 
-               let dayTxt = "";
                let workoutTxt = "";
-
-               switch (day) {
-                    case 0:
-                         dayTxt = "Søndag";
-                         break;
-                    case 1:
-                         dayTxt = "Mandag";
-                         break;
-                    case 2:
-                         dayTxt = "Tirsdag";
-                         break;
-                    case 3:
-                         dayTxt = "Onsdag";
-                         break;
-                    case 4:
-                         dayTxt = "Torsdag";
-                         break;
-                    case 5:
-                         dayTxt = "Fredag";
-                         break;
-                    case 6:
-                         dayTxt = "Lørdag";
-                         break;
-               }
 
                if (getWorkoutPlanInfo.isOwner === true) {
 

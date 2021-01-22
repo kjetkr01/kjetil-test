@@ -50,10 +50,11 @@ async function validate(displayname, username, password, confirmpassword) {
                         const url = `/access`;
 
                         const resp = await callServerAPI(body, url);
+
                         if (resp) {
                             message = resp;//"godkjent";
                         } else {
-                            message = "En feil har oppstått!";
+                            message = errorText;
                         }
 
                     } else {
@@ -100,6 +101,9 @@ async function login(username, password, rmbrMe) {
 
                 if (resp.authToken) {
 
+                    localStorage.clear();
+                    sessionStorage.clear();
+
                     if (rmbrMe === true) {
                         localStorage.setItem("authToken", resp.authToken);
                         localStorage.setItem("user", JSON.stringify(resp.user));
@@ -108,8 +112,12 @@ async function login(username, password, rmbrMe) {
                         sessionStorage.setItem("user", JSON.stringify(resp.user));
                     }
 
+                    const today = new Date();
+                    const updatedTxt = today.toLocaleDateString() || true;
+                    sessionStorage.setItem("updated", updatedTxt);
+
                     message = "Login successful";
-                }else{
+                } else {
                     message = "Det har oppstått en feil.";
                 }
 
