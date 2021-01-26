@@ -1,0 +1,57 @@
+/* spacing and "empty content" */
+
+
+
+/* row 1 */
+
+
+#header > #Gtitle {
+    grid-area: Gtitle;
+}
+
+#header > #GsmallTitle {
+    grid-area: GsmallTitle;
+}
+
+
+/* end of row 1 */
+
+
+
+/* row 2 */
+
+
+#content > #Glogo {
+    grid-area: Glogo;
+}
+
+#content > #Ginp1 {
+    grid-area: Ginp1;
+}
+
+#content > #Ginp2 {
+    grid-area: Ginp2;
+}
+
+#content > #GrmbrMeBtn {
+    grid-area: GrmbrMeBtn;
+}
+
+#content > #GrmbrMeTxt {
+    grid-area: GrmbrMeTxt;
+}
+
+#content > #GrespMsg {
+    grid-area: GrespMsg;
+}
+
+#content > #GloginBtn {
+    grid-area: GloginBtn;
+}
+
+#content > #GnoAccBtn {
+    grid-area: GnoAccBtn;
+}
+
+
+/* end of row 2 */

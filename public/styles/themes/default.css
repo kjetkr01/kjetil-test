@@ -1,0 +1,10 @@
+:root {
+    --main-headerBackground: linear-gradient(to bottom right, #78CFF0, #094E5C);
+    --main-headerTextColor: white;
+    --main-font-Family-Verdana: Verdana, Geneva, Tahoma, sans-serif;
+    --main-font-Family-Arial: Arial, Helvetica, sans-serif;
+
+    --main-backgroundColor: #357F9B;
+    --main-textColorLight: white;
+    --main-textColorDark: black;
+}

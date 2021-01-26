@@ -1,0 +1,60 @@
+/* elements for mobile & desktop */
+
+
+
+@media only screen and (max-width: 768px) {
+    
+    #Gtitle > #title {
+        font-size: 34px;
+        margin-top: 30px;
+        margin-bottom: 10px;
+    }
+
+    #GsmallTitle > #smallTitle {
+        font-size: 22px;
+        margin-bottom: 25px;
+    }
+
+    #title, #smallTitle {
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+
+    #logo {
+        margin-top: 30px;
+        margin-bottom: 30px;
+        height: 108px;
+        width: 108px;
+    }
+
+    
+
+}
+
+#title, #smallTitle {
+    color:var(--main-headerTextColor);
+    font-weight: bold;
+    font-family: var(--main-font-Family-Verdana);
+}
+
+#smallTitle{
+    opacity: 85%;
+}
+
+#inp1, #inp2, #loginBtn {
+    background-color: var(--main-backgroundColor);
+    color: var(--main-textColorLight);
+    height: 30px;
+    width: 200px;
+}
+
+::placeholder {
+    color: var(--main-textColorLight);
+}
+
+#logo, #inp1, #inp2, #rmbrMeBtn, #rmbrMeTxt, #respMsg, #loginBtn, #noAccBtn {
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

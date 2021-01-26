@@ -1,0 +1,52 @@
+body {
+    --elS: 15px;
+    word-break: break-all;
+}
+
+#header {
+    width: 100vw;
+    height: 20vh;
+    background: var(--main-headerBackground);
+    display: grid;
+    grid-template-areas:
+
+    "Gtitle Gtitle Gtitle Gtitle Gtitle"
+    "GsmallTitle GsmallTitle GsmallTitle GsmallTitle GsmallTitle"
+    ;
+    
+    grid-template-rows: /* nedover */
+    auto auto
+
+    ; /*22*/
+
+    grid-template-columns: /* bortover */
+    var(--elS) 1fr 1fr 1fr var(--elS);
+}
+
+#content {
+    width: 100vw;
+    height: 80vh;
+    display: grid;
+    grid-template-areas:
+
+    "Glogo Glogo Glogo Glogo Glogo"
+    "Ginp1 Ginp1 Ginp1 Ginp1 Ginp1"
+    "Ginp2 Ginp2 Ginp2 Ginp2 Ginp2"
+    "GrmbrMeBtn GrmbrMeBtn GrmbrMeBtn GrmbrMeBtn GrmbrMeBtn"
+    "GrmbrMeTxt GrmbrMeTxt GrmbrMeTxt GrmbrMeTxt GrmbrMeTxt"
+    "GrespMsg GrespMsg GrespMsg GrespMsg GrespMsg"
+    "GloginBtn GloginBtn GloginBtn GloginBtn GloginBtn"
+    "GnoAccBtn GnoAccBtn GnoAccBtn GnoAccBtn GnoAccBtn"
+    ;
+    
+    grid-template-rows: /* nedover */
+
+    auto 60px 60px 30px 30px 30px 60px
+
+    1fr
+
+    ; /*22*/
+
+    grid-template-columns: /* bortover */
+    var(--elS) 1fr 1fr 1fr var(--elS);
+}
