@@ -15,18 +15,18 @@ body {
     ;
     
     grid-template-rows: /* nedover */
-    30px /* c1r1 */
+    3vh /* c1r1 */
 
     50px /* title */
     
     50px /* smallTitle */
 
-    10px /* c2r1 */
+    1vh /* c2r1 */
 
-    ; /*22*/
+    ;
 
     grid-template-columns: /* bortover */
-    15px 1fr 1fr 1fr 15px
+    15px 1fr 1fr 1fr 15px;
 }
 
 #content {
@@ -52,45 +52,48 @@ body {
     "GloginBtn GloginBtn GloginBtn GloginBtn GloginBtn"
     "c9r2 c9r2 c9r2 c9r2 c9r2"
     "GnoAccBtn GnoAccBtn GnoAccBtn GnoAccBtn GnoAccBtn"
+    "c10r2 c10r2 c10r2 c10r2 c10r2"
     ;
     
     grid-template-rows: /* nedover */
 
-    40px /* c1r2 */
+    4vh /* c1r2 */
 
     auto /* logo */
 
-    20px /* c2r2 */
+    2vh /* c2r2 */
 
-    10px /* line */
+    1vh /* line */
     
-    30px /* c3r2 */
+    3vh /* c3r2 */
     
     auto /* inp1 */
     
-    30px /* c4r2 */
+    3vh /* c4r2 */
     
     auto /* inp2 */
     
-    30px /* c5r2 */
+    3vh /* c5r2 */
     
     auto /* rmbrMeBtn */
     
-    10px /* c6r2 */
+    1vh /* c6r2 */
     
     auto /* rmbrMeTxt */
 
-    10px /* c7r2 */
+    1vh /* c7r2 */
 
     auto /* respMsg */
 
-    20px /* c8r2 */
+    2vh /* c8r2 */
 
-    30px /* loginBtn */
+    auto /* loginBtn */
 
-    30px /* c9r2 */
+    3vh /* c9r2 */
 
-    1fr /* noAccBtn */
+    auto /* noAccBtn */
+
+    1fr /* c10r2 */
 
     ;
 
