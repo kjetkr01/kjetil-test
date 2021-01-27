@@ -4,7 +4,6 @@
 
 /* row 1 */
 
-
 #header > #Gtitle {
     grid-area: Gtitle;
 }
@@ -23,6 +22,10 @@
 
 #content > #Glogo {
     grid-area: Glogo;
+}
+
+#content > #Gline {
+    grid-area: Gline;
 }
 
 #content > #Ginp1 {

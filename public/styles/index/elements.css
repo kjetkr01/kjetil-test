@@ -18,6 +18,10 @@
         margin-left: 20px;
     }
 
+    #Gline > #line {
+       width: 75vw;
+    }
+
     #logo {
         height: 108px;
         width: 108px;
@@ -27,7 +31,7 @@
 
 }
 
-#title, #smallTitle {
+#title, #smallTitle, #loginBtn {
     color:var(--main-headerTextColor);
     font-weight: bold;
     font-family: var(--main-font-Family-Verdana);
@@ -37,18 +41,47 @@
     opacity: 85%;
 }
 
+#line {
+    opacity: 40%;
+    border: 1px #757575 solid;
+}
+
 #inp1, #inp2, #loginBtn {
     background-color: var(--main-backgroundColor1);
     color: var(--main-textColorLight);
-    height: 30px;
-    width: 200px;
+    border-radius: 8px;
+    border: 1px black solid;
+}
+
+#inp1, #inp2 {
+    height: 40px;
+    width: 250px;
+}
+
+#loginBtn {
+    height: 40px;
+    width: 150px;
+    font-size: 20px;
 }
 
 ::placeholder {
     color: var(--main-textColorLight);
+    font-family: var(--main-font-Family-Verdana);
+    font-size: 16px;
+    opacity: 85%;
 }
 
-#logo, #inp1, #inp2, #rmbrMeBtn, #rmbrMeTxt, #respMsg, #loginBtn, #noAccBtn {
+#rmbrMeBtn {
+    height: 20px;
+    width: 20px;
+}
+
+#rmbrMeTxt, #respMsg, #noAccBtn {
+    font-family: var(--main-font-Family-Verdana);
+    font-size: 16px;
+}
+
+#logo, #line, #inp1, #inp2, #rmbrMeBtn, #rmbrMeTxt, #respMsg, #loginBtn, #noAccBtn {
     text-align: center;
     display: block;
     margin-left: auto;
