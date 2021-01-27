@@ -1,5 +1,4 @@
 body {
-    --elS: 15px;
     word-break: break-all;
 }
 
@@ -15,12 +14,12 @@ body {
     ;
     
     grid-template-rows: /* nedover */
-    auto auto
+    50px 50px
 
     ; /*22*/
 
     grid-template-columns: /* bortover */
-    var(--elS) 1fr 1fr 1fr var(--elS);
+    15px 1fr 1fr 1fr 15px
 }
 
 #content {
@@ -48,5 +47,5 @@ body {
     ; /*22*/
 
     grid-template-columns: /* bortover */
-    var(--elS) 1fr 1fr 1fr var(--elS);
+    15px 1fr 1fr 1fr 15px;
 }

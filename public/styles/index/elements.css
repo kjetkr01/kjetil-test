@@ -6,13 +6,11 @@
     
     #Gtitle > #title {
         font-size: 34px;
-        margin-top: 30px;
-        margin-bottom: 10px;
+        
     }
 
     #GsmallTitle > #smallTitle {
         font-size: 22px;
-        margin-bottom: 25px;
     }
 
     #title, #smallTitle {
@@ -21,8 +19,6 @@
     }
 
     #logo {
-        margin-top: 30px;
-        margin-bottom: 30px;
         height: 108px;
         width: 108px;
     }
