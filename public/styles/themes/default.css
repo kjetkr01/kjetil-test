@@ -4,7 +4,9 @@
     --main-font-Family-Verdana: Verdana, Geneva, Tahoma, sans-serif;
     --main-font-Family-Arial: Arial, Helvetica, sans-serif;
 
-    --main-backgroundColor: #357F9B;
+    --main-bodyBackgroundColor: #78CFF0;
+    --main-backgroundColor1: #357F9B;
+    --main-backgroundColor2: lightgray;
     --main-textColorLight: white;
     --main-textColorDark: black;
 }

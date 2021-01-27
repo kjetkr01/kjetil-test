@@ -38,7 +38,7 @@
 }
 
 #inp1, #inp2, #loginBtn {
-    background-color: var(--main-backgroundColor);
+    background-color: var(--main-backgroundColor1);
     color: var(--main-textColorLight);
     height: 30px;
     width: 200px;

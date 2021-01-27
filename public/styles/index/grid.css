@@ -25,6 +25,7 @@ body {
 #content {
     width: 100vw;
     height: 80vh;
+    background-color: var(--main-backgroundColor2);
     display: grid;
     grid-template-areas:
 
