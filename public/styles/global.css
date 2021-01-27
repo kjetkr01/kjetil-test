@@ -4,5 +4,5 @@
 }
 
 body {
-    background: var(--main-bodyBackgroundColor);
+    background-color: var(--main-bodyBackgroundColor);
 }
