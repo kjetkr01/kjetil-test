@@ -4,8 +4,6 @@ body {
 }
 
 #header {
-    width: 100vw;
-    height: 20vh;
     background: var(--main-headerBackground);
     display: grid;
     grid-template-areas:
@@ -23,7 +21,7 @@ body {
     
     50px /* smallTitle */
 
-    30px /* c2r1 */
+    10px /* c2r1 */
 
     ; /*22*/
 
@@ -32,8 +30,6 @@ body {
 }
 
 #content {
-    width: 100vw;
-    height: 80vh;
     background-color: var(--main-backgroundColor2);
     display: grid;
     grid-template-areas:
