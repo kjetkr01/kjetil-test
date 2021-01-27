@@ -1,14 +1,15 @@
 {
-  "name": "Treningsstatistikk - Test App",
-  "short_name": "Treningsstatistikk",
+  "name": "Treningsstatistikken - Test App",
+  "short_name": "Treningsstatistikken",
   "lang": "nb-NO",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "theme_color": "#357F9B",
   "icons": [
     {
       "src": "images/appIcon.png",
-      "sizes": "192x192",
+      "sizes": "192x129",
       "type": "image/png"
     }
   ]
