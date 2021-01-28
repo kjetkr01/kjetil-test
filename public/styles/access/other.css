@@ -1,0 +1,60 @@
+/* spacing and "empty content" */
+
+
+
+/* row 1 */
+
+#header > #Gtitle {
+    grid-area: Gtitle;
+}
+
+#header > #GsmallTitle {
+    grid-area: GsmallTitle;
+}
+
+
+/* end of row 1 */
+
+
+
+/* row 2 */
+
+
+#content > #Glogo {
+    grid-area: Glogo;
+}
+
+#content > #Gline {
+    grid-area: Gline;
+}
+
+#content > #Ginp1 {
+    grid-area: Ginp1;
+}
+
+#content > #Ginp2 {
+    grid-area: Ginp2;
+}
+
+#content > #Ginp3 {
+    grid-area: Ginp3;
+}
+
+#content > #Ginp4 {
+    grid-area: Ginp4;
+}
+
+#content > #GrespMsg {
+    grid-area: GrespMsg;
+}
+
+#content > #GaskForAccessBtn {
+    grid-area: GaskForAccessBtn;
+}
+
+#content > #GalreadyAccBtn {
+    grid-area: GalreadyAccBtn;
+}
+
+
+/* end of row 2 */

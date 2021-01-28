@@ -1,0 +1,85 @@
+/* elements for mobile & desktop */
+
+
+
+@media only screen and (max-width: 768px) {
+    
+    #Gtitle > #title {
+        font-size: 34px;
+        
+    }
+
+    #GsmallTitle > #smallTitle {
+        font-size: 22px;
+    }
+
+    #title, #smallTitle {
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+
+    #Gline > #line {
+       width: 75vw;
+    }
+
+    #logo {
+        height: 108px;
+        width: 108px;
+    }
+
+    
+
+}
+
+#title, #smallTitle, #askForAccessBtn {
+    color:var(--main-headerTextColor);
+    font-weight: bold;
+    font-family: var(--main-font-Family-Verdana);
+}
+
+#smallTitle{
+    opacity: 85%;
+}
+
+#line {
+    opacity: 40%;
+    border: 1px #757575 solid;
+}
+
+#inp1, #inp2, #inp3, #inp4, #askForAccessBtn {
+    background-color: var(--main-backgroundColor1);
+    color: var(--main-textColorLight);
+    border-radius: 8px;
+    border: 1px black solid;
+}
+
+#inp1, #inp2, #inp3, #inp4 {
+    height: 40px;
+    width: 250px;
+    font-size: 16px;
+}
+
+#askForAccessBtn {
+    height: 40px;
+    width: 200px;
+    font-size: 20px;
+}
+
+::placeholder {
+    color: var(--main-textColorLight);
+    font-family: var(--main-font-Family-Verdana);
+    font-size: 16px;
+    opacity: 85%;
+}
+
+#respMsg, #alreadyAccBtn {
+    font-family: var(--main-font-Family-Verdana);
+    font-size: 16px;
+}
+
+#logo, #line, #inp1, #inp2, #inp3, #inp4, #respMsg, #askForAccessBtn, #alreadyAccBtn {
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
