@@ -30,7 +30,7 @@ body {
 }
 
 #content {
-    /*background-color: var(--main-backgroundColor2);*/
+    background-color: var(--main-backgroundColor2);
     display: grid;
     grid-template-areas:
 
