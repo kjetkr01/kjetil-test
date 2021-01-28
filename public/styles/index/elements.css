@@ -56,6 +56,7 @@
 #inp1, #inp2 {
     height: 40px;
     width: 250px;
+    font-size: 16px;
 }
 
 #loginBtn {
