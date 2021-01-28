@@ -1,9 +1,10 @@
 * {
     margin: 0;
     /*font-family: Arial, Helvetica, sans-serif;*/
+    overscroll-behavior-y: contain;
 }
 
 body {
-    background-color: var(--main-bodyBackgroundColor);
-    overscroll-behavior-y: contain;
+    /*background-color: var(--main-bodyBackgroundColor);*/
+    background-color: var(--main-backgroundColor2);
 }
