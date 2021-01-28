@@ -1,11 +1,24 @@
 * {
     margin: 0;
     /*font-family: Arial, Helvetica, sans-serif;*/
-    overscroll-behavior: contain;
 }
 
+/* this part makes sure there is nowhere left to scroll */
+
 html {
-    overscroll-behavior: contain;
+    position: static;
+    overflow-y: hidden;
+    height: 100%;
+    max-height: 100%;
+}
+
+/* all properties don't necessarily need to be applied on both elements,
+this is only used to override any existing code */
+
+body {
+    overflow: hidden;
+    height: 100%;
+    max-height: 100%;
 }
 
 body {
