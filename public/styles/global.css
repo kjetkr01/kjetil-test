@@ -1,7 +1,11 @@
 * {
     margin: 0;
     /*font-family: Arial, Helvetica, sans-serif;*/
-    overscroll-behavior-y: contain;
+    overscroll-behavior: contain;
+}
+
+html {
+    overscroll-behavior: contain;
 }
 
 body {
