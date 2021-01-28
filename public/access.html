@@ -83,11 +83,11 @@
 
       <div id="Ginp3">
          <input id="inp3" type="password" placeholder="Passord" required>
-     </div>
+      </div>
 
-     <div id="Ginp4">
+      <div id="Ginp4">
          <input id="inp4" type="password" placeholder="Gjenta passord" required>
-     </div>
+      </div>
 
       <div id="GrespMsg">
          <p id="respMsg">
@@ -112,6 +112,33 @@
 
 <script>
 
+   addEventListener("keypress", function (evt) {
+
+      if (evt.keyCode === 13) {
+         requestAccess();
+      }
+
+   });
+
+   async function requestAccess() {
+
+      const displayname = document.getElementById("inp1").value;
+      const username = document.getElementById("inp2").value;
+      const psw = document.getElementById("inp3").value;
+      const confirmPsw = document.getElementById("inp4").value;
+
+      const resp = await validate(displayname, username, psw, confirmPsw);
+
+      if (resp) {
+         const respmsg = document.getElementById("respMsg");
+         respmsg.innerHTML = resp;
+      } else {
+         respmsg.innerHTML = errorText;
+      }
+
+
+
+   };
 
 </script>
 
