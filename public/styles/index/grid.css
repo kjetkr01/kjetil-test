@@ -6,6 +6,8 @@ body {
 #header {
     background: var(--main-headerBackground);
     display: grid;
+    width: 100vw;
+    height: 20vh;
     grid-template-areas:
 
     "c1r1 c1r1 c1r1 c1r1 c1r1"
@@ -32,6 +34,8 @@ body {
 #content {
     background-color: var(--main-backgroundColor2);
     display: grid;
+    width: 100vw;
+    height: 80vh;
     grid-template-areas:
 
     "c1r2 c1r2 c1r2 c1r2 c1r2"
