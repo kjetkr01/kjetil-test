@@ -4,11 +4,11 @@
 
 /* row 1 */
 
-#header > #Gtitle {
+#page > #Gtitle {
     grid-area: Gtitle;
 }
 
-#header > #GsmallTitle {
+#page > #GsmallTitle {
     grid-area: GsmallTitle;
 }
 
@@ -20,40 +20,85 @@
 /* row 2 */
 
 
-#content > #Glogo {
+#page > #c1r2 {
+    grid-area: c1r2;
+}
+
+#page > #Glogo {
     grid-area: Glogo;
 }
 
-#content > #Gline {
+#page > #c2r2 {
+    grid-area: c2r2;
+}
+
+#page > #Gline {
     grid-area: Gline;
 }
 
-#content > #Ginp1 {
+#page > #c3r2 {
+    grid-area: c3r2;
+}
+
+#page > #Ginp1 {
     grid-area: Ginp1;
 }
 
-#content > #Ginp2 {
+#page > #c4r2 {
+    grid-area: c4r2;
+}
+
+#page > #Ginp2 {
     grid-area: Ginp2;
 }
 
-#content > #Ginp3 {
+#page > #c5r2 {
+    grid-area: c5r2;
+}
+
+#page > #Ginp3 {
     grid-area: Ginp3;
 }
 
-#content > #Ginp4 {
+#page > #c6r2 {
+    grid-area: c6r2;
+}
+
+#page > #Ginp4 {
     grid-area: Ginp4;
 }
 
-#content > #GrespMsg {
+#page > #c7r2 {
+    grid-area: c7r2;
+}
+
+#page > #GrespMsg {
     grid-area: GrespMsg;
 }
 
-#content > #GaskForAccessBtn {
+#page > #c8r2 {
+    grid-area: c8r2;
+}
+
+#page > #GaskForAccessBtn {
     grid-area: GaskForAccessBtn;
 }
 
-#content > #GalreadyAccBtn {
+#page > #c9r2 {
+    grid-area: c9r2;
+}
+
+#page > #GalreadyAccBtn {
     grid-area: GalreadyAccBtn;
+}
+
+#page > #c10r2 {
+    grid-area: c10r2;
+    padding-bottom: 3vh;
+}
+
+#Glogo, #Gline, #Ginp1, #Ginp2, #Ginp3, #Ginp4, #GrespMsg, #GaskForAccessBtn, #GalreadyAccBtn, #c1r2, #c2r2, #c3r2, #c4r2, #c5r2, #c6r2, #c7r2, #c8r2, #c9r2, #c10r2 {
+    background-color: var(--main-backgroundColor2);
 }
 
 

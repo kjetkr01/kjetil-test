@@ -1,14 +1,14 @@
-/* spacing and "empty content" */
+/* spacing and "empty page" */
 
 
 
 /* row 1 */
 
-#header > #Gtitle {
+#page > #Gtitle {
     grid-area: Gtitle;
 }
 
-#header > #GsmallTitle {
+#page > #GsmallTitle {
     grid-area: GsmallTitle;
 }
 
@@ -20,40 +20,85 @@
 /* row 2 */
 
 
-#content > #Glogo {
+#page > #c1r2 {
+    grid-area: c1r2;
+}
+
+#page > #Glogo {
     grid-area: Glogo;
 }
 
-#content > #Gline {
+#page > #c2r2 {
+    grid-area: c2r2;
+}
+
+#page > #Gline {
     grid-area: Gline;
 }
 
-#content > #Ginp1 {
+#page > #c3r2 {
+    grid-area: c3r2;
+}
+
+#page > #Ginp1 {
     grid-area: Ginp1;
 }
 
-#content > #Ginp2 {
+#page > #c4r2 {
+    grid-area: c4r2;
+}
+
+#page > #Ginp2 {
     grid-area: Ginp2;
 }
 
-#content > #GrmbrMeBtn {
+#page > #c5r2 {
+    grid-area: c5r2;
+}
+
+#page > #GrmbrMeBtn {
     grid-area: GrmbrMeBtn;
 }
 
-#content > #GrmbrMeTxt {
+#page > #c6r2 {
+    grid-area: c6r2;
+}
+
+#page > #GrmbrMeTxt {
     grid-area: GrmbrMeTxt;
 }
 
-#content > #GrespMsg {
+#page > #c7r2 {
+    grid-area: c7r2;
+}
+
+#page > #GrespMsg {
     grid-area: GrespMsg;
 }
 
-#content > #GloginBtn {
+#page > #c8r2 {
+    grid-area: c8r2;
+}
+
+#page > #GloginBtn {
     grid-area: GloginBtn;
 }
 
-#content > #GnoAccBtn {
+#page > #c9r2 {
+    grid-area: c9r2;
+}
+
+#page > #GnoAccBtn {
     grid-area: GnoAccBtn;
+}
+
+#page > #c10r2 {
+    grid-area: c10r2;
+    padding-bottom: 3vh;
+}
+
+#Glogo, #Gline, #Ginp1, #Ginp2, #GrmbrMeBtn, #GrmbrMeTxt, #GrespMsg, #GloginBtn, #GnoAccBtn, #c1r2, #c2r2, #c3r2, #c4r2, #c5r2, #c6r2, #c7r2, #c8r2, #c9r2, #c10r2 {
+    background-color: var(--main-backgroundColor2);
 }
 
 
