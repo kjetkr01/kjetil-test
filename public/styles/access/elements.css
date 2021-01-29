@@ -2,7 +2,7 @@
 
 
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1024px) { /* 768 */
     
     #Gtitle > #title {
         font-size: 34px;
