@@ -1,0 +1,233 @@
+/* elements, grid and other for mobile */
+
+@media only screen and (max-width: 1024px) { /* 768px var før, men passer bedre med 1024px for ipad */
+
+/* grid */
+
+
+
+#page {
+display: grid;
+width: 100vw;
+height: 100vh;
+grid-template-areas:
+
+"c1r1 c1r1 c1r1 c1r1 c1r1"
+"Gtitle Gtitle Gtitle Gtitle Gtitle"
+"GsmallTitle GsmallTitle GsmallTitle GsmallTitle GsmallTitle"
+"c2r1 c2r1 c2r1 c2r1 c2r1"
+
+"c1r2 c1r2 c1r2 c1r2 c1r2"
+"Glogo Glogo Glogo Glogo Glogo"
+"c2r2 c2r2 c2r2 c2r2 c2r2"
+"Gline Gline Gline Gline Gline"
+"c3r2 c3r2 c3r2 c3r2 c3r2"
+"Ginp1 Ginp1 Ginp1 Ginp1 Ginp1"
+"c4r2 c4r2 c4r2 c4r2 c4r2"
+"Ginp2 Ginp2 Ginp2 Ginp2 Ginp2"
+"c5r2 c5r2 c5r2 c5r2 c5r2"
+"Ginp3 Ginp3 Ginp3 Ginp3 Ginp3"
+"c6r2 c6r2 c6r2 c6r2 c6r2"
+"Ginp4 Ginp4 Ginp4 Ginp4 Ginp4"
+"c7r2 c7r2 c7r2 c7r2 c7r2"
+"GrespMsg GrespMsg GrespMsg GrespMsg GrespMsg"
+"c8r2 c8r2 c8r2 c8r2 c8r2"
+"GaskForAccessBtn GaskForAccessBtn GaskForAccessBtn GaskForAccessBtn GaskForAccessBtn"
+"c9r2 c9r2 c9r2 c9r2 c9r2"
+"GalreadyAccBtn GalreadyAccBtn GalreadyAccBtn GalreadyAccBtn GalreadyAccBtn"
+"c10r2 c10r2 c10r2 c10r2 c10r2"
+;
+
+grid-template-rows: /* nedover */
+
+3vh /* c1r1 */
+
+50px /* title */
+
+50px /* smallTitle */
+
+1vh /* c2r1 */
+
+4vh /* c1r2 */
+
+auto /* logo */
+
+2vh /* c2r2 */
+
+1vh /* line */
+
+3vh /* c3r2 */
+
+auto /* inp1 */
+
+3vh /* c4r2 */
+
+auto /* inp2 */
+
+3vh /* c5r2 */
+
+auto /* inp3 */
+
+3vh /* c6r2 */
+
+auto /* inp4 */
+
+3vh /* c7r2 */
+
+auto /* respMsg */
+
+2vh /* c8r2 */
+
+auto /* loginBtn */
+
+3vh /* c9r2 */
+
+auto /* noAccBtn */
+
+1fr /* c10r2 */
+
+;
+
+grid-template-columns: /* bortover */
+15px 1fr 1fr 1fr 15px;
+}
+
+
+
+/* end of grid */
+
+
+
+/* elements */
+
+
+
+#Gtitle > #title {
+font-size: 34px;
+
+}
+
+#GsmallTitle > #smallTitle {
+font-size: 22px;
+}
+
+#title, #smallTitle {
+margin-right: 20px;
+margin-left: 20px;
+}
+
+#Gline > #line {
+width: 75vw;
+}
+
+#logo {
+height: 108px;
+width: 108px;
+}
+
+
+
+/* end of elements */
+
+
+
+/* spacing & other */
+
+
+
+#page > #Gtitle {
+grid-area: Gtitle;
+}
+
+#page > #GsmallTitle {
+grid-area: GsmallTitle;
+}
+
+
+
+#page > #c1r2 {
+grid-area: c1r2;
+}
+
+#page > #Glogo {
+grid-area: Glogo;
+}
+
+#page > #c2r2 {
+grid-area: c2r2;
+}
+
+#page > #Gline {
+grid-area: Gline;
+}
+
+#page > #c3r2 {
+grid-area: c3r2;
+}
+
+#page > #Ginp1 {
+grid-area: Ginp1;
+}
+
+#page > #c4r2 {
+grid-area: c4r2;
+}
+
+#page > #Ginp2 {
+grid-area: Ginp2;
+}
+
+#page > #c5r2 {
+grid-area: c5r2;
+}
+
+#page > #Ginp3 {
+grid-area: Ginp3;
+}
+
+#page > #c6r2 {
+grid-area: c6r2;
+}
+
+#page > #Ginp4 {
+grid-area: Ginp4;
+}
+
+#page > #c7r2 {
+grid-area: c7r2;
+}
+
+#page > #GrespMsg {
+grid-area: GrespMsg;
+}
+
+#page > #c8r2 {
+grid-area: c8r2;
+}
+
+#page > #GaskForAccessBtn {
+grid-area: GaskForAccessBtn;
+}
+
+#page > #c9r2 {
+grid-area: c9r2;
+}
+
+#page > #GalreadyAccBtn {
+grid-area: GalreadyAccBtn;
+}
+
+#page > #c10r2 {
+grid-area: c10r2;
+padding-bottom: 3vh;
+}
+
+#Glogo, #Gline, #Ginp1, #Ginp2, #Ginp3, #Ginp4, #GrespMsg, #GaskForAccessBtn, #GalreadyAccBtn, #c1r2, #c2r2, #c3r2, #c4r2, #c5r2, #c6r2, #c7r2, #c8r2, #c9r2, #c10r2 {
+background-color: var(--main-backgroundColor2);
+}
+
+
+
+/* end of spacing & other */
+
+}
