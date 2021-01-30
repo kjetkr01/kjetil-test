@@ -112,7 +112,6 @@
 
       <div id="Gtoday">
          <p id="today" class="noselect">
-            Tirsdag, 5. Januar
          </p>
       </div>
 
@@ -163,6 +162,51 @@
       } else {
          titleDom.textContent = partOfDayMsg.message;
       }
+   }
+
+   currentDayInfo();
+   function currentDayInfo() {
+
+      const todayDom = document.getElementById("today");
+
+      const todayDate = new Date();
+      const option = { weekday: "long", month: "long", day: "numeric" };
+      todayDate.toLocaleDateString("no-NB", option);
+
+      //todayDom.textContent = "Tirsdag, 5. Januar";
+
+      let dateFormat = todayDate.toLocaleDateString("no-NB", option);
+
+      let splitDateFormat = dateFormat.split(" ");
+
+      let fixedDateFormat = "";
+
+      for (let i = 0; i < splitDateFormat.length; i++) {
+
+         function upperCaseFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+         }
+
+         function lowerCaseAllWordsExceptFirstLetters(string) {
+            return string.replace(/\S*/g, function (word) {
+               return word.charAt(0) + word.slice(1).toLowerCase();
+            });
+         }
+
+         fixedDateFormat += upperCaseFirstLetter(lowerCaseAllWordsExceptFirstLetters(splitDateFormat[i])) + " ";
+
+      }
+
+      fixedDateFormat = fixedDateFormat.split(" ");
+
+      if (fixedDateFormat[0] && fixedDateFormat[1] && fixedDateFormat[2]) {
+         todayDom.textContent = `${fixedDateFormat[0]}, ${fixedDateFormat[1]} ${fixedDateFormat[2]}`;
+      } else {
+         todayDom.textContent = dateFormat;
+      }
+
+
+
    }
 
    /*
