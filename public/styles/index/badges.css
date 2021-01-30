@@ -1,0 +1,142 @@
+.badges {
+display: grid;
+border-radius: 18px;
+width: 130px;
+height: 180x;
+/*background-color: red;*/
+grid-template-areas:
+
+"c1b c1b"
+"Gprogression Gprogression"
+"c2b c2b"
+"GkgLeft GkgLeft"
+"c3b c3b"
+"Gexercise Gexercise"
+"c4b c4b"
+"Gkg Gkg"
+"c5b c5b"
+"Gmsg Gmsg"
+"c6r2 c6r2"
+;
+grid-template-rows: /* nedover */
+
+10px /* c1b */
+
+30px /* Gprogression */
+
+5px /* c2b */
+
+20px /* GkgLeft */
+
+25px /* c3b */
+
+20px /* Gexercise */
+
+5px /* c4b */
+
+20px /* Gkg */
+
+5px /* c5b */
+
+20px /* Gmsg */
+
+20px /* c6r2 */
+
+;
+
+grid-template-columns: /* bortover */
+65px 65px;
+}
+
+#Gprogression > #progression {
+    margin-right: 10px;
+    margin-left: 10px;
+    color: var(--main-textColorLight);
+}
+
+#GkgLeft > #kgLeft {
+
+}
+
+#progression, #kgLeft {
+    font-size: 13px;
+}
+
+#Gexercise > #exercise {
+font-size: 18px;
+}
+
+#Gkg > #kg {
+font-size: 16px;
+}
+
+#kg, #exercise {
+    font-family: var(--main-font-Family-Verdana);
+ }
+
+ #progression, #kgLeft, #exercise, #kg {
+    font-weight: bold;
+ }
+
+#Gmsg > #msg {
+    font-size: 14px;
+}
+
+#kgLeft, #exercise, #kg, #msg {
+margin-right: 10px;
+margin-left: 10px;
+color: var(--main-textColorLight);
+
+overflow: hidden;
+white-space:nowrap;
+text-overflow: ellipsis;
+}
+
+
+
+/* elements */
+
+
+.badges > #c1b {
+grid-area: c1b;
+}
+
+.badges > #Gprogression {
+grid-area: Gprogression;
+}
+
+.badges > #c2b {
+grid-area: c2b;
+}
+
+.badges > #GkgLeft {
+grid-area: GkgLeft;
+}
+
+.badges > #c3b {
+grid-area: c3b;
+}
+
+.badges > #Gexercise {
+grid-area: Gexercise;
+}
+
+.badges > #c4b {
+grid-area: c4b;
+}
+
+.badges > #Gkg {
+grid-area: Gkg;
+}
+
+.badges > #c5b {
+grid-area: c5b;
+}
+
+.badges > #Gmsg {
+grid-area: Gmsg;
+}
+
+.badges > #c6b {
+grid-area: c6b;
+}
