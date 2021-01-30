@@ -1,8 +1,12 @@
-.badges {
+/* grid for big badges */
+
+
+
+.bigBadges {
 display: grid;
 border-radius: 18px;
 width: 130px;
-height: 180x;
+height: 180px;
 /*background-color: red;*/
 grid-template-areas:
 
@@ -48,10 +52,146 @@ grid-template-columns: /* bortover */
 65px 65px;
 }
 
+/* elements */
+
+
+.bigBadges > #c1b {
+grid-area: c1b;
+}
+
+.bigBadges > #Gprogression {
+grid-area: Gprogression;
+}
+
+.bigBadges > #c2b {
+grid-area: c2b;
+}
+
+.bigBadges > #GkgLeft {
+grid-area: GkgLeft;
+}
+
+.bigBadges > #c3b {
+grid-area: c3b;
+}
+
+.bigBadges > #Gexercise {
+grid-area: Gexercise;
+}
+
+.bigBadges > #c4b {
+grid-area: c4b;
+}
+
+.bigBadges > #Gkg {
+grid-area: Gkg;
+}
+
+.bigBadges > #c5b {
+grid-area: c5b;
+}
+
+.bigBadges > #Gmsg {
+grid-area: Gmsg;
+}
+
+.bigBadges > #c6b {
+grid-area: c6b;
+}
+
+
+/* end of grid for big badges */
+
+
+
+
+
+/* grid for small badges */
+
+
+
+.smallBadges {
+display: grid;
+border-radius: 18px;
+width: 130px;
+height: 100px;
+/*background-color: red;*/
+grid-template-areas:
+
+"c1b c1b"
+"Gexercise Gexercise"
+"c2b c2b"
+"Gkg Gkg"
+"c3b c3b"
+"Gmsg Gmsg"
+"c4r2 c4r2"
+;
+grid-template-rows: /* nedover */
+
+20px /* c1b */
+
+20px /* Gexercise */
+
+5px /* c2b */
+
+20px /* Gkg */
+
+5px /* c3b */
+
+20px /* Gmsg */
+
+20px /* c4r2 */
+
+;
+
+grid-template-columns: /* bortover */
+65px 65px;
+}
+
+/* elements */
+
+
+.smallBadges > #c1b {
+grid-area: c1b;
+}
+
+.smallBadges > #Gexercise {
+grid-area: Gexercise;
+}
+
+.smallBadges > #c2b {
+grid-area: c2b;
+}
+
+.smallBadges > #Gkg {
+grid-area: Gkg;
+}
+
+.smallBadges > #c3b {
+grid-area: c3b;
+}
+
+.smallBadges > #Gmsg {
+grid-area: Gmsg;
+}
+
+.smallBadges > #c4b {
+grid-area: c4b;
+}
+
+
+/* end of grid for small badges */
+
+
+
+
+/* elements */
+
+
 #Gprogression > #progression {
-    margin-right: 10px;
-    margin-left: 10px;
-    color: var(--main-textColorLight);
+margin-right: 10px;
+margin-left: 10px;
+color: var(--main-textColorLight);
 }
 
 #GkgLeft > #kgLeft {
@@ -59,7 +199,7 @@ grid-template-columns: /* bortover */
 }
 
 #progression, #kgLeft {
-    font-size: 13px;
+font-size: 13px;
 }
 
 #Gexercise > #exercise {
@@ -71,15 +211,15 @@ font-size: 16px;
 }
 
 #kg, #exercise {
-    font-family: var(--main-font-Family-Verdana);
- }
+font-family: var(--main-font-Family-Verdana);
+}
 
- #progression, #kgLeft, #exercise, #kg {
-    font-weight: bold;
- }
+#progression, #kgLeft, #exercise, #kg {
+font-weight: bold;
+}
 
 #Gmsg > #msg {
-    font-size: 14px;
+font-size: 14px;
 }
 
 #kgLeft, #exercise, #kg, #msg {
@@ -93,50 +233,4 @@ text-overflow: ellipsis;
 }
 
 
-
-/* elements */
-
-
-.badges > #c1b {
-grid-area: c1b;
-}
-
-.badges > #Gprogression {
-grid-area: Gprogression;
-}
-
-.badges > #c2b {
-grid-area: c2b;
-}
-
-.badges > #GkgLeft {
-grid-area: GkgLeft;
-}
-
-.badges > #c3b {
-grid-area: c3b;
-}
-
-.badges > #Gexercise {
-grid-area: Gexercise;
-}
-
-.badges > #c4b {
-grid-area: c4b;
-}
-
-.badges > #Gkg {
-grid-area: Gkg;
-}
-
-.badges > #c5b {
-grid-area: c5b;
-}
-
-.badges > #Gmsg {
-grid-area: Gmsg;
-}
-
-.badges > #c6b {
-grid-area: c6b;
-}
+/* end of elements */

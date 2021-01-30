@@ -7,6 +7,7 @@
     --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
     --main-backgroundColor1: #357F9B;
     --main-backgroundColor2: #F0F0F0;
+    --main-backgroundColor3: #ffffff;
     --main-textColorLight: white;
     --main-textColorDark: black;
 }

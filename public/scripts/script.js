@@ -90,7 +90,7 @@ function isGymOpen() {
 
 function partOfDayMessage(displayName) {
 
-    let usermessage = "";
+    let message = "";
     let messageWithName = true;
     let partOfDay = "";
     let firstName = "";
@@ -120,12 +120,12 @@ function partOfDayMessage(displayName) {
     }
 
     if (messageWithName) {
-        usermessage = `God ${partOfDay}, ${firstName}.`;
+        message = `God ${partOfDay},`;
     } else {
-        usermessage = `God ${partOfDay}.`;
+        message = `God ${partOfDay}.`;
     }
 
-    return usermessage;
+    return {"message": message, "firstName": firstName};
 }
 
 
