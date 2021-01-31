@@ -80,18 +80,46 @@
 
       <div id="GsmallTitle">
          <p id="smallTitle" class="noselect">
-            Din fremgang
+            Laster...
          </p>
       </div>
 
-      <div id="Gbadges">
+      <div id="Gbadges" style="min-height: 100px;">
 
          <table id="badges">
 
             <tr id="badgesTableRow">
-               <td><div id="badge1" class="smallBadges"
-                  style="background: linear-gradient(to right bottom, #E36262, #972F2F); box-shadow: 6px 6px rgba(151,47,47, 0.4);">
-               </div></td>
+               <td>
+                  <div id="badge1" class="smallBadges"
+                     style="background: linear-gradient(to right bottom, #E36262, #972F2F); box-shadow: 6px 6px rgba(151,47,47, 0.4);">
+
+                     <!--
+                  <div id="c1b"></div>
+                  <div id="c2b"></div>
+                  <div id="c3b"></div>
+                  <div id="c4b"></div>
+                  <div id="c5b"></div>
+                  <div id="c6b"></div>
+                  -->
+
+                     <div id="Gexercise">
+                        <p id="exercise">
+                           Laster...
+                        </p>
+                     </div>
+
+                     <div id="Gkg">
+                        <p id="kg">
+                        </p>
+                     </div>
+
+                     <div id="Gmsg">
+                        <p id="msg">
+                        </p>
+                     </div>
+
+                  </div>
+               </td>
             </tr>
 
          </table>
@@ -144,22 +172,48 @@
 
 <script>
 
-   if (userDisplayname) {
-      const partOfDayMsg = partOfDayMessage(userDisplayname);
-      const titleDom = document.getElementById("title");
-      const nameDom = document.getElementById("name");
 
-      if (partOfDayMsg.message && partOfDayMsg.firstName) {
-         titleDom.textContent = partOfDayMsg.message;
-         nameDom.textContent = partOfDayMsg.firstName;
-      } else {
-         titleDom.textContent = partOfDayMsg.message;
-      }
+
+   function intervals() {
+
+      let savedDay = new Date().getDay();
+
+      setInterval(() => {
+
+         const currentDay = new Date().getDay()
+         if (savedDay !== currentDay) {
+            savedDay = currentDay;
+            checkWhoIsWorkingOutToday();
+            currentDayInfo();
+         }
+
+      }, 15000);
+
+      setInterval(() => {
+         displayPartOfDayMsg();
+      }, 60000);
+
    }
 
+   intervals();
+
+   displayPartOfDayMsg();
    checkWhoIsWorkingOutToday();
    currentDayInfo();
    displayBadges();
+
+
+
+
+   function viewUser(viewUser) {
+
+      if (viewUser) {
+         sessionStorage.setItem("ViewingUser", viewUser);
+         //redirectToUser();
+      }
+
+   }
+
 
 </script>
 

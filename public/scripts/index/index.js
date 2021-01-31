@@ -1,3 +1,20 @@
+function displayPartOfDayMsg() {
+
+    if (userDisplayname) {
+        const partOfDayMsg = partOfDayMessage(userDisplayname);
+        const titleDom = document.getElementById("title");
+        const nameDom = document.getElementById("name");
+
+        if (partOfDayMsg.message && partOfDayMsg.firstName) {
+            titleDom.textContent = partOfDayMsg.message;
+            nameDom.textContent = partOfDayMsg.firstName;
+        } else {
+            titleDom.textContent = partOfDayMsg.message;
+        }
+    }
+
+}
+
 
 async function checkWhoIsWorkingOutToday() {
 
@@ -124,6 +141,8 @@ async function displayBadges() {
     let myUsername = JSON.parse(user);
     myUsername = myUsername.username;
 
+    const smallTitle = document.getElementById("smallTitle");
+
     const body = { "authToken": token, "userInfo": user, "viewingUser": myUsername };
     const url = `/users/details/${myUsername}`;
 
@@ -135,6 +154,12 @@ async function displayBadges() {
             localStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
         } else {
             sessionStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
+        }
+
+        const size = 0;
+
+        if (size === 1) {
+            document.getElementById("Gbadges").style.minHeight = "180px";
         }
 
 
@@ -180,9 +205,11 @@ async function displayBadges() {
 
             arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
 
+            smallTitle.textContent = "Din fremgang";
+
             for (let i = 0; i < arr.length; i++) {
 
-                const badge = getBadge(0, arr[i]);
+                const badge = getBadge(size, arr[i]);
 
                 if (badge) {
                     badgesTableRowDom.innerHTML += badge;
@@ -190,6 +217,8 @@ async function displayBadges() {
             }
         } else {
             const badge = getBadge();
+
+            smallTitle.textContent = "Du har ingen mål enda!";
 
             if (badge) {
                 badgesTableRowDom.innerHTML = badge;
