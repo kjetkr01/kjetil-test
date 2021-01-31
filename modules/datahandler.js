@@ -502,20 +502,22 @@ class StorageHandler {
 
         const client = new pg.Client(this.credentials);
         let results = false;
-        let info = {};
+        //let info = {};
+        let infoList = [];
 
         try {
             await client.connect();
 
             results = await client.query('SELECT "username","displayname","settings","trainingsplit" FROM "users"');
 
-            let counter = 0;
+            //let counter = 0;
 
             for (let i = 0; i < results.rows.length; i++) {
                 const todaysWorkout = results.rows[i].trainingsplit[dayTxt];
                 if (results.rows[i].settings.displayWorkoutList.value === true && todaysWorkout.length > 0 && todaysWorkout !== "Fri") {
-                    info[counter] = { "username": results.rows[i].username, "userFullName": results.rows[i].displayname, "todaysWorkout": todaysWorkout };
-                    counter++;
+                    //info[counter] = { "username": results.rows[i].username, "userFullName": results.rows[i].displayname, "todaysWorkout": todaysWorkout };
+                    //counter++;
+                    infoList.push({ "username": results.rows[i].username, "userFullName": results.rows[i].displayname, "todaysWorkout": todaysWorkout });
                 }
             }
 
@@ -530,7 +532,7 @@ class StorageHandler {
 
         client.end();
 
-        return { "status": results, "info": info };
+        return { "status": results, "info": infoList };
     }
 
     //

@@ -45,7 +45,7 @@ grid-template-rows: /* nedover */
 
 auto /* Gbadges */
 
-3vh /* c3r1 */
+2vh /* c3r1 */
 
 3vh /* c4r1 */
 
@@ -112,7 +112,7 @@ font-size: 18px;
 }
 
 #Gbadges > #badges {
-
+margin-bottom: 15px;
 }
 
 #Gline > #line {
@@ -150,6 +150,7 @@ grid-area: c2r1;
 
 #page > #Gbadges {
 grid-area: Gbadges;
+overflow-x: auto;
 }
 
 #page > #c3r1 {
