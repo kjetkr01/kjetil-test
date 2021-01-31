@@ -157,7 +157,7 @@ ${userBadgeInfo.msg}
         const badgeTemplate = `
 <td>
 <div id="badge1" class="smallBadges"
-style="background: linear-gradient(to right bottom, #E36262, #972F2F); box-shadow: 6px 6px rgba(151,47,47, 0.4);">
+style="background-color: #8d8d8d; box-shadow: 6px 6px rgba(141,141,141, 0.4);">
 
 
 
