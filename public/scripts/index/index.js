@@ -111,7 +111,7 @@ function currentDayInfo() {
     fixedDateFormat = fixedDateFormat.split(" ");
 
     if (fixedDateFormat[0] && fixedDateFormat[1] && fixedDateFormat[2]) {
-        todayDom.textContent = `${fixedDateFormat[0]}, ${fixedDateFormat[1]} ${fixedDateFormat[2]}`;
+        todayDom.textContent = `${fixedDateFormat[0]} ${fixedDateFormat[1]} ${fixedDateFormat[2]}`;
     } else {
         todayDom.textContent = dateFormat;
     }
