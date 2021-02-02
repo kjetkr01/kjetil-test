@@ -23,6 +23,8 @@ async function checkWhoIsWorkingOutToday() {
 
     const resp = await whoIsWorkingOutToday();
 
+    currentDayInfo();
+
     peopleWorkoutList.innerHTML = "";
     peopleWorkoutTxt.innerHTML = "";
 
