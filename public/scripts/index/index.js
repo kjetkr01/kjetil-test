@@ -66,10 +66,21 @@ async function checkWhoIsWorkingOutToday() {
                 shortenedFullName += `${splitFullName[j][0]}.`;
             }
 
-            peopleWorkoutList.innerHTML += `
+            if (username === resp[i].username) {
+                console.log("color")
+                peopleWorkoutList.innerHTML += `
+                <button class="ownAccount" onClick="viewUser('${resp[i].username}')">${shortenedFullName}</button>
+                <br>
+                `;
+
+            } else {
+
+                peopleWorkoutList.innerHTML += `
             <button class="peopleWorkoutListName" onClick="viewUser('${resp[i].username}')">${shortenedFullName}</button>
             <br>
             `;
+
+            }
 
         }
 

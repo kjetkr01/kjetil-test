@@ -2,7 +2,7 @@
 
 const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
 const user = localStorage.getItem("user") || sessionStorage.getItem("user");
-let userDisplayname, showGymCloseTime;
+let userDisplayname, showGymCloseTime, username;
 let isUpdatingUserObject = false;
 
 let lastUpdatedTime = new Date();
@@ -26,6 +26,8 @@ if (user) {
             getUpdatedUserObject(false, userDisplayname.username);
             hasUpdatedInfo = true;
         }
+
+        username = userDisplayname.username;
 
         showGymCloseTime = userDisplayname.showGymCloseTime;
         preferredColorTheme = userDisplayname.preferredColorTheme;

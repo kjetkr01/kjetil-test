@@ -66,7 +66,17 @@ margin-bottom: 5px;
 margin-top: 5px;
 background-color: transparent;
 border: transparent;
+}
 
+.ownAccount {
+color: var(--main-backgroundColor1);
+font-size: 16px;
+font-family: var(--main-font-Family-Verdana);
+
+margin-bottom: 5px;
+margin-top: 5px;
+background-color: transparent;
+border: transparent;
 }
 
 
