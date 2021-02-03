@@ -429,6 +429,9 @@ async function getUpdatedUserObject(returnInfo, myUsername) {
 
 function checkConnection(aDom) {
 
+    const offlineTxt = "Ingen internettforbindelse";
+    const onlineTxt = "Tilkoblet";
+
     if (aDom) {
 
         if (document.getElementById(aDom)) {
@@ -436,12 +439,15 @@ function checkConnection(aDom) {
             const domElement = document.getElementById(aDom);
 
             if (!window.navigator.onLine) {
-                domElement.textContent = "Ingen internettforbindelse";
+                domElement.textContent = offlineTxt;
                 domElement.style.color = "red";
-            } /*else {
-                domElement.textContent = "Tilkoblet";
+            } else if (window.navigator.onLine && domElement.textContent === offlineTxt) {
+                domElement.textContent = onlineTxt;
                 domElement.style.color = "green";
-            }*/
+            }
+            else {
+                domElement.textContent = "";
+            }
 
 
 
