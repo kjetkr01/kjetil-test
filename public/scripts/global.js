@@ -425,6 +425,36 @@ async function getUpdatedUserObject(returnInfo, myUsername) {
 
 //
 
+// check if connected to wifi
+
+function checkConnection(aDom) {
+
+    if (aDom) {
+
+        if (document.getElementById(aDom)) {
+
+            const domElement = document.getElementById(aDom);
+
+            if (!window.navigator.onLine) {
+                domElement.textContent = "Ingen internett";
+                domElement.style.color = "red";
+            } else {
+                domElement.textContent = "Koblet til internet";
+                domElement.style.color = "green";
+            }
+
+
+
+        }
+
+    }
+
+}
+
+
+
+//
+
 // redirect functions
 
 function redirectToLogin() {
