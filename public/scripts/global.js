@@ -43,6 +43,37 @@ if (user) {
 
 //
 
+//disables body,html scrolling
+
+window.addEventListener("scroll", (e) => {
+
+    const test = innerHeight * 0.50;
+    //alert(test)
+
+    if (innerWidth < 1024) {
+
+        e.preventDefault();
+
+        if (pageDom) {
+
+            //const calc = (window.scrollY + pageDom.offsetHeight) - 10;
+            const calc = (window.scrollY + pageDom.offsetHeight) + test;
+
+            if (calc > pageDom.scrollHeight) {
+                document.body.style.position = "fixed";
+                window.scrollTo(0, 0);
+            } else {
+                document.body.style.position = "";
+            }
+
+        }
+
+    }
+
+});
+
+//
+
 //auto redirect to login if token is invalid
 window.onload = validateToken;
 async function validateToken() {
