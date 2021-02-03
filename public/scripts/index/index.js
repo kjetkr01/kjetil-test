@@ -69,7 +69,7 @@ async function checkWhoIsWorkingOutToday() {
             if (username === resp[i].username) {
                 console.log("color")
                 peopleWorkoutList.innerHTML += `
-                <button class="ownAccount" onClick="viewUser('${resp[i].username}')">${shortenedFullName}</button>
+                <button class="accountOwner" onClick="viewUser('${resp[i].username}')">${shortenedFullName}</button>
                 <br>
                 `;
 

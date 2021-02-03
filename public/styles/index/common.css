@@ -59,17 +59,13 @@ margin-top: 10px;
 
 .peopleWorkoutListName {
 color: var(--main-textColorDark);
-font-size: 16px;
-font-family: var(--main-font-Family-Verdana);
-
-margin-bottom: 5px;
-margin-top: 5px;
-background-color: transparent;
-border: transparent;
 }
 
-.ownAccount {
+.accountOwner {
 color: var(--main-backgroundColor1);
+}
+
+.peopleWorkoutListName, .accountOwner {
 font-size: 16px;
 font-family: var(--main-font-Family-Verdana);
 
