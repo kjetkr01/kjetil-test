@@ -176,7 +176,7 @@
 
 <script>
 
-const pageDom = document.getElementById("page");
+   const pageDom = document.getElementById("page");
 
    function intervals() {
 
@@ -196,6 +196,10 @@ const pageDom = document.getElementById("page");
          displayPartOfDayMsg();
       }, 60000);
 
+      setInterval(() => {
+         checkConnection("c6r2");
+      }, 1000);
+
    }
 
    intervals();
@@ -204,7 +208,6 @@ const pageDom = document.getElementById("page");
    checkWhoIsWorkingOutToday();
    displayBadges();
    changeBodyPosition();
-   checkConnection("c6r2");
 
 
 

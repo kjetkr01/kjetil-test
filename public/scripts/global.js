@@ -436,12 +436,12 @@ function checkConnection(aDom) {
             const domElement = document.getElementById(aDom);
 
             if (!window.navigator.onLine) {
-                domElement.textContent = "Ingen internett";
+                domElement.textContent = "Ingen internettforbindelse";
                 domElement.style.color = "red";
-            } else {
-                domElement.textContent = "Koblet til internet";
+            } /*else {
+                domElement.textContent = "Tilkoblet";
                 domElement.style.color = "green";
-            }
+            }*/
 
 
 
