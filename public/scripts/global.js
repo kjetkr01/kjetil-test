@@ -44,13 +44,12 @@ if (user) {
 //
 
 //disables body,html scrolling
-
-window.addEventListener("scroll", (e) => {
+/*window.addEventListener("scroll", (e) => {
 
     const test = innerHeight * 0.50;
     //alert(test)
 
-    if (innerWidth < 1024) {
+    if (innerWidth < 1024 && window.orientation === 0) {
 
         e.preventDefault();
 
@@ -68,6 +67,49 @@ window.addEventListener("scroll", (e) => {
 
         }
 
+    }else{
+        document.body.style.position = "";
+    }
+
+});
+*/
+
+window.addEventListener("orientationchange", function () {
+    changeBodyPosition();
+});
+
+
+function changeBodyPosition() {
+    if (window.orientation === 0 && document.body.style.position === "") {
+        document.body.style.position = "fixed";
+    } else {
+        document.body.style.position = "";
+    }
+}
+
+
+window.addEventListener("scroll", (e) => {
+
+    e.preventDefault();
+
+    if (innerWidth <= 1024 && window.orientation === 0) {
+
+        if (pageDom) {
+
+            //const calc = (window.scrollY + pageDom.offsetHeight) - 10;
+            const calc = (window.scrollY + pageDom.offsetHeight) + 1;
+
+            if (calc > pageDom.scrollHeight) {
+                //document.body.style.position = "fixed";
+                window.scrollTo(0, window.scrollY - 5);
+            } else {
+                //document.body.style.position = "";
+            }
+
+        }
+
+    } else {
+        document.body.style.position = "";
     }
 
 });
