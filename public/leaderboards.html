@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Ledertavler</title>
+
+   <meta charset="utf-8" />
+
+   <!-- manifest -->
+
+   <link rel="manifest" href="manifest.json">
+
+   <meta name="mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="application-name" content="Treningsstatistikken">
+   <meta name="apple-mobile-web-app-title" content="Treningsstatistikken">
+   <meta name="msapplication-starturl" content="/">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0">
+
+   <link rel="icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+   <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+
+   <!-- -->
+
+   <!-- status bar color -->
+
+   <meta id="themeColor" name="theme-color" content="#357F9B">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+   <!-- -->
+
+   <link rel="stylesheet" href="styles/globalVariables.css">
+   <link rel="stylesheet" href="styles/globalClasses.css">
+   <link rel="stylesheet" href="styles/global.css">
+   <link rel="stylesheet" href="styles/themes/default.css">
+
+
+   <link rel="stylesheet" href="styles/leaderboards/desktop.css">
+   <link rel="stylesheet" href="styles/leaderboards/mobile.css">
+   <link rel="stylesheet" href="styles/leaderboards/common.css">
+
+   <link rel="stylesheet" href="styles/leaderboards/board.css">
+
+
+   <script src="scripts/global.js" type="text/javascript"></script>
+   <script src="scripts/leaderboards/leaderboards.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+   <section id="page">
+
+      <div id="c1r1"></div>
+      <div id="c2r1"></div>
+      <div id="c3r1"></div>
+      <div id="c4r1"></div>
+
+      <div id="c1r2"></div>
+      <div id="c2r2"></div>
+      <div id="c3r2"></div>
+      <div id="c4r2"></div>
+      <div id="c5r2"></div>
+      <div id="c6r2"></div>
+
+      <div id="Gtitle">
+         <p id="title" class="noselect">
+            Ledertavler
+         </p>
+      </div>
+
+      <div id="GlistOfLeaderboards">
+         <table id="listOfLeaderboards" class="noselect">
+            <tr id="leaderboardsTableRow">
+               <td>
+                  <div><button disabled class="leaderboardsList">Totalt</button></div>
+               </td>
+
+               <td>
+                  <div><button disabled class="leaderboardsList">Benkpress</button></div>
+               </td>
+
+               <td>
+                  <div><button disabled class="leaderboardsList">Knebøy</button></div>
+               </td>
+
+               <td>
+                  <div><button disabled class="leaderboardsList">Markløft</button></div>
+               </td>
+
+               <td>
+                  <div><button disabled class="leaderboardsList">Skulderpresss</button></div>
+               </td>
+
+               <td>
+                  <div><button disabled class="leaderboardsList">Triceps</button></div>
+               </td>
+            </tr>
+         </table>
+      </div>
+
+      <div id="Gline">
+         <hr id="line" class="noselect">
+      </div>
+
+      <div id="GpeopleLeaderboardsTxt">
+         <p id="peopleLeaderboardsTxt" class="noselect">
+            Det er 5 brukere på tavlen
+         </p>
+      </div>
+
+      <div id="GpeopleLeaderboardsList">
+         <div id="peopleLeaderboardsList" class="noselect">
+
+            <!--
+            <tr>
+               <td class="leaderboardsPlacementNumber">
+                  1.
+               </td>
+               <td>
+                  <button disabled class="accountOwner">kjetkr01</button>
+                  <p class="peopleLeaderboardsListWeight">100 kg</p>
+               </td>
+            </tr>
+
+            <tr>
+               <td class="leaderboardsPlacementNumber">
+                  2.
+               </td>
+               <td>
+                  <button disabled class="peopleLeaderboardsListName">Lordlard</button>
+                  <br>
+                  <p class="peopleLeaderboardsListWeight">100 kg</p>
+               </td>
+            </tr>
+-->
+
+            <div class="leaderboard">
+               <div id="Gplacement">
+                  <div id="placement">
+                     1.
+                  </div>
+               </div>
+               <div id="Gusername">
+                  <div id="username">
+                     <button disabled class="accountOwner">kjetkr01</button>
+                  </div>
+               </div>
+               <div id="Gweight">
+                  <div id="weight">
+                     <p>100 kg</p>
+                  </div>
+               </div>
+            </div>
+            <hr class="boardLine">
+
+            <div class="leaderboard">
+               <div id="Gplacement">
+                  <div id="placement">
+                     2.
+                  </div>
+               </div>
+               <div id="Gusername">
+                  <div id="username">
+                     <button disabled class="peopleLeaderboardsListName">Lordlard</button>
+                  </div>
+               </div>
+
+               <div id="Gweight">
+                  <div id="weight">
+                     <p>100 kg</p>
+                  </div>
+               </div>
+            </div>
+            <hr class="boardLine">
+
+         </div>
+      </div>
+
+      <div id="Gfeed" class="noselect">
+         <img id="feed" onclick="redirectToFeed();" draggable="false" class="icons" src="images/feedIcon.svg"
+            alt="Feed">
+         </img>
+      </div>
+
+      <div id="Gleaderboards" class="noselect">
+         <img id="leaderboards" onclick="redirectToLeaderboards();" draggable="false" class="icons"
+            src="images/leaderboardsIconActive.svg" alt="Leaderboards">
+         </img>
+      </div>
+
+      <div id="Gaccount" class="noselect">
+         <img id="account" onclick="location.reload();" draggable="false" class="icons" src="images/accountIcon.svg"
+            alt="Account">
+         </img>
+      </div>
+
+   </section>
+
+</body>
+
+<script>
+
+   /*
+
+   const listTitle = document.getElementById("listTitle");
+   const listTitleG = document.getElementById("listTitleG");
+   const list = document.getElementById("list");
+   const usermsg1 = document.getElementById("usermsg1");
+
+   const ViewingLeaderboard = sessionStorage.getItem("ViewingLeaderboard");
+
+   if (ViewingLeaderboard) {
+      document.title = ViewingLeaderboard;
+      getListOfLeaderboard();
+   } else {
+      redirectToLeaderboards();
+   }
+
+
+   async function getListOfLeaderboard() {
+
+      if (token && user) {
+
+         listTitle.innerHTML = loadingText;
+         usermsg1.innerHTML = loadingText;
+
+         const body = { "authToken": token, "userInfo": user, "leaderboard": ViewingLeaderboard };
+         const url = `/users/list/all/leaderboards/${ViewingLeaderboard}`;
+
+         const resp = await callServerAPI(body, url);
+
+         list.innerHTML = "";
+
+         if (Object.keys(resp).length > 0) {
+
+            listTitle.innerHTML = ViewingLeaderboard;
+
+            listTitleG.innerHTML += `<hr>`;
+
+            // sorts leaderboard in correct order, from highest to lowest
+            resp.sort(function (a, b) { return b[ViewingLeaderboard] - a[ViewingLeaderboard] });
+            //resp.sort((a, b) => (a[ViewingLeaderboard] < b[ViewingLeaderboard]) ? 1 : -1);
+
+            //
+
+            for (let i = 0; i < Object.keys(resp).length; i++) {
+
+               list.innerHTML += `
+               <tr>
+                  <td>${i + 1}.</td>
+                  <td><button class="listButton" onClick="viewUser('${resp[i].username}')">${resp[i].username}</button></td>
+                  <td>${resp[i][ViewingLeaderboard]} kg</td>
+               </tr>
+               `;
+
+
+            }
+
+            if (Object.keys(resp).length === 1) {
+               usermsg1.innerHTML = "Det er " + parseInt(Object.keys(resp).length) + " bruker på denne tavlen!";
+            } else {
+               usermsg1.innerHTML = "Det er " + parseInt(Object.keys(resp).length) + " brukere på denne tavlen!";
+            }
+
+         } else {
+            usermsg1.innerHTML = errorLoadingText;
+            listTitle.innerHTML = errorLoadingText;
+            alert(`Ledertavlen ${ViewingLeaderboard} finnes ikke!`);
+            window.history.back();
+         }
+
+      } else {
+         listTitle.innerHTML = "Det er ingen brukere på denne tavlen!";
+      }
+   }
+
+   //
+
+   function viewUser(viewUser) {
+
+      if (viewUser) {
+         sessionStorage.setItem("ViewingUser", viewUser);
+         //redirectToUser();
+      }
+
+   }
+   */
+
+</script>
+
+</html>

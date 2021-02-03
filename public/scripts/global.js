@@ -80,12 +80,14 @@ window.addEventListener("orientationchange", function () {
 
 
 function changeBodyPosition() {
+
     if (window.orientation === 0 && document.body.style.position === "") {
         document.body.style.position = "fixed";
     } else {
         document.body.style.position = "";
     }
 }
+
 
 
 window.addEventListener("scroll", (e) => {
@@ -121,9 +123,6 @@ window.onload = validateToken;
 async function validateToken() {
 
     if (!window.navigator.onLine) {
-        const offlineMsg = "Offline mode is enabled, server fetching is disabled!";
-        alert(offlineMsg);
-        console.log(offlineMsg);
         return;
     }
 
@@ -161,9 +160,6 @@ async function validateToken() {
 async function callServerAPI(body, url) {
 
     if (!window.navigator.onLine) {
-        const offlineMsg = "Offline mode is enabled, server fetching is disabled!";
-        alert(offlineMsg);
-        console.log(offlineMsg);
         return;
     }
 
@@ -469,7 +465,7 @@ function redirectToLogin() {
 
 }
 
-function redirectToHome() {
+function redirectToFeed() {
 
     location.href = "index.html";
 
@@ -478,12 +474,6 @@ function redirectToHome() {
 function redirectToLeaderboards() {
 
     location.href = "leaderboards.html";
-
-}
-
-function redirectToLeaderboard() {
-
-    location.href = "leaderboard.html";
 
 }
 
