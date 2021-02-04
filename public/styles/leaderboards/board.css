@@ -15,20 +15,22 @@ grid-template-rows: /* nedover */
 
 auto /* row1 */
 
-auto /* row2 */
+0px /* row2 */
 
 auto /* row3 */
 
 ;
 
 grid-template-columns: /* bortover */
-30px 1fr 0px;
+auto 1fr 0px;
 }
 
 /* elements */
 
 .leaderboard > #Gplacement {
 grid-area: Gplacement;
+min-width: 40px;
+min-height: 40px;
 }
 
 .leaderboard > #Gusername {
@@ -46,7 +48,7 @@ grid-area: Gweight;
 #Gplacement>#placement{
 font-size: 22px;
 color: var(--main-textColorDark);
-margin-top: 45%;
+margin: auto;
 }
 
 #Gusername>#username{
@@ -94,15 +96,15 @@ font-weight: bold;
 }
 
 .peopleLeaderboardsListName, .accountOwner {
-font-size: 20px;
+font-size: 18px;
 font-family: var(--main-font-Family-Verdana);
 background-color: transparent;
 border: transparent;
 }
 
 .boardLine {
-margin-top: 10px;
-margin-bottom: 10px;
+margin-top: 14px;
+margin-bottom: 12px;
 
 opacity: 40%;
 border: 1px #757575 thin;

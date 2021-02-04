@@ -30,7 +30,7 @@ grid-template-rows: /* nedover */
 
 3vh /* c1r1 */
 
-145px /* title */
+auto /* title */
 
 2vh /* c2r1 */
 
@@ -40,7 +40,7 @@ auto /* GlistOfLeaderboards */
 
 30px /* GpeopleLeaderboardsTxt */
 
-3vh /* c3r1 */
+6vh /* c3r1 */
 
 1fr /* GpeopleLeaderboardsList */
 
@@ -110,6 +110,7 @@ grid-area: c1r1;
 
 #page > #Gtitle {
 grid-area: Gtitle;
+margin-bottom: 12vh;
 }
 
 #page > #c2r1 {
@@ -119,6 +120,7 @@ grid-area: c2r1;
 #page > #GlistOfLeaderboards {
 grid-area: GlistOfLeaderboards;
 overflow-x: auto;
+min-height: 50px;
 }
 
 #page > #c3r1 {

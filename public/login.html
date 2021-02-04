@@ -151,7 +151,7 @@
          const resp = await login(username, psw, rmbrMe);
 
          if (resp === "Login successful") {
-            redirectToHome();
+            redirectToFeed();
          } else {
             const respmsg = document.getElementById("respMsg");
             respmsg.innerHTML = resp;

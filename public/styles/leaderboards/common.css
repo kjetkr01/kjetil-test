@@ -48,20 +48,24 @@ border-bottom: 1px #75757585 solid;
 }
 
 .leaderboardsList {
+word-break: keep-all;
 margin-right: 10px;
 font-size: 18px;
-color:var(--main-headerTextColor);
 font-weight: bold;
 font-family: var(--main-font-Family-Verdana);
 
 background-color: var(--main-backgroundColor1);
-color: var(--main-textColorLight);
+color: #e1e1e1c7;
 border-radius: 8px;
 border: 1px var(--main-backgroundColor1) solid;
 box-shadow: 4px 4px rgba(53,127,155, 0.4);
 
 height: 35px;
 width: fit-content;
+}
+
+.active {
+    color: var(--main-textColorLight);
 }
 
 /* end of mobile & desktop */
