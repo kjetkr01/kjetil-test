@@ -182,6 +182,8 @@
 
 <script>
 
+   changeBodyPosition();
+
    document.getElementById("badgesLiftsTableRow").innerHTML = `
 <td >
                         <div id="badge1" class="smallBadges fadeInLeft animate"
@@ -265,6 +267,10 @@
                      </td>
                   </tr>
 `;
+
+   setInterval(() => {
+      checkConnection("c6r2");
+   }, 5000);
 
 </script>
 

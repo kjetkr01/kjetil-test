@@ -41,7 +41,7 @@ auto /* info */
 
 50px /* Gsettings */
 
-3vh /* c3r1 */
+10px /* c3r1 */
 
 1fr /* GuserGrid */
 
@@ -81,7 +81,7 @@ grid-template-columns: /* bortover */
 }
 
 #GuserGrid > #userGrid{
-    
+
 }
 
 #title {
