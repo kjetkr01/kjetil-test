@@ -2,7 +2,7 @@
 <html>
 
 <head>
-   <title>Hjem</title>
+   <title>Min konto</title>
 
    <meta charset="utf-8" />
 
@@ -35,18 +35,15 @@
    <link rel="stylesheet" href="styles/themes/default.css">
 
 
-   <link rel="stylesheet" href="styles/index/desktop.css">
-   <link rel="stylesheet" href="styles/index/mobile.css">
-   <link rel="stylesheet" href="styles/index/common.css">
+   <link rel="stylesheet" href="styles/account/desktop.css">
+   <link rel="stylesheet" href="styles/account/mobile.css">
+   <link rel="stylesheet" href="styles/account/common.css">
 
    <link rel="stylesheet" href="styles/global/badges.css">
    <!--<link rel="stylesheet" href="styles/index/progressbar.css">-->
 
 
    <script src="scripts/global.js" type="text/javascript"></script>
-   <script src="scripts/index/script.js" type="text/javascript"></script>
-   <script src="scripts/index/index.js" type="text/javascript"></script>
-   <script src="scripts/index/badges.js" type="text/javascript"></script>
 
 </head>
 
@@ -70,50 +67,93 @@
 
       <div id="Gtitle">
          <p id="title" class="noselect">
+            Kjetil Kristiansen
          </p>
       </div>
 
-      <div id="Gname">
-         <p id="name" class="noselect">
+      <div id="Ggym">
+         <p id="gym" class="noselect">
+            Hisøy Treningssenter
          </p>
       </div>
 
-      <div id="GsmallTitle">
-         <p id="smallTitle" class="noselect">
-            Laster...
+      <div id="Ginfo1">
+         <p id="info1" class="noselect">
+            19 år
          </p>
       </div>
 
-      <div id="Gbadges" style="min-height: 110px;">
-         <table id="badges" class="noselect">
-            <tr id="badgesTableRow">
+      <div id="Ginfo2">
+         <p id="info2" class="noselect">
+            184 cm
+         </p>
+      </div>
+
+      <div id="Ginfo3">
+         <p id="info3" class="noselect">
+            86.5 kg
+         </p>
+      </div>
+
+      <div id="Gsettings">
+         <button id="settings" class="noselect">
+            Innstillinger
+         </button>
+      </div>
+
+      <div id="Glifts">
+         <p id="lifts" class="noselect">
+            Løft (3)
+         </p>
+      </div>
+
+      <div id="GlineLifts">
+         <hr id="lineLifts" class="noselect">
+      </div>
+
+      <div id="GbadgesLifts" style="min-height: 110px;">
+         <table id="badgesLifts" class="noselect">
+            <tr id="badgesLiftsTableRow">
             </tr>
          </table>
       </div>
 
-      <div id="Gtoday">
-         <p id="today" class="noselect">
-            Laster...
+      <div id="Ggoals">
+         <p id="goals" class="noselect">
+            Mål (3)
          </p>
       </div>
 
-      <div id="Gline">
-         <hr id="line" class="noselect">
+      <div id="GlineGoals">
+         <hr id="lineGoals" class="noselect">
       </div>
 
-      <div id="GpeopleWorkoutTxt">
-         <p id="peopleWorkoutTxt" class="noselect">
-            Laster...
+      <div id="GbadgesGoals" style="min-height: 110px;">
+         <table id="badgesGoals" class="noselect">
+            <tr id="badgesGoalsTableRow">
+            </tr>
+         </table>
+      </div>
+
+      <div id="Gtrainingsplit">
+         <p id="trainingsplit" class="noselect">
+            Treningsplan
          </p>
       </div>
 
-      <div id="GpeopleWorkoutList">
-         <p id="peopleWorkoutList" class="noselect">
-         </p>
+      <div id="GlineTrainingsplit">
+         <hr id="lineTrainingsplit" class="noselect">
+      </div>
+
+      <div id="GbadgesTrainingsplit" style="min-height: 110px;">
+         <table id="badgesTrainingsplit" class="noselect">
+            <tr id="badgesTrainingsplitTableRow">
+            </tr>
+         </table>
       </div>
 
       <div id="Gfeed" class="noselect">
-         <img id="feed" onclick="redirectToFeed();" draggable="false" class="icons" src="images/feedIconActive.svg"
+         <img id="feed" onclick="redirectToFeed();" draggable="false" class="icons" src="images/feedIcon.svg"
             alt="Feed">
          </img>
       </div>
@@ -125,8 +165,8 @@
       </div>
 
       <div id="Gaccount" class="noselect">
-         <img id="account" onclick="redirectToAccount();" draggable="false" class="icons" src="images/accountIcon.svg"
-            alt="Account">
+         <img id="account" onclick="redirectToAccount();" draggable="false" class="icons"
+            src="images/accountIconActive.svg" alt="Account">
          </img>
       </div>
 
@@ -135,37 +175,6 @@
 </body>
 
 <script>
-
-   function intervals() {
-
-      let savedDay = new Date().getDay();
-
-      setInterval(() => {
-
-         const currentDay = new Date().getDay()
-         if (savedDay !== currentDay) {
-            savedDay = currentDay;
-            checkWhoIsWorkingOutToday();
-         }
-
-      }, 15000);
-
-      setInterval(() => {
-         displayPartOfDayMsg();
-      }, 60000);
-
-      setInterval(() => {
-         checkConnection("c6r2");
-      }, 5000);
-
-   }
-
-   intervals();
-
-   displayPartOfDayMsg();
-   checkWhoIsWorkingOutToday();
-   displayBadges();
-   changeBodyPosition();
 
 </script>
 

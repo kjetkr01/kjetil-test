@@ -148,3 +148,13 @@ animation-delay: 0.2s;
 -moz-animation-delay: 0.6s;
 animation-delay: 0.6s;
 }
+
+
+
+
+
+.emptyBadge {
+background-color: #8d8d8d;
+box-shadow: 6px 6px rgba(141,141,141, 0.4);
+border: 1px dashed white;
+}

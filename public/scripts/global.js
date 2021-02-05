@@ -88,6 +88,16 @@ function changeBodyPosition() {
 }
 
 
+function viewUser(viewUser) {
+
+    if (viewUser) {
+        sessionStorage.setItem("ViewingUser", viewUser);
+        //redirectToUser();
+    }
+
+}
+
+
 
 window.addEventListener("scroll", (e) => {
 

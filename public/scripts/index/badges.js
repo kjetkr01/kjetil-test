@@ -156,8 +156,7 @@ ${userBadgeInfo.msg}
 
         const badgeTemplate = `
 <td>
-<div id="badge1" class="smallBadges fadeInLeft animate"
-style="background-color: #8d8d8d; box-shadow: 6px 6px rgba(141,141,141, 0.4);">
+<div id="badge1" class="smallBadges fadeInLeft animate emptyBadge">
 
 
 

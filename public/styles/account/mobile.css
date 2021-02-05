@@ -1,0 +1,242 @@
+/* elements, grid and other for mobile */
+
+@media only screen and (max-width: 1024px) { /* 768px var før, men passer bedre med 1024px for ipad */
+
+/* grid */
+
+
+#page {
+display: grid;
+width: 100vw;
+height: 100vh;
+grid-template-areas:
+
+"c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
+"Gtitle Gtitle Gtitle Gtitle Gtitle Gtitle Gtitle"
+"Ggym Ggym Ggym Ggym Ggym Ggym Ggym"
+"GsmallTitle GsmallTitle GsmallTitle GsmallTitle GsmallTitle GsmallTitle GsmallTitle"
+"c2r1 c2r1 c2r1 c2r1 c2r1 c2r1 c2r1"
+"Gbadges Gbadges Gbadges Gbadges Gbadges Gbadges Gbadges"
+"c3r1 c3r1 c3r1 c3r1 c3r1 c3r1 c3r1"
+"c4r1 c4r1 c4r1 c4r1 c4r1 c4r1 c4r1"
+"Gtoday Gtoday Gtoday Gtoday Gtoday Gtoday Gtoday"
+"Gline Gline Gline Gline Gline Gline Gline"
+"GpeopleWorkoutTxt GpeopleWorkoutTxt GpeopleWorkoutTxt GpeopleWorkoutTxt GpeopleWorkoutTxt GpeopleWorkoutTxt GpeopleWorkoutTxt"
+"c5r1 c5r1 c5r1 c5r1 c5r1 c5r1 c5r1"
+"GpeopleWorkoutList GpeopleWorkoutList GpeopleWorkoutList GpeopleWorkoutList GpeopleWorkoutList GpeopleWorkoutList GpeopleWorkoutList"
+"c6r1 c6r1 c6r1 c6r1 c6r1 c6r1 c6r1"
+
+"c1r2 c1r2 c1r2 c1r2 c1r2 c1r2 c1r2"
+"c2r2 Gfeed c3r2 Gleaderboards c4r2 Gaccount c5r2"
+"c6r2 c6r2 c6r2 c6r2 c6r2 c6r2 c6r2"
+;
+
+grid-template-rows: /* nedover */
+
+3vh /* c1r1 */
+
+45px /* title */
+
+11vh /* Ggym */
+
+6vh /* smallTitle */
+
+5px /* c2r1 */
+
+auto /* Gbadges */
+
+2vh /* c3r1 */
+
+3vh /* c4r1 */
+
+30px /* Gtoday */
+
+1vh /* line */
+
+30px /* GpeopleWorkoutTxt */
+
+3vh /* c5r1 */
+
+1fr /* GpeopleWorkoutList */
+
+3vh /* c6r1 */
+
+2vh /* c1r2 */
+
+30px /* Glinks */
+
+6vh /* c2r2 */
+
+;
+
+grid-template-columns: /* bortover */
+12vw 30px 1fr 30px 1fr 30px 12vw;
+}
+
+
+
+/* end of grid */
+
+
+
+/* elements */
+
+
+#Gtitle > #title {
+
+}
+
+#Ggym > #gym {
+
+}
+
+#title, #gym {
+font-size: 34px;
+}
+
+#GsmallTitle > #smallTitle {
+font-size: 22px;
+}
+
+#title, #gym, #smallTitle, #badges, #today, #peopleWorkoutTxt {
+margin-right: 20px;
+margin-left: 20px;
+}
+
+#Gtoday > #today {
+font-size: 20px;
+}
+
+#GpeopleWorkoutTxt > #peopleWorkoutTxt {
+font-size: 18px;
+}
+
+#Gbadges > #badges {
+margin-bottom: 10px;
+min-height: 110px;
+}
+
+#Gline > #line {
+width: 92.5vw;
+}
+
+
+/* end of elements */
+
+
+
+/* spacing & other */
+
+
+#page > #c1r1 {
+grid-area: c1r1;
+}
+
+
+#page > #Gtitle {
+grid-area: Gtitle;
+}
+
+#page > #Ggym {
+grid-area: Ggym;
+}
+
+#page > #GsmallTitle {
+grid-area: GsmallTitle;
+}
+
+#page > #c2r1 {
+grid-area: c2r1;
+}
+
+#page > #Gbadges {
+grid-area: Gbadges;
+overflow-x: auto;
+}
+
+#page > #c3r1 {
+grid-area: c3r1;
+}
+
+#page > #c4r1 {
+grid-area: c4r1;
+}
+
+#page > #Gtoday {
+grid-area: Gtoday;
+}
+
+#page > #Gline {
+grid-area: Gline;
+}
+
+#page > #GpeopleWorkoutTxt {
+grid-area: GpeopleWorkoutTxt;
+}
+
+#page > #c5r1 {
+grid-area: c5r1;
+}
+
+#page > #GpeopleWorkoutList {
+grid-area: GpeopleWorkoutList;
+overflow-y: auto;
+min-height: 120px;
+}
+
+#page > #c6r1 {
+grid-area: c6r1;
+}
+
+
+
+#page > #c1r2 {
+grid-area: c1r2;
+}
+
+#page > #c2r2 {
+grid-area: c2r2;
+}
+
+#page > #Gfeed {
+grid-area: Gfeed;
+}
+
+#page > #c3r2 {
+grid-area: c3r2;
+}
+
+#page > #Gleaderboards {
+grid-area: Gleaderboards;
+}
+
+#page > #c4r2 {
+grid-area: c4r2;
+}
+
+#page > #Gaccount {
+grid-area: Gaccount;
+}
+
+#page > #c5r2 {
+grid-area: c5r2;
+}
+
+#page > #c6r2 {
+grid-area: c6r2;
+}
+
+
+#c4r1, #c5r1, #Gtoday, #Gline, #GpeopleWorkoutTxt, #c5r1, #GpeopleWorkoutList, #c6r1 {
+background-color: var(--main-backgroundColor2);
+}
+
+#c1r2, #c2r2, #Gfeed, #c3r2, #Gleaderboards, #c4r2, #Gaccount, #c5r2, #c6r2 {
+background-color: var(--main-backgroundColor3);
+}
+
+
+
+/* end of spacing & other */
+
+}
