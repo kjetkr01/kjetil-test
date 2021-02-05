@@ -1,7 +1,6 @@
 /* elements for mobile & desktop */
 
 
-
 #title {
 color:var(--main-headerTextColor);
 font-weight: bold;
@@ -43,8 +42,8 @@ text-align: center;
 border-top: 1px #75757585 solid;
 }
 
-#Gtitle {
-border-bottom: 1px #75757585 solid;
+#c2r1 {
+    border-top: 1px #75757585 solid;
 }
 
 .leaderboardsList {

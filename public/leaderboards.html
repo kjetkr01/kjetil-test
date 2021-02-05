@@ -181,6 +181,10 @@
          aLeaderboard = "Totalt";
       }
 
+      if (!window.navigator.onLine) {
+         return;
+      }
+
       if (token && user && aLeaderboard) {
          const ViewingLeaderboard = aLeaderboard;
 
@@ -193,6 +197,7 @@
             document.getElementById(ViewingLeaderboard).classList.add("active");
          };
 
+         usermsg1.textContent = loadingText;
 
          list.innerHTML = `
                <div class="leaderboard">
@@ -201,7 +206,7 @@
                </div>
                <div id="Gusername">
                   <div id="username">
-                     <button class="peopleLeaderboardsListName">Laster...</button>
+                     <button class="peopleLeaderboardsListName">${loadingText}</button>
                   </div>
                </div>
                <div id="Gweight">
@@ -211,8 +216,6 @@
                </div>
             </div>
                `;
-
-
 
 
          const body = { "authToken": token, "userInfo": user, "leaderboard": ViewingLeaderboard };

@@ -54,7 +54,7 @@ async function checkWhoIsWorkingOutToday() {
 
             if (currentWorkout !== resp[i].todaysWorkout) {
                 peopleWorkoutList.innerHTML += `
-               <button disabled class="peopleWorkoutListWorkout">${resp[i].todaysWorkout}</button>
+               <button disabled class="peopleWorkoutListWorkout fadeIn">${resp[i].todaysWorkout}</button>
                <br>
                `;
 
@@ -69,14 +69,14 @@ async function checkWhoIsWorkingOutToday() {
             if (username === resp[i].username) {
                 console.log("color")
                 peopleWorkoutList.innerHTML += `
-                <button class="accountOwner" onClick="viewUser('${resp[i].username}')">${shortenedFullName}</button>
+                <button class="accountOwner fadeIn" onClick="viewUser('${resp[i].username}')">${shortenedFullName}</button>
                 <br>
                 `;
 
             } else {
 
                 peopleWorkoutList.innerHTML += `
-            <button class="peopleWorkoutListName" onClick="viewUser('${resp[i].username}')">${shortenedFullName}</button>
+            <button class="peopleWorkoutListName fadeIn" onClick="viewUser('${resp[i].username}')">${shortenedFullName}</button>
             <br>
             `;
 
