@@ -34,7 +34,7 @@ auto /* title */
 
 2vh /* c2r1 */
 
-auto /* GlistOfLeaderboards */
+55px /* GlistOfLeaderboards */
 
 2vh /* line */
 
@@ -88,7 +88,7 @@ font-size: 18px;
 }
 
 #GlistOfLeaderboards > #listOfLeaderboards {
-margin-bottom: 15px;
+
 }
 
 #Gline > #line {
@@ -120,7 +120,6 @@ grid-area: c2r1;
 #page > #GlistOfLeaderboards {
 grid-area: GlistOfLeaderboards;
 overflow-x: auto;
-min-height: 50px;
 }
 
 #page > #c3r1 {

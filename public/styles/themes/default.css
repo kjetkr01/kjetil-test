@@ -1,15 +1,15 @@
 :root {
-    --main-headerBackground:  #357F9B;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
-    --main-headerTextColor: white;
-    --main-font-Family-Verdana: Verdana, Geneva, Tahoma, sans-serif;
-    --main-font-Family-Arial: Arial, Helvetica, sans-serif;
+--main-headerBackground:  #357F9B;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-headerTextColor: white;
+--main-font-Family-Verdana: Verdana, Geneva, Tahoma, sans-serif;
+--main-font-Family-Arial: Arial, Helvetica, sans-serif;
 
-    --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
-    --main-backgroundColor1: #357F9B;
-    --main-backgroundColor2: #F0F0F0;
-    --main-backgroundColor3: #ffffff;
-    --main-textColorLight: white;
-    --main-textColorDark: black;
+--main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
+--main-backgroundColor1: #357F9B;
+--main-backgroundColor2: #F0F0F0;
+--main-backgroundColor3: #ffffff;
+--main-textColorLight: white;
+--main-textColorDark: black;
 }
 
 /* javascript add stylesheet hvis man vil ha eget theme? så remove */
