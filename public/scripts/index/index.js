@@ -67,7 +67,6 @@ async function checkWhoIsWorkingOutToday() {
             }
 
             if (username === resp[i].username) {
-                console.log("color")
                 peopleWorkoutList.innerHTML += `
                 <button class="accountOwner fadeIn" onClick="viewUser('${resp[i].username}')">${shortenedFullName}</button>
                 <br>

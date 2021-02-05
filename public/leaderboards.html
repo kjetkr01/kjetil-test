@@ -72,19 +72,6 @@
       <div id="GlistOfLeaderboards">
          <table id="listOfLeaderboards" class="noselect">
             <tr id="leaderboardsTableRow">
-
-               <td>
-                  <button class="leaderboardsList">Laster...</button>
-               </td>
-
-               <td>
-                  <button class="leaderboardsList">Laster...</button>
-               </td>
-
-               <td>
-                  <button class="leaderboardsList">Laster...</button>
-               </td>
-
             </tr>
          </table>
       </div>
@@ -147,7 +134,7 @@
             leaderboardsTableRowDom.innerHTML += `
 
             <td>
-               <button id="Totalt" class="leaderboardsList active" onclick="getListOfLeaderboard('Totalt');">Totalt</button>
+               <button id="Totalt" class="leaderboardsList active fadeInLeft animate delaySmall" onclick="getListOfLeaderboard('Totalt');">Totalt</button>
             </td>
 
    `;
@@ -159,7 +146,7 @@
             leaderboardsTableRowDom.innerHTML += `
 
             <td>
-               <button id="${resp[i]}" class="leaderboardsList" onclick="getListOfLeaderboard('${resp[i]}');">${resp[i]}</button>
+               <button id="${resp[i]}" class="leaderboardsList fadeInLeft animate" onclick="getListOfLeaderboard('${resp[i]}');">${resp[i]}</button>
             </td>
 
    `;
@@ -199,24 +186,7 @@
 
          usermsg1.textContent = loadingText;
 
-         list.innerHTML = `
-               <div class="leaderboard">
-               <div id="Gplacement">
-                     
-               </div>
-               <div id="Gusername">
-                  <div id="username">
-                     <button class="peopleLeaderboardsListName">${loadingText}</button>
-                  </div>
-               </div>
-               <div id="Gweight">
-                  <div id="weight">
-                     <p></p>
-                  </div>
-               </div>
-            </div>
-               `;
-
+         list.innerHTML = "";
 
          const body = { "authToken": token, "userInfo": user, "leaderboard": ViewingLeaderboard };
          const url = `/users/list/all/leaderboards/${ViewingLeaderboard}`;
@@ -256,7 +226,7 @@
                }
 
                list.innerHTML += `
-               <div class="leaderboard">
+               <div class="leaderboard fadeIn">
                <div id="Gplacement">
                   <div id="placement">
                      ${placementHTML}

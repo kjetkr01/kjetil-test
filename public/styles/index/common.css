@@ -69,6 +69,7 @@ color: var(--main-textColorDark);
 
 .accountOwner {
 color: var(--main-backgroundColor1);
+font-weight: bold;
 }
 
 .peopleWorkoutListName, .accountOwner {

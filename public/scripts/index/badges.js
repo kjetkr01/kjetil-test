@@ -26,7 +26,7 @@ function getBadge(aSize, aBadgeInfo) {
 
         const badgeTemplate = `
 <td>
-<div id="badge1" class="bigBadges fadeIn"
+<div id="badge1" class="bigBadges fadeInLeft animate"
 style="background: linear-gradient(to right bottom, #E36262, #972F2F); box-shadow: 6px 6px rgba(151,47,47, 0.4);">
 
 
@@ -109,7 +109,7 @@ Nærmer deg!
 
         const badgeTemplate = `
 <td>
-<div id="badge1" class="smallBadges fadeIn"
+<div id="badge1" class="smallBadges fadeInLeft animate"
 style="background: linear-gradient(to right bottom, #E36262, #972F2F); box-shadow: 6px 6px rgba(151,47,47, 0.4);">
 
 <!--
@@ -156,7 +156,7 @@ ${userBadgeInfo.msg}
 
         const badgeTemplate = `
 <td>
-<div id="badge1" class="smallBadges"
+<div id="badge1" class="smallBadges fadeInLeft animate"
 style="background-color: #8d8d8d; box-shadow: 6px 6px rgba(141,141,141, 0.4);">
 
 
