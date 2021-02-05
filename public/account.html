@@ -40,6 +40,7 @@
    <link rel="stylesheet" href="styles/account/common.css">
 
    <link rel="stylesheet" href="styles/global/badges.css">
+   <link rel="stylesheet" href="styles/account/userGrid.css">
    <!--<link rel="stylesheet" href="styles/index/progressbar.css">-->
 
 
@@ -97,59 +98,64 @@
          </button>
       </div>
 
-      <div id="GuserGrid">
-         <!--
-      <div id="Glifts">
-         <p id="lifts" class="noselect">
-            Løft (3)
-         </p>
-      </div>
+      <div id="GuserGrid" class="userGrid">
+         <div id="userGrid">
 
-      <div id="GlineLifts">
-         <hr id="lineLifts" class="noselect">
-      </div>
+            <div id="Glifts">
+               <p id="lifts">
+                  Løft (2)
+               </p>
+            </div>
 
-      <div id="GbadgesLifts" style="min-height: 110px;">
-         <table id="badgesLifts" class="noselect">
-            <tr id="badgesLiftsTableRow">
-            </tr>
-         </table>
-      </div>
+            <div id="GlineLifts">
+               <hr id="lineLifts">
+            </div>
 
-      <div id="Ggoals">
-         <p id="goals" class="noselect">
-            Mål (3)
-         </p>
-      </div>
+            <div id="GbadgesLifts">
+               <table id="badgesLifts">
+                  <tr id="badgesLiftsTableRow">
+                  </tr>
+               </table>
+            </div>
 
-      <div id="GlineGoals">
-         <hr id="lineGoals" class="noselect">
-      </div>
 
-      <div id="GbadgesGoals" style="min-height: 110px;">
-         <table id="badgesGoals" class="noselect">
-            <tr id="badgesGoalsTableRow">
-            </tr>
-         </table>
-      </div>
+            <div id="Ggoals">
+               <p id="goals">
+                  Mål (1)
+               </p>
+            </div>
 
-      <div id="Gtrainingsplit">
-         <p id="trainingsplit" class="noselect">
-            Treningsplan
-         </p>
-      </div>
+            <div id="GlineGoals">
+               <hr id="lineGoals">
+            </div>
 
-      <div id="GlineTrainingsplit">
-         <hr id="lineTrainingsplit" class="noselect">
-      </div>
+            <div id="GbadgesGoals">
+               <table id="badgesGoals">
+                  <tr id="badgesGoalsTableRow">
+                  </tr>
+               </table>
+            </div>
 
-      <div id="GbadgesTrainingsplit" style="min-height: 110px;">
-         <table id="badgesTrainingsplit" class="noselect">
-            <tr id="badgesTrainingsplitTableRow">
-            </tr>
-         </table>
-      </div>
-      -->
+
+
+            <div id="Gtrainingsplit">
+               <p id="trainingsplit">
+                  Treningsplan
+               </p>
+            </div>
+
+            <div id="GlineTrainingsplit">
+               <hr id="lineTrainingsplit">
+            </div>
+
+            <div id="GbadgesTrainingsplit">
+               <table id="badgesTrainingsplit">
+                  <tr id="badgesTrainingsplitTableRow">
+                  </tr>
+               </table>
+            </div>
+
+         </div>
       </div>
 
       <div id="Gfeed" class="noselect">
@@ -176,7 +182,89 @@
 
 <script>
 
-</script>
+   document.getElementById("badgesLiftsTableRow").innerHTML = `
+<td >
+                        <div id="badge1" class="smallBadges fadeInLeft animate"
+                           style="background: linear-gradient(to right bottom, #E36262, #972F2F); box-shadow: 6px 6px rgba(151,47,47, 0.4);">
+
+                           <div id="Gexercise">
+                              <p id="exercise">
+                                 Benkpress
+                              </p>
+                           </div>
+
+                           <div id="Gkg">
+                              <p id="kg">
+                                 120 kg
+                              </p>
+                           </div>
+
+                           <div id="Gmsg">
+                              <p id="msg">
+                                 35 dager siden
+                              </p>
+                           </div>
+
+                        </div>
+                     </td>
+                  </tr>
+`;
+
+   document.getElementById("badgesGoalsTableRow").innerHTML = `
+<td >
+                        <div id="badge1" class="smallBadges fadeInLeft animate"
+                           style="background: linear-gradient(to right bottom, #E36262, #972F2F); box-shadow: 6px 6px rgba(151,47,47, 0.4);">
+
+                           <div id="Gexercise">
+                              <p id="exercise">
+                                 Benkpress
+                              </p>
+                           </div>
+
+                           <div id="Gkg">
+                              <p id="kg">
+                                 120 kg
+                              </p>
+                           </div>
+
+                           <div id="Gmsg">
+                              <p id="msg">
+                                 Målet er nådd!
+                              </p>
+                           </div>
+
+                        </div>
+                     </td>
+                  </tr>
+`;
+
+
+   document.getElementById("badgesTrainingsplitTableRow").innerHTML = `
+<td >
+                        <div id="badge1" class="smallBadges fadeInLeft animate"
+                           style="background: linear-gradient(to right bottom, #E36262, #972F2F); box-shadow: 6px 6px rgba(151,47,47, 0.4);">
+
+                           <div id="Gexercise">
+                              <p id="exercise">
+                                 Mandag
+                              </p>
+                           </div>
+
+                           <div id="Gkg">
+                              <p id="kg">
+                                Bryst og Triceps
+                              </p>
+                           </div>
+
+                           <div id="Gmsg">
+                              <p id="msg">
+                              </p>
+                           </div>
+
+                        </div>
+                     </td>
+                  </tr>
+`;
 
 </script>
 

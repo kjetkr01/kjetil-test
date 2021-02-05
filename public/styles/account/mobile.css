@@ -80,6 +80,10 @@ grid-template-columns: /* bortover */
 
 }
 
+#GuserGrid > #userGrid{
+    
+}
+
 #title {
 font-size: 26px;
 }
@@ -132,6 +136,7 @@ grid-area: c3r1;
 
 #page > #GuserGrid {
 grid-area: GuserGrid;
+overflow-y: auto;
 }
 
 #page > #c4r1 {

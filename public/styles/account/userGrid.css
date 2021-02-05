@@ -2,87 +2,182 @@
 
 @media only screen and (max-width: 1024px) { /* 768px var før, men passer bedre med 1024px for ipad */
 
-    /* grid */
-    
-    
-    #page {
-    display: grid;
-    width: 100vw;
-    height: 100vh;
-    grid-template-areas:
-    
-    "Glifts Glifts Glifts Glifts Glifts Glifts Glifts"
-    "GlineLifts GlineLifts GlineLifts GlineLifts GlineLifts GlineLifts GlineLifts"
-    "GbadgesLifts GbadgesLifts GbadgesLifts GbadgesLifts GbadgesLifts GbadgesLifts GbadgesLifts"
-    "c8r1 c8r1 c8r1 c8r1 c8r1 c8r1 c8r1"
-    
-    "Ggoals Ggoals Ggoals Ggoals Ggoals Ggoals Ggoals"
-    "GlineGoals GlineGoals GlineGoals GlineGoals GlineGoals GlineGoals GlineGoals"
-    "GbadgesGoals GbadgesGoals GbadgesGoals GbadgesGoals GbadgesGoals GbadgesGoals GbadgesGoals"
-    "c9r1 c9r1 c9r1 c9r1 c9r1 c9r1 c9r1"
-    
-    "Gtrainingsplit Gtrainingsplit Gtrainingsplit Gtrainingsplit Gtrainingsplit Gtrainingsplit Gtrainingsplit"
-    "GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit"
-    "GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit"
-    "c10r1 c10r1 c10r1 c10r1 c10r1 c10r1 c10r1"
-    ;
-    
-    grid-template-rows: /* nedover */
-    
-    3vh /* c1r1 */
-    
-    45px /* Gtitle */
-    
-    2vh /* Ggym */
-    
-    auto /* info */
-    
-    5px /* c6r1 */
-    
-    50px /* Gsettings */
-    
-    2vh /* c7r1 */
-    
-    50px /* Glifts */
-    
-    30px /* Gtoday */
-    
-    1vh /* line */
-    
-    30px /* GpeopleWorkoutTxt */
-    
-    3vh /* c5r1 */
-    
-    1fr /* GpeopleWorkoutList */
-    
-    3vh /* c6r1 */
-    
-    2vh /* c1r2 */
-    
-    30px /* Glinks */
-    
-    6vh /* c2r2 */
-    
-    ;
-    
-    grid-template-columns: /* bortover */
-    12vw 30px 1fr 30px 1fr 30px 12vw;
-    }
-    
-    
-    
-    /* end of grid */
-    
-    
-    
-    /* elements */
-    
-    /* end of elements */
-    
-    
-    
-    /* spacing & other */
-    
-    /* end of spacing & other */
-    
-    }
+/* grid */
+
+
+.userTable {
+display: grid;
+width: 100vw;
+grid-template-areas:
+
+"Glifts Glifts Glifts Glifts Glifts Glifts Glifts"
+"GlineLifts GlineLifts GlineLifts GlineLifts GlineLifts GlineLifts GlineLifts"
+"GbadgesLifts GbadgesLifts GbadgesLifts GbadgesLifts GbadgesLifts GbadgesLifts GbadgesLifts"
+"c8r1 c8r1 c8r1 c8r1 c8r1 c8r1 c8r1"
+
+"Ggoals Ggoals Ggoals Ggoals Ggoals Ggoals Ggoals"
+"GlineGoals GlineGoals GlineGoals GlineGoals GlineGoals GlineGoals GlineGoals"
+"GbadgesGoals GbadgesGoals GbadgesGoals GbadgesGoals GbadgesGoals GbadgesGoals GbadgesGoals"
+"c9r1 c9r1 c9r1 c9r1 c9r1 c9r1 c9r1"
+
+"Gtrainingsplit Gtrainingsplit Gtrainingsplit Gtrainingsplit Gtrainingsplit Gtrainingsplit Gtrainingsplit"
+"GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit"
+"GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit"
+"c10r1 c10r1 c10r1 c10r1 c10r1 c10r1 c10r1"
+;
+
+grid-template-rows: /* nedover */
+
+50px /* Glifts */
+
+15px /* GlineLifts */
+
+auto /* GbadgesLifts */
+
+30px /* c8r1 */
+
+
+50px /* Ggoals */
+
+15px /* GlineGoals */
+
+auto /* GbadgesGoals */
+
+30px /* c9r1 */
+
+
+50px /* Gtrainingsplit */
+
+15px /* GlineTrainingsplit */
+
+auto /* GbadgesTrainingsplit */
+
+30px /* c10r1 */
+;
+
+grid-template-columns: /* bortover */
+12vw 30px 1fr 30px 1fr 30px 12vw;
+}
+
+
+
+/* end of grid */
+
+
+
+/* elements */
+
+#Glifts > #lifts {
+}
+
+#GlineLifts > #lineLifts {
+}
+
+#GbadgesLifts > #badgesLifts {
+}
+
+#Ggoals > #goals {
+}
+
+#GlineGoals > #lineGoals {
+}
+
+#badgesGoals > #badgesGoals {
+}
+
+#Gtrainingsplit > #trainingsplit {
+}
+
+#GlineTrainingsplit > #lineTrainingsplit {
+}
+
+#GbadgesTrainingsplit > #badgesTrainingsplit {
+}
+
+#lineLifts, #lineGoals, #lineTrainingsplit {
+    opacity: 40%;
+    border: 1px #757575 thin;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    max-width: 90vw;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#badgesLifts, #badgesGoals, #badgesTrainingsplit {
+    margin-left: 12px;
+    margin-right: 12px;
+    margin-bottom: 20px;
+}
+
+#lifts, #goals, #trainingsplit {
+font-size: 20px;
+margin-left: 20px;
+margin-right: 20px;
+color:var(--main-textColorDark);
+font-weight: bold;
+font-family: var(--main-font-Family-Verdana);
+}
+
+/* end of elements */
+
+
+
+/* spacing & other */
+
+#page > #Glifts {
+grid-area: Glifts;
+}
+
+#page > #GlineLifts {
+grid-area: GlineLifts;
+}
+
+#page > #GbadgesLifts {
+grid-area: GbadgesLifts;
+overflow-x: auto;
+}
+
+#page > #c8r1 {
+grid-area: c8r1;
+}
+
+#page > #Ggoals {
+grid-area: Ggoals;
+}
+
+#page > #GlineGoals {
+grid-area: GlineGoals;
+}
+
+#page > #GbadgesGoals {
+grid-area: GbadgesGoals;
+overflow-x: auto;
+}
+
+#page > #c9r1 {
+grid-area: c9r1;
+}
+
+#page > #Gtrainingsplit {
+grid-area: Gtrainingsplit;
+}
+
+#page > #GlineTrainingsplit {
+grid-area: GlineTrainingsplit;
+}
+
+#page > #GbadgesTrainingsplit {
+grid-area: GbadgesTrainingsplit;
+overflow-x: auto;
+}
+
+#page > #c10r1 {
+grid-area: c10r1;
+}
+
+/* end of spacing & other */
+
+}
