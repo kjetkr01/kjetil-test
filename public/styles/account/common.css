@@ -1,32 +1,45 @@
 /* elements for mobile & desktop */
 
 
-
-#title, #gym, #smallTitle {
+#title, #gym, #info {
 color:var(--main-headerTextColor);
 font-weight: bold;
 font-family: var(--main-font-Family-Verdana);
 }
 
-#today {
-font-weight: bold;
-}
-
-#today, #peopleWorkoutTxt {
-color:var(--main-textColorDark);
-font-family: var(--main-font-Family-Verdana);
-}
-
-#smallTitle{
+#gym, #info{
 opacity: 85%;
 }
 
-#line {
-opacity: 40%;
-border: 1px #757575 solid;
+#settings {
+margin-top: 10px;
 }
 
-#line, #peopleWorkoutList, #feed, #leaderboards, #account  {
+.infoTable {
+text-align: center;
+width: 100%;
+margin: 0 auto;
+}
+
+.settingsBtn {
+float:right;
+margin-right: 20px;
+word-break: keep-all;
+font-size: 16px;
+font-weight: bold;
+font-family: var(--main-font-Family-Verdana);
+
+background-color: var(--main-backgroundColor1);
+color: var(--main-textColorLight);
+border-radius: 8px;
+border: 1px var(--main-backgroundColor1) solid;
+box-shadow: 4px 4px rgba(53,127,155, 0.4);
+
+height: 35px;
+width: fit-content;
+}
+
+#feed, #leaderboards, #account  {
 text-align: center;
 display: block;
 margin-left: auto;
@@ -39,49 +52,9 @@ font-size: 14px;
 text-align: center;
 }
 
-#c1r2, #c4r1 {
+#c1r2, #Gsettings {
 border-top: 1px #75757585 solid;
 }
-
-.peopleWorkoutListWorkout {
-font-size: 18px;
-color:var(--main-headerTextColor);
-font-weight: bold;
-font-family: var(--main-font-Family-Verdana);
-
-background-color: var(--main-backgroundColor1);
-color: var(--main-textColorLight);
-border-radius: 8px;
-border: 1px var(--main-backgroundColor1) solid;
-box-shadow: 4px 4px rgba(53,127,155, 0.4);
-
-height: 35px;
-width: fit-content;
-padding-left: 30px;
-padding-right: 30px;
-margin-bottom: 10px;
-margin-top: 10px;
-}
-
-.peopleWorkoutListName {
-color: var(--main-textColorDark);
-}
-
-.accountOwner {
-color: var(--main-backgroundColor1);
-font-weight: bold;
-}
-
-.peopleWorkoutListName, .accountOwner {
-font-size: 16px;
-font-family: var(--main-font-Family-Verdana);
-
-margin-bottom: 5px;
-margin-top: 5px;
-background-color: transparent;
-border: transparent;
-}
-
 
 
 /* end of mobile & desktop */

@@ -1,0 +1,88 @@
+/* elements, grid and other for mobile */
+
+@media only screen and (max-width: 1024px) { /* 768px var før, men passer bedre med 1024px for ipad */
+
+    /* grid */
+    
+    
+    #page {
+    display: grid;
+    width: 100vw;
+    height: 100vh;
+    grid-template-areas:
+    
+    "Glifts Glifts Glifts Glifts Glifts Glifts Glifts"
+    "GlineLifts GlineLifts GlineLifts GlineLifts GlineLifts GlineLifts GlineLifts"
+    "GbadgesLifts GbadgesLifts GbadgesLifts GbadgesLifts GbadgesLifts GbadgesLifts GbadgesLifts"
+    "c8r1 c8r1 c8r1 c8r1 c8r1 c8r1 c8r1"
+    
+    "Ggoals Ggoals Ggoals Ggoals Ggoals Ggoals Ggoals"
+    "GlineGoals GlineGoals GlineGoals GlineGoals GlineGoals GlineGoals GlineGoals"
+    "GbadgesGoals GbadgesGoals GbadgesGoals GbadgesGoals GbadgesGoals GbadgesGoals GbadgesGoals"
+    "c9r1 c9r1 c9r1 c9r1 c9r1 c9r1 c9r1"
+    
+    "Gtrainingsplit Gtrainingsplit Gtrainingsplit Gtrainingsplit Gtrainingsplit Gtrainingsplit Gtrainingsplit"
+    "GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit"
+    "GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit"
+    "c10r1 c10r1 c10r1 c10r1 c10r1 c10r1 c10r1"
+    ;
+    
+    grid-template-rows: /* nedover */
+    
+    3vh /* c1r1 */
+    
+    45px /* Gtitle */
+    
+    2vh /* Ggym */
+    
+    auto /* info */
+    
+    5px /* c6r1 */
+    
+    50px /* Gsettings */
+    
+    2vh /* c7r1 */
+    
+    50px /* Glifts */
+    
+    30px /* Gtoday */
+    
+    1vh /* line */
+    
+    30px /* GpeopleWorkoutTxt */
+    
+    3vh /* c5r1 */
+    
+    1fr /* GpeopleWorkoutList */
+    
+    3vh /* c6r1 */
+    
+    2vh /* c1r2 */
+    
+    30px /* Glinks */
+    
+    6vh /* c2r2 */
+    
+    ;
+    
+    grid-template-columns: /* bortover */
+    12vw 30px 1fr 30px 1fr 30px 12vw;
+    }
+    
+    
+    
+    /* end of grid */
+    
+    
+    
+    /* elements */
+    
+    /* end of elements */
+    
+    
+    
+    /* spacing & other */
+    
+    /* end of spacing & other */
+    
+    }
