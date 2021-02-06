@@ -67,23 +67,18 @@
       <div id="c6r2"></div>
 
       <div id="Gtitle">
-         <p id="title" class="noselect">
-            Laster...
+         <p id="title" class="noselect fadeInLeft animate">
          </p>
       </div>
 
       <div id="Ggym">
-         <p id="gym" class="noselect">
-            Laster...
+         <p id="gym" class="noselect fadeIn animate delaySmall">
          </p>
       </div>
 
       <div id="Ginfo">
-         <table id="info" class="infoTable">
+         <table id="info" class="infoTable fadeIn animate delayMedium">
             <tr id="infoList">
-               <td>
-                  Laster...
-               </td>
             </tr>
          </table>
       </div>
@@ -96,24 +91,6 @@
 
       <div id="GuserGrid" class="userGrid noselect">
          <div id="userGrid">
-
-            <div id="Glifts">
-               <p id="lifts">
-                  Laster...
-               </p>
-            </div>
-
-            <div id="GlineLifts">
-               <hr id="lineLifts">
-            </div>
-
-            <div id="GbadgesLifts">
-               <table id="badgesLifts">
-                  <tr id="badgesLiftsTableRow">
-                  </tr>
-               </table>
-            </div>
-
          </div>
       </div>
 
@@ -298,13 +275,13 @@
 
                   userGrid.innerHTML += `
 <div id="Glifts">
-<p id="lifts">
+<p id="lifts" class="fadeIn animate delaySmall">
 Løft (${arr.length})
 </p>
 </div>
 
 <div id="GlineLifts">
-<hr id="lineLifts">
+<hr id="lineLifts" class="fadeIn animate delayMedium">
 </div>
 
 <div id="GbadgesLifts">
@@ -329,13 +306,13 @@ Løft (${arr.length})
          } else {
             userGrid.innerHTML += `
 <div id="Glifts">
-<p id="lifts">
+<p id="lifts" class="fadeIn animate delaySmall">
 Løft
 </p>
 </div>
 
 <div id="GlineLifts">
-<hr id="lineLifts">
+<hr id="lineLifts" class="fadeIn animate delayMedium">
 </div>
 
 <div id="GbadgesLifts">
@@ -402,13 +379,13 @@ Løft
 
                userGrid.innerHTML += `
 <div id="Ggoals">
-<p id="goals">
+<p id="goals" class="fadeIn animate delaySmall">
 Mål (${arr.length})
 </p>
 </div>
 
 <div id="GlineGoals">
-<hr id="lineGoals">
+<hr id="lineGoals" class="fadeIn animate delayMedium">
 </div>
 
 <div id="GbadgesGoals">
@@ -433,13 +410,13 @@ Mål (${arr.length})
          } else {
             userGrid.innerHTML += `
 <div id="Ggoals">
-<p id="goals">
+<p id="goals" class="fadeIn animate delaySmall">
 Mål
 </p>
 </div>
 
 <div id="GlineGoals">
-<hr id="lineGoals">
+<hr id="lineGoals" class="fadeIn animate delayMedium">
 </div>
 
 <div id="GbadgesGoals">
@@ -469,13 +446,13 @@ Mål
 
          userGrid.innerHTML += `
 <div id="Gtrainingsplit">
-<p id="trainingsplit">
+<p id="trainingsplit" class="fadeIn animate delaySmall">
 Treningsplan
 </p>
 </div>
 
 <div id="GlineTrainingsplit">
-<hr id="lineTrainingsplit">
+<hr id="lineTrainingsplit" class="fadeIn animate delaySmall">
 </div>
 
 <div id="GbadgesTrainingsplit">
