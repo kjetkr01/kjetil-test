@@ -46,10 +46,6 @@ async function getListOfLeaderboard(aLeaderboard) {
         aLeaderboard = "Totalt";
     }
 
-    if (!window.navigator.onLine) {
-        return;
-    }
-
     if (token && user && aLeaderboard) {
         const ViewingLeaderboard = aLeaderboard;
 
@@ -62,7 +58,7 @@ async function getListOfLeaderboard(aLeaderboard) {
             document.getElementById(ViewingLeaderboard).classList.add("active");
         };
 
-        usermsg1.textContent = loadingText;
+        usermsg1.innerHTML = "";
 
         list.innerHTML = "";
 
