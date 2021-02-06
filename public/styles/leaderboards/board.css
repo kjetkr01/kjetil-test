@@ -91,7 +91,10 @@ color: var(--main-textColorDark);
 color: var(--main-backgroundColor1);
 }
 
-.peopleLeaderboardsListName, .accountOwner {
+.accountOwner {
+/*
+evt legge til .peopleLeaderboardsListName
+*/
 font-weight: bold;
 }
 

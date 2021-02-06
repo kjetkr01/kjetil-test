@@ -20,7 +20,6 @@ grid-template-areas:
 
 "c3r1 c3r1 c3r1 c3r1 c3r1 c3r1 c3r1"
 "GuserGrid GuserGrid GuserGrid GuserGrid GuserGrid GuserGrid GuserGrid"
-"c4r1 c4r1 c4r1 c4r1 c4r1 c4r1 c4r1"
 
 "c1r2 c1r2 c1r2 c1r2 c1r2 c1r2 c1r2"
 "c2r2 Gfeed c3r2 Gleaderboards c4r2 Gaccount c5r2"
@@ -44,8 +43,6 @@ auto /* info */
 10px /* c3r1 */
 
 1fr /* GuserGrid */
-
-3vh /* c4r1 */
 
 2vh /* c1r2 */
 
@@ -136,11 +133,8 @@ grid-area: c3r1;
 
 #page > #GuserGrid {
 grid-area: GuserGrid;
-overflow-y: auto;
-}
-
-#page > #c4r1 {
-grid-area: c4r1;
+overflow-y: scroll;
+overflow-x: hidden;
 }
 
 
@@ -182,7 +176,7 @@ grid-area: c6r2;
 }
 
 
-#Gsettings, #c3r1, #GuserGrid, #c4r1 {
+#Gsettings, #c3r1, #GuserGrid {
 background-color: var(--main-backgroundColor2);
 }
 

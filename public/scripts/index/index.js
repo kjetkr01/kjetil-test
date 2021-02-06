@@ -185,7 +185,7 @@ async function displayBadges() {
 
             const goalKeys = Object.keys(goals);
 
-            const arr = []
+            const arr = [];
             let kgUntilGoal = 0, msg = "";
 
             for (let i = 0; i < Object.entries(goals).length; i++) {
@@ -221,14 +221,14 @@ async function displayBadges() {
 
             for (let i = 0; i < arr.length; i++) {
 
-                const badge = getBadge(size, arr[i]);
+                const badge = getBadgeGoals(size, arr[i]);
 
                 if (badge) {
                     badgesTableRowDom.innerHTML += badge;
                 }
             }
         } else {
-            const badge = getBadge();
+            const badge = getBadgeGoals();
 
             smallTitle.textContent = "Du har ingen mål enda!";
 

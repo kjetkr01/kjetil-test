@@ -95,21 +95,21 @@ grid-template-columns: /* bortover */
 }
 
 #lineLifts, #lineGoals, #lineTrainingsplit {
-    opacity: 40%;
-    border: 1px #757575 thin;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    max-width: 90vw;
-    text-align: center;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+opacity: 40%;
+border: 1px #757575 thin;
+margin-top: 10px;
+margin-bottom: 10px;
+max-width: 90vw;
+text-align: center;
+display: block;
+margin-left: auto;
+margin-right: auto;
 }
 
 #badgesLifts, #badgesGoals, #badgesTrainingsplit {
-    margin-left: 12px;
-    margin-right: 12px;
-    margin-bottom: 20px;
+margin-left: 12px;
+margin-right: 12px;
+margin-bottom: 20px;
 }
 
 #lifts, #goals, #trainingsplit {
@@ -127,55 +127,56 @@ font-family: var(--main-font-Family-Verdana);
 
 /* spacing & other */
 
-#page > #Glifts {
+.userTable > #Glifts {
 grid-area: Glifts;
 }
 
-#page > #GlineLifts {
+.userTable > #GlineLifts {
 grid-area: GlineLifts;
 }
 
-#page > #GbadgesLifts {
+.userTable > #GbadgesLifts {
 grid-area: GbadgesLifts;
-overflow-x: auto;
 }
 
-#page > #c8r1 {
+.userTable > #c8r1 {
 grid-area: c8r1;
 }
 
-#page > #Ggoals {
+.userTable > #Ggoals {
 grid-area: Ggoals;
 }
 
-#page > #GlineGoals {
+.userTable > #GlineGoals {
 grid-area: GlineGoals;
 }
 
-#page > #GbadgesGoals {
+.userTable > #GbadgesGoals {
 grid-area: GbadgesGoals;
-overflow-x: auto;
 }
 
-#page > #c9r1 {
+.userTable > #c9r1 {
 grid-area: c9r1;
 }
 
-#page > #Gtrainingsplit {
+.userTable > #Gtrainingsplit {
 grid-area: Gtrainingsplit;
 }
 
-#page > #GlineTrainingsplit {
+.userTable > #GlineTrainingsplit {
 grid-area: GlineTrainingsplit;
 }
 
-#page > #GbadgesTrainingsplit {
+.userTable > #GbadgesTrainingsplit {
 grid-area: GbadgesTrainingsplit;
-overflow-x: auto;
 }
 
-#page > #c10r1 {
+.userTable > #c10r1 {
 grid-area: c10r1;
+}
+
+#GbadgesLifts, #GbadgesGoals, #GbadgesTrainingsplit {
+    overflow-x: scroll;
 }
 
 /* end of spacing & other */

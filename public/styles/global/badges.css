@@ -3,6 +3,7 @@
 
 
 .bigBadges {
+color: var(--main-textColorLight);
 display: grid;
 margin-right: 10px;
 border-radius: 18px;
@@ -21,7 +22,7 @@ grid-template-areas:
 "Gkg Gkg"
 "c5b c5b"
 "Gmsg Gmsg"
-"c6r2 c6r2"
+"c6b c6b"
 ;
 grid-template-rows: /* nedover */
 
@@ -45,7 +46,7 @@ grid-template-rows: /* nedover */
 
 20px /* Gmsg */
 
-20px /* c6r2 */
+20px /* c6b */
 
 ;
 
@@ -112,6 +113,7 @@ grid-area: c6b;
 
 
 .smallBadges {
+color: var(--main-textColorLight);
 display: grid;
 margin-right: 10px;
 border-radius: 18px;
@@ -126,7 +128,7 @@ grid-template-areas:
 "Gkg Gkg"
 "c3b c3b"
 "Gmsg Gmsg"
-"c4r2 c4r2"
+"c4b c4b"
 ;
 grid-template-rows: /* nedover */
 
@@ -187,13 +189,79 @@ grid-area: c4b;
 
 
 
+/* grid for small badges (trainingsplit) */
+
+
+
+.smallBadgesTrainingsplit {
+color: var(--main-textColorLight);
+display: grid;
+margin-right: 10px;
+border-radius: 18px;
+width: 130px;
+height: 100px;
+/*background-color: red;*/
+grid-template-areas:
+
+"c1b c1b"
+"Gday Gday"
+"c2b c2b"
+"GtrainingsplitTxt GtrainingsplitTxt"
+"c3r2 c3r2"
+;
+grid-template-rows: /* nedover */
+
+20px /* c1b */
+
+20px /* Gday */
+
+5px /* c2b */
+
+45px /* GtrainingsplitTxt */
+
+20px /* c3r2 */
+
+;
+
+grid-template-columns: /* bortover */
+65px 65px;
+}
+
+/* elements */
+
+
+.smallBadgesTrainingsplit > #c1b {
+grid-area: c1b;
+}
+
+.smallBadgesTrainingsplit > #Gday {
+grid-area: Gday;
+}
+
+.smallBadgesTrainingsplit > #c2b {
+grid-area: c2b;
+}
+
+.smallBadgesTrainingsplit > #GtrainingsplitTxt {
+grid-area: GtrainingsplitTxt;
+}
+
+.smallBadgesTrainingsplit > #c4b {
+grid-area: c3b;
+}
+
+
+/* end of grid for small badges (trainingsplit) */
+
+
+
+
 /* elements */
 
 
 #Gprogression > #progression {
 margin-right: 10px;
 margin-left: 10px;
-color: var(--main-textColorLight);
 }
 
 #GkgLeft > #kgLeft {
@@ -208,15 +276,19 @@ font-size: 13px;
 font-size: 18px;
 }
 
+#Gday > #day {
+font-size: 18px;
+}
+
 #Gkg > #kg {
 font-size: 16px;
 }
 
-#kg, #exercise {
+#kg, #exercise, #day {
 font-family: var(--main-font-Family-Verdana);
 }
 
-#progression, #kgLeft, #exercise, #kg {
+#progression, #kgLeft, #exercise, #kg, #day {
 font-weight: bold;
 }
 
@@ -224,11 +296,18 @@ font-weight: bold;
 font-size: 14px;
 }
 
-#kgLeft, #exercise, #kg, #msg {
+#GtrainingsplitTxt > #trainingsplitTxt {
+font-size: 16px;
 margin-right: 10px;
 margin-left: 10px;
-color: var(--main-textColorLight);
+overflow: hidden;
+white-space:nowrap;
+text-overflow: ellipsis;
+}
 
+#kgLeft, #exercise, #kg, #msg, #day {
+margin-right: 10px;
+margin-left: 10px;
 overflow: hidden;
 white-space:nowrap;
 text-overflow: ellipsis;
