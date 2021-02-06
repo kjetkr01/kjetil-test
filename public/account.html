@@ -38,6 +38,7 @@
    <link rel="stylesheet" href="styles/account/desktop.css">
    <link rel="stylesheet" href="styles/account/mobile.css">
    <link rel="stylesheet" href="styles/account/common.css">
+   <link rel="stylesheet" href="styles/account/overlay.css">
 
    <link rel="stylesheet" href="styles/badges/badges.css">
    <link rel="stylesheet" href="styles/badges/badgeColors.css">
@@ -51,6 +52,61 @@
 </head>
 
 <body>
+
+   <div id="createNewLiftorGoalOverlay" style="display: none;" class="overlay">
+      <div id="createNewLiftorGoal" class="createNewLiftorGoal">
+         <div id="Gtitle1">
+            <p id="title1">Legg til nytt løft</p>
+         </div>
+         <div id="Gline1">
+            <hr id="line1">
+         </div>
+
+
+         <div id="Gtitle2">
+            <p id="title2">Øvelse</p>
+         </div>
+         <div id="Gline2">
+            <hr id="line2">
+         </div>
+         <div id="Ginp1">
+            <input id="inp1"></input>
+         </div>
+
+         <div id="Gtitle3">
+            <p id="title3">Antall KG</p>
+         </div>
+         <div id="Gline3">
+            <hr id="line3">
+         </div>
+         <div id="Ginp2">
+            <input id="inp2"></input>
+         </div>
+
+         <div id="Gtitle4">
+            <p id="title4">Dato</p>
+         </div>
+         <div id="Gline4">
+            <hr id="line4">
+         </div>
+         <div id="Ginp3">
+            <input id="inp3"></input>
+         </div>
+
+         <div id="Gresp">
+            <p id="resp">respmsg</p>
+         </div>
+
+         <div id="Gcancel">
+            <button id="cancel" onclick="off();">Avbryt</button>
+         </div>
+
+         <div id="Gsave">
+            <button id="save" onclick="off();">Lagre</button>
+         </div>
+
+      </div>
+   </div>
 
    <section id="page">
 
@@ -118,12 +174,26 @@
 
 <script>
 
+   on();
+
    changeBodyPosition();
    getUserDetails();
 
    setInterval(() => {
       checkConnection("c6r2");
    }, 5000);
+
+
+   function on() {
+      console.log("Overlay is on")
+      document.getElementById("createNewLiftorGoalOverlay").style.display = "block";
+   }
+
+   function off() {
+      console.log("Overlay is off")
+      document.getElementById("createNewLiftorGoalOverlay").style.display = "none";
+   }
+
 
 </script>
 

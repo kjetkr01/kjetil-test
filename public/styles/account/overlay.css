@@ -1,0 +1,269 @@
+/* elements, grid and other for mobile */
+
+@media only screen and (max-width: 1024px) { /* 768px var før, men passer bedre med 1024px for ipad */
+
+/* grid */
+
+.overlay {
+text-align: center;
+position: fixed;
+z-index: 2;
+background-color: rgba(0, 0, 0, 0.5);
+height: 100vh;
+width: 100vw;
+}
+
+.overlay>.createNewLiftorGoal {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+-ms-transform: translate(-50%,-50%);
+width: 80vw;
+height: 60vh;
+overflow-y: scroll;
+
+background-color: var(--main-backgroundColor2);
+
+border: 1px solid black;
+border-radius: 18px;
+
+display: grid;
+grid-template-areas:
+
+"c1o c1o c1o"
+"Gtitle1 Gtitle1 Gtitle1"
+"Gline1 Gline1 Gline1"
+"c2o c2o c2o"
+
+"Gtitle2 Gtitle2 Gtitle2"
+"Gline2 Gline2 Gline2"
+"Ginp1 Ginp1 Ginp1"
+"c3o c3o c3o"
+
+"Gtitle3 Gtitle3 Gtitle3"
+"Gline3 Gline3 Gline3"
+"Ginp2 Ginp2 Ginp2"
+"c4o c4o c4o"
+
+"Gtitle4 Gtitle4 Gtitle4"
+"Gline4 Gline4 Gline4"
+"Ginp3 Ginp3 Ginp3"
+"c5o c5o c5o"
+
+"Gresp Gresp Gresp"
+"Gcancel c6o Gsave"
+"c7o c7o c7o"
+;
+
+grid-template-rows: /* nedover */
+
+2vh /* c1o */
+
+30px /* Gtitle1 */
+
+10px /* Gline1 */
+
+1fr /* c2o */
+
+
+
+25px /* Gtitle2 */
+
+10px /* Gline2 */
+
+auto /* Ginp1 */
+
+4vh /* c3o */
+
+
+
+25px /* Gtitle3 */
+
+10px /* Gline3 */
+
+auto /* Ginp2 */
+
+4vh /* c4o */
+
+
+
+25px /* Gtitle4 */
+
+10px /* Gline4 */
+
+auto /* Ginp3 */
+
+1fr /* c5o */
+
+
+
+auto /* Gresp */
+
+30px /* Gbuttons */
+
+2vh /* c7o */
+
+;
+
+grid-template-columns: /* bortover */
+1fr 1fr 1fr;
+}
+
+
+
+/* end of grid */
+
+
+
+/* elements */
+
+
+
+#Gtitle1 > #title1 {
+font-size: 22px;
+}
+
+#Gline1 > #line1 {
+width: 75%;
+}
+
+#Gline2 > #line2 {
+}
+
+#Gline3 > #line3 {
+}
+
+#Gline4 > #line4 {
+
+}
+
+#line2, #line3, #line4 {
+width: 40%;
+}
+
+#Gtitle2 > #title2 {
+}
+
+#Gtitle3 > #title3 {
+}
+
+#Gtitle4 > #title4 {
+}
+
+#title2, #title3, #title4 {
+font-size: 18px;
+}
+
+#title1, #title2, #title3, #title4 {
+font-family: var(--main-font-Family-Verdana);
+font-weight: bold;
+}
+
+#line1, #line2, #line3, #line4 {
+text-align: center;
+display: block;
+margin-left: auto;
+margin-right: auto;
+
+opacity: 40%;
+border: 1px #757575 solid;
+}
+
+
+
+/* end of elements */
+
+
+
+/* spacing & other */
+
+
+
+.createNewLiftorGoal > #c1o {
+grid-area: c1o;
+}
+
+.createNewLiftorGoal > #Gtitle1 {
+grid-area: Gtitle1;
+}
+
+.createNewLiftorGoal > #Gline1 {
+grid-area: Gline1;
+}
+
+.createNewLiftorGoal > #c2o {
+grid-area: c2o;
+}
+
+.createNewLiftorGoal > #Gtitle2 {
+grid-area: Gtitle2;
+}
+
+.createNewLiftorGoal > #Gline2 {
+grid-area: Gline2;
+}
+
+.createNewLiftorGoal > #Ginp1 {
+grid-area: Ginp1;
+}
+
+.createNewLiftorGoal > #c3o {
+grid-area: c3o;
+}
+
+.createNewLiftorGoal > #Gtitle3 {
+grid-area: Gtitle3;
+}
+
+.createNewLiftorGoal > #Gline3 {
+grid-area: Gline3;
+}
+
+.createNewLiftorGoal > #Ginp2 {
+grid-area: Ginp2;
+}
+
+.createNewLiftorGoal > #c4o {
+grid-area: c4o;
+}
+
+.createNewLiftorGoal > #Gtitle4 {
+grid-area: Gtitle4;
+}
+
+.createNewLiftorGoal > #Gline4 {
+grid-area: Gline4;
+}
+
+.createNewLiftorGoal > #Ginp3 {
+grid-area: Ginp3;
+}
+
+.createNewLiftorGoal > #c5o {
+grid-area: c5o;
+}
+
+.createNewLiftorGoal > #Gresp {
+grid-area: Gresp;
+}
+
+.createNewLiftorGoal > #Gcancel {
+grid-area: Gcancel;
+}
+
+.createNewLiftorGoal > #c6o {
+grid-area: c6o;
+}
+
+.createNewLiftorGoal > #Gsave {
+grid-area: Gsave;
+}
+
+.createNewLiftorGoal > #c7o {
+grid-area: c7o;
+}
+
+/* end of spacing & other */
+
+}

@@ -88,11 +88,11 @@ function displayInformation(respInfo) {
     }
 
     if (lifts) {
-        displayLifts();
+        displayLifts(info.liftsLeft.length > 0);
     }
 
     if (goals) {
-        displayGoals();
+        displayGoals(info.goalsLeft.length > 0);
     }
 
     if (program) {
@@ -102,7 +102,7 @@ function displayInformation(respInfo) {
 
     /// ------------ start of displayLifts --------------- ///
 
-    function displayLifts() {
+    function displayLifts(hasLiftsLeft) {
 
         if (Object.entries(lifts).length > 0) {
 
@@ -166,7 +166,6 @@ Løft (${arr.length})
 `;
 
                     arr.sort(function (a, b) { return b.kg - a.kg });
-
                     for (let i = 0; i < arr.length; i++) {
                         const badge = getBadgeLift(size, arr[i]);
 
@@ -175,6 +174,7 @@ Løft (${arr.length})
                         }
                     }
                 }
+
             }
         } else {
             userGrid.innerHTML += `
@@ -195,12 +195,16 @@ Løft
 </table>
 </div>
 `;
+
         }
 
-        const badge = getBadgeLift();
+        if (hasLiftsLeft === true) {
 
-        if (badge) {
-            document.getElementById("badgesLiftsTableRow").innerHTML += badge;
+            const badge = getBadgeLift();
+
+            if (badge) {
+                document.getElementById("badgesLiftsTableRow").innerHTML += badge;
+            }
         }
 
     }
@@ -212,7 +216,7 @@ Løft
 
     /// ------------ start of displayGoals --------------- ///
 
-    function displayGoals() {
+    function displayGoals(hasGoalsLeft) {
 
         if (Object.entries(goals).length > 0) {
 
@@ -301,10 +305,13 @@ Mål
 `;
         }
 
-        const badge = getBadgeGoals();
+        if (hasGoalsLeft === true) {
 
-        if (badge) {
-            document.getElementById("badgesGoalsTableRow").innerHTML += badge;
+            const badge = getBadgeLift();
+
+            if (badge) {
+                document.getElementById("badgesGoalsTableRow").innerHTML += badge;
+            }
         }
 
     }
