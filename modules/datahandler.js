@@ -310,7 +310,7 @@ class StorageHandler {
 
                             const lifts = {};
                             const goals = {};
-                            const info = {"gym": "", "age": 0, "height": 0, "weight": 0 };
+                            const info = { "gym": "", "age": 0, "height": 0, "weight": 0 };
 
                             await client.query('INSERT INTO "public"."users"("username", "password", "displayname", "settings", "trainingsplit", "lifts", "goals", "info", "isadmin") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;', [newUserUsername, newUserPassword, newUserDisplayname, settings, trainingSplit, lifts, goals, info, false]);
                             results = true;
@@ -514,10 +514,12 @@ class StorageHandler {
 
             for (let i = 0; i < results.rows.length; i++) {
                 const todaysWorkout = results.rows[i].trainingsplit[dayTxt];
-                if (results.rows[i].settings.displayWorkoutList.value === true && todaysWorkout.length > 0 && todaysWorkout !== "Fri") {
-                    //info[counter] = { "username": results.rows[i].username, "userFullName": results.rows[i].displayname, "todaysWorkout": todaysWorkout };
-                    //counter++;
-                    infoList.push({ "username": results.rows[i].username, "userFullName": results.rows[i].displayname, "todaysWorkout": todaysWorkout });
+                if (todaysWorkout) {
+                    if (results.rows[i].settings.displayWorkoutList.value === true && todaysWorkout.length > 0 && todaysWorkout !== "Fri") {
+                        //info[counter] = { "username": results.rows[i].username, "userFullName": results.rows[i].displayname, "todaysWorkout": todaysWorkout };
+                        //counter++;
+                        infoList.push({ "username": results.rows[i].username, "userFullName": results.rows[i].displayname, "todaysWorkout": todaysWorkout });
+                    }
                 }
             }
 

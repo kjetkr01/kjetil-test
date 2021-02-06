@@ -574,7 +574,7 @@ ${aBadgeInfo.trainingsplit}
         </div>
         
         <div id="GtrainingsplitTxt">
-        <p id="trainingsplitTxt">
+        <p id="trainingsplitTxt" style="font-weight: bold; font-size: 18px">
         dager
         </p>
         </div>

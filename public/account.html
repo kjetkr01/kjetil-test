@@ -93,7 +93,7 @@
          </button>
       </div>
 
-      <div id="GuserGrid" class="userGrid">
+      <div id="GuserGrid" class="userGrid noselect">
          <div id="userGrid">
 
             <div id="Glifts">
@@ -211,13 +211,19 @@
       let infoString = "";
 
       if (age) {
-         infoString += `<td>${age} år</td>`;
+         if (age >= 15) {
+            infoString += `<td>${age} år</td>`;
+         }
       }
       if (height) {
-         infoString += `<td>${height} cm</td>`;
+         if (height >= 140) {
+            infoString += `<td>${height} cm</td>`;
+         }
       }
       if (weight) {
-         infoString += `<td>${weight} kg</td>`;
+         if (weight >= 40) {
+            infoString += `<td>${weight} kg</td>`;
+         }
       }
 
       if (infoString) {
@@ -313,6 +319,25 @@ Løft (${arr.length})
                   }
                }
             }
+         } else {
+            userGrid.innerHTML += `
+<div id="Glifts">
+<p id="lifts">
+Løft
+</p>
+</div>
+
+<div id="GlineLifts">
+<hr id="lineLifts">
+</div>
+
+<div id="GbadgesLifts">
+<table id="badgesLifts">
+<tr id="badgesLiftsTableRow">
+</tr>
+</table>
+</div>
+`;
          }
 
          const badge = getBadgeLift();
@@ -398,6 +423,25 @@ Mål (${arr.length})
                   }
                }
             }
+         } else {
+            userGrid.innerHTML += `
+<div id="Ggoals">
+<p id="goals">
+Mål
+</p>
+</div>
+
+<div id="GlineGoals">
+<hr id="lineGoals">
+</div>
+
+<div id="GbadgesGoals">
+<table id="badgesGoals">
+<tr id="badgesGoalsTableRow">
+</tr>
+</table>
+</div>
+`;
          }
 
          const badge = getBadgeGoals();
@@ -415,6 +459,25 @@ Mål (${arr.length})
       /// ------------ start of displayTrainingsplit --------------- ///
 
       function displayTrainingsplit() {
+
+         userGrid.innerHTML += `
+<div id="Gtrainingsplit">
+<p id="trainingsplit">
+Treningsplan
+</p>
+</div>
+
+<div id="GlineTrainingsplit">
+<hr id="lineTrainingsplit">
+</div>
+
+<div id="GbadgesTrainingsplit">
+<table id="badgesTrainingsplit">
+<tr id="badgesTrainingsplitTableRow">
+</tr>
+</table>
+</div>
+`;
 
          if (Object.entries(program).length > 0) {
 
@@ -434,25 +497,6 @@ Mål (${arr.length})
 
                if (arr.length > 0) {
 
-                  userGrid.innerHTML += `
-<div id="Gday">
-<p id="day">
-Treningsplan
-</p>
-</div>
-
-<div id="GlineTrainingsplit">
-<hr id="lineTrainingsplit">
-</div>
-
-<div id="GbadgesTrainingsplit">
-<table id="badgesTrainingsplit">
-<tr id="badgesTrainingsplitTableRow">
-</tr>
-</table>
-</div>
-`;
-
                   arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
 
                   for (let i = 0; i < arr.length; i++) {
@@ -464,16 +508,15 @@ Treningsplan
                      }
                   }
                }
-
-
-               const badge = getBadgeTrainingsplit();
-
-               if (badge) {
-                  document.getElementById("badgesTrainingsplitTableRow").innerHTML += badge;
-               }
-
             }
          }
+
+         const badge = getBadgeTrainingsplit();
+
+         if (badge) {
+            document.getElementById("badgesTrainingsplitTableRow").innerHTML += badge;
+         }
+
       }
 
       /// ------------ end of displayTrainingsplit --------------- ///
