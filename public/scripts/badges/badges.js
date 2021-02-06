@@ -32,8 +32,7 @@ function getBadgeGoals(aSize, aBadgeInfo) {
 
         const badgeTemplate = `
 <td>
-<div id="badge1" class="bigBadges fadeInLeft animate"
-style="background: linear-gradient(to right bottom, #E36262, #972F2F); box-shadow: 6px 6px rgba(151,47,47, 0.4);">
+<div id="badge1" class="bigBadges fadeInLeft animate ${aBadgeInfo.color || "redBadge"}">
 
 
 
@@ -115,8 +114,7 @@ Nærmer deg!
 
         const badgeTemplate = `
 <td>
-<div id="badge1" class="smallBadges fadeInLeft animate"
-style="background: linear-gradient(to right bottom, #E36262, #972F2F); box-shadow: 6px 6px rgba(151,47,47, 0.4);">
+<div id="badge1" class="smallBadges fadeInLeft animate ${aBadgeInfo.color || "redBadge"}">
 
 <!--
 <div id="c1b"></div>
@@ -243,8 +241,7 @@ function getBadgeLift(aSize, aBadgeInfo) {
 
         const badgeTemplate = `
 <td>
-<div id="badge1" class="bigBadges fadeInLeft animate"
-style="background: linear-gradient(to right bottom, #E36262, #972F2F); box-shadow: 6px 6px rgba(151,47,47, 0.4);">
+<div id="badge1" class="bigBadges fadeInLeft animate ${aBadgeInfo.color || "redBadge"}">
 
 
 
@@ -326,8 +323,7 @@ Nærmer deg!
 
         const badgeTemplate = `
 <td>
-<div id="badge1" class="smallBadges fadeInLeft animate"
-style="background: linear-gradient(to right bottom, #E36262, #972F2F); box-shadow: 6px 6px rgba(151,47,47, 0.4);">
+<div id="badge1" class="smallBadges fadeInLeft animate ${aBadgeInfo.color || "redBadge"}">
 
 <!--
 <div id="c1b"></div>
@@ -449,8 +445,7 @@ function getBadgeTrainingsplit(aSize, aBadgeInfo) {
 
         const badgeTemplate = `
 <td>
-<div id="badge1" class="bigBadges fadeInLeft animate"
-style="background: linear-gradient(to right bottom, #E36262, #972F2F); box-shadow: 6px 6px rgba(151,47,47, 0.4);">
+<div id="badge1" class="bigBadges fadeInLeft animate ${aBadgeInfo.color || "redBadge"}">
 
 
 
@@ -532,8 +527,7 @@ Nærmer deg!
 
         const badgeTemplate = `
 <td>
-<div id="badge1" class="smallBadgesTrainingsplit fadeInLeft animate"
-style="background: linear-gradient(to right bottom, #E36262, #972F2F); box-shadow: 6px 6px rgba(151,47,47, 0.4);">
+<div id="badge1" class="smallBadgesTrainingsplit fadeInLeft animate ${aBadgeInfo.color || "redBadge"}">
 
 <div id="Gday">
 <p id="day">

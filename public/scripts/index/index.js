@@ -209,7 +209,7 @@ async function displayBadges() {
                             msg = `${kgUntilGoal} kg igjen`;
                         }
 
-                        arr.push({ "exercise": goalKeys[i], "kg": currentGoalPR, "kgLeft": kgUntilGoal, "msg": msg });
+                        arr.push({ "exercise": goalKeys[i], "kg": currentGoalPR, "kgLeft": kgUntilGoal, "msg": msg, "color": "blueBadge"});
                     }
                 }
 
