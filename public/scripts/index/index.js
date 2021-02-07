@@ -174,9 +174,9 @@ async function displayBadges() {
             document.getElementById("Gbadges").style.minHeight = "180px";
         }
 
-
         const lifts = resp.info.lifts;
         const goals = resp.info.goals;
+        goalsLeft = new TgoalsLeft(resp.info.goalsLeft);
 
         const badgesTableRowDom = document.getElementById("badgesTableRow");
         badgesTableRowDom.innerHTML = "";
@@ -203,13 +203,13 @@ async function displayBadges() {
 
                         kgUntilGoal = currentGoalPR - currentLiftPR;
 
-                        if (kgUntilGoal < 0) {
+                        if (kgUntilGoal <= 0) {
                             msg = "Målet er nådd!";
                         } else {
                             msg = `${kgUntilGoal} kg igjen`;
                         }
 
-                        arr.push({ "exercise": goalKeys[i], "kg": currentGoalPR, "kgLeft": kgUntilGoal, "msg": msg, "color": "blueBadge"});
+                        arr.push({ "exercise": goalKeys[i], "kg": currentGoalPR, "kgLeft": kgUntilGoal, "msg": msg, "color": "blueBadge" });
                     }
                 }
 

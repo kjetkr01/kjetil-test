@@ -247,7 +247,7 @@ Løft
 
                         kgUntilGoal = currentGoalPR - currentLiftPR;
 
-                        if (kgUntilGoal < 0) {
+                        if (kgUntilGoal <= 0) {
                             msg = "Målet er nådd!";
                         } else {
                             msg = `${kgUntilGoal} kg igjen`;
