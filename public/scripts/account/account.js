@@ -134,7 +134,6 @@ function displayInformation(respInfo) {
                                 const prDate = new Date(prDateArr[0], (prDateArr[1] - 1), prDateArr[2]);
 
                                 const daysSinceTime = parseInt((d - prDate) / (1000 * 3600 * 24));
-                                console.log(daysSinceTime)
 
                                 if (daysSinceTime > 1) {
                                     msg = `${parseInt(daysSinceTime)} dager siden`;
