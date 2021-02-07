@@ -23,6 +23,10 @@ const getUserSettingsAndInfo = require("./modules/user").getUserSettingsAndInfo;
 const updateUserSetting = require("./modules/user").updateUserSetting;
 const getListOfAllUsersWorkoutToday = require("./modules/user").getListOfAllUsersWorkoutToday;
 
+const saveLiftOrGoal = require("./modules/user").saveLiftOrGoal;
+
+const allowedExercises = require("./exercisesList").allowedExercises;
+
 const createToken = require("./modules/token").createToken;
 
 // api only
@@ -404,6 +408,37 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
           res.status(403).json("invalid user").end();
      }
 
+});
+
+//
+
+// saver user lifts & goals
+
+server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
+
+     const info = req.body.info;
+     const currentUser = JSON.parse(req.body.userInfo);
+
+     if (currentUser.username && info.exercise && info.kg && info.date && info.type === "lift" || info.type === "goal") {
+
+          let isValid = false;
+
+          for (let i = 0; i < allowedExercises.length; i++) {
+               if (info.exercise === allowedExercises[i]) {
+                    isValid = true;
+               }
+          }
+
+          if (isValid === true) {
+               const saveLiftOrGoalResp = await saveLiftOrGoal(currentUser.username, info.exercise, info.kg, info.date, info.type);
+               res.status(200).json(saveLiftOrGoalResp).end();
+          } else {
+               res.status(403).json("invalid information").end();
+          }
+
+     } else {
+          res.status(403).json("invalid information").end();
+     }
 });
 
 //

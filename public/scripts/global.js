@@ -80,7 +80,9 @@ window.addEventListener("orientationchange", function () {
 
 
 function changeBodyPosition() {
+
     if (window.orientation === 0 && document.body.style.position === "") {
+
         document.body.style.position = "fixed";
     } else {
         document.body.style.position = "";

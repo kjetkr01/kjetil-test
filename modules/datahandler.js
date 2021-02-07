@@ -563,6 +563,54 @@ class StorageHandler {
 
     //
 
+    //  -------------------------------  save/update lift or goal  ------------------------------- //
+
+    async saveLiftOrGoal(username, exercise, kg, date, type) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+
+        try {
+            await client.connect();
+
+            if (type === "lift") {
+
+                results = await client.query('SELECT "lifts" FROM "users" WHERE username=$1', [username]);
+
+                const updatedLifts = results.rows[0].lifts;
+                updatedLifts[exercise] = { "ORM": kg, "PRdate": date };
+
+                await client.query('UPDATE "users" SET lifts=$1 WHERE username=$2', [updatedLifts, username]);
+
+                results = true;
+
+            } else if (type === "goal") {
+
+                results = await client.query('SELECT "goals" FROM "users" WHERE username=$1', [username]);
+
+                const updatedGoals = results.rows[0].goals;
+                updatedGoals[exercise] = { "goal": kg, "Goaldate": date };
+
+                await client.query('UPDATE "users" SET goals=$1 WHERE username=$2', [updatedGoals, username]);
+
+                results = true;
+
+            }
+
+            client.end();
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+
+        return results;
+    }
+
+    //
+
     // api only calls
 
     //  -------------------------------  getWorkoutPlanAPI  ------------------------------- //

@@ -122,21 +122,26 @@ function displayInformation(respInfo) {
 
                     if (liftKeys.ORM !== "0" && liftKeys.ORM !== 0 && liftKeys.ORM !== "") {
 
-                        const prDateArr = liftKeys.PRdate.split(".");
+                        const prDateArr = liftKeys.PRdate.split("-");
 
                         if (prDateArr.length === 3) {
 
-                            if (prDateArr[0] > 0 && prDateArr[0] <= 31 && prDateArr[0].length <= 2 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2 && prDateArr[2].length === 4) {
+                            //prDateArr[0] > 0 && prDateArr[0] <= 31 && prDateArr[0].length <= 2 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2 && prDateArr[2].length === 4
+                            //prDateArr[2].length === 4 && prDateArr[0] > 0 && prDateArr[0] <= 31 && prDateArr[0].length <= 2 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2
+                            if (prDateArr[0].length === 4 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2 && prDateArr[2] > 0 && prDateArr[2] <= 31 && prDateArr[2].length <= 2) {
 
                                 const d = new Date();
+                                const prDate = new Date(prDateArr[0], (prDateArr[1] - 1), prDateArr[2]);
 
-                                const prDate = new Date(prDateArr[2], (prDateArr[1] - 1), prDateArr[0]);
+                                const daysSinceTime = parseInt((d - prDate) / (1000 * 3600 * 24));
+                                console.log(daysSinceTime)
 
-                                const daysSinceTime = (d - prDate) / (1000 * 3600 * 24);
-
-                                if (daysSinceTime > 0) {
+                                if (daysSinceTime > 1) {
                                     msg = `${parseInt(daysSinceTime)} dager siden`;
-                                } else if (daysSinceTime === 0) {
+                                } else if (daysSinceTime === 1) {
+                                    msg = `1 dag siden`;
+                                }
+                                else if (daysSinceTime === 0) {
                                     msg = `I dag`;
                                 }
                             }
@@ -252,10 +257,10 @@ Løft
                         arr.push({ "exercise": goalKeys[i], "kg": currentGoalPR, "kgLeft": kgUntilGoal, "msg": msg, "color": "blueBadge" });
                     }
                 }
-
             }
 
             if (arr.length > 0) {
+
 
                 userGrid.innerHTML += `
 <div id="Ggoals">

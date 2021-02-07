@@ -129,6 +129,15 @@ async function getListOfAllUsersWorkoutToday(dayTxt) {
     }
 }
 
+async function saveLiftOrGoal(username, exercise, kg, date, type) {
+    try {
+        const resp = await database.saveLiftOrGoal(username, exercise, kg, date, type);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 module.exports = User;
 module.exports.validateUser = validateUser;
 module.exports.getListOfUsers = getListOfUsers;
@@ -141,3 +150,4 @@ module.exports.getUserDetails = getUserDetails;
 module.exports.getUserSettingsAndInfo = getUserSettingsAndInfo;
 module.exports.updateUserSetting = updateUserSetting;
 module.exports.getListOfAllUsersWorkoutToday = getListOfAllUsersWorkoutToday;
+module.exports.saveLiftOrGoal = saveLiftOrGoal;
