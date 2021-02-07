@@ -160,7 +160,7 @@ ${userBadgeInfo.msg}
 
         const badgeTemplate = `
 <td>
-<div id="badge1" class="smallBadges fadeInLeft animate emptyBadge">
+<div id="badge1" class="smallBadges fadeInLeft animate emptyBadge" onClick="enableOverlay('goal')">
 
 
 
@@ -369,7 +369,7 @@ ${userBadgeInfo.msg}
 
         const badgeTemplate = `
 <td>
-<div id="badge1" class="smallBadges fadeInLeft animate emptyBadge">
+<div id="badge1" class="smallBadges fadeInLeft animate emptyBadge" onClick="enableOverlay('lift')">
 
 
 

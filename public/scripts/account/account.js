@@ -47,6 +47,9 @@ function displayInformation(respInfo) {
     const height = info.info.height;
     const weight = info.info.weight;
 
+    liftsLeft = new TliftsLeft(info.liftsLeft);
+    goalsLeft = new TgoalsLeft(info.goalsLeft);
+
     const lifts = info.lifts;
     const goals = info.goals;
     const program = info.trainingsplit;
@@ -198,7 +201,7 @@ Løft
 
         }
 
-        if (hasLiftsLeft === true) {
+        if (hasLiftsLeft === true || Object.entries(lifts).length === 0) {
 
             const badge = getBadgeLift();
 
@@ -305,9 +308,9 @@ Mål
 `;
         }
 
-        if (hasGoalsLeft === true) {
+        if (hasGoalsLeft === true || Object.entries(goals).length === 0) {
 
-            const badge = getBadgeLift();
+            const badge = getBadgeGoals();
 
             if (badge) {
                 document.getElementById("badgesGoalsTableRow").innerHTML += badge;

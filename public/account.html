@@ -56,7 +56,7 @@
    <div id="createNewLiftorGoalOverlay" style="display: none;" class="overlay">
       <div id="createNewLiftorGoal" class="createNewLiftorGoal">
          <div id="Gtitle1">
-            <p id="title1">Legg til nytt løft</p>
+            <p id="title1"></p>
          </div>
          <div id="Gline1">
             <hr id="line1">
@@ -70,7 +70,9 @@
             <hr id="line2">
          </div>
          <div id="Ginp1">
-            <input id="inp1"></input>
+            <select id="inp1">
+               <option value="test">Test</option>
+            </select>
          </div>
 
          <div id="Gtitle3">
@@ -80,7 +82,7 @@
             <hr id="line3">
          </div>
          <div id="Ginp2">
-            <input id="inp2"></input>
+            <input id="inp2" type="number"></input>
          </div>
 
          <div id="Gtitle4">
@@ -90,19 +92,18 @@
             <hr id="line4">
          </div>
          <div id="Ginp3">
-            <input id="inp3"></input>
+            <input id="inp3" type="date"></input>
          </div>
 
          <div id="Gresp">
-            <p id="resp">respmsg</p>
+            <p id="resp"></p>
          </div>
 
          <div id="Gcancel">
-            <button id="cancel" onclick="off();">Avbryt</button>
+            <button id="cancel" onclick="disableOverlay();">Avbryt</button>
          </div>
 
          <div id="Gsave">
-            <button id="save" onclick="off();">Lagre</button>
          </div>
 
       </div>
@@ -174,7 +175,7 @@
 
 <script>
 
-   on();
+   let liftsLeft = null, goalsLeft = null;
 
    changeBodyPosition();
    getUserDetails();
@@ -183,17 +184,77 @@
       checkConnection("c6r2");
    }, 5000);
 
+   function enableOverlay(aType) {
 
-   function on() {
-      console.log("Overlay is on")
-      document.getElementById("createNewLiftorGoalOverlay").style.display = "block";
+      const type = aType;
+      const title1 = document.getElementById("title1");
+      const inp1 = document.getElementById("inp1");
+      const Gsave = document.getElementById("Gsave");
+      const respMsg = document.getElementById("resp");
+
+      const createNewLiftorGoalOverlay = document.getElementById("createNewLiftorGoalOverlay");
+
+      title1.innerHTML = "";
+      inp1.innerHTML = "";
+      document.getElementById("inp2").innerHTML = "";
+      document.getElementById("inp3").innerHTML = "";
+      Gsave.innerHTML = "";
+      respMsg.innerHTML = "";
+
+      if (type === "lift" && liftsLeft) {
+         title1.textContent = "Legg til nytt løft";
+         const liftsLeftInfo = liftsLeft.info();
+
+         if (liftsLeftInfo.length > 0) {
+            for (let i = 0; i < liftsLeftInfo.length; i++) {
+               inp1.innerHTML += `<option value="${liftsLeftInfo[i]}">${liftsLeftInfo[i]}`;
+            }
+            Gsave.innerHTML = `<button id="save" onclick="saveLift();">Lagre</button>`;
+         }
+
+         createNewLiftorGoalOverlay.style.display = "block";
+
+      } else if (type === "goal" && goalsLeft) {
+         title1.textContent = "Legg til nytt mål";
+         const goalsLeftInfo = goalsLeft.info();
+
+         if (goalsLeftInfo.length > 0) {
+            for (let i = 0; i < goalsLeftInfo.length; i++) {
+               inp1.innerHTML += `<option value="${goalsLeftInfo[i]}">${goalsLeftInfo[i]}`;
+            }
+            Gsave.innerHTML = `<button id="save" onclick="saveGoal();">Lagre</button>`;
+         }
+
+         createNewLiftorGoalOverlay.style.display = "block";
+      } else {
+         alert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
+         return;
+      }
    }
 
-   function off() {
-      console.log("Overlay is off")
+   function disableOverlay() {
+      console.log("Overlay is off");
       document.getElementById("createNewLiftorGoalOverlay").style.display = "none";
    }
 
+
+   function TliftsLeft(aLiftsLeft) {
+      const liftsLeftInfo = aLiftsLeft;
+
+      this.info = function () {
+         return liftsLeftInfo;
+      }
+
+   }
+
+   function TgoalsLeft(aGoalsLeft) {
+      const goalsLeftInfo = aGoalsLeft;
+
+      this.info = function () {
+         return goalsLeftInfo;
+      }
+
+   }
 
 </script>
 

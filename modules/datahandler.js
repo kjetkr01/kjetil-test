@@ -1,6 +1,6 @@
-const { response } = require("express");
 const pg = require("pg");
 const dbCredentials = process.env.DATABASE_URL || require("../localenv").credentials;
+const allowedExercises = require("../exercisesList").allowedExercises;
 
 class StorageHandler {
 
@@ -402,32 +402,24 @@ class StorageHandler {
 
                             const hasAccessToApi = await client.query('SELECT "key" FROM "api_keys" WHERE username=$1', [username]);
 
-
-                            const allowedExercises = ["Benkpress", "Knebøy", "Markløft", "Skuldepress"];
                             const liftsLeft = [];
                             const goalsLeft = [];
 
-                            if (Object.keys(results.lifts).length > 0) {
+                            const liftKeys = Object.keys(results.lifts);
 
-                                const liftKeys = Object.keys(results.lifts);
-
-                                for (let i = 0; i < allowedExercises.length; i++) {
-                                    if (liftKeys.includes(allowedExercises[i])) {
-                                    } else {
-                                        liftsLeft.push(allowedExercises[i]);
-                                    }
+                            for (let i = 0; i < allowedExercises.length; i++) {
+                                if (liftKeys.includes(allowedExercises[i])) {
+                                } else {
+                                    liftsLeft.push(allowedExercises[i]);
                                 }
                             }
 
-                            if (Object.keys(results.goals).length > 0) {
+                            const goalKeys = Object.keys(results.goals);
 
-                                const goalKeys = Object.keys(results.goals);
-
-                                for (let i = 0; i < allowedExercises.length; i++) {
-                                    if (goalKeys.includes(allowedExercises[i])) {
-                                    } else {
-                                        goalsLeft.push(allowedExercises[i]);
-                                    }
+                            for (let i = 0; i < allowedExercises.length; i++) {
+                                if (goalKeys.includes(allowedExercises[i])) {
+                                } else {
+                                    goalsLeft.push(allowedExercises[i]);
                                 }
                             }
 
