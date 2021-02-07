@@ -1,4 +1,5 @@
 let previousLeaderboard = "";
+let firstLeaderboard = null;
 
 async function loadLeaderboards() {
 
@@ -9,10 +10,12 @@ async function loadLeaderboards() {
 
     if (resp.length > 0) {
 
+        firstLeaderboard = resp[0];
+
         const leaderboardsTableRowDom = document.getElementById("leaderboardsTableRow");
         leaderboardsTableRowDom.innerHTML = "";
 
-        if (resp[0] === "Benkpress" && resp[1] === "Knebøy" && resp[2] === "Markløft") {
+        if (resp.includes("Benkpress") && resp.includes("Knebøy") && resp.includes("Markløft")) {
 
             leaderboardsTableRowDom.innerHTML += `
 
@@ -21,6 +24,8 @@ async function loadLeaderboards() {
           </td>
 
  `;
+
+            firstLeaderboard = "Totalt";
 
         }
 
@@ -37,13 +42,14 @@ async function loadLeaderboards() {
 
     }
 
+    getListOfLeaderboard();
 }
 
 
 async function getListOfLeaderboard(aLeaderboard) {
 
     if (!aLeaderboard) {
-        aLeaderboard = "Totalt";
+        aLeaderboard = firstLeaderboard;
     }
 
     if (token && user && aLeaderboard) {
@@ -130,8 +136,8 @@ async function getListOfLeaderboard(aLeaderboard) {
 
         } else {
             usermsg1.textContent = errorLoadingText;
-            alert(`Ledertavlen ${ViewingLeaderboard} finnes ikke!`);
-            window.history.back();
+            //alert(`Ledertavlen ${ViewingLeaderboard} finnes ikke!`);
+            //window.history.back();
         }
 
     } else {
