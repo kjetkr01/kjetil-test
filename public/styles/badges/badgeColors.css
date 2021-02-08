@@ -1,24 +1,45 @@
 body {
-    --bsSize: 6px 6px;
+--bsSize: 6px 6px;
 }
 
-.redBadge {
+/* Gradent Color Badges */
+
+.redBadgeG {
 background: linear-gradient(to right bottom, #E36262, #972F2F);
 box-shadow: var(--bsSize) rgba(151,47,47, 0.4);
 }
 
-.blueBadge {
+.yellowBadgeG {
+    background: linear-gradient(to right bottom, #DBB331, #C96E4C);
+    box-shadow: var(--bsSize) rgba(201,110,76, 0.4);
+    }
+
+.blueBadgeG {
 background: linear-gradient(to right bottom, #626BE3, #2B2379);
 box-shadow: var(--bsSize) rgba(43,35,121, 0.4);
 }
 
-.yellowBadge {
-background: linear-gradient(to right bottom, #DBB331, #C96E4C);
-box-shadow: var(--bsSize) rgba(201,110,76, 0.4);
+/* end of Gradent Color Badges */
+
+
+/* Plain Color Badges */
+
+.redBadge {
+background-color:  #972F2F;
+box-shadow: var(--bsSize) rgba(151,47,47, 0.4);
 }
 
+.yellowBadge {
+    background-color: #C96E4C;
+    box-shadow: var(--bsSize) rgba(201,110,76, 0.4);
+    }
 
+.blueBadge {
+background-color: #2B2379;
+box-shadow: var(--bsSize) rgba(43,35,121, 0.4);
+}
 
+/* end of Plain Color Badges */
 
 
 .emptyBadge {
