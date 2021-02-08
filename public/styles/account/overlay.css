@@ -147,15 +147,20 @@ width: 75%;
 }
 
 #Ginp1C > #inp1C {
-width: 50%;
+width: fit-content;
 }
 
 #Ginp2C > #inp2C {
-width: 30%;
+width: fit-content;
 }
 
 #Ginp3C > #inp3C {
-width: 50%;
+width: fit-content;
+}
+
+#GrespC > #respC {
+    margin: 20px;
+    font-size: 16px;
 }
 
 #GcancelC > #cancelC {
@@ -459,15 +464,15 @@ width: 75%;
 }
 
 #Ginp1E > #inp1E {
-width: 30%;
+width: fit-content;
 }
 
 #Ginp2E > #inp2E {
-width: 40%;
+width: fit-content;
 }
 
 #Ginp3E > #inp3E {
-width: 40%;
+width: fit-content;
 }
 
 #GcancelE > #cancelE {
@@ -481,6 +486,11 @@ color:red;
 }
 
 #GsaveE > #saveE {
+}
+
+#GrespE > #respE {
+    margin: 20px;
+    font-size: 16px;
 }
 
 #deleteE, #cancelE, #saveE {
@@ -523,10 +533,11 @@ width: 40%;
 font-size: 18px;
 }
 
-#title1E, #title2E, #title3E, #title4 {
+#title1E, #title2E, #title3E, #title4E {
 font-family: var(--main-font-Family-Verdana);
 font-weight: bold;
 }
+    
 
 #line1E, #line2E, #line3E, #line4E {
 text-align: center;

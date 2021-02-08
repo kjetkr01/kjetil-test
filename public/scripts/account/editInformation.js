@@ -307,6 +307,13 @@ async function deleteLiftOrGoal(aExercise, aType) {
 
         const type = aType;
         const exercise = aExercise;
+        let typeMsg = "Løftet";
+
+        if (aType === "goal") {
+            typeMsg = "Målet";
+        }
+
+        respMsg.textContent = `Sletter ${exercise}...`;
 
         const info = { "exercise": exercise, "type": type };
 
@@ -316,7 +323,7 @@ async function deleteLiftOrGoal(aExercise, aType) {
         const resp = await callServerAPI(body, url);
 
         if (resp === true) {
-            respMsg.textContent = `${exercise} ble slettet!`;
+            respMsg.textContent = `${typeMsg} ble slettet!`;
             setTimeout(() => {
                 disableOverlay();
             }, 1500);
