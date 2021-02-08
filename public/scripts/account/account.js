@@ -126,7 +126,7 @@ function displayInformation(respInfo) {
 
                     if (liftKeys.ORM !== "0" && liftKeys.ORM !== 0 && liftKeys.ORM !== "") {
 
-                        const color = liftKeys.color || "redBadge";
+                        const color = liftKeys.color || "redBadgeG";
 
                         const prDateArr = liftKeys.PRdate.split("-");
 
@@ -244,7 +244,7 @@ Løft
 
                     if (goals[goalKeys[i]].goal > 0) {
 
-                        const color = goals[goalKeys[i]].color || "redBadge";
+                        const color = goals[goalKeys[i]].color || "redBadgeG";
 
                         const currentGoalPR = parseFloat(goals[goalKeys[i]].goal);
                         let currentLiftPR = 0;
@@ -367,7 +367,7 @@ Treningsplan
                 for (let i = 0; i < keys.length; i++) {
 
                     let programKeys = program[keys[i]];
-                    const color = programKeys.color || "redBadge";
+                    const color = programKeys.color || "redBadgeG";
 
                     if (programKeys !== "0" && programKeys !== 0 && programKeys !== "") {
 
