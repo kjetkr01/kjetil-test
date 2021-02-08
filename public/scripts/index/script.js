@@ -106,10 +106,10 @@ function partOfDayMessage(displayName) {
 
     const hours = today.getHours();
 
-    if (hours >= 0 && hours <= 5) {
+    if (hours >= 0 && hours <= 4) {
         partOfDay = "natt";
     }
-    else if (hours > 5 && hours <= 10) {
+    else if (hours > 4 && hours <= 10) {
         partOfDay = "morgen";
     }
     else if (hours > 10 && hours <= 18) {

@@ -43,50 +43,8 @@ if (user) {
 
 //
 
-//disables body,html scrolling
-/*window.addEventListener("scroll", (e) => {
-
-    const test = innerHeight * 0.50;
-    //alert(test)
-
-    if (innerWidth < 1024 && window.orientation === 0) {
-
-        e.preventDefault();
-
-        if (pageDom) {
-
-            //const calc = (window.scrollY + pageDom.offsetHeight) - 10;
-            const calc = (window.scrollY + pageDom.offsetHeight) + test;
-
-            if (calc > pageDom.scrollHeight) {
-                document.body.style.position = "fixed";
-                window.scrollTo(0, 0);
-            } else {
-                document.body.style.position = "";
-            }
-
-        }
-
-    }else{
-        document.body.style.position = "";
-    }
-
-});
-*/
-
-window.addEventListener("orientationchange", function () {
-    changeBodyPosition();
-});
-
-
-function changeBodyPosition() {
-
-    if (window.orientation === 0 && document.body.style.position === "") {
-
-        document.body.style.position = "fixed";
-    } else {
-        document.body.style.position = "";
-    }
+function lockBodyPosition() {
+    document.body.classList.add("lockedBody");
 }
 
 
@@ -99,32 +57,12 @@ function viewUser(viewUser) {
 
 }
 
-
-
 window.addEventListener("scroll", (e) => {
 
     e.preventDefault();
-
-    if (innerWidth <= 1024 && window.orientation === 0) {
-
-        if (pageDom) {
-
-            //const calc = (window.scrollY + pageDom.offsetHeight) - 10;
-            const calc = (window.scrollY + pageDom.offsetHeight) + 1;
-
-            if (calc > pageDom.scrollHeight) {
-                //document.body.style.position = "fixed";
-                window.scrollTo(0, window.scrollY - 5);
-            } else {
-                //document.body.style.position = "";
-            }
-
-        }
-
-    } else {
-        document.body.style.position = "";
+    if (innerWidth <= 1024 && window.orientation === 0 && document.body.className === "lockedBody") {
+        window.scrollTo(0, 0);
     }
-
 });
 
 //

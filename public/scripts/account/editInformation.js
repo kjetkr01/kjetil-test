@@ -102,7 +102,11 @@ function enableOverlayEdit(aType, aExercise) {
                 Gsave.innerHTML = `<button id="saveE" onclick="saveLiftOrGoal('lift','edit');">Lagre</button>`;
 
                 for (let i = 0; i < badgeColorsValues.length; i++) {
-                    inp3.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}`;
+                    if (badgeColorsValues[i][0] === lifts[exercise].color) {
+                        inp3.innerHTML += `<option selected="selected" value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}`;
+                    } else {
+                        inp3.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}`;
+                    }
                 }
 
             } else {
@@ -123,7 +127,11 @@ function enableOverlayEdit(aType, aExercise) {
                 Gsave.innerHTML = `<button id="saveE" onclick="saveLiftOrGoal('goal','edit');">Lagre</button>`;
 
                 for (let i = 0; i < badgeColorsValues.length; i++) {
-                    inp3.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}`;
+                    if (badgeColorsValues[i][0] === goals[exercise].color) {
+                        inp3.innerHTML += `<option selected="selected" value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}`;
+                    } else {
+                        inp3.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}`;
+                    }
                 }
 
             } else {
@@ -133,7 +141,6 @@ function enableOverlayEdit(aType, aExercise) {
             editLiftorGoalOverlay.style.display = "block";
         } else {
             alert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
-            return;
         }
     }
 }
@@ -280,14 +287,14 @@ function deleteLiftOrGoalConfirm(aExercise, aType) {
         const exercise = aExercise;
 
         if (type === "lift") {
-            const confirmation = confirm(`Er du sikkert på at du vil slette løftet ditt: ${exercise} ?`);
+            const confirmation = confirm(`Er du sikkert på at du vil slette løftet ditt: "${exercise}" ?`);
             if (confirmation === true) {
                 deleteLiftOrGoal(exercise, type);
             }
         }
 
         if (type === "goal") {
-            const confirmation = confirm(`Er du sikkert på at du vil slette målet ditt: ${exercise} ?`);
+            const confirmation = confirm(`Er du sikkert på at du vil slette målet ditt: "${exercise}" ?`);
             if (confirmation === true) {
                 deleteLiftOrGoal(exercise, type);
             }
