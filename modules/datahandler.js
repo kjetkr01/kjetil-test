@@ -2,6 +2,7 @@ const pg = require("pg");
 const dbCredentials = process.env.DATABASE_URL || require("../localenv").credentials;
 const allowedLifts = require("../arrayLists").allowedLifts;
 const allowedGoals = require("../arrayLists").allowedGoals;
+const badgeColors = require("../arrayLists").badgeColors;
 
 class StorageHandler {
 
@@ -430,6 +431,8 @@ class StorageHandler {
                             if (hasAccessToApi.rows[0] !== undefined) {
                                 results.apikey = hasAccessToApi.rows[0].key;
                             }
+
+                            results.badgeColors = badgeColors;
                         }
 
                     } else {
@@ -566,7 +569,7 @@ class StorageHandler {
 
     //  -------------------------------  save/update lift or goal  ------------------------------- //
 
-    async saveLiftOrGoal(username, exercise, kg, date, type) {
+    async saveLiftOrGoal(username, exercise, kg, date, type, colorID) {
 
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -579,7 +582,7 @@ class StorageHandler {
                 results = await client.query('SELECT "lifts" FROM "users" WHERE username=$1', [username]);
 
                 const updatedLifts = results.rows[0].lifts;
-                updatedLifts[exercise] = { "ORM": kg, "PRdate": date };
+                updatedLifts[exercise] = { "ORM": kg, "PRdate": date, "color": badgeColors[colorID] };
 
                 await client.query('UPDATE "users" SET lifts=$1 WHERE username=$2', [updatedLifts, username]);
 
@@ -590,7 +593,7 @@ class StorageHandler {
                 results = await client.query('SELECT "goals" FROM "users" WHERE username=$1', [username]);
 
                 const updatedGoals = results.rows[0].goals;
-                updatedGoals[exercise] = { "goal": kg, "Goaldate": date };
+                updatedGoals[exercise] = { "goal": kg, "Goaldate": date, "color": badgeColors[colorID] };
 
                 await client.query('UPDATE "users" SET goals=$1 WHERE username=$2', [updatedGoals, username]);
 

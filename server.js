@@ -28,6 +28,7 @@ const deleteLiftOrGoal = require("./modules/user").deleteLiftOrGoal;
 
 const allowedLifts = require("./arrayLists").allowedLifts;
 const allowedGoals = require("./arrayLists").allowedGoals;
+const badgeColors = require("./arrayLists").badgeColors;
 
 const createToken = require("./modules/token").createToken;
 
@@ -424,6 +425,12 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
      if (currentUser.username && info.exercise && info.kg && info.date && info.type === "lift" || info.type === "goal") {
 
           let isValid = false;
+          let colorID = 0;
+
+          if (colorID < badgeColors.length) {
+               colorID = 0;
+          }
+
 
           for (let i = 0; i < allowedLifts.length; i++) {
                if (info.exercise === allowedLifts[i]) {
@@ -440,7 +447,7 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
           }
 
           if (isValid === true) {
-               const saveLiftOrGoalResp = await saveLiftOrGoal(currentUser.username, info.exercise, info.kg, info.date, info.type);
+               const saveLiftOrGoalResp = await saveLiftOrGoal(currentUser.username, info.exercise, info.kg, info.date, info.type, colorID);
                res.status(200).json(saveLiftOrGoalResp).end();
           } else {
                res.status(403).json("invalid information").end();

@@ -50,6 +50,8 @@ function displayInformation(respInfo) {
     liftsLeft = new TliftsLeft(info.liftsLeft);
     goalsLeft = new TgoalsLeft(info.goalsLeft);
 
+    badgeColors = new TbadgeColors(info.badgeColors);
+
     const lifts = info.lifts;
     const goals = info.goals;
     const program = info.trainingsplit;
@@ -96,7 +98,7 @@ function displayInformation(respInfo) {
     }
 
     if (goals) {
-        goalsInfo = new Tlifts(info.goals);
+        goalsInfo = new Tgoals(info.goals);
         displayGoals(info.goalsLeft.length > 0);
     }
 
@@ -124,6 +126,8 @@ function displayInformation(respInfo) {
 
                     if (liftKeys.ORM !== "0" && liftKeys.ORM !== 0 && liftKeys.ORM !== "") {
 
+                        const color = liftKeys.color || "redBadge";
+
                         const prDateArr = liftKeys.PRdate.split("-");
 
                         if (prDateArr.length === 3) {
@@ -148,7 +152,7 @@ function displayInformation(respInfo) {
                             }
                         }
 
-                        arr.push({ "exercise": keys[i], "kg": liftKeys.ORM, "msg": msg, "color": "redBadge" });
+                        arr.push({ "exercise": keys[i], "kg": liftKeys.ORM, "msg": msg, "color": color });
 
                     }
                 }
@@ -240,6 +244,8 @@ Løft
 
                     if (goals[goalKeys[i]].goal > 0) {
 
+                        const color = goals[goalKeys[i]].color || "redBadge";
+
                         const currentGoalPR = parseFloat(goals[goalKeys[i]].goal);
                         let currentLiftPR = 0;
 
@@ -255,7 +261,7 @@ Løft
                             msg = `${kgUntilGoal} kg igjen`;
                         }
 
-                        arr.push({ "exercise": goalKeys[i], "kg": currentGoalPR, "kgLeft": kgUntilGoal, "msg": msg, "color": "blueBadge" });
+                        arr.push({ "exercise": goalKeys[i], "kg": currentGoalPR, "kgLeft": kgUntilGoal, "msg": msg, "color": color });
                     }
                 }
             }
@@ -361,10 +367,11 @@ Treningsplan
                 for (let i = 0; i < keys.length; i++) {
 
                     let programKeys = program[keys[i]];
+                    const color = programKeys.color || "redBadge";
 
                     if (programKeys !== "0" && programKeys !== 0 && programKeys !== "") {
 
-                        arr.push({ "day": keys[i], "trainingsplit": programKeys, "color": "yellowBadge" });
+                        arr.push({ "day": keys[i], "trainingsplit": programKeys, "color": color });
                     }
                 }
 

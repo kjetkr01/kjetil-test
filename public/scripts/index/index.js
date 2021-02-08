@@ -178,7 +178,8 @@ async function displayBadges() {
         const goals = resp.info.goals;
         goalsLeft = new TgoalsLeft(resp.info.goalsLeft);
         if (resp.info.goals) {
-            goalsInfo = new Tlifts(resp.info.goals);
+            goalsInfo = new Tgoals(resp.info.goals);
+            badgeColors = new TbadgeColors(resp.info.badgeColors);
         }
 
         const badgesTableRowDom = document.getElementById("badgesTableRow");
@@ -199,6 +200,7 @@ async function displayBadges() {
 
                         const currentGoalPR = parseFloat(goals[goalKeys[i]].goal);
                         let currentLiftPR = 0;
+                        const color = goals[goalKeys[i]].color || "redBadge";
 
                         if (lifts[goalKeys[i]]) {
                             currentLiftPR = parseFloat(lifts[goalKeys[i]].ORM);
@@ -212,7 +214,7 @@ async function displayBadges() {
                             msg = `${kgUntilGoal} kg igjen`;
                         }
 
-                        arr.push({ "exercise": goalKeys[i], "kg": currentGoalPR, "kgLeft": kgUntilGoal, "msg": msg, "color": "blueBadge" });
+                        arr.push({ "exercise": goalKeys[i], "kg": currentGoalPR, "kgLeft": kgUntilGoal, "msg": msg, "color": color });
                     }
                 }
 

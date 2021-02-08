@@ -1,4 +1,4 @@
-let liftsLeft = null, goalsLeft = null, liftsInfo = null, goalsInfo = null;
+let liftsLeft = null, goalsLeft = null, liftsInfo = null, goalsInfo = null, badgeColors = null;
 
 function enableOverlayCreate(aType) {
 
@@ -24,6 +24,7 @@ function enableOverlayCreate(aType) {
         if (type === "lift" && liftsLeft) {
             title1.textContent = "Legg til nytt løft";
             const liftsLeftInfo = liftsLeft.info();
+            const badgeColorsInfo = badgeColors.info();
 
             if (liftsLeftInfo.length > 0) {
                 for (let i = 0; i < liftsLeftInfo.length; i++) {
@@ -37,6 +38,7 @@ function enableOverlayCreate(aType) {
         } else if (type === "goal" && goalsLeft) {
             title1.textContent = "Legg til nytt mål";
             const goalsLeftInfo = goalsLeft.info();
+            const badgeColorsInfo = badgeColors.info();
 
             if (goalsLeftInfo.length > 0) {
                 for (let i = 0; i < goalsLeftInfo.length; i++) {
@@ -84,6 +86,7 @@ function enableOverlayEdit(aType, aExercise) {
 
         if (type === "lift" && liftsInfo) {
             const lifts = liftsInfo.info();
+            const badgeColorsInfo = badgeColors.info();
 
             if (lifts[exercise]) {
                 inp1.value = lifts[exercise].ORM;
@@ -98,6 +101,7 @@ function enableOverlayEdit(aType, aExercise) {
 
         } else if (type === "goal" && goalsInfo) {
             const goals = goalsInfo.info();
+            const badgeColorsInfo = badgeColors.info();
 
             if (goals[exercise]) {
                 inp1.value = goals[exercise].goal;
@@ -132,11 +136,27 @@ function Tlifts(aLifts) {
     }
 }
 
+function Tgoals(aGoals) {
+    const goalsInfo = aGoals;
+
+    this.info = function () {
+        return goalsInfo;
+    }
+}
+
 function TgoalsLeft(aGoalsLeft) {
     const goalsLeftInfo = aGoalsLeft;
 
     this.info = function () {
         return goalsLeftInfo;
+    }
+}
+
+function TbadgeColors(aBadgeColors) {
+    const badgeColors = aBadgeColors;
+
+    this.info = function () {
+        return badgeColors;
     }
 }
 

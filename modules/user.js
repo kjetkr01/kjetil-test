@@ -129,9 +129,9 @@ async function getListOfAllUsersWorkoutToday(dayTxt) {
     }
 }
 
-async function saveLiftOrGoal(username, exercise, kg, date, type) {
+async function saveLiftOrGoal(username, exercise, kg, date, type, colorID) {
     try {
-        const resp = await database.saveLiftOrGoal(username, exercise, kg, date, type);
+        const resp = await database.saveLiftOrGoal(username, exercise, kg, date, type, colorID);
         return resp;
     } catch (error) {
         console.error(error);
