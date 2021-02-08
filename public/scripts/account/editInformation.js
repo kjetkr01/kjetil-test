@@ -1,54 +1,118 @@
-let liftsLeft = null, goalsLeft = null;
+let liftsLeft = null, goalsLeft = null, liftsInfo = null, goalsInfo = null;
 
-function enableOverlay(aType) {
+function enableOverlayCreate(aType) {
 
-    const type = aType;
-    const title1 = document.getElementById("title1");
-    const inp1 = document.getElementById("inp1");
-    const inp2 = document.getElementById("inp2");
-    const inp3 = document.getElementById("inp3");
-    const Gsave = document.getElementById("Gsave");
-    const respMsg = document.getElementById("resp");
+    if (aType) {
 
-    const createNewLiftorGoalOverlay = document.getElementById("createNewLiftorGoalOverlay");
+        const type = aType;
+        const title1 = document.getElementById("title1C");
+        const inp1 = document.getElementById("inp1C");
+        const inp2 = document.getElementById("inp2C");
+        const inp3 = document.getElementById("inp3C");
+        const Gsave = document.getElementById("GsaveC");
+        const respMsg = document.getElementById("respC");
 
-    title1.innerHTML = "";
-    inp1.innerHTML = "";
-    inp2.value = "";
-    inp3.value = "";
-    document.getElementById("inp2").innerHTML = "";
-    document.getElementById("inp3").innerHTML = "";
-    Gsave.innerHTML = "";
-    respMsg.innerHTML = "";
+        const createNewLiftorGoalOverlay = document.getElementById("createNewLiftorGoalOverlay");
 
-    if (type === "lift" && liftsLeft) {
-        title1.textContent = "Legg til nytt løft";
-        const liftsLeftInfo = liftsLeft.info();
+        title1.innerHTML = "";
+        inp1.innerHTML = "";
+        inp2.value = "";
+        inp3.value = "";
+        Gsave.innerHTML = "";
+        respMsg.innerHTML = "";
 
-        if (liftsLeftInfo.length > 0) {
-            for (let i = 0; i < liftsLeftInfo.length; i++) {
-                inp1.innerHTML += `<option value="${liftsLeftInfo[i]}">${liftsLeftInfo[i]}`;
+        if (type === "lift" && liftsLeft) {
+            title1.textContent = "Legg til nytt løft";
+            const liftsLeftInfo = liftsLeft.info();
+
+            if (liftsLeftInfo.length > 0) {
+                for (let i = 0; i < liftsLeftInfo.length; i++) {
+                    inp1.innerHTML += `<option value="${liftsLeftInfo[i]}">${liftsLeftInfo[i]}`;
+                }
+                Gsave.innerHTML = `<button id="saveC" onclick="saveLiftOrGoal('lift','create');">Lagre</button>`;
             }
-            Gsave.innerHTML = `<button id="save" onclick="saveLiftOrGoal('lift');">Lagre</button>`;
+
+            createNewLiftorGoalOverlay.style.display = "block";
+
+        } else if (type === "goal" && goalsLeft) {
+            title1.textContent = "Legg til nytt mål";
+            const goalsLeftInfo = goalsLeft.info();
+
+            if (goalsLeftInfo.length > 0) {
+                for (let i = 0; i < goalsLeftInfo.length; i++) {
+                    inp1.innerHTML += `<option value="${goalsLeftInfo[i]}">${goalsLeftInfo[i]}`;
+                }
+                Gsave.innerHTML = `<button id="saveC" onclick="saveLiftOrGoal('goal','create');">Lagre</button>`;
+            }
+
+            createNewLiftorGoalOverlay.style.display = "block";
+        } else {
+            alert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
+            return;
+        }
+    }
+}
+
+
+function enableOverlayEdit(aType, aExercise) {
+
+    if (aType && aExercise) {
+
+        const type = aType;
+        const exercise = aExercise;
+        const title1 = document.getElementById("title1E");
+        const inp1 = document.getElementById("inp1E");
+        const inp2 = document.getElementById("inp2E");
+        const GdeleteE = document.getElementById("GdeleteE");
+        const Gsave = document.getElementById("GsaveE");
+        const respMsg = document.getElementById("respE");
+
+        const editLiftorGoalOverlay = document.getElementById("editLiftorGoalOverlay");
+
+        if (type === "goal") {
+            title1.textContent = exercise + " (mål)";
+        } else {
+            title1.textContent = exercise + " (løft)";
         }
 
-        createNewLiftorGoalOverlay.style.display = "block";
+        title1.value = exercise;
 
-    } else if (type === "goal" && goalsLeft) {
-        title1.textContent = "Legg til nytt mål";
-        const goalsLeftInfo = goalsLeft.info();
+        inp1.value = "";
+        inp2.value = "";
+        Gsave.innerHTML = "";
+        respMsg.innerHTML = "";
 
-        if (goalsLeftInfo.length > 0) {
-            for (let i = 0; i < goalsLeftInfo.length; i++) {
-                inp1.innerHTML += `<option value="${goalsLeftInfo[i]}">${goalsLeftInfo[i]}`;
+        if (type === "lift" && liftsInfo) {
+            const lifts = liftsInfo.info();
+
+            if (lifts[exercise]) {
+                inp1.value = lifts[exercise].ORM;
+                inp2.value = lifts[exercise].PRdate;
+                GdeleteE.innerHTML = `<button id="deleteE" onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift');">Slett</button>`;
+                Gsave.innerHTML = `<button id="saveC" onclick="saveLiftOrGoal('lift','edit');">Lagre</button>`;
+            } else {
+                alert("Det har oppstått et problem!");
             }
-            Gsave.innerHTML = `<button id="save" onclick="saveLiftOrGoal('goal');">Lagre</button>`;
-        }
 
-        createNewLiftorGoalOverlay.style.display = "block";
-    } else {
-        alert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
-        return;
+            editLiftorGoalOverlay.style.display = "block";
+
+        } else if (type === "goal" && goalsInfo) {
+            const goals = goalsInfo.info();
+
+            if (goals[exercise]) {
+                inp1.value = goals[exercise].goal;
+                inp2.value = goals[exercise].Goaldate;
+                GdeleteE.innerHTML = `<button id="deleteE" onclick="deleteLiftOrGoalConfirm('${exercise}', 'goal');">Slett</button>`;
+                Gsave.innerHTML = `<button id="saveC" onclick="saveLiftOrGoal('goal','edit');">Lagre</button>`;
+            } else {
+                alert("Det har oppstått et problem!");
+            }
+
+            editLiftorGoalOverlay.style.display = "block";
+        } else {
+            alert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
+            return;
+        }
     }
 }
 
@@ -58,7 +122,14 @@ function TliftsLeft(aLiftsLeft) {
     this.info = function () {
         return liftsLeftInfo;
     }
+}
 
+function Tlifts(aLifts) {
+    const liftsInfo = aLifts;
+
+    this.info = function () {
+        return liftsInfo;
+    }
 }
 
 function TgoalsLeft(aGoalsLeft) {
@@ -67,24 +138,34 @@ function TgoalsLeft(aGoalsLeft) {
     this.info = function () {
         return goalsLeftInfo;
     }
-
 }
 
-async function saveLiftOrGoal(aType) {
+async function saveLiftOrGoal(aType, editOrCreate) {
 
-    const respMsg = document.getElementById("resp");
+    if (aType === "lift" || aType === "goal" && editOrCreate === "edit" || editOrCreate === "create") {
 
-    if (aType === "lift" || aType === "goal") {
+        let respMsg = null, inp1 = null, inp2 = null, inp3 = null;
 
-        const inp1 = document.getElementById("inp1").value;
-        const inp2 = document.getElementById("inp2").value;
-        const inp3 = document.getElementById("inp3").value;
+        if (editOrCreate === "create") {
+            respMsg = document.getElementById("respC");
+
+            inp1 = document.getElementById("inp1C").value;
+            inp2 = document.getElementById("inp2C").value;
+            inp3 = document.getElementById("inp3C").value;
+        }
+
+        if (editOrCreate === "edit") {
+            respMsg = document.getElementById("respE");
+
+            inp1 = document.getElementById("title1E").value;
+            inp2 = document.getElementById("inp1E").value;
+            inp3 = document.getElementById("inp2E").value;
+        }
 
         const validateInfo = validateLiftOrGoal(inp1, inp2, inp3, aType);
 
         if (validateInfo.isValid === true && validateInfo.info) {
             respMsg.textContent = "Lagrer...";
-            console.log()
 
             const body = { "authToken": token, "userInfo": user, "info": validateInfo.info };
             const url = `/user/update/liftOrGoal/:${validateInfo.info}`;
@@ -107,7 +188,7 @@ async function saveLiftOrGoal(aType) {
             respMsg.textContent = validateInfo.msg;
         }
     } else {
-        respMsg.textContent = "Det har oppstått en feil!";
+        alert("Det har oppstått en feil!");
     }
 }
 
@@ -149,24 +230,95 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aType) {
     }
 
     return { "isValid": isValid, "msg": msg, "info": info };
+}
+
+function deleteLiftOrGoalConfirm(aExercise, aType) {
+
+    if (aExercise && aType) {
+
+        const type = aType;
+        const exercise = aExercise;
+
+        if (type === "lift") {
+            const confirmation = confirm(`Er du sikkert på at du vil slette løftet ditt: ${exercise} ?`);
+            if (confirmation === true) {
+                deleteLiftOrGoal(exercise, type);
+            }
+        }
+
+        if (type === "goal") {
+            const confirmation = confirm(`Er du sikkert på at du vil slette målet ditt: ${exercise} ?`);
+            if (confirmation === true) {
+                deleteLiftOrGoal(exercise, type);
+            }
+        }
+
+
+    } else {
+        alert("Det har oppstått en feil!");
+    }
+}
+
+async function deleteLiftOrGoal(aExercise, aType) {
+
+    if (aExercise && aType) {
+
+        const respMsg = document.getElementById("respE");
+
+        const type = aType;
+        const exercise = aExercise;
+
+        const info = { "exercise": exercise, "type": type };
+
+        const body = { "authToken": token, "userInfo": user, "info": info };
+        const url = `/user/delete/liftOrGoal/:${info}`;
+
+        const resp = await callServerAPI(body, url);
+
+        if (resp === true) {
+            respMsg.textContent = `${exercise} ble slettet!`;
+            setTimeout(() => {
+                disableOverlay();
+            }, 1500);
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
+        } else {
+            respMsg.textContent = "Kunne ikke slette" + exercise;
+        }
+
+
+    } else {
+        alert("Det har oppstått en feil!");
+    }
 
 }
 
 
-function onlyAllowedKeys(evt) {
+function onlyAllowedKeys(evt, editOrCreate) {
     const code = (evt.which) ? evt.which : evt.keyCode;
-    const inp2 = document.getElementById("inp2").value;
 
-    if (inp2.length <= 5) {
+    if (editOrCreate === "create" || editOrCreate === "edit") {
 
-        let length = 0;
+        let inp2 = document.getElementById("inp2C").value;
 
-        if (inp2.match(/\./g)) {
-            length = inp2.match(/\./g).length;
+        if (editOrCreate === "edit") {
+            inp2 = document.getElementById("inp1E").value;
         }
 
-        if (code >= 48 && code <= 57 || code === 46 && length === 0) {
-            return true;
+        if (inp2.length <= 5) {
+
+            let length = 0;
+
+            if (inp2.match(/\./g)) {
+                length = inp2.match(/\./g).length;
+            }
+
+            if (code >= 48 && code <= 57 || code === 46 && length === 0) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
@@ -176,6 +328,13 @@ function onlyAllowedKeys(evt) {
 }
 
 
-function disableOverlay() {
-    document.getElementById("createNewLiftorGoalOverlay").style.display = "none";
+function disableOverlay(aEditOrCreate) {
+
+    if (aEditOrCreate === "create") {
+        document.getElementById("createNewLiftorGoalOverlay").style.display = "none";
+    }
+
+    if (aEditOrCreate === "edit") {
+        document.getElementById("editLiftorGoalOverlay").style.display = "none";
+    }
 }

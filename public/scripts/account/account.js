@@ -91,10 +91,12 @@ function displayInformation(respInfo) {
     }
 
     if (lifts) {
+        liftsInfo = new Tlifts(info.lifts);
         displayLifts(info.liftsLeft.length > 0);
     }
 
     if (goals) {
+        goalsInfo = new Tlifts(info.goals);
         displayGoals(info.goalsLeft.length > 0);
     }
 

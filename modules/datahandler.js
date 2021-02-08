@@ -1,6 +1,7 @@
 const pg = require("pg");
 const dbCredentials = process.env.DATABASE_URL || require("../localenv").credentials;
-const allowedExercises = require("../exercisesList").allowedExercises;
+const allowedLifts = require("../arrayLists").allowedLifts;
+const allowedGoals = require("../arrayLists").allowedGoals;
 
 class StorageHandler {
 
@@ -407,19 +408,19 @@ class StorageHandler {
 
                             const liftKeys = Object.keys(results.lifts);
 
-                            for (let i = 0; i < allowedExercises.length; i++) {
-                                if (liftKeys.includes(allowedExercises[i])) {
+                            for (let i = 0; i < allowedLifts.length; i++) {
+                                if (liftKeys.includes(allowedLifts[i])) {
                                 } else {
-                                    liftsLeft.push(allowedExercises[i]);
+                                    liftsLeft.push(allowedLifts[i]);
                                 }
                             }
 
                             const goalKeys = Object.keys(results.goals);
 
-                            for (let i = 0; i < allowedExercises.length; i++) {
-                                if (goalKeys.includes(allowedExercises[i])) {
+                            for (let i = 0; i < allowedGoals.length; i++) {
+                                if (goalKeys.includes(allowedGoals[i])) {
                                 } else {
-                                    goalsLeft.push(allowedExercises[i]);
+                                    goalsLeft.push(allowedGoals[i]);
                                 }
                             }
 
@@ -596,6 +597,55 @@ class StorageHandler {
                 results = true;
 
             }
+
+            client.end();
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+
+        return results;
+    }
+
+    //
+
+    //  -------------------------------  delete lift or goal  ------------------------------- //
+
+    async deleteLiftOrGoal(username, exercise, type) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+
+        try {
+            await client.connect();
+
+            if (type === "lift") {
+
+                results = await client.query('SELECT "lifts" FROM "users" WHERE username=$1', [username]);
+
+                const updatedLifts = results.rows[0].lifts;
+                delete updatedLifts[exercise];
+
+                await client.query('UPDATE "users" SET lifts=$1 WHERE username=$2', [updatedLifts, username]);
+
+                results = true;
+
+            } else if (type === "goal") {
+
+                results = await client.query('SELECT "goals" FROM "users" WHERE username=$1', [username]);
+
+                const updatedGoals = results.rows[0].goals;
+                delete updatedGoals[exercise];
+
+                await client.query('UPDATE "users" SET goals=$1 WHERE username=$2', [updatedGoals, username]);
+
+                results = true;
+
+            }
+
 
             client.end();
 

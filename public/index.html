@@ -59,57 +59,87 @@
 
    <div id="createNewLiftorGoalOverlay" style="display: none;" class="overlay">
       <div id="createNewLiftorGoal" class="createNewLiftorGoal">
-         <div id="Gtitle1">
-            <p id="title1"></p>
+         <div id="Gtitle1C">
+            <p id="title1C"></p>
          </div>
-         <div id="Gline1">
-            <hr id="line1">
+         <div id="Gline1C">
+            <hr id="line1C">
          </div>
-
-
-         <div id="Gtitle2">
-            <p id="title2">Øvelse</p>
+         <div id="Gtitle2C">
+            <p id="title2C">Øvelse</p>
          </div>
-         <div id="Gline2">
-            <hr id="line2">
+         <div id="Gline2C">
+            <hr id="line2C">
          </div>
-         <div id="Ginp1">
-            <select id="inp1">
-               <option value="test">Test</option>
+         <div id="Ginp1C">
+            <select id="inp1C">
             </select>
          </div>
+         <div id="Gtitle3C">
+            <p id="title3C">Antall KG</p>
+         </div>
+         <div id="Gline3C">
+            <hr id="line3C">
+         </div>
+         <div id="Ginp2C">
+            <input id="inp2C" type="text" onkeypress="return onlyAllowedKeys(event,'create')"></input>
+         </div>
+         <div id="Gtitle4C">
+            <p id="title4C">Dato</p>
+         </div>
+         <div id="Gline4C">
+            <hr id="line4C">
+         </div>
+         <div id="Ginp3C">
+            <input id="inp3C" type="date"></input>
+         </div>
+         <div id="GrespC">
+            <p id="respC"></p>
+         </div>
+         <div id="GcancelC">
+            <button id="cancelC" onclick="disableOverlay('create');">Avbryt</button>
+         </div>
+         <div id="GsaveC">
+         </div>
+      </div>
+   </div>
 
-         <div id="Gtitle3">
-            <p id="title3">Antall KG</p>
+   <div id="editLiftorGoalOverlay" style="display: none;" class="overlay">
+      <div id="editLiftorGoal" class="editLiftorGoal">
+         <div id="Gtitle1E">
+            <p id="title1E"></p>
          </div>
-         <div id="Gline3">
-            <hr id="line3">
+         <div id="Gline1E">
+            <hr id="line1E">
          </div>
-         <div id="Ginp2">
-            <input id="inp2" type="text" onkeypress="return onlyAllowedKeys(event)"></input>
+         <div id="Gtitle2E">
+            <p id="title2E">Antall KG</p>
          </div>
-
-         <div id="Gtitle4">
-            <p id="title4">Dato</p>
+         <div id="Gline2E">
+            <hr id="line2E">
          </div>
-         <div id="Gline4">
-            <hr id="line4">
+         <div id="Ginp1E">
+            <input id="inp1E" type="text" onkeypress="return onlyAllowedKeys(event,'edit')"></input>
          </div>
-         <div id="Ginp3">
-            <input id="inp3" type="date"></input>
+         <div id="Gtitle3E">
+            <p id="title3E">Dato</p>
          </div>
-
-         <div id="Gresp">
-            <p id="resp"></p>
+         <div id="Gline3E">
+            <hr id="line3E">
          </div>
-
-         <div id="Gcancel">
-            <button id="cancel" onclick="disableOverlay();">Avbryt</button>
+         <div id="Ginp2E">
+            <input id="inp2E" type="date"></input>
          </div>
-
-         <div id="Gsave">
+         <div id="GdeleteE">
          </div>
-
+         <div id="GrespE">
+            <p id="respE"></p>
+         </div>
+         <div id="GcancelE">
+            <button id="cancelE" onclick="disableOverlay('edit');">Avbryt</button>
+         </div>
+         <div id="GsaveE">
+         </div>
       </div>
    </div>
 

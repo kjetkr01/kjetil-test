@@ -177,6 +177,9 @@ async function displayBadges() {
         const lifts = resp.info.lifts;
         const goals = resp.info.goals;
         goalsLeft = new TgoalsLeft(resp.info.goalsLeft);
+        if (resp.info.goals) {
+            goalsInfo = new Tlifts(resp.info.goals);
+        }
 
         const badgesTableRowDom = document.getElementById("badgesTableRow");
         badgesTableRowDom.innerHTML = "";

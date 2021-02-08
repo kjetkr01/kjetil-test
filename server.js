@@ -24,8 +24,10 @@ const updateUserSetting = require("./modules/user").updateUserSetting;
 const getListOfAllUsersWorkoutToday = require("./modules/user").getListOfAllUsersWorkoutToday;
 
 const saveLiftOrGoal = require("./modules/user").saveLiftOrGoal;
+const deleteLiftOrGoal = require("./modules/user").deleteLiftOrGoal;
 
-const allowedExercises = require("./exercisesList").allowedExercises;
+const allowedLifts = require("./arrayLists").allowedLifts;
+const allowedGoals = require("./arrayLists").allowedGoals;
 
 const createToken = require("./modules/token").createToken;
 
@@ -412,7 +414,7 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
 
 //
 
-// saver user lifts & goals
+// save user lifts & goals
 
 server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
 
@@ -423,14 +425,61 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
 
           let isValid = false;
 
-          for (let i = 0; i < allowedExercises.length; i++) {
-               if (info.exercise === allowedExercises[i]) {
+          for (let i = 0; i < allowedLifts.length; i++) {
+               if (info.exercise === allowedLifts[i]) {
                     isValid = true;
+               }
+          }
+
+          if (isValid === false) {
+               for (let i = 0; i < allowedGoals.length; i++) {
+                    if (info.exercise === allowedGoals[i]) {
+                         isValid = true;
+                    }
                }
           }
 
           if (isValid === true) {
                const saveLiftOrGoalResp = await saveLiftOrGoal(currentUser.username, info.exercise, info.kg, info.date, info.type);
+               res.status(200).json(saveLiftOrGoalResp).end();
+          } else {
+               res.status(403).json("invalid information").end();
+          }
+
+     } else {
+          res.status(403).json("invalid information").end();
+     }
+});
+
+//
+
+// delete user lifts & goals
+
+server.post("/user/delete/liftOrGoal/:info", auth, async (req, res) => {
+
+     const info = req.body.info;
+     const currentUser = JSON.parse(req.body.userInfo);
+
+     if (currentUser.username && info.exercise && info.type === "lift" || info.type === "goal") {
+
+          let isValid = false;
+
+          for (let i = 0; i < allowedLifts.length; i++) {
+               if (info.exercise === allowedLifts[i]) {
+                    isValid = true;
+               }
+          }
+
+          if (isValid === false) {
+               for (let i = 0; i < allowedGoals.length; i++) {
+                    if (info.exercise === allowedGoals[i]) {
+                         isValid = true;
+                    }
+               }
+          }
+
+          if (isValid === true) {
+               const saveLiftOrGoalResp = await deleteLiftOrGoal(currentUser.username, info.exercise, info.type);
                res.status(200).json(saveLiftOrGoalResp).end();
           } else {
                res.status(403).json("invalid information").end();

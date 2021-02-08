@@ -32,7 +32,7 @@ function getBadgeGoals(aSize, aBadgeInfo) {
 
         const badgeTemplate = `
 <td>
-<div id="badge1" class="bigBadges fadeInLeft animate ${aBadgeInfo.color || "redBadge"}">
+<div id="badge1" class="bigBadges fadeInLeft animate ${aBadgeInfo.color || "redBadge"}" onClick="enableOverlayEdit('goal', '${userBadgeInfo.exercise}');">
 
 
 
@@ -114,7 +114,7 @@ Nærmer deg!
 
         const badgeTemplate = `
 <td>
-<div id="badge1" class="smallBadges fadeInLeft animate ${aBadgeInfo.color || "redBadge"}">
+<div id="badge1" class="smallBadges fadeInLeft animate ${aBadgeInfo.color || "redBadge"}" onClick="enableOverlayEdit('goal', '${userBadgeInfo.exercise}');">
 
 <!--
 <div id="c1b"></div>
@@ -160,7 +160,7 @@ ${userBadgeInfo.msg}
 
         const badgeTemplate = `
 <td>
-<div id="badge1" class="smallBadges fadeInLeft animate emptyBadge" onClick="enableOverlay('goal')">
+<div id="badge1" class="smallBadges fadeInLeft animate emptyBadge" onClick="enableOverlayCreate('goal')">
 
 
 
@@ -241,7 +241,7 @@ function getBadgeLift(aSize, aBadgeInfo) {
 
         const badgeTemplate = `
 <td>
-<div id="badge1" class="bigBadges fadeInLeft animate ${aBadgeInfo.color || "redBadge"}">
+<div id="badge1" class="bigBadges fadeInLeft animate ${aBadgeInfo.color || "redBadge"}" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}');">
 
 
 
@@ -323,7 +323,7 @@ Nærmer deg!
 
         const badgeTemplate = `
 <td>
-<div id="badge1" class="smallBadges fadeInLeft animate ${aBadgeInfo.color || "redBadge"}">
+<div id="badge1" class="smallBadges fadeInLeft animate ${aBadgeInfo.color || "redBadge"}" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}');">
 
 <!--
 <div id="c1b"></div>
@@ -369,7 +369,7 @@ ${userBadgeInfo.msg}
 
         const badgeTemplate = `
 <td>
-<div id="badge1" class="smallBadges fadeInLeft animate emptyBadge" onClick="enableOverlay('lift')">
+<div id="badge1" class="smallBadges fadeInLeft animate emptyBadge" onClick="enableOverlayCreate('lift')">
 
 
 

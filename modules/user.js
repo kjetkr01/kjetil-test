@@ -138,6 +138,15 @@ async function saveLiftOrGoal(username, exercise, kg, date, type) {
     }
 }
 
+async function deleteLiftOrGoal(username, exercise, type) {
+    try {
+        const resp = await database.deleteLiftOrGoal(username, exercise, type);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 module.exports = User;
 module.exports.validateUser = validateUser;
 module.exports.getListOfUsers = getListOfUsers;
@@ -151,3 +160,4 @@ module.exports.getUserSettingsAndInfo = getUserSettingsAndInfo;
 module.exports.updateUserSetting = updateUserSetting;
 module.exports.getListOfAllUsersWorkoutToday = getListOfAllUsersWorkoutToday;
 module.exports.saveLiftOrGoal = saveLiftOrGoal;
+module.exports.deleteLiftOrGoal = deleteLiftOrGoal;
