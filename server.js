@@ -425,13 +425,16 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
      if (currentUser.username && info.exercise && info.kg && info.date && info.type === "lift" || info.type === "goal") {
 
           let isValid = false;
-          let colorID = 0;
-          const checkColor = parseInt(info.color);
 
-          if (checkColor < badgeColors.length) {
-               colorID = checkColor;
+          const badgeColorValues = Object.entries(badgeColors);
+
+          let color = badgeColorValues[0][0];
+
+          for (let i = 0; i < badgeColorValues.length; i++) {
+               if (info.color === badgeColorValues[i][0]) {
+                    color = badgeColorValues[i][0];
+               }
           }
-
 
           for (let i = 0; i < allowedLifts.length; i++) {
                if (info.exercise === allowedLifts[i]) {
@@ -448,7 +451,7 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
           }
 
           if (isValid === true) {
-               const saveLiftOrGoalResp = await saveLiftOrGoal(currentUser.username, info.exercise, info.kg, info.date, info.type, colorID);
+               const saveLiftOrGoalResp = await saveLiftOrGoal(currentUser.username, info.exercise, info.kg, info.date, info.type, color);
                res.status(200).json(saveLiftOrGoalResp).end();
           } else {
                res.status(403).json("invalid information").end();

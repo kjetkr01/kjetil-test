@@ -93,6 +93,7 @@ function enableOverlayEdit(aType, aExercise) {
         if (type === "lift" && liftsInfo) {
             const lifts = liftsInfo.info();
             const badgeColorsInfo = badgeColors.info();
+            const badgeColorsValues = Object.entries(badgeColorsInfo);
 
             if (lifts[exercise]) {
                 inp1.value = lifts[exercise].ORM;
@@ -100,8 +101,8 @@ function enableOverlayEdit(aType, aExercise) {
                 GdeleteE.innerHTML = `<button id="deleteE" onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift');">Slett løftet</button>`;
                 Gsave.innerHTML = `<button id="saveE" onclick="saveLiftOrGoal('lift','edit');">Lagre</button>`;
 
-                for (let i = 0; i < badgeColorsInfo.length; i++) {
-                    inp3.innerHTML += `<option value="${i}">${badgeColorsInfo[i]}`;
+                for (let i = 0; i < badgeColorsValues.length; i++) {
+                    inp3.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}`;
                 }
 
             } else {
@@ -113,6 +114,7 @@ function enableOverlayEdit(aType, aExercise) {
         } else if (type === "goal" && goalsInfo) {
             const goals = goalsInfo.info();
             const badgeColorsInfo = badgeColors.info();
+            const badgeColorsValues = Object.entries(badgeColorsInfo);
 
             if (goals[exercise]) {
                 inp1.value = goals[exercise].goal;
@@ -120,8 +122,8 @@ function enableOverlayEdit(aType, aExercise) {
                 GdeleteE.innerHTML = `<button id="deleteE" onclick="deleteLiftOrGoalConfirm('${exercise}', 'goal');">Slett målet</button>`;
                 Gsave.innerHTML = `<button id="saveE" onclick="saveLiftOrGoal('goal','edit');">Lagre</button>`;
 
-                for (let i = 0; i < badgeColorsInfo.length; i++) {
-                    inp3.innerHTML += `<option value="${i}">${badgeColorsInfo[i]}`;
+                for (let i = 0; i < badgeColorsValues.length; i++) {
+                    inp3.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}`;
                 }
 
             } else {

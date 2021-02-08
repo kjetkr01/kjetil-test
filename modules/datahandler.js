@@ -569,7 +569,7 @@ class StorageHandler {
 
     //  -------------------------------  save/update lift or goal  ------------------------------- //
 
-    async saveLiftOrGoal(username, exercise, kg, date, type, colorID) {
+    async saveLiftOrGoal(username, exercise, kg, date, type, color) {
 
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -582,7 +582,7 @@ class StorageHandler {
                 results = await client.query('SELECT "lifts" FROM "users" WHERE username=$1', [username]);
 
                 const updatedLifts = results.rows[0].lifts;
-                updatedLifts[exercise] = { "ORM": kg, "PRdate": date, "color": badgeColors[colorID] };
+                updatedLifts[exercise] = { "ORM": kg, "PRdate": date, "color": color };
 
                 await client.query('UPDATE "users" SET lifts=$1 WHERE username=$2', [updatedLifts, username]);
 
@@ -593,7 +593,8 @@ class StorageHandler {
                 results = await client.query('SELECT "goals" FROM "users" WHERE username=$1', [username]);
 
                 const updatedGoals = results.rows[0].goals;
-                updatedGoals[exercise] = { "goal": kg, "Goaldate": date, "color": badgeColors[colorID] };
+
+                updatedGoals[exercise] = { "goal": kg, "Goaldate": date, "color": color };
 
                 await client.query('UPDATE "users" SET goals=$1 WHERE username=$2', [updatedGoals, username]);
 
