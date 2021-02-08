@@ -19,8 +19,8 @@ top: 50%;
 left: 50%;
 transform: translate(-50%,-50%);
 -ms-transform: translate(-50%,-50%);
-width: 80%;
-height: 60%;
+width: 90%;
+height: 70%;
 overflow-y: scroll;
 
 background-color: var(--main-backgroundColor2);
@@ -118,6 +118,15 @@ grid-template-columns: /* bortover */
 
 /* elements */
 
+input { 
+    text-align: center;
+}
+
+select{
+    text-align: center;
+    text-align-last: center;
+}
+
 
 
 #Gtitle1C > #title1C {
@@ -162,7 +171,7 @@ font-size: 16px;
 
 background-color: rgb(212, 212, 212);
 border-radius: 4px;
-border: 1px solid black;
+border: transparent;
 }
 
 #inp1C, #inp2C, #inp3C {
@@ -316,8 +325,8 @@ top: 50%;
 left: 50%;
 transform: translate(-50%,-50%);
 -ms-transform: translate(-50%,-50%);
-width: 80%;
-height: 60%;
+width: 90%;
+height: 70%;
 overflow-y: scroll;
 
 background-color: var(--main-backgroundColor2);
@@ -396,7 +405,7 @@ auto /* Ginp3E */
 
 
 
-30px /* GrespE */
+30px /* GdeleteE */
 
 auto /* GrespE */
 
@@ -417,6 +426,15 @@ grid-template-columns: /* bortover */
 
 
 /* elements */
+
+input { 
+    text-align: center;
+}
+
+select{
+    text-align: center;
+    text-align-last: center;
+}
 
 
 
@@ -439,15 +457,15 @@ width: 75%;
 }
 
 #Ginp1E > #inp1E {
-width: 25%;
+    width: 25%;
 }
 
 #Ginp2E > #inp2E {
-width: 50%;
+    width: 40%;
 }
 
 #Ginp3E > #inp3E {
-    width: 50%;
+    width: 40%;
     }
 
 #GcancelE > #cancelE {
@@ -468,7 +486,7 @@ font-size: 16px;
 
 background-color: rgb(212, 212, 212);
 border-radius: 4px;
-border: 1px solid black;
+border: transparent;
 }
 
 #inp1E, #inp2E, #inp3E {

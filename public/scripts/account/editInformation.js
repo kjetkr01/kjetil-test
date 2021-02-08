@@ -14,12 +14,18 @@ function enableOverlayCreate(aType) {
 
         const createNewLiftorGoalOverlay = document.getElementById("createNewLiftorGoalOverlay");
 
+        const today = new Date().toISOString().substr(0, 10) || null;
+
         title1.innerHTML = "";
         inp1.innerHTML = "";
         inp2.value = "";
         inp3.value = "";
         Gsave.innerHTML = "";
         respMsg.innerHTML = "";
+
+        if (today) {
+            inp3.value = today;
+        }
 
         if (type === "lift" && liftsLeft) {
             title1.textContent = "Legg til nytt løft";
@@ -92,7 +98,7 @@ function enableOverlayEdit(aType, aExercise) {
                 inp1.value = lifts[exercise].ORM;
                 inp2.value = lifts[exercise].PRdate;
                 GdeleteE.innerHTML = `<button id="deleteE" onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift');">Slett løftet</button>`;
-                Gsave.innerHTML = `<button id="saveC" onclick="saveLiftOrGoal('lift','edit');">Lagre</button>`;
+                Gsave.innerHTML = `<button id="saveE" onclick="saveLiftOrGoal('lift','edit');">Lagre</button>`;
 
                 for (let i = 0; i < badgeColorsInfo.length; i++) {
                     inp3.innerHTML += `<option value="${i}">${badgeColorsInfo[i]}`;
@@ -112,7 +118,7 @@ function enableOverlayEdit(aType, aExercise) {
                 inp1.value = goals[exercise].goal;
                 inp2.value = goals[exercise].Goaldate;
                 GdeleteE.innerHTML = `<button id="deleteE" onclick="deleteLiftOrGoalConfirm('${exercise}', 'goal');">Slett målet</button>`;
-                Gsave.innerHTML = `<button id="saveC" onclick="saveLiftOrGoal('goal','edit');">Lagre</button>`;
+                Gsave.innerHTML = `<button id="saveE" onclick="saveLiftOrGoal('goal','edit');">Lagre</button>`;
 
                 for (let i = 0; i < badgeColorsInfo.length; i++) {
                     inp3.innerHTML += `<option value="${i}">${badgeColorsInfo[i]}`;
