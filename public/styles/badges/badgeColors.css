@@ -10,9 +10,9 @@ box-shadow: var(--bsSize) rgba(151,47,47, 0.4);
 }
 
 .yellowBadgeG {
-    background: linear-gradient(to right bottom, #DBB331, #C96E4C);
-    box-shadow: var(--bsSize) rgba(201,110,76, 0.4);
-    }
+background: linear-gradient(to right bottom, #DBB331, #C96E4C);
+box-shadow: var(--bsSize) rgba(201,110,76, 0.4);
+}
 
 .blueBadgeG {
 background: linear-gradient(to right bottom, #626BE3, #2B2379);
@@ -30,9 +30,9 @@ box-shadow: var(--bsSize) rgba(227,98,98, 0.4);
 }
 
 .yellowBadge {
-    background-color: #DBB331;
-    box-shadow: var(--bsSize) rgba(219,179,49, 0.4);
-    }
+background-color: #DBB331;
+box-shadow: var(--bsSize) rgba(219,179,49, 0.4);
+}
 
 .blueBadge {
 background-color: #626BE3;

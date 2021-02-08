@@ -48,9 +48,9 @@ async function getListOfUsers() {
     }
 }
 
-async function getListOfLeaderboardsUsers(numbersOnly) {
+async function getListOfLeaderboardsUsers() {
     try {
-        const resp = await database.getListOfLeaderboardsUsers(numbersOnly);
+        const resp = await database.getListOfLeaderboardsUsers();
         return resp;
     } catch (error) {
         console.error(error);

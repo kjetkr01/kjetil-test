@@ -5,7 +5,6 @@ module.exports.allowedLifts = ["Benkpress", "Knebøy", "Markløft", "Skulderpres
 module.exports.allowedGoals = ["Benkpress", "Knebøy", "Markløft", "Skulderpress"];
 
 //badgeColors
-//module.exports.badgeColors = ["redBadge", "blueBadge", "yellowBadge"];
 const gradientTxt = "(gradient)";
 module.exports.badgeColors = {
     "redBadgeG": `Rød ${gradientTxt}`, "yellowBadgeG": `Gul ${gradientTxt}`, "blueBadgeG": `Blå ${gradientTxt}`,

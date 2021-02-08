@@ -103,7 +103,7 @@ class StorageHandler {
 
     //  -------------------------------  get a list of all leaderboard users in application  ------------------------------- //
 
-    async getListOfLeaderboardsUsers(numbersOnly) {
+    async getListOfLeaderboardsUsers() {
         const client = new pg.Client(this.credentials);
         let results = null;
         try {
@@ -112,36 +112,28 @@ class StorageHandler {
 
             results = await client.query('SELECT "username","settings","lifts" FROM "public"."users"');
 
-            let counter = 1;
-            let leaderboardsCounter = 0;
-            let info = {};
             let leaderboardsArr = [];
 
             for (let i = 0; i < results.rows.length; i++) {
                 if (results.rows[i].settings.displayLeaderboards.value === true) {
-                    // evt legge til løft osv?
 
-                    let getLeaderboard = Object.keys(results.rows[i].lifts);
+                    const getLeaderboard = Object.keys(results.rows[i].lifts);
 
                     for (let j = 0; j < getLeaderboard.length; j++) {
-                        if (!leaderboardsArr.includes(getLeaderboard[leaderboardsCounter]) && getLeaderboard[leaderboardsCounter]) {
-                            leaderboardsArr.push(getLeaderboard[leaderboardsCounter]);
-                            leaderboardsCounter++;
+                        const isAllowedLift = allowedLifts.includes(getLeaderboard[j]);
+
+                        if (isAllowedLift === true) {
+                            if (!leaderboardsArr.includes(getLeaderboard[j]) && getLeaderboard[j]) {
+                                leaderboardsArr.push(getLeaderboard[j]);
+                            }
                         }
                     }
 
-                    leaderboardsCounter = 0;
 
-                    info[counter] = { "username": results.rows[i].username };
-                    counter++;
                 }
             }
 
-            if (numbersOnly === true) {
-                results = Object.entries(info).length;
-            } else {
-                results = leaderboardsArr;
-            }
+            results = leaderboardsArr;
 
             client.end();
         } catch (err) {

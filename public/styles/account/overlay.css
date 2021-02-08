@@ -159,8 +159,8 @@ width: fit-content;
 }
 
 #GrespC > #respC {
-    margin: 20px;
-    font-size: 16px;
+margin: 20px;
+font-size: 16px;
 }
 
 #GcancelC > #cancelC {
@@ -489,8 +489,8 @@ color:red;
 }
 
 #GrespE > #respE {
-    margin: 20px;
-    font-size: 16px;
+margin: 20px;
+font-size: 16px;
 }
 
 #deleteE, #cancelE, #saveE {
@@ -537,7 +537,7 @@ font-size: 18px;
 font-family: var(--main-font-Family-Verdana);
 font-weight: bold;
 }
-    
+
 
 #line1E, #line2E, #line3E, #line4E {
 text-align: center;

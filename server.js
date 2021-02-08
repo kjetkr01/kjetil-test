@@ -166,13 +166,7 @@ server.post("/users/list/all", auth, async (req, res) => {
 
 server.post("/users/list/all/leaderboards", auth, async (req, res) => {
 
-     let numbersOnly = false;
-
-     if (req.body.numbersOnly && req.body.numbersOnly === true) {
-          numbersOnly = true;
-     }
-
-     const listOfLeaderboardsUsers = await getListOfLeaderboardsUsers(numbersOnly);
+     const listOfLeaderboardsUsers = await getListOfLeaderboardsUsers();
 
      if (listOfLeaderboardsUsers) {
 
