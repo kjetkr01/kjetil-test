@@ -24,7 +24,6 @@ function enableOverlayCreate(aType) {
         if (type === "lift" && liftsLeft) {
             title1.textContent = "Legg til nytt løft";
             const liftsLeftInfo = liftsLeft.info();
-            const badgeColorsInfo = badgeColors.info();
 
             if (liftsLeftInfo.length > 0) {
                 for (let i = 0; i < liftsLeftInfo.length; i++) {
@@ -38,7 +37,6 @@ function enableOverlayCreate(aType) {
         } else if (type === "goal" && goalsLeft) {
             title1.textContent = "Legg til nytt mål";
             const goalsLeftInfo = goalsLeft.info();
-            const badgeColorsInfo = badgeColors.info();
 
             if (goalsLeftInfo.length > 0) {
                 for (let i = 0; i < goalsLeftInfo.length; i++) {
@@ -65,6 +63,7 @@ function enableOverlayEdit(aType, aExercise) {
         const title1 = document.getElementById("title1E");
         const inp1 = document.getElementById("inp1E");
         const inp2 = document.getElementById("inp2E");
+        const inp3 = document.getElementById("inp3E");
         const GdeleteE = document.getElementById("GdeleteE");
         const Gsave = document.getElementById("GsaveE");
         const respMsg = document.getElementById("respE");
@@ -81,6 +80,7 @@ function enableOverlayEdit(aType, aExercise) {
 
         inp1.value = "";
         inp2.value = "";
+        inp3.innerHTML = "";
         Gsave.innerHTML = "";
         respMsg.innerHTML = "";
 
@@ -91,8 +91,13 @@ function enableOverlayEdit(aType, aExercise) {
             if (lifts[exercise]) {
                 inp1.value = lifts[exercise].ORM;
                 inp2.value = lifts[exercise].PRdate;
-                GdeleteE.innerHTML = `<button id="deleteE" onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift');">Slett</button>`;
+                GdeleteE.innerHTML = `<button id="deleteE" onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift');">Slett løftet</button>`;
                 Gsave.innerHTML = `<button id="saveC" onclick="saveLiftOrGoal('lift','edit');">Lagre</button>`;
+
+                for (let i = 0; i < badgeColorsInfo.length; i++) {
+                    inp3.innerHTML += `<option value="${i}">${badgeColorsInfo[i]}`;
+                }
+
             } else {
                 alert("Det har oppstått et problem!");
             }
@@ -106,8 +111,13 @@ function enableOverlayEdit(aType, aExercise) {
             if (goals[exercise]) {
                 inp1.value = goals[exercise].goal;
                 inp2.value = goals[exercise].Goaldate;
-                GdeleteE.innerHTML = `<button id="deleteE" onclick="deleteLiftOrGoalConfirm('${exercise}', 'goal');">Slett</button>`;
+                GdeleteE.innerHTML = `<button id="deleteE" onclick="deleteLiftOrGoalConfirm('${exercise}', 'goal');">Slett målet</button>`;
                 Gsave.innerHTML = `<button id="saveC" onclick="saveLiftOrGoal('goal','edit');">Lagre</button>`;
+
+                for (let i = 0; i < badgeColorsInfo.length; i++) {
+                    inp3.innerHTML += `<option value="${i}">${badgeColorsInfo[i]}`;
+                }
+
             } else {
                 alert("Det har oppstått et problem!");
             }
@@ -164,7 +174,7 @@ async function saveLiftOrGoal(aType, editOrCreate) {
 
     if (aType === "lift" || aType === "goal" && editOrCreate === "edit" || editOrCreate === "create") {
 
-        let respMsg = null, inp1 = null, inp2 = null, inp3 = null;
+        let respMsg = null, inp1 = null, inp2 = null, inp3 = null, color = 0;
 
         if (editOrCreate === "create") {
             respMsg = document.getElementById("respC");
@@ -180,9 +190,10 @@ async function saveLiftOrGoal(aType, editOrCreate) {
             inp1 = document.getElementById("title1E").value;
             inp2 = document.getElementById("inp1E").value;
             inp3 = document.getElementById("inp2E").value;
+            color = document.getElementById("inp3E").value;
         }
 
-        const validateInfo = validateLiftOrGoal(inp1, inp2, inp3, aType);
+        const validateInfo = validateLiftOrGoal(inp1, inp2, inp3, aType, color);
 
         if (validateInfo.isValid === true && validateInfo.info) {
             respMsg.textContent = "Lagrer...";
@@ -212,7 +223,7 @@ async function saveLiftOrGoal(aType, editOrCreate) {
     }
 }
 
-function validateLiftOrGoal(aInp1, aInp2, aInp3, aType) {
+function validateLiftOrGoal(aInp1, aInp2, aInp3, aType, aColor) {
 
     let isValid = false;
     let msg = "Vennligst fyll ut alle feltene!";
@@ -224,6 +235,7 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aType) {
         const input2 = aInp2;
         const input3 = aInp3;
         const type = aType;
+        const color = aColor;
 
         const onlyNumbers = /^[0-9.]+$/;
 
@@ -243,7 +255,7 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aType) {
             return { "isValid": isValid, "msg": msg };
         }
 
-        info = { "exercise": input1, "kg": input2, "date": input3, "type": type };
+        info = { "exercise": input1, "kg": input2, "date": input3, "type": type, "color": color };
 
         isValid = true;
 

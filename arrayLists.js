@@ -5,4 +5,5 @@ module.exports.allowedLifts = ["Benkpress", "Knebøy", "Markløft", "Skulderpres
 module.exports.allowedGoals = ["Benkpress", "Knebøy", "Markløft", "Skulderpress"];
 
 //badgeColors
-module.exports.badgeColors = ["redBadge", "greenBadge", "yellowBadge"];
+module.exports.badgeColors = ["redBadge", "blueBadge", "yellowBadge"];
+//styles/badges/badgeColors.css for reference

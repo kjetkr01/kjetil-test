@@ -426,9 +426,10 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
 
           let isValid = false;
           let colorID = 0;
+          const checkColor = parseInt(info.color);
 
-          if (colorID < badgeColors.length) {
-               colorID = 0;
+          if (checkColor < badgeColors.length) {
+               colorID = checkColor;
           }
 
 

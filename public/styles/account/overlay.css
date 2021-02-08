@@ -343,10 +343,15 @@ grid-template-areas:
 "Ginp2E Ginp2E Ginp2E"
 "c4oE c4oE c4oE"
 
+"Gtitle4E Gtitle4E Gtitle4E"
+"Gline4E Gline4E Gline4E"
+"Ginp3E Ginp3E Ginp3E"
+"c5oE c5oE c5oE"
+
 "GdeleteE GdeleteE GdeleteE"
 "GrespE GrespE GrespE"
-"GcancelE c5oE GsaveE"
-"c6oE c6oE c6oE"
+"GcancelE c6oE GsaveE"
+"c7oE c7oE c7oE"
 ;
 
 grid-template-rows: /* nedover */
@@ -377,7 +382,18 @@ auto /* Ginp1E */
 
 auto /* Ginp2E */
 
-1fr /* c4oE */
+4vh /* c4oE */
+
+
+
+25px /* Gtitle4E */
+
+10px /* Gline4E */
+
+auto /* Ginp3E */
+
+1fr /* c5oE */
+
 
 
 30px /* GrespE */
@@ -386,7 +402,7 @@ auto /* GrespE */
 
 30px /* GbuttonsE */
 
-2vh /* c6oE */
+2vh /* c7oE */
 
 ;
 
@@ -419,6 +435,9 @@ width: 75%;
 #Gline3E > #line3E {
 }
 
+#Gline4E > #line4E {
+}
+
 #Ginp1E > #inp1E {
 width: 25%;
 }
@@ -427,11 +446,14 @@ width: 25%;
 width: 50%;
 }
 
+#Ginp3E > #inp3E {
+    width: 50%;
+    }
+
 #GcancelE > #cancelE {
 }
 
 #GdeleteE > #deleteE {
-
 }
 
 #cancelE, #deleteE {
@@ -449,7 +471,7 @@ border-radius: 4px;
 border: 1px solid black;
 }
 
-#inp1E, #inp2E {
+#inp1E, #inp2E, #inp3E {
 color: var(--main-backgroundColor1);
 font-family: var(--main-font-Family-Verdana);
 font-size: 14px;
@@ -462,7 +484,7 @@ font-size: 14px;
 opacity: 85%;
 }
 
-#line2E, #line3E {
+#line2E, #line3E, #line4E {
 width: 40%;
 }
 
@@ -472,16 +494,19 @@ width: 40%;
 #Gtitle3E > #title3E {
 }
 
-#title2E, #title3E {
+#Gtitle4E > #title4E {
+}
+
+#title2E, #title3E, #title4E {
 font-size: 18px;
 }
 
-#title1E, #title2E, #title3E {
+#title1E, #title2E, #title3E, #title4 {
 font-family: var(--main-font-Family-Verdana);
 font-weight: bold;
 }
 
-#line1E, #line2E, #line3E {
+#line1E, #line2E, #line3E, #line4E {
 text-align: center;
 display: block;
 margin-left: auto;
@@ -549,6 +574,22 @@ grid-area: Ginp2E;
 grid-area: c4oE;
 }
 
+.editLiftorGoal > #Gtitle4E {
+    grid-area: Gtitle4E;
+    }
+    
+    .editLiftorGoal > #Gline4E {
+    grid-area: Gline4E;
+    }
+    
+    .editLiftorGoal > #Ginp3E {
+    grid-area: Ginp3E;
+    }
+    
+    .editLiftorGoal > #c5oE {
+    grid-area: c5oE;
+    }
+    
 .editLiftorGoal > #GdeleteE {
 grid-area: GdeleteE;
 }
@@ -561,16 +602,16 @@ grid-area: GrespE;
 grid-area: GcancelE;
 }
 
-.editLiftorGoal > #c5oE {
-grid-area: c5oE;
+.editLiftorGoal > #c6oE {
+grid-area: c6oE;
 }
 
 .editLiftorGoal > #GsaveE {
 grid-area: GsaveE;
 }
 
-.editLiftorGoal > #c6oE {
-grid-area: c6oE;
+.editLiftorGoal > #c7oE {
+grid-area: c7oE;
 }
 
 /* end of spacing & other */
