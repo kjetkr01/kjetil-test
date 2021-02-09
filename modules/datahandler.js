@@ -284,12 +284,14 @@ class StorageHandler {
                         if (newUserUsername && newUserPassword && newUserDisplayname) {
 
 
+                            // fikse sånn at name blir hentet fra en liste i arrayList.js? Slik at navn kan endres enkelt
                             const settings = {
                                 "publicProfile": { "name": "Offentlig profil", "value": true },
-                                "showGymCloseTime": { "name": "Vis åpningstider", "value": true },
-                                "preferredColorTheme": { "name": "Utseende", "value": "auto" },
                                 "displayLeaderboards": { "name": "Vis meg på ledertavler", "value": true },
                                 "displayWorkoutList": { "name": "Vis meg på 'hvem som trener i dag listen'", "value": true },
+                                "preferredColorTheme": { "name": "Utseende", "value": "auto" },
+                                "badgeSize": { "name": "Badge størrelse", "value": 0 },
+                                "badgeDetails": { "name": "Badge informasjon", "value": 0 },
                             };
 
                             const trainingSplit = {
@@ -304,7 +306,7 @@ class StorageHandler {
 
                             const lifts = {};
                             const goals = {};
-                            const info = { "gym": "", "age": 0, "height": 0, "weight": 0 };
+                            const info = { "height": 0, "age": 0, "weight": 0, "gym": "" };
 
                             await client.query('INSERT INTO "public"."users"("username", "password", "displayname", "settings", "trainingsplit", "lifts", "goals", "info", "isadmin") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;', [newUserUsername, newUserPassword, newUserDisplayname, settings, trainingSplit, lifts, goals, info, false]);
                             results = true;

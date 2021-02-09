@@ -132,124 +132,115 @@ function currentDayInfo() {
 
 }
 
-/*
-   const numb = document.getElementById("percentNum");
-   let counter = 0;
-   let max = 23;
- 
-   setInterval(() => {
-      if (counter === 100 || counter >= max) {
-         clearInterval();
-        
-      } else {
-         counter += 1;
-         numb.textContent = counter + "%";
-      }
-   }, 20);
-*/
+// requestAccountDetails
 
-async function displayBadges() {
+async function requestAccountDetails() {
+    const resp = await getAccountDetails(username);
 
-    let myUsername = JSON.parse(user);
-    myUsername = myUsername.username;
+    if (resp) {
+        if (resp.hasOwnProperty("info")) {
+            displayBadges(resp.info);
+            return;
+        }
+    }
+
+    //alert("Det har oppstått en feil!");
+    //redirectToFeed();
+}
+
+// end of requestAccountDetails
+
+async function displayBadges(aInfo) {
+
+    if (!aInfo) {
+        return;
+    }
+
+    const info = aInfo;
 
     const smallTitle = document.getElementById("smallTitle");
 
-    const body = { "authToken": token, "userInfo": user, "viewingUser": myUsername };
-    const url = `/users/details/${myUsername}`;
+    const size = 0;
 
-    const resp = await callServerAPI(body, url);
+    if (size === 1) {
+        document.getElementById("Gbadges").style.minHeight = "180px";
+    }
 
-    if (resp.info && resp.updatedUserObject) {
+    const lifts = info.lifts;
+    const goals = info.goals;
+    goalsLeft = new TgoalsLeft(info.goalsLeft);
+    if (info.goals) {
+        goalsInfo = new Tgoals(info.goals);
+        badgeColors = new TbadgeColors(info.badgeColors);
+    }
 
-        if (localStorage.getItem("user")) {
-            localStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
-        } else {
-            sessionStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
-        }
+    const badgesTableRowDom = document.getElementById("badgesTableRow");
+    badgesTableRowDom.innerHTML = "";
 
-        const size = 0;
+    if (Object.entries(goals).length > 0) {
 
-        if (size === 1) {
-            document.getElementById("Gbadges").style.minHeight = "180px";
-        }
+        const goalKeys = Object.keys(goals);
 
-        const lifts = resp.info.lifts;
-        const goals = resp.info.goals;
-        goalsLeft = new TgoalsLeft(resp.info.goalsLeft);
-        if (resp.info.goals) {
-            goalsInfo = new Tgoals(resp.info.goals);
-            badgeColors = new TbadgeColors(resp.info.badgeColors);
-        }
+        const arr = [];
+        let kgUntilGoal = 0, msg = "";
 
-        const badgesTableRowDom = document.getElementById("badgesTableRow");
-        badgesTableRowDom.innerHTML = "";
+        for (let i = 0; i < Object.entries(goals).length; i++) {
 
-        if (Object.entries(goals).length > 0) {
+            if (goalKeys[i]) {
 
-            const goalKeys = Object.keys(goals);
+                if (goals[goalKeys[i]].goal > 0) {
 
-            const arr = [];
-            let kgUntilGoal = 0, msg = "";
+                    const currentGoalPR = parseFloat(goals[goalKeys[i]].goal);
+                    let currentLiftPR = 0;
+                    const color = goals[goalKeys[i]].color || "redBadge";
 
-            for (let i = 0; i < Object.entries(goals).length; i++) {
-
-                if (goalKeys[i]) {
-
-                    if (goals[goalKeys[i]].goal > 0) {
-
-                        const currentGoalPR = parseFloat(goals[goalKeys[i]].goal);
-                        let currentLiftPR = 0;
-                        const color = goals[goalKeys[i]].color || "redBadge";
-
-                        if (lifts[goalKeys[i]]) {
-                            currentLiftPR = parseFloat(lifts[goalKeys[i]].ORM);
-                        }
-
-                        kgUntilGoal = currentGoalPR - currentLiftPR;
-
-                        if (kgUntilGoal <= 0) {
-                            msg = "Målet er nådd!";
-                        } else {
-                            msg = `${kgUntilGoal} kg igjen`;
-                        }
-
-                        arr.push({ "exercise": goalKeys[i], "kg": currentGoalPR, "kgLeft": kgUntilGoal, "msg": msg, "color": color });
+                    if (lifts[goalKeys[i]]) {
+                        currentLiftPR = parseFloat(lifts[goalKeys[i]].ORM);
                     }
-                }
 
-            }
+                    kgUntilGoal = currentGoalPR - currentLiftPR;
 
-            arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
+                    if (kgUntilGoal <= 0) {
+                        msg = "Målet er nådd!";
+                    } else {
+                        msg = `${kgUntilGoal} kg igjen`;
+                    }
 
-            smallTitle.textContent = "Din fremgang";
-
-            for (let i = 0; i < arr.length; i++) {
-
-                const badge = getBadgeGoals(size, arr[i]);
-
-                if (badge) {
-                    badgesTableRowDom.innerHTML += badge;
+                    arr.push({ "exercise": goalKeys[i], "kg": currentGoalPR, "kgLeft": kgUntilGoal, "msg": msg, "color": color });
                 }
             }
 
-            if (resp.info.goalsLeft.length > 0 === true || Object.entries(goals).length === 0) {
+        }
 
-                const badge = getBadgeGoals();
+        arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
 
-                if (badge) {
-                    badgesTableRowDom.innerHTML += badge;
-                }
-            }
+        smallTitle.textContent = "Din fremgang";
 
-        } else {
-            const badge = getBadgeGoals();
+        for (let i = 0; i < arr.length; i++) {
 
-            smallTitle.textContent = "Du har ingen mål enda!";
+            const badge = getBadgeGoals(size, arr[i]);
 
             if (badge) {
-                badgesTableRowDom.innerHTML = badge;
+                badgesTableRowDom.innerHTML += badge;
             }
+        }
+
+        if (info.goalsLeft.length > 0 === true || Object.entries(goals).length === 0) {
+
+            const badge = getBadgeGoals();
+
+            if (badge) {
+                badgesTableRowDom.innerHTML += badge;
+            }
+        }
+
+    } else {
+        const badge = getBadgeGoals();
+
+        smallTitle.textContent = "Du har ingen mål enda!";
+
+        if (badge) {
+            badgesTableRowDom.innerHTML = badge;
         }
     }
 }

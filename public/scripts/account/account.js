@@ -1,34 +1,24 @@
-async function getUserDetails() {
+// requestAccountDetails
 
-    if (token && user) {
+async function requestAccountDetails() {
+    const resp = await getAccountDetails(username);
 
-        let myUsername = username;
-
-        isUpdatingUserObject = true;
-
-        const body = { "authToken": token, "userInfo": user, "viewingUser": myUsername };
-        const url = `/users/details/${myUsername}`;
-
-        const resp = await callServerAPI(body, url);
-
-        if (resp.info && resp.updatedUserObject) {
-
-            if (localStorage.getItem("user")) {
-                localStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
-            } else {
-                sessionStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
-            }
-
+    if (resp) {
+        if (resp.hasOwnProperty("info")) {
             displayInformation(resp.info);
-        } else {
-            alert("Det har oppstått en feil!");
-            redirectToFeed();
+            return;
         }
     }
+
+    //alert("Det har oppstått en feil!");
+    redirectToFeed();
 }
+
+// end of requestAccountDetails
 
 
 // displayInformation
+
 function displayInformation(respInfo) {
 
     if (!respInfo) {
@@ -132,8 +122,6 @@ function displayInformation(respInfo) {
 
                         if (prDateArr.length === 3) {
 
-                            //prDateArr[0] > 0 && prDateArr[0] <= 31 && prDateArr[0].length <= 2 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2 && prDateArr[2].length === 4
-                            //prDateArr[2].length === 4 && prDateArr[0] > 0 && prDateArr[0] <= 31 && prDateArr[0].length <= 2 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2
                             if (prDateArr[0].length === 4 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2 && prDateArr[2] > 0 && prDateArr[2] <= 31 && prDateArr[2].length <= 2) {
 
                                 const d = new Date();

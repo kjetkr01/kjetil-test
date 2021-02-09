@@ -21,16 +21,16 @@ if (user) {
 
         userDisplayname = JSON.parse(user);
 
-        if (!sessionStorage.getItem("updated")) {
+        /*if (!sessionStorage.getItem("updated")) {
             console.log("updating user object");
-            getUpdatedUserObject(false, userDisplayname.username);
+            getAccountDetails(userDisplayname.username);
             hasUpdatedInfo = true;
-        }
+        }*/
 
         username = userDisplayname.username;
 
-        showGymCloseTime = userDisplayname.showGymCloseTime;
-        preferredColorTheme = userDisplayname.preferredColorTheme;
+        //showGymCloseTime = userDisplayname.showGymCloseTime;
+        //preferredColorTheme = userDisplayname.preferredColorTheme;
 
         userDisplayname = userDisplayname.displayname;
 
@@ -143,12 +143,13 @@ async function callServerAPI(body, url) {
 let currentdID = "";
 let savedWidth = window.innerWidth;
 
+/*
 setInterval(() => {
     if (savedWidth !== window.innerWidth) {
         displayLinks(currentdID);
     }
-}, 100);
-
+}, 100);*/
+/*
 function displayLinks(dID) {
 
     if (dID) {
@@ -259,7 +260,7 @@ function displayLinks(dID) {
 
                 if (getCurrentPage) {
 
-                    /*
+                    
                     switch (getCurrentPage) {
                         case accessURL:
                             htmlInfo = `
@@ -280,7 +281,7 @@ function displayLinks(dID) {
                                 `;
                             break;
                     }
-                    */
+                    
 
                     if (window.innerWidth < 769) {
                         footermenu.innerHTML = document.title;
@@ -298,11 +299,11 @@ function displayLinks(dID) {
         }
     }
 }
-
+*/
 //
 
 // check color theme
-
+/*
 function checkColorTheme() {
     if (user) {
 
@@ -324,10 +325,11 @@ function checkColorTheme() {
         }, 100);
     }
 }
-
+*/
 //
 
 // get new updated user object
+/*
 async function getUpdatedUserObject(returnInfo, myUsername) {
 
     if (token && user && myUsername) {
@@ -367,6 +369,39 @@ async function getUpdatedUserObject(returnInfo, myUsername) {
         }
     }
 }
+*/
+//
+
+// get user/owner information
+async function getAccountDetails(aUser) {
+
+    if (token && user && aUser) {
+
+        const viewingUser = aUser;
+
+        const body = { "authToken": token, "userInfo": user, "viewingUser": viewingUser };
+        const url = `/users/details/${viewingUser}`;
+
+        const resp = await callServerAPI(body, url);
+
+        if (resp) {
+
+            if (resp.hasOwnProperty("updatedUserObject")) {
+                if (localStorage.getItem("user")) {
+                    localStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
+                } else {
+                    sessionStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
+                }
+            }
+
+            return resp;
+
+        }
+    }
+
+    //alert("Feil, prøv igjen");
+    //redirectToFeed();
+}
 
 //
 
@@ -401,8 +436,6 @@ function checkConnection(aDom) {
     }
 
 }
-
-
 
 //
 

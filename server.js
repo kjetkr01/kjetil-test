@@ -306,7 +306,7 @@ server.post("/users/details/:user", auth, async (req, res) => {
      username = JSON.parse(username);
      username = username.username;
 
-     const viewingUser = req.body.viewingUser
+     const viewingUser = req.body.viewingUser;
 
      if (username && viewingUser) {
 
@@ -321,7 +321,6 @@ server.post("/users/details/:user", auth, async (req, res) => {
                               "id": resp.userDetails.id,
                               "username": resp.userDetails.username,
                               "displayname": resp.userDetails.displayname,
-                              "showGymCloseTime": resp.userDetails.settings.showGymCloseTime.value,
                               "preferredColorTheme": resp.userDetails.settings.preferredColorTheme.value,
                          }
 
