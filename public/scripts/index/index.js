@@ -232,6 +232,16 @@ async function displayBadges() {
                     badgesTableRowDom.innerHTML += badge;
                 }
             }
+
+            if (resp.info.goalsLeft.length > 0 === true || Object.entries(goals).length === 0) {
+
+                const badge = getBadgeGoals();
+
+                if (badge) {
+                    badgesTableRowDom.innerHTML += badge;
+                }
+            }
+
         } else {
             const badge = getBadgeGoals();
 
