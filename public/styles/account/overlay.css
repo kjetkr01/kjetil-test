@@ -684,7 +684,7 @@ grid-template-rows: /* nedover */
 
 10px /* Gline1E */
 
-4vh /* c2oE */
+6vh /* c2oE */
 
 
 
@@ -736,13 +736,13 @@ width: 75%;
 font-size: 16px;
 }
 
-table {
+.daysTable {
 margin-left: auto;
 margin-right: auto;
 width: 40%;
 }
 
-td {
+.daysTabletd {
 width: 60%;
 }
 
