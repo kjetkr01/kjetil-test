@@ -671,8 +671,20 @@ class StorageHandler {
 
             const updatedTrainingDays = {};
 
-            for (let i = 0; i < trainingDays.length; i++) {
-                updatedTrainingDays[trainingDays[i]] = "";
+            if (trainingDays[0] !== "none") {
+
+                let checkTrainingDays = await client.query('SELECT trainingsplit FROM users WHERE username=$1', [username]);
+                checkTrainingDays = checkTrainingDays.rows[0].trainingsplit;
+                const trainingDaysKeys = Object.keys(checkTrainingDays);
+
+                for (let i = 0; i < trainingDays.length; i++) {
+                    if (trainingDaysKeys.includes(trainingDays[i])) {
+                        updatedTrainingDays[trainingDays[i]] = checkTrainingDays[trainingDays[i]];
+                    } else {
+                        updatedTrainingDays[trainingDays[i]] = "";
+                    }
+
+                }
             }
 
             await client.query('UPDATE "users" SET trainingsplit=$1 WHERE username=$2', [updatedTrainingDays, username]);

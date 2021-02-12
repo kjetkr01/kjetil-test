@@ -465,7 +465,11 @@ async function saveTrainingDays() {
         }
     }
 
-    if (trainingDays.length > 0) {
+    if (trainingDays.length === 0) {
+        trainingDays.push("none");
+    }
+
+    if (trainingDays.length <= allowedDays.length) {
 
         respMsg.textContent = "Lagrer...";
         const body = { "authToken": token, "userInfo": user, "trainingDays": trainingDays };

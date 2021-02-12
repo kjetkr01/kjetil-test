@@ -512,9 +512,12 @@ server.post("/user/update/trainingDays/:info", auth, async (req, res) => {
 
      let isNotValidCounter = 0;
 
-     for (let i = 0; i < trainingDays; i++) {
-          if (!allowedTrainingDays.includes(trainingDays[i])) {
-               isNotValidCounter++;
+     if (trainingDays[0] !== "none") {
+
+          for (let i = 0; i < trainingDays.length; i++) {
+               if (!allowedTrainingDays.includes(trainingDays[i])) {
+                    isNotValidCounter++;
+               }
           }
      }
 
