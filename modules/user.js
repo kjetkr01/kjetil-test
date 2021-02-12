@@ -147,6 +147,15 @@ async function deleteLiftOrGoal(username, exercise, type) {
     }
 }
 
+async function updateTrainingDays(trainingDays, username) {
+    try {
+        const resp = await database.updateTrainingDays(trainingDays, username);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 module.exports = User;
 module.exports.validateUser = validateUser;
 module.exports.getListOfUsers = getListOfUsers;
@@ -161,3 +170,4 @@ module.exports.updateUserSetting = updateUserSetting;
 module.exports.getListOfAllUsersWorkoutToday = getListOfAllUsersWorkoutToday;
 module.exports.saveLiftOrGoal = saveLiftOrGoal;
 module.exports.deleteLiftOrGoal = deleteLiftOrGoal;
+module.exports.updateTrainingDays = updateTrainingDays;

@@ -72,7 +72,7 @@
             <hr id="line2C">
          </div>
          <div id="Ginp1C">
-            <select id="inp1C">
+            <select id="inp1C" class="selectLiftOrGoal">
             </select>
          </div>
          <div id="Gtitle3C">
@@ -82,7 +82,7 @@
             <hr id="line3C">
          </div>
          <div id="Ginp2C">
-            <input id="inp2C" type="text" onkeypress="return onlyAllowedKeys(event,'create')"
+            <input id="inp2C" class="inputLiftOrGoal" type="text" onkeypress="return onlyAllowedKeys(event,'create')"
                placeholder="Eks: 35.25"></input>
          </div>
          <div id="Gtitle4C">
@@ -92,13 +92,13 @@
             <hr id="line4C">
          </div>
          <div id="Ginp3C">
-            <input id="inp3C" type="date"></input>
+            <input id="inp3C" class="inputLiftOrGoal" type="date"></input>
          </div>
          <div id="GrespC">
             <p id="respC"></p>
          </div>
          <div id="GcancelC">
-            <button id="cancelC" onclick="disableOverlay('create');">Avbryt</button>
+            <button id="cancelC" onclick="disableOverlay('createLiftOrGoal');">Avbryt</button>
          </div>
          <div id="GsaveC">
          </div>
@@ -120,7 +120,7 @@
             <hr id="line2E">
          </div>
          <div id="Ginp1E">
-            <input id="inp1E" type="text" onkeypress="return onlyAllowedKeys(event,'edit')"
+            <input id="inp1E" class="inputLiftOrGoal" type="text" onkeypress="return onlyAllowedKeys(event,'edit')"
                placeholder="Eks: 35.25"></input>
          </div>
          <div id="Gtitle3E">
@@ -130,7 +130,7 @@
             <hr id="line3E">
          </div>
          <div id="Ginp2E">
-            <input id="inp2E" type="date"></input>
+            <input id="inp2E" class="inputLiftOrGoal" type="date"></input>
          </div>
          <div id="Gtitle4E">
             <p id="title4E">Farge</p>
@@ -139,7 +139,7 @@
             <hr id="line4E">
          </div>
          <div id="Ginp3E">
-            <select id="inp3E"></select>
+            <select id="inp3E" class="selectLiftOrGoal"></select>
          </div>
          <div id="GdeleteE">
          </div>
@@ -147,7 +147,7 @@
             <p id="respE"></p>
          </div>
          <div id="GcancelE">
-            <button id="cancelE" onclick="disableOverlay('edit');">Avbryt</button>
+            <button id="cancelE" onclick="disableOverlay('editLiftOrGoal');">Avbryt</button>
          </div>
          <div id="GsaveE">
          </div>

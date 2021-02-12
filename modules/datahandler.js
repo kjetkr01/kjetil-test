@@ -659,6 +659,37 @@ class StorageHandler {
 
     //
 
+    //  -------------------------------  update trainingDays (user)  ------------------------------- //
+
+    async updateTrainingDays(trainingDays, username) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+
+        try {
+            await client.connect();
+
+            const updatedTrainingDays = {};
+
+            for (let i = 0; i < trainingDays.length; i++) {
+                updatedTrainingDays[trainingDays[i]] = "";
+            }
+
+            await client.query('UPDATE "users" SET trainingsplit=$1 WHERE username=$2', [updatedTrainingDays, username]);
+
+            results = true;
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return results;
+    }
+
+    //
+
     // api only calls
 
     //  -------------------------------  getWorkoutPlanAPI  ------------------------------- //

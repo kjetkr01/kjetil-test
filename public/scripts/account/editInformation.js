@@ -1,4 +1,4 @@
-let liftsLeft = null, goalsLeft = null, liftsInfo = null, goalsInfo = null, badgeColors = null;
+let liftsLeft = null, goalsLeft = null, liftsInfo = null, goalsInfo = null, badgeColors = null, traningsplitInfo = null;
 
 function enableOverlayCreate(aType) {
 
@@ -182,6 +182,14 @@ function TbadgeColors(aBadgeColors) {
 
     this.info = function () {
         return badgeColors;
+    }
+}
+
+function Ttrainingsplit(aTrainingsplit) {
+    const trainingsplit = aTrainingsplit;
+
+    this.info = function () {
+        return trainingsplit;
     }
 }
 
@@ -382,13 +390,104 @@ function onlyAllowedKeys(evt, editOrCreate) {
 }
 
 
-function disableOverlay(aEditOrCreate) {
+function disableOverlay() {
 
-    if (aEditOrCreate === "create") {
-        document.getElementById("createNewLiftorGoalOverlay").style.display = "none";
+    const createNewLiftorGoalOverlay = document.getElementById("createNewLiftorGoalOverlay");
+    const editLiftorGoalOverlay = document.getElementById("editLiftorGoalOverlay");
+    const editDaysOverlay = document.getElementById("editDaysOverlay");
+
+    if (createNewLiftorGoalOverlay) {
+        createNewLiftorGoalOverlay.style.display = "none";
     }
 
-    if (aEditOrCreate === "edit") {
-        document.getElementById("editLiftorGoalOverlay").style.display = "none";
+    if (editLiftorGoalOverlay) {
+        editLiftorGoalOverlay.style.display = "none";
+    }
+
+    if (editDaysOverlay) {
+        editDaysOverlay.style.display = "none";
     }
 }
+
+
+const allowedDays = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"];
+
+// enableOverlayEditDays
+
+function enableOverlayEditDays() {
+
+    const respMsg = document.getElementById("respEditDays");
+
+    respMsg.textContent = "";
+
+    for (let i = 0; i < allowedDays.length; i++) {
+        if (document.getElementById(allowedDays[i])) {
+            document.getElementById(allowedDays[i]).checked = false;
+        }
+    }
+
+    if (traningsplitInfo) {
+        const trainingsplitInformation = traningsplitInfo.info();
+
+        const trainingsplitKeys = Object.keys(trainingsplitInformation);
+
+        for (let i = 0; i < trainingsplitKeys.length; i++) {
+            const current = trainingsplitKeys[i];
+            if (allowedDays.includes(current)) {
+                if (document.getElementById(current)) {
+                    document.getElementById(current).checked = true;
+                }
+            }
+        }
+    }
+
+    document.getElementById("editDaysOverlay").style.display = "block";
+
+}
+
+// end of enableOverlayEditDays
+
+
+// saveTrainingDays
+
+async function saveTrainingDays() {
+
+    const respMsg = document.getElementById("respEditDays");
+    respMsg.textContent = "";
+
+    const trainingDays = [];
+
+    for (let i = 0; i < allowedDays.length; i++) {
+        if (document.getElementById(allowedDays[i])) {
+            if (document.getElementById(allowedDays[i]).checked === true) {
+                trainingDays.push(allowedDays[i]);
+            }
+        }
+    }
+
+    if (trainingDays.length > 0) {
+
+        respMsg.textContent = "Lagrer...";
+        const body = { "authToken": token, "userInfo": user, "trainingDays": trainingDays };
+        const url = `/user/update/trainingDays/${trainingDays}`;
+
+        const resp = await callServerAPI(body, url);
+
+        if (resp === true) {
+            respMsg.textContent = "Lagret!";
+            setTimeout(() => {
+                disableOverlay();
+            }, 1500);
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
+        } else {
+            respMsg.textContent = "Det har oppstått en feil!";
+        }
+
+    } else {
+        respMsg.textContent = "Velg minst 1 dag";
+    }
+}
+
+// end of saveTrainingDays

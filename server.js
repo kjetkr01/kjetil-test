@@ -25,10 +25,13 @@ const getListOfAllUsersWorkoutToday = require("./modules/user").getListOfAllUser
 
 const saveLiftOrGoal = require("./modules/user").saveLiftOrGoal;
 const deleteLiftOrGoal = require("./modules/user").deleteLiftOrGoal;
+const updateTrainingDays = require("./modules/user").updateTrainingDays;
 
 const allowedLifts = require("./arrayLists").allowedLifts;
 const allowedGoals = require("./arrayLists").allowedGoals;
 const badgeColors = require("./arrayLists").badgeColors;
+
+const allowedTrainingDays = require("./arrayLists").allowedTrainingDays;
 
 const createToken = require("./modules/token").createToken;
 
@@ -419,6 +422,8 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
 
           let isValid = false;
 
+          // fikse slik at den heller teller antall feil og om det er 0 feil, så fortsett!! sånn som i "/user/update/trainingDays/:info"
+
           const badgeColorValues = Object.entries(badgeColors);
 
           let color = badgeColorValues[0][0];
@@ -468,6 +473,8 @@ server.post("/user/delete/liftOrGoal/:info", auth, async (req, res) => {
 
           let isValid = false;
 
+          // fikse slik at den heller teller antall feil og om det er 0 feil, så fortsett!! sånn som i "/user/update/trainingDays/:info"
+
           for (let i = 0; i < allowedLifts.length; i++) {
                if (info.exercise === allowedLifts[i]) {
                     isValid = true;
@@ -492,6 +499,38 @@ server.post("/user/delete/liftOrGoal/:info", auth, async (req, res) => {
      } else {
           res.status(403).json("invalid information").end();
      }
+});
+
+//
+
+// update which days the user is training
+
+server.post("/user/update/trainingDays/:info", auth, async (req, res) => {
+
+     const trainingDays = req.body.trainingDays;
+     const currentUser = JSON.parse(req.body.userInfo);
+
+     let isNotValidCounter = 0;
+
+     for (let i = 0; i < trainingDays; i++) {
+          if (!allowedTrainingDays.includes(trainingDays[i])) {
+               isNotValidCounter++;
+          }
+     }
+
+     if (isNotValidCounter === 0) {
+          const resp = await updateTrainingDays(trainingDays, currentUser.username);
+
+          if (resp === true) {
+               res.status(200).json(true).end();
+          } else {
+               res.status(403).json("error, try again").end();
+          }
+
+     } else {
+          res.status(403).json("invalid information").end();
+     }
+
 });
 
 //

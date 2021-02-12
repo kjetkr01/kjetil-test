@@ -40,6 +40,8 @@ function displayInformation(respInfo) {
     liftsLeft = new TliftsLeft(info.liftsLeft);
     goalsLeft = new TgoalsLeft(info.goalsLeft);
 
+    traningsplitInfo = new Ttrainingsplit(info.trainingsplit);
+
     badgeColors = new TbadgeColors(info.badgeColors);
 
     const lifts = info.lifts;
@@ -357,10 +359,14 @@ Treningsplan
                     let programKeys = program[keys[i]];
                     const color = programKeys.color || "redBadgeG";
 
-                    if (programKeys !== "0" && programKeys !== 0 && programKeys !== "") {
-
-                        arr.push({ "day": keys[i], "trainingsplit": programKeys, "color": color });
+                    /*
+                    if (programKeys === "0" || programKeys === 0 || programKeys === "") {
+                        programKeys = "Fri";
                     }
+*/
+
+                    arr.push({ "day": keys[i], "trainingsplit": programKeys, "color": color });
+
                 }
 
                 if (arr.length > 0) {
