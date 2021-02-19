@@ -1,14 +1,14 @@
 :root {
---main-headerBackground:  #357F9B;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-headerBackground:  #535353;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-headerTextColor: white;
 --main-font-Family-Verdana: Verdana, Geneva, Tahoma, sans-serif;
 --main-font-Family-Arial: Arial, Helvetica, sans-serif;
 
---main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
---main-backgroundColor1: #357F9B;
+--main-bodyBackgroundColor: var(--main-headerBackground); /* #707070 */
+--main-backgroundColor1: #535353;
 --main-backgroundColor2: #F0F0F0;
 --main-backgroundColor3: #ffffff;
---main-boxShadow: 4px 4px rgba(53,127,155, 0.4);
+--main-boxShadow: 4px 4px rgba(83,83,83, 0.4);
 --main-textColorLight: white;
 --main-textColorDark: black;
 }

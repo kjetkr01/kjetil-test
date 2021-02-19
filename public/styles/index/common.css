@@ -53,7 +53,7 @@ background-color: var(--main-backgroundColor1);
 color: var(--main-textColorLight);
 border-radius: 8px;
 border: 1px var(--main-backgroundColor1) solid;
-box-shadow: 4px 4px rgba(53,127,155, 0.4);
+box-shadow: var(--main-boxShadow);
 
 height: 35px;
 width: fit-content;
