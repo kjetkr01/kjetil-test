@@ -1,0 +1,184 @@
+/* elements, grid and other for mobile */
+
+@media only screen and (max-width: 1024px) { /* 768px var før, men passer bedre med 1024px for ipad */
+
+/* grid */
+
+
+.userTable {
+display: grid;
+width: 100vw;
+grid-template-areas:
+
+"Glifts Glifts Glifts Glifts Glifts Glifts Glifts"
+"GlineLifts GlineLifts GlineLifts GlineLifts GlineLifts GlineLifts GlineLifts"
+"GbadgesLifts GbadgesLifts GbadgesLifts GbadgesLifts GbadgesLifts GbadgesLifts GbadgesLifts"
+"c8r1 c8r1 c8r1 c8r1 c8r1 c8r1 c8r1"
+
+"Ggoals Ggoals Ggoals Ggoals Ggoals Ggoals Ggoals"
+"GlineGoals GlineGoals GlineGoals GlineGoals GlineGoals GlineGoals GlineGoals"
+"GbadgesGoals GbadgesGoals GbadgesGoals GbadgesGoals GbadgesGoals GbadgesGoals GbadgesGoals"
+"c9r1 c9r1 c9r1 c9r1 c9r1 c9r1 c9r1"
+
+"Gtrainingsplit Gtrainingsplit Gtrainingsplit Gtrainingsplit Gtrainingsplit Gtrainingsplit Gtrainingsplit"
+"GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit"
+"GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit"
+"c10r1 c10r1 c10r1 c10r1 c10r1 c10r1 c10r1"
+;
+
+grid-template-rows: /* nedover */
+
+50px /* Glifts */
+
+15px /* GlineLifts */
+
+auto /* GbadgesLifts */
+
+30px /* c8r1 */
+
+
+50px /* Ggoals */
+
+15px /* GlineGoals */
+
+auto /* GbadgesGoals */
+
+30px /* c9r1 */
+
+
+50px /* Gtrainingsplit */
+
+15px /* GlineTrainingsplit */
+
+auto /* GbadgesTrainingsplit */
+
+30px /* c10r1 */
+;
+
+grid-template-columns: /* bortover */
+12vw 30px 1fr 30px 1fr 30px 12vw;
+}
+
+
+
+/* end of grid */
+
+
+
+/* elements */
+
+#Glifts > #lifts {
+}
+
+#GlineLifts > #lineLifts {
+}
+
+#GbadgesLifts > #badgesLifts {
+}
+
+#Ggoals > #goals {
+}
+
+#GlineGoals > #lineGoals {
+}
+
+#badgesGoals > #badgesGoals {
+}
+
+#Gtrainingsplit > #trainingsplit {
+}
+
+#GlineTrainingsplit > #lineTrainingsplit {
+}
+
+#GbadgesTrainingsplit > #badgesTrainingsplit {
+}
+
+#lineLifts, #lineGoals, #lineTrainingsplit {
+opacity: 40%;
+border: 1px #757575 thin;
+margin-top: 10px;
+margin-bottom: 10px;
+max-width: 90vw;
+text-align: center;
+display: block;
+margin-left: auto;
+margin-right: auto;
+}
+
+#badgesLifts, #badgesGoals, #badgesTrainingsplit {
+margin-left: 12px;
+margin-right: 12px;
+margin-bottom: 20px;
+}
+
+#lifts, #goals, #trainingsplit {
+font-size: 20px;
+margin-left: 20px;
+margin-right: 20px;
+color:var(--main-textColorDark);
+font-weight: bold;
+font-family: var(--main-font-Family-Verdana);
+}
+
+/* end of elements */
+
+
+
+/* spacing & other */
+
+.userTable > #Glifts {
+grid-area: Glifts;
+}
+
+.userTable > #GlineLifts {
+grid-area: GlineLifts;
+}
+
+.userTable > #GbadgesLifts {
+grid-area: GbadgesLifts;
+}
+
+.userTable > #c8r1 {
+grid-area: c8r1;
+}
+
+.userTable > #Ggoals {
+grid-area: Ggoals;
+}
+
+.userTable > #GlineGoals {
+grid-area: GlineGoals;
+}
+
+.userTable > #GbadgesGoals {
+grid-area: GbadgesGoals;
+}
+
+.userTable > #c9r1 {
+grid-area: c9r1;
+}
+
+.userTable > #Gtrainingsplit {
+grid-area: Gtrainingsplit;
+}
+
+.userTable > #GlineTrainingsplit {
+grid-area: GlineTrainingsplit;
+}
+
+.userTable > #GbadgesTrainingsplit {
+grid-area: GbadgesTrainingsplit;
+}
+
+.userTable > #c10r1 {
+grid-area: c10r1;
+}
+
+#GbadgesLifts, #GbadgesGoals, #GbadgesTrainingsplit {
+    overflow-x: scroll;
+}
+
+/* end of spacing & other */
+
+}

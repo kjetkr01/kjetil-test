@@ -45,14 +45,12 @@ if (user) {
 
 function lockBodyPosition() {
 
-    return;
-
     if (window.navigator.standalone === true) {
 
         if (document.body.classList !== "lockedBody") {
 
             document.body.classList.add("lockedBody");
-            
+
 
             window.addEventListener("scroll", (e) => {
 
@@ -104,7 +102,7 @@ function viewUser(viewUser) {
 
     if (viewUser) {
         sessionStorage.setItem("ViewingUser", viewUser);
-        //redirectToUser();
+        redirectToUser();
     }
 
 }

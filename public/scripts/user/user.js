@@ -1,17 +1,36 @@
 // requestAccountDetails
 
 async function requestAccountDetails() {
-    const resp = await getAccountDetails(username);
 
-    if (resp) {
-        if (resp.hasOwnProperty("info")) {
-            displayInformation(resp.info);
-            return;
+    const viewingUser = sessionStorage.getItem("ViewingUser");
+
+    if (viewingUser) {
+
+        document.title = `${viewingUser} sin profil`;
+
+        const resp = await getAccountDetails(viewingUser);
+
+        if (resp) {
+            if (resp.hasOwnProperty("info")) {
+                displayInformation(resp.info);
+                return;
+            } else if (resp.includes("sin profil er privat!") === true) {
+                alert(`${viewingUser} sin profil er privat!`);
+                window.history.back();
+            } else {
+                alert("Det har oppstått en feil!");
+                redirectToFeed();
+            }
+
+        } else {
+            alert("Det har oppstått en feil!");
+            redirectToFeed();
         }
-    }
 
-    alert("Det har oppstått en feil!");
-    redirectToFeed();
+    } else {
+        alert("Det har oppstått en feil!");
+        redirectToFeed();
+    }
 }
 
 // end of requestAccountDetails
@@ -32,13 +51,11 @@ function displayInformation(respInfo) {
     const size = 0;
 
     const displayname = info.displayname;
+    const firstName = displayname.split(" ");
     const gym = info.info.gym;
     const age = info.info.age;
     const height = info.info.height;
     const weight = info.info.weight;
-
-    liftsLeft = new TliftsLeft(info.liftsLeft);
-    goalsLeft = new TgoalsLeft(info.goalsLeft);
 
     traningsplitInfo = new Ttrainingsplit(info.trainingsplit);
 
@@ -84,24 +101,50 @@ function displayInformation(respInfo) {
         document.getElementById("infoList").textContent = "";
     }
 
-    if (lifts) {
-        liftsInfo = new Tlifts(info.lifts);
-        displayLifts(info.liftsLeft.length > 0);
-    }
 
-    if (goals) {
-        goalsInfo = new Tgoals(info.goals);
-        displayGoals(info.goalsLeft.length > 0);
-    }
+    if (!Object.entries(lifts).length > 0 && !Object.entries(goals).length > 0 && !Object.entries(program).length > 0) {
 
-    if (program) {
-        displayTrainingsplit();
+        userGrid.innerHTML = `
+<div id="Glifts">
+<p id="lifts" class="fadeIn animate delaySmall">
+${firstName[0]} har ingen løft, mål eller treningsplan
+</p>
+</div>
+
+<div id="GlineLifts">
+<hr id="lineLifts" class="fadeIn animate delayMedium">
+</div>
+
+<div id="GbadgesLifts">
+<table id="badgesLifts">
+<tr id="badgesLiftsTableRow">
+</tr>
+</table>
+</div>
+`;
+
+    } else {
+
+        if (lifts) {
+            liftsInfo = new Tlifts(info.lifts);
+            displayLifts();
+        }
+
+        if (goals) {
+            goalsInfo = new Tgoals(info.goals);
+            displayGoals();
+        }
+
+        if (program) {
+            displayTrainingsplit();
+        }
+
     }
 
 
     /// ------------ start of displayLifts --------------- ///
 
-    function displayLifts(hasLiftsLeft) {
+    function displayLifts() {
 
         if (Object.entries(lifts).length > 0) {
 
@@ -180,37 +223,7 @@ Løft (${arr.length})
                 }
 
             }
-        } else {
-            userGrid.innerHTML += `
-<div id="Glifts">
-<p id="lifts" class="fadeIn animate delaySmall">
-Løft
-</p>
-</div>
-
-<div id="GlineLifts">
-<hr id="lineLifts" class="fadeIn animate delayMedium">
-</div>
-
-<div id="GbadgesLifts">
-<table id="badgesLifts">
-<tr id="badgesLiftsTableRow">
-</tr>
-</table>
-</div>
-`;
-
         }
-
-        if (hasLiftsLeft === true || Object.entries(lifts).length === 0) {
-
-            const badge = getBadgeLift();
-
-            if (badge) {
-                document.getElementById("badgesLiftsTableRow").innerHTML += badge;
-            }
-        }
-
     }
 
     /// ------------ end of displayLifts --------------- ///
@@ -220,7 +233,7 @@ Løft
 
     /// ------------ start of displayGoals --------------- ///
 
-    function displayGoals(hasGoalsLeft) {
+    function displayGoals() {
 
         if (Object.entries(goals).length > 0) {
 
@@ -290,36 +303,7 @@ Mål (${arr.length})
                     }
                 }
             }
-        } else {
-            userGrid.innerHTML += `
-<div id="Ggoals">
-<p id="goals" class="fadeIn animate delaySmall">
-Mål
-</p>
-</div>
-
-<div id="GlineGoals">
-<hr id="lineGoals" class="fadeIn animate delayMedium">
-</div>
-
-<div id="GbadgesGoals">
-<table id="badgesGoals">
-<tr id="badgesGoalsTableRow">
-</tr>
-</table>
-</div>
-`;
         }
-
-        if (hasGoalsLeft === true || Object.entries(goals).length === 0) {
-
-            const badge = getBadgeGoals();
-
-            if (badge) {
-                document.getElementById("badgesGoalsTableRow").innerHTML += badge;
-            }
-        }
-
     }
 
     /// ------------ end of displayGoals --------------- ///
@@ -385,13 +369,6 @@ Treningsplan
                 }
             }
         }
-
-        const badge = getBadgeTrainingsplit();
-
-        if (badge) {
-            document.getElementById("badgesTrainingsplitTableRow").innerHTML += badge;
-        }
-
     }
 
     /// ------------ end of displayTrainingsplit --------------- ///

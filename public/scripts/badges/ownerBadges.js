@@ -115,15 +115,6 @@ Nærmer deg!
 <td>
 <div class="smallBadges fadeInLeft animate ${aBadgeInfo.color}" onClick="enableOverlayEdit('goal', '${userBadgeInfo.exercise}');">
 
-<!--
-<div id="c1b"></div>
-<div id="c2b"></div>
-<div id="c3b"></div>
-<div id="c4b"></div>
-<div id="c5b"></div>
-<div id="c6b"></div>
--->
-
 <div id="Gexercise">
 <p id="exercise">
 ${userBadgeInfo.exercise}

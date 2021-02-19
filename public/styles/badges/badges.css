@@ -3,7 +3,7 @@
 
 
 .bigBadges {
-color: var(--main-textColorLight);
+color: var(--main-textColorBadges);
 display: grid;
 margin-right: 10px;
 border-radius: 18px;
@@ -113,7 +113,7 @@ grid-area: c6b;
 
 
 .smallBadges {
-color: var(--main-textColorLight);
+color: var(--main-textColorBadges);
 display: grid;
 margin-right: 10px;
 border-radius: 18px;
@@ -194,7 +194,7 @@ grid-area: c4b;
 
 
 .smallBadgesTrainingsplit {
-color: var(--main-textColorLight);
+color: var(--main-textColorBadges);
 display: grid;
 margin-right: 10px;
 border-radius: 18px;

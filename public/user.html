@@ -2,7 +2,7 @@
 <html>
 
 <head>
-   <title>Min konto</title>
+   <title>Bruker</title>
 
    <meta charset="utf-8" />
 
@@ -35,20 +35,20 @@
    <link rel="stylesheet" href="styles/themes/default.css">
 
 
-   <link rel="stylesheet" href="styles/account/desktop.css">
-   <link rel="stylesheet" href="styles/account/mobile.css">
-   <link rel="stylesheet" href="styles/account/common.css">
-   <link rel="stylesheet" href="styles/account/overlay.css">
+   <link rel="stylesheet" href="styles/user/desktop.css">
+   <link rel="stylesheet" href="styles/user/mobile.css">
+   <link rel="stylesheet" href="styles/user/common.css">
+   <link rel="stylesheet" href="styles/user/overlay.css">
 
    <link rel="stylesheet" href="styles/badges/badges.css">
    <link rel="stylesheet" href="styles/badges/badgeColors.css">
-   <link rel="stylesheet" href="styles/account/userGrid.css">
+   <link rel="stylesheet" href="styles/user/userGrid.css">
    <!--<link rel="stylesheet" href="styles/index/progressbar.css">-->
 
    <script src="scripts/global.js" type="text/javascript"></script>
-   <script src="scripts/badges/ownerBadges.js" type="text/javascript"></script>
-   <script src="scripts/account/account.js" type="text/javascript"></script>
-   <script src="scripts/account/editInformation.js" type="text/javascript"></script>
+   <script src="scripts/badges/userBadges.js" type="text/javascript"></script>
+   <script src="scripts/user/user.js" type="text/javascript"></script>
+   <script src="scripts/user/editInformation.js" type="text/javascript"></script>
 
 </head>
 
@@ -252,12 +252,11 @@
       <div id="c3r1"></div>
       <div id="c4r1"></div>
 
-      <div id="c1r2"></div>
-      <div id="c2r2"></div>
-      <div id="c3r2"></div>
-      <div id="c4r2"></div>
-      <div id="c5r2"></div>
-      <div id="c6r2"></div>
+      <div id="GbackBtn">
+         <img id="backBtn" onclick="window.history.back();" draggable="false" class="icons fadeInLeft animate delaySmall" src="images/backIcon.svg"
+            alt="Tilbake">
+         </img>
+      </div>
 
       <div id="Gtitle">
          <p id="title" class="noselect fadeInLeft animate">
@@ -276,33 +275,9 @@
          </table>
       </div>
 
-      <div id="Gsettings">
-         <button id="settings" class="noselect settingsBtn">
-            Innstillinger
-         </button>
-      </div>
-
       <div id="GuserGrid" class="userGrid noselect">
          <div id="userGrid">
          </div>
-      </div>
-
-      <div id="Gfeed" class="noselect">
-         <img id="feed" onclick="redirectToFeed();" draggable="false" class="icons" src="images/feedIcon.svg"
-            alt="Feed">
-         </img>
-      </div>
-
-      <div id="Gleaderboards" class="noselect">
-         <img id="leaderboards" onclick="redirectToLeaderboards();" draggable="false" class="icons"
-            src="images/leaderboardsIcon.svg" alt="Leaderboards">
-         </img>
-      </div>
-
-      <div id="Gaccount" class="noselect">
-         <img id="account" onclick="redirectToAccount();" draggable="false" class="icons"
-            src="images/accountIconActive.svg" alt="Account">
-         </img>
       </div>
 
    </section>
