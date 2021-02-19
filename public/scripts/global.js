@@ -44,7 +44,22 @@ if (user) {
 //
 
 function lockBodyPosition() {
-    document.body.classList.add("lockedBody");
+
+    if (window.navigator.standalone === true) {
+
+        if (document.body.classList !== "lockedBody") {
+
+            document.body.classList.add("lockedBody");
+
+            window.addEventListener("scroll", (e) => {
+
+                e.preventDefault();
+                if (innerWidth <= 1024 && window.orientation === 0 && document.body.className === "lockedBody") {
+                    window.scrollTo(0, 0);
+                }
+            });
+        }
+    }
 }
 
 
@@ -56,14 +71,6 @@ function viewUser(viewUser) {
     }
 
 }
-
-window.addEventListener("scroll", (e) => {
-
-    e.preventDefault();
-    if (innerWidth <= 1024 && window.orientation === 0 && document.body.className === "lockedBody") {
-        window.scrollTo(0, 0);
-    }
-});
 
 //
 
@@ -151,76 +158,76 @@ setInterval(() => {
 }, 100);*/
 /*
 function displayLinks(dID) {
-
+ 
     if (dID) {
-
+ 
         const documentID = document.getElementById(dID);
-
+ 
         if (documentID) {
-
+ 
             savedWidth = window.innerWidth;
-
+ 
             currentdID = dID;
-
+ 
             let htmlInfo = "";
-
+ 
             const homeURL = "index.html", homeName = "Hjem";
             const leaderboardsURL = "leaderboards.html", leaderboardsName = "Ledertavler";
             const accountURL = "account.html", accountName = "Min Konto";
-
+ 
             const accessURL = "access.html", accessName = "Be om tilgang";
             const loginURL = "login.html", loginName = "Logg inn";
-
+ 
             const currentPageURL = window.location.href;
             const getCurrentPage = currentPageURL.split("/").pop();
-
+ 
             const footermenu = document.getElementById("footermenu");
-
+ 
             if (token && user) {
-
+ 
                 if (window.innerWidth < 769) {
-
+ 
                     let icon1Loaded = false;
                     let icon2Loaded = false;
                     let icon3Loaded = false;
-
+ 
                     const homeImg = new Image();
                     homeImg.src = "images/homeIcon.svg";
-
+ 
                     const leaderboardsImg = new Image();
                     leaderboardsImg.src = "images/leaderboardsIcon.svg";
-
+ 
                     const accountImg = new Image();
                     accountImg.src = "images/accountIcon.svg";
-
+ 
                     homeImg.onload = function () { icon1Loaded = true };
                     leaderboardsImg.onload = function () { icon2Loaded = true };
                     accountImg.onload = function () { icon3Loaded = true };
-
+ 
                     const checkIfImagesIsLoaded = setInterval(() => {
                         if (icon1Loaded === true && icon2Loaded === true && icon3Loaded === true) {
                             displayIcons();
                             clearInterval(checkIfImagesIsLoaded);
                         }
                     }, 100);
-
+ 
                     function displayIcons() {
                         htmlInfo = `
                             <a href=${homeURL}><img class="footerIcons" src="images/homeIcon.svg" draggable="false" alt="${homeName}"></a>
                             <a href=${leaderboardsURL} style="margin-right:24vw; margin-left:24vw;"><img class="footerIcons" src="images/leaderboardsIcon.svg" draggable="false" alt="${leaderboardsName}"></a>
                             <a href=${accountURL}><img class="footerIcons" src="images/accountIcon.svg" draggable="false" alt="${accountName}"></a>
                             `;
-
+ 
                         footermenu.innerHTML = document.title;
-
+ 
                         documentID.innerHTML = htmlInfo;
                     }
-
-
+ 
+ 
                 } else {
-
+ 
                     footermenu.innerHTML = "";
-
+ 
                     switch (getCurrentPage) {
                         case homeURL:
                             htmlInfo = `
@@ -251,15 +258,15 @@ function displayLinks(dID) {
                             `;
                             break;
                     }
-
+ 
                     documentID.innerHTML = htmlInfo;
-
+ 
                 }
-
+ 
             } else {
-
+ 
                 if (getCurrentPage) {
-
+ 
                     
                     switch (getCurrentPage) {
                         case accessURL:
@@ -282,18 +289,18 @@ function displayLinks(dID) {
                             break;
                     }
                     
-
+ 
                     if (window.innerWidth < 769) {
                         footermenu.innerHTML = document.title;
                     } else {
                         footermenu.innerHTML = "";
                     }
-
+ 
                     documentID.innerHTML = htmlInfo;
-
+ 
                 }
             }
-
+ 
         } else {
             console.log("error ID: " + dID + " does not exist!");
         }
@@ -306,9 +313,9 @@ function displayLinks(dID) {
 /*
 function checkColorTheme() {
     if (user) {
-
+ 
         const intervalCheck = setInterval(() => {
-
+ 
             if (isUpdatingUserObject === false) {
                 if (preferredColorTheme) {
                     if (preferredColorTheme === "light" || preferredColorTheme === "dark") {
@@ -331,37 +338,37 @@ function checkColorTheme() {
 // get new updated user object
 /*
 async function getUpdatedUserObject(returnInfo, myUsername) {
-
+ 
     if (token && user && myUsername) {
-
+ 
         isUpdatingUserObject = true;
-
+ 
         const body = { "authToken": token, "userInfo": user, "viewingUser": myUsername };
         const url = `/user/details/settingsInfo`;
-
+ 
         const resp = await callServerAPI(body, url);
-
+ 
         if (resp.settings && resp.userInfo) {
-
+ 
             if (localStorage.getItem("user")) {
                 localStorage.setItem("user", JSON.stringify(resp.userInfo));
             } else {
                 sessionStorage.setItem("user", JSON.stringify(resp.userInfo));
             }
-
+ 
             checkColorTheme();
-
+ 
             const today = new Date();
             const updatedTxt = today.toLocaleDateString() || true;
             sessionStorage.setItem("updated", updatedTxt);
-
+ 
             preferredColorTheme = resp.userInfo.preferredColorTheme;
             isUpdatingUserObject = false;
-
+ 
             if (returnInfo === true) {
                 return resp;
             }
-
+ 
         } else {
             isUpdatingUserObject = false;
             alert("Feil, prøv igjen");
