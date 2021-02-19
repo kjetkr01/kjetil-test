@@ -503,8 +503,13 @@ function redirectToLeaderboards() {
 
 function redirectToUsers() {
 
-    location.href = "users.html";
+    const viewingUser = sessionStorage.getItem("ViewingUser");
 
+    if (username === viewingUser) {
+        redirectToAccount();
+    } else {
+        location.href = "users.html";
+    }
 }
 
 function redirectToUser() {
