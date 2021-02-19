@@ -645,5 +645,5 @@ server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
 // ------------------------------- allows the server to run on localhost  ------------------------------- //
 
 server.listen(server.get('port'), function () {
-     console.log('server running', server.get('port'));
+     console.log('Server running', server.get('port'));
 })
