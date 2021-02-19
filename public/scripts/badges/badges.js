@@ -568,7 +568,7 @@ ${aBadgeInfo.trainingsplit}
         
         <div id="GtrainingsplitTxt">
         <p id="trainingsplitTxt" style="font-weight: bold; font-size: 18px">
-        dager
+        treningsplan
         </p>
         </div>
         

@@ -25,6 +25,7 @@ function enableOverlayCreate(aType) {
 
         if (today) {
             inp3.value = today;
+            inp3.setAttribute('max', today);
         }
 
         if (type === "lift" && liftsLeft) {
@@ -89,6 +90,12 @@ function enableOverlayEdit(aType, aExercise) {
         inp3.innerHTML = "";
         Gsave.innerHTML = "";
         respMsg.innerHTML = "";
+
+        const today = new Date().toISOString().substr(0, 10) || null;
+
+        if (today) {
+            inp2.setAttribute('max', today);
+        }
 
         if (type === "lift" && liftsInfo) {
             const lifts = liftsInfo.info();
@@ -272,6 +279,14 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aType, aColor) {
 
         //Date format = YYYY-MM-DD
         const checkDateFormat = input3.split("-");
+
+        const today = new Date().toISOString().substr(0, 10);
+
+        if (input3 > today) {
+            msg = "Dato kan ikke være i fremtiden!";
+            return { "isValid": isValid, "msg": msg };
+        }
+
         if (checkDateFormat[0].length === 4 && checkDateFormat[1].length === 2 && checkDateFormat[2].length === 2) {
         } else {
             msg = "Dato er ugyldig!";

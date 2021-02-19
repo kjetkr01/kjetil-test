@@ -131,12 +131,13 @@ function displayInformation(respInfo) {
 
                                 const daysSinceTime = parseInt((d - prDate) / (1000 * 3600 * 24));
 
-                                if (daysSinceTime > 1) {
+                                if (d < prDate) {
+                                    //fremtiden
+                                } else if (daysSinceTime > 1) {
                                     msg = `${parseInt(daysSinceTime)} dager siden`;
                                 } else if (daysSinceTime === 1) {
-                                    msg = `1 dag siden`;
-                                }
-                                else if (daysSinceTime === 0) {
+                                    msg = `I går`;
+                                } else if (daysSinceTime === 0) {
                                     msg = `I dag`;
                                 }
                             }
