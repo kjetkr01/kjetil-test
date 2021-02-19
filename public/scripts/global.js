@@ -503,19 +503,21 @@ function redirectToLeaderboards() {
 
 function redirectToUsers() {
 
-    const viewingUser = sessionStorage.getItem("ViewingUser");
+    location.href = "users.html";
 
-    if (username === viewingUser) {
-        redirectToAccount();
-    } else {
-        location.href = "users.html";
-    }
 }
 
 function redirectToUser() {
 
-    location.href = "user.html";
+    if (username === sessionStorage.getItem("ViewingUser")) {
 
+        redirectToAccount();
+
+    } else {
+
+        location.href = "user.html";
+
+    }
 }
 
 function redirectToAccount() {
