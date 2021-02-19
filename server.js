@@ -169,11 +169,11 @@ server.post("/users/list/all", auth, async (req, res) => {
 
 server.post("/users/list/all/leaderboards", auth, async (req, res) => {
 
-     const listOfLeaderboardsUsers = await getListOfLeaderboardsUsers();
+     const resp = await getListOfLeaderboardsUsers();
 
-     if (listOfLeaderboardsUsers) {
+     if (resp.status === true) {
 
-          res.status(200).json(listOfLeaderboardsUsers).end();
+          res.status(200).json({ "leaderboardsArr": resp.leaderboardsArr, "leaderboardsCounter": resp.leaderboardsCounter }).end();
 
      } else {
           res.status(403).json(`Feil, prøv igjen`).end();

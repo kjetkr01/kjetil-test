@@ -19,7 +19,7 @@ async function requestAccountDetails() {
                     displayInformation(resp.info);
                     return;
                 } else if (resp.includes("sin profil er privat!") === true) {
-                    alert(`${viewingUser} sin profil er privat!`);
+                    alert("Brukeren sin profil er privat!");
                     window.history.back();
                 } else {
                     alert("Det har oppstått en feil!");

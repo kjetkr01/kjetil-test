@@ -105,42 +105,80 @@ class StorageHandler {
 
     async getListOfLeaderboardsUsers() {
         const client = new pg.Client(this.credentials);
-        let results = null;
+        let results = false;
+
+        let leaderboardsArr = [];
+        let leaderboardsCounter = {};
+
         try {
             await client.connect();
             // evt legge til lifts og andre ting brukeren trenger å motta
 
             results = await client.query('SELECT "username","settings","lifts" FROM "public"."users"');
 
-            let leaderboardsArr = [];
-
             for (let i = 0; i < results.rows.length; i++) {
                 if (results.rows[i].settings.displayLeaderboards.value === true) {
 
                     const getLeaderboard = Object.keys(results.rows[i].lifts);
+
+                    let hasBench = false;
+                    let hasSquat = false;
+                    let hasDeadlift = false;
 
                     for (let j = 0; j < getLeaderboard.length; j++) {
                         const isAllowedLift = allowedLifts.includes(getLeaderboard[j]);
 
                         if (isAllowedLift === true) {
                             if (!leaderboardsArr.includes(getLeaderboard[j]) && getLeaderboard[j]) {
+                                leaderboardsCounter[getLeaderboard[j]] = 1;
                                 leaderboardsArr.push(getLeaderboard[j]);
+
+                                // rydde, trenger kanskje ikke leaderboardsArr???
+
+                                switch (getLeaderboard[j]) {
+                                    case "Benkpress":
+                                        hasBench = true;
+                                        break;
+                                    case "Knebøy":
+                                        hasSquat = true;
+                                        break;
+                                    case "Markløft":
+                                        hasDeadlift = true;
+                                        break;
+                                }
+
+                            } else {
+                                if (leaderboardsCounter.hasOwnProperty(getLeaderboard[j])) {
+                                    const updateNumber = parseInt(leaderboardsCounter[getLeaderboard[j]]);
+                                    leaderboardsCounter[getLeaderboard[j]] = updateNumber + 1;
+                                }
                             }
                         }
+
+
                     }
 
+                    if (hasBench === true && hasSquat === true && hasDeadlift === true) {
 
+                        if (!leaderboardsArr.includes("Totalt")) {
+                            leaderboardsArr.push("Totalt");
+                        }
+
+                        const updateNumber = parseInt(leaderboardsCounter["Totalt"]) || 0;
+                        leaderboardsCounter["Totalt"] = updateNumber + 1;
+
+                    }
                 }
             }
 
-            results = leaderboardsArr;
+            results = true;
 
             client.end();
         } catch (err) {
             console.log(err);
         }
 
-        return results;
+        return { "leaderboardsArr": leaderboardsArr, "leaderboardsCounter": leaderboardsCounter, "status": results };
     }
 
     //

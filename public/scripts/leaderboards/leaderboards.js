@@ -8,33 +8,33 @@ async function loadLeaderboards() {
 
     const resp = await callServerAPI(body, url);
 
-    if (resp.length > 0) {
+    if (resp.leaderboardsArr.length > 0 && resp.leaderboardsArr.length === Object.entries(resp.leaderboardsCounter).length) {
 
-        firstLeaderboard = resp[0];
+        //const lList = resp.leaderboardsArr;
+
+        const leaderboardsArrOrder = [];
+
+        for (let i = 0; i < Object.entries(resp.leaderboardsCounter).length; i++) {
+
+            const keys = Object.keys(resp.leaderboardsCounter);
+
+            leaderboardsArrOrder.push({ "leaderboard": [keys[i]], "usersCount": resp.leaderboardsCounter[keys[i]] })
+        }
+
+        leaderboardsArrOrder.sort(function (a, b) { return b.usersCount - a.usersCount });
 
         const leaderboardsTableRowDom = document.getElementById("leaderboardsTableRow");
         leaderboardsTableRowDom.innerHTML = "";
 
-        if (resp.includes("Benkpress") && resp.includes("Knebøy") && resp.includes("Markløft")) {
+        firstLeaderboard = leaderboardsArrOrder[0].leaderboard[0];
+
+        for (let i = 0; i < leaderboardsArrOrder.length; i++) {
+            const currentLeaderboard = leaderboardsArrOrder[i].leaderboard[0];
 
             leaderboardsTableRowDom.innerHTML += `
 
           <td>
-             <button id="Totalt" class="leaderboardsList active fadeInLeft animate delaySmall" onclick="getListOfLeaderboard('Totalt');">Totalt</button>
-          </td>
-
- `;
-
-            firstLeaderboard = "Totalt";
-
-        }
-
-        for (let i = 0; i < resp.length; i++) {
-
-            leaderboardsTableRowDom.innerHTML += `
-
-          <td>
-             <button id="${resp[i]}" class="leaderboardsList fadeInLeft animate" onclick="getListOfLeaderboard('${resp[i]}');">${resp[i]}</button>
+             <button id="${currentLeaderboard}" class="leaderboardsList fadeInLeft animate" onclick="getListOfLeaderboard('${currentLeaderboard}');">${currentLeaderboard}</button>
           </td>
 
  `;
