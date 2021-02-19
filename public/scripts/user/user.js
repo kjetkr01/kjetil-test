@@ -6,25 +6,30 @@ async function requestAccountDetails() {
 
     if (viewingUser) {
 
-        document.title = `${viewingUser} sin profil`;
+        if (username === viewingUser) {
+            redirectToAccount();
+        } else {
 
-        const resp = await getAccountDetails(viewingUser);
+            document.title = `${viewingUser} sin profil`;
 
-        if (resp) {
-            if (resp.hasOwnProperty("info")) {
-                displayInformation(resp.info);
-                return;
-            } else if (resp.includes("sin profil er privat!") === true) {
-                alert(`${viewingUser} sin profil er privat!`);
-                window.history.back();
+            const resp = await getAccountDetails(viewingUser);
+
+            if (resp) {
+                if (resp.hasOwnProperty("info")) {
+                    displayInformation(resp.info);
+                    return;
+                } else if (resp.includes("sin profil er privat!") === true) {
+                    alert(`${viewingUser} sin profil er privat!`);
+                    window.history.back();
+                } else {
+                    alert("Det har oppstått en feil!");
+                    redirectToFeed();
+                }
+
             } else {
                 alert("Det har oppstått en feil!");
                 redirectToFeed();
             }
-
-        } else {
-            alert("Det har oppstått en feil!");
-            redirectToFeed();
         }
 
     } else {
