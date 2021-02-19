@@ -93,9 +93,9 @@ async function getWorkoutSplit(username) {
     }
 }
 
-async function getUserDetails(viewingUser, username) {
+async function getUserDetails(viewingUser, userID) {
     try {
-        const resp = await database.getUserDetails(viewingUser, username);
+        const resp = await database.getUserDetails(viewingUser, userID);
         return resp;
     } catch (error) {
         console.error(error);

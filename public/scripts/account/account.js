@@ -1,7 +1,7 @@
 // requestAccountDetails
 
 async function requestAccountDetails() {
-    const resp = await getAccountDetails(username);
+    const resp = await getAccountDetails(userID);
 
     if (resp) {
         if (resp.hasOwnProperty("info")) {

@@ -305,20 +305,20 @@ server.post("/user/whatToTrainToday", auth, async (req, res) => {
 
 server.post("/users/details/:user", auth, async (req, res) => {
 
-     let username = req.body.userInfo;
-     username = JSON.parse(username);
-     username = username.username;
+     let userID = req.body.userInfo;
+     userID = JSON.parse(userID);
+     userID = userID.id;
 
      const viewingUser = req.body.viewingUser;
 
-     if (username && viewingUser) {
+     if (userID && viewingUser) {
 
-          const resp = await getUserDetails(viewingUser, username);
+          const resp = await getUserDetails(viewingUser, userID);
 
           if (resp.status === true) {
                if (resp.userDetails !== false) {
 
-                    if (viewingUser === username) {
+                    if (viewingUser === userID) {
 
                          const updatedUserInfo = {
                               "id": resp.userDetails.id,

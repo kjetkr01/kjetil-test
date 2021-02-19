@@ -6,7 +6,7 @@ async function requestAccountDetails() {
 
     if (viewingUser) {
 
-        if (username === viewingUser) {
+        if (userID === parseInt(viewingUser)) {
             redirectToAccount();
         } else {
 

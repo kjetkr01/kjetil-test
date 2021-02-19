@@ -2,7 +2,7 @@
 
 const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
 const user = localStorage.getItem("user") || sessionStorage.getItem("user");
-let userDisplayname, showGymCloseTime, username;
+let userDisplayname, showGymCloseTime, username, userID;
 let isUpdatingUserObject = false;
 
 let lastUpdatedTime = new Date();
@@ -28,6 +28,7 @@ if (user) {
         }*/
 
         username = userDisplayname.username;
+        userID = userDisplayname.id;
 
         //showGymCloseTime = userDisplayname.showGymCloseTime;
         //preferredColorTheme = userDisplayname.preferredColorTheme;
@@ -415,11 +416,11 @@ async function getUpdatedUserObject(returnInfo, myUsername) {
 //
 
 // get user/owner information
-async function getAccountDetails(aUser) {
+async function getAccountDetails(aUserID) {
 
-    if (token && user && aUser) {
+    if (token && user && aUserID) {
 
-        const viewingUser = aUser;
+        const viewingUser = aUserID;
 
         const body = { "authToken": token, "userInfo": user, "viewingUser": viewingUser };
         const url = `/users/details/${viewingUser}`;
@@ -509,14 +510,16 @@ function redirectToUsers() {
 
 function redirectToUser() {
 
-    if (username === sessionStorage.getItem("ViewingUser")) {
+    const viewingUser = sessionStorage.getItem("ViewingUser");
 
-        redirectToAccount();
-
+    if (viewingUser) {
+        if (userID === parseInt(viewingUser)) {
+            redirectToAccount();
+        } else {
+            location.href = "user.html";
+        }
     } else {
-
         location.href = "user.html";
-
     }
 }
 

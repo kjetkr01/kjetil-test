@@ -66,16 +66,17 @@ async function checkWhoIsWorkingOutToday() {
                 shortenedFullName += `${splitFullName[j][0]}.`;
             }
 
-            if (username === resp[i].username) {
+            if (userID === resp[i].id) {
+
                 peopleWorkoutList.innerHTML += `
-                <button class="accountOwner fadeInUp animate" onClick="viewUser('${resp[i].username}')">${shortenedFullName}</button>
+                <button class="accountOwner fadeInUp animate" onClick="viewUser('${resp[i].id}')">${shortenedFullName}</button>
                 <br>
                 `;
 
             } else {
 
                 peopleWorkoutList.innerHTML += `
-            <button class="peopleWorkoutListName fadeInUp animate" onClick="viewUser('${resp[i].username}')">${shortenedFullName}</button>
+            <button class="peopleWorkoutListName fadeInUp animate" onClick="viewUser('${resp[i].id}')">${shortenedFullName}</button>
             <br>
             `;
 
@@ -135,7 +136,7 @@ function currentDayInfo() {
 // requestAccountDetails
 
 async function requestAccountDetails() {
-    const resp = await getAccountDetails(username);
+    const resp = await getAccountDetails(userID);
 
     if (resp) {
         if (resp.hasOwnProperty("info")) {

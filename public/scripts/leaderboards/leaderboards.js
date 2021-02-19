@@ -85,10 +85,10 @@ async function getListOfLeaderboard(aLeaderboard) {
             for (let i = 0; i < Object.keys(resp).length; i++) {
 
                 let placementHTML = `${i + 1}.`;
-                let usernameHTML = `<button class="peopleLeaderboardsListName" onClick="viewUser('${resp[i].username}')">${resp[i].username}</button>`;
+                let usernameHTML = `<button class="peopleLeaderboardsListName" onClick="viewUser('${resp[i].id}')">${resp[i].username}</button>`;
 
-                if (resp[i].username === username) {
-                    usernameHTML = `<button class="accountOwner" onClick="viewUser('${resp[i].username}')">${resp[i].username}</button>`;
+                if (resp[i].id === userID) {
+                    usernameHTML = `<button class="accountOwner" onClick="viewUser('${resp[i].id}')">${resp[i].username}</button>`;
                 }
 
                 if (i === 0) {

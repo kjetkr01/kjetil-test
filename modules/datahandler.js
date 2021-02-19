@@ -153,7 +153,7 @@ class StorageHandler {
         try {
             await client.connect();
 
-            results = await client.query('SELECT "username","settings","lifts" FROM "public"."users"');
+            results = await client.query('SELECT "id","username","settings","lifts" FROM "public"."users"');
 
             //let counter = 1;
             //let info = {};
@@ -174,7 +174,7 @@ class StorageHandler {
                                     if (currentUsersLift.Markløft.ORM !== 0 && currentUsersLift.Markløft.ORM !== "") {
 
                                         const totalORM = parseFloat(currentUsersLift.Benkpress.ORM) + parseFloat(currentUsersLift.Knebøy.ORM) + parseFloat(currentUsersLift.Markløft.ORM);
-                                        infoList.push({ "username": results.rows[i].username, [leaderboard]: totalORM.toFixed(2) });
+                                        infoList.push({ "id": results.rows[i].id, "username": results.rows[i].username, [leaderboard]: totalORM.toFixed(2) });
                                     }
                                 }
                             }
@@ -191,7 +191,7 @@ class StorageHandler {
 
                         if (currentUsersLift[leaderboard].ORM && currentUsersLift[leaderboard].ORM !== 0 && currentUsersLift[leaderboard].ORM !== "") {
                             //info[counter] = { "username": results.rows[i].username, [leaderboard]: results.rows[i].lifts[leaderboard].ORM };
-                            infoList.push({ "username": results.rows[i].username, [leaderboard]: parseFloat(results.rows[i].lifts[leaderboard].ORM) });
+                            infoList.push({ "id": results.rows[i].id, "username": results.rows[i].username, [leaderboard]: parseFloat(results.rows[i].lifts[leaderboard].ORM) });
                             //counter++;
                         }
 
@@ -375,7 +375,7 @@ class StorageHandler {
 
     //  -------------------------------  get userdetails (view userPage)  ------------------------------- //
 
-    async getUserDetails(viewingUser, username) {
+    async getUserDetails(viewingUser, userID) {
 
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -384,17 +384,18 @@ class StorageHandler {
         try {
             await client.connect();
 
-            results = await client.query('SELECT "settings" FROM "users" WHERE username=$1', [viewingUser]);
+            results = await client.query('SELECT "settings" FROM "users" WHERE id=$1', [viewingUser]);
 
             if (results.rows[0] !== undefined) {
 
                 //if owner then access anyways
-                if (results.rows[0].settings.publicProfile.value === true || viewingUser === username) {
-                    if (viewingUser === username) {
-                        results = await client.query('SELECT "id","username","displayname","settings","trainingsplit","lifts","goals","info","isadmin" FROM "users" WHERE username=$1', [username]);
+                if (results.rows[0].settings.publicProfile.value === true || viewingUser === userID) {
+                    if (viewingUser === userID) {
+                        results = await client.query('SELECT "id","username","displayname","settings","trainingsplit","lifts","goals","info","isadmin" FROM "users" WHERE id=$1', [userID]);
 
                         if (results.rows[0]) {
                             results = results.rows[0];
+                            const username = results.username;
 
                             const hasAccessToApi = await client.query('SELECT "key" FROM "api_keys" WHERE username=$1', [username]);
 
@@ -430,7 +431,7 @@ class StorageHandler {
                         }
 
                     } else {
-                        results = await client.query('SELECT "username","displayname","trainingsplit","lifts","goals","info" FROM "users" WHERE username=$1', [viewingUser]);
+                        results = await client.query('SELECT "username","displayname","trainingsplit","lifts","goals","info" FROM "users" WHERE id=$1', [viewingUser]);
                         results = results.rows[0];
                     }
                     userDetails = results;
@@ -530,7 +531,7 @@ class StorageHandler {
         try {
             await client.connect();
 
-            results = await client.query('SELECT "username","displayname","settings","trainingsplit" FROM "users"');
+            results = await client.query('SELECT "id","displayname","settings","trainingsplit" FROM "users"');
 
             //let counter = 0;
 
@@ -540,7 +541,7 @@ class StorageHandler {
                     if (results.rows[i].settings.displayWorkoutList.value === true && todaysWorkout.length > 0 && todaysWorkout !== "Fri") {
                         //info[counter] = { "username": results.rows[i].username, "userFullName": results.rows[i].displayname, "todaysWorkout": todaysWorkout };
                         //counter++;
-                        infoList.push({ "username": results.rows[i].username, "userFullName": results.rows[i].displayname, "todaysWorkout": todaysWorkout });
+                        infoList.push({ "id": results.rows[i].id, "userFullName": results.rows[i].displayname, "todaysWorkout": todaysWorkout });
                     }
                 }
             }
