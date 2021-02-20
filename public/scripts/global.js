@@ -12,6 +12,8 @@ const errorText = "Det har oppstått en feil!";
 const loadingText = "Laster...";
 const errorLoadingText = "Kunne ikke laste inn innholdet.";
 
+const allowedThemes = ["default", "blue"];
+
 //
 
 // fixed global variables
@@ -33,6 +35,22 @@ if (user) {
         //showGymCloseTime = userDisplayname.showGymCloseTime;
         //preferredColorTheme = userDisplayname.preferredColorTheme;
 
+        /* bare for nå, random theme */
+        if (!sessionStorage.getItem("randomNum")) {
+            const randomNum = Math.floor(Math.random() * allowedThemes.length);
+            sessionStorage.setItem("randomNum", randomNum);
+        }
+
+        const randomTheme = sessionStorage.getItem("randomNum");
+        const preferredColorTheme = allowedThemes[randomTheme];
+        /* slutt for "bare for nå, random theme"  */
+
+        //const preferredColorTheme = "default";
+
+        if (preferredColorTheme !== sessionStorage.getItem("colorTheme") && allowedThemes.includes(preferredColorTheme) === true) {
+            sessionStorage.setItem("colorTheme", preferredColorTheme);
+        }
+
         userDisplayname = userDisplayname.displayname;
 
     } catch (err) {
@@ -41,6 +59,29 @@ if (user) {
 
     }
 }
+
+// changeColorTheme
+
+function changeColorTheme() {
+
+    let colorTheme = allowedThemes[0];
+    const preferredTheme = sessionStorage.getItem("colorTheme") || colorTheme;
+
+    if (allowedThemes.includes(preferredTheme) === true) {
+        colorTheme = preferredTheme;
+    }
+
+    if (colorTheme !== sessionStorage.getItem("colorTheme")) {
+        sessionStorage.setItem("colorTheme", colorTheme);
+    }
+
+    const cssStyleLink = `styles/themes/${colorTheme}.css`;
+
+    const themeStyleCSS = document.getElementById("themeStyleCSS");
+    themeStyleCSS.setAttribute("href", cssStyleLink);
+}
+
+//
 
 //
 

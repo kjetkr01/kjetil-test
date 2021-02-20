@@ -32,7 +32,7 @@
    <link rel="stylesheet" href="styles/global/globalVariables.css">
    <link rel="stylesheet" href="styles/global/globalClasses.css">
    <link rel="stylesheet" href="styles/global/global.css">
-   <link rel="stylesheet" href="styles/themes/default.css">
+   <link id="themeStyleCSS" rel="stylesheet" href="styles/themes/default.css">
 
    <link rel="stylesheet" href="styles/login/desktop.css">
    <link rel="stylesheet" href="styles/login/mobile.css">
@@ -132,6 +132,7 @@
       evt.preventDefault();
    })*/
 
+   changeColorTheme();
    lockBodyPosition();
 
    addEventListener("keypress", function (evt) {
