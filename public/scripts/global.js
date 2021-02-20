@@ -467,6 +467,10 @@ function checkConnection(aDom) {
             } else if (window.navigator.onLine && domElement.textContent === offlineTxt) {
                 domElement.textContent = onlineTxt;
                 domElement.style.color = "green";
+
+                setInterval(() => {
+                    location.reload();
+                }, 2500);
             }
             else {
                 domElement.textContent = "";

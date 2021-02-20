@@ -43,6 +43,7 @@ async function loadLeaderboards() {
     getListOfLeaderboard();
 }
 
+let leaderboardIsLoading = false;
 
 async function getListOfLeaderboard(aLeaderboard) {
 
@@ -50,8 +51,13 @@ async function getListOfLeaderboard(aLeaderboard) {
         aLeaderboard = firstLeaderboard;
     }
 
+    if (leaderboardIsLoading === true) {
+        return;
+    }
+
     if (token && user && aLeaderboard) {
         const ViewingLeaderboard = aLeaderboard;
+        leaderboardIsLoading = true;
 
         if (document.getElementById(ViewingLeaderboard)) {
 
@@ -132,10 +138,12 @@ async function getListOfLeaderboard(aLeaderboard) {
                 usermsg1.textContent = "Det er " + parseInt(Object.keys(resp).length) + " brukere på tavlen";
             }
 
+            leaderboardIsLoading = false;
+
         } else {
             usermsg1.textContent = errorLoadingText;
-            //alert(`Ledertavlen ${ViewingLeaderboard} finnes ikke!`);
-            //window.history.back();
+            alert(`Ledertavlen ${ViewingLeaderboard} finnes ikke!`);
+            window.history.back();
         }
 
     } else {

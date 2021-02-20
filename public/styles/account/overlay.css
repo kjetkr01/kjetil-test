@@ -30,6 +30,7 @@ left: 50%;
 transform: translate(-50%,-50%);
 -ms-transform: translate(-50%,-50%);
 width: 90%;
+max-width: 550px;
 height: 60%;
 overflow-y: scroll;
 
@@ -332,6 +333,7 @@ left: 50%;
 transform: translate(-50%,-50%);
 -ms-transform: translate(-50%,-50%);
 width: 90%;
+max-width: 550px;
 height: 60%;
 overflow-y: scroll;
 
@@ -550,8 +552,6 @@ border: 1px #757575 solid;
 
 /* spacing & other */
 
-
-
 .editLiftorGoal > #c1oE {
 grid-area: c1oE;
 }
@@ -650,6 +650,7 @@ left: 50%;
 transform: translate(-50%,-50%);
 -ms-transform: translate(-50%,-50%);
 width: 90%;
+max-width: 550px;
 height: 60%;
 overflow-y: scroll;
 
