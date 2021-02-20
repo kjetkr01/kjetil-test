@@ -30,12 +30,9 @@ async function loadLeaderboards() {
             const currentLeaderboard = leaderboardsArrOrder[i].leaderboard[0];
 
             leaderboardsTableRowDom.innerHTML += `
-
           <td>
              <button id="${currentLeaderboard}" class="leaderboardsList fadeInLeft animate" onclick="getListOfLeaderboard('${currentLeaderboard}');">${currentLeaderboard}</button>
-          </td>
-
- `;
+          </td>`;
         }
 
     }

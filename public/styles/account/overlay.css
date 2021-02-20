@@ -182,13 +182,13 @@ border: transparent;
 }
 
 #inp1C, #inp2C, #inp3C {
-color: var(--main-backgroundColor1);
+color: var(--main-textColorDark);
 font-family: var(--main-font-Family-Verdana);
 font-size: 16px;
 }
 
 ::placeholder {
-color: var(--main-backgroundColor1);
+color: var(--main-textColorDark);
 font-family: var(--main-font-Family-Verdana);
 font-size: 16px;
 opacity: 85%;
@@ -212,6 +212,7 @@ font-size: 18px;
 }
 
 #title1C, #title2C, #title3C, #title4C {
+color: var(--main-textColorDark);
 font-family: var(--main-font-Family-Verdana);
 font-weight: bold;
 }
@@ -223,7 +224,7 @@ margin-left: auto;
 margin-right: auto;
 
 opacity: 40%;
-border: 1px #757575 solid;
+border: var(--main-lineBorder);
 }
 
 
@@ -441,7 +442,6 @@ grid-template-columns: /* bortover */
 
 #Gtitle1E > #title1E {
 font-size: 22px;
-/*color: var(--main-backgroundColor1);*/
 }
 
 #Gline1E > #line1E {
@@ -499,13 +499,13 @@ border: transparent;
 }
 
 #inp1E, #inp2E, #inp3E {
-color: var(--main-backgroundColor1);
+color: var(--main-textColorDark);
 font-family: var(--main-font-Family-Verdana);
 font-size: 16px;
 }
 
 ::placeholder {
-color: var(--main-backgroundColor1);
+color: var(--main-textColorDark);
 font-family: var(--main-font-Family-Verdana);
 font-size: 16px;
 opacity: 85%;
@@ -529,6 +529,7 @@ font-size: 18px;
 }
 
 #title1E, #title2E, #title3E, #title4E {
+color: var(--main-textColorDark);
 font-family: var(--main-font-Family-Verdana);
 font-weight: bold;
 }
@@ -541,7 +542,7 @@ margin-left: auto;
 margin-right: auto;
 
 opacity: 40%;
-border: 1px #757575 solid;
+border: var(--main-lineBorder);
 }
 
 
@@ -723,7 +724,6 @@ grid-template-columns: /* bortover */
 
 #Gtitle1EditDays > #title1EditDays {
 font-size: 22px;
-/*color: var(--main-backgroundColor1);*/
 }
 
 #Gline1EditDays > #line1EditDays {
@@ -745,6 +745,7 @@ width: 40%;
 
 .daysTabletd {
 width: 60%;
+color: var(--main-textColorDark);
 }
 
 .editDaysCheckbox {
@@ -797,6 +798,7 @@ font-size: 18px;
 }
 
 #title1EditDays, #title2EditDays {
+color: var(--main-textColorDark);
 font-family: var(--main-font-Family-Verdana);
 font-weight: bold;
 }
@@ -809,7 +811,7 @@ margin-left: auto;
 margin-right: auto;
 
 opacity: 40%;
-border: 1px #757575 solid;
+border: var(--main-lineBorder);
 }
 
 

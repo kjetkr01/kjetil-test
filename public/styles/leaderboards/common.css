@@ -16,7 +16,7 @@ font-family: var(--main-font-Family-Verdana);
 
 #line {
 opacity: 40%;
-border: 1px #757575 solid;
+border: var(--main-lineBorder);
 }
 
 #feed, #leaderboards, #account, #line  {

@@ -23,7 +23,7 @@ opacity: 85%;
 
 #line {
 opacity: 40%;
-border: 1px #757575 solid;
+border: var(--main-lineBorder);
 }
 
 #line, #peopleWorkoutList, #feed, #leaderboards, #account  {

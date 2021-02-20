@@ -2,883 +2,883 @@
 
 @media only screen and (max-width: 1024px) { /* 768px var før, men passer bedre med 1024px for ipad */
 
-/* grid */
-
-.overlay {
-text-align: center;
-position: fixed;
-z-index: 2;
-background-color: rgba(0, 0, 0, 0.6);
-height: 100%;
-width: 100%;
-}
-
-.inputLiftOrGoal, .selectLiftOrGoal { 
-text-align: center;
-text-align-last: center;
-appearance: none;
--webkit-appearance: none;
--moz-appearance: none;
-border: none;
-background-color: var(--main-backgroundColor2);
-}
-
-.overlay>.createNewLiftorGoal {
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%,-50%);
--ms-transform: translate(-50%,-50%);
-width: 90%;
-max-width: 550px;
-height: 60%;
-overflow-y: scroll;
-
-background-color: var(--main-backgroundColor2);
-
-border: 1px solid var(--main-backgroundColor1);
-border-radius: 16px;
-
-display: grid;
-grid-template-areas:
-
-"c1oC c1oC c1oC"
-"Gtitle1C Gtitle1C Gtitle1C"
-"Gline1C Gline1C Gline1C"
-"c2oC c2oC c2oC"
-
-"Gtitle2C Gtitle2C Gtitle2C"
-"Gline2C Gline2C Gline2C"
-"Ginp1C Ginp1C Ginp1C"
-"c3oC c3oC c3oC"
-
-"Gtitle3C Gtitle3C Gtitle3C"
-"Gline3C Gline3C Gline3C"
-"Ginp2C Ginp2C Ginp2C"
-"c4oC c4oC c4oC"
-
-"Gtitle4C Gtitle4C Gtitle4C"
-"Gline4C Gline4C Gline4C"
-"Ginp3C Ginp3C Ginp3C"
-"c5oC c5oC c5oC"
-
-"GrespC GrespC GrespC"
-"GcancelC c6oC GsaveC"
-"c7oC c7oC c7oC"
-;
-
-grid-template-rows: /* nedover */
-
-2vh /* c1oC */
-
-30px /* Gtitle1C */
-
-10px /* Gline1C */
-
-1fr /* c2oC */
-
-
-
-25px /* Gtitle2C */
-
-10px /* Gline2C */
-
-auto /* Ginp1C */
-
-4vh /* c3oC */
-
-
-
-25px /* Gtitle3C */
-
-10px /* Gline3C */
-
-auto /* Ginp2C */
-
-4vh /* c4oC */
-
-
-
-25px /* Gtitle4C */
-
-10px /* Gline4C */
-
-auto /* Ginp3C */
-
-1fr /* c5oC */
-
-
-
-auto /* GrespC */
-
-30px /* GbuttonsC */
-
-2vh /* c7oC */
-
-;
-
-grid-template-columns: /* bortover */
-1fr 1fr 1fr;
-}
-
-
-
-/* end of grid */
-
-
-
-/* elements */
-
-#Gtitle1C > #title1C {
-font-size: 22px;
-}
-
-#Gline1C > #line1C {
-width: 75%;
-}
-
-#Gline2C > #line2C {
-}
-
-#Gline3C > #line3C {
-}
-
-#Gline4C > #line4C {
-
-}
-
-#Ginp1C > #inp1C {
-width: fit-content;
-}
-
-#Ginp2C > #inp2C {
-width: fit-content;
-}
-
-#Ginp3C > #inp3C {
-width: fit-content;
-}
-
-#GrespC > #respC {
-margin: 20px;
-font-size: 16px;
-}
-
-#GcancelC > #cancelC {
-}
-
-#GsaveC > #saveC {
-color: var(--main-backgroundColor1);
-}
-
-#cancelC, #saveC {
-font-size: 16px;
-font-weight: bold;
-height: 30px;
-
-background-color: rgb(212, 212, 212);
-border-radius: 4px;
-border: transparent;
-}
-
-#inp1C, #inp2C, #inp3C {
-color: var(--main-backgroundColor1);
-font-family: var(--main-font-Family-Verdana);
-font-size: 16px;
-}
-
-::placeholder {
-color: var(--main-backgroundColor1);
-font-family: var(--main-font-Family-Verdana);
-font-size: 16px;
-opacity: 85%;
-}
-
-#line2C, #line3C, #line4C {
-width: 40%;
-}
-
-#Gtitle2C > #title2C {
-}
-
-#Gtitle3C > #title3C {
-}
-
-#Gtitle4C > #title4C {
-}
-
-#title2C, #title3C, #title4C {
-font-size: 18px;
-}
-
-#title1C, #title2C, #title3C, #title4C {
-font-family: var(--main-font-Family-Verdana);
-font-weight: bold;
-}
-
-#line1C, #line2C, #line3C, #line4C {
-text-align: center;
-display: block;
-margin-left: auto;
-margin-right: auto;
-
-opacity: 40%;
-border: 1px #757575 solid;
-}
-
-
-
-/* end of elements */
-
-
-
-/* spacing & other */
-
-
-
-.createNewLiftorGoal > #c1oC {
-grid-area: c1oC;
-}
-
-.createNewLiftorGoal > #Gtitle1C {
-grid-area: Gtitle1C;
-}
-
-.createNewLiftorGoal > #Gline1C {
-grid-area: Gline1C;
-}
-
-.createNewLiftorGoal > #c2oC {
-grid-area: c2oC;
-}
-
-.createNewLiftorGoal > #Gtitle2C {
-grid-area: Gtitle2C;
-}
-
-.createNewLiftorGoal > #Gline2C {
-grid-area: Gline2C;
-}
-
-.createNewLiftorGoal > #Ginp1C {
-grid-area: Ginp1C;
-}
-
-.createNewLiftorGoal > #c3oC {
-grid-area: c3oC;
-}
-
-.createNewLiftorGoal > #Gtitle3C {
-grid-area: Gtitle3C;
-}
-
-.createNewLiftorGoal > #Gline3C {
-grid-area: Gline3C;
-}
-
-.createNewLiftorGoal > #Ginp2C {
-grid-area: Ginp2C;
-}
-
-.createNewLiftorGoal > #c4oC {
-grid-area: c4oC;
-}
-
-.createNewLiftorGoal > #Gtitle4C {
-grid-area: Gtitle4C;
-}
-
-.createNewLiftorGoal > #Gline4C {
-grid-area: Gline4C;
-}
-
-.createNewLiftorGoal > #Ginp3C {
-grid-area: Ginp3C;
-}
-
-.createNewLiftorGoal > #c5oC {
-grid-area: c5oC;
-}
-
-.createNewLiftorGoal > #GrespC {
-grid-area: GrespC;
-}
-
-.createNewLiftorGoal > #GcancelC {
-grid-area: GcancelC;
-}
-
-.createNewLiftorGoal > #c6oC {
-grid-area: c6oC;
-}
-
-.createNewLiftorGoal > #GsaveC {
-grid-area: GsaveC;
-}
-
-.createNewLiftorGoal > #c7oC {
-grid-area: c7oC;
-}
-
-/* end of spacing & other */
-
-
-
-
-
-.overlay>.editLiftorGoal {
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%,-50%);
--ms-transform: translate(-50%,-50%);
-width: 90%;
-max-width: 550px;
-height: 60%;
-overflow-y: scroll;
-
-background-color: var(--main-backgroundColor2);
-
-border: 1px solid var(--main-backgroundColor1);
-border-radius: 16px;
-
-display: grid;
-grid-template-areas:
-
-"c1oE c1oE c1oE"
-"Gtitle1E Gtitle1E Gtitle1E"
-"Gline1E Gline1E Gline1E"
-"c2oE c2oE c2oE"
-
-"Gtitle2E Gtitle2E Gtitle2E"
-"Gline2E Gline2E Gline2E"
-"Ginp1E Ginp1E Ginp1E"
-"c3oE c3oE c3oE"
-
-"Gtitle3E Gtitle3E Gtitle3E"
-"Gline3E Gline3E Gline3E"
-"Ginp2E Ginp2E Ginp2E"
-"c4oE c4oE c4oE"
-
-"Gtitle4E Gtitle4E Gtitle4E"
-"Gline4E Gline4E Gline4E"
-"Ginp3E Ginp3E Ginp3E"
-"c5oE c5oE c5oE"
-
-"GdeleteE GdeleteE GdeleteE"
-"GrespE GrespE GrespE"
-"GcancelE c6oE GsaveE"
-"c7oE c7oE c7oE"
-;
-
-grid-template-rows: /* nedover */
-
-2vh /* c1oE */
-
-30px /* Gtitle1E */
-
-10px /* Gline1E */
-
-1fr /* c2oE */
-
-
-
-25px /* Gtitle2E */
-
-10px /* Gline2E */
-
-auto /* Ginp1E */
-
-4vh /* c3oE */
-
-
-
-25px /* Gtitle3E */
-
-10px /* Gline3E */
-
-auto /* Ginp2E */
-
-4vh /* c4oE */
-
-
-
-25px /* Gtitle4E */
-
-10px /* Gline4E */
-
-auto /* Ginp3E */
-
-1fr /* c5oE */
-
-
-
-30px /* GdeleteE */
-
-auto /* GrespE */
-
-30px /* GbuttonsE */
-
-2vh /* c7oE */
-
-;
-
-grid-template-columns: /* bortover */
-1fr 1fr 1fr;
-}
-
-
-
-/* end of grid */
-
-
-
-/* elements */
-
-
-
-
-
-#Gtitle1E > #title1E {
-font-size: 22px;
-/*color: var(--main-backgroundColor1);*/
-}
-
-#Gline1E > #line1E {
-width: 75%;
-}
-
-#Gline2E > #line2E {
-}
-
-#Gline3E > #line3E {
-}
-
-#Gline4E > #line4E {
-}
-
-#Ginp1E > #inp1E {
-width: fit-content;
-}
-
-#Ginp2E > #inp2E {
-width: fit-content;
-}
-
-#Ginp3E > #inp3E {
-width: fit-content;
-}
-
-#GcancelE > #cancelE {
-}
-
-#GdeleteE > #deleteE {
-}
-
-#deleteE {
-color:red;
-}
-
-#GsaveE > #saveE {
-color: var(--main-backgroundColor1);
-}
-
-#GrespE > #respE {
-margin: 20px;
-font-size: 16px;
-}
-
-#deleteE, #cancelE, #saveE {
-font-size: 16px;
-font-weight: bold;
-height: 30px;
-
-background-color: rgb(212, 212, 212);
-border-radius: 4px;
-border: transparent;
-}
-
-#inp1E, #inp2E, #inp3E {
-color: var(--main-backgroundColor1);
-font-family: var(--main-font-Family-Verdana);
-font-size: 16px;
-}
-
-::placeholder {
-color: var(--main-backgroundColor1);
-font-family: var(--main-font-Family-Verdana);
-font-size: 16px;
-opacity: 85%;
-}
-
-#line2E, #line3E, #line4E {
-width: 40%;
-}
-
-#Gtitle2E > #title2E {
-}
-
-#Gtitle3E > #title3E {
-}
-
-#Gtitle4E > #title4E {
-}
-
-#title2E, #title3E, #title4E {
-font-size: 18px;
-}
-
-#title1E, #title2E, #title3E, #title4E {
-font-family: var(--main-font-Family-Verdana);
-font-weight: bold;
-}
-
-
-#line1E, #line2E, #line3E, #line4E {
-text-align: center;
-display: block;
-margin-left: auto;
-margin-right: auto;
-
-opacity: 40%;
-border: 1px #757575 solid;
-}
-
-
-
-/* end of elements */
-
-
-
-/* spacing & other */
-
-
-
-.editLiftorGoal > #c1oE {
-grid-area: c1oE;
-}
-
-.editLiftorGoal > #Gtitle1E {
-grid-area: Gtitle1E;
-}
-
-.editLiftorGoal > #Gline1E {
-grid-area: Gline1E;
-}
-
-.editLiftorGoal > #c2oE {
-grid-area: c2oE;
-}
-
-.editLiftorGoal > #Gtitle2E {
-grid-area: Gtitle2E;
-}
-
-.editLiftorGoal > #Gline2E {
-grid-area: Gline2E;
-}
-
-.editLiftorGoal > #Ginp1E {
-grid-area: Ginp1E;
-}
-
-.editLiftorGoal > #c3oE {
-grid-area: c3oE;
-}
-
-.editLiftorGoal > #Gtitle3E {
-grid-area: Gtitle3E;
-}
-
-.editLiftorGoal > #Gline3E {
-grid-area: Gline3E;
-}
-
-.editLiftorGoal > #Ginp2E {
-grid-area: Ginp2E;
-}
-
-.editLiftorGoal > #c4oE {
-grid-area: c4oE;
-}
-
-.editLiftorGoal > #Gtitle4E {
-grid-area: Gtitle4E;
-}
-
-.editLiftorGoal > #Gline4E {
-grid-area: Gline4E;
-}
-
-.editLiftorGoal > #Ginp3E {
-grid-area: Ginp3E;
-}
-
-.editLiftorGoal > #c5oE {
-grid-area: c5oE;
-}
-
-.editLiftorGoal > #GdeleteE {
-grid-area: GdeleteE;
-}
-
-.editLiftorGoal > #GrespE {
-grid-area: GrespE;
-}
-
-.editLiftorGoal > #GcancelE {
-grid-area: GcancelE;
-}
-
-.editLiftorGoal > #c6oE {
-grid-area: c6oE;
-}
-
-.editLiftorGoal > #GsaveE {
-grid-area: GsaveE;
-}
-
-.editLiftorGoal > #c7oE {
-grid-area: c7oE;
-}
-
-/* end of spacing & other */
-
-
-.overlay>.editDays {
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%,-50%);
--ms-transform: translate(-50%,-50%);
-width: 90%;
-max-width: 550px;
-height: 60%;
-overflow-y: scroll;
-
-background-color: var(--main-backgroundColor2);
-
-border: 1px solid var(--main-backgroundColor1);
-border-radius: 16px;
-
-display: grid;
-grid-template-areas:
-
-"c1oE c1oE c1oE"
-"Gtitle1EditDays Gtitle1EditDays Gtitle1EditDays"
-"Gline1EditDays Gline1EditDays Gline1EditDays"
-"c2oE c2oE c2oE"
-
-"Gtitle2EditDays Gtitle2EditDays Gtitle2EditDays"
-"Gline2EditDays Gline2EditDays Gline2EditDays"
-"GlistEditDays GlistEditDays GlistEditDays"
-"c3oE c3oE c3oE"
-
-"GrespEditDays GrespEditDays GrespEditDays"
-"GcancelEditDays c4oE GsaveEditDays"
-"c5oE c5oE c5oE"
-;
-
-grid-template-rows: /* nedover */
-
-2vh /* c1oE */
-
-30px /* Gtitle1E */
-
-10px /* Gline1E */
-
-6vh /* c2oE */
-
-
-
-25px /* Gtitle2E */
-
-10px /* Gline2E */
-
-auto /* GlistE */
-
-4vh /* c3oE */
-
-
-
-auto /* GrespE */
-
-30px /* GbuttonsE */
-
-2vh /* c5oE */
-
-;
-
-grid-template-columns: /* bortover */
-1fr 1fr 1fr;
-}
-
-
-
-/* end of grid */
-
-
-
-/* elements */
-
-
-
-#Gtitle1EditDays > #title1EditDays {
-font-size: 22px;
-/*color: var(--main-backgroundColor1);*/
-}
-
-#Gline1EditDays > #line1EditDays {
-width: 75%;
-}
-
-#Gline2EditDays > #line2EditDays {
-}
-
-#GlistEditDays > #listEditDays {
-font-size: 16px;
-}
-
-.daysTable {
-margin-left: auto;
-margin-right: auto;
-width: 40%;
-}
-
-.daysTabletd {
-width: 60%;
-}
-
-.editDaysCheckbox {
-background-color: red;
-height: 16px;
-width: 16px;
-
-appearance: none;
--webkit-appearance: none;
--moz-appearance: none;
-border: none;
-border-radius: 10px;
-}
-
-.editDaysCheckbox:checked {
-background-color: green;
-}
-
-#GcancelEditDays > #cancelEditDays {
-}
-
-#GsaveEditDays > #saveEditDays {
-color: var(--main-backgroundColor1);
-}
-
-#GrespEditDays > #respEditDays {
-margin: 20px;
-font-size: 16px;
-}
-
-#cancelEditDays, #saveEditDays {
-font-size: 16px;
-font-weight: bold;
-height: 30px;
-
-background-color: rgb(212, 212, 212);
-border-radius: 4px;
-border: transparent;
-}
-
-#line2EditDays {
-width: 40%;
-}
-
-#Gtitle2EditDays > #title2EditDays {
-}
-
-#title2EditDays {
-font-size: 18px;
-}
-
-#title1EditDays, #title2EditDays {
-font-family: var(--main-font-Family-Verdana);
-font-weight: bold;
-}
-
-
-#line1EditDays, #line2EditDays {
-text-align: center;
-display: block;
-margin-left: auto;
-margin-right: auto;
-
-opacity: 40%;
-border: 1px #757575 solid;
-}
-
-
-
-/* end of elements */
-
-
-
-/* spacing & other */
-
-
-
-.editDays > #c1oE {
-grid-area: c1oE;
-}
-
-.editDays > #Gtitle1EditDays {
-grid-area: Gtitle1EditDays;
-}
-
-.editDays > #Gline1EditDays {
-grid-area: Gline1EditDays;
-}
-
-.editDays > #c2oE {
-grid-area: c2oE;
-}
-
-.editDays > #Gtitle2EditDays {
-grid-area: Gtitle2EditDays;
-}
-
-.editDays > #Gline2EditDays {
-grid-area: Gline2EditDays;
-}
-
-.editDays > #GlistEditDays {
-grid-area: GlistEditDays;
-overflow-y: auto;
-padding-top: 10px;
-}
-
-.editDays > #c3oE {
-grid-area: c3oE;
-}
-
-.editDays > #GrespEditDays {
-grid-area: GrespEditDays;
-}
-
-.editDays > #GcancelEditDays {
-grid-area: GcancelEditDays;
-}
-
-.editDays > #c6oE {
-grid-area: c4oE;
-}
-
-.editDays > #GsaveEditDays {
-grid-area: GsaveEditDays;
-}
-
-.editDays > #c7oE {
-grid-area: c5oE;
-}
-
-/* end of spacing & other */
-
-
-}
+    /* grid */
+    
+    .overlay {
+    text-align: center;
+    position: fixed;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.6);
+    height: 100%;
+    width: 100%;
+    }
+    
+    .inputLiftOrGoal, .selectLiftOrGoal { 
+    text-align: center;
+    text-align-last: center;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: none;
+    background-color: var(--main-backgroundColor2);
+    }
+    
+    .overlay>.createNewLiftorGoal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    width: 90%;
+    max-width: 550px;
+    height: 60%;
+    overflow-y: scroll;
+    
+    background-color: var(--main-backgroundColor2);
+    
+    border: 1px solid var(--main-backgroundColor1);
+    border-radius: 16px;
+    
+    display: grid;
+    grid-template-areas:
+    
+    "c1oC c1oC c1oC"
+    "Gtitle1C Gtitle1C Gtitle1C"
+    "Gline1C Gline1C Gline1C"
+    "c2oC c2oC c2oC"
+    
+    "Gtitle2C Gtitle2C Gtitle2C"
+    "Gline2C Gline2C Gline2C"
+    "Ginp1C Ginp1C Ginp1C"
+    "c3oC c3oC c3oC"
+    
+    "Gtitle3C Gtitle3C Gtitle3C"
+    "Gline3C Gline3C Gline3C"
+    "Ginp2C Ginp2C Ginp2C"
+    "c4oC c4oC c4oC"
+    
+    "Gtitle4C Gtitle4C Gtitle4C"
+    "Gline4C Gline4C Gline4C"
+    "Ginp3C Ginp3C Ginp3C"
+    "c5oC c5oC c5oC"
+    
+    "GrespC GrespC GrespC"
+    "GcancelC c6oC GsaveC"
+    "c7oC c7oC c7oC"
+    ;
+    
+    grid-template-rows: /* nedover */
+    
+    2vh /* c1oC */
+    
+    30px /* Gtitle1C */
+    
+    10px /* Gline1C */
+    
+    1fr /* c2oC */
+    
+    
+    
+    25px /* Gtitle2C */
+    
+    10px /* Gline2C */
+    
+    auto /* Ginp1C */
+    
+    4vh /* c3oC */
+    
+    
+    
+    25px /* Gtitle3C */
+    
+    10px /* Gline3C */
+    
+    auto /* Ginp2C */
+    
+    4vh /* c4oC */
+    
+    
+    
+    25px /* Gtitle4C */
+    
+    10px /* Gline4C */
+    
+    auto /* Ginp3C */
+    
+    1fr /* c5oC */
+    
+    
+    
+    auto /* GrespC */
+    
+    30px /* GbuttonsC */
+    
+    2vh /* c7oC */
+    
+    ;
+    
+    grid-template-columns: /* bortover */
+    1fr 1fr 1fr;
+    }
+    
+    
+    
+    /* end of grid */
+    
+    
+    
+    /* elements */
+    
+    #Gtitle1C > #title1C {
+    font-size: 22px;
+    }
+    
+    #Gline1C > #line1C {
+    width: 250px;
+    }
+    
+    #Gline2C > #line2C {
+    }
+    
+    #Gline3C > #line3C {
+    }
+    
+    #Gline4C > #line4C {
+    
+    }
+    
+    #Ginp1C > #inp1C {
+    width: fit-content;
+    }
+    
+    #Ginp2C > #inp2C {
+    width: fit-content;
+    }
+    
+    #Ginp3C > #inp3C {
+    width: fit-content;
+    }
+    
+    #GrespC > #respC {
+    margin: 20px;
+    font-size: 16px;
+    }
+    
+    #GcancelC > #cancelC {
+    }
+    
+    #GsaveC > #saveC {
+    color: var(--main-backgroundColor1);
+    }
+    
+    #cancelC, #saveC {
+    font-size: 16px;
+    font-weight: bold;
+    height: 30px;
+    
+    background-color: rgb(212, 212, 212);
+    border-radius: 4px;
+    border: transparent;
+    }
+    
+    #inp1C, #inp2C, #inp3C {
+    color: var(--main-textColorDark);
+    font-family: var(--main-font-Family-Verdana);
+    font-size: 16px;
+    }
+    
+    ::placeholder {
+    color: var(--main-textColorDark);
+    font-family: var(--main-font-Family-Verdana);
+    font-size: 16px;
+    opacity: 85%;
+    }
+    
+    #line2C, #line3C, #line4C {
+    width: 125px;
+    }
+    
+    #Gtitle2C > #title2C {
+    }
+    
+    #Gtitle3C > #title3C {
+    }
+    
+    #Gtitle4C > #title4C {
+    }
+    
+    #title2C, #title3C, #title4C {
+    font-size: 18px;
+    }
+    
+    #title1C, #title2C, #title3C, #title4C {
+    color: var(--main-textColorDark);
+    font-family: var(--main-font-Family-Verdana);
+    font-weight: bold;
+    }
+    
+    #line1C, #line2C, #line3C, #line4C {
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    
+    opacity: 40%;
+    border: var(--main-lineBorder);
+    }
+    
+    
+    
+    /* end of elements */
+    
+    
+    
+    /* spacing & other */
+    
+    
+    
+    .createNewLiftorGoal > #c1oC {
+    grid-area: c1oC;
+    }
+    
+    .createNewLiftorGoal > #Gtitle1C {
+    grid-area: Gtitle1C;
+    }
+    
+    .createNewLiftorGoal > #Gline1C {
+    grid-area: Gline1C;
+    }
+    
+    .createNewLiftorGoal > #c2oC {
+    grid-area: c2oC;
+    }
+    
+    .createNewLiftorGoal > #Gtitle2C {
+    grid-area: Gtitle2C;
+    }
+    
+    .createNewLiftorGoal > #Gline2C {
+    grid-area: Gline2C;
+    }
+    
+    .createNewLiftorGoal > #Ginp1C {
+    grid-area: Ginp1C;
+    }
+    
+    .createNewLiftorGoal > #c3oC {
+    grid-area: c3oC;
+    }
+    
+    .createNewLiftorGoal > #Gtitle3C {
+    grid-area: Gtitle3C;
+    }
+    
+    .createNewLiftorGoal > #Gline3C {
+    grid-area: Gline3C;
+    }
+    
+    .createNewLiftorGoal > #Ginp2C {
+    grid-area: Ginp2C;
+    }
+    
+    .createNewLiftorGoal > #c4oC {
+    grid-area: c4oC;
+    }
+    
+    .createNewLiftorGoal > #Gtitle4C {
+    grid-area: Gtitle4C;
+    }
+    
+    .createNewLiftorGoal > #Gline4C {
+    grid-area: Gline4C;
+    }
+    
+    .createNewLiftorGoal > #Ginp3C {
+    grid-area: Ginp3C;
+    }
+    
+    .createNewLiftorGoal > #c5oC {
+    grid-area: c5oC;
+    }
+    
+    .createNewLiftorGoal > #GrespC {
+    grid-area: GrespC;
+    }
+    
+    .createNewLiftorGoal > #GcancelC {
+    grid-area: GcancelC;
+    }
+    
+    .createNewLiftorGoal > #c6oC {
+    grid-area: c6oC;
+    }
+    
+    .createNewLiftorGoal > #GsaveC {
+    grid-area: GsaveC;
+    }
+    
+    .createNewLiftorGoal > #c7oC {
+    grid-area: c7oC;
+    }
+    
+    /* end of spacing & other */
+    
+    
+    
+    
+    
+    .overlay>.editLiftorGoal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    width: 90%;
+    max-width: 550px;
+    height: 60%;
+    overflow-y: scroll;
+    
+    background-color: var(--main-backgroundColor2);
+    
+    border: 1px solid var(--main-backgroundColor1);
+    border-radius: 16px;
+    
+    display: grid;
+    grid-template-areas:
+    
+    "c1oE c1oE c1oE"
+    "Gtitle1E Gtitle1E Gtitle1E"
+    "Gline1E Gline1E Gline1E"
+    "c2oE c2oE c2oE"
+    
+    "Gtitle2E Gtitle2E Gtitle2E"
+    "Gline2E Gline2E Gline2E"
+    "Ginp1E Ginp1E Ginp1E"
+    "c3oE c3oE c3oE"
+    
+    "Gtitle3E Gtitle3E Gtitle3E"
+    "Gline3E Gline3E Gline3E"
+    "Ginp2E Ginp2E Ginp2E"
+    "c4oE c4oE c4oE"
+    
+    "Gtitle4E Gtitle4E Gtitle4E"
+    "Gline4E Gline4E Gline4E"
+    "Ginp3E Ginp3E Ginp3E"
+    "c5oE c5oE c5oE"
+    
+    "GdeleteE GdeleteE GdeleteE"
+    "GrespE GrespE GrespE"
+    "GcancelE c6oE GsaveE"
+    "c7oE c7oE c7oE"
+    ;
+    
+    grid-template-rows: /* nedover */
+    
+    2vh /* c1oE */
+    
+    30px /* Gtitle1E */
+    
+    10px /* Gline1E */
+    
+    1fr /* c2oE */
+    
+    
+    
+    25px /* Gtitle2E */
+    
+    10px /* Gline2E */
+    
+    auto /* Ginp1E */
+    
+    4vh /* c3oE */
+    
+    
+    
+    25px /* Gtitle3E */
+    
+    10px /* Gline3E */
+    
+    auto /* Ginp2E */
+    
+    4vh /* c4oE */
+    
+    
+    
+    25px /* Gtitle4E */
+    
+    10px /* Gline4E */
+    
+    auto /* Ginp3E */
+    
+    1fr /* c5oE */
+    
+    
+    
+    30px /* GdeleteE */
+    
+    auto /* GrespE */
+    
+    30px /* GbuttonsE */
+    
+    2vh /* c7oE */
+    
+    ;
+    
+    grid-template-columns: /* bortover */
+    1fr 1fr 1fr;
+    }
+    
+    
+    
+    /* end of grid */
+    
+    
+    
+    /* elements */
+    
+    
+    
+    
+    
+    #Gtitle1E > #title1E {
+    font-size: 22px;
+    }
+    
+    #Gline1E > #line1E {
+    width: 250px;
+    }
+    
+    #Gline2E > #line2E {
+    }
+    
+    #Gline3E > #line3E {
+    }
+    
+    #Gline4E > #line4E {
+    }
+    
+    #Ginp1E > #inp1E {
+    width: fit-content;
+    }
+    
+    #Ginp2E > #inp2E {
+    width: fit-content;
+    }
+    
+    #Ginp3E > #inp3E {
+    width: fit-content;
+    }
+    
+    #GcancelE > #cancelE {
+    }
+    
+    #GdeleteE > #deleteE {
+    }
+    
+    #deleteE {
+    color:red;
+    }
+    
+    #GsaveE > #saveE {
+    color: var(--main-backgroundColor1);
+    }
+    
+    #GrespE > #respE {
+    margin: 20px;
+    font-size: 16px;
+    }
+    
+    #deleteE, #cancelE, #saveE {
+    font-size: 16px;
+    font-weight: bold;
+    height: 30px;
+    
+    background-color: rgb(212, 212, 212);
+    border-radius: 4px;
+    border: transparent;
+    }
+    
+    #inp1E, #inp2E, #inp3E {
+    color: var(--main-textColorDark);
+    font-family: var(--main-font-Family-Verdana);
+    font-size: 16px;
+    }
+    
+    ::placeholder {
+    color: var(--main-textColorDark);
+    font-family: var(--main-font-Family-Verdana);
+    font-size: 16px;
+    opacity: 85%;
+    }
+    
+    #line2E, #line3E, #line4E {
+    width: 125px;
+    }
+    
+    #Gtitle2E > #title2E {
+    }
+    
+    #Gtitle3E > #title3E {
+    }
+    
+    #Gtitle4E > #title4E {
+    }
+    
+    #title2E, #title3E, #title4E {
+    font-size: 18px;
+    }
+    
+    #title1E, #title2E, #title3E, #title4E {
+    color: var(--main-textColorDark);
+    font-family: var(--main-font-Family-Verdana);
+    font-weight: bold;
+    }
+    
+    
+    #line1E, #line2E, #line3E, #line4E {
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    
+    opacity: 40%;
+    border: var(--main-lineBorder);
+    }
+    
+    
+    
+    /* end of elements */
+    
+    
+    
+    /* spacing & other */
+    
+    .editLiftorGoal > #c1oE {
+    grid-area: c1oE;
+    }
+    
+    .editLiftorGoal > #Gtitle1E {
+    grid-area: Gtitle1E;
+    }
+    
+    .editLiftorGoal > #Gline1E {
+    grid-area: Gline1E;
+    }
+    
+    .editLiftorGoal > #c2oE {
+    grid-area: c2oE;
+    }
+    
+    .editLiftorGoal > #Gtitle2E {
+    grid-area: Gtitle2E;
+    }
+    
+    .editLiftorGoal > #Gline2E {
+    grid-area: Gline2E;
+    }
+    
+    .editLiftorGoal > #Ginp1E {
+    grid-area: Ginp1E;
+    }
+    
+    .editLiftorGoal > #c3oE {
+    grid-area: c3oE;
+    }
+    
+    .editLiftorGoal > #Gtitle3E {
+    grid-area: Gtitle3E;
+    }
+    
+    .editLiftorGoal > #Gline3E {
+    grid-area: Gline3E;
+    }
+    
+    .editLiftorGoal > #Ginp2E {
+    grid-area: Ginp2E;
+    }
+    
+    .editLiftorGoal > #c4oE {
+    grid-area: c4oE;
+    }
+    
+    .editLiftorGoal > #Gtitle4E {
+    grid-area: Gtitle4E;
+    }
+    
+    .editLiftorGoal > #Gline4E {
+    grid-area: Gline4E;
+    }
+    
+    .editLiftorGoal > #Ginp3E {
+    grid-area: Ginp3E;
+    }
+    
+    .editLiftorGoal > #c5oE {
+    grid-area: c5oE;
+    }
+    
+    .editLiftorGoal > #GdeleteE {
+    grid-area: GdeleteE;
+    }
+    
+    .editLiftorGoal > #GrespE {
+    grid-area: GrespE;
+    }
+    
+    .editLiftorGoal > #GcancelE {
+    grid-area: GcancelE;
+    }
+    
+    .editLiftorGoal > #c6oE {
+    grid-area: c6oE;
+    }
+    
+    .editLiftorGoal > #GsaveE {
+    grid-area: GsaveE;
+    }
+    
+    .editLiftorGoal > #c7oE {
+    grid-area: c7oE;
+    }
+    
+    /* end of spacing & other */
+    
+    
+    .overlay>.editDays {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    width: 90%;
+    max-width: 550px;
+    height: 60%;
+    overflow-y: scroll;
+    
+    background-color: var(--main-backgroundColor2);
+    
+    border: 1px solid var(--main-backgroundColor1);
+    border-radius: 16px;
+    
+    display: grid;
+    grid-template-areas:
+    
+    "c1oE c1oE c1oE"
+    "Gtitle1EditDays Gtitle1EditDays Gtitle1EditDays"
+    "Gline1EditDays Gline1EditDays Gline1EditDays"
+    "c2oE c2oE c2oE"
+    
+    "Gtitle2EditDays Gtitle2EditDays Gtitle2EditDays"
+    "Gline2EditDays Gline2EditDays Gline2EditDays"
+    "GlistEditDays GlistEditDays GlistEditDays"
+    "c3oE c3oE c3oE"
+    
+    "GrespEditDays GrespEditDays GrespEditDays"
+    "GcancelEditDays c4oE GsaveEditDays"
+    "c5oE c5oE c5oE"
+    ;
+    
+    grid-template-rows: /* nedover */
+    
+    2vh /* c1oE */
+    
+    30px /* Gtitle1E */
+    
+    10px /* Gline1E */
+    
+    6vh /* c2oE */
+    
+    
+    
+    25px /* Gtitle2E */
+    
+    10px /* Gline2E */
+    
+    auto /* GlistE */
+    
+    4vh /* c3oE */
+    
+    
+    
+    auto /* GrespE */
+    
+    30px /* GbuttonsE */
+    
+    2vh /* c5oE */
+    
+    ;
+    
+    grid-template-columns: /* bortover */
+    1fr 1fr 1fr;
+    }
+    
+    
+    
+    /* end of grid */
+    
+    
+    
+    /* elements */
+    
+    
+    
+    #Gtitle1EditDays > #title1EditDays {
+    font-size: 22px;
+    }
+    
+    #Gline1EditDays > #line1EditDays {
+    width: 250px;
+    }
+    
+    #Gline2EditDays > #line2EditDays {
+    }
+    
+    #GlistEditDays > #listEditDays {
+    font-size: 16px;
+    }
+    
+    .daysTable {
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    }
+    
+    .daysTabletd {
+    width: 60%;
+    color: var(--main-textColorDark);
+    }
+    
+    .editDaysCheckbox {
+    background-color: red;
+    height: 16px;
+    width: 16px;
+    
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: none;
+    border-radius: 10px;
+    }
+    
+    .editDaysCheckbox:checked {
+    background-color: green;
+    }
+    
+    #GcancelEditDays > #cancelEditDays {
+    }
+    
+    #GsaveEditDays > #saveEditDays {
+    color: var(--main-backgroundColor1);
+    }
+    
+    #GrespEditDays > #respEditDays {
+    margin: 20px;
+    font-size: 16px;
+    }
+    
+    #cancelEditDays, #saveEditDays {
+    font-size: 16px;
+    font-weight: bold;
+    height: 30px;
+    
+    background-color: rgb(212, 212, 212);
+    border-radius: 4px;
+    border: transparent;
+    }
+    
+    #line2EditDays {
+    width: 125px;
+    }
+    
+    #Gtitle2EditDays > #title2EditDays {
+    }
+    
+    #title2EditDays {
+    font-size: 18px;
+    }
+    
+    #title1EditDays, #title2EditDays {
+    color: var(--main-textColorDark);
+    font-family: var(--main-font-Family-Verdana);
+    font-weight: bold;
+    }
+    
+    
+    #line1EditDays, #line2EditDays {
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    
+    opacity: 40%;
+    border: var(--main-lineBorder);
+    }
+    
+    
+    
+    /* end of elements */
+    
+    
+    
+    /* spacing & other */
+    
+    
+    
+    .editDays > #c1oE {
+    grid-area: c1oE;
+    }
+    
+    .editDays > #Gtitle1EditDays {
+    grid-area: Gtitle1EditDays;
+    }
+    
+    .editDays > #Gline1EditDays {
+    grid-area: Gline1EditDays;
+    }
+    
+    .editDays > #c2oE {
+    grid-area: c2oE;
+    }
+    
+    .editDays > #Gtitle2EditDays {
+    grid-area: Gtitle2EditDays;
+    }
+    
+    .editDays > #Gline2EditDays {
+    grid-area: Gline2EditDays;
+    }
+    
+    .editDays > #GlistEditDays {
+    grid-area: GlistEditDays;
+    overflow-y: auto;
+    padding-top: 10px;
+    }
+    
+    .editDays > #c3oE {
+    grid-area: c3oE;
+    }
+    
+    .editDays > #GrespEditDays {
+    grid-area: GrespEditDays;
+    }
+    
+    .editDays > #GcancelEditDays {
+    grid-area: GcancelEditDays;
+    }
+    
+    .editDays > #c6oE {
+    grid-area: c4oE;
+    }
+    
+    .editDays > #GsaveEditDays {
+    grid-area: GsaveEditDays;
+    }
+    
+    .editDays > #c7oE {
+    grid-area: c5oE;
+    }
+    
+    /* end of spacing & other */
+    
+    
+    }
