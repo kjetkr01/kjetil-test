@@ -8,17 +8,15 @@ async function loadLeaderboards() {
 
     const resp = await callServerAPI(body, url);
 
-    if (resp.leaderboardsArr.length > 0 && resp.leaderboardsArr.length === Object.entries(resp.leaderboardsCounter).length) {
-
-        //const lList = resp.leaderboardsArr;
+    if (resp) {
 
         const leaderboardsArrOrder = [];
 
-        for (let i = 0; i < Object.entries(resp.leaderboardsCounter).length; i++) {
+        for (let i = 0; i < Object.entries(resp).length; i++) {
 
-            const keys = Object.keys(resp.leaderboardsCounter);
+            const keys = Object.keys(resp);
 
-            leaderboardsArrOrder.push({ "leaderboard": [keys[i]], "usersCount": resp.leaderboardsCounter[keys[i]] })
+            leaderboardsArrOrder.push({ "leaderboard": [keys[i]], "usersCount": resp[keys[i]] })
         }
 
         leaderboardsArrOrder.sort(function (a, b) { return b.usersCount - a.usersCount });

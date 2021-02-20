@@ -48,9 +48,9 @@ async function getListOfUsers() {
     }
 }
 
-async function getListOfLeaderboardsUsers() {
+async function getListOfLeaderboards() {
     try {
-        const resp = await database.getListOfLeaderboardsUsers();
+        const resp = await database.getListOfLeaderboards();
         return resp;
     } catch (error) {
         console.error(error);
@@ -159,7 +159,7 @@ async function updateTrainingDays(trainingDays, username) {
 module.exports = User;
 module.exports.validateUser = validateUser;
 module.exports.getListOfUsers = getListOfUsers;
-module.exports.getListOfLeaderboardsUsers = getListOfLeaderboardsUsers;
+module.exports.getListOfLeaderboards = getListOfLeaderboards;
 module.exports.getListOfUsersLeaderboard = getListOfUsersLeaderboard;
 module.exports.getListOfPendingUsers = getListOfPendingUsers;
 module.exports.acceptOrDenyUser = acceptOrDenyUser;

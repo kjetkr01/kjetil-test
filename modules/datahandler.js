@@ -101,18 +101,16 @@ class StorageHandler {
 
     //
 
-    //  -------------------------------  get a list of all leaderboard users in application  ------------------------------- //
+    //  -------------------------------  get a list of all leaderboards in application  ------------------------------- //
 
-    async getListOfLeaderboardsUsers() {
+    async getListOfLeaderboards() {
         const client = new pg.Client(this.credentials);
         let results = false;
 
-        let leaderboardsArr = [];
-        let leaderboardsCounter = {};
+        let leaderboards = {};
 
         try {
             await client.connect();
-            // evt legge til lifts og andre ting brukeren trenger å motta
 
             results = await client.query('SELECT "username","settings","lifts" FROM "public"."users"');
 
@@ -129,11 +127,9 @@ class StorageHandler {
                         const isAllowedLift = allowedLifts.includes(getLeaderboard[j]);
 
                         if (isAllowedLift === true) {
-                            if (!leaderboardsArr.includes(getLeaderboard[j]) && getLeaderboard[j]) {
-                                leaderboardsCounter[getLeaderboard[j]] = 1;
-                                leaderboardsArr.push(getLeaderboard[j]);
+                            if (!leaderboards.hasOwnProperty(getLeaderboard[j]) && getLeaderboard[j]) {
 
-                                // rydde, trenger kanskje ikke leaderboardsArr???
+                                leaderboards[getLeaderboard[j]] = 1;
 
                                 switch (getLeaderboard[j]) {
                                     case "Benkpress":
@@ -148,24 +144,18 @@ class StorageHandler {
                                 }
 
                             } else {
-                                if (leaderboardsCounter.hasOwnProperty(getLeaderboard[j])) {
-                                    const updateNumber = parseInt(leaderboardsCounter[getLeaderboard[j]]);
-                                    leaderboardsCounter[getLeaderboard[j]] = updateNumber + 1;
+                                if (leaderboards.hasOwnProperty(getLeaderboard[j])) {
+                                    const updateNumber = parseInt(leaderboards[getLeaderboard[j]]);
+                                    leaderboards[getLeaderboard[j]] = updateNumber + 1;
                                 }
                             }
                         }
-
-
                     }
 
                     if (hasBench === true && hasSquat === true && hasDeadlift === true) {
 
-                        if (!leaderboardsArr.includes("Totalt")) {
-                            leaderboardsArr.push("Totalt");
-                        }
-
-                        const updateNumber = parseInt(leaderboardsCounter["Totalt"]) || 0;
-                        leaderboardsCounter["Totalt"] = updateNumber + 1;
+                        const updateNumber = parseInt(leaderboards["Totalt"]) || 0;
+                        leaderboards["Totalt"] = updateNumber + 1;
 
                     }
                 }
@@ -178,7 +168,7 @@ class StorageHandler {
             console.log(err);
         }
 
-        return { "leaderboardsArr": leaderboardsArr, "leaderboardsCounter": leaderboardsCounter, "status": results };
+        return { "leaderboards": leaderboards, "status": results };
     }
 
     //

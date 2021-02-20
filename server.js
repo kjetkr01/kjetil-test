@@ -13,7 +13,7 @@ const auth = require("./modules/auth");
 const user = require("./modules/user");
 const validateUser = require("./modules/user").validateUser;
 const getListOfUsers = require("./modules/user").getListOfUsers;
-const getListOfLeaderboardsUsers = require("./modules/user").getListOfLeaderboardsUsers;
+const getListOfLeaderboards = require("./modules/user").getListOfLeaderboards;
 const getListOfUsersLeaderboard = require("./modules/user").getListOfUsersLeaderboard;
 const getListOfPendingUsers = require("./modules/user").getListOfPendingUsers;
 const acceptOrDenyUser = require("./modules/user").acceptOrDenyUser;
@@ -169,11 +169,11 @@ server.post("/users/list/all", auth, async (req, res) => {
 
 server.post("/users/list/all/leaderboards", auth, async (req, res) => {
 
-     const resp = await getListOfLeaderboardsUsers();
+     const resp = await getListOfLeaderboards();
 
      if (resp.status === true) {
 
-          res.status(200).json({ "leaderboardsArr": resp.leaderboardsArr, "leaderboardsCounter": resp.leaderboardsCounter }).end();
+          res.status(200).json(resp.leaderboards).end();
 
      } else {
           res.status(403).json(`Feil, prøv igjen`).end();

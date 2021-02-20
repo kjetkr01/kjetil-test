@@ -93,7 +93,8 @@ font-size: 18px;
 }
 
 #Gline > #line {
-width: 92.5vw;
+margin-left: 20px;
+margin-right: 20px;
 }
 
 

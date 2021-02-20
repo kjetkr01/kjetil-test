@@ -10,8 +10,6 @@ async function requestAccountDetails() {
             redirectToAccount();
         } else {
 
-            document.title = `${viewingUser} sin profil`;
-
             const resp = await getAccountDetails(viewingUser);
 
             if (resp) {
@@ -54,6 +52,8 @@ function displayInformation(respInfo) {
 
     const info = respInfo;
     const size = 0;
+
+    document.title = `${info.username} sin profil`;
 
     const displayname = info.displayname;
     const firstName = displayname.split(" ");

@@ -133,7 +133,7 @@ font-size: 22px;
 }
 
 #Gline1C > #line1C {
-width: 75%;
+width: 250px;
 }
 
 #Gline2C > #line2C {
@@ -194,7 +194,7 @@ opacity: 85%;
 }
 
 #line2C, #line3C, #line4C {
-width: 40%;
+width: 125px;
 }
 
 #Gtitle2C > #title2C {
@@ -443,7 +443,7 @@ font-size: 22px;
 }
 
 #Gline1E > #line1E {
-width: 75%;
+width: 250px;
 }
 
 #Gline2E > #line2E {
@@ -510,7 +510,7 @@ opacity: 85%;
 }
 
 #line2E, #line3E, #line4E {
-width: 40%;
+width: 125px;
 }
 
 #Gtitle2E > #title2E {
@@ -726,7 +726,7 @@ font-size: 22px;
 }
 
 #Gline1EditDays > #line1EditDays {
-width: 75%;
+width: 250px;
 }
 
 #Gline2EditDays > #line2EditDays {
@@ -785,7 +785,7 @@ border: transparent;
 }
 
 #line2EditDays {
-width: 40%;
+width: 125px;
 }
 
 #Gtitle2EditDays > #title2EditDays {
