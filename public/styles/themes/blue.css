@@ -1,27 +1,11 @@
-:root {
---main-font-Family-Verdana: Verdana, Geneva, Tahoma, sans-serif;
---main-font-Family-Arial: Arial, Helvetica, sans-serif;
-}
-
 @media (prefers-color-scheme: light) {
 :root {
 --main-headerBackground:  #3e50b4;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
 --main-backgroundColor1: #3e50b4;
 --main-boxShadow: 4px 4px rgba(62,80,180, 0.4);
---main-lineBorder: 1px #757575 solid;
 
---main-backgroundColor2: #F0F0F0;
---main-backgroundColor3: #ffffff;
-
---main-headerTextColor: white;
---main-textColorLight: white;
---main-textColorDark: black;
---main-textColorBadges: white;
 --main-accountOwnerColor: var(--main-headerBackground);
-
---main-iconsActiveColor: #231f20;
---main-iconsDefaultColor: #8D8D8D;
 }
 }
 
@@ -31,19 +15,8 @@
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
 --main-backgroundColor1: #2c3a8a;
 --main-boxShadow: 4px 4px rgba(44,58,138, 0.4);
---main-lineBorder: 1px #ffffff solid;
 
---main-backgroundColor2: #2b2b2b;
---main-backgroundColor3: #353535;
-
---main-headerTextColor: white;
---main-textColorLight: white;
---main-textColorDark: white;
---main-textColorBadges: white;
 --main-accountOwnerColor: #4154c0;
-
---main-iconsActiveColor: #e0e0e0;
---main-iconsDefaultColor: #808080;
 }
 }
 

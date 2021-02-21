@@ -75,10 +75,21 @@ function changeColorTheme() {
         sessionStorage.setItem("colorTheme", colorTheme);
     }
 
-    const cssStyleLink = `styles/themes/${colorTheme}.css`;
+    const keepTheme = document.getElementById(`themeStyleCSS-${colorTheme}`);
 
-    const themeStyleCSS = document.getElementById("themeStyleCSS");
-    themeStyleCSS.setAttribute("href", cssStyleLink);
+    if (keepTheme) {
+
+        for (let i = 0; i < allowedThemes.length; i++) {
+
+            const removeTheme = document.getElementById(`themeStyleCSS-${allowedThemes[i]}`);
+
+            if (removeTheme) {
+                if (removeTheme !== keepTheme) {
+                    removeTheme.remove();
+                }
+            }
+        }
+    }
 }
 
 //
