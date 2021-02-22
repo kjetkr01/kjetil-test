@@ -130,20 +130,36 @@ async function getListOfLeaderboard(aLeaderboard) {
             }
 
             if (Object.keys(resp).length === 1) {
-                usermsg1.textContent = "Det er " + parseInt(Object.keys(resp).length) + " bruker på tavlen";
+                //usermsg1.textContent = "Det er " + parseInt(Object.keys(resp).length) + " bruker på tavlen";
+                usermsg1.innerHTML = `
+                <p id="peopleLeaderboardsTxt" class="noselect fadeIn animate delaySmall">
+                Det er ${parseInt(Object.keys(resp).length)} bruker på tavlen
+                </p>`;
             } else {
-                usermsg1.textContent = "Det er " + parseInt(Object.keys(resp).length) + " brukere på tavlen";
+                //usermsg1.textContent = "Det er " + parseInt(Object.keys(resp).length) + " brukere på tavlen";
+                usermsg1.innerHTML = `
+                <p id="peopleLeaderboardsTxt" class="noselect fadeIn animate delaySmall">
+                Det er ${parseInt(Object.keys(resp).length)} brukere på tavlen
+                </p>`;
             }
 
             leaderboardIsLoading = false;
 
         } else {
-            usermsg1.textContent = errorLoadingText;
+            //usermsg1.textContent = errorLoadingText;
+            usermsg1.innerHTML = `
+                <p id="peopleLeaderboardsTxt" class="noselect fadeIn animate delaySmall">
+                ${errorLoadingText}
+                </p>`;
             alert(`Ledertavlen ${ViewingLeaderboard} finnes ikke!`);
             window.history.back();
         }
 
     } else {
-        usermsg1.textContent = "Det er ingen brukere på tavlen";
+        //usermsg1.textContent = "Det er ingen brukere på tavlen";
+        usermsg1.innerHTML = `
+                <p id="peopleLeaderboardsTxt" class="noselect fadeIn animate delaySmall">
+                Det er ingen brukere på tavlen
+                </p>`;
     }
 }

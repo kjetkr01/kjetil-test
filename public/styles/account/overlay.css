@@ -160,6 +160,7 @@ width: fit-content;
 }
 
 #GrespC > #respC {
+color: var(--main-textColorDark);
 margin: 20px;
 font-size: 16px;
 }
@@ -484,6 +485,7 @@ color: var(--main-backgroundColor1);
 }
 
 #GrespE > #respE {
+color: var(--main-textColorDark);
 margin: 20px;
 font-size: 16px;
 }
@@ -772,6 +774,7 @@ color: var(--main-backgroundColor1);
 }
 
 #GrespEditDays > #respEditDays {
+color: var(--main-textColorDark);
 margin: 20px;
 font-size: 16px;
 }
