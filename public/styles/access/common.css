@@ -37,18 +37,17 @@ background-color: var(--main-backgroundColor1);
 color: var(--main-textColorLight);
 border-radius: 8px;
 border: 1px var(--main-backgroundColor1) solid;
-outline-style: none;
 }
 
 ::placeholder {
-    color: var(--main-textColorDark);
+color: var(--main-textColorDark);
 font-family: var(--main-font-Family-Verdana);
 font-size: 16px;
 opacity: 85%;
 }
 
 #respMsg, #alreadyAccBtn {
-    color: var(--main-textColorDark);
+color: var(--main-textColorDark);
 font-family: var(--main-font-Family-Verdana);
 font-size: 16px;
 }

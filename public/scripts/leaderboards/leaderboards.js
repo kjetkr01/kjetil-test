@@ -34,7 +34,6 @@ async function loadLeaderboards() {
              <button id="${currentLeaderboard}" class="leaderboardsList fadeInLeft animate" onclick="getListOfLeaderboard('${currentLeaderboard}');">${currentLeaderboard}</button>
           </td>`;
         }
-
     }
 
     getListOfLeaderboard();

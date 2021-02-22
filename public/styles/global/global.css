@@ -22,6 +22,10 @@ outline-style: none;
 -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
+button {
+outline-style: none; 
+}
+
 /* width */
 ::-webkit-scrollbar {
 width: 10px;
