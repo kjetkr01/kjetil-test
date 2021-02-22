@@ -17,8 +17,8 @@ async function requestAccountDetails() {
                     displayInformation(resp.info);
                     return;
                 } else if (resp.includes("sin profil er privat!") === true) {
-                    alert("Brukeren sin profil er privat!");
-                    window.history.back();
+                    alert(resp);
+                    returnToPrevious();
                 } else {
                     alert("Det har oppstått en feil!");
                     redirectToFeed();

@@ -408,11 +408,13 @@ class StorageHandler {
         const client = new pg.Client(this.credentials);
         let results = false;
         let userDetails = {};
+        let username = null;
 
         try {
             await client.connect();
 
-            results = await client.query('SELECT "settings" FROM "users" WHERE id=$1', [viewingUser]);
+            results = await client.query('SELECT "username","settings" FROM "users" WHERE id=$1', [viewingUser]);
+            username = results.rows[0].username;
 
             if (results.rows[0] !== undefined) {
 
@@ -479,7 +481,7 @@ class StorageHandler {
 
         client.end();
 
-        return { "status": results, "userDetails": userDetails };
+        return { "status": results, "userDetails": userDetails, "username": username };
     }
 
     //

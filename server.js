@@ -333,7 +333,12 @@ server.post("/users/details/:user", auth, async (req, res) => {
                     }
 
                } else {
-                    res.status(403).json(`${viewingUser} sin profil er privat!`).end();
+
+                    if (resp.username) {
+                         res.status(403).json(`${resp.username} sin profil er privat!`).end();
+                    } else {
+                         res.status(403).json(`Brukeren sin profil er privat!`).end();
+                    }
                }
           } else {
                res.status(403).json(`Brukeren finnes ikke!`).end();

@@ -259,7 +259,7 @@
       <div id="c4r1"></div>
 
       <div id="GbackBtn">
-         <img id="backBtn" onclick="redirectToFeed();" draggable="false" class="icons fadeInLeft animate delaySmall"
+         <img id="backBtn" onclick="returnToPrevious();" draggable="false" class="icons fadeInLeft animate delaySmall"
             src="images/backIcon.svg" alt="Tilbake">
          </img>
       </div>
@@ -292,9 +292,8 @@
 
 <script>
 
-   if (document.referrer.includes("leaderboards.html")) {
-      const backBtn = document.getElementById("backBtn");
-      backBtn.setAttribute("onClick", "redirectToLeaderboards();");
+   function returnToPrevious() {
+      location.href = document.referrer || redirectToFeed();;
    }
 
    changeColorTheme();
