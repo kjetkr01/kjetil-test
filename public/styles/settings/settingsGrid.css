@@ -60,11 +60,11 @@ grid-area: cS4;
 }
 
 .borderT {
-border-top: var(--main-lineBorder);
+border-top: 1px #75757585 solid;
 }
 
 .borderB {
-border-bottom: var(--main-lineBorder);
+border-bottom: 1px #75757585 solid;
 }
 
 .spacingTop {

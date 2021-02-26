@@ -18,7 +18,7 @@ margin-right: 20px;
 }
 
 #c2r1 {
-border-bottom: var(--main-lineBorder);
+border-bottom: 1px #75757585 solid;
 }
 
 /* end of mobile & desktop */
