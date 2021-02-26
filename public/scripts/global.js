@@ -585,5 +585,10 @@ function redirectToAccount() {
 
 }
 
+function redirectToSettings() {
+
+    location.href = "settings.html";
+
+}
 
 //

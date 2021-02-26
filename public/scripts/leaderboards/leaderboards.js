@@ -84,6 +84,9 @@ async function getListOfLeaderboard(aLeaderboard) {
 
             for (let i = 0; i < Object.keys(resp).length; i++) {
 
+                let svgMedalColor = null;
+                let svgMedal = null;
+
                 let placementHTML = `${i + 1}.`;
                 let usernameHTML = `<button class="peopleLeaderboardsListName" onClick="viewUser('${resp[i].id}')">${resp[i].username}</button>`;
 
@@ -91,18 +94,31 @@ async function getListOfLeaderboard(aLeaderboard) {
                     usernameHTML = `<button class="accountOwner" onClick="viewUser('${resp[i].id}')">${resp[i].username}</button>`;
                 }
 
-                if (i === 0) {
-                    placementHTML = `<img id="placement" draggable="false" class="icons" src="images/goldMedal.svg"
-          alt="${i + 1}.">
-       </img>`;
-                } else if (i === 1) {
-                    placementHTML = `<img id="placement" draggable="false" class="icons" src="images/silverMedal.svg"
-          alt="${i + 1}.">
-       </img>`;
-                } else if (i === 2) {
-                    placementHTML = `<img id="placement" draggable="false" class="icons" src="images/bronzeMedal.svg"
-          alt="${i + 1}.">
-       </img>`;
+                switch (i) {
+                    case 0:
+                        svgMedalColor = "medalIconGold";
+                        break;
+                    case 1:
+                        svgMedalColor = "medalIconSilver";
+                        break;
+                    case 2:
+                        svgMedalColor = "medalIconBronze";
+                        break;
+                }
+
+                if (svgMedal === null && svgMedalColor !== null) {
+                    placementHTML = `
+                    <svg id="placement" class="medals ${svgMedalColor}" draggable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+                        <defs>
+                            </defs>
+                            <g id="Layer_2" data-name="Layer 2">
+                            <g id="Layer_1-2" data-name="Layer 1">
+                            <path class="${svgMedalColor}"
+                            d="M28.33,17.38v-14H11.67V17.38a1.66,1.66,0,0,0,.81,1.44l7,4.18L17.8,26.9l-5.68.48,4.31,3.74-1.31,5.55,4.88-3,4.88,3-1.3-5.55,4.32-3.74-5.68-.48L20.57,23l7-4.18A1.66,1.66,0,0,0,28.33,17.38Zm-6.66,3-1.67,1-1.67-1V5h3.34Z" />
+                        </g>
+                    </g>
+                </svg>
+                `;
                 }
 
                 list.innerHTML += `
@@ -130,35 +146,36 @@ async function getListOfLeaderboard(aLeaderboard) {
 
             if (Object.keys(resp).length === 1) {
                 //usermsg1.textContent = "Det er " + parseInt(Object.keys(resp).length) + " bruker på tavlen";
-                usermsg1.innerHTML = `
-                <p id="peopleLeaderboardsTxt" class="noselect fadeIn animate delaySmall">
-                Det er ${parseInt(Object.keys(resp).length)} bruker på tavlen
-                </p>`;
+                usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Det er 1 bruker på tavlen`);
             } else {
                 //usermsg1.textContent = "Det er " + parseInt(Object.keys(resp).length) + " brukere på tavlen";
-                usermsg1.innerHTML = `
-                <p id="peopleLeaderboardsTxt" class="noselect fadeIn animate delaySmall">
-                Det er ${parseInt(Object.keys(resp).length)} brukere på tavlen
-                </p>`;
+                usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Det er ${parseInt(Object.keys(resp).length)} brukere på tavlen`);
             }
 
             leaderboardIsLoading = false;
 
         } else {
             //usermsg1.textContent = errorLoadingText;
-            usermsg1.innerHTML = `
-                <p id="peopleLeaderboardsTxt" class="noselect fadeIn animate delaySmall">
-                ${errorLoadingText}
-                </p>`;
+            usermsg1.innerHTML = peopleLeaderboardsTxtHTML();
             alert(`Ledertavlen ${ViewingLeaderboard} finnes ikke!`);
             window.history.back();
         }
 
     } else {
         //usermsg1.textContent = "Det er ingen brukere på tavlen";
-        usermsg1.innerHTML = `
-                <p id="peopleLeaderboardsTxt" class="noselect fadeIn animate delaySmall">
-                Det er ingen brukere på tavlen
-                </p>`;
+        usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Det er ingen brukere på tavlen`);
     }
+}
+
+function peopleLeaderboardsTxtHTML(aInput) {
+
+    const inputInfo = aInput || errorLoadingText;
+
+    const htmlInfo = `
+    <p id="peopleLeaderboardsTxt" class="noselect fadeIn animate delaySmall">
+    ${inputInfo}
+    </p>`;
+
+    return htmlInfo;
+
 }

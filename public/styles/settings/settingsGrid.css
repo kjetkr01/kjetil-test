@@ -1,0 +1,75 @@
+/* elements, grid and other for mobile */
+
+@media only screen and (max-width: 1024px) { /* 768px var før, men passer bedre med 1024px for ipad */
+
+/* grid */
+
+.userSettingsDefault {
+font-size: 15px;
+font-family: var(--main-font-Family-Verdana);
+background-color: var(--main-backgroundColor3);
+display: grid;
+width: 100vw;
+grid-template-areas:
+
+"cS1 cS1 cS1 cS1"
+"cS2 gsSetting gsInfo cS3"
+"cS4 cS4 cS4 cS4"
+;
+
+grid-template-rows: /* nedover */
+
+17.5px /* cS1 */
+32.5px /* gsSetting osv */
+5px /* cS4 */
+;
+
+grid-template-columns: /* bortover */
+20px auto auto 20px;
+}
+
+.userSettingsDefault > #cS1 {
+grid-area: cS1;
+}
+
+.userSettingsDefault > #gsSetting {
+grid-area: gsSetting;
+}
+
+#gsSetting>#sSetting{
+color: var(--main-textColorDark);
+}
+
+.userSettingsDefault > #gsInfo {
+grid-area: gsInfo;
+}
+
+#gsSetting, #gsInfo {
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
+#gsInfo>#sInfo{
+text-align: right;
+color: var(--main-accountOwnerColor);
+}
+
+.userSettingsDefault > #cS4 {
+grid-area: cS4;
+}
+
+.borderT {
+border-top: var(--main-lineBorder);
+}
+
+.borderB {
+border-bottom: var(--main-lineBorder);
+}
+
+.spacingTop {
+    margin-top: 40px;
+}
+
+/* border-bottom: var(--main-lineBorder); */
+}

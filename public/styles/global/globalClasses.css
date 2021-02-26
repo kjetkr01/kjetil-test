@@ -169,10 +169,14 @@ outline-style: none;
 -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
-.iconsActiveColor {
+.iconsFooterActiveColor {
 stroke: var(--main-iconsActiveColor);
 }
 
-.iconsDefaultColor {
+.iconsFooterDefaultColor {
 stroke: var(--main-iconsDefaultColor);
+}
+
+.iconsDefaultColor {
+stroke: var(--main-textColorDark);
 }
