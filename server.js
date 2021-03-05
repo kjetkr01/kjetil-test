@@ -359,7 +359,7 @@ server.post("/user/details/settingsInfo", auth, async (req, res) => {
      if (currentUser.username) {
 
           const resp = await getUserSettingsAndInfo(currentUser.username);
-
+          
           const userInfo = {
                "id": resp.userDetails.id,
                "username": resp.userDetails.username,

@@ -64,8 +64,6 @@
       <div id="GbackBtn">
          <svg id="backBtn" class="icons iconsDefaultColor fadeInLeft animate delaySmall" draggable="false"
             onclick="redirectToAccount();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
-            <defs>
-            </defs>
             <g id="Layer_2" data-name="Layer 2">
                <g id="Layer_1-2" data-name="Layer 1">
                   <polyline class="cls-1" points="21.25 1.24 2.48 20.02 20.45 37.99" />
@@ -84,6 +82,7 @@
          <p id="settingsGrid" class="noselect">
             <!-- endres på -->
 
+            <!--
          <div class="userSettingsDefault noselect">
             <div id="cS1">
             </div>
@@ -119,7 +118,6 @@
          </div>
 
          <div class="userSettingsDefault noselect">
-            <!-- lage button og switch-->
             <div id="cS1">
             </div>
             <div id="gsSetting">
@@ -128,9 +126,14 @@
                </p>
             </div>
             <div id="gsInfo">
-               <p id="sInfo">
-                  btn class
-               </p>
+               <svg id="sInfo" class="settingsIcons fadeIn" draggable="false" onclick="loadSetting('password');"
+                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
+                  <g id="Layer_2" data-name="Layer 2">
+                     <g id="Layer_1-2" data-name="Layer 1">
+                        <polyline class="cls-1" points="1.24 1.24 20.02 20.02 2.04 37.99" />
+                     </g>
+                  </g>
+               </svg>
             </div>
             <div id="cS4" class="borderB">
             </div>
@@ -145,9 +148,14 @@
                </p>
             </div>
             <div id="gsInfo">
-               <p id="sInfo">
-                  btn class
-               </p>
+               <svg id="sInfo" class="settingsIcons fadeIn" draggable="false" onclick="loadSetting('about');"
+                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
+                  <g id="Layer_2" data-name="Layer 2">
+                     <g id="Layer_1-2" data-name="Layer 1">
+                        <polyline class="cls-1" points="1.24 1.24 20.02 20.02 2.04 37.99" />
+                     </g>
+                  </g>
+               </svg>
             </div>
             <div id="cS4" class="borderB">
             </div>
@@ -162,15 +170,16 @@
                </p>
             </div>
             <div id="gsInfo">
-               <p id="sInfo">
-                  switch class
-               </p>
+               <label id="sInfo" class="settingsCheckbox">
+                  <input type="checkbox">
+                  <span class="slider round"></span>
+               </label>
             </div>
             <div id="cS4" class="borderB">
             </div>
          </div>
-
-         <!-- slutt på endres på -->
+         -->
+            <!-- slutt på endres på -->
          </p>
       </div>
 
@@ -184,7 +193,302 @@
 
    /* script here */
 
-</script>
+   function loadSetting(aSetting) {
+
+      const setting = aSetting;
+      if (setting) {
+         alert(setting);
+      }
+   }
+
+   const settingsGrid = document.getElementById("settingsGrid");
+
+   loadDefaultPage();
+   async function loadDefaultPage() {
+
+      /*const myUsername = username;
+      const body = { "authToken": token, "userInfo": user, "viewingUser": myUsername };
+      const url = `/users/details/${myUsername}`;
+
+      const resp = await callServerAPI(body, url);*/
+
+      const resp = await getAccountDetails(userID);
+
+      console.log(resp.info)
+
+      if (resp.hasOwnProperty("info")) {
+
+         const settings = resp.info.settings;
+         const userinfo = resp.info;
+
+         settingsGrid.innerHTML = "";
+
+         settingsGrid.innerHTML += getTemplate("Displayname", "displaynameDiv", userinfo.displayname);
+         settingsGrid.innerHTML += getTemplate("Brukernavn", "usernameDiv", userinfo.username);
+         settingsGrid.innerHTML += getTemplateWithBtn("Passord", "passwordDiv");
+
+         settingsGrid.innerHTML += getTemplateWithBtn("Om deg", "aboutDiv", "spacingTop");
+
+         if (settings.publicProfile.value === true) {
+            settingsGrid.innerHTML += getTemplateWithCheckbox("Privat profil", "profileVisibilityDiv", true, "spacingTop");
+         } else {
+            settingsGrid.innerHTML += getTemplateWithCheckbox("Privat profil", "profileVisibilityDiv", false, "spacingTop");
+         }
+
+         if (settings.displayLeaderboards.value === true) {
+            settingsGrid.innerHTML += getTemplateWithCheckbox("Ledertavler synlighet", "leaderboardsVisibilityDiv", true);
+         } else {
+            settingsGrid.innerHTML += getTemplateWithCheckbox("Ledertavler synlighet", "leaderboardsVisibilityDiv", false);
+         }
+
+         if (settings.displayWorkoutList.value === true) {
+            settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", "workoutTodayListDiv", true);
+         } else {
+            settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", "workoutTodayListDiv", false);
+         }
+
+
+         settingsGrid.innerHTML += getTemplateWithBtn("Utseende", "appearanceDiv", "spacingTop");
+         settingsGrid.innerHTML += getTemplateWithBtn("Fremgangs info", "appearanceDiv");
+
+         settingsGrid.innerHTML += getTemplateWithBtn("Om appen", "aboutAppDiv", "spacingTop");
+
+         if (userinfo.hasOwnProperty("isadmin")) {
+            if (userinfo.isadmin === true) {
+
+               settingsGrid.innerHTML += getPendingRequestsTemplate();
+
+            }
+         }
+
+         if (userinfo.hasOwnProperty("apikey")) {
+            settingsGrid.innerHTML += getTemplateWithBtn("API", "apiDiv");
+         }
+
+         settingsGrid.innerHTML += getLogoutBtn();
+
+         if (userinfo.hasOwnProperty("isadmin")) {
+            if (userinfo.isadmin === true) {
+
+               const body = { "authToken": token, "userInfo": user, "onlyNumbers": true };
+               const url = `/users/list/pending`;
+
+               const resp = await callServerAPI(body, url);
+
+               if (resp) {
+                  if (resp.length > 0) {
+                     const pendingRequestsTxt = document.getElementsByName("pendingRequestsTxt");
+                     pendingRequestsTxt[0].innerHTML = `Forespørsler (${resp.length})`;
+                  }
+               }
+            }
+         }
+
+      } else {
+         redirectToAccount();
+      }
+   }
+
+   function getTemplate(aSetting, aDivId, aInfo, aSpacingTop) {
+
+      const setting = aSetting || "Innstillingen finnes ikke!";
+      const divId = aDivId || "";
+      const info = aInfo || "";
+      const spacingTop = aSpacingTop || "";
+      let borderT = "";
+
+      if (spacingTop) {
+         borderT = "borderT";
+      }
+
+      const html =
+         `
+   <div id="${divId}" class="userSettingsDefault noselect ${spacingTop}">
+            <div id="cS1" class="${borderT}">
+            </div>
+            <div id="gsSetting">
+               <p id="sSetting">
+                  ${setting}
+               </p>
+            </div>
+            <div id="gsInfo">
+               <p id="sInfo">
+                  ${info}
+               </p>
+            </div>
+            <div id="cS4" class="borderB">
+            </div>
+         </div>
+   `;
+      return html;
+   }
+
+   function getTemplateWithBtn(aSetting, aDivId, aSpacingTop) {
+
+      const setting = aSetting || "Innstillingen finnes ikke!";
+      const divId = aDivId || "";
+      const spacingTop = aSpacingTop || "";
+      let borderT = "";
+
+      if (spacingTop) {
+         borderT = "borderT";
+      }
+
+      const html =
+         `
+         <div id="${divId}" class="userSettingsDefault noselect ${spacingTop}">
+            <div id="cS1" class="${borderT}">
+            </div>
+            <div id="gsSetting">
+               <p id="sSetting">
+                  ${setting}
+               </p>
+            </div>
+            <div id="gsInfo">
+               <svg id="sInfo" class="settingsIcons fadeIn" draggable="false" onclick="loadSetting('${setting}');"
+                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
+                  <g id="Layer_2" data-name="Layer 2">
+                     <g id="Layer_1-2" data-name="Layer 1">
+                        <polyline class="cls-1" points="1.24 1.24 20.02 20.02 2.04 37.99" />
+                     </g>
+                  </g>
+               </svg>
+            </div>
+            <div id="cS4" class="borderB">
+            </div>
+         </div>
+`;
+      return html;
+   }
+
+
+
+   function getTemplateWithCheckbox(aSetting, aDivId, aChecked, aSpacingTop) {
+
+      const setting = aSetting || "Innstillingen finnes ikke!";
+      const divId = aDivId || "";
+      const isChecked = aChecked || false;
+      const spacingTop = aSpacingTop || "";
+      let borderT = "";
+
+      if (spacingTop) {
+         borderT = "borderT";
+      }
+
+      let html =
+         `
+         <div id="${divId}" class="userSettingsDefault noselect ${spacingTop}">
+            <div id="cS1" class="${borderT}">
+            </div>
+            <div id="gsSetting">
+               <p id="sSetting">
+                  ${setting}
+               </p>
+            </div>
+            <div id="gsInfo">
+               <label id="sInfo" class="settingsCheckbox fadeIn">
+                  <input type="checkbox">
+                  <span class="slider round"></span>
+               </label>
+            </div>
+            <div id="cS4" class="borderB">
+            </div>
+         </div>
+`;
+
+      if (isChecked === true) {
+         html =
+            `
+         <div id="${divId}" class="userSettingsDefault noselect ${spacingTop}">
+            <div id="cS1" class="${borderT}">
+            </div>
+            <div id="gsSetting">
+               <p id="sSetting">
+                  ${setting}
+               </p>
+            </div>
+            <div id="gsInfo">
+               <label id="sInfo" class="settingsCheckbox fadeIn">
+                  <input type="checkbox" checked>
+                  <span class="slider round"></span>
+               </label>
+            </div>
+            <div id="cS4" class="borderB">
+            </div>
+         </div>
+`;
+      }
+
+      return html;
+   }
+
+   function getLogoutBtn() {
+
+      const html =
+         `
+<div class="userSettingsDefault noselect spacingTop" style="margin-bottom: 80px;">
+      <div id="cS1" class="borderT">
+      </div>
+      <div id="gsSetting">
+         <p id="sSetting" style="color:red;" onClick="confirmLogout();">
+            Logg ut
+         </p>
+      </div>
+      <div id="gsInfo">
+         <p id="sInfo">
+            
+         </p>
+      </div>
+      <div id="cS4" class="borderB">
+      </div>
+   </div>
+`;
+      return html;
+   }
+
+
+   function confirmLogout() {
+
+      const logout = confirm("Er du sikker på at du vil logge ut?");
+
+      if (logout === true) {
+
+         localStorage.clear();
+         sessionStorage.clear();
+         redirectToLogin();
+
+      }
+   }
+
+
+   function getPendingRequestsTemplate() {
+
+      const html =
+         `
+         <div id="pendingRequestsDiv" class="userSettingsDefault noselect">
+            <div id="cS1">
+            </div>
+            <div id="gsSetting">
+               <p id="sSetting" name="pendingRequestsTxt">
+                  Forespørsler
+               </p>
+            </div>
+            <div id="gsInfo">
+               <svg id="sInfo" class="settingsIcons fadeIn" draggable="false" onclick="loadSetting('pendingUsers');"
+                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
+                  <g id="Layer_2" data-name="Layer 2">
+                     <g id="Layer_1-2" data-name="Layer 1">
+                        <polyline class="cls-1" points="1.24 1.24 20.02 20.02 2.04 37.99" />
+                     </g>
+                  </g>
+               </svg>
+            </div>
+            <div id="cS4" class="borderB">
+            </div>
+         </div>
+`;
+      return html;
+   }
 
 </script>
 
