@@ -649,7 +649,7 @@ server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
 
 // api
 
-server.put("/getTotalPB/:user/:key", async function (req, res) {
+server.get("/getTotalPB/:user/:key", async function (req, res) {
 
      const url = req.url;
      const urlInfo = url.split("/");
