@@ -764,7 +764,7 @@ class StorageHandler {
                 if (results.rows.length === 0) {
                     results = false;
                 } else {
-                    const userHasPublicProfile = results.rows[0].settings.publicProfile.value
+                    const userHasPublicProfile = results.rows[0].settings.publicProfile.value;
 
                     if (userHasPublicProfile === true || isOwner === true) {
                         results = await client.query('SELECT "trainingsplit","displayname" FROM "users" WHERE username=$1', [user]);
@@ -774,6 +774,92 @@ class StorageHandler {
                         } else {
                             info = results.rows[0]
                             results = true;
+                        }
+
+                    } else {
+                        results = false;
+                    }
+
+                }
+
+            }
+
+            client.end();
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+
+        return { "status": results, "info": info, "isOwner": isOwner };
+    }
+
+    //
+
+
+    //  -------------------------------  getTotalPBAPI  ------------------------------- //
+
+    async getTotalPBAPI(user, key) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        let isOwner = false;
+        let info = {};
+
+        try {
+            await client.connect();
+
+            results = await client.query('SELECT "username" FROM "api_keys" WHERE key=$1', [key]);
+
+            if (results.rows.length === 0) {
+
+                results = false;
+
+            } else {
+
+                if (results.rows[0].username === user) {
+                    isOwner = true;
+                }
+
+                results = await client.query('SELECT "settings" FROM "users" WHERE username=$1', [user]);
+
+                if (results.rows.length === 0) {
+                    results = false;
+                } else {
+                    const userHasPublicProfile = results.rows[0].settings.publicProfile.value;
+
+                    if (userHasPublicProfile === true || isOwner === true) {
+                        results = await client.query('SELECT "lifts","displayname" FROM "users" WHERE username=$1', [user]);
+
+                        if (results.rows.length === 0) {
+                            results = false;
+                        } else {
+
+                            info = results.rows[0];
+
+                            if (info.lifts.hasOwnProperty("Benkpress") && info.lifts.hasOwnProperty("Knebøy") && info.lifts.hasOwnProperty("Markløft")) {
+
+                                const currentUsersLift = results.rows[0].lifts;
+
+                                if (currentUsersLift.Benkpress.ORM !== 0 && currentUsersLift.Benkpress.ORM !== "") {
+                                    if (currentUsersLift.Knebøy.ORM !== 0 && currentUsersLift.Knebøy.ORM !== "") {
+                                        if (currentUsersLift.Markløft.ORM !== 0 && currentUsersLift.Markløft.ORM !== "") {
+
+                                            const totalORMKG = parseFloat(currentUsersLift.Benkpress.ORM) + parseFloat(currentUsersLift.Knebøy.ORM) + parseFloat(currentUsersLift.Markløft.ORM);
+                                            const totalORMLBS = totalORMKG * 2.20462262;
+                                            info.kg = totalORMKG.toFixed(2);
+                                            info.lbs = totalORMLBS.toFixed(2);
+                                            results = true;
+                                        }
+                                    }
+                                }
+
+                            } else {
+                                info = {};
+                                results = false;
+                            }
                         }
 
                     } else {

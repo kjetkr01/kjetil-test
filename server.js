@@ -38,6 +38,7 @@ const createToken = require("./modules/token").createToken;
 // api only
 
 const getWorkoutPlanAPI = require("./modules/API").getWorkoutPlanAPI;
+const getTotalPBAPI = require("./modules/API").getTotalPBAPI;
 
 //
 
@@ -359,7 +360,7 @@ server.post("/user/details/settingsInfo", auth, async (req, res) => {
      if (currentUser.username) {
 
           const resp = await getUserSettingsAndInfo(currentUser.username);
-          
+
           const userInfo = {
                "id": resp.userDetails.id,
                "username": resp.userDetails.username,
@@ -577,7 +578,8 @@ server.post("/validate", auth, async (req, res) => {
 
 server.get("/api", function (req, res) {
      const resp = [
-          "/getWorkoutInfo/:user/:key",
+          "/getWorkoutInfo/{user}/${key}",
+          "/getTotalPB/{user}/${key}",
           "Kommer snart:",
           "hent benk, knebøy, markløft + totalen / og / eller lifts (maks 3? / kan velge)",
           "hent mål i ulike løft (maks 3? / kan velge)",
@@ -629,6 +631,41 @@ server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
                const resp = {
                     "currentDay": dayTxt.toLocaleLowerCase(),
                     "todaysWorkout": workoutTxt
+               }
+
+               res.status(200).json(resp).end();
+
+          } else {
+               res.status(403).json(`ingen tilgang`).end();
+          }
+
+     } else {
+          res.status(403).json(`ingen tilgang`).end();
+     }
+})
+
+
+//
+
+// api
+
+server.get("/getTotalPB/:user/:key", async function (req, res) {
+
+     const url = req.url;
+     const urlInfo = url.split("/");
+
+     if (urlInfo[1] === "getTotalPB" && urlInfo[2].length < maxCharLength && urlInfo[3].length < maxCharLength) {
+          const user = urlInfo[2];
+          const key = urlInfo[3];
+
+          const getTotalPB = await getTotalPBAPI(user, key);
+
+          if (getTotalPB.status === true) {
+
+               const resp = {
+                    "user": user,
+                    "totalPBKG": getTotalPB.info.kg,
+                    "totalPBLBS": getTotalPB.info.lbs,
                }
 
                res.status(200).json(resp).end();
