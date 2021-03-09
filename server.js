@@ -578,8 +578,8 @@ server.post("/validate", auth, async (req, res) => {
 
 server.get("/api", function (req, res) {
      const resp = [
-          "/getWorkoutInfo/{user}/${key}",
-          "/getTotalPB/{user}/${key}",
+          "/getWorkoutInfo/{user}/{key}",
+          "/getTotalPB/{user}/{key}",
           "Kommer snart:",
           "hent benk, knebøy, markløft + totalen / og / eller lifts (maks 3? / kan velge)",
           "hent mål i ulike løft (maks 3? / kan velge)",
@@ -649,7 +649,7 @@ server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
 
 // api
 
-server.get("/getTotalPB/:user/:key", async function (req, res) {
+server.put("/getTotalPB/:user/:key", async function (req, res) {
 
      const url = req.url;
      const urlInfo = url.split("/");
