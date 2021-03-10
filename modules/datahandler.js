@@ -111,7 +111,6 @@ class StorageHandler {
 
         try {
             await client.connect();
-
             results = await client.query('SELECT "username","settings","lifts" FROM "public"."users"');
 
             for (let i = 0; i < results.rows.length; i++) {
@@ -119,44 +118,19 @@ class StorageHandler {
 
                     const getLeaderboard = Object.keys(results.rows[i].lifts);
 
-                    let hasBench = false;
-                    let hasSquat = false;
-                    let hasDeadlift = false;
+                    if (getLeaderboard.includes("Benkpress") && getLeaderboard.includes("Knebøy") && getLeaderboard.includes("Markløft")) {
+                        const updateNumber = parseInt(leaderboards["Totalt"]) || 0;
+                        leaderboards["Totalt"] = updateNumber + 1;
+                    }
 
                     for (let j = 0; j < getLeaderboard.length; j++) {
                         const isAllowedLift = allowedLifts.includes(getLeaderboard[j]);
 
                         if (isAllowedLift === true) {
-                            if (!leaderboards.hasOwnProperty(getLeaderboard[j]) && getLeaderboard[j]) {
 
-                                leaderboards[getLeaderboard[j]] = 1;
-
-                                switch (getLeaderboard[j]) {
-                                    case "Benkpress":
-                                        hasBench = true;
-                                        break;
-                                    case "Knebøy":
-                                        hasSquat = true;
-                                        break;
-                                    case "Markløft":
-                                        hasDeadlift = true;
-                                        break;
-                                }
-
-                            } else {
-                                if (leaderboards.hasOwnProperty(getLeaderboard[j])) {
-                                    const updateNumber = parseInt(leaderboards[getLeaderboard[j]]);
-                                    leaderboards[getLeaderboard[j]] = updateNumber + 1;
-                                }
-                            }
+                            const updateNumber = parseInt(leaderboards[getLeaderboard[j]]) || 0;
+                            leaderboards[getLeaderboard[j]] = updateNumber + 1;
                         }
-                    }
-
-                    if (hasBench === true && hasSquat === true && hasDeadlift === true) {
-
-                        const updateNumber = parseInt(leaderboards["Totalt"]) || 0;
-                        leaderboards["Totalt"] = updateNumber + 1;
-
                     }
                 }
             }
