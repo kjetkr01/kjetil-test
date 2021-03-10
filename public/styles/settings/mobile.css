@@ -15,6 +15,7 @@ grid-template-areas:
 "GbackBtn Gtitle"
 "c2r1 c2r1"
 "GsettingsGrid GsettingsGrid"
+"c3r1 c3r1"
 ;
 
 grid-template-rows: /* nedover */
@@ -23,7 +24,6 @@ grid-template-rows: /* nedover */
 auto /* header (GbackBtn & Gtitle) */
 3vh /* c2r1 */
 1fr /* GsettingsGrid */
-
 ;
 
 grid-template-columns: /* bortover */

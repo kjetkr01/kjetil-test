@@ -12,7 +12,12 @@ const errorText = "Det har oppstått en feil!";
 const loadingText = "Laster...";
 const errorLoadingText = "Kunne ikke laste inn innholdet.";
 
-const allowedThemes = ["default", "blue"];
+//const allowedThemes = ["default", "blue"];
+
+const allowedThemes = {
+    0: { "name": "Standard", "theme": "default" },
+    1: { "name": "Blå", "theme": "blue" }
+}
 
 //
 
@@ -42,7 +47,7 @@ if (user) {
         }
 
         const randomTheme = sessionStorage.getItem("randomNum");
-        const preferredColorTheme = allowedThemes[randomTheme];
+        const preferredColorTheme = allowedThemes[randomTheme].theme;
         /* slutt for "bare for nå, random theme"  */
 
         //const preferredColorTheme = "default";
@@ -64,10 +69,16 @@ if (user) {
 
 function changeColorTheme() {
 
-    let colorTheme = allowedThemes[0];
+    const themeKeys = Object.keys(allowedThemes);
+    const checkAllowedThemes = [];
+    for (let i = 0; i < themeKeys.length; i++) {
+        checkAllowedThemes.push(allowedThemes[themeKeys[i]].theme);
+    }
+
+    let colorTheme = allowedThemes[0].theme;
     const preferredTheme = sessionStorage.getItem("colorTheme") || colorTheme;
 
-    if (allowedThemes.includes(preferredTheme) === true) {
+    if (checkAllowedThemes.includes(preferredTheme) === true) {
         colorTheme = preferredTheme;
     }
 
@@ -79,9 +90,9 @@ function changeColorTheme() {
 
     if (keepTheme) {
 
-        for (let i = 0; i < allowedThemes.length; i++) {
+        for (let i = 0; i < checkAllowedThemes.length; i++) {
 
-            const removeTheme = document.getElementById(`themeStyleCSS-${allowedThemes[i]}`);
+            const removeTheme = document.getElementById(`themeStyleCSS-${checkAllowedThemes[i]}`);
 
             if (removeTheme) {
                 if (removeTheme !== keepTheme) {

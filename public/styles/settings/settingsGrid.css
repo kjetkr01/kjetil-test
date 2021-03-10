@@ -1,12 +1,15 @@
 /* elements, grid and other for mobile */
 
+* {
+    font-family: var(--main-font-Family-Verdana);
+}
+
 @media only screen and (max-width: 1024px) { /* 768px var før, men passer bedre med 1024px for ipad */
 
 /* grid */
 
 .userSettingsDefault {
 font-size: 15px;
-font-family: var(--main-font-Family-Verdana);
 background-color: var(--main-backgroundColor3);
 display: grid;
 width: 100vw;
@@ -71,6 +74,91 @@ border-bottom: 1px #75757585 solid;
 .spacingTop {
 margin-top: 40px;
 }
+
+
+
+.userSettingsCenteredItems {
+font-size: 15px;
+background-color: var(--main-backgroundColor3);
+display: grid;
+width: 100vw;
+grid-template-areas:
+
+"cSC1"
+"gsCenteredItems"
+"cSC2"
+;
+
+grid-template-rows: /* nedover */
+
+17.5px /* cSC1 */
+32.5px /* gsCenteredItems osv */
+5px /* cSC2 */
+;
+
+grid-template-columns: /* bortover */
+1fr;
+}
+
+.userSettingsCenteredItems > #cSC1 {
+grid-area: cSC1;
+}
+
+.userSettingsCenteredItems > #gsCenteredItems {
+grid-area: gsCenteredItems;
+text-align: center;
+}
+
+#gsCenteredItems {
+color: var(--main-textColorDark);
+}
+
+.userSettingsCenteredItems > #cSC2 {
+grid-area: cSC2;
+}
+
+
+
+
+.userSettingsJustText {
+    font-size: 15px;
+    display: grid;
+    width: 100vw;
+    grid-template-areas:
+    
+    "cSJC1"
+    "gsJustText"
+    "cSJC2"
+    ;
+    
+    grid-template-rows: /* nedover */
+    
+    30px /* cSJC1 */
+    auto /* gsJustText osv */
+    30px /* cSJC2 */
+    ;
+    
+    grid-template-columns: /* bortover */
+    1fr;
+    }
+    
+    .userSettingsJustText > #cSJC1 {
+    grid-area: cSJC1;
+    }
+    
+    .userSettingsJustText > #gsJustText {
+    grid-area: gsJustText;
+    }
+    
+    #gsJustText>#sJustText {
+    color: var(--main-textColorDark);
+    margin-right: 20px;
+    margin-left: 20px;
+    }
+    
+    .userSettingsJustText > #cSJC2 {
+    grid-area: cSJC2;
+    }
 }
 
 .settingsIcons {
@@ -148,4 +236,26 @@ border-radius: 34px;
 
 .slider.round:before {
 border-radius: 50%;
+}
+
+.settingsInput {
+background-color: transparent;
+border: transparent;
+font-size: 15px;
+color: var(--main-accountOwnerColor);
+text-align: center;
+}
+
+::placeholder{
+text-align: center;
+font-size: 15px;
+color: var(--main-accountOwnerColor);
+}
+
+.settingsButton {
+background-color: transparent;
+border: transparent;
+color: var(--main-textColorDark);
+text-align: center;
+font-size: 18px;
 }

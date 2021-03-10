@@ -110,9 +110,9 @@ function enableOverlayEdit(aType, aExercise) {
 
                 for (let i = 0; i < badgeColorsValues.length; i++) {
                     if (badgeColorsValues[i][0] === lifts[exercise].color) {
-                        inp3.innerHTML += `<option selected="selected" value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}`;
+                        inp3.innerHTML += `<option selected="selected" value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}</option>`;
                     } else {
-                        inp3.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}`;
+                        inp3.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}</option>`;
                     }
                 }
 
@@ -135,9 +135,9 @@ function enableOverlayEdit(aType, aExercise) {
 
                 for (let i = 0; i < badgeColorsValues.length; i++) {
                     if (badgeColorsValues[i][0] === goals[exercise].color) {
-                        inp3.innerHTML += `<option selected="selected" value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}`;
+                        inp3.innerHTML += `<option selected="selected" value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}</option>`;
                     } else {
-                        inp3.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}`;
+                        inp3.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}</option>`;
                     }
                 }
 

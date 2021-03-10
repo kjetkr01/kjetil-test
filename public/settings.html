@@ -63,7 +63,7 @@
 
       <div id="GbackBtn">
          <svg id="backBtn" class="icons iconsDefaultColor fadeInLeft animate delaySmall" draggable="false"
-            onclick="redirectToAccount();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
+            onclick="backToPrevious();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
             <g id="Layer_2" data-name="Layer 2">
                <g id="Layer_1-2" data-name="Layer 1">
                   <polyline class="cls-1" points="21.25 1.24 2.48 20.02 20.45 37.99" />
@@ -80,106 +80,6 @@
 
       <div id="GsettingsGrid">
          <p id="settingsGrid" class="noselect">
-            <!-- endres på -->
-
-            <!--
-         <div class="userSettingsDefault noselect">
-            <div id="cS1">
-            </div>
-            <div id="gsSetting">
-               <p id="sSetting">
-                  Visningsnavn
-               </p>
-            </div>
-            <div id="gsInfo">
-               <p id="sInfo">
-                  ${displayname}
-               </p>
-            </div>
-            <div id="cS4" class="borderB">
-            </div>
-         </div>
-
-         <div class="userSettingsDefault noselect">
-            <div id="cS1">
-            </div>
-            <div id="gsSetting">
-               <p id="sSetting">
-                  Brukernavn
-               </p>
-            </div>
-            <div id="gsInfo">
-               <p id="sInfo">
-                  ${username}
-               </p>
-            </div>
-            <div id="cS4" class="borderB">
-            </div>
-         </div>
-
-         <div class="userSettingsDefault noselect">
-            <div id="cS1">
-            </div>
-            <div id="gsSetting">
-               <p id="sSetting">
-                  Passord
-               </p>
-            </div>
-            <div id="gsInfo">
-               <svg id="sInfo" class="settingsIcons fadeIn" draggable="false" onclick="loadSetting('password');"
-                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
-                  <g id="Layer_2" data-name="Layer 2">
-                     <g id="Layer_1-2" data-name="Layer 1">
-                        <polyline class="cls-1" points="1.24 1.24 20.02 20.02 2.04 37.99" />
-                     </g>
-                  </g>
-               </svg>
-            </div>
-            <div id="cS4" class="borderB">
-            </div>
-         </div>
-
-         <div class="userSettingsDefault noselect spacingTop">
-            <div id="cS1" class="borderT">
-            </div>
-            <div id="gsSetting">
-               <p id="sSetting">
-                  Om deg
-               </p>
-            </div>
-            <div id="gsInfo">
-               <svg id="sInfo" class="settingsIcons fadeIn" draggable="false" onclick="loadSetting('about');"
-                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
-                  <g id="Layer_2" data-name="Layer 2">
-                     <g id="Layer_1-2" data-name="Layer 1">
-                        <polyline class="cls-1" points="1.24 1.24 20.02 20.02 2.04 37.99" />
-                     </g>
-                  </g>
-               </svg>
-            </div>
-            <div id="cS4" class="borderB">
-            </div>
-         </div>
-
-         <div class="userSettingsDefault noselect spacingTop">
-            <div id="cS1" class="borderT">
-            </div>
-            <div id="gsSetting">
-               <p id="sSetting">
-                  Privat Profil
-               </p>
-            </div>
-            <div id="gsInfo">
-               <label id="sInfo" class="settingsCheckbox">
-                  <input type="checkbox">
-                  <span class="slider round"></span>
-               </label>
-            </div>
-            <div id="cS4" class="borderB">
-            </div>
-         </div>
-         -->
-            <!-- slutt på endres på -->
          </p>
       </div>
 
@@ -191,40 +91,62 @@
 
    changeColorTheme();
 
-   /* script here */
+   const titleDom = document.getElementById("title");
+   const settingsGrid = document.getElementById("settingsGrid");
+   let userInfo = null;
+
+   function backToPrevious() {
+
+      if (titleDom.innerHTML === "Innstillinger") {
+         redirectToAccount();
+      } else {
+         loadDefaultPage();
+      }
+
+   }
 
    function loadSetting(aSetting) {
 
       const setting = aSetting;
       if (setting) {
-         alert(setting);
+         console.log(setting)
+         titleDom.innerHTML = setting;
+         settingsGrid.innerHTML = "";
+         switch (setting) {
+            case "Passord":
+               loadPasswordPage();
+               break;
+            case "Om deg":
+               loadAboutMePage();
+               break;
+            case "Utseende":
+               loadAppearancePage();
+               break;
+            default:
+               loadDefaultPage();
+               break;
+         }
       }
    }
-
-   const settingsGrid = document.getElementById("settingsGrid");
 
    loadDefaultPage();
    async function loadDefaultPage() {
 
-      /*const myUsername = username;
-      const body = { "authToken": token, "userInfo": user, "viewingUser": myUsername };
-      const url = `/users/details/${myUsername}`;
-
-      const resp = await callServerAPI(body, url);*/
-
       const resp = await getAccountDetails(userID);
-
-      console.log(resp.info)
 
       if (resp.hasOwnProperty("info")) {
 
-         const settings = resp.info.settings;
-         const userinfo = resp.info;
-
+         titleDom.innerHTML = "Innstillinger";
          settingsGrid.innerHTML = "";
 
-         settingsGrid.innerHTML += getTemplate("Displayname", "displaynameDiv", userinfo.displayname);
-         settingsGrid.innerHTML += getTemplate("Brukernavn", "usernameDiv", userinfo.username);
+         const settings = resp.info.settings;
+         userinfo = resp.info;
+
+         //settingsGrid.innerHTML += getTemplate("Displayname", "displaynameDiv", userinfo.displayname);
+         settingsGrid.innerHTML += getTemplate("Displayname", "displaynameDiv", `<input style="text-align:right;" class='settingsInput' value='${userinfo.displayname}'></input>`, "borderTop");
+         //settingsGrid.innerHTML += getTemplate("Brukernavn", "usernameDiv", userinfo.username);
+         settingsGrid.innerHTML += getTemplate("Brukernavn", "usernameDiv", `<input style="text-align:right;" class='settingsInput' value='${userinfo.username}'></input>`);
+
          settingsGrid.innerHTML += getTemplateWithBtn("Passord", "passwordDiv");
 
          settingsGrid.innerHTML += getTemplateWithBtn("Om deg", "aboutDiv", "spacingTop");
@@ -288,6 +210,68 @@
          redirectToAccount();
       }
    }
+
+   function loadPasswordPage() {
+
+      settingsGrid.innerHTML = justTextTemplate("Her kan du endre passordet ditt her", "left");
+
+      settingsGrid.innerHTML += getCenteredTextTemplate("Skriv inn eksisterende passord", "", "borderTop");
+      settingsGrid.innerHTML += getCenteredTextTemplate("<input class='settingsInput' id='exsistingPsw' type='password' placeholder='Fyll inn'></input>");
+
+      settingsGrid.innerHTML += getCenteredTextTemplate("Skriv inn ditt nye ønskede passord", "usernameDiv", "spacingTop");
+      settingsGrid.innerHTML += getCenteredTextTemplate("<input class='settingsInput' id='newPsw' type='password' placeholder='Fyll inn'></input>");
+
+      settingsGrid.innerHTML += getCenteredTextTemplate("Gjenta ditt nye ønskede passord", "usernameDiv", "spacingTop");
+      settingsGrid.innerHTML += getCenteredTextTemplate("<input class='settingsInput' id='repeatNewPsw' type='password' placeholder='Fyll inn'></input>");
+
+      settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="alert('savepsw');">Lagre</button>`, "test", "spacingTop");
+
+   }
+
+   function loadAboutMePage() {
+
+      settingsGrid.innerHTML = justTextTemplate("Her kan du velge høyde, vekt og alder. Om profilen din er offentlig, vises dette til andre", "left");
+
+      settingsGrid.innerHTML += getTemplate("Alder", "ageInp", `<input style="text-align:right;" class='settingsInput' value='${userinfo.info.age}'>år</input>`, "borderTop");
+
+      settingsGrid.innerHTML += getTemplate("Høyde", "heightInp", `<input style="text-align:right;" class='settingsInput' value='${userinfo.info.height}'>cm</input>`, "spacingTop");
+      settingsGrid.innerHTML += getTemplate("Vekt", "weightInp", `<input style="text-align:right;" class='settingsInput' value='${userinfo.info.weight}'>kg</input>`);
+
+      settingsGrid.innerHTML += justTextTemplate(`Om du ikke ønsker å velge vekt eller høyde, kan du bruke standard verdier. <button class='settingsButton' onClick="alert('defaultVals');">Trykk her</button>`, "left");
+
+      settingsGrid.innerHTML += getTemplate("Treningssenter", "gymInp", `<input style="text-align:right;" class='settingsInput' value='${userinfo.info.gym}'></input>`, "borderTop");
+
+   }
+
+   function loadAppearancePage() {
+
+      settingsGrid.innerHTML = justTextTemplate("Her kan du endre utseende på appen!", "left");
+
+      const themeKeys = Object.keys(allowedThemes);
+      let themeColorOptionsHTML = "";
+      for (let i = 0; i < themeKeys.length; i++) {
+         themeColorOptionsHTML += `<option value="${themeKeys[i]}">${allowedThemes[themeKeys[i]].name}</option>`;
+      }
+
+      let themeColorSelectionHTML = `
+      <select id="themeColorSelection">
+    ${themeColorOptionsHTML}
+  </select>
+      `;
+
+      const appearanceThemeHTML = `
+      <select id="appearanceThemeSelection">
+         <option value="1">Automatisk</option>
+  </select>
+      `;
+
+      //settingsGrid.innerHTML += getTemplate("Tema", "themeInp", `<input style="text-align:right;" class='settingsInput' value='${userinfo.info.age}'></input>`, "borderTop");
+      settingsGrid.innerHTML += getTemplate("Tema", "themeColorInp", themeColorSelectionHTML, "borderTop");
+
+      settingsGrid.innerHTML += getTemplate("Farge-tema", "appearanceThemeInp", appearanceThemeHTML, "borderTop");
+
+   }
+
 
    function getTemplate(aSetting, aDivId, aInfo, aSpacingTop) {
 
@@ -426,7 +410,7 @@
 
       const html =
          `
-<div class="userSettingsDefault noselect spacingTop" style="margin-bottom: 80px;">
+<div class="userSettingsDefault noselect spacingTop" style="margin-bottom:80px;">
       <div id="cS1" class="borderT">
       </div>
       <div id="gsSetting">
@@ -488,6 +472,61 @@
          </div>
 `;
       return html;
+   }
+
+   function getCenteredTextTemplate(aDetails, aDivId, aSpacingTop) {
+
+      const details = aDetails || "Det har oppstått et problem";
+      const divId = aDivId || "";
+      const spacingTop = aSpacingTop || "";
+      let borderT = "";
+
+      if (spacingTop) {
+         borderT = "borderT";
+      }
+
+      const html =
+         `
+<div id="${divId}" class="userSettingsCenteredItems noselect ${spacingTop}">
+      <div id="cSC1" class="${borderT}">
+      </div>
+      <div id="gsCenteredItems">
+         <p id="sCenteredItems">
+            ${details}
+         </p>
+      </div>
+      <div id="cSC2" class="borderB">
+      </div>
+   </div>
+`;
+      return html;
+   }
+
+   function justTextTemplate(aText, aTextAlign) {
+
+      if (aTextAlign !== "left" && aTextAlign !== "center") {
+         aTextAlign = "left";
+      }
+
+      const text = aText;
+      const textAlign = aTextAlign;
+
+      const html =
+         `
+<div class="userSettingsJustText noselect" style="text-align: ${textAlign};">
+      <div id="cSJC1">
+      </div>
+      <div id="gsJustText">
+         <p id="sJustText">
+            ${text}
+         </p>
+      </div>
+      <div id="cSJC2">
+      </div>
+   </div>
+`;
+      return html;
+
    }
 
 </script>
