@@ -247,28 +247,34 @@
 
       settingsGrid.innerHTML = justTextTemplate("Her kan du endre utseende på appen!", "left");
 
-      const themeKeys = Object.keys(allowedThemes);
-      let themeColorOptionsHTML = "";
-      for (let i = 0; i < themeKeys.length; i++) {
-         themeColorOptionsHTML += `<option value="${themeKeys[i]}">${allowedThemes[themeKeys[i]].name}</option>`;
-      }
-
-      let themeColorSelectionHTML = `
-      <select id="themeColorSelection">
-    ${themeColorOptionsHTML}
-  </select>
-      `;
-
       const appearanceThemeHTML = `
       <select id="appearanceThemeSelection">
          <option value="1">Automatisk</option>
   </select>
       `;
 
-      //settingsGrid.innerHTML += getTemplate("Tema", "themeInp", `<input style="text-align:right;" class='settingsInput' value='${userinfo.info.age}'></input>`, "borderTop");
-      settingsGrid.innerHTML += getTemplate("Tema", "themeColorInp", themeColorSelectionHTML, "borderTop");
+      settingsGrid.innerHTML += getTemplate("Tema", "appearanceThemeInp", appearanceThemeHTML, "borderTop");
 
-      settingsGrid.innerHTML += getTemplate("Farge-tema", "appearanceThemeInp", appearanceThemeHTML, "borderTop");
+      const themeKeys = Object.keys(allowedThemes);
+      let themeColorOptionsHTML = "";
+      let colorTheme = allowedThemes[0].theme;
+      const preferredTheme = sessionStorage.getItem("colorTheme") || colorTheme;
+      for (let i = 0; i < themeKeys.length; i++) {
+
+         if (preferredTheme === allowedThemes[themeKeys[i]].theme) {
+            themeColorOptionsHTML += `<option selected="selected" value="${themeKeys[i]}">${allowedThemes[themeKeys[i]].name}</option>`;
+         } else {
+            themeColorOptionsHTML += `<option value="${themeKeys[i]}">${allowedThemes[themeKeys[i]].name}</option>`;
+         }
+      }
+
+      const themeColorSelectionHTML = `
+      <select id="themeColorSelection">
+    ${themeColorOptionsHTML}
+  </select>
+      `;
+
+      settingsGrid.innerHTML += getTemplate("Farge-tema", "themeColorInp", themeColorSelectionHTML, "borderTop");
 
    }
 

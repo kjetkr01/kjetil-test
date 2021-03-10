@@ -42,7 +42,7 @@ if (user) {
 
         /* bare for nå, random theme */
         if (!sessionStorage.getItem("randomNum")) {
-            const randomNum = Math.floor(Math.random() * allowedThemes.length);
+            const randomNum = Math.floor(Math.random() * Object.entries(allowedThemes).length);
             sessionStorage.setItem("randomNum", randomNum);
         }
 
@@ -52,7 +52,13 @@ if (user) {
 
         //const preferredColorTheme = "default";
 
-        if (preferredColorTheme !== sessionStorage.getItem("colorTheme") && allowedThemes.includes(preferredColorTheme) === true) {
+        const themeKeys = Object.keys(allowedThemes);
+        const checkAllowedThemes = [];
+        for (let i = 0; i < themeKeys.length; i++) {
+            checkAllowedThemes.push(allowedThemes[themeKeys[i]].theme);
+        }
+
+        if (preferredColorTheme !== sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(preferredColorTheme) === true) {
             sessionStorage.setItem("colorTheme", preferredColorTheme);
         }
 
