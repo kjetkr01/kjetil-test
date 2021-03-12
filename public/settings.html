@@ -110,6 +110,7 @@
 
       const setting = aSetting;
       if (setting) {
+
          console.log(setting)
          titleDom.innerHTML = setting;
          settingsGrid.innerHTML = "";
@@ -419,16 +420,17 @@
 
          for (let i = 0; i < usersKeys.length; i++) {
 
+            const currentUser = resp[usersKeys[i]];
+
             const usersTemplateHTML = `
-         <p class="settingsPendingUserFullName" onClick="viewUser('2');">${resp[usersKeys[i]].displayname}</p>
-         <p class="settingsPendingUsername" onClick="viewUser('2');">${resp[usersKeys[i]].username}</p>
-         <p class="settingsPendingUsername">${resp[usersKeys[i]].id}</p>
-         `;
+            <p class="settingsPendingUserFullName" onClick="viewUser('${currentUser.id}');">${currentUser.displayname}</p>
+            <p class="settingsPendingUsername" onClick="viewUser('${currentUser.id}');">${currentUser.username}</p>
+            <p class="settingsPendingUsername">${currentUser.id}</p>
+            <p class="settingsPendingUsername">Gi API tilgang (hasAPI?)</p>
+            `;
 
-            settingsGrid.innerHTML += getCenteredTextTemplate(usersTemplateHTML, `${resp[usersKeys[i]].username}Div`, "spacingTop");
+            settingsGrid.innerHTML += getCenteredTextTemplate(usersTemplateHTML, `${currentUser.username}Div`, "spacingTop");
          }
-
-
       }
 
       settingsGrid.innerHTML += getBottomSpacingTemplate();

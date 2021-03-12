@@ -286,12 +286,13 @@ class StorageHandler {
                         if (newUserUsername && newUserPassword && newUserDisplayname) {
 
 
-                            // fikse sånn at name blir hentet fra en liste i arrayList.js? Slik at navn kan endres enkelt
+                            // endre slik at kun value ? feks "publicProfile: true"
                             const settings = {
                                 "publicProfile": { "name": "Offentlig profil", "value": true },
                                 "displayLeaderboards": { "name": "Vis meg på ledertavler", "value": true },
                                 "displayWorkoutList": { "name": "Vis meg på 'hvem som trener i dag listen'", "value": true },
-                                "preferredColorTheme": { "name": "Utseende", "value": "auto" },
+                                "preferredTheme": { "name": "Tema", "value": "auto" },
+                                "preferredColorTheme": { "name": "Fare-tema", "value": 0 },
                                 "badgeSize": { "name": "Badge størrelse", "value": 0 },
                                 "badgeDetails": { "name": "Badge informasjon", "value": 0 },
                             };

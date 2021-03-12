@@ -1,7 +1,7 @@
 // global variables
 
 const applicationName = `Treningstatistikken`;
-const applicationVersionNumber = `1.0`;
+const applicationVersionNumber = `1.1`;
 const applicationVersionState = `demo`;
 const applicationFullVersion = `Versjon ${applicationVersionNumber} (${applicationVersionState})`;
 
@@ -42,20 +42,7 @@ if (user) {
         username = userDisplayname.username;
         userID = userDisplayname.id;
 
-        //showGymCloseTime = userDisplayname.showGymCloseTime;
-        //preferredColorTheme = userDisplayname.preferredColorTheme;
-
-        /* bare for nå, random theme */
-        if (!sessionStorage.getItem("randomNum")) {
-            const randomNum = Math.floor(Math.random() * Object.entries(allowedThemes).length);
-            sessionStorage.setItem("randomNum", randomNum);
-        }
-
-        const randomTheme = sessionStorage.getItem("randomNum");
-        const preferredColorTheme = allowedThemes[randomTheme].theme;
-        /* slutt for "bare for nå, random theme"  */
-
-        //const preferredColorTheme = "default";
+        const preferredColorTheme = allowedThemes[userDisplayname.preferredColorTheme].theme;
 
         const themeKeys = Object.keys(allowedThemes);
         const checkAllowedThemes = [];
