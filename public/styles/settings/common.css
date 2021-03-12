@@ -5,6 +5,7 @@ background-color: var(--main-backgroundColor3);
 }
 
 #backBtn {
+    margin-top: 3px;
 margin-left: 20px;
 }
 
