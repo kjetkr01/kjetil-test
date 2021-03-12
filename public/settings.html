@@ -426,7 +426,7 @@
 
       settingsGrid.innerHTML = justTextTemplate("Her kan du se ulike APIer og din API key.", "left");
 
-      settingsGrid.innerHTML += getTemplate("Din API Key", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.apikey}' onkeypress="return false;"></input>`, "borderTop");
+      settingsGrid.innerHTML += getTemplate("Din API Key", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.apikey}' readonly="readonly"></input>`, "borderTop");
 
 
       const config = {
@@ -460,6 +460,9 @@
       const exampleAPIData = await exampleAPIResponse.json();
 
       settingsGrid.innerHTML += getAPITextTemplate(JSON.stringify(exampleAPIData));
+
+      settingsGrid.innerHTML += getBottomSpacingTemplate();
+
    }
 
    async function acceptPendingUser(username, acceptOrDeny) {
@@ -771,6 +774,26 @@
          </p>
       </div>
       <div id="cSCA2" class="borderB">
+      </div>
+      </div>
+      `;
+      return html;
+   }
+
+
+
+   function getBottomSpacingTemplate() {
+
+      const html =
+         `
+      <div class="userSettingsJustText noselect" style="background-color:red;">
+      <div id="cSJC1">
+      </div>
+      <div id="gsJustText">
+      <p id="sJustText">
+      </p>
+      </div>
+      <div id="cSJC2">
       </div>
       </div>
       `;
