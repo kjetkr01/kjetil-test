@@ -74,7 +74,6 @@
 
       <div id="Gtitle">
          <p id="title" class="noselect">
-            Innstillinger
          </p>
       </div>
 
@@ -94,13 +93,15 @@
    const titleDom = document.getElementById("title");
    const settingsGrid = document.getElementById("settingsGrid");
    let userInfo = null;
+   let settings = null;
 
    function backToPrevious() {
 
       if (titleDom.innerHTML === "Innstillinger") {
+         sessionStorage.removeItem("currentSetting");
          redirectToAccount();
       } else {
-         loadDefaultPage();
+         loadSetting("Innstillinger");
       }
 
    }
@@ -114,100 +115,133 @@
          settingsGrid.innerHTML = "";
          switch (setting) {
             case "Passord":
+               cacheCurrentSetting(setting);
                loadPasswordPage();
                break;
             case "Om deg":
+               cacheCurrentSetting(setting);
                loadAboutMePage();
                break;
             case "Utseende":
+               cacheCurrentSetting(setting);
                loadAppearancePage();
                break;
+            case "Fremgangs info":
+               cacheCurrentSetting(setting);
+               loadProgressionInfoPage();
+               break;
+            case "Om appen":
+               cacheCurrentSetting(setting);
+               loadAboutAppPage();
+               break;
+            case "pendingUsers":
+               cacheCurrentSetting(setting);
+               loadPendingUsersPage();
+               break;
             default:
+               cacheCurrentSetting(setting);
                loadDefaultPage();
                break;
          }
       }
    }
 
-   loadDefaultPage();
-   async function loadDefaultPage() {
+   updateUserInfo();
+   async function updateUserInfo() {
 
       const resp = await getAccountDetails(userID);
 
       if (resp.hasOwnProperty("info")) {
 
-         titleDom.innerHTML = "Innstillinger";
-         settingsGrid.innerHTML = "";
+         userInfo = resp.info;
+         settings = resp.info.settings;
 
-         const settings = resp.info.settings;
-         userinfo = resp.info;
+         const currentSetting = sessionStorage.getItem("currentSetting") || "Innstillinger";
 
-         //settingsGrid.innerHTML += getTemplate("Displayname", "displaynameDiv", userinfo.displayname);
-         settingsGrid.innerHTML += getTemplate("Displayname", "displaynameDiv", `<input style="text-align:right;" class='settingsInput' value='${userinfo.displayname}'></input>`, "borderTop");
-         //settingsGrid.innerHTML += getTemplate("Brukernavn", "usernameDiv", userinfo.username);
-         settingsGrid.innerHTML += getTemplate("Brukernavn", "usernameDiv", `<input style="text-align:right;" class='settingsInput' value='${userinfo.username}'></input>`);
-
-         settingsGrid.innerHTML += getTemplateWithBtn("Passord", "passwordDiv");
-
-         settingsGrid.innerHTML += getTemplateWithBtn("Om deg", "aboutDiv", "spacingTop");
-
-         if (settings.publicProfile.value === true) {
-            settingsGrid.innerHTML += getTemplateWithCheckbox("Privat profil", "profileVisibilityDiv", true, "spacingTop");
-         } else {
-            settingsGrid.innerHTML += getTemplateWithCheckbox("Privat profil", "profileVisibilityDiv", false, "spacingTop");
-         }
-
-         if (settings.displayLeaderboards.value === true) {
-            settingsGrid.innerHTML += getTemplateWithCheckbox("Ledertavler synlighet", "leaderboardsVisibilityDiv", true);
-         } else {
-            settingsGrid.innerHTML += getTemplateWithCheckbox("Ledertavler synlighet", "leaderboardsVisibilityDiv", false);
-         }
-
-         if (settings.displayWorkoutList.value === true) {
-            settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", "workoutTodayListDiv", true);
-         } else {
-            settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", "workoutTodayListDiv", false);
-         }
-
-
-         settingsGrid.innerHTML += getTemplateWithBtn("Utseende", "appearanceDiv", "spacingTop");
-         settingsGrid.innerHTML += getTemplateWithBtn("Fremgangs info", "appearanceDiv");
-
-         settingsGrid.innerHTML += getTemplateWithBtn("Om appen", "aboutAppDiv", "spacingTop");
-
-         if (userinfo.hasOwnProperty("isadmin")) {
-            if (userinfo.isadmin === true) {
-
-               settingsGrid.innerHTML += getPendingRequestsTemplate();
-
-            }
-         }
-
-         if (userinfo.hasOwnProperty("apikey")) {
-            settingsGrid.innerHTML += getTemplateWithBtn("API", "apiDiv");
-         }
-
-         settingsGrid.innerHTML += getLogoutBtn();
-
-         if (userinfo.hasOwnProperty("isadmin")) {
-            if (userinfo.isadmin === true) {
-
-               const body = { "authToken": token, "userInfo": user, "onlyNumbers": true };
-               const url = `/users/list/pending`;
-
-               const resp = await callServerAPI(body, url);
-
-               if (resp) {
-                  if (resp.length > 0) {
-                     const pendingRequestsTxt = document.getElementsByName("pendingRequestsTxt");
-                     pendingRequestsTxt[0].innerHTML = `Forespørsler (${resp.length})`;
-                  }
-               }
-            }
-         }
+         loadSetting(currentSetting);
 
       } else {
          redirectToAccount();
+      }
+   }
+
+   function cacheCurrentSetting(aCurrentSetting) {
+
+      if (!aCurrentSetting) {
+         aCurrentSetting = "Innstillinger";
+      }
+
+      const currentSetting = aCurrentSetting;
+
+      sessionStorage.setItem("currentSetting", currentSetting);
+
+   }
+
+   async function loadDefaultPage() {
+
+      titleDom.innerHTML = "Innstillinger";
+      settingsGrid.innerHTML = "";
+
+      settingsGrid.innerHTML += getTemplate("Displayname", "displaynameDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.displayname}'></input>`, "borderTop");
+      settingsGrid.innerHTML += getTemplate("Brukernavn", "usernameDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.username}'></input>`);
+
+      settingsGrid.innerHTML += getTemplateWithBtn("Passord", "passwordDiv");
+
+      settingsGrid.innerHTML += getTemplateWithBtn("Om deg", "aboutDiv", "spacingTop");
+
+      if (settings.publicProfile.value === true) {
+         settingsGrid.innerHTML += getTemplateWithCheckbox("Privat profil", "profileVisibilityDiv", true, "spacingTop");
+      } else {
+         settingsGrid.innerHTML += getTemplateWithCheckbox("Privat profil", "profileVisibilityDiv", false, "spacingTop");
+      }
+
+      if (settings.displayLeaderboards.value === true) {
+         settingsGrid.innerHTML += getTemplateWithCheckbox("Ledertavler synlighet", "leaderboardsVisibilityDiv", true);
+      } else {
+         settingsGrid.innerHTML += getTemplateWithCheckbox("Ledertavler synlighet", "leaderboardsVisibilityDiv", false);
+      }
+
+      if (settings.displayWorkoutList.value === true) {
+         settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", "workoutTodayListDiv", true);
+      } else {
+         settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", "workoutTodayListDiv", false);
+      }
+
+
+      settingsGrid.innerHTML += getTemplateWithBtn("Utseende", "appearanceDiv", "spacingTop");
+      settingsGrid.innerHTML += getTemplateWithBtn("Fremgangs info", "appearanceDiv");
+
+      settingsGrid.innerHTML += getTemplateWithBtn("Om appen", "aboutAppDiv", "spacingTop");
+
+      if (userInfo.hasOwnProperty("isadmin")) {
+         if (userInfo.isadmin === true) {
+
+            settingsGrid.innerHTML += getPendingRequestsTemplate();
+
+         }
+      }
+
+      if (userInfo.hasOwnProperty("apikey")) {
+         settingsGrid.innerHTML += getTemplateWithBtn("API", "apiDiv");
+      }
+
+      settingsGrid.innerHTML += getLogoutBtn();
+
+      if (userInfo.hasOwnProperty("isadmin")) {
+         if (userInfo.isadmin === true) {
+
+            const body = { "authToken": token, "userInfo": user, "onlyNumbers": true };
+            const url = `/users/list/pending`;
+
+            const resp = await callServerAPI(body, url);
+
+            if (resp) {
+               if (resp.length > 0) {
+                  const pendingRequestsTxt = document.getElementsByName("pendingRequestsTxt");
+                  pendingRequestsTxt[0].innerHTML = `Forespørsler (${resp.length})`;
+               }
+            }
+         }
       }
    }
 
@@ -224,7 +258,7 @@
       settingsGrid.innerHTML += getCenteredTextTemplate("Gjenta ditt nye ønskede passord", "usernameDiv", "spacingTop");
       settingsGrid.innerHTML += getCenteredTextTemplate("<input class='settingsInput' id='repeatNewPsw' type='password' placeholder='Fyll inn'></input>");
 
-      settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="alert('savepsw');">Lagre</button>`, "test", "spacingTop");
+      settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="alert('savepsw');">Oppdater passord</button>`, "test", "spacingTop");
 
    }
 
@@ -232,15 +266,15 @@
 
       settingsGrid.innerHTML = justTextTemplate("Her kan du velge høyde, vekt og alder. Om profilen din er offentlig, vises dette til andre", "left");
 
-      settingsGrid.innerHTML += getTemplate("Alder", "ageInp", `<input style="text-align:right;" class='settingsInput' value='${userinfo.info.age}'>år</input>`, "borderTop");
+      settingsGrid.innerHTML += getTemplate("Treningssenter", "gymInp", `<input style="text-align:right;" class='settingsInput' value='${userInfo.info.gym}'></input>`, "borderTop");
+      settingsGrid.innerHTML += getTemplate("Alder", "ageInp", `<input style="text-align:right;" class='settingsInput' value='${userInfo.info.age}'>år</input>`);
 
-      settingsGrid.innerHTML += getTemplate("Høyde", "heightInp", `<input style="text-align:right;" class='settingsInput' value='${userinfo.info.height}'>cm</input>`, "spacingTop");
-      settingsGrid.innerHTML += getTemplate("Vekt", "weightInp", `<input style="text-align:right;" class='settingsInput' value='${userinfo.info.weight}'>kg</input>`);
+      settingsGrid.innerHTML += getTemplate("Høyde", "heightInp", `<input style="text-align:right;" class='settingsInput' value='${userInfo.info.height}'>cm</input>`, "spacingTop");
+      settingsGrid.innerHTML += getTemplate("Vekt", "weightInp", `<input style="text-align:right;" class='settingsInput' value='${userInfo.info.weight}'>kg</input>`);
 
-      settingsGrid.innerHTML += justTextTemplate(`Om du ikke ønsker å velge vekt eller høyde, kan du bruke standard verdier. <button class='settingsButton' onClick="alert('defaultVals');">Trykk her</button>`, "left");
+      settingsGrid.innerHTML += justTextTemplate(`Om du ikke ønsker å velge vekt eller høyde, kan du bruke standard verdier.`, "left");
 
-      settingsGrid.innerHTML += getTemplate("Treningssenter", "gymInp", `<input style="text-align:right;" class='settingsInput' value='${userinfo.info.gym}'></input>`, "borderTop");
-
+      settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="alert('defaultVals');">Standard verdier</button>`, "test1", "borderTop");
    }
 
    function loadAppearancePage() {
@@ -274,7 +308,100 @@
   </select>
       `;
 
-      settingsGrid.innerHTML += getTemplate("Farge-tema", "themeColorInp", themeColorSelectionHTML, "borderTop");
+      settingsGrid.innerHTML += getTemplate("Farge-tema", "themeColorInp", themeColorSelectionHTML);
+
+   }
+
+   function loadProgressionInfoPage() {
+
+      settingsGrid.innerHTML = justTextTemplate("Her kan du endre hvor mye informasjon du ønsker å se på startsiden!", "left");
+
+      const badeSizeHTML = `
+      <select id="badgeSizeSelection">
+         <option value="1">Stor</option>
+         <option value="2">Liten</option>
+  </select>
+      `;
+
+      settingsGrid.innerHTML += getTemplate("Størrelse", "badgeSizeInp", badeSizeHTML, "borderTop");
+
+      const badeInfoHTML = `
+      <select id="badeInfoSelection">
+         <option value="1">Alt</option>
+         <option value="2">KG igjen</option>
+         <option value="3">% fremgang</option>
+  </select>
+      `;
+
+      settingsGrid.innerHTML += getTemplate("Informasjon", "badeInfoInp", badeInfoHTML);
+
+   }
+
+   function loadAboutAppPage() {
+
+      const imageHTML = `
+      <img id="logo" src="images/appIcon.png" alt="image" draggable="false" class="noselect settingsLogo"></img>
+      `;
+
+      settingsGrid.innerHTML = justTextTemplate(imageHTML, "center");
+
+      const appInfoHTML = `
+      <strong>${applicationName}</strong>
+      <br>
+      <p class="settingsApplicationFullVersion">${applicationFullVersion}</p>
+      `;
+
+      settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
+
+      const html = `
+      ${applicationName} er et app prosjekt utviklet av <button class="settingsButtonHighlightUser" onClick="viewUser('3');">Kjetil Kristiansen</button>.
+      
+      <br><br>
+      Hjelp til design:
+      <button class="settingsButtonHighlightUser" onClick="viewUser('2');">Christoffer Simonsen</button>,
+      Christian Jenssen,
+      Mandius Abelsen,
+      <button class="settingsButtonHighlightUser" onClick="viewUser('41');">Szilard Andri Reynisson</button>,
+      Sondre Olsen.
+      `;
+
+      settingsGrid.innerHTML += getCenteredTextTemplate(html, "infoAboutApp", "spacingTop");
+   }
+
+   async function loadPendingUsersPage() {
+
+      titleDom.innerHTML = "Forespørsler";
+
+      const body = { "authToken": token, "userInfo": user };
+      const url = `/users/list/pending`;
+
+      const resp = await callServerAPI(body, url);
+
+      const totalRequests = resp.length;
+      let HTMLText = `Det er totalt ${totalRequests} forespørseler<br>Godta eller avlså brukeren`;
+
+      settingsGrid.innerHTML = justTextTemplate(HTMLText, "left");
+
+      const defaultHTML = `
+      <p class="settingsPendingUserFullName">Visningsnavn</p>
+      <p class="settingsPendingUsername">Brukernavn</p>
+      `;
+
+      settingsGrid.innerHTML += getCenteredTextTemplate(defaultHTML, "infoAboutApp", "borderTop");
+
+      const pendingUserKeys = Object.keys(resp);
+
+      for (let i = 0; i < pendingUserKeys.length; i++) {
+
+         const pendingTemplateHTML = `
+         <p class="settingsPendingUserFullName">${resp[pendingUserKeys[i]].displayname}</p>
+         <p class="settingsPendingUsername">${resp[pendingUserKeys[i]].username}</p>
+         <button class="settingsAcceptPendingUser">Godta</button><button class="settingsDeclinePendingUser">Avslå</button>
+         `;
+
+         settingsGrid.innerHTML += getCenteredTextTemplate(pendingTemplateHTML, "infoAboutApp", "spacingTop");
+
+      }
 
    }
 

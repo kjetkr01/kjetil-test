@@ -1,5 +1,10 @@
 // global variables
 
+const applicationName = `Treningstatistikken`;
+const applicationVersionNumber = `1.0`;
+const applicationVersionState = `demo`;
+const applicationFullVersion = `Versjon ${applicationVersionNumber} (${applicationVersionState})`;
+
 const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
 const user = localStorage.getItem("user") || sessionStorage.getItem("user");
 let userDisplayname, showGymCloseTime, username, userID;
