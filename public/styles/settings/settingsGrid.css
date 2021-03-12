@@ -158,6 +158,51 @@ margin-left: 20px;
 .userSettingsJustText > #cSJC2 {
 grid-area: cSJC2;
 }
+
+
+
+.userSettingsAPIList {
+    font-size: 15px;
+    background-color: var(--main-backgroundColor3);
+    display: grid;
+    width: 100vw;
+    grid-template-areas:
+    
+    "cSCA1"
+    "gsaCenteredItems"
+    "cSCA2"
+    ;
+    
+    grid-template-rows: /* nedover */
+    
+    17.5px /* cSCA1 */
+    auto /* gsCenteredItems osv */
+    17.5px /* cSCA2 */
+    ;
+    
+    grid-template-columns: /* bortover */
+    1fr;
+    }
+    
+    .userSettingsAPIList > #cSCA1 {
+    grid-area: cSCA1;
+    }
+    
+    .userSettingsAPIList > #gsaCenteredItems {
+    grid-area: gsaCenteredItems;
+    text-align: left;
+    }
+    
+    #gsaCenteredItems {
+    color: var(--main-textColorDark);
+    margin-right: 20px;
+    margin-left: 20px;
+    }
+    
+    .userSettingsAPIList > #cSCA2 {
+    grid-area: cSCA2;
+    }
+
 }
 
 select {
@@ -295,7 +340,6 @@ border: transparent;
 color: var(--main-accountOwnerColor);
 }
 
-
 .settingsPendingUserFullName {
 font-weight: bold;
 }
@@ -312,8 +356,8 @@ color: red;
 font-size: 14px;
 background-color: transparent;
 border: transparent;
-margin-right: 7.5px;
-margin-left: 7.5px;
+margin-right: 12px;
+margin-left: 12px;
 }
 
 .settingsPendingUsername, .settingsAcceptPendingUser, .settingsDeclinePendingUser {
