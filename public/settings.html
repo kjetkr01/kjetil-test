@@ -426,7 +426,7 @@
             <p class="settingsPendingUserFullName" onClick="viewUser('${currentUser.id}');">${currentUser.displayname}</p>
             <p class="settingsPendingUsername" onClick="viewUser('${currentUser.id}');">${currentUser.username}</p>
             <p class="settingsPendingUsername">${currentUser.id}</p>
-            <p class="settingsPendingUsername">Gi API tilgang (hasAPI?)</p>
+            <p class="settingsPendingUsername">Gi/Fjern API tilgang (.hasAPI / true|false)</p>
             `;
 
             settingsGrid.innerHTML += getCenteredTextTemplate(usersTemplateHTML, `${currentUser.username}Div`, "spacingTop");
