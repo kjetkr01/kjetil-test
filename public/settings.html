@@ -264,6 +264,7 @@
 
       settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="alert('savepsw');">Oppdater passord</button>`, "test", "spacingTop");
 
+      settingsGrid.innerHTML += getBottomSpacingTemplate();
    }
 
    function loadAboutMePage() {
@@ -280,6 +281,7 @@
 
       settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="alert('defaultVals');">Standard verdier</button>`, "test1", "borderTop");
 
+      settingsGrid.innerHTML += getBottomSpacingTemplate();
    }
 
    function loadAppearancePage() {
@@ -315,6 +317,7 @@
 
       settingsGrid.innerHTML += getTemplate("Farge-tema", "themeColorInp", themeColorSelectionHTML);
 
+      settingsGrid.innerHTML += getBottomSpacingTemplate();
    }
 
    function loadProgressionInfoPage() {
@@ -340,6 +343,7 @@
 
       settingsGrid.innerHTML += getTemplate("Informasjon", "badeInfoInp", badeInfoHTML);
 
+      settingsGrid.innerHTML += getBottomSpacingTemplate();
    }
 
    function loadAboutAppPage() {
@@ -371,6 +375,8 @@
       `;
 
       settingsGrid.innerHTML += getCenteredTextTemplate(html, "infoAboutApp", "spacingTop");
+
+      settingsGrid.innerHTML += getBottomSpacingTemplate();
    }
 
    async function loadPendingUsersPage() {
@@ -420,6 +426,8 @@
 
          }
       }
+
+      settingsGrid.innerHTML += getBottomSpacingTemplate();
    }
 
    async function loadAPIPage() {
@@ -786,7 +794,7 @@
 
       const html =
          `
-      <div class="userSettingsJustText noselect" style="background-color:red;">
+      <div class="userSettingsJustText noselect" style="margin-bottom:30px;">
       <div id="cSJC1">
       </div>
       <div id="gsJustText">
