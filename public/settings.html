@@ -138,6 +138,10 @@
                cacheCurrentSetting(setting);
                loadPendingUsersPage();
                break;
+            case "Brukere":
+               cacheCurrentSetting(setting);
+               loadUsersListPage();
+               break;
             case "API":
                cacheCurrentSetting(setting);
                loadAPIPage();
@@ -219,9 +223,8 @@
 
       if (userInfo.hasOwnProperty("isadmin")) {
          if (userInfo.isadmin === true) {
-
             settingsGrid.innerHTML += getPendingRequestsTemplate();
-
+            settingsGrid.innerHTML += getTemplateWithBtn("Brukere", "usersDiv");
          }
       }
 
@@ -379,6 +382,58 @@
       settingsGrid.innerHTML += getBottomSpacingTemplate();
    }
 
+   async function loadUsersListPage() {
+
+      const body = { "authToken": token, "userInfo": user };
+      const url = `/users/list/all`;
+
+      const resp = await callServerAPI(body, url);
+
+      let totalUsers = 0;
+      if (resp[0].hasOwnProperty("id")) {
+         totalUsers = resp.length
+      }
+
+      let usersText = `Det er totalt ${totalUsers} brukere<br>Her er listen med brukere`;
+      if (totalUsers === 1) {
+         usersText = `Det er totalt ${totalUsers} brukere<br>Her er listen med brukere`;
+      } else if (totalUsers === 0) {
+         usersText = `Det er ingen brukere`;
+      }
+
+
+
+      settingsGrid.innerHTML = justTextTemplate(usersText, "left");
+
+      if (resp[0].hasOwnProperty("id")) {
+
+         const usersKeys = Object.keys(resp);
+
+         const defaultHTML = `
+         <p class="settingsPendingUserFullName">Visningsnavn</p>
+         <p class="settingsPendingUsername">Brukernavn</p>
+         <p class="settingsPendingUsername">ID</p>
+         `;
+
+         settingsGrid.innerHTML += getCenteredTextTemplate(defaultHTML, "infoAboutApp2", "borderTop");
+
+         for (let i = 0; i < usersKeys.length; i++) {
+
+            const usersTemplateHTML = `
+         <p class="settingsPendingUserFullName" onClick="viewUser('2');">${resp[usersKeys[i]].displayname}</p>
+         <p class="settingsPendingUsername" onClick="viewUser('2');">${resp[usersKeys[i]].username}</p>
+         <p class="settingsPendingUsername">${resp[usersKeys[i]].id}</p>
+         `;
+
+            settingsGrid.innerHTML += getCenteredTextTemplate(usersTemplateHTML, `${resp[usersKeys[i]].username}Div`, "spacingTop");
+         }
+
+
+      }
+
+      settingsGrid.innerHTML += getBottomSpacingTemplate();
+   }
+
    async function loadPendingUsersPage() {
 
       titleDom.innerHTML = "Forespørsler";
@@ -409,7 +464,7 @@
          <p class="settingsPendingUsername">Brukernavn</p>
          `;
 
-         settingsGrid.innerHTML += getCenteredTextTemplate(defaultHTML, "infoAboutApp", "borderTop");
+         settingsGrid.innerHTML += getCenteredTextTemplate(defaultHTML, "infoAboutApp2", "borderTop");
 
          const pendingUserKeys = Object.keys(resp);
 
@@ -422,7 +477,7 @@
          <button class="settingsDeclinePendingUser" onClick='acceptPendingUser("${resp[pendingUserKeys[i]].username}", false);'>Avslå</button>
          `;
 
-            settingsGrid.innerHTML += getCenteredTextTemplate(pendingTemplateHTML, "infoAboutApp", "spacingTop");
+            settingsGrid.innerHTML += getCenteredTextTemplate(pendingTemplateHTML, "infoAboutApp1", "spacingTop");
 
          }
       }
