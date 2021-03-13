@@ -151,11 +151,26 @@ server.post("/autenticate", async function (req, res) {
 
 server.post("/users/list/all", auth, async (req, res) => {
 
-     const listOfUsers = await getListOfUsers();
+     let username = req.body.userInfo;
+     username = JSON.parse(username);
+     username = username.username;
 
-     if (listOfUsers) {
+     if (username) {
 
-          res.status(200).json(listOfUsers).end();
+          const listOfUsers = await getListOfUsers(username);
+
+          if (listOfUsers.status === true) {
+
+               const respWithUsers = {
+                    "allUsers": listOfUsers.allUsers,
+                    "allAPIUsers": listOfUsers.allAPIUsers
+               }
+
+               res.status(200).json(respWithUsers).end();
+
+          } else {
+               res.status(403).json(`Feil, prøv igjen`).end();
+          }
 
      } else {
           res.status(403).json(`Feil, prøv igjen`).end();

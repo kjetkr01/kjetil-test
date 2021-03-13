@@ -83,20 +83,34 @@ class StorageHandler {
 
     //  -------------------------------  get a list of all users in application  ------------------------------- //
 
-    async getListOfAllUsers() {
+    async getListOfAllUsers(username) {
         const client = new pg.Client(this.credentials);
-        let results = null;
+        let results = false;
+        let allUsers = null;
+        let allAPIUsers;
         try {
             await client.connect();
             // evt legge til lifts og andre ting brukeren trenger å motta
-            results = await client.query('SELECT "id","username","displayname" FROM "public"."users"');
-            results = (results.rows.length > 0) ? results.rows : null;
+
+            const checkIfAdmin = await client.query('SELECT "username" FROM "users" WHERE username=$1 AND isadmin=true', [username]);
+
+            if (checkIfAdmin.rows.length !== 0) {
+                allAPIUsers = await client.query('SELECT "username" FROM "public"."api_keys"');
+                allAPIUsers = allAPIUsers.rows;
+
+                allUsers = await client.query('SELECT "id","username","displayname" FROM "public"."users"');
+                allUsers = allUsers.rows;
+                results = true;
+            } else {
+                results = false;
+            }
+
             client.end();
         } catch (err) {
             console.log(err);
         }
 
-        return results;
+        return { "status": results, "allUsers": allUsers, "allAPIUsers": allAPIUsers };
     }
 
     //

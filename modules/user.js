@@ -39,9 +39,9 @@ async function validateUser(username, password) {
     }
 }
 
-async function getListOfUsers() {
+async function getListOfUsers(username) {
     try {
-        const resp = await database.getListOfAllUsers();
+        const resp = await database.getListOfAllUsers(username);
         return resp;
     } catch (error) {
         console.error(error);

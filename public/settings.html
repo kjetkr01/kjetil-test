@@ -99,13 +99,6 @@
    let settings = null;
    let savedScrollPos = null;
 
-   function scrollToSavedPos() {
-
-      if (savedScrollPos) {
-         console.log("scrolled to saved pos:" + savedScrollPos);
-         settingsDom.scrollTo(0, savedScrollPos);
-      }
-   }
 
    settingsDom.addEventListener("scroll", function () {
       if (titleDom.innerHTML === "Innstillinger") {
@@ -114,6 +107,12 @@
       }
    });
 
+   function scrollToSavedPos() {
+
+      if (savedScrollPos) {
+         settingsDom.scrollTo(0, savedScrollPos);
+      }
+   }
 
    function backToPrevious() {
 
@@ -413,47 +412,60 @@
 
       const resp = await callServerAPI(body, url);
 
-      let totalUsers = 0;
-      if (resp[0].hasOwnProperty("id")) {
-         totalUsers = resp.length
-      }
+      if (resp.hasOwnProperty("allUsers") && resp.hasOwnProperty("allAPIUsers")) {
 
-      let usersText = `Det er totalt ${totalUsers} brukere<br>Her er listen med brukere`;
-      if (totalUsers === 1) {
-         usersText = `Det er totalt ${totalUsers} brukere<br>Her er listen med brukere`;
-      } else if (totalUsers === 0) {
-         usersText = `Det er ingen brukere`;
-      }
+         let totalUsers = 0;
+         const allAPIUsersArr = [];
 
-
-
-      settingsGrid.innerHTML = justTextTemplate(usersText, "left");
-
-      if (resp[0].hasOwnProperty("id")) {
-
-         const usersKeys = Object.keys(resp);
-
-         const defaultHTML = `
-         <p class="settingsPendingUserFullName">Visningsnavn</p>
-         <p class="settingsPendingUsername">Brukernavn</p>
-         <p class="settingsPendingUsername">ID</p>
-         `;
-
-         settingsGrid.innerHTML += getCenteredTextTemplate(defaultHTML, "", "borderTop");
-
-         for (let i = 0; i < usersKeys.length; i++) {
-
-            const currentUser = resp[usersKeys[i]];
-
-            const usersTemplateHTML = `
-            <p class="settingsPendingUserFullName" onClick="viewUser('${currentUser.id}');">${currentUser.displayname}</p>
-            <p class="settingsPendingUsername" onClick="viewUser('${currentUser.id}');">${currentUser.username}</p>
-            <p class="settingsPendingUsername">${currentUser.id}</p>
-            <p class="settingsPendingUsername">Gi/Fjern API tilgang (.hasAPI / true|false)</p>
-            `;
-
-            settingsGrid.innerHTML += getCenteredTextTemplate(usersTemplateHTML, "", "spacingTop");
+         for (let i = 0; i < resp.allAPIUsers.length; i++) {
+            allAPIUsersArr.push(resp.allAPIUsers[i].username);
          }
+
+         let totalAPIUsers = allAPIUsersArr.length;
+         if (resp.allUsers[0].hasOwnProperty("id")) {
+            totalUsers = resp.allUsers.length
+         }
+
+         let usersText = `Det er totalt ${totalUsers} brukere<br>${totalAPIUsers} av brukerene har API tilgang<br>Her er listen med brukere`;
+         if (totalUsers === 0) {
+            usersText = `Det er ingen brukere`;
+         }
+
+         settingsGrid.innerHTML = justTextTemplate(usersText, "left");
+
+         if (resp.allUsers[0].hasOwnProperty("id")) {
+
+            const usersKeys = Object.keys(resp.allUsers);
+
+            const defaultHTML = `
+                  <p class="settingsPendingUserFullName">Visningsnavn</p>
+                  <p class="settingsPendingUsername">Brukernavn</p>
+                  <p class="settingsPendingUsername">ID</p>
+                  `;
+
+            settingsGrid.innerHTML += getCenteredTextTemplate(defaultHTML, "", "borderTop");
+
+            for (let i = 0; i < usersKeys.length; i++) {
+
+               const currentUser = resp.allUsers[usersKeys[i]];
+
+               let hasAPIAccessTxt = `<button class="settingsAcceptPendingUser" onClick="alert('giveAPIAccess');">Gi API tilgang</button>`;
+
+               if (allAPIUsersArr.includes(currentUser.username)) {
+                  hasAPIAccessTxt = `<button class="settingsDeclinePendingUser" onClick="alert('removeAPIAccess');">Fjern API tilgang</button>`;
+               }
+
+               const usersTemplateHTML = `
+                     <p class="settingsPendingUserFullName" onClick="viewUser('${currentUser.id}');">${currentUser.displayname}</p>
+                     <p class="settingsPendingUsername" onClick="viewUser('${currentUser.id}');">${currentUser.username}</p>
+                     <p class="settingsPendingUsername">${currentUser.id}</p>
+                     <p class="settingsPendingUsername">${hasAPIAccessTxt}</p>
+                     `;
+
+               settingsGrid.innerHTML += getCenteredTextTemplate(usersTemplateHTML, "", "spacingTop");
+            }
+         }
+
       }
 
       settingsGrid.innerHTML += getBottomSpacingTemplate();
