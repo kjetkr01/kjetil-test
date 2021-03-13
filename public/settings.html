@@ -64,7 +64,8 @@
 
       <div id="GbackBtn">
          <svg id="backBtn" class="icons iconsDefaultColor fadeInLeft animate delaySmall" draggable="false"
-            onclick="backToPrevious();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22" style="width: 27px; height: 27px;">
+            onclick="backToPrevious();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22"
+            style="width: 27px; height: 27px;">
             <g id="Layer_2" data-name="Layer 2">
                <g id="Layer_1-2" data-name="Layer 1">
                   <polyline class="cls-1" points="21.25 1.24 2.48 20.02 20.45 37.99" />
@@ -111,8 +112,6 @@
 
       const setting = aSetting;
       if (setting) {
-
-         console.log(setting)
          titleDom.innerHTML = setting;
          settingsGrid.innerHTML = "";
          switch (setting) {
@@ -356,7 +355,7 @@
    function loadAboutAppPage() {
 
       const imageHTML = `
-      <img id="logo" src="images/appIcon.png" alt="image" draggable="false" class="noselect settingsLogo"></img>
+      <img id="logo" src="images/appIcon.png" alt="" draggable="false" class="noselect settingsLogo"></img>
       `;
 
       settingsGrid.innerHTML = justTextTemplate(imageHTML, "center");

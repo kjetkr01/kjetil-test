@@ -114,7 +114,7 @@ class StorageHandler {
             results = await client.query('SELECT "username","settings","lifts" FROM "public"."users"');
 
             for (let i = 0; i < results.rows.length; i++) {
-                if (results.rows[i].settings.displayLeaderboards.value === true) {
+                if (results.rows[i].settings.displayLeaderboards === true) {
 
                     const getLeaderboard = Object.keys(results.rows[i].lifts);
 
@@ -167,7 +167,7 @@ class StorageHandler {
 
                     const currentUsersLift = results.rows[i].lifts;
 
-                    if (results.rows[i].settings.displayLeaderboards.value === true && leaderboard === "Totalt") {
+                    if (results.rows[i].settings.displayLeaderboards === true && leaderboard === "Totalt") {
 
                         if (currentUsersLift.Benkpress && currentUsersLift.Knebøy && currentUsersLift.Markløft) {
 
@@ -189,7 +189,7 @@ class StorageHandler {
 
                 for (let i = 0; i < results.rows.length; i++) {
                     const currentUsersLift = results.rows[i].lifts;
-                    if (results.rows[i].settings.displayLeaderboards.value === true && currentUsersLift[leaderboard]) {
+                    if (results.rows[i].settings.displayLeaderboards === true && currentUsersLift[leaderboard]) {
 
                         if (currentUsersLift[leaderboard].ORM && currentUsersLift[leaderboard].ORM !== 0 && currentUsersLift[leaderboard].ORM !== "") {
                             //info[counter] = { "username": results.rows[i].username, [leaderboard]: results.rows[i].lifts[leaderboard].ORM };
@@ -288,13 +288,13 @@ class StorageHandler {
 
                             // endre slik at kun value ? feks "publicProfile: true"
                             const settings = {
-                                "publicProfile": { "name": "Offentlig profil", "value": true },
-                                "displayLeaderboards": { "name": "Vis meg på ledertavler", "value": true },
-                                "displayWorkoutList": { "name": "Vis meg på 'hvem som trener i dag listen'", "value": true },
-                                "preferredTheme": { "name": "Tema", "value": "auto" },
-                                "preferredColorTheme": { "name": "Fare-tema", "value": 0 },
-                                "badgeSize": { "name": "Badge størrelse", "value": 0 },
-                                "badgeDetails": { "name": "Badge informasjon", "value": 0 },
+                                "publicProfile": true,
+                                "displayLeaderboards": true,
+                                "displayWorkoutList": true,
+                                "preferredTheme": 0,
+                                "preferredColorTheme": 0,
+                                "badgeSize": 0,
+                                "badgeDetails": 0,
                             };
 
                             const trainingSplit = {
@@ -394,7 +394,7 @@ class StorageHandler {
             if (results.rows[0] !== undefined) {
 
                 //if owner then access anyways
-                if (results.rows[0].settings.publicProfile.value === true || viewingUser === userID) {
+                if (results.rows[0].settings.publicProfile === true || viewingUser === userID) {
                     if (viewingUser === userID) {
                         results = await client.query('SELECT "id","username","displayname","settings","trainingsplit","lifts","goals","info","isadmin" FROM "users" WHERE id=$1', [userID]);
 
@@ -504,7 +504,7 @@ class StorageHandler {
 
             const newSettings = results.rows[0].settings;
 
-            newSettings[setting].value = value;
+            newSettings[setting] = value;
 
             await client.query('UPDATE "users" SET settings=$1 WHERE username=$2', [newSettings, username]);
 
@@ -543,7 +543,7 @@ class StorageHandler {
             for (let i = 0; i < results.rows.length; i++) {
                 const todaysWorkout = results.rows[i].trainingsplit[dayTxt];
                 if (todaysWorkout) {
-                    if (results.rows[i].settings.displayWorkoutList.value === true && todaysWorkout.length > 0 && todaysWorkout !== "Fri") {
+                    if (results.rows[i].settings.displayWorkoutList === true && todaysWorkout.length > 0 && todaysWorkout !== "Fri") {
                         //info[counter] = { "username": results.rows[i].username, "userFullName": results.rows[i].displayname, "todaysWorkout": todaysWorkout };
                         //counter++;
                         infoList.push({ "id": results.rows[i].id, "userFullName": results.rows[i].displayname, "todaysWorkout": todaysWorkout });
@@ -739,7 +739,7 @@ class StorageHandler {
                 if (results.rows.length === 0) {
                     results = false;
                 } else {
-                    const userHasPublicProfile = results.rows[0].settings.publicProfile.value;
+                    const userHasPublicProfile = results.rows[0].settings.publicProfile;
 
                     if (userHasPublicProfile === true || isOwner === true) {
                         results = await client.query('SELECT "trainingsplit","displayname" FROM "users" WHERE username=$1', [user]);
@@ -803,7 +803,7 @@ class StorageHandler {
                 if (results.rows.length === 0) {
                     results = false;
                 } else {
-                    const userHasPublicProfile = results.rows[0].settings.publicProfile.value;
+                    const userHasPublicProfile = results.rows[0].settings.publicProfile;
 
                     if (userHasPublicProfile === true || isOwner === true) {
                         results = await client.query('SELECT "lifts","displayname" FROM "users" WHERE username=$1', [user]);

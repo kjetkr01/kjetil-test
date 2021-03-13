@@ -28,12 +28,6 @@ if (user) {
 
         userDisplayname = JSON.parse(user);
 
-        /*if (!sessionStorage.getItem("updated")) {
-            console.log("updating user object");
-            getAccountDetails(userDisplayname.username);
-            hasUpdatedInfo = true;
-        }*/
-
         username = userDisplayname.username;
         userID = userDisplayname.id;
 

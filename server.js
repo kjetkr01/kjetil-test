@@ -130,7 +130,7 @@ server.post("/autenticate", async function (req, res) {
                     "id": requestUser.userInfo.id,
                     "username": requestUser.userInfo.username,
                     "displayname": requestUser.userInfo.displayname,
-                    "preferredColorTheme": requestUser.userInfo.settings.preferredColorTheme.value,
+                    "preferredColorTheme": requestUser.userInfo.settings.preferredColorTheme,
                }
                const sessionToken = createToken(requestUser.userInfo);
                res.status(200).json({ "authToken": sessionToken, "user": userInfo }).end();
@@ -324,7 +324,7 @@ server.post("/users/details/:user", auth, async (req, res) => {
                               "id": resp.userDetails.id,
                               "username": resp.userDetails.username,
                               "displayname": resp.userDetails.displayname,
-                              "preferredColorTheme": resp.userDetails.settings.preferredColorTheme.value,
+                              "preferredColorTheme": resp.userDetails.settings.preferredColorTheme,
                          }
 
                          res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo }).end();
@@ -364,8 +364,7 @@ server.post("/user/details/settingsInfo", auth, async (req, res) => {
                "id": resp.userDetails.id,
                "username": resp.userDetails.username,
                "displayname": resp.userDetails.displayname,
-               "showGymCloseTime": resp.userDetails.settings.showGymCloseTime.value,
-               "preferredColorTheme": resp.userDetails.settings.preferredColorTheme.value,
+               "preferredColorTheme": resp.userDetails.settings.preferredColorTheme,
           }
 
           if (resp.status === true) {
