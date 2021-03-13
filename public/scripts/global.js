@@ -21,7 +21,7 @@ const allowedThemes = {
 
 //
 
-// fixed global variables
+// update global user variables
 
 if (user) {
     try {
@@ -48,6 +48,10 @@ if (user) {
     } catch (err) {
 
         console.log("invalid user object");
+        console.log("ERROR:");
+        console.log("------------------------------------");
+        console.log(err);
+        console.log("------------------------------------");
 
     }
 }
@@ -525,9 +529,6 @@ function checkConnection(aDom) {
             else {
                 domElement.textContent = "";
             }
-
-
-
         }
 
     }
@@ -585,6 +586,7 @@ function redirectToAccount() {
 
 function redirectToSettings() {
 
+    sessionStorage.removeItem("currentSetting");
     location.href = "settings.html";
 
 }

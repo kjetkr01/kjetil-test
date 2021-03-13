@@ -24,7 +24,6 @@ function scrollToSavedPos() {
 
 function backToPrevious() {
     if (titleDom.innerHTML === "Innstillinger") {
-        sessionStorage.removeItem("currentSetting");
         redirectToAccount();
     } else {
         loadSetting("Innstillinger");
@@ -52,4 +51,20 @@ function confirmLogout() {
         redirectToLogin();
 
     }
+}
+
+async function updateCheckboxSetting(aSetting, aValue) {
+
+    const setting = aSetting;
+    const value = aValue;
+
+    const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
+    const url = `/user/update/settings/${setting}`;
+
+    const resp = await callServerAPI(body, url);
+
+    if (resp === true) {
+        location.reload();
+    }
+
 }

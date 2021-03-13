@@ -1,17 +1,17 @@
 function getTemplate(aSetting, aDivId, aInfo, aSpacingTop) {
 
-    const setting = aSetting || "Innstillingen finnes ikke!";
-    const divId = aDivId || "";
-    const info = aInfo || "";
-    const spacingTop = aSpacingTop || "";
-    let borderT = "";
+   const setting = aSetting || "Innstillingen finnes ikke!";
+   const divId = aDivId || "";
+   const info = aInfo || "";
+   const spacingTop = aSpacingTop || "";
+   let borderT = "";
 
-    if (spacingTop) {
-        borderT = "borderT";
-    }
+   if (spacingTop) {
+      borderT = "borderT";
+   }
 
-    const html =
-        `
+   const html =
+      `
  <div id="${divId}" class="userSettingsDefault noselect ${spacingTop}">
           <div id="cS1" class="${borderT}">
           </div>
@@ -29,22 +29,22 @@ function getTemplate(aSetting, aDivId, aInfo, aSpacingTop) {
           </div>
        </div>
  `;
-    return html;
+   return html;
 }
 
 function getTemplateWithBtn(aSetting, aDivId, aSpacingTop) {
 
-    const setting = aSetting || "Innstillingen finnes ikke!";
-    const divId = aDivId || "";
-    const spacingTop = aSpacingTop || "";
-    let borderT = "";
+   const setting = aSetting || "Innstillingen finnes ikke!";
+   const divId = aDivId || "";
+   const spacingTop = aSpacingTop || "";
+   let borderT = "";
 
-    if (spacingTop) {
-        borderT = "borderT";
-    }
+   if (spacingTop) {
+      borderT = "borderT";
+   }
 
-    const html =
-        `
+   const html =
+      `
        <div id="${divId}" class="userSettingsDefault noselect ${spacingTop}">
           <div id="cS1" class="${borderT}">
           </div>
@@ -67,25 +67,26 @@ function getTemplateWithBtn(aSetting, aDivId, aSpacingTop) {
           </div>
        </div>
 `;
-    return html;
+   return html;
 }
 
 
 
-function getTemplateWithCheckbox(aSetting, aDivId, aChecked, aSpacingTop) {
+function getTemplateWithCheckbox(aSetting, aDivId, aChecked, aOnClickInfo, aSpacingTop) {
 
-    const setting = aSetting || "Innstillingen finnes ikke!";
-    const divId = aDivId || "";
-    const isChecked = aChecked || false;
-    const spacingTop = aSpacingTop || "";
-    let borderT = "";
+   const setting = aSetting || "Innstillingen finnes ikke!";
+   const divId = aDivId || "";
+   const isChecked = aChecked || false;
+   const onClickInfo = aOnClickInfo || "";
+   const spacingTop = aSpacingTop || "";
+   let borderT = "";
 
-    if (spacingTop) {
-        borderT = "borderT";
-    }
+   if (spacingTop) {
+      borderT = "borderT";
+   }
 
-    let html =
-        `
+   let html =
+      `
        <div id="${divId}" class="userSettingsDefault noselect ${spacingTop}">
           <div id="cS1" class="${borderT}">
           </div>
@@ -96,7 +97,7 @@ function getTemplateWithCheckbox(aSetting, aDivId, aChecked, aSpacingTop) {
           </div>
           <div id="gsInfo">
              <label id="sInfo" class="settingsCheckbox fadeIn">
-                <input type="checkbox">
+                <input onClick="updateCheckboxSetting('${onClickInfo}', true);" type="checkbox">
                 <span class="slider round"></span>
              </label>
           </div>
@@ -105,9 +106,9 @@ function getTemplateWithCheckbox(aSetting, aDivId, aChecked, aSpacingTop) {
        </div>
 `;
 
-    if (isChecked === true) {
-        html =
-            `
+   if (isChecked === true) {
+      html =
+         `
        <div id="${divId}" class="userSettingsDefault noselect ${spacingTop}">
           <div id="cS1" class="${borderT}">
           </div>
@@ -118,7 +119,7 @@ function getTemplateWithCheckbox(aSetting, aDivId, aChecked, aSpacingTop) {
           </div>
           <div id="gsInfo">
              <label id="sInfo" class="settingsCheckbox fadeIn">
-                <input type="checkbox" checked>
+                <input onClick="updateCheckboxSetting('${onClickInfo}', false);" type="checkbox" checked>
                 <span class="slider round"></span>
              </label>
           </div>
@@ -126,15 +127,15 @@ function getTemplateWithCheckbox(aSetting, aDivId, aChecked, aSpacingTop) {
           </div>
        </div>
 `;
-    }
+   }
 
-    return html;
+   return html;
 }
 
 function getLogoutBtn() {
 
-    const html =
-        `
+   const html =
+      `
 <div class="userSettingsDefault noselect spacingTop" style="margin-bottom:80px;">
     <div id="cS1" class="borderT">
     </div>
@@ -152,14 +153,14 @@ function getLogoutBtn() {
     </div>
  </div>
 `;
-    return html;
+   return html;
 }
 
 
 function getPendingRequestsTemplate() {
 
-    const html =
-        `
+   const html =
+      `
        <div id="pendingRequestsDiv" class="userSettingsDefault noselect">
           <div id="cS1">
           </div>
@@ -182,22 +183,22 @@ function getPendingRequestsTemplate() {
           </div>
        </div>
 `;
-    return html;
+   return html;
 }
 
 function getCenteredTextTemplate(aDetails, aDivId, aSpacingTop) {
 
-    const details = aDetails || "Det har oppstått et problem";
-    const divId = aDivId || "";
-    const spacingTop = aSpacingTop || "";
-    let borderT = "";
+   const details = aDetails || "Det har oppstått et problem";
+   const divId = aDivId || "";
+   const spacingTop = aSpacingTop || "";
+   let borderT = "";
 
-    if (spacingTop) {
-        borderT = "borderT";
-    }
+   if (spacingTop) {
+      borderT = "borderT";
+   }
 
-    const html =
-        `
+   const html =
+      `
 <div id="${divId}" class="userSettingsCenteredItems noselect ${spacingTop}">
     <div id="cSC1" class="${borderT}">
     </div>
@@ -210,20 +211,20 @@ function getCenteredTextTemplate(aDetails, aDivId, aSpacingTop) {
     </div>
  </div>
 `;
-    return html;
+   return html;
 }
 
 function justTextTemplate(aText, aTextAlign) {
 
-    if (aTextAlign !== "left" && aTextAlign !== "center") {
-        aTextAlign = "left";
-    }
+   if (aTextAlign !== "left" && aTextAlign !== "center") {
+      aTextAlign = "left";
+   }
 
-    const text = aText;
-    const textAlign = aTextAlign;
+   const text = aText;
+   const textAlign = aTextAlign;
 
-    const html =
-        `
+   const html =
+      `
 <div class="userSettingsJustText noselect" style="text-align: ${textAlign};">
     <div id="cSJC1">
     </div>
@@ -236,22 +237,22 @@ function justTextTemplate(aText, aTextAlign) {
     </div>
  </div>
 `;
-    return html;
+   return html;
 }
 
 function getAPITextTemplate(aDetails, aDivId, aSpacingTop) {
 
-    const details = aDetails || "Det har oppstått et problem";
-    const divId = aDivId || "";
-    const spacingTop = aSpacingTop || "";
-    let borderT = "";
+   const details = aDetails || "Det har oppstått et problem";
+   const divId = aDivId || "";
+   const spacingTop = aSpacingTop || "";
+   let borderT = "";
 
-    if (spacingTop) {
-        borderT = "borderT";
-    }
+   if (spacingTop) {
+      borderT = "borderT";
+   }
 
-    const html =
-        `
+   const html =
+      `
     <div id="${divId}" class="userSettingsAPIList ${spacingTop}">
     <div id="cSCA1" class="${borderT}">
     </div>
@@ -264,15 +265,15 @@ function getAPITextTemplate(aDetails, aDivId, aSpacingTop) {
     </div>
     </div>
     `;
-    return html;
+   return html;
 }
 
 
 
 function getBottomSpacingTemplate() {
 
-    const html =
-        `
+   const html =
+      `
     <div class="userSettingsJustText noselect" style="margin-bottom:30px;">
     <div id="cSJC1">
     </div>
@@ -284,5 +285,5 @@ function getBottomSpacingTemplate() {
     </div>
     </div>
     `;
-    return html;
+   return html;
 }
