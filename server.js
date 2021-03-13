@@ -594,10 +594,9 @@ server.get("/api", function (req, res) {
           { "url": "/getWorkoutInfo/{user}/{key}", "method": "GET" }, // denne brukes som eksempel i API innstillingen
           { "url": "/getTotalPB/{user}/{key}", "method": "GET" },
 
-
-          { "url": "Kommer snart:", "method": "null" },
-          { "url": "hent benk, knebøy, markløft + totalen / og / eller lifts (maks 3? / kan velge)", "method": "null" },
-          { "url": "hent mål i ulike løft (maks 3? / kan velge)", "method": "null" },
+          { "url": "Kommer snart:", "method": "" },
+          { "url": "hent benk, knebøy, markløft + totalen / og / eller lifts (maks 3? / kan velge)", "method": "" },
+          { "url": "hent mål i ulike løft (maks 3? / kan velge)", "method": "" },
      ];
      res.status(200).json(resp).end();
 });

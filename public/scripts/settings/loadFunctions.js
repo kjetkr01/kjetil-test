@@ -387,11 +387,7 @@ async function loadAPIPage() {
         Metode: ${data[i].method}
         `;
 
-        if (i === 0) {
-            settingsGrid.innerHTML += getAPITextTemplate(text, "", "spacingTop");
-        } else {
-            settingsGrid.innerHTML += getAPITextTemplate(text);
-        }
+        settingsGrid.innerHTML += getAPITextTemplate(text, "", "spacingTop");
     }
 
     settingsGrid.innerHTML += getCenteredTextTemplate("Eksempel:", "", "spacingTop");
@@ -401,8 +397,9 @@ async function loadAPIPage() {
     currentURL = currentURL.split("/");
     currentURL = `${currentURL[0]}/${currentURL[2]}`;
     const exampleAPIHTML = `/${firstAPIExample[1]}/${username}/${userInfo.apikey}`;
+    const fullExampleAPIText = `${data[0].method} ${currentURL}${exampleAPIHTML}`;
 
-    settingsGrid.innerHTML += getAPITextTemplate(data[0].method + " " + currentURL + exampleAPIHTML);
+    settingsGrid.innerHTML += getAPITextTemplate(fullExampleAPIText);
 
     settingsGrid.innerHTML += getCenteredTextTemplate("Response:", "", "spacingTop");
 
