@@ -81,5 +81,17 @@ async function updateCheckboxSetting(aSetting, aValue) {
             isUpdatingSetting = false;
         }
     }
+}
 
+function aboutMeDefaultValues() {
+    document.getElementById("heightInp").value = 172.5;
+    document.getElementById("weightInp").value = 70.8;
+}
+
+function aboutMeResetValues() {
+    const domList = ["gymInp", "ageInp", "heightInp", "weightInp"];
+
+    for (let i = 0; i < domList.length; i++) {
+        document.getElementById(domList[i]).value = "";
+    }
 }

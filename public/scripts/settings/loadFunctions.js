@@ -134,15 +134,16 @@ function loadAboutMePage() {
 
     settingsGrid.innerHTML = justTextTemplate("Her kan du velge høyde, vekt og alder. Om profilen din er offentlig, vises dette til andre brukere", "left");
 
-    settingsGrid.innerHTML += getTemplate("Treningssenter", "gymInp", `<input style="text-align:right;" class='settingsInput' value='${userInfo.info.gym}'></input>`, "borderTop");
-    settingsGrid.innerHTML += getTemplate("Alder", "ageInp", `<input style="text-align:right;" class='settingsInput' value='${userInfo.info.age}'>år</input>`);
+    settingsGrid.innerHTML += getTemplate("Treningssenter", "", `<input id="gymInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.gym}'></input>`, "borderTop");
+    settingsGrid.innerHTML += getTemplate("Alder", "", `<input id="ageInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.age}'>år</input>`);
 
-    settingsGrid.innerHTML += getTemplate("Høyde", "heightInp", `<input style="text-align:right;" class='settingsInput' value='${userInfo.info.height}'>cm</input>`, "spacingTop");
-    settingsGrid.innerHTML += getTemplate("Vekt", "weightInp", `<input style="text-align:right;" class='settingsInput' value='${userInfo.info.weight}'>kg</input>`);
+    settingsGrid.innerHTML += getTemplate("Høyde", "", `<input id="heightInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.height}'>cm</input>`, "spacingTop");
+    settingsGrid.innerHTML += getTemplate("Vekt", "", `<input id="weightInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.weight}'>kg</input>`);
 
     settingsGrid.innerHTML += justTextTemplate(`Om du ikke ønsker å velge vekt eller høyde, kan du bruke standard verdier.`, "left");
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="alert('defaultVals');">Standard verdier</button>`, "", "borderTop");
+    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="aboutMeDefaultValues();">Standard verdier</button>`, "", "borderTop");
+    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="aboutMeResetValues();">Tilbakestill verdier</button>`);
 
     settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="alert('updateDetails');">Oppdater detaljer</button>`, "", "spacingTop");
 
