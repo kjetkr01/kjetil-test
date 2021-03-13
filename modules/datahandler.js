@@ -302,7 +302,7 @@ class StorageHandler {
 
                             // endre slik at kun value ? feks "publicProfile: true"
                             const settings = {
-                                "publicProfile": true,
+                                "publicProfile": false,
                                 "displayLeaderboards": true,
                                 "displayWorkoutList": true,
                                 "preferredTheme": 0,
@@ -408,7 +408,7 @@ class StorageHandler {
             if (results.rows[0] !== undefined) {
 
                 //if owner then access anyways
-                if (results.rows[0].settings.publicProfile === true || viewingUser === userID) {
+                if (results.rows[0].settings.publicProfile === false || viewingUser === userID) {
                     if (viewingUser === userID) {
                         results = await client.query('SELECT "id","username","displayname","settings","trainingsplit","lifts","goals","info","isadmin" FROM "users" WHERE id=$1', [userID]);
 
@@ -755,7 +755,7 @@ class StorageHandler {
                 } else {
                     const userHasPublicProfile = results.rows[0].settings.publicProfile;
 
-                    if (userHasPublicProfile === true || isOwner === true) {
+                    if (userHasPublicProfile === false || isOwner === true) {
                         results = await client.query('SELECT "trainingsplit","displayname" FROM "users" WHERE username=$1', [user]);
 
                         if (results.rows.length === 0) {
@@ -819,7 +819,7 @@ class StorageHandler {
                 } else {
                     const userHasPublicProfile = results.rows[0].settings.publicProfile;
 
-                    if (userHasPublicProfile === true || isOwner === true) {
+                    if (userHasPublicProfile === false || isOwner === true) {
                         results = await client.query('SELECT "lifts","displayname" FROM "users" WHERE username=$1', [user]);
 
                         if (results.rows.length === 0) {
