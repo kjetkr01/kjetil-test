@@ -64,6 +64,7 @@ async function updateCheckboxSetting(aSetting, aValue) {
     const resp = await callServerAPI(body, url);
 
     if (resp === true) {
+        updateUserInfo();
         loadSetting();
     }
 
