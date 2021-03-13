@@ -379,9 +379,10 @@ async function loadAPIPage() {
     const response = await fetch("/api", config);
     const data = await response.json();
 
-    settingsGrid.innerHTML = justTextTemplate(`${applicationName} har ${data.length} APIer.<br>Her kan du se ulike APIer og din API key.`, "left");
+    settingsGrid.innerHTML = justTextTemplate(`${applicationName} har ${data.length} APIer.<br>Her kan du se din API key, BrukerID og ulike APIer.`, "left");
 
-    settingsGrid.innerHTML += getTemplate("Din API Key", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.apikey}' readonly="readonly"></input>`, "borderTop");
+    settingsGrid.innerHTML += getTemplate("API Key", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.apikey}' readonly="readonly"></input>`, "borderTop");
+    settingsGrid.innerHTML += getTemplate("BrukerID", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.id}' readonly="readonly"></input>`);
 
     for (let i = 0; i < data.length; i++) {
         const text = `

@@ -744,7 +744,7 @@ class StorageHandler {
 
             } else {
 
-                if (results.rows[0].id === user) {
+                if (results.rows[0].user_id === user) {
                     isOwner = true;
                 }
 
