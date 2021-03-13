@@ -217,34 +217,40 @@ function loadProgressionInfoPage() {
 
 function loadAboutAppPage() {
 
-    const imageHTML = `
-    <img id="logo" src="images/appIcon.png" alt="" draggable="false" class="noselect settingsLogo"></img>
-    `;
+    const imageURL = new Image();
+    imageURL.src = "images/appIcon.png";
 
-    settingsGrid.innerHTML = justTextTemplate(imageHTML, "center");
+    imageURL.onload = function () {
 
-    const appInfoHTML = `
-    <strong>${applicationName}</strong>
-    <br>
-    <p class="settingsApplicationFullVersion">${applicationFullVersion}</p>
-    `;
+        const imageHTML = `
+        <img id="logo" src="images/appIcon.png" alt="" draggable="false" class="noselect settingsLogo"></img>
+        `;
 
-    settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
+        settingsGrid.innerHTML = justTextTemplate(imageHTML, "center");
 
-    const html = `
-    ${applicationName} er et app prosjekt utviklet av <button class="settingsButtonHighlightUser" onClick="viewUser('3');">Kjetil Kristiansen</button>.
-    <br><br>
-    Hjelp til design:
-    <button class="settingsButtonHighlightUser" onClick="viewUser('2');">Christoffer Simonsen</button>,
-    Christian Jenssen,
-    Mandius Abelsen,
-    <button class="settingsButtonHighlightUser" onClick="viewUser('41');">Szilard Andri Reynisson</button>,
-    Sondre Olsen.
-    `;
+        const appInfoHTML = `
+        <strong>${applicationName}</strong>
+        <br>
+        <p class="settingsApplicationFullVersion">${applicationFullVersion}</p>
+        `;
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(html, "", "spacingTop");
+        settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
 
-    settingsGrid.innerHTML += getBottomSpacingTemplate();
+        const html = `
+        ${applicationName} er et app prosjekt utviklet av <button class="settingsButtonHighlightUser" onClick="viewUser('3');">Kjetil Kristiansen</button>.
+        <br><br>
+        Hjelp til design:
+        <button class="settingsButtonHighlightUser" onClick="viewUser('2');">Christoffer Simonsen</button>,
+        Christian Jenssen,
+        Mandius Abelsen,
+        <button class="settingsButtonHighlightUser" onClick="viewUser('41');">Szilard Andri Reynisson</button>,
+        Sondre Olsen.
+        `;
+
+        settingsGrid.innerHTML += getCenteredTextTemplate(html, "", "spacingTop");
+
+        settingsGrid.innerHTML += getBottomSpacingTemplate();
+    }
 }
 
 async function loadUsersListPage() {
@@ -365,11 +371,6 @@ async function loadPendingUsersPage() {
 
 async function loadAPIPage() {
 
-    settingsGrid.innerHTML = justTextTemplate("Her kan du se ulike APIer og din API key.", "left");
-
-    settingsGrid.innerHTML += getTemplate("Din API Key", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.apikey}' readonly="readonly"></input>`, "borderTop");
-
-
     const config = {
         method: "GET",
         headers: {
@@ -379,6 +380,10 @@ async function loadAPIPage() {
 
     const response = await fetch("/api", config);
     const data = await response.json();
+
+    settingsGrid.innerHTML = justTextTemplate(`${applicationName} har ${data.length} APIer.<br>Her kan du se ulike APIer og din API key.`, "left");
+
+    settingsGrid.innerHTML += getTemplate("Din API Key", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.apikey}' readonly="readonly"></input>`, "borderTop");
 
     for (let i = 0; i < data.length; i++) {
         const text = `
