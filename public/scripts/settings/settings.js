@@ -83,11 +83,6 @@ async function updateCheckboxSetting(aSetting, aValue) {
     }
 }
 
-function aboutMeDefaultValues() {
-    document.getElementById("heightInp").value = 172.5;
-    document.getElementById("weightInp").value = 70.8;
-}
-
 function aboutMeResetValues() {
     const domList = ["gymInp", "ageInp", "heightInp", "weightInp"];
 

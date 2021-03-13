@@ -586,8 +586,8 @@ server.post("/validate", auth, async (req, res) => {
 
 server.get("/api", function (req, res) {
      const resp = [
-          { "url": "/getWorkoutInfo/{user}/{key}", "method": "GET" }, // denne brukes som eksempel i API innstillingen
-          { "url": "/getTotalPB/{user}/{key}", "method": "GET" },
+          { "url": "/getWorkoutInfo/{userID}/{key}", "method": "GET" }, // denne brukes som eksempel i API innstillingen
+          { "url": "/getTotalPB/{userID}/{key}", "method": "GET" },
      ];
 
      // Ideer:

@@ -1,6 +1,6 @@
 const applicationName = `Treningstatistikken`;
 
-const vMajorVersion = 1;
+const vMajorVersion = 2;
 const vMinorVersion = 3;
 const vRevision = 13;
 

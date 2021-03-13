@@ -95,7 +95,7 @@ class StorageHandler {
             const checkIfAdmin = await client.query('SELECT "username" FROM "users" WHERE username=$1 AND isadmin=true', [username]);
 
             if (checkIfAdmin.rows.length !== 0) {
-                allAPIUsers = await client.query('SELECT "username" FROM "public"."api_keys"');
+                allAPIUsers = await client.query('SELECT "user_id" FROM "public"."api_keys"');
                 allAPIUsers = allAPIUsers.rows;
 
                 allUsers = await client.query('SELECT "id","username","displayname" FROM "public"."users"');
@@ -414,9 +414,9 @@ class StorageHandler {
 
                         if (results.rows[0]) {
                             results = results.rows[0];
-                            const username = results.username;
+                            const userID = results.id;
 
-                            const hasAccessToApi = await client.query('SELECT "key" FROM "api_keys" WHERE username=$1', [username]);
+                            const hasAccessToApi = await client.query('SELECT "key" FROM "api_keys" WHERE user_id=$1', [userID]);
 
                             const liftsLeft = [];
                             const goalsLeft = [];
@@ -736,7 +736,7 @@ class StorageHandler {
         try {
             await client.connect();
 
-            results = await client.query('SELECT "username" FROM "api_keys" WHERE key=$1', [key]);
+            results = await client.query('SELECT "user_id" FROM "api_keys" WHERE key=$1', [key]);
 
             if (results.rows.length === 0) {
 
@@ -744,11 +744,11 @@ class StorageHandler {
 
             } else {
 
-                if (results.rows[0].username === user) {
+                if (results.rows[0].id === user) {
                     isOwner = true;
                 }
 
-                results = await client.query('SELECT "settings" FROM "users" WHERE username=$1', [user]);
+                results = await client.query('SELECT "settings" FROM "users" WHERE id=$1', [user]);
 
                 if (results.rows.length === 0) {
                     results = false;
@@ -756,7 +756,7 @@ class StorageHandler {
                     const userHasPublicProfile = results.rows[0].settings.publicProfile;
 
                     if (userHasPublicProfile === false || isOwner === true) {
-                        results = await client.query('SELECT "trainingsplit","displayname" FROM "users" WHERE username=$1', [user]);
+                        results = await client.query('SELECT "trainingsplit","displayname" FROM "users" WHERE id=$1', [user]);
 
                         if (results.rows.length === 0) {
                             results = false;
@@ -768,9 +768,7 @@ class StorageHandler {
                     } else {
                         results = false;
                     }
-
                 }
-
             }
 
             client.end();
@@ -800,7 +798,7 @@ class StorageHandler {
         try {
             await client.connect();
 
-            results = await client.query('SELECT "username" FROM "api_keys" WHERE key=$1', [key]);
+            results = await client.query('SELECT "user_id" FROM "api_keys" WHERE key=$1', [key]);
 
             if (results.rows.length === 0) {
 
@@ -808,11 +806,11 @@ class StorageHandler {
 
             } else {
 
-                if (results.rows[0].username === user) {
+                if (results.rows[0].id === user) {
                     isOwner = true;
                 }
 
-                results = await client.query('SELECT "settings" FROM "users" WHERE username=$1', [user]);
+                results = await client.query('SELECT "settings" FROM "users" WHERE id=$1', [user]);
 
                 if (results.rows.length === 0) {
                     results = false;
@@ -820,7 +818,7 @@ class StorageHandler {
                     const userHasPublicProfile = results.rows[0].settings.publicProfile;
 
                     if (userHasPublicProfile === false || isOwner === true) {
-                        results = await client.query('SELECT "lifts","displayname" FROM "users" WHERE username=$1', [user]);
+                        results = await client.query('SELECT "lifts","displayname" FROM "users" WHERE id=$1', [user]);
 
                         if (results.rows.length === 0) {
                             results = false;

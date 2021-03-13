@@ -140,12 +140,9 @@ function loadAboutMePage() {
     settingsGrid.innerHTML += getTemplate("Høyde", "", `<input id="heightInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.height}'>cm</input>`, "spacingTop");
     settingsGrid.innerHTML += getTemplate("Vekt", "", `<input id="weightInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.weight}'>kg</input>`);
 
-    settingsGrid.innerHTML += justTextTemplate(`Om du ikke ønsker å velge vekt eller høyde, kan du bruke standard verdier.`, "left");
-
-    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="aboutMeDefaultValues();">Standard verdier</button>`, "", "borderTop");
-    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="aboutMeResetValues();">Tilbakestill verdier</button>`);
-
     settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="alert('updateDetails');">Oppdater detaljer</button>`, "", "spacingTop");
+
+    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="aboutMeResetValues();">Tilbakestill verdier</button>`, "", "spacingTop");
 
     settingsGrid.innerHTML += getBottomSpacingTemplate();
 }
@@ -402,7 +399,7 @@ async function loadAPIPage() {
     let currentURL = window.location.href || "";
     currentURL = currentURL.split("/");
     currentURL = `${currentURL[0]}/${currentURL[2]}`;
-    const exampleAPIHTML = `/${firstAPIExample[1]}/${username}/${userInfo.apikey}`;
+    const exampleAPIHTML = `/${firstAPIExample[1]}/${userID}/${userInfo.apikey}`;
     const fullExampleAPIText = `${data[0].method} ${currentURL}${exampleAPIHTML}`;
 
     settingsGrid.innerHTML += getAPITextTemplate(fullExampleAPIText);

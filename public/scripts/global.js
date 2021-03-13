@@ -111,40 +111,12 @@ function lockBodyPosition() {
                     const isOwerflown = element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
 
                     if (isOwerflown === false) {
-                        //document.body.classList.add("lockedBody");
-                        //document.body.className = "lockedBody";
                         e.preventDefault();
-
-                        /*if (innerWidth <= 1024 && window.orientation === 0 && document.body.className === "lockedBody") {
-                            //window.scrollTo(0, 0);
-                        }*/
-
                     }
                 }
-
             });
         }
     }
-
-    /*
-
-    document.getElementById("page").addEventListener('touchmove', function (evt) {
-
-        //alert(evt.target.id)
-
-        const target = evt.target.id;
-        const allowedScroll = ["peopleWorkoutList"];
-
-        const element = document.getElementById("page");
-
-        const isOwerflown = element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
-
-        if (isOwerflown === false && !allowedScroll.includes(target)) {
-            evt.preventDefault();
-        }
-
-    });*/
-
 }
 
 
@@ -154,7 +126,6 @@ function viewUser(viewUser) {
         sessionStorage.setItem("ViewingUser", viewUser);
         redirectToUser();
     }
-
 }
 
 //
