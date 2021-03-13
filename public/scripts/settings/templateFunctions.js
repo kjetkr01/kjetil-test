@@ -54,7 +54,7 @@ function getTemplateWithBtn(aSetting, aDivId, aSpacingTop) {
              </p>
           </div>
           <div id="gsInfo">
-             <svg id="sInfo" class="settingsIcons fadeIn" draggable="false" onclick="loadSetting('${setting}');"
+             <svg id="sInfo" class="settingsIcons" draggable="false" onclick="loadSetting('${setting}');"
                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
                 <g id="Layer_2" data-name="Layer 2">
                    <g id="Layer_1-2" data-name="Layer 1">
@@ -96,7 +96,7 @@ function getTemplateWithCheckbox(aSetting, aDivId, aChecked, aOnClickInfo, aSpac
              </p>
           </div>
           <div id="gsInfo">
-             <label id="sInfo" class="settingsCheckbox fadeIn">
+             <label id="sInfo" class="settingsCheckbox">
                 <input class="inputCategory" onClick="updateCheckboxSetting('${onClickInfo}', true);" type="checkbox">
                 <span class="slider round"></span>
              </label>
@@ -118,7 +118,7 @@ function getTemplateWithCheckbox(aSetting, aDivId, aChecked, aOnClickInfo, aSpac
              </p>
           </div>
           <div id="gsInfo">
-             <label id="sInfo" class="settingsCheckbox fadeIn">
+             <label id="sInfo" class="settingsCheckbox">
                 <input class="inputCategory" onClick="updateCheckboxSetting('${onClickInfo}', false);" type="checkbox" checked>
                 <span class="slider round"></span>
              </label>
@@ -170,7 +170,7 @@ function getPendingRequestsTemplate() {
              </p>
           </div>
           <div id="gsInfo">
-             <svg id="sInfo" class="settingsIcons fadeIn" draggable="false" onclick="loadSetting('pendingUsers');"
+             <svg id="sInfo" class="settingsIcons" draggable="false" onclick="loadSetting('pendingUsers');"
                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
                 <g id="Layer_2" data-name="Layer 2">
                    <g id="Layer_1-2" data-name="Layer 1">
