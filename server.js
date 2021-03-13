@@ -130,7 +130,6 @@ server.post("/autenticate", async function (req, res) {
                     "id": requestUser.userInfo.id,
                     "username": requestUser.userInfo.username,
                     "displayname": requestUser.userInfo.displayname,
-                    "showGymCloseTime": requestUser.userInfo.settings.showGymCloseTime.value,
                     "preferredColorTheme": requestUser.userInfo.settings.preferredColorTheme.value,
                }
                const sessionToken = createToken(requestUser.userInfo);
