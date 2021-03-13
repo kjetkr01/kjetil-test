@@ -97,7 +97,7 @@ function getTemplateWithCheckbox(aSetting, aDivId, aChecked, aOnClickInfo, aSpac
           </div>
           <div id="gsInfo">
              <label id="sInfo" class="settingsCheckbox fadeIn">
-                <input onClick="updateCheckboxSetting('${onClickInfo}', true);" type="checkbox">
+                <input class="inputCategory" onClick="updateCheckboxSetting('${onClickInfo}', true);" type="checkbox">
                 <span class="slider round"></span>
              </label>
           </div>
@@ -119,7 +119,7 @@ function getTemplateWithCheckbox(aSetting, aDivId, aChecked, aOnClickInfo, aSpac
           </div>
           <div id="gsInfo">
              <label id="sInfo" class="settingsCheckbox fadeIn">
-                <input onClick="updateCheckboxSetting('${onClickInfo}', false);" type="checkbox" checked>
+                <input class="inputCategory" onClick="updateCheckboxSetting('${onClickInfo}', false);" type="checkbox" checked>
                 <span class="slider round"></span>
              </label>
           </div>

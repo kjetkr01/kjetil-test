@@ -53,19 +53,33 @@ function confirmLogout() {
     }
 }
 
+let isUpdatingSetting = false;
+
 async function updateCheckboxSetting(aSetting, aValue) {
 
-    const setting = aSetting;
-    const value = aValue;
+    if (isUpdatingSetting === false) {
 
-    const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
-    const url = `/user/update/settings/${setting}`;
+        isUpdatingSetting = true;
 
-    const resp = await callServerAPI(body, url);
+        const inputCategory = document.getElementsByClassName("inputCategory");
 
-    if (resp === true) {
-        updateUserInfo();
-        loadSetting();
+        for (let i = 0; i < inputCategory.length; i++) {
+            inputCategory[i].setAttribute("disabled", true);
+        }
+
+        const setting = aSetting;
+        const value = aValue;
+
+        const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
+        const url = `/user/update/settings/${setting}`;
+
+        const resp = await callServerAPI(body, url);
+
+        if (resp === true) {
+            updateUserInfo();
+            loadSetting();
+            isUpdatingSetting = false;
+        }
     }
 
 }
