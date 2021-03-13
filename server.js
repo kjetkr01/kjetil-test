@@ -591,11 +591,13 @@ server.post("/validate", auth, async (req, res) => {
 
 server.get("/api", function (req, res) {
      const resp = [
-          "/getWorkoutInfo/{user}/{key}", // denne brukes som eksempel i API innstillingen
-          "/getTotalPB/{user}/{key}",
-          "Kommer snart:",
-          "hent benk, knebøy, markløft + totalen / og / eller lifts (maks 3? / kan velge)",
-          "hent mål i ulike løft (maks 3? / kan velge)",
+          { "url": "/getWorkoutInfo/{user}/{key}", "method": "GET" }, // denne brukes som eksempel i API innstillingen
+          { "url": "/getTotalPB/{user}/{key}", "method": "GET" },
+
+
+          { "url": "Kommer snart:", "method": "null" },
+          { "url": "hent benk, knebøy, markløft + totalen / og / eller lifts (maks 3? / kan velge)", "method": "null" },
+          { "url": "hent mål i ulike løft (maks 3? / kan velge)", "method": "null" },
      ];
      res.status(200).json(resp).end();
 });

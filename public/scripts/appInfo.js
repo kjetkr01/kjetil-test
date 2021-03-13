@@ -2,7 +2,7 @@ const applicationName = `Treningstatistikken`;
 
 const vMajorVersion = 1;
 const vMinorVersion = 0;
-const vRevision = 4;
+const vRevision = 5;
 
 const applicationVersionNumber = `${vMajorVersion}.${vMinorVersion}.${vRevision}`;
 const applicationVersionState = `alpha`;
