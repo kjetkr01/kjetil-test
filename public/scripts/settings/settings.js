@@ -114,20 +114,16 @@ async function saveApperanceSettings() {
 
         if (resp === true) {
 
-            preferredColorTheme = allowedThemes[value].theme;
+            const lastColorTheme = document.getElementById(`themeStyleCSS-${preferredColorTheme}`);
 
-            if (preferredColorTheme !== sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(preferredColorTheme) === true) {
+            const newColorTheme = allowedThemes[value].theme;
+
+            if (newColorTheme !== sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(newColorTheme) === true) {
+                preferredColorTheme = allowedThemes[value].theme;
                 sessionStorage.setItem("colorTheme", preferredColorTheme);
+                lastColorTheme.href = `styles/themes/${preferredColorTheme}.css`;
+                lastColorTheme.id = `themeStyleCSS-${preferredColorTheme}`;
             }
-
-            const head = document.head;
-            const link = document.createElement("link");
-
-            link.type = "text/css";
-            link.rel = "stylesheet";
-            link.href = preferredColorTheme;
-
-            head.appendChild(link);
 
             updateUserInfo();
             loadSetting();
