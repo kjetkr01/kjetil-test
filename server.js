@@ -405,7 +405,7 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
      const value = req.body.value;
 
      const allowedSettings = ["publicProfile", "displayLeaderboards", "displayWorkoutList", "preferredTheme", "preferredColorTheme"];
-     const allowedValues = [true, false];
+     const allowedValues = [true, false, "0", "1"];
 
      if (currentUser.username && allowedSettings.includes(setting) && allowedValues.includes(value)) {
 
@@ -420,28 +420,6 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
      } else {
           res.status(403).json("invalid user").end();
      }
-
-     //accepter bare "godkjente" settings
-
-     /*if (currentUser.username && setting && value === true || value === false || value === "auto" || value === "light" || value === "dark") {
-
-          if (setting === "publicProfile" || setting === "showGymCloseTime" || setting === "preferredColorTheme" || setting === "displayLeaderboards" || setting === "displayWorkoutList") {
-
-               const resp = true//await updateUserSetting(currentUser.username, setting, value);
-
-               if (resp === true) {
-                    res.status(200).json(`updated setting`).end();
-               } else {
-                    res.status(403).json("error, try again").end();
-               }
-
-          } else {
-               res.status(403).json("invalid setting").end();
-          }
-
-     } else {
-          res.status(403).json("invalid user").end();
-     }*/
 
 });
 

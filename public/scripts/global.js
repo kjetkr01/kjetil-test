@@ -4,6 +4,7 @@ const token = localStorage.getItem("authToken") || sessionStorage.getItem("authT
 const user = localStorage.getItem("user") || sessionStorage.getItem("user");
 let userDisplayname, showGymCloseTime, username, userID;
 let isUpdatingUserObject = false;
+let preferredColorTheme = null;
 
 let lastUpdatedTime = new Date();
 lastUpdatedTime = lastUpdatedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -19,6 +20,12 @@ const allowedThemes = {
     1: { "name": "Blå", "theme": "blue" }
 }
 
+const themeKeys = Object.keys(allowedThemes);
+const checkAllowedThemes = [];
+for (let i = 0; i < themeKeys.length; i++) {
+    checkAllowedThemes.push(allowedThemes[themeKeys[i]].theme);
+}
+
 //
 
 // update global user variables
@@ -31,13 +38,7 @@ if (user) {
         username = userDisplayname.username;
         userID = userDisplayname.id;
 
-        const preferredColorTheme = allowedThemes[userDisplayname.preferredColorTheme].theme;
-
-        const themeKeys = Object.keys(allowedThemes);
-        const checkAllowedThemes = [];
-        for (let i = 0; i < themeKeys.length; i++) {
-            checkAllowedThemes.push(allowedThemes[themeKeys[i]].theme);
-        }
+        preferredColorTheme = allowedThemes[userDisplayname.preferredColorTheme].theme;
 
         if (preferredColorTheme !== sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(preferredColorTheme) === true) {
             sessionStorage.setItem("colorTheme", preferredColorTheme);
@@ -59,12 +60,6 @@ if (user) {
 // changeColorTheme
 
 function changeColorTheme() {
-
-    const themeKeys = Object.keys(allowedThemes);
-    const checkAllowedThemes = [];
-    for (let i = 0; i < themeKeys.length; i++) {
-        checkAllowedThemes.push(allowedThemes[themeKeys[i]].theme);
-    }
 
     let colorTheme = allowedThemes[0].theme;
     const preferredTheme = sessionStorage.getItem("colorTheme") || colorTheme;

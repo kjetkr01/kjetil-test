@@ -95,3 +95,47 @@ function aboutMeResetValues() {
         document.getElementById(domList[i]).value = "";
     }
 }
+
+async function saveApperanceSettings() {
+
+    if (isUpdatingSetting === false) {
+
+        isUpdatingSetting = true;
+
+        //const theme = document.getElementById("appearanceThemeSelection").value;
+        const colorTheme = document.getElementById("themeColorSelection").value;
+        let value = colorTheme;
+        let setting = "preferredColorTheme";
+
+        const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
+        const url = `/user/update/settings/${setting}`;
+
+        const resp = await callServerAPI(body, url);
+
+        if (resp === true) {
+
+            preferredColorTheme = allowedThemes[value].theme;
+
+            if (preferredColorTheme !== sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(preferredColorTheme) === true) {
+                sessionStorage.setItem("colorTheme", preferredColorTheme);
+            }
+
+            const head = document.head;
+            const link = document.createElement("link");
+
+            link.type = "text/css";
+            link.rel = "stylesheet";
+            link.href = preferredColorTheme;
+
+            head.appendChild(link);
+
+            updateUserInfo();
+            loadSetting();
+            changeColorTheme();
+            isUpdatingSetting = false;
+
+
+        }
+    }
+
+}

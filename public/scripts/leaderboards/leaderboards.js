@@ -8,7 +8,7 @@ async function loadLeaderboards() {
 
     const resp = await callServerAPI(body, url);
 
-    if (resp) {
+    if (Object.entries(resp).length > 0) {
 
         const leaderboardsArrOrder = [];
 
@@ -34,9 +34,12 @@ async function loadLeaderboards() {
              <button id="${currentLeaderboard}" class="leaderboardsList fadeInLeft animate" onclick="getListOfLeaderboard('${currentLeaderboard}');">${currentLeaderboard}</button>
           </td>`;
         }
+
+        getListOfLeaderboard();
+    } else {
+        usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Det finnes ingen ledertavler!`);
     }
 
-    getListOfLeaderboard();
 }
 
 let leaderboardIsLoading = false;
