@@ -87,7 +87,10 @@ const plannedUpdatesArr = [
     "Lage større versjon av badge (mål-badge)",
 
     "TITLE:Offline support",
-    "Se treningsplan, løft, mål offline"
+    "Se treningsplan, løft, mål offline",
+
+    "TITLE:Desktop design",
+    "Lage desktop design",
 ];
 
 //
