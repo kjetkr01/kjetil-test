@@ -218,21 +218,23 @@ function loadAboutAppPage() {
     const imageURL = new Image();
     imageURL.src = "images/appIcon.png";
 
-    const imageHTML = `
+    imageURL.onload = function () {
+
+        const imageHTML = `
         <img id="logo" src="images/appIcon.png" alt="" draggable="false" class="noselect settingsLogo"></img>
         `;
 
-    settingsGrid.innerHTML = justTextTemplate(imageHTML, "center");
+        settingsGrid.innerHTML = justTextTemplate(imageHTML, "center");
 
-    const appInfoHTML = `
+        const appInfoHTML = `
         <strong>${applicationName}</strong>
         <br>
         <p class="settingsApplicationFullVersion">${applicationFullVersion}</p>
         `;
 
-    settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
+        settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
 
-    const html = `
+        const html = `
         ${applicationName} er et app prosjekt utviklet av <button class="settingsButtonHighlightUser" onClick="viewUser('3');">Kjetil Kristiansen</button>.
 
         <br><br>
@@ -252,9 +254,19 @@ function loadAboutAppPage() {
         Sondre Olsen.
         `;
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(html, "", "spacingTop");
+        settingsGrid.innerHTML += getCenteredTextTemplate(html, "", "spacingTop");
 
-    const infoHTML = `
+        if (showOngoingUpdates === true) {
+            settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${ongoingUpdatesText}</button>`, "", "spacingTop");
+            settingsGrid.innerHTML += getCenteredTextTemplate(ongoingUpdates);
+        }
+
+        if (showPlannedUpdates === true) {
+            settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${plannedUpdatesText}</button>`, "", "spacingTop");
+            settingsGrid.innerHTML += getCenteredTextTemplate(plannedUpdates);
+        }
+
+        const infoHTML = `
         Prosjekt oppstart: 20.11.2020
         <br>
         Full rework: 19.01.2021
@@ -262,9 +274,10 @@ function loadAboutAppPage() {
         Sist oppdatert: ${applicationUpdateDate}
         `;
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(infoHTML, "", "spacingTop");
+        settingsGrid.innerHTML += getCenteredTextTemplate(infoHTML, "", "spacingTop");
 
-    settingsGrid.innerHTML += getBottomSpacingTemplate();
+        settingsGrid.innerHTML += getBottomSpacingTemplate();
+    }
 }
 
 async function loadUsersListPage() {
