@@ -98,7 +98,7 @@ class StorageHandler {
                 allAPIUsers = await client.query('SELECT "user_id" FROM "public"."api_keys"');
                 allAPIUsers = allAPIUsers.rows;
 
-                allUsers = await client.query('SELECT "id","username","displayname" FROM "public"."users"');
+                allUsers = await client.query('SELECT "id","username","displayname","settings" FROM "public"."users"');
                 allUsers = allUsers.rows;
                 results = true;
             } else {
@@ -403,12 +403,14 @@ class StorageHandler {
             await client.connect();
 
             results = await client.query('SELECT "username","settings" FROM "users" WHERE id=$1', [viewingUser]);
+            let isAdmin = await client.query('SELECT "username","isadmin" FROM "users" WHERE id=$1', [userID]);
+            isAdmin = isAdmin.rows[0].isadmin;
             username = results.rows[0].username;
 
             if (results.rows[0] !== undefined) {
 
-                //if owner then access anyways
-                if (results.rows[0].settings.publicProfile === false || viewingUser === userID) {
+                //if owner then access anyways / admins get access anyways
+                if (results.rows[0].settings.publicProfile === false || viewingUser === userID || isAdmin === true) {
                     if (viewingUser === userID) {
                         results = await client.query('SELECT "id","username","displayname","settings","trainingsplit","lifts","goals","info","isadmin" FROM "users" WHERE id=$1', [userID]);
 

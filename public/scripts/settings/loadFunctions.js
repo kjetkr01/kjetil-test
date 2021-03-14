@@ -273,7 +273,7 @@ async function loadUsersListPage() {
             totalUsers = resp.allUsers.length
         }
 
-        let usersText = `${applicationName} har ${totalUsers} brukere<br>${totalAPIUsers} av brukerene har API tilgang<br>Her er listen med brukere`;
+        let usersText = `${applicationName} har ${totalUsers} brukere<br>${totalAPIUsers} av brukerene har API tilgang<br>Admins kan besøke profilen uavhengig om den er privat eller ikke<br>Her er listen med brukere`;
         if (totalUsers === 0) {
             usersText = `Det er ingen brukere`;
         }
@@ -288,6 +288,8 @@ async function loadUsersListPage() {
                 <p class="settingsPendingUserFullName">Visningsnavn</p>
                 <p class="settingsPendingUsername">Brukernavn</p>
                 <p class="settingsPendingUsername">ID</p>
+                <p class="settingsPendingUsername">Profil synlighet</p>
+                <p class="settingsPendingUsername">API tilgang</p>
                 `;
 
             settingsGrid.innerHTML += getCenteredTextTemplate(defaultHTML, "", "borderTop");
@@ -295,6 +297,7 @@ async function loadUsersListPage() {
             for (let i = 0; i < usersKeys.length; i++) {
 
                 const currentUser = resp.allUsers[usersKeys[i]];
+                let profileStatus = `<p class="settingsPendingUsername" style="color:green;">Offentlig</p>`;
 
                 let hasAPIAccessTxt = `<button class="settingsAcceptPendingUser" onClick="alert('giveAPIAccess');">Gi API tilgang</button>`;
 
@@ -302,11 +305,18 @@ async function loadUsersListPage() {
                     hasAPIAccessTxt = `<button class="settingsDeclinePendingUser" onClick="alert('removeAPIAccess');">Fjern API tilgang</button>`;
                 }
 
+                if (currentUser.settings.publicProfile === true) {
+                    profileStatus = `<p class="settingsPendingUsername" style="color:red;">Privat</p>`;
+                }
+
                 const usersTemplateHTML = `
-                   <p class="settingsPendingUserFullName" onClick="viewUser('${currentUser.id}');">${currentUser.displayname}</p>
-                   <p class="settingsPendingUsername" onClick="viewUser('${currentUser.id}');">${currentUser.username}</p>
+                   <p class="settingsPendingUserFullName">${currentUser.displayname}</p>
+                   <p class="settingsPendingUsername">${currentUser.username}</p>
                    <p class="settingsPendingUsername">${currentUser.id}</p>
+                   ${profileStatus}
                    <p class="settingsPendingUsername">${hasAPIAccessTxt}</p>
+                   <br>
+                   <button class="settingsButton" onClick="viewUser('${currentUser.id}');">Se profil</button>
                    `;
 
                 settingsGrid.innerHTML += getCenteredTextTemplate(usersTemplateHTML, "", "spacingTop");
