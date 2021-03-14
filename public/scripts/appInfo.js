@@ -4,7 +4,7 @@ const applicationName = `Treningstatistikken`;
 
 const vMajorVersion = 2; // hvis ny major. minor og revision = 0
 const vMinorVersion = 3; // hvis ny minor. revision = 0
-const vRevision = 27;
+const vRevision = 28;
 
 const updateDay = "14";
 const updateMonth = "03";

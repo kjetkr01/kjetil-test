@@ -4,7 +4,7 @@
 font-family: var(--main-font-Family-Verdana);
 }
 
-@media only screen and (max-width: 1024px) { /* 768px var før, men passer bedre med 1024px for ipad */
+/*@media only screen and (max-width: 1024px) {*/ /* 768px var før, men passer bedre med 1024px for ipad */
 
 /* grid */
 
@@ -245,7 +245,7 @@ margin-left: 20px;
 grid-area: cSCA2;
 }
 
-}
+/*}*/
 
 select {
 color: var(--main-accountOwnerColor);
