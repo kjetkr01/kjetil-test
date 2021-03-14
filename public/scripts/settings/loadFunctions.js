@@ -198,7 +198,7 @@ function loadProgressionInfoPage() {
 
     settingsGrid.innerHTML += getTemplate("Størrelse", "badgeSizeInp", badeSizeHTML, "borderTop");
 
-    const badeInfoHTML = `
+    const badgeInfoHTML = `
     <select id="badeInfoSelection">
        <option value="1">Alt</option>
        <option value="2">KG igjen</option>
@@ -206,7 +206,7 @@ function loadProgressionInfoPage() {
 </select>
     `;
 
-    settingsGrid.innerHTML += getTemplate("Informasjon", "badeInfoInp", badeInfoHTML);
+    settingsGrid.innerHTML += getTemplate("Informasjon", "badeInfoInp", badgeInfoHTML);
 
     settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="alert('saveDetails');">Lagre endringer</button>`, "", "spacingTop");
 
@@ -218,7 +218,7 @@ function loadAboutAppPage() {
     const imageURL = new Image();
     imageURL.src = "images/appIcon.png";
 
-    imageURL.onload = function () {
+    //imageURL.onload = function () {
 
         const imageHTML = `
         <img id="logo" src="images/appIcon.png" alt="" draggable="false" class="noselect settingsLogo"></img>
@@ -258,12 +258,14 @@ function loadAboutAppPage() {
 
         if (showOngoingUpdates === true) {
             settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${ongoingUpdatesText}</button>`, "", "spacingTop");
-            settingsGrid.innerHTML += getCenteredTextTemplate(ongoingUpdates);
+            //settingsGrid.innerHTML += getCenteredTextTemplate(ongoingUpdates);
+            settingsGrid.innerHTML += justTextTemplate(ongoingUpdates, "left");
         }
 
         if (showPlannedUpdates === true) {
             settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${plannedUpdatesText}</button>`, "", "spacingTop");
-            settingsGrid.innerHTML += getCenteredTextTemplate(plannedUpdates);
+            //settingsGrid.innerHTML += getCenteredTextTemplate(plannedUpdates);
+            settingsGrid.innerHTML += justTextTemplate(plannedUpdates, "left");
         }
 
         const infoHTML = `
@@ -277,7 +279,7 @@ function loadAboutAppPage() {
         settingsGrid.innerHTML += getCenteredTextTemplate(infoHTML, "", "spacingTop");
 
         settingsGrid.innerHTML += getBottomSpacingTemplate();
-    }
+    //}
 }
 
 async function loadUsersListPage() {
