@@ -214,6 +214,34 @@ function getCenteredTextTemplate(aDetails, aDivId, aSpacingTop) {
    return html;
 }
 
+function getLeftTextTemplate(aDetails, aDivId, aSpacingTop) {
+
+   const details = aDetails || "Det har oppstått et problem";
+   const divId = aDivId || "";
+   const spacingTop = aSpacingTop || "";
+   let borderT = "";
+
+   if (spacingTop) {
+      borderT = "borderT";
+   }
+
+   const html =
+      `
+<div id="${divId}" class="userSettingsLeftItems noselect ${spacingTop}">
+    <div id="cSLC1" class="${borderT}">
+    </div>
+    <div id="gsLeftItems">
+       <p id="sLeftItems">
+          ${details}
+       </p>
+    </div>
+    <div id="cSLC2" class="borderB">
+    </div>
+ </div>
+`;
+   return html;
+}
+
 function justTextTemplate(aText, aTextAlign) {
 
    if (aTextAlign !== "left" && aTextAlign !== "center") {

@@ -1,6 +1,7 @@
 /* elements for mobile & desktop */
 
 body {
+word-break: keep-all;
 background-color: var(--main-backgroundColor3);
 }
 

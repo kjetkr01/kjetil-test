@@ -218,7 +218,7 @@ function loadAboutAppPage() {
     const imageURL = new Image();
     imageURL.src = "images/appIcon.png";
 
-    //imageURL.onload = function () {
+    imageURL.onload = function () {
 
         const imageHTML = `
         <img id="logo" src="images/appIcon.png" alt="" draggable="false" class="noselect settingsLogo"></img>
@@ -254,18 +254,16 @@ function loadAboutAppPage() {
         Sondre Olsen.
         `;
 
-        settingsGrid.innerHTML += getCenteredTextTemplate(html, "", "spacingTop");
+        settingsGrid.innerHTML += getLeftTextTemplate(html, "", "spacingTop");
 
         if (showOngoingUpdates === true) {
             settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${ongoingUpdatesText}</button>`, "", "spacingTop");
-            //settingsGrid.innerHTML += getCenteredTextTemplate(ongoingUpdates);
-            settingsGrid.innerHTML += justTextTemplate(ongoingUpdates, "left");
+            settingsGrid.innerHTML += getLeftTextTemplate(ongoingUpdates);
         }
 
         if (showPlannedUpdates === true) {
             settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${plannedUpdatesText}</button>`, "", "spacingTop");
-            //settingsGrid.innerHTML += getCenteredTextTemplate(plannedUpdates);
-            settingsGrid.innerHTML += justTextTemplate(plannedUpdates, "left");
+            settingsGrid.innerHTML += getLeftTextTemplate(plannedUpdates);
         }
 
         const infoHTML = `
@@ -279,7 +277,7 @@ function loadAboutAppPage() {
         settingsGrid.innerHTML += getCenteredTextTemplate(infoHTML, "", "spacingTop");
 
         settingsGrid.innerHTML += getBottomSpacingTemplate();
-    //}
+    }
 }
 
 async function loadUsersListPage() {

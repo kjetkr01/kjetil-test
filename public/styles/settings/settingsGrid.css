@@ -119,6 +119,48 @@ margin-left: 20px;
 grid-area: cSC2;
 }
 
+.userSettingsLeftItems {
+font-size: 15px;
+background-color: var(--main-backgroundColor3);
+display: grid;
+width: 100vw;
+grid-template-areas:
+
+"cSLC1"
+"gsLeftItems"
+"cSLC2"
+;
+
+grid-template-rows: /* nedover */
+
+17.5px /* cSLC1 */
+auto /* gsLeftItems osv */
+17.5px /* cSLC2 */
+;
+
+grid-template-columns: /* bortover */
+1fr;
+}
+
+.userSettingsLeftItems > #cSLC1 {
+grid-area: cSLC1;
+}
+
+.userSettingsLeftItems > #gsLeftItems {
+grid-area: gsLeftItems;
+text-align: left;
+}
+
+#gsLeftItems {
+color: var(--main-textColorDark);
+margin-right: 20px;
+margin-left: 20px;
+}
+
+.userSettingsLeftItems > #cSLC2 {
+grid-area: cSLC2;
+}
+
 .userSettingsJustText {
 font-size: 15px;
 display: grid;
@@ -162,46 +204,46 @@ grid-area: cSJC2;
 
 
 .userSettingsAPIList {
-    font-size: 15px;
-    background-color: var(--main-backgroundColor3);
-    display: grid;
-    width: 100vw;
-    grid-template-areas:
-    
-    "cSCA1"
-    "gsaCenteredItems"
-    "cSCA2"
-    ;
-    
-    grid-template-rows: /* nedover */
-    
-    17.5px /* cSCA1 */
-    auto /* gsCenteredItems osv */
-    17.5px /* cSCA2 */
-    ;
-    
-    grid-template-columns: /* bortover */
-    1fr;
-    }
-    
-    .userSettingsAPIList > #cSCA1 {
-    grid-area: cSCA1;
-    }
-    
-    .userSettingsAPIList > #gsaCenteredItems {
-    grid-area: gsaCenteredItems;
-    text-align: left;
-    }
-    
-    #gsaCenteredItems {
-    color: var(--main-textColorDark);
-    margin-right: 20px;
-    margin-left: 20px;
-    }
-    
-    .userSettingsAPIList > #cSCA2 {
-    grid-area: cSCA2;
-    }
+font-size: 15px;
+background-color: var(--main-backgroundColor3);
+display: grid;
+width: 100vw;
+grid-template-areas:
+
+"cSCA1"
+"gsaCenteredItems"
+"cSCA2"
+;
+
+grid-template-rows: /* nedover */
+
+17.5px /* cSCA1 */
+auto /* gsCenteredItems osv */
+17.5px /* cSCA2 */
+;
+
+grid-template-columns: /* bortover */
+1fr;
+}
+
+.userSettingsAPIList > #cSCA1 {
+grid-area: cSCA1;
+}
+
+.userSettingsAPIList > #gsaCenteredItems {
+grid-area: gsaCenteredItems;
+text-align: left;
+}
+
+#gsaCenteredItems {
+color: var(--main-textColorDark);
+margin-right: 20px;
+margin-left: 20px;
+}
+
+.userSettingsAPIList > #cSCA2 {
+grid-area: cSCA2;
+}
 
 }
 
