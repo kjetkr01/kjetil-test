@@ -218,24 +218,31 @@ function loadAboutAppPage() {
     const imageURL = new Image();
     imageURL.src = "images/appIcon.png";
 
-    imageURL.onload = function () {
-
-        const imageHTML = `
+    const imageHTML = `
         <img id="logo" src="images/appIcon.png" alt="" draggable="false" class="noselect settingsLogo"></img>
         `;
 
-        settingsGrid.innerHTML = justTextTemplate(imageHTML, "center");
+    settingsGrid.innerHTML = justTextTemplate(imageHTML, "center");
 
-        const appInfoHTML = `
+    const appInfoHTML = `
         <strong>${applicationName}</strong>
         <br>
         <p class="settingsApplicationFullVersion">${applicationFullVersion}</p>
         `;
 
-        settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
+    settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
 
-        const html = `
+    const html = `
         ${applicationName} er et app prosjekt utviklet av <button class="settingsButtonHighlightUser" onClick="viewUser('3');">Kjetil Kristiansen</button>.
+
+        <br><br>
+        Appen ble hovedsakling laget for å enkelt se ORM (One Rep Max) i ulike løft.
+        Kunne lage mål i ulike øvelser og enkelt sjekke progresjon og hvor langt man er unna målet.
+
+        <br><br>
+        Ha muligheten til å opprette treningsplaner, samt legge inn øvelser per dag.
+        Siden appen er koblet til et database system, vil muligheten for å se andre brukere sine løft, mål, progresjon og treningsplaner være veldig enkelt.
+
         <br><br>
         Hjelp til design:
         <button class="settingsButtonHighlightUser" onClick="viewUser('2');">Christoffer Simonsen</button>,
@@ -245,10 +252,19 @@ function loadAboutAppPage() {
         Sondre Olsen.
         `;
 
-        settingsGrid.innerHTML += getCenteredTextTemplate(html, "", "spacingTop");
+    settingsGrid.innerHTML += getCenteredTextTemplate(html, "", "spacingTop");
 
-        settingsGrid.innerHTML += getBottomSpacingTemplate();
-    }
+    const infoHTML = `
+        Prosjekt oppstart: 20.11.2020
+        <br>
+        Full rework: 19.01.2021
+        <br>
+        Sist oppdatert: ${applicationUpdateDate}
+        `;
+
+    settingsGrid.innerHTML += getCenteredTextTemplate(infoHTML, "", "spacingTop");
+
+    settingsGrid.innerHTML += getBottomSpacingTemplate();
 }
 
 async function loadUsersListPage() {
