@@ -1,13 +1,22 @@
 const applicationName = `Treningstatistikken`;
 
+// Oppdatere disse når ny commit
+
 const vMajorVersion = 2; // hvis ny major. minor og revision = 0
 const vMinorVersion = 3; // hvis ny minor. revision = 0
 const vRevision = 22;
-const applicationUpdateDate = "14.03.2021";
+
+const updateYear = 2021;
+const updateMonth = 3;
+const updateDay = 14;
+
+// Slutt
+
 
 const applicationVersionNumber = `${vMajorVersion}.${vMinorVersion}.${vRevision}`;
 const applicationVersionState = `alpha`;
 const applicationFullVersion = `Versjon ${applicationVersionNumber} (${applicationVersionState})`;
+const applicationUpdateDate = new Date(`${updateYear}-${updateMonth}-${updateDay}`).toLocaleDateString();
 
 const showOngoingUpdates = true; // vis/skjul pågående oppdateringer
 const showPlannedUpdates = true; // vis/skjul planlagte oppdateringer
@@ -72,9 +81,9 @@ const plannedUpdatesArr = [
 
 
 const aboutAppBottomInfo = `
-Prosjekt oppstart: 20.11.2020
+Prosjekt oppstart: ${new Date(`2020-11-20`).toLocaleDateString()}
 <br>
-Full rework: 19.01.2021
+Full rework: ${new Date(`2021-01-19`).toLocaleDateString()}
 <br>
 Sist oppdatert: ${applicationUpdateDate}
 `;
