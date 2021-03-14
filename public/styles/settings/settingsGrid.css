@@ -373,12 +373,17 @@ width: 119px;
 height: 119px;
 }
 
-.settingsButtonHighlightUser {
+.settingsButtonUser {
 margin: 0;
 padding: 0;
 font-size: 15px;
+font-weight: bold;
 background-color: transparent;
 border: transparent;
+color: var(--main-textColorDark);
+}
+
+.settingsHightlightUser {
 color: var(--main-accountOwnerColor);
 }
 

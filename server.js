@@ -322,41 +322,45 @@ server.post("/users/details/:user", auth, async (req, res) => {
 
      let userID = req.body.userInfo;
      userID = JSON.parse(userID);
-     userID = userID.id;
+     userID = parseInt(userID.id);
 
-     const viewingUser = req.body.viewingUser;
+     const viewingUser = parseInt(req.body.viewingUser);
 
-     if (userID && viewingUser) {
+     if (typeof viewingUser === "number" && typeof userID === "number") {
+          if (userID && viewingUser) {
 
-          const resp = await getUserDetails(viewingUser, userID);
+               const resp = await getUserDetails(viewingUser, userID);
 
-          if (resp.status === true) {
-               if (resp.userDetails !== false) {
+               if (resp.status === true) {
+                    if (resp.userDetails !== false) {
 
-                    if (viewingUser === userID) {
+                         if (viewingUser === userID) {
 
-                         const updatedUserInfo = {
-                              "id": resp.userDetails.id,
-                              "username": resp.userDetails.username,
-                              "displayname": resp.userDetails.displayname,
-                              "preferredColorTheme": resp.userDetails.settings.preferredColorTheme,
+                              const updatedUserInfo = {
+                                   "id": resp.userDetails.id,
+                                   "username": resp.userDetails.username,
+                                   "displayname": resp.userDetails.displayname,
+                                   "preferredColorTheme": resp.userDetails.settings.preferredColorTheme,
+                              }
+
+                              res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo }).end();
+                         } else {
+                              res.status(200).json({ "info": resp.userDetails }).end();
                          }
 
-                         res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo }).end();
                     } else {
-                         res.status(200).json({ "info": resp.userDetails }).end();
-                    }
 
+                         if (resp.username) {
+                              res.status(403).json(`${resp.username} sin profil er privat!`).end();
+                         } else {
+                              res.status(403).json(`Brukeren sin profil er privat!`).end();
+                         }
+                    }
                } else {
-
-                    if (resp.username) {
-                         res.status(403).json(`${resp.username} sin profil er privat!`).end();
-                    } else {
-                         res.status(403).json(`Brukeren sin profil er privat!`).end();
-                    }
+                    res.status(403).json(`Brukeren finnes ikke!`).end();
                }
           } else {
-               res.status(403).json(`Brukeren finnes ikke!`).end();
+               res.status(403).json(`Feil, prøv igjen`).end();
           }
      } else {
           res.status(403).json(`Feil, prøv igjen`).end();

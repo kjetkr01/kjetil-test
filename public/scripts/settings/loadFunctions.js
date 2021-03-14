@@ -234,27 +234,7 @@ function loadAboutAppPage() {
 
         settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
 
-        const html = `
-        ${applicationName} er et app prosjekt utviklet av <button class="settingsButtonHighlightUser" onClick="viewUser('3');">Kjetil Kristiansen</button>.
-
-        <br><br>
-        Appen ble hovedsakling laget for å enkelt se ORM (One Rep Max) i ulike løft.
-        Kunne lage mål i ulike øvelser og enkelt sjekke progresjon og hvor langt man er unna målet.
-
-        <br><br>
-        Ha muligheten til å opprette treningsplaner, samt legge inn øvelser per dag.
-        Siden appen er koblet til et database system, vil muligheten for å se andre brukere sine løft, mål, progresjon og treningsplaner være veldig enkelt.
-
-        <br><br>
-        Hjelp til design:
-        <button class="settingsButtonHighlightUser" onClick="viewUser('2');">Christoffer Simonsen</button>,
-        Christian Jenssen,
-        Mandius Abelsen,
-        <button class="settingsButtonHighlightUser" onClick="viewUser('41');">Szilard Andri Reynisson</button>,
-        Sondre Olsen.
-        `;
-
-        settingsGrid.innerHTML += getLeftTextTemplate(html, "", "spacingTop");
+        settingsGrid.innerHTML += getLeftTextTemplate(aboutAppText, "", "spacingTop");
 
         if (showOngoingUpdates === true) {
             settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${ongoingUpdatesText}</button>`, "", "spacingTop");
@@ -266,15 +246,7 @@ function loadAboutAppPage() {
             settingsGrid.innerHTML += getLeftTextTemplate(plannedUpdates);
         }
 
-        const infoHTML = `
-        Prosjekt oppstart: 20.11.2020
-        <br>
-        Full rework: 19.01.2021
-        <br>
-        Sist oppdatert: ${applicationUpdateDate}
-        `;
-
-        settingsGrid.innerHTML += getCenteredTextTemplate(infoHTML, "", "spacingTop");
+        settingsGrid.innerHTML += getCenteredTextTemplate(aboutAppBottomInfo, "", "spacingTop");
 
         settingsGrid.innerHTML += getBottomSpacingTemplate();
     }
