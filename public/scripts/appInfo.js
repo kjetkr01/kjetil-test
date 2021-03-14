@@ -4,7 +4,7 @@ const applicationName = `Treningstatistikken`;
 
 const vMajorVersion = 2; // hvis ny major. minor og revision = 0
 const vMinorVersion = 3; // hvis ny minor. revision = 0
-const vRevision = 22;
+const vRevision = 23;
 
 const updateYear = 2021;
 const updateMonth = 3;
@@ -16,7 +16,7 @@ const updateDay = 14;
 const applicationVersionNumber = `${vMajorVersion}.${vMinorVersion}.${vRevision}`;
 const applicationVersionState = `alpha`;
 const applicationFullVersion = `Versjon ${applicationVersionNumber} (${applicationVersionState})`;
-const applicationUpdateDate = new Date(`${updateYear}-${updateMonth}-${updateDay}`).toLocaleDateString();
+const applicationUpdateDate = new Date(`${updateYear}-${updateMonth}-${updateDay}`).toLocaleDateString() || `${updateDay}.${updateMonth}.${updateYear}`;
 
 const showOngoingUpdates = true; // vis/skjul pågående oppdateringer
 const showPlannedUpdates = true; // vis/skjul planlagte oppdateringer
@@ -81,9 +81,9 @@ const plannedUpdatesArr = [
 
 
 const aboutAppBottomInfo = `
-Prosjekt oppstart: ${new Date(`2020-11-20`).toLocaleDateString()}
+Prosjekt oppstart: ${new Date(`2020-11-20`).toLocaleDateString() || "20.11.2020"}
 <br>
-Full rework: ${new Date(`2021-01-19`).toLocaleDateString()}
+Full rework: ${new Date(`2021-01-19`).toLocaleDateString() || "19.01.2021"}
 <br>
 Sist oppdatert: ${applicationUpdateDate}
 `;
