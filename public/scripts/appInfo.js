@@ -4,11 +4,11 @@ const applicationName = `Treningstatistikken`;
 
 const vMajorVersion = 2; // hvis ny major. minor og revision = 0
 const vMinorVersion = 3; // hvis ny minor. revision = 0
-const vRevision = 23;
+const vRevision = 24;
 
-const updateYear = 2021;
-const updateMonth = 3;
-const updateDay = 14;
+const updateDay = "14";
+const updateMonth = "03";
+const updateYear = "2021";
 
 // Slutt
 
@@ -16,7 +16,7 @@ const updateDay = 14;
 const applicationVersionNumber = `${vMajorVersion}.${vMinorVersion}.${vRevision}`;
 const applicationVersionState = `alpha`;
 const applicationFullVersion = `Versjon ${applicationVersionNumber} (${applicationVersionState})`;
-const applicationUpdateDate = new Date(`${updateYear}-${updateMonth}-${updateDay}`).toLocaleDateString() || `${updateDay}.${updateMonth}.${updateYear}`;
+const applicationUpdateDate = getDateFormat(updateDay, updateMonth, updateYear);
 
 const showOngoingUpdates = true; // vis/skjul pågående oppdateringer
 const showPlannedUpdates = true; // vis/skjul planlagte oppdateringer
@@ -81,9 +81,9 @@ const plannedUpdatesArr = [
 
 
 const aboutAppBottomInfo = `
-Prosjekt oppstart: ${new Date(`2020-11-20`).toLocaleDateString() || "20.11.2020"}
+Prosjekt oppstart: ${getDateFormat("20", "11", "2020")}
 <br>
-Full rework: ${new Date(`2021-01-19`).toLocaleDateString() || "19.01.2021"}
+Full rework: ${getDateFormat("19", "01", "2021")}
 <br>
 Sist oppdatert: ${applicationUpdateDate}
 `;
@@ -142,5 +142,28 @@ function createBtn(aUserFullname, aUserID) {
         return html;
 
     }
+}
+
+function getDateFormat(aDay, aMonth, aYear) {
+
+    const day = aDay;
+    const month = aMonth;
+    const year = aYear;
+
+    let string = "Ugyldig dato";
+
+    if (day && month && year) {
+        if (day.length === 1 || day.length === 2 && month.length === 1 || month.length === 2 && year.length === 4) {
+
+            string = new Date(`${year}-${month}-${day}`);
+            if (isNaN(string)) {
+                string = `${day}.${month}.${year}`;
+            } else {
+                string = new Date(`${year}-${month}-${day}`).toLocaleDateString();
+            }
+        }
+    }
+
+    return string;
 
 }

@@ -218,7 +218,7 @@ function loadAboutAppPage() {
     const imageURL = new Image();
     imageURL.src = "images/appIcon.png";
 
-    imageURL.onload = function () {
+    //imageURL.onload = function () {
 
         const imageHTML = `
         <img id="logo" src="images/appIcon.png" alt="" draggable="false" class="noselect settingsLogo"></img>
@@ -249,7 +249,7 @@ function loadAboutAppPage() {
         settingsGrid.innerHTML += getCenteredTextTemplate(aboutAppBottomInfo, "", "spacingTop");
 
         settingsGrid.innerHTML += getBottomSpacingTemplate();
-    }
+    //}
 }
 
 async function loadUsersListPage() {
