@@ -4,7 +4,7 @@ const applicationName = `Treningstatistikken`;
 
 const vMajorVersion = 2; // hvis ny major. minor og revision = 0
 const vMinorVersion = 3; // hvis ny minor. revision = 0
-const vRevision = 24;
+const vRevision = 25;
 
 const updateDay = "14";
 const updateMonth = "03";
@@ -82,10 +82,10 @@ const plannedUpdatesArr = [
 
 const aboutAppBottomInfo = `
 Prosjekt oppstart: ${getDateFormat("20", "11", "2020")}
-<br>
+<br><br>
 Full rework: ${getDateFormat("19", "01", "2021")}
-<br>
-Sist oppdatert: ${applicationUpdateDate}
+<br><br>
+Sist oppdatert: ${calcDaysSinceUpdate()}
 `;
 
 
@@ -162,6 +162,30 @@ function getDateFormat(aDay, aMonth, aYear) {
                 string = new Date(`${year}-${month}-${day}`).toLocaleDateString();
             }
         }
+    }
+
+    return string;
+}
+
+function calcDaysSinceUpdate() {
+
+    let string = "";
+
+    const todayDate = new Date();
+    const updateDate = new Date(parseInt(updateYear), (parseInt(updateMonth) - 1), parseInt(updateDay));
+
+    const daysSinceTime = parseInt((todayDate - updateDate) / (1000 * 3600 * 24));
+
+    if (todayDate < updateDate) {
+        //fremtiden
+    } else if (daysSinceTime > 1) {
+        string = `${parseInt(daysSinceTime)} dager siden`;
+    } else if (daysSinceTime === 1) {
+        string = `${parseInt(daysSinceTime)} dag siden`;
+    } else if (daysSinceTime === 0) {
+        string = `I dag`;
+    } else {
+        string = applicationUpdateDate;
     }
 
     return string;
