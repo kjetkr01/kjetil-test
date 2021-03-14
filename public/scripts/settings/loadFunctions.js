@@ -3,6 +3,7 @@ function loadSetting(aSetting) {
     const setting = aSetting;
     if (setting) {
         titleDom.innerHTML = setting;
+        document.title = setting;
         settingsGrid.innerHTML = "";
         switch (setting) {
             case "Passord":
@@ -220,35 +221,38 @@ function loadAboutAppPage() {
 
     imageURL.onload = function () {
 
-        const imageHTML = `
-        <img id="logo" src="images/appIcon.png" alt="" draggable="false" class="noselect settingsLogo"></img>
-        `;
+        if (sessionStorage.getItem("currentSetting") === "Om appen") {
 
-        settingsGrid.innerHTML = justTextTemplate(imageHTML, "center");
+            const imageHTML = `
+            <img id="logo" src="images/appIcon.png" alt="" draggable="false" class="noselect settingsLogo"></img>
+            `;
 
-        const appInfoHTML = `
-        <strong>${applicationName}</strong>
-        <br>
-        <p class="settingsApplicationFullVersion">${applicationFullVersion}</p>
-        `;
+            settingsGrid.innerHTML = justTextTemplate(imageHTML, "center");
 
-        settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
+            const appInfoHTML = `
+            <strong>${applicationName}</strong>
+            <br>
+            <p class="settingsApplicationFullVersion">${applicationFullVersion}</p>
+            `;
 
-        settingsGrid.innerHTML += getLeftTextTemplate(aboutAppText, "", "spacingTop");
+            settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
 
-        if (showOngoingUpdates === true) {
-            settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${ongoingUpdatesText}</button>`, "", "spacingTop");
-            settingsGrid.innerHTML += getLeftTextTemplate(ongoingUpdates);
+            settingsGrid.innerHTML += getLeftTextTemplate(aboutAppText, "", "spacingTop");
+
+            if (showOngoingUpdates === true) {
+                settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${ongoingUpdatesText}</button>`, "", "spacingTop");
+                settingsGrid.innerHTML += getLeftTextTemplate(ongoingUpdates);
+            }
+
+            if (showPlannedUpdates === true) {
+                settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${plannedUpdatesText}</button>`, "", "spacingTop");
+                settingsGrid.innerHTML += getLeftTextTemplate(plannedUpdates);
+            }
+
+            settingsGrid.innerHTML += getCenteredTextTemplate(aboutAppBottomInfo, "", "spacingTop");
+
+            settingsGrid.innerHTML += getBottomSpacingTemplate();
         }
-
-        if (showPlannedUpdates === true) {
-            settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${plannedUpdatesText}</button>`, "", "spacingTop");
-            settingsGrid.innerHTML += getLeftTextTemplate(plannedUpdates);
-        }
-
-        settingsGrid.innerHTML += getCenteredTextTemplate(aboutAppBottomInfo, "", "spacingTop");
-
-        settingsGrid.innerHTML += getBottomSpacingTemplate();
     }
 }
 
@@ -331,6 +335,7 @@ async function loadUsersListPage() {
 async function loadPendingUsersPage() {
 
     titleDom.innerHTML = "Forespørsler";
+    document.title = "Forespørsler";
 
     const body = { "authToken": token, "userInfo": user };
     const url = `/users/list/pending`;
