@@ -4,7 +4,7 @@ const applicationName = `Treningstatistikken`;
 
 const vMajorVersion = 2; // hvis ny major. minor og revision = 0
 const vMinorVersion = 3; // hvis ny minor. revision = 0
-const vRevision = 26;
+const vRevision = 27;
 
 const updateDay = "14";
 const updateMonth = "03";
@@ -69,12 +69,25 @@ const ongoingUpdatesArr = [
 
 const plannedUpdatesText = "Planlagte oppdateringer";
 const plannedUpdatesArr = [
+    "TITLE:Farge-tema",
+    "Lage flere farge-temaer",
+
+    "TITLE:Løft/Mål",
+    "Legge til flere løft og mål. Foreløpi bare: Benkpress, Knebøy, Markløft, Skulderpress",
+
     "TITLE:Treningsplan",
     "Opp til 4 treningsplaner",
     "Egendefinert navn per plan",
     "Velge aktiv treningsplan",
     "Elementer: nr, øvelse, resp, sets, % utfra ORM, rpe, notis (kun for brukeren)",
     "Kunne lagre/kopiere andre brukere sine planer",
+
+    "TITLE:Badges",
+    "Lage flere badge farger",
+    "Lage større versjon av badge (mål-badge)",
+
+    "TITLE:Offline support",
+    "Se treningsplan, løft, mål offline"
 ];
 
 //
@@ -83,7 +96,7 @@ const plannedUpdatesArr = [
 const aboutAppBottomInfo = `
 Prosjekt oppstart: ${getDateFormat("20", "11", "2020")}
 <br><br>
-Full rework: ${getDateFormat("19", "01", "2021")}
+Full redesign: ${getDateFormat("19", "01", "2021")}
 <br><br>
 Sist oppdatert: ${calcDaysSinceUpdate()}
 `;
