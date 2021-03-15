@@ -230,21 +230,21 @@ function loadAboutAppPage() {
             settingsGrid.innerHTML = justTextTemplate(imageHTML, "center");
 
             const appInfoHTML = `
-            <strong>${applicationName}</strong>
+            <strong>${application.name}</strong>
             <br>
-            <p class="settingsApplicationFullVersion">${applicationFullVersion}</p>
+            <p class="settingsApplicationFullVersion">${application.version.full || application.version.fullNumber || ""}</p>
             `;
 
             settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
 
             settingsGrid.innerHTML += getLeftTextTemplate(aboutAppText, "", "spacingTop");
 
-            if (showOngoingUpdates === true) {
+            if (application.updatesInfo.showOnGoing === true) {
                 settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${ongoingUpdatesText}</button>`, "", "spacingTop");
                 settingsGrid.innerHTML += getLeftTextTemplate(ongoingUpdates);
             }
 
-            if (showPlannedUpdates === true) {
+            if (application.updatesInfo.showPlanned === true) {
                 settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${plannedUpdatesText}</button>`, "", "spacingTop");
                 settingsGrid.innerHTML += getLeftTextTemplate(plannedUpdates);
             }
@@ -277,7 +277,7 @@ async function loadUsersListPage() {
             totalUsers = resp.allUsers.length
         }
 
-        let usersText = `${applicationName} har ${totalUsers} brukere<br>${totalAPIUsers} av brukerene har API tilgang<br>Admins kan besøke profilen uavhengig om den er privat eller ikke<br>Her er listen med brukere`;
+        let usersText = `${application.name} har ${totalUsers} brukere<br>${totalAPIUsers} av brukerene har API tilgang<br>Admins kan besøke profilen uavhengig om den er privat eller ikke<br>Her er listen med brukere`;
         if (totalUsers === 0) {
             usersText = `Det er ingen brukere`;
         }
@@ -395,7 +395,7 @@ async function loadAPIPage() {
     const response = await fetch("/api", config);
     const data = await response.json();
 
-    settingsGrid.innerHTML = justTextTemplate(`${applicationName} har ${data.length} APIer.<br>Her kan du se din API key, BrukerID og ulike APIer.`, "left");
+    settingsGrid.innerHTML = justTextTemplate(`${application.name} har ${data.length} APIer.<br>Her kan du se din API key, BrukerID og ulike APIer.`, "left");
 
     settingsGrid.innerHTML += getTemplate("API Key", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.apikey}' readonly="readonly"></input>`, "borderTop");
     settingsGrid.innerHTML += getTemplate("BrukerID", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.id}' readonly="readonly"></input>`);

@@ -1,28 +1,32 @@
-const applicationName = `Treningstatistikken`;
-
 // Oppdatere disse når ny commit
 
-const vMajorVersion = 2; // hvis ny major. minor og revision = 0
-const vMinorVersion = 3; // hvis ny minor. revision = 0
-const vRevision = 29;
-
-const updateDay = "14";
-const updateMonth = "03";
-const updateYear = "2021";
+const application = {
+    name: "Treningstatistikken",
+    version: {
+        state: "alpha",
+        major: 2, // major++ = minor = 0 && revision = 0
+        minor: 3, // minor++ = revision = 0
+        revision: 30,
+    },
+    lastUpdated: {
+        day: "15",
+        month: "03",
+        year: "2021"
+    },
+    updatesInfo: {
+        showOnGoing: true,
+        showPlanned: true,
+    }
+}
 
 // Slutt
 
-
-const applicationVersionNumber = `${vMajorVersion}.${vMinorVersion}.${vRevision}`;
-const applicationVersionState = `alpha`;
-const applicationFullVersion = `Versjon ${applicationVersionNumber} (${applicationVersionState})`;
-const applicationUpdateDate = getDateFormat(updateDay, updateMonth, updateYear);
-
-const showOngoingUpdates = true; // vis/skjul pågående oppdateringer
-const showPlannedUpdates = true; // vis/skjul planlagte oppdateringer
+application.version.fullNumber = `${application.version.major}.${application.version.minor}.${application.version.revision}`;
+application.version.full = `Versjon ${application.version.fullNumber} (${application.version.state})`;
+application.lastUpdated.date = getDateFormat(application.lastUpdated.day, application.lastUpdated.month, application.lastUpdated.year);
 
 const aboutAppText = `
-${applicationName} er et app prosjekt utviklet av ${createBtn("Kjetil Kristiansen", "3")}.
+${application.name} er et app prosjekt utviklet av ${createBtn("Kjetil Kristiansen", "3")}.
 
 <br><br>
 Appen ble hovedsakling laget for å enkelt se ORM (One Rep Max) i ulike løft.
@@ -103,8 +107,6 @@ Full redesign: ${getDateFormat("19", "01", "2021")}
 <br><br>
 Sist oppdatert: ${calcDaysSinceUpdate()}
 `;
-
-
 
 // array to html
 let ongoingUpdates = "", plannedUpdates = "";
@@ -188,7 +190,7 @@ function calcDaysSinceUpdate() {
     let string = "";
 
     const todayDate = new Date();
-    const updateDate = new Date(parseInt(updateYear), (parseInt(updateMonth) - 1), parseInt(updateDay));
+    const updateDate = new Date(parseInt(application.lastUpdated.year), (parseInt(application.lastUpdated.month) - 1), parseInt(application.lastUpdated.day));
 
     const daysSinceTime = parseInt((todayDate - updateDate) / (1000 * 3600 * 24));
 
@@ -201,7 +203,7 @@ function calcDaysSinceUpdate() {
     } else if (daysSinceTime === 0) {
         string = `I dag`;
     } else {
-        string = applicationUpdateDate;
+        string = application.lastUpdated.date;
     }
 
     return string;
