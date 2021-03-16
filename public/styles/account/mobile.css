@@ -45,16 +45,15 @@ grid-template-rows: /* nedover */
 
 1fr /* GuserGrid */
 
-2vh /* c1r2 */
+var(--main-footerHeightTop) /* c1r2 */
 
-30px /* Glinks */
+var(--main-footerIconHeight) /* Glinks */
 
-6vh /* c2r2 */
-
+var(--main-footerHeightBottom) /* c2r2 */
 ;
 
 grid-template-columns: /* bortover */
-12vw 30px 1fr 30px 1fr 30px 12vw;
+12vw auto 1fr auto 1fr auto 12vw;
 }
 
 

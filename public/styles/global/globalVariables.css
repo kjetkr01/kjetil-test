@@ -1,0 +1,8 @@
+:root {
+
+    --main-footerHeightTop: 17.5px; /*index/leaderboards/account*/
+    --main-footerIconHeight: auto; /*index/leaderboards/account*/
+    --main-footerHeightBottom: 40px; /*index/leaderboards/account*/
+    --main-footerIconSize: 28px;
+
+}
