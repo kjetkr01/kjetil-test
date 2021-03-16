@@ -12,7 +12,7 @@ font-family: var(--main-font-Family-Verdana);
 font-size: 15px;
 background-color: var(--main-backgroundColor3);
 display: grid;
-width: 100vw;
+width: 100%;
 grid-template-areas:
 
 "cS1 cS1 cS1 cS1"
@@ -22,9 +22,9 @@ grid-template-areas:
 
 grid-template-rows: /* nedover */
 
-17.5px /* cS1 */
-32.5px /* gsSetting osv */
-5px /* cS4 */
+16.5px /* cS1 */
+auto /* gsSetting osv */
+16.5px /* cS4 */
 ;
 
 grid-template-columns: /* bortover */
@@ -81,7 +81,7 @@ margin-top: 40px;
 font-size: 15px;
 background-color: var(--main-backgroundColor3);
 display: grid;
-width: 100vw;
+width: 100%;
 grid-template-areas:
 
 "cSC1"
@@ -164,7 +164,7 @@ grid-area: cSLC2;
 .userSettingsJustText {
 font-size: 15px;
 display: grid;
-width: 100vw;
+width: 100%;
 grid-template-areas:
 
 "cSJC1"
@@ -208,7 +208,7 @@ word-break: break-all;
 font-size: 15px;
 background-color: var(--main-backgroundColor3);
 display: grid;
-width: 100vw;
+width: 100%;
 grid-template-areas:
 
 "cSCA1"
@@ -258,6 +258,10 @@ appearance: none;
 -moz-appearance: none;
 border: none;
 background-color: var(--main-backgroundColor3);
+}
+
+input {
+    padding: 0;
 }
 
 .settingsIcons {
