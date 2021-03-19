@@ -452,9 +452,15 @@ server.post("/user/update/settings/about/me", auth, async (req, res) => {
           const height = parseFloat(settings.height);
           const weight = parseFloat(settings.weight);
 
-          if (settings.gym.length > 30) {
+          const letters = /^[ÆØÅæøåA-Za-z0-9\s]+$/;
+
+          if (settings.gym.length > 30 || !gym.match(letters)) {
                info.isValid = false;
-               info.msg = `Treningssenter overskrider 30 bokstaver`;
+               if (!gym.match(letters)) {
+                    info.msg = `Treningssenter er ugyldig`;
+               } else {
+                    info.msg = `Treningssenter overskrider 30 bokstaver`;
+               }
           }
           else if (settings.age.length > 2 || isNaN(age) === true) {
                info.isValid = false;

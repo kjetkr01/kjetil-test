@@ -33,9 +33,9 @@ grid-template-rows: /* nedover */
 
 50px /* Gtitle */
 
-6vh /* Ggym */
+auto /* Ggym */
 
-3.75vh /* info */
+auto /* info */
 
 10px /* c2r1 */
 
@@ -70,11 +70,12 @@ grid-template-columns: /* bortover */
 }
 
 #Ggym > #gym {
-
+min-height: 6vh;
 }
 
 #Ginfo > #info {
-
+min-height: 4.10vh;
+margin-top: 10px;
 }
 
 #GuserGrid > #userGrid{
