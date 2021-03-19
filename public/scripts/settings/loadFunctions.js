@@ -179,7 +179,7 @@ function loadPasswordPage() {
     settingsGrid.innerHTML += getCenteredTextTemplate("Gjenta ditt nye ønskede passord", "usernameDiv", "spacingTop");
     settingsGrid.innerHTML += getCenteredTextTemplate("<input class='settingsInput' id='repeatNewPsw' type='password' placeholder='Fyll inn'></input>");
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="alert('savepsw');">Oppdater passord</button>`, "", "spacingTop");
+    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="updatePassword();">Oppdater passord</button>`, "", "spacingTop");
 
     settingsGrid.innerHTML += getBottomSpacingTemplate();
 }
@@ -188,13 +188,13 @@ function loadAboutMePage() {
 
     settingsGrid.innerHTML = justTextTemplate("Her kan du velge høyde, vekt og alder. Om profilen din er offentlig, vises dette til andre brukere", "left");
 
-    settingsGrid.innerHTML += getTemplate("Treningssenter", "", `<input id="gymInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.gym}'></input>`, "borderTop");
-    settingsGrid.innerHTML += getTemplate("Alder", "", `<input id="ageInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.age}'>år</input>`);
+    settingsGrid.innerHTML += getTemplate("Treningssenter", "", `<input id="gymInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.gym}' maxlength="30"></input>`, "borderTop");
+    settingsGrid.innerHTML += getTemplate("Alder", "", `<input id="ageInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.age}' type="number">år</input>`);
 
-    settingsGrid.innerHTML += getTemplate("Høyde", "", `<input id="heightInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.height}'>cm</input>`, "spacingTop");
-    settingsGrid.innerHTML += getTemplate("Vekt", "", `<input id="weightInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.weight}'>kg</input>`);
+    settingsGrid.innerHTML += getTemplate("Høyde", "", `<input id="heightInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.height}' type="number">cm</input>`, "spacingTop");
+    settingsGrid.innerHTML += getTemplate("Vekt", "", `<input id="weightInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.weight}' type="number">kg</input>`);
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="alert('updateDetails');">Oppdater detaljer</button>`, "", "spacingTop");
+    settingsGrid.innerHTML += getCenteredTextTemplate(`<button id="updateAboutMeBtn" class='settingsButton' onClick="updateAboutMe();">Oppdater detaljer</button>`, "", "spacingTop");
 
     settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="aboutMeResetValues();">Tilbakestill verdier</button>`, "", "spacingTop");
 
@@ -228,8 +228,8 @@ function loadAppearancePage() {
 
     const themeColorSelectionHTML = `
     <select id="themeColorSelection">
-  ${themeColorOptionsHTML}
-</select>
+    ${themeColorOptionsHTML}
+    </select>
     `;
 
     settingsGrid.innerHTML += getTemplate("Farge-tema", "themeColorInp", themeColorSelectionHTML);
@@ -247,7 +247,7 @@ function loadProgressionInfoPage() {
     <select id="badgeSizeSelection">
        <option value="1">Stor</option>
        <option value="2">Liten</option>
-</select>
+    </select>
     `;
 
     settingsGrid.innerHTML += getTemplate("Størrelse", "badgeSizeInp", badeSizeHTML, "borderTop");
@@ -257,7 +257,7 @@ function loadProgressionInfoPage() {
        <option value="1">Alt</option>
        <option value="2">KG igjen</option>
        <option value="3">% fremgang</option>
-</select>
+    </select>
     `;
 
     settingsGrid.innerHTML += getTemplate("Informasjon", "badeInfoInp", badgeInfoHTML);
@@ -359,10 +359,10 @@ async function loadUsersListPage(setting) {
                 const currentUser = resp.allUsers[usersKeys[i]];
                 let profileStatus = `<p class="settingsPendingUsername" style="color:green;">Offentlig</p>`;
 
-                let hasAPIAccessTxt = `<button class="settingsAcceptPendingUser" onClick="alert('giveAPIAccess');">Gi API tilgang</button>`;
+                let hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsAcceptPendingUser" onClick="alert('giveAPIAccess');">Gi API tilgang</button>`;
 
                 if (allAPIUsersArr.includes(currentUser.username)) {
-                    hasAPIAccessTxt = `<button class="settingsDeclinePendingUser" onClick="alert('removeAPIAccess');">Fjern API tilgang</button>`;
+                    hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsDeclinePendingUser" onClick="alert('removeAPIAccess');">Fjern API tilgang</button>`;
                 }
 
                 if (currentUser.settings.publicProfile === true) {
@@ -376,7 +376,7 @@ async function loadUsersListPage(setting) {
                    ${profileStatus}
                    <p class="settingsPendingUsername">${hasAPIAccessTxt}</p>
                    <br>
-                   <button class="settingsButton" onClick="viewUser('${currentUser.id}');">Se profil</button>
+                   <button style="padding:0;margin:0;" class="settingsButton" onClick="viewUser('${currentUser.id}');">Se profil</button>
                    `;
 
                 settingsGrid.innerHTML += getCenteredTextTemplate(usersTemplateHTML, "", "spacingTop");

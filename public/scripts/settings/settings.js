@@ -102,49 +102,23 @@ function confirmLogout() {
     }
 }
 
-let isUpdatingSetting = false;
-
-async function updateCheckboxSetting(aSetting, aValue) {
-
-    if (isUpdatingSetting === false) {
-
-        isUpdatingSetting = true;
-
-        const inputCategory = document.getElementsByClassName("inputCategory");
-
-        for (let i = 0; i < inputCategory.length; i++) {
-            inputCategory[i].setAttribute("disabled", true);
-        }
-
-        const setting = aSetting;
-        const value = aValue;
-
-        const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
-        const url = `/user/update/settings/${setting}`;
-
-        const resp = await callServerAPI(body, url);
-
-        if (resp === true) {
-            updateUserInfo();
-            loadSetting();
-            isUpdatingSetting = false;
-        }
-    }
-}
-
 function aboutMeResetValues() {
     const domList = ["gymInp", "ageInp", "heightInp", "weightInp"];
 
     for (let i = 0; i < domList.length; i++) {
-        document.getElementById(domList[i]).value = "";
+        if (domList[i] === "gymInp") {
+            document.getElementById(domList[i]).value = "";
+        } else {
+            document.getElementById(domList[i]).value = 0;
+        }
     }
 }
 
 async function saveApperanceSettings() {
 
-    if (isUpdatingSetting === false) {
+    if (isUpdatingCheckboxSetting === false) {
 
-        isUpdatingSetting = true;
+        isUpdatingCheckboxSetting = true;
 
         //const theme = document.getElementById("appearanceThemeSelection").value;
         const colorTheme = document.getElementById("themeColorSelection").value;
@@ -172,7 +146,7 @@ async function saveApperanceSettings() {
             updateUserInfo();
             loadSetting();
             changeColorTheme();
-            isUpdatingSetting = false;
+            isUpdatingCheckboxSetting = false;
 
 
         }

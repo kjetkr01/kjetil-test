@@ -22,6 +22,7 @@ const getUserDetails = require("./modules/user").getUserDetails;
 const getUserSettingsAndInfo = require("./modules/user").getUserSettingsAndInfo;
 const updateUserSetting = require("./modules/user").updateUserSetting;
 const getListOfAllUsersWorkoutToday = require("./modules/user").getListOfAllUsersWorkoutToday;
+const updateAboutMe = require("./modules/user").updateAboutMe;
 
 const saveLiftOrGoal = require("./modules/user").saveLiftOrGoal;
 const deleteLiftOrGoal = require("./modules/user").deleteLiftOrGoal;
@@ -428,6 +429,74 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
 });
 
 //
+
+
+
+// update about me information
+
+server.post("/user/update/settings/about/me", auth, async (req, res) => {
+
+     const currentUser = JSON.parse(req.body.userInfo);
+     const settings = req.body.updateSettings;
+
+     if (settings.hasOwnProperty("gym") && settings.hasOwnProperty("age") && settings.hasOwnProperty("height") && settings.hasOwnProperty("weight") && currentUser.hasOwnProperty("username")) {
+
+          let info = {
+               isValid: true,
+               msg: ""
+          };
+          //validering her???
+
+          const gym = settings.gym;
+          const age = parseInt(settings.age);
+          const height = parseFloat(settings.height);
+          const weight = parseFloat(settings.weight);
+
+          if (settings.gym.length > 30) {
+               info.isValid = false;
+               info.msg = `Treningssenter overskrider 30 bokstaver`;
+          }
+          else if (settings.age.length > 2 || isNaN(age) === true) {
+               info.isValid = false;
+               info.msg = `Alder er ugyldig. Eks: 20`;
+          }
+          else if (settings.height.length > 6 || isNaN(height) === true || height > 205) {
+               info.isValid = false;
+               info.msg = `Høyde er ugyldig. Eks: 183.25`;
+          }
+          else if (settings.weight.length > 6 || isNaN(weight) === true || weight > 140) {
+               info.isValid = false;
+               info.msg = `Vekt er ugyldig. Eks: 83.5`;
+          }
+
+          if (info.isValid === true) {
+
+               const updateSettings = {
+                    gym: gym,
+                    age: age,
+                    height: height,
+                    weight: weight
+               }
+
+               const resp = await updateAboutMe(currentUser.username, updateSettings);
+
+               if (resp === true) {
+                    res.status(200).json("Endringer er blitt oppdatert!").end();
+               } else {
+                    res.status(403).json("error, try again").end();
+               }
+          } else {
+               res.status(403).json(info.msg).end();
+          }
+
+     } else {
+          res.status(403).json("invalid settings").end();
+     }
+});
+
+//
+
+
 
 // save user lifts & goals
 

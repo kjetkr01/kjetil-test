@@ -724,6 +724,31 @@ class StorageHandler {
 
     //
 
+    //  -------------------------------  update about me (user)  ------------------------------- //
+
+    async updateAboutMe(username, settings) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+
+        try {
+            await client.connect();
+
+            await client.query('UPDATE "users" SET info=$1 WHERE username=$2', [settings, username]);
+
+            results = true;
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return results;
+    }
+
+    //
+
     // api only calls
 
     //  -------------------------------  getWorkoutPlanAPI  ------------------------------- //
