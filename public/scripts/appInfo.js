@@ -6,10 +6,10 @@ const application = {
         state: "alpha",
         major: 2, // major++ = minor = 0 && revision = 0
         minor: 3, // minor++ = revision = 0
-        revision: 34,
+        revision: 35,
     },
     lastUpdated: {
-        day: "16",
+        day: "19",
         month: "03",
         year: "2021"
     },
@@ -71,12 +71,13 @@ const ongoingUpdatesArr = [
 
 //
 
-const plannedUpdatesText = "Planlagte oppdateringer";
+const plannedUpdatesText = "Kommende oppdateringer";
 const plannedUpdatesArr = [
     "TITLE:Farge-tema",
     "Lage flere farge-temaer",
 
     "TITLE:Løft/Mål",
+    "Slå av sletting av løft og mål i Innstillinger. Passord for å slå det av igjen",
     "Legge til flere løft og mål. Foreløpi bare: Benkpress, Knebøy, Markløft, Skulderpress",
 
     "TITLE:Treningsplan",

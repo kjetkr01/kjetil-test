@@ -1,3 +1,42 @@
+const ELoadSettings = {
+    settings: {
+        name: `Innstillinger`,
+        value: 1
+    },
+    password: {
+        name: `Passord`,
+        value: 2
+    },
+    aboutMe: {
+        name: `Om deg`,
+        value: 3
+    },
+    apperance: {
+        name: `Utseende`,
+        value: 4
+    },
+    progressionInfo: {
+        name: `Fremgangs info`,
+        value: 5
+    },
+    aboutApp: {
+        name: `Om appen`,
+        value: 6
+    },
+    pendingUsers: {
+        name: `Forespørsler`,
+        value: 7
+    },
+    users: {
+        name: `Brukere`,
+        value: 8
+    },
+    api: {
+        name: `API`,
+        value: 9
+    },
+};
+
 async function updateUserInfo() {
 
     const resp = await getAccountDetails(userID);
@@ -7,7 +46,7 @@ async function updateUserInfo() {
         userInfo = resp.info;
         settings = resp.info.settings;
 
-        const currentSetting = sessionStorage.getItem("currentSetting") || "Innstillinger";
+        const currentSetting = sessionStorage.getItem("currentSetting") || ELoadSettings.settings;
 
         loadSetting(currentSetting);
 
@@ -16,30 +55,41 @@ async function updateUserInfo() {
     }
 }
 
-function scrollToSavedPos() {
-    if (savedScrollPos) {
-        settingsDom.scrollTo(0, savedScrollPos);
+function scrollToSavedPos(setting) {
+
+    const currentScroll = sessionStorage.getItem(`@scroll-${setting}`);
+
+    if (currentScroll) {
+        settingsDom.scrollTo(0, currentScroll);
     }
 }
 
 function backToPrevious() {
-    if (titleDom.innerHTML === "Innstillinger") {
+    if (titleDom.innerHTML === ELoadSettings.settings.name) {
+        clearAllScrollPos();
         redirectToAccount();
     } else {
-        loadSetting("Innstillinger");
+        loadSetting(ELoadSettings.settings.name);
     }
 
 }
 
 function cacheCurrentSetting(aCurrentSetting) {
     if (!aCurrentSetting) {
-        aCurrentSetting = "Innstillinger";
+        aCurrentSetting = ELoadSettings.settings.name;
     }
 
     const currentSetting = aCurrentSetting;
 
     sessionStorage.setItem("currentSetting", currentSetting);
+}
 
+function clearAllScrollPos() {
+    const ELoadSettingsKeys = Object.keys(ELoadSettings);
+    for (let i = 0; i < ELoadSettingsKeys.length; i++) {
+        console.log(123)
+        sessionStorage.removeItem(`@scroll-${ELoadSettings[ELoadSettingsKeys[i]].name}`);
+    }
 }
 
 function confirmLogout() {
@@ -49,7 +99,6 @@ function confirmLogout() {
         localStorage.clear();
         sessionStorage.clear();
         redirectToLogin();
-
     }
 }
 

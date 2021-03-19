@@ -6,3 +6,19 @@
     --main-footerIconSize: 28px;
 
 }
+
+/* vis større mellomrom hvis iphone x osv?
+var ratio = window.devicePixelRatio || 1;
+  
+    // Define the users device screen dimensions
+    var screen = {
+      width : window.screen.width * ratio,
+      height : window.screen.height * ratio
+    };
+  
+    // iPhone X Detection
+    if (iOS && screen.width == 1125 && screen.height === 2436) {
+      $('body').addClass('iphoneX');
+    }
+
+*/

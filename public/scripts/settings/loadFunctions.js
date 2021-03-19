@@ -2,15 +2,64 @@ function loadSetting(aSetting) {
 
     const setting = aSetting;
     if (setting) {
+        saveNewScrollPos = false;
         titleDom.innerHTML = setting;
         document.title = setting;
         settingsGrid.innerHTML = "";
+
+        if (setting === ELoadSettings.password.name) {
+            cacheCurrentSetting(setting);
+            loadPasswordPage();
+        }
+
+        else if (setting === ELoadSettings.aboutMe.name) {
+            cacheCurrentSetting(setting);
+            loadAboutMePage();
+        }
+
+        else if (setting === ELoadSettings.apperance.name) {
+            cacheCurrentSetting(setting);
+            loadAppearancePage();
+        }
+
+        else if (setting === ELoadSettings.progressionInfo.name) {
+            cacheCurrentSetting(setting);
+            loadProgressionInfoPage();
+        }
+
+        else if (setting === ELoadSettings.aboutApp.name) {
+            cacheCurrentSetting(setting);
+            loadAboutAppPage(setting);
+        }
+
+        else if (setting === ELoadSettings.pendingUsers.name) {
+            cacheCurrentSetting(setting);
+            loadPendingUsersPage(setting);
+        }
+
+        else if (setting === ELoadSettings.users.name) {
+            cacheCurrentSetting(setting);
+            loadUsersListPage(setting);
+        }
+
+        else if (setting === ELoadSettings.api.name) {
+            cacheCurrentSetting(setting);
+            loadAPIPage();
+        }
+
+        else {
+            document.title = ELoadSettings.settings.name;
+            cacheCurrentSetting(ELoadSettings.settings.name);
+            loadDefaultPage(ELoadSettings.settings.name);
+        }
+
+        /*
         switch (setting) {
-            case "Passord":
+            case [ELoadSettings.password]:
                 cacheCurrentSetting(setting);
                 loadPasswordPage();
                 break;
-            case "Om deg":
+            case ELoadSettings.aboutMe:
                 cacheCurrentSetting(setting);
                 loadAboutMePage();
                 break;
@@ -24,40 +73,40 @@ function loadSetting(aSetting) {
                 break;
             case "Om appen":
                 cacheCurrentSetting(setting);
-                loadAboutAppPage();
+                loadAboutAppPage(setting);
                 break;
             case "pendingUsers":
                 cacheCurrentSetting(setting);
-                loadPendingUsersPage();
+                loadPendingUsersPage(setting);
                 break;
             case "Brukere":
                 cacheCurrentSetting(setting);
-                loadUsersListPage();
+                loadUsersListPage(setting);
                 break;
             case "API":
                 cacheCurrentSetting(setting);
                 loadAPIPage();
                 break;
             default:
+                document.title = ELoadSettings.settings;
                 cacheCurrentSetting(setting);
-                loadDefaultPage();
-                scrollToSavedPos();
+                loadDefaultPage(setting);
                 break;
-        }
+        }*/
     }
 }
 
-async function loadDefaultPage() {
+async function loadDefaultPage(setting) {
 
-    titleDom.innerHTML = "Innstillinger";
+    titleDom.innerHTML = ELoadSettings.settings.name;
     settingsGrid.innerHTML = "";
 
     settingsGrid.innerHTML += getTemplate("Visningsnavn", "displaynameDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.displayname}'></input>`, "borderTop");
     settingsGrid.innerHTML += getTemplate("Brukernavn", "usernameDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.username}'></input>`);
 
-    settingsGrid.innerHTML += getTemplateWithBtn("Passord", "passwordDiv");
+    settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.password.name, "passwordDiv");
 
-    settingsGrid.innerHTML += getTemplateWithBtn("Om deg", "aboutDiv", "spacingTop");
+    settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.aboutMe.name, "aboutDiv", "spacingTop");
 
     if (settings.publicProfile === true) {
         settingsGrid.innerHTML += getTemplateWithCheckbox("Privat profil", "profileVisibilityDiv", true, "publicProfile", "spacingTop");
@@ -77,23 +126,25 @@ async function loadDefaultPage() {
         settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", "workoutTodayListDiv", false, "displayWorkoutList");
     }
 
-    settingsGrid.innerHTML += getTemplateWithBtn("Utseende", "appearanceDiv", "spacingTop");
-    settingsGrid.innerHTML += getTemplateWithBtn("Fremgangs info", "appearanceDiv");
+    settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.apperance.name, "appearanceDiv", "spacingTop");
+    settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.progressionInfo.name, "appearanceDiv");
 
-    settingsGrid.innerHTML += getTemplateWithBtn("Om appen", "aboutAppDiv", "spacingTop");
+    settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.aboutApp.name, "aboutAppDiv", "spacingTop");
 
     if (userInfo.hasOwnProperty("isadmin")) {
         if (userInfo.isadmin === true) {
             settingsGrid.innerHTML += getPendingRequestsTemplate();
-            settingsGrid.innerHTML += getTemplateWithBtn("Brukere", "usersDiv");
+            settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.users.name, "usersDiv");
         }
     }
 
     if (userInfo.hasOwnProperty("apikey")) {
-        settingsGrid.innerHTML += getTemplateWithBtn("API", "apiDiv");
+        settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.api.name, "apiDiv");
     }
 
     settingsGrid.innerHTML += getLogoutBtn();
+
+    scrollToSavedPos(setting);
 
     if (userInfo.hasOwnProperty("isadmin")) {
         if (userInfo.isadmin === true) {
@@ -106,11 +157,13 @@ async function loadDefaultPage() {
             if (resp) {
                 if (resp[0].hasOwnProperty("id")) {
                     const pendingRequestsTxt = document.getElementsByName("pendingRequestsTxt");
-                    pendingRequestsTxt[0].innerHTML = `Forespørsler (${resp.length})`;
+                    pendingRequestsTxt[0].innerHTML = `${ELoadSettings.pendingUsers.name} (${resp.length})`;
                 }
             }
         }
     }
+
+    saveNewScrollPos = true;
 }
 
 function loadPasswordPage() {
@@ -214,14 +267,14 @@ function loadProgressionInfoPage() {
     settingsGrid.innerHTML += getBottomSpacingTemplate();
 }
 
-function loadAboutAppPage() {
+function loadAboutAppPage(setting) {
 
     const imageURL = new Image();
     imageURL.src = "images/appIcon.png";
 
     imageURL.onload = function () {
 
-        if (sessionStorage.getItem("currentSetting") === "Om appen") {
+        if (sessionStorage.getItem("currentSetting") === ELoadSettings.aboutApp.name) {
 
             const imageHTML = `
             <img id="logo" src="images/appIcon.png" alt="" draggable="false" class="noselect settingsLogo"></img>
@@ -253,17 +306,20 @@ function loadAboutAppPage() {
 
             settingsGrid.innerHTML += getBottomSpacingTemplate();
         }
+
+        scrollToSavedPos(setting);
+        saveNewScrollPos = true;
     }
 }
 
-async function loadUsersListPage() {
+async function loadUsersListPage(setting) {
 
     const body = { "authToken": token, "userInfo": user };
     const url = `/users/list/all`;
 
     const resp = await callServerAPI(body, url);
 
-    if (resp.hasOwnProperty("allUsers") && resp.hasOwnProperty("allAPIUsers")) {
+    if (resp.hasOwnProperty("allUsers") && resp.hasOwnProperty("allAPIUsers") && sessionStorage.getItem("currentSetting") === ELoadSettings.users.name) {
 
         let totalUsers = 0;
         const allAPIUsersArr = [];
@@ -326,16 +382,17 @@ async function loadUsersListPage() {
                 settingsGrid.innerHTML += getCenteredTextTemplate(usersTemplateHTML, "", "spacingTop");
             }
         }
-
     }
 
     settingsGrid.innerHTML += getBottomSpacingTemplate();
+    scrollToSavedPos(setting);
+    saveNewScrollPos = true;
 }
 
-async function loadPendingUsersPage() {
+async function loadPendingUsersPage(setting) {
 
-    titleDom.innerHTML = "Forespørsler";
-    document.title = "Forespørsler";
+    titleDom.innerHTML = ELoadSettings.pendingUsers.name;
+    document.title = ELoadSettings.pendingUsers.name;
 
     const body = { "authToken": token, "userInfo": user };
     const url = `/users/list/pending`;
@@ -356,7 +413,7 @@ async function loadPendingUsersPage() {
 
     settingsGrid.innerHTML = justTextTemplate(HTMLText, "left");
 
-    if (resp[0].hasOwnProperty("username")) {
+    if (resp[0].hasOwnProperty("username") && sessionStorage.getItem("currentSetting") === ELoadSettings.pendingUsers.name) {
 
         const defaultHTML = `
        <p class="settingsPendingUserFullName">Visningsnavn</p>
@@ -381,6 +438,8 @@ async function loadPendingUsersPage() {
     }
 
     settingsGrid.innerHTML += getBottomSpacingTemplate();
+    scrollToSavedPos(setting);
+    saveNewScrollPos = true;
 }
 
 async function loadAPIPage() {
@@ -395,40 +454,46 @@ async function loadAPIPage() {
     const response = await fetch("/api", config);
     const data = await response.json();
 
-    settingsGrid.innerHTML = justTextTemplate(`${application.name} har ${data.length} APIer.<br>Her kan du se din API key, BrukerID og ulike APIer.`, "left");
+    if (sessionStorage.getItem("currentSetting") === ELoadSettings.api.name) {
 
-    settingsGrid.innerHTML += getTemplate("API Key", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.apikey}' readonly="readonly"></input>`, "borderTop");
-    settingsGrid.innerHTML += getTemplate("BrukerID", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.id}' readonly="readonly"></input>`);
+        settingsGrid.innerHTML = justTextTemplate(`${application.name} har ${data.length} APIer.<br>Her kan du se din API key, BrukerID og ulike APIer.`, "left");
 
-    for (let i = 0; i < data.length; i++) {
-        const text = `
+        settingsGrid.innerHTML += getTemplate("API Key", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.apikey}' readonly="readonly"></input>`, "borderTop");
+        settingsGrid.innerHTML += getTemplate("BrukerID", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.id}' readonly="readonly"></input>`);
+
+        for (let i = 0; i < data.length; i++) {
+            const text = `
         URL: ${data[i].url}
         <br><br>
         Metode: ${data[i].method}
         `;
 
-        settingsGrid.innerHTML += getAPITextTemplate(text, "", "spacingTop");
+            settingsGrid.innerHTML += getAPITextTemplate(text, "", "spacingTop");
+        }
+
+        settingsGrid.innerHTML += getCenteredTextTemplate("Eksempel:", "", "spacingTop");
+
+        const firstAPIExample = data[0].url.split("/");
+        let currentURL = window.location.href || "";
+        currentURL = currentURL.split("/");
+        currentURL = `${currentURL[0]}/${currentURL[2]}`;
+        const exampleAPIHTML = `/${firstAPIExample[1]}/${userID}/${userInfo.apikey}`;
+        const fullExampleAPIText = `${data[0].method} ${currentURL}${exampleAPIHTML}`;
+
+        settingsGrid.innerHTML += getAPITextTemplate(fullExampleAPIText);
+
+        settingsGrid.innerHTML += getCenteredTextTemplate("Response:", "", "spacingTop");
+
+        const exampleAPIResponse = await fetch(exampleAPIHTML, config);
+        const exampleAPIData = await exampleAPIResponse.json();
+
+        if (sessionStorage.getItem("currentSetting") === ELoadSettings.api.name) {
+
+            settingsGrid.innerHTML += getAPITextTemplate(JSON.stringify(exampleAPIData));
+
+            settingsGrid.innerHTML += getBottomSpacingTemplate();
+        }
     }
-
-    settingsGrid.innerHTML += getCenteredTextTemplate("Eksempel:", "", "spacingTop");
-
-    const firstAPIExample = data[0].url.split("/");
-    let currentURL = window.location.href || "";
-    currentURL = currentURL.split("/");
-    currentURL = `${currentURL[0]}/${currentURL[2]}`;
-    const exampleAPIHTML = `/${firstAPIExample[1]}/${userID}/${userInfo.apikey}`;
-    const fullExampleAPIText = `${data[0].method} ${currentURL}${exampleAPIHTML}`;
-
-    settingsGrid.innerHTML += getAPITextTemplate(fullExampleAPIText);
-
-    settingsGrid.innerHTML += getCenteredTextTemplate("Response:", "", "spacingTop");
-
-    const exampleAPIResponse = await fetch(exampleAPIHTML, config);
-    const exampleAPIData = await exampleAPIResponse.json();
-
-    settingsGrid.innerHTML += getAPITextTemplate(JSON.stringify(exampleAPIData));
-
-    settingsGrid.innerHTML += getBottomSpacingTemplate();
 
 }
 
@@ -459,6 +524,6 @@ async function acceptPendingUser(username, acceptOrDeny) {
             alert("Feil, brukeren finnes ikke!");
         }
 
-        loadSetting("pendingUsers");
+        loadSetting(ELoadSettings.pendingUsers.name);
     }
 }

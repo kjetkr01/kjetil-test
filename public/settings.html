@@ -102,14 +102,17 @@
    const settingsGrid = document.getElementById("settingsGrid");
    let userInfo = null;
    let settings = null;
-   let savedScrollPos = null;
+   let saveNewScrollPos = true;
 
    updateUserInfo();
 
    settingsDom.addEventListener("scroll", function () {
-      if (titleDom.innerHTML === "Innstillinger") {
+      if (saveNewScrollPos === true) {
          const currentScroll = settingsDom.scrollTop;
-         savedScrollPos = currentScroll;
+         const currentSetting = sessionStorage.getItem("currentSetting");
+         if (currentSetting) {
+            sessionStorage.setItem(`@scroll-${currentSetting}`, currentScroll);
+         }
       }
    });
 
