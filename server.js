@@ -55,7 +55,7 @@ const maxCharLength = 20;
 const minCharLength = 3;
 
 
-const APICatchErrorJSON = {error: "Det har oppstått et problem!"};
+const APICatchErrorJSON = { error: "Det har oppstått et problem!" };
 
 const day = new Date().getDay();
 let dayTxt = "";
@@ -457,7 +457,7 @@ server.post("/user/update/settings/about/me", auth, async (req, res) => {
 
           const letters = /^[ÆØÅæøåA-Za-z0-9\s]+$/;
 
-          if (settings.gym.length > 30 || !gym.match(letters)) {
+          if (settings.gym.length > 30 || !gym.match(letters) && gym !== "") {
                info.isValid = false;
                if (!gym.match(letters)) {
                     info.msg = `Treningssenter er ugyldig`;
