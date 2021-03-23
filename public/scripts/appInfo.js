@@ -4,12 +4,12 @@ const application = {
     name: "Treningstatistikken",
     version: {
         state: "alpha",
-        major: 2, // major++ = minor = 0 && revision = 0
-        minor: 4, // minor++ = revision = 0
-        revision: 2,
+        major: 3, // major++ = minor = 0 && revision = 0
+        minor: 0, // minor++ = revision = 0
+        revision: 0,
     },
     lastUpdated: {
-        day: "19",
+        day: "23",
         month: "03",
         year: "2021"
     },
@@ -79,6 +79,7 @@ const plannedUpdatesArr = [
     "TITLE:Løft/Mål",
     "Slå av sletting av løft og mål i Innstillinger. Passord for å slå det av igjen",
     "Legge til flere løft og mål. Foreløpi bare: Benkpress, Knebøy, Markløft, Skulderpress",
+    "Kunne velge opp til 3 løft per øvelse. Velge antall reps",
 
     "TITLE:Treningsplan",
     "Opp til 4 treningsplaner",

@@ -54,6 +54,9 @@ server.use(bodyParser.json({ limit: "5mb" }));
 const maxCharLength = 20;
 const minCharLength = 3;
 
+
+const APICatchErrorJSON = {error: "Det har oppstått et problem!"};
+
 const day = new Date().getDay();
 let dayTxt = "";
 
@@ -689,51 +692,55 @@ server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
      const url = req.url;
      const urlInfo = url.split("/");
 
-     if (urlInfo[1] === "getWorkoutInfo" && urlInfo[2].length < maxCharLength && urlInfo[3].length < maxCharLength) {
-          const user = urlInfo[2];
-          const key = urlInfo[3];
+     try {
+          if (urlInfo[1] === "getWorkoutInfo" && urlInfo[2].length < maxCharLength && urlInfo[3].length < maxCharLength) {
+               const user = urlInfo[2];
+               const key = urlInfo[3];
 
-          const getWorkoutPlanInfo = await getWorkoutPlanAPI(user, key);
+               const getWorkoutPlanInfo = await getWorkoutPlanAPI(user, key);
 
-          if (getWorkoutPlanInfo.status === true) {
+               if (getWorkoutPlanInfo.status === true) {
 
-               const program = getWorkoutPlanInfo.info.trainingsplit;
-               let firstName = getWorkoutPlanInfo.info.displayname
-               firstName = firstName.split(" ");
-               firstName = firstName[0];
+                    const program = getWorkoutPlanInfo.info.trainingsplit;
+                    let firstName = getWorkoutPlanInfo.info.displayname
+                    firstName = firstName.split(" ");
+                    firstName = firstName[0];
 
-               let workoutTxt = "";
+                    let workoutTxt = "";
 
-               if (getWorkoutPlanInfo.isOwner === true) {
+                    if (getWorkoutPlanInfo.isOwner === true) {
 
-                    if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
-                         workoutTxt = `Skal du trene ${program[dayTxt]}`;
+                         if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
+                              workoutTxt = `Skal du trene ${program[dayTxt]}`;
+                         } else {
+                              workoutTxt = `Skal du ikke trene`;
+                         }
+
                     } else {
-                         workoutTxt = `Skal du ikke trene`;
+
+                         if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
+                              workoutTxt = `Trener ${firstName} ${program[dayTxt]}`;
+                         } else {
+                              workoutTxt = `Trener ikke ${firstName}`;
+                         }
                     }
+
+                    const resp = {
+                         "currentDay": dayTxt.toLocaleLowerCase(),
+                         "todaysWorkout": workoutTxt
+                    }
+
+                    res.status(200).json(resp).end();
 
                } else {
-
-                    if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
-                         workoutTxt = `Trener ${firstName} ${program[dayTxt]}`;
-                    } else {
-                         workoutTxt = `Trener ikke ${firstName}`;
-                    }
+                    res.status(403).json(`ingen tilgang`).end();
                }
-
-               const resp = {
-                    "currentDay": dayTxt.toLocaleLowerCase(),
-                    "todaysWorkout": workoutTxt
-               }
-
-               res.status(200).json(resp).end();
 
           } else {
                res.status(403).json(`ingen tilgang`).end();
           }
-
-     } else {
-          res.status(403).json(`ingen tilgang`).end();
+     } catch (err) {
+          res.status(403).json(APICatchErrorJSON).end();
      }
 })
 
@@ -747,28 +754,32 @@ server.get("/getTotalPB/:user/:key", async function (req, res) {
      const url = req.url;
      const urlInfo = url.split("/");
 
-     if (urlInfo[1] === "getTotalPB" && urlInfo[2].length < maxCharLength && urlInfo[3].length < maxCharLength) {
-          const user = urlInfo[2];
-          const key = urlInfo[3];
+     try {
+          if (urlInfo[1] === "getTotalPB" && urlInfo[2].length < maxCharLength && urlInfo[3].length < maxCharLength) {
+               const user = urlInfo[2];
+               const key = urlInfo[3];
 
-          const getTotalPB = await getTotalPBAPI(user, key);
+               const getTotalPB = await getTotalPBAPI(user, key);
 
-          if (getTotalPB.status === true) {
+               if (getTotalPB.status === true) {
 
-               const resp = {
-                    "user": user,
-                    "totalPBKG": getTotalPB.info.kg,
-                    "totalPBLBS": getTotalPB.info.lbs,
+                    const resp = {
+                         "user": user,
+                         "totalPBKG": getTotalPB.info.kg,
+                         "totalPBLBS": getTotalPB.info.lbs,
+                    }
+
+                    res.status(200).json(resp).end();
+
+               } else {
+                    res.status(403).json(`ingen tilgang`).end();
                }
-
-               res.status(200).json(resp).end();
 
           } else {
                res.status(403).json(`ingen tilgang`).end();
           }
-
-     } else {
-          res.status(403).json(`ingen tilgang`).end();
+     } catch (err) {
+          res.status(403).json(APICatchErrorJSON).end();
      }
 })
 

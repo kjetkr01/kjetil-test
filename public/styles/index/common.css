@@ -44,7 +44,7 @@ border-top: 1px #75757585 solid;
 }
 
 .peopleWorkoutListWorkout {
-font-size: 18px;
+font-size: 16px;
 color:var(--main-headerTextColor);
 font-weight: bold;
 font-family: var(--main-font-Family-Verdana);
@@ -55,7 +55,7 @@ border-radius: 8px;
 border: 1px var(--main-backgroundColor1) solid;
 box-shadow: var(--main-boxShadow);
 
-height: 35px;
+height: 34px;
 width: fit-content;
 padding-left: 30px;
 padding-right: 30px;
@@ -73,7 +73,7 @@ font-weight: bold;
 }
 
 .peopleWorkoutListName, .accountOwner {
-font-size: 16px;
+font-size: 15px;
 font-family: var(--main-font-Family-Verdana);
 
 margin-bottom: 5px;

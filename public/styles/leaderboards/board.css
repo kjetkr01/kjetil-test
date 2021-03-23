@@ -56,7 +56,7 @@ margin: auto;
 }
 
 #Gweight>#weight{
-font-size: 16px;
+font-size: 15px;
 color: #939393;
 }
 
@@ -91,15 +91,9 @@ color: var(--main-textColorDark);
 color: var(--main-accountOwnerColor);
 }
 
-.accountOwner {
-/*
-evt legge til .peopleLeaderboardsListName
-*/
-font-weight: bold;
-}
-
 .peopleLeaderboardsListName, .accountOwner {
-font-size: 18px;
+font-size: 16px;
+font-weight: bold;
 font-family: var(--main-font-Family-Verdana);
 background-color: transparent;
 border: transparent;

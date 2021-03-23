@@ -28,7 +28,7 @@ grid-template-rows: /* nedover */
 
 3vh /* c1r1 */
 
-40px /* GbackBtn */
+auto /* GbackBtn */
 
 40px /* Gtitle */
 
@@ -58,8 +58,6 @@ grid-template-columns: /* bortover */
 /* elements */
 
 #GbackBtn > #backBtn {
-height: 30px;
-width: 30px;
 margin-right: 20px;
 margin-left: 20px;
 }
