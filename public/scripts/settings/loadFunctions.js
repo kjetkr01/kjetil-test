@@ -374,15 +374,25 @@ async function loadUsersListPage(setting) {
                     myAccountColor = "settingsHightlightUser";
                 }
 
-                const usersTemplateHTML = `
+                let usersTemplateHTML = `
                    <p class="settingsPendingUserFullName ${myAccountColor}">${currentUser.displayname}</p>
                    <p class="settingsPendingUsername ${myAccountColor}">${currentUser.username}</p>
                    <p class="settingsPendingUsername">ID: ${currentUser.id}</p>
-                   ${profileStatus}
-                   <p class="settingsPendingUsername">${hasAPIAccessTxt}</p>
+                   `;
+
+                if (currentUser.username !== username) {
+                    usersTemplateHTML += `
+                    ${profileStatus}
+                    <p class="settingsPendingUsername">${hasAPIAccessTxt}</p>
                    <br>
                    <button style="padding:0;margin:0;" class="settingsButton" onClick="viewUser('${currentUser.id}');">Se profil</button>
-                   `;
+                    `;
+                } else {
+                    usersTemplateHTML += `
+                   <br>
+                   <button style="padding:0;margin:0;" class="settingsButton">Din bruker</button>
+                    `;
+                }
 
                 settingsGrid.innerHTML += getCenteredTextTemplate(usersTemplateHTML, "", "spacingTop");
             }

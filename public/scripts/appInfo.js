@@ -6,7 +6,7 @@ const application = {
         state: "alpha",
         major: 3, // major++ = minor = 0 && revision = 0
         minor: 0, // minor++ = revision = 0
-        revision: 1,
+        revision: 2,
     },
     lastUpdated: {
         day: "23",
