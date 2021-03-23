@@ -357,6 +357,7 @@ async function loadUsersListPage(setting) {
             for (let i = 0; i < usersKeys.length; i++) {
 
                 const currentUser = resp.allUsers[usersKeys[i]];
+                let myAccountColor = "";
                 let profileStatus = `<p class="settingsPendingUsername" style="color:green;">Offentlig</p>`;
 
                 let hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsAcceptPendingUser" onClick="alert('giveAPIAccess');">Gi API tilgang</button>`;
@@ -369,10 +370,14 @@ async function loadUsersListPage(setting) {
                     profileStatus = `<p class="settingsPendingUsername" style="color:red;">Privat</p>`;
                 }
 
+                if (currentUser.username === username) {
+                    myAccountColor = "settingsHightlightUser";
+                }
+
                 const usersTemplateHTML = `
-                   <p class="settingsPendingUserFullName">${currentUser.displayname}</p>
-                   <p class="settingsPendingUsername">${currentUser.username}</p>
-                   <p class="settingsPendingUsername">${currentUser.id}</p>
+                   <p class="settingsPendingUserFullName ${myAccountColor}">${currentUser.displayname}</p>
+                   <p class="settingsPendingUsername ${myAccountColor}">${currentUser.username}</p>
+                   <p class="settingsPendingUsername">ID: ${currentUser.id}</p>
                    ${profileStatus}
                    <p class="settingsPendingUsername">${hasAPIAccessTxt}</p>
                    <br>

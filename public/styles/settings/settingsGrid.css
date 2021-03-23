@@ -9,7 +9,7 @@ font-family: var(--main-font-Family-Verdana);
 /* grid */
 
 .userSettingsDefault {
-font-size: 15px;
+font-size: 14px;
 background-color: var(--main-backgroundColor3);
 display: grid;
 width: 100%;
@@ -22,9 +22,9 @@ grid-template-areas:
 
 grid-template-rows: /* nedover */
 
-16.5px /* cS1 */
+15.5px /* cS1 */
 auto /* gsSetting osv */
-16.5px /* cS4 */
+15.5px /* cS4 */
 ;
 
 grid-template-columns: /* bortover */
@@ -81,7 +81,7 @@ margin-top: 40px;
 
 
 .userSettingsCenteredItems {
-font-size: 15px;
+font-size: 14px;
 background-color: var(--main-backgroundColor3);
 display: grid;
 width: 100%;
@@ -123,7 +123,7 @@ grid-area: cSC2;
 }
 
 .userSettingsLeftItems {
-font-size: 15px;
+font-size: 14px;
 background-color: var(--main-backgroundColor3);
 display: grid;
 width: 100vw;
@@ -165,7 +165,7 @@ grid-area: cSLC2;
 }
 
 .userSettingsJustText {
-font-size: 15px;
+font-size: 14px;
 display: grid;
 width: 100%;
 grid-template-areas:
@@ -208,7 +208,7 @@ grid-area: cSJC2;
 
 .userSettingsAPIList {
 word-break: break-all;
-font-size: 15px;
+font-size: 14px;
 background-color: var(--main-backgroundColor3);
 display: grid;
 width: 100%;
@@ -253,7 +253,7 @@ grid-area: cSCA2;
 
 select {
 color: var(--main-accountOwnerColor);
-font-size: 15px;
+font-size: 14px;
 text-align: right;
 text-align-last: right;
 appearance: none;
@@ -347,14 +347,14 @@ border-radius: 50%;
 .settingsInput {
 background-color: transparent;
 border: transparent;
-font-size: 15px;
+font-size: 14px;
 color: var(--main-accountOwnerColor);
 text-align: center;
 }
 
 ::placeholder{
 text-align: center;
-font-size: 15px;
+font-size: 14px;
 color: var(--main-accountOwnerColor);
 }
 
@@ -384,7 +384,7 @@ height: 119px;
 .settingsButtonUser {
 margin: 0;
 padding: 0;
-font-size: 15px;
+font-size: 14px;
 font-weight: bold;
 background-color: transparent;
 border: transparent;
