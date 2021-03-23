@@ -1,98 +1,59 @@
 function loadSetting(aSetting) {
 
-    const setting = aSetting;
-    if (setting) {
-        saveNewScrollPos = false;
-        titleDom.innerHTML = setting;
-        document.title = setting;
-        settingsGrid.innerHTML = "";
+    if (sessionStorage.getItem("userSettings")) {
+        settings = JSON.parse(sessionStorage.getItem("userSettings"));
+    }
 
-        if (setting === ELoadSettings.password.name) {
-            cacheCurrentSetting(setting);
-            loadPasswordPage();
-        }
+    const setting = aSetting || sessionStorage.getItem("currentSetting") || ELoadSettings.settings.name;
+    saveNewScrollPos = false;
+    titleDom.innerHTML = setting;
+    document.title = setting;
+    settingsGrid.innerHTML = "";
 
-        else if (setting === ELoadSettings.aboutMe.name) {
-            cacheCurrentSetting(setting);
-            loadAboutMePage();
-        }
+    if (setting === ELoadSettings.password.name) {
+        cacheCurrentSetting(setting);
+        loadPasswordPage();
+    }
 
-        else if (setting === ELoadSettings.apperance.name) {
-            cacheCurrentSetting(setting);
-            loadAppearancePage();
-        }
+    else if (setting === ELoadSettings.aboutMe.name) {
+        cacheCurrentSetting(setting);
+        loadAboutMePage();
+    }
 
-        else if (setting === ELoadSettings.progressionInfo.name) {
-            cacheCurrentSetting(setting);
-            loadProgressionInfoPage();
-        }
+    else if (setting === ELoadSettings.apperance.name) {
+        cacheCurrentSetting(setting);
+        loadAppearancePage();
+    }
 
-        else if (setting === ELoadSettings.aboutApp.name) {
-            cacheCurrentSetting(setting);
-            loadAboutAppPage(setting);
-        }
+    else if (setting === ELoadSettings.progressionInfo.name) {
+        cacheCurrentSetting(setting);
+        loadProgressionInfoPage();
+    }
 
-        else if (setting === ELoadSettings.pendingUsers.name) {
-            cacheCurrentSetting(setting);
-            loadPendingUsersPage(setting);
-        }
+    else if (setting === ELoadSettings.aboutApp.name) {
+        cacheCurrentSetting(setting);
+        loadAboutAppPage(setting);
+    }
 
-        else if (setting === ELoadSettings.users.name) {
-            cacheCurrentSetting(setting);
-            loadUsersListPage(setting);
-        }
+    else if (setting === ELoadSettings.pendingUsers.name) {
+        cacheCurrentSetting(setting);
+        loadPendingUsersPage(setting);
+    }
 
-        else if (setting === ELoadSettings.api.name) {
-            cacheCurrentSetting(setting);
-            loadAPIPage();
-        }
+    else if (setting === ELoadSettings.users.name) {
+        cacheCurrentSetting(setting);
+        loadUsersListPage(setting);
+    }
 
-        else {
-            document.title = ELoadSettings.settings.name;
-            cacheCurrentSetting(ELoadSettings.settings.name);
-            loadDefaultPage(ELoadSettings.settings.name);
-        }
+    else if (setting === ELoadSettings.api.name) {
+        cacheCurrentSetting(setting);
+        loadAPIPage();
+    }
 
-        /*
-        switch (setting) {
-            case [ELoadSettings.password]:
-                cacheCurrentSetting(setting);
-                loadPasswordPage();
-                break;
-            case ELoadSettings.aboutMe:
-                cacheCurrentSetting(setting);
-                loadAboutMePage();
-                break;
-            case "Utseende":
-                cacheCurrentSetting(setting);
-                loadAppearancePage();
-                break;
-            case "Fremgangs info":
-                cacheCurrentSetting(setting);
-                loadProgressionInfoPage();
-                break;
-            case "Om appen":
-                cacheCurrentSetting(setting);
-                loadAboutAppPage(setting);
-                break;
-            case "pendingUsers":
-                cacheCurrentSetting(setting);
-                loadPendingUsersPage(setting);
-                break;
-            case "Brukere":
-                cacheCurrentSetting(setting);
-                loadUsersListPage(setting);
-                break;
-            case "API":
-                cacheCurrentSetting(setting);
-                loadAPIPage();
-                break;
-            default:
-                document.title = ELoadSettings.settings;
-                cacheCurrentSetting(setting);
-                loadDefaultPage(setting);
-                break;
-        }*/
+    else {
+        document.title = ELoadSettings.settings.name;
+        cacheCurrentSetting(ELoadSettings.settings.name);
+        loadDefaultPage(ELoadSettings.settings.name);
     }
 }
 
@@ -499,12 +460,20 @@ async function loadAPIPage() {
 
         settingsGrid.innerHTML += getCenteredTextTemplate("Response:", "", "spacingTop");
 
-        const exampleAPIResponse = await fetch(exampleAPIHTML, config);
-        const exampleAPIData = await exampleAPIResponse.json();
+        let exampleAPIData = sessionStorage.getItem("cachedExAPIResp");
+
+        if (!exampleAPIData) {
+
+            const exampleAPIResponse = await fetch(exampleAPIHTML, config);
+            exampleAPIData = await exampleAPIResponse.json();
+            exampleAPIData = JSON.stringify(exampleAPIData);
+            sessionStorage.setItem("cachedExAPIResp", exampleAPIData);
+
+        }
 
         if (sessionStorage.getItem("currentSetting") === ELoadSettings.api.name) {
 
-            settingsGrid.innerHTML += getAPITextTemplate(JSON.stringify(exampleAPIData));
+            settingsGrid.innerHTML += getAPITextTemplate(exampleAPIData);
 
             settingsGrid.innerHTML += getBottomSpacingTemplate();
         }

@@ -16,8 +16,8 @@ const errorLoadingText = "Kunne ikke laste inn innholdet.";
 //const allowedThemes = ["default", "blue"];
 
 const allowedThemes = {
-    0: { "name": "Standard", "theme": "default" },
-    1: { "name": "Blå", "theme": "blue" }
+    0: { "id": 0, "name": "Standard", "theme": "default" },
+    1: { "id": 1, "name": "Blå", "theme": "blue" }
 }
 
 const themeKeys = Object.keys(allowedThemes);
@@ -455,6 +455,19 @@ async function getAccountDetails(aUserID) {
                 } else {
                     sessionStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
                 }
+
+                const newColorTheme = allowedThemes[resp.updatedUserObject.preferredColorTheme].theme;
+
+                if (preferredColorTheme !== newColorTheme && checkAllowedThemes.includes(newColorTheme) === true) {
+                    const lastColorTheme = document.getElementById(`themeStyleCSS-${preferredColorTheme}`);
+                    preferredColorTheme = newColorTheme;
+                    sessionStorage.setItem("colorTheme", newColorTheme);
+                    lastColorTheme.href = `styles/themes/${preferredColorTheme}.css`;
+                    lastColorTheme.id = `themeStyleCSS-${preferredColorTheme}`;
+                }
+
+
+
             }
 
             return resp;

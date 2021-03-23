@@ -44,7 +44,8 @@ async function updateUserInfo() {
     if (resp.hasOwnProperty("info")) {
 
         userInfo = resp.info;
-        settings = resp.info.settings;
+        //settings = resp.info.settings;
+        sessionStorage.setItem("userSettings", JSON.stringify(resp.info.settings));
 
         const currentSetting = sessionStorage.getItem("currentSetting") || ELoadSettings.settings;
 
@@ -112,44 +113,4 @@ function aboutMeResetValues() {
             document.getElementById(domList[i]).value = 0;
         }
     }
-}
-
-async function saveApperanceSettings() {
-
-    if (isUpdatingCheckboxSetting === false) {
-
-        isUpdatingCheckboxSetting = true;
-
-        //const theme = document.getElementById("appearanceThemeSelection").value;
-        const colorTheme = document.getElementById("themeColorSelection").value;
-        let value = colorTheme;
-        let setting = "preferredColorTheme";
-
-        const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
-        const url = `/user/update/settings/${setting}`;
-
-        const resp = await callServerAPI(body, url);
-
-        if (resp === true) {
-
-            const lastColorTheme = document.getElementById(`themeStyleCSS-${preferredColorTheme}`);
-
-            const newColorTheme = allowedThemes[value].theme;
-
-            if (newColorTheme !== sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(newColorTheme) === true) {
-                preferredColorTheme = allowedThemes[value].theme;
-                sessionStorage.setItem("colorTheme", preferredColorTheme);
-                lastColorTheme.href = `styles/themes/${preferredColorTheme}.css`;
-                lastColorTheme.id = `themeStyleCSS-${preferredColorTheme}`;
-            }
-
-            updateUserInfo();
-            loadSetting();
-            changeColorTheme();
-            isUpdatingCheckboxSetting = false;
-
-
-        }
-    }
-
 }

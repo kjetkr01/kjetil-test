@@ -92,10 +92,64 @@ async function updateCheckboxSetting(aSetting, aValue) {
         const resp = await callServerAPI(body, url);
 
         if (resp === true) {
-            updateUserInfo();
+            //updateUserInfo();
+            updateLocalSettings(setting, value);
             loadSetting();
             isUpdatingCheckboxSetting = false;
         }
     }
 }
 //
+
+async function saveApperanceSettings() {
+
+    if (isUpdatingCheckboxSetting === false) {
+
+        isUpdatingCheckboxSetting = true;
+
+        //const theme = document.getElementById("appearanceThemeSelection").value;
+        const colorTheme = document.getElementById("themeColorSelection").value;
+        let value = colorTheme;
+        let setting = "preferredColorTheme";
+
+        const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
+        const url = `/user/update/settings/${setting}`;
+
+        const resp = await callServerAPI(body, url);
+
+        if (resp === true) {
+
+            const lastColorTheme = document.getElementById(`themeStyleCSS-${preferredColorTheme}`);
+
+            const newColorTheme = allowedThemes[value].theme;
+
+            if (newColorTheme !== sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(newColorTheme) === true) {
+                preferredColorTheme = allowedThemes[value].theme;
+                sessionStorage.setItem("colorTheme", preferredColorTheme);
+                lastColorTheme.href = `styles/themes/${preferredColorTheme}.css`;
+                lastColorTheme.id = `themeStyleCSS-${preferredColorTheme}`;
+            }
+
+            updateUserInfo();
+            //loadSetting();
+            //changeColorTheme();
+            isUpdatingCheckboxSetting = false;
+        }
+    }
+}
+
+function updateLocalSettings(aSetting, aValue) {
+
+    if (aSetting) {
+
+        const setting = aSetting;
+        const value = aValue;
+
+        settings[setting] = value;
+
+        sessionStorage.setItem("userSettings", JSON.stringify(settings));
+
+    } else {
+        updateUserInfo();
+    }
+}
