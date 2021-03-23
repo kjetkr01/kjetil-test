@@ -6,7 +6,7 @@ const application = {
         state: "alpha",
         major: 3, // major++ = minor = 0 && revision = 0
         minor: 1, // minor++ = revision = 0
-        revision: 7,
+        revision: 8,
     },
     lastUpdated: {
         day: "23",
@@ -56,15 +56,10 @@ const ongoingUpdatesArr = [
     "Endre: Brukernavn (0%)",
     "Oppdatere: Passord (30%)",
     "Oppdatere detaljer: Om deg (90%)",
-    "Endre: Privat profil (100%)",
-    "Endre: Ledertavler synlighet (100%)",
-    "Endre: Trener i dag listen synlighet (100%)",
     "Oppdatere Utseende: Tema (0%)",
-    "Oppdatere Utseende: Farge-tema (100%)",
     "Oppdatere Fremgangs info: Lagre endringer (0%)",
-    "Godta/Avslå Forespørseler (100%)",
     "Brukere (80%)",
-    "API (100%)",
+    "Personvern (0%)",
 ];
 
 //
@@ -75,6 +70,9 @@ const ongoingUpdatesArr = [
 
 const plannedUpdatesText = "Kommende oppdateringer";
 const plannedUpdatesArr = [
+    "TITLE:Logg inn",
+    "Husk meg i 30 dager (istedenfor 7)",
+
     "TITLE:Farge-tema",
     "Lage flere farge-temaer",
 
