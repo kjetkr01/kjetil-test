@@ -21,6 +21,16 @@ const allowedThemes = {
     1: { "id": 1, "name": "Blå", "theme": "blue" }
 }
 
+const badgeColorBorders = {
+    "redBadgeG": `972F2F`,
+    "yellowBadgeG": `C96E4C`,
+    "blueBadgeG": `2B2379`,
+
+    "redBadge": `E36262`,
+    "yellowBadge": `DBB331`,
+    "blueBadge": `626BE3`,
+}
+
 const themeKeys = Object.keys(allowedThemes);
 const checkAllowedThemes = [];
 for (let i = 0; i < themeKeys.length; i++) {

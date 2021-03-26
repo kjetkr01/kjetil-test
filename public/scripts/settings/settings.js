@@ -114,3 +114,29 @@ function aboutMeResetValues() {
         }
     }
 }
+
+function checkIfEdited(aType) {
+
+    if (aType) {
+
+        if (aType === "displayname") {
+
+            const displaynameInp = document.getElementById("displaynameInp").value;
+
+            if (displaynameInp !== userInfo.displayname) {
+                document.getElementById("displaynameSaveBtn").style.display = "inline-block";
+            } else {
+                document.getElementById("displaynameSaveBtn").style.display = "none";
+            }
+        } else if (aType === "username") {
+
+            const usernameInp = document.getElementById("usernameInp").value;
+
+            if (usernameInp !== userInfo.username) {
+                document.getElementById("usernameSaveBtn").style.display = "inline-block";
+            } else {
+                document.getElementById("usernameSaveBtn").style.display = "none";
+            }
+        }
+    }
+}

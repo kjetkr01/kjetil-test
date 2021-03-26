@@ -62,8 +62,8 @@ async function loadDefaultPage(setting) {
     titleDom.innerHTML = ELoadSettings.settings.name;
     settingsGrid.innerHTML = "";
 
-    settingsGrid.innerHTML += getTemplate("Visningsnavn", "displaynameDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.displayname}'></input>`, "borderTop");
-    settingsGrid.innerHTML += getTemplate("Brukernavn", "usernameDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.username}'></input>`);
+    settingsGrid.innerHTML += getTemplate("Visningsnavn", "", `<input id="displaynameInp" onKeyup="checkIfEdited('displayname');" style="text-align:right;" class='settingsInput' value='${userInfo.displayname}'></input><button onClick="saveDisplayname();" style="display:none;" id="displaynameSaveBtn" class="settingsButton">Lagre</button>`, "borderTop");
+    settingsGrid.innerHTML += getTemplate("Brukernavn", "", `<input id="usernameInp" onKeyup="checkIfEdited('username');" style="text-align:right;" class='settingsInput' value='${userInfo.username}'></input><button onClick="saveUsername();" style="display:none;" id="usernameSaveBtn" class="settingsButton">Lagre</button>`);
 
     settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.password.name, "passwordDiv");
 
@@ -267,47 +267,40 @@ function loadProgressionInfoPage() {
 
 function loadAboutAppPage(setting) {
 
-    const imageURL = new Image();
-    imageURL.src = application.logoURL;
+    const imageHTML = `
+    <img id="logo" src="" alt="" draggable="false" class="noselect settingsLogo"></img>
+    `;
 
-    imageURL.onload = function () {
+    settingsGrid.innerHTML = justTextTemplate(imageHTML, "center");
 
-        if (sessionStorage.getItem("currentSetting") === ELoadSettings.aboutApp.name) {
+    document.getElementById("logo").src = application.logoURL;
 
-            const imageHTML = `
-            <img id="logo" src="${application.logoURL}" alt="" draggable="false" class="noselect settingsLogo"></img>
-            `;
+    const appInfoHTML = `
+    <strong>${application.name}</strong>
+    <br>
+    <p class="settingsApplicationFullVersion">${application.version.full || application.version.fullNumber || ""}</p>
+    `;
 
-            settingsGrid.innerHTML = justTextTemplate(imageHTML, "center");
+    settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
 
-            const appInfoHTML = `
-            <strong>${application.name}</strong>
-            <br>
-            <p class="settingsApplicationFullVersion">${application.version.full || application.version.fullNumber || ""}</p>
-            `;
+    settingsGrid.innerHTML += getLeftTextTemplate(aboutAppText, "", "spacingTop");
 
-            settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
-
-            settingsGrid.innerHTML += getLeftTextTemplate(aboutAppText, "", "spacingTop");
-
-            if (application.updatesInfo.showOnGoing === true) {
-                settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${ongoingUpdatesText}</button>`, "", "spacingTop");
-                settingsGrid.innerHTML += getLeftTextTemplate(ongoingUpdates);
-            }
-
-            if (application.updatesInfo.showPlanned === true) {
-                settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${plannedUpdatesText}</button>`, "", "spacingTop");
-                settingsGrid.innerHTML += getLeftTextTemplate(plannedUpdates);
-            }
-
-            settingsGrid.innerHTML += getCenteredTextTemplate(aboutAppBottomInfo, "", "spacingTop");
-
-            settingsGrid.innerHTML += getBottomSpacingTemplate();
-        }
-
-        scrollToSavedPos(setting);
-        saveNewScrollPos = true;
+    if (application.updatesInfo.showOnGoing === true) {
+        settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${ongoingUpdatesText}</button>`, "", "spacingTop");
+        settingsGrid.innerHTML += getLeftTextTemplate(ongoingUpdates);
     }
+
+    if (application.updatesInfo.showPlanned === true) {
+        settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${plannedUpdatesText}</button>`, "", "spacingTop");
+        settingsGrid.innerHTML += getLeftTextTemplate(plannedUpdates);
+    }
+
+    settingsGrid.innerHTML += getCenteredTextTemplate(aboutAppBottomInfo, "", "spacingTop");
+
+    settingsGrid.innerHTML += getBottomSpacingTemplate();
+
+    scrollToSavedPos(setting);
+    saveNewScrollPos = true;
 }
 
 async function loadUsersListPage(setting) {

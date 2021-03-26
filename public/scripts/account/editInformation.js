@@ -67,6 +67,7 @@ function enableOverlayEdit(aType, aExercise) {
 
         const type = aType;
         const exercise = aExercise;
+        const editLiftorGoal = document.getElementById("editLiftorGoal");
         const title1 = document.getElementById("title1E");
         const inp1 = document.getElementById("inp1E");
         const inp2 = document.getElementById("inp2E");
@@ -76,6 +77,7 @@ function enableOverlayEdit(aType, aExercise) {
         const respMsg = document.getElementById("respE");
 
         const editLiftorGoalOverlay = document.getElementById("editLiftorGoalOverlay");
+        editLiftorGoal.style.border = "";
 
         if (type === "goal") {
             title1.textContent = exercise + " (mål)";
@@ -116,6 +118,10 @@ function enableOverlayEdit(aType, aExercise) {
                     }
                 }
 
+                if (badgeColorBorders.hasOwnProperty(lifts[exercise].color)) {
+                    document.getElementById("editLiftorGoal").style.border = `1px solid #${badgeColorBorders[lifts[exercise].color]}`;
+                }
+
             } else {
                 alert("Det har oppstått et problem!");
             }
@@ -139,6 +145,10 @@ function enableOverlayEdit(aType, aExercise) {
                     } else {
                         inp3.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}</option>`;
                     }
+                }
+
+                if (badgeColorBorders.hasOwnProperty(goals[exercise].color)) {
+                    document.getElementById("editLiftorGoal").style.border = `1px solid #${badgeColorBorders[goals[exercise].color]}`;
                 }
 
             } else {
@@ -510,3 +520,16 @@ async function saveTrainingDays() {
 }
 
 // end of saveTrainingDays
+
+
+function changeOverlayBorderColor() {
+
+    const inp3Val = document.getElementById("inp3E");
+
+    if (inp3Val) {
+
+        if (badgeColorBorders.hasOwnProperty(inp3Val.value)) {
+            document.getElementById("editLiftorGoal").style.border = `1px solid #${badgeColorBorders[inp3Val.value]}`;
+        }
+    }
+}

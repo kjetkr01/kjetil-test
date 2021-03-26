@@ -195,6 +195,16 @@ async function saveColorTheme() {
     }
 }
 
+async function saveDisplayname() {
+    const displaynameInp = document.getElementById("displaynameInp").value;
+    console.log(displaynameInp);
+}
+
+async function saveUsername() {
+    const usernameInp = document.getElementById("usernameInp").value;
+    console.log(usernameInp);
+}
+
 function updateLocalSettings(aSetting, aValue) {
 
     if (aSetting) {
