@@ -2,6 +2,7 @@
 
 const application = {
     name: "Treningstatistikken",
+    logoURL: "images/appIcon.png",
     version: {
         state: "alpha",
         major: 3, // major++ = minor = 0 && revision = 0

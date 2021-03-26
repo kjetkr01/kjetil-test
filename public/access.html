@@ -80,7 +80,7 @@
       </div>
 
       <div id="Glogo">
-         <img id="logo" src="images/appIcon.png" alt="" draggable="false" class="noselect"></img>
+         <img id="logo" src="" alt="" draggable="false" class="noselect"></img>
       </div>
 
       <div id="Gline">
@@ -127,6 +127,8 @@
 </body>
 
 <script>
+
+   document.getElementById("logo").src = application.logoURL || "";
 
    document.getElementById("smallTitle").innerHTML = application.name || "";
 

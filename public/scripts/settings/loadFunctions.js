@@ -268,14 +268,14 @@ function loadProgressionInfoPage() {
 function loadAboutAppPage(setting) {
 
     const imageURL = new Image();
-    imageURL.src = "images/appIcon.png";
+    imageURL.src = application.logoURL;
 
     imageURL.onload = function () {
 
         if (sessionStorage.getItem("currentSetting") === ELoadSettings.aboutApp.name) {
 
             const imageHTML = `
-            <img id="logo" src="images/appIcon.png" alt="" draggable="false" class="noselect settingsLogo"></img>
+            <img id="logo" src="${application.logoURL}" alt="" draggable="false" class="noselect settingsLogo"></img>
             `;
 
             settingsGrid.innerHTML = justTextTemplate(imageHTML, "center");
