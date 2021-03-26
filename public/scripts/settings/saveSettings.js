@@ -119,15 +119,14 @@ async function saveApperanceSettings() {
 
         if (resp === true) {
 
-            const lastColorTheme = document.getElementById(`themeStyleCSS-${preferredColorTheme}`);
-
             const newColorTheme = allowedThemes[value].theme;
 
             if (newColorTheme !== sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(newColorTheme) === true) {
                 preferredColorTheme = allowedThemes[value].theme;
                 sessionStorage.setItem("colorTheme", preferredColorTheme);
-                lastColorTheme.href = `styles/themes/${preferredColorTheme}.css`;
-                lastColorTheme.id = `themeStyleCSS-${preferredColorTheme}`;
+                changeColorTheme();
+                //lastColorTheme.href = `styles/themes/${preferredColorTheme}.css`;
+                //lastColorTheme.id = `themeStyleCSS-${preferredColorTheme}`;
             }
 
             updateUserInfo();

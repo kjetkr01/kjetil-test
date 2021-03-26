@@ -68,11 +68,25 @@ function changeColorTheme() {
         colorTheme = preferredTheme;
     }
 
+    // heller bruke feks colorThemeBlue, light/dark eller auto = ingen
+
     if (colorTheme !== sessionStorage.getItem("colorTheme")) {
         sessionStorage.setItem("colorTheme", colorTheme);
     }
 
-    const keepTheme = document.getElementById(`themeStyleCSS-${colorTheme}`);
+    let preferredApperance = 1; // 0 auto, 1 light, 2 dark?
+
+    if (preferredApperance === 1) {
+        document.body.classList = `${colorTheme}ColorTheme lightMode`; // evt legge til if preferred apperance = light, dark. Hvis auto bare ""colorTheme
+    } else if (preferredApperance === 2) {
+        document.body.classList = `${colorTheme}ColorTheme darkMode`; // evt legge til if preferred apperance = light, dark. Hvis auto bare ""colorTheme
+    } else {
+        document.body.classList = `${colorTheme}ColorTheme`; // evt legge til if preferred apperance = light, dark. Hvis auto bare ""colorTheme
+    }
+
+    //document.body.classList = `${colorTheme}ColorTheme`; // evt legge til if preferred apperance = light, dark. Hvis auto bare ""colorTheme
+
+    /*const keepTheme = document.getElementById(`themeStyleCSS-${colorTheme}`);
 
     if (keepTheme) {
 
@@ -86,7 +100,7 @@ function changeColorTheme() {
                 }
             }
         }
-    }
+    }*/
 }
 
 //
