@@ -6,7 +6,7 @@ const application = {
         state: "alpha",
         major: 3, // major++ = minor = 0 && revision = 0
         minor: 2, // minor++ = revision = 0
-        revision: 0,
+        revision: 1,
     },
     lastUpdated: {
         day: "26",
@@ -56,7 +56,6 @@ const ongoingUpdatesArr = [
     "Endre: Brukernavn (0%)",
     "Oppdatere: Passord (30%)",
     "Oppdatere detaljer: Om deg (90%)",
-    "Oppdatere Utseende: Tema (0%)",
     "Oppdatere Fremgangs info: Lagre endringer (0%)",
     "Brukere (80%)",
     "Personvern (0%)",

@@ -1,6 +1,6 @@
 /* LIGHT THEME VALUES */
-@media (prefers-color-scheme: light) {
-.defaultColorTheme {
+
+.defaultColorTheme-light {
 --main-headerBackground:  #357F9B;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
 --main-backgroundColor1: #357F9B;
@@ -9,7 +9,7 @@
 --main-accountOwnerColor: var(--main-headerBackground);
 }
 
-.blueColorTheme {
+.blueColorTheme-light {
 --main-headerBackground:  #3e50b4;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
 --main-backgroundColor1: #3e50b4;
@@ -17,13 +17,12 @@
 
 --main-accountOwnerColor: var(--main-headerBackground);
 }
-}
+
 /* END OF LIGHT THEME VALUES */
 
 
 /* DARK THEME VALUES */
-@media (prefers-color-scheme: dark) {
-.defaultColorTheme {
+.defaultColorTheme-dark {
 --main-headerBackground:  #24586b;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
 --main-backgroundColor1: #24586b;
@@ -32,13 +31,12 @@
 --main-accountOwnerColor: #357F9B;
 }
 
-.blueColorTheme {
+.blueColorTheme-dark {
 --main-headerBackground:  #2c3a8a;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
 --main-backgroundColor1: #2c3a8a;
 --main-boxShadow: 4px 4px rgba(44,58,138, 0.4);
 
 --main-accountOwnerColor: #4154c0;
-}
 }
 /* END OF DARK THEME VALUES */

@@ -78,17 +78,48 @@ function changeColorTheme() {
         } else {
             sessionStorage.setItem("colorTheme", colorTheme);
         }
-
     }
 
     const theme = localStorage.getItem("theme") || sessionStorage.getItem("theme") || "0";
 
     if (theme === "1") {
-        document.body.classList = `${colorTheme}ColorTheme lightMode`; // evt legge til if preferred apperance = light, dark. Hvis auto bare ""colorTheme
+        document.body.classList = `${colorTheme}ColorTheme-light lightMode`; // evt legge til if preferred apperance = light, dark. Hvis auto bare ""colorTheme
     } else if (theme === "2") {
-        document.body.classList = `${colorTheme}ColorTheme darkMode`; // evt legge til if preferred apperance = light, dark. Hvis auto bare ""colorTheme
+        document.body.classList = `${colorTheme}ColorTheme-dark darkMode`; // evt legge til if preferred apperance = light, dark. Hvis auto bare ""colorTheme
     } else {
-        document.body.classList = `${colorTheme}ColorTheme`; // evt legge til if preferred apperance = light, dark. Hvis auto bare ""colorTheme
+        //document.body.classList = `${colorTheme}ColorTheme`; // evt legge til if preferred apperance = light, dark. Hvis auto bare ""colorTheme
+
+        //window.matchMedia('(prefers-color-scheme: dark)').removeEventListener("change", test);
+        //window.matchMedia('(prefers-color-scheme: light)').removeEventListener("change", test);
+
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            // dark mode
+
+            //window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', test);
+
+            document.body.classList = `${colorTheme}ColorTheme-dark darkMode`;
+        } else {
+            // light mode
+            //window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', test);
+
+            document.body.classList = `${colorTheme}ColorTheme-light lightMode`;
+        }
+
+
+
+    }
+}
+
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', checkIfAllowedScheme);
+
+function checkIfAllowedScheme(e) {
+    const newColorScheme = e.matches ? "dark" : "light";
+    const theme = localStorage.getItem("theme") || sessionStorage.getItem("theme") || "0";
+
+    if (theme === "0") {
+        if (newColorScheme === "dark" || newColorScheme === "light") {
+            changeColorTheme();
+        }
     }
 }
 

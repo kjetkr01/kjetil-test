@@ -270,6 +270,8 @@
 
 <script>
 
+   lockBodyPosition();
+
    function intervals() {
 
       let savedDay = new Date().getDay();
@@ -296,7 +298,6 @@
 
    intervals();
 
-   lockBodyPosition();
    displayPartOfDayMsg();
    checkWhoIsWorkingOutToday();
    requestAccountDetails();
