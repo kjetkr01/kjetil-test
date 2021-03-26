@@ -5,6 +5,7 @@ const user = localStorage.getItem("user") || sessionStorage.getItem("user");
 let userDisplayname, showGymCloseTime, username, userID;
 let isUpdatingUserObject = false;
 let preferredColorTheme = null;
+let lockedBody = false;
 
 let lastUpdatedTime = new Date();
 lastUpdatedTime = lastUpdatedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -105,8 +106,10 @@ function changeColorTheme() {
             document.body.classList = `${colorTheme}ColorTheme-light lightMode`;
         }
 
+    }
 
-
+    if (lockedBody === true) {
+        document.body.classList.add("lockedBody");
     }
 }
 
@@ -134,7 +137,7 @@ function lockBodyPosition() {
         if (document.body.classList !== "lockedBody") {
 
             document.body.classList.add("lockedBody");
-
+            lockedBody = true;
 
             window.addEventListener("scroll", (e) => {
 
