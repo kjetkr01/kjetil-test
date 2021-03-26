@@ -345,6 +345,7 @@ server.post("/users/details/:user", auth, async (req, res) => {
                                    "username": resp.userDetails.username,
                                    "displayname": resp.userDetails.displayname,
                                    "preferredColorTheme": resp.userDetails.settings.preferredColorTheme,
+                                   "preferredTheme": resp.userDetails.settings.preferredTheme
                               }
 
                               res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo }).end();
@@ -413,7 +414,7 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
      const value = req.body.value;
 
      const allowedSettings = ["publicProfile", "displayLeaderboards", "displayWorkoutList", "preferredTheme", "preferredColorTheme"];
-     const allowedValues = [true, false, "0", "1"];
+     const allowedValues = [true, false, "0", "1", "2"];
 
      if (currentUser.username && allowedSettings.includes(setting) && allowedValues.includes(value)) {
 

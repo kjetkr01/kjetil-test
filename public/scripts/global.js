@@ -40,9 +40,9 @@ if (user) {
 
         preferredColorTheme = allowedThemes[userDisplayname.preferredColorTheme].theme;
 
-        if (preferredColorTheme !== sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(preferredColorTheme) === true) {
+        /*if (preferredColorTheme !== sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(preferredColorTheme) === true) {
             sessionStorage.setItem("colorTheme", preferredColorTheme);
-        }
+        }*/
 
         userDisplayname = userDisplayname.displayname;
 
@@ -62,7 +62,7 @@ if (user) {
 function changeColorTheme() {
 
     let colorTheme = allowedThemes[0].theme;
-    const preferredTheme = sessionStorage.getItem("colorTheme") || colorTheme;
+    const preferredTheme = localStorage.getItem("colorTheme") || sessionStorage.getItem("colorTheme") || colorTheme;
 
     if (checkAllowedThemes.includes(preferredTheme) === true) {
         colorTheme = preferredTheme;
@@ -71,36 +71,25 @@ function changeColorTheme() {
     // heller bruke feks colorThemeBlue, light/dark eller auto = ingen
 
     if (colorTheme !== sessionStorage.getItem("colorTheme")) {
-        sessionStorage.setItem("colorTheme", colorTheme);
+        //sessionStorage.setItem("colorTheme", colorTheme);
+
+        if (localStorage.getItem("user")) {
+            localStorage.setItem("colorTheme", colorTheme);
+        } else {
+            sessionStorage.setItem("colorTheme", colorTheme);
+        }
+
     }
 
-    let preferredApperance = 1; // 0 auto, 1 light, 2 dark?
+    const theme = localStorage.getItem("theme") || sessionStorage.getItem("theme") || "0";
 
-    if (preferredApperance === 1) {
+    if (theme === "1") {
         document.body.classList = `${colorTheme}ColorTheme lightMode`; // evt legge til if preferred apperance = light, dark. Hvis auto bare ""colorTheme
-    } else if (preferredApperance === 2) {
+    } else if (theme === "2") {
         document.body.classList = `${colorTheme}ColorTheme darkMode`; // evt legge til if preferred apperance = light, dark. Hvis auto bare ""colorTheme
     } else {
         document.body.classList = `${colorTheme}ColorTheme`; // evt legge til if preferred apperance = light, dark. Hvis auto bare ""colorTheme
     }
-
-    //document.body.classList = `${colorTheme}ColorTheme`; // evt legge til if preferred apperance = light, dark. Hvis auto bare ""colorTheme
-
-    /*const keepTheme = document.getElementById(`themeStyleCSS-${colorTheme}`);
-
-    if (keepTheme) {
-
-        for (let i = 0; i < checkAllowedThemes.length; i++) {
-
-            const removeTheme = document.getElementById(`themeStyleCSS-${checkAllowedThemes[i]}`);
-
-            if (removeTheme) {
-                if (removeTheme !== keepTheme) {
-                    removeTheme.remove();
-                }
-            }
-        }
-    }*/
 }
 
 //
@@ -473,14 +462,30 @@ async function getAccountDetails(aUserID) {
                 const newColorTheme = allowedThemes[resp.updatedUserObject.preferredColorTheme].theme;
 
                 if (preferredColorTheme !== newColorTheme && checkAllowedThemes.includes(newColorTheme) === true) {
-                    const lastColorTheme = document.getElementById(`themeStyleCSS-${preferredColorTheme}`);
                     preferredColorTheme = newColorTheme;
-                    sessionStorage.setItem("colorTheme", newColorTheme);
-                    lastColorTheme.href = `styles/themes/${preferredColorTheme}.css`;
-                    lastColorTheme.id = `themeStyleCSS-${preferredColorTheme}`;
+
+                    if (localStorage.getItem("user")) {
+                        localStorage.setItem("colorTheme", newColorTheme);
+                    } else {
+                        sessionStorage.setItem("colorTheme", newColorTheme);
+                    }
+
+                    changeColorTheme();
                 }
 
+                const newTheme = resp.updatedUserObject.preferredTheme;
 
+                if (newTheme === "0" || newTheme === "1" || newTheme === "2") {
+                    //localStorage.setItem("theme", newTheme);
+
+                    if (localStorage.getItem("user")) {
+                        localStorage.setItem("theme", newTheme);
+                    } else {
+                        sessionStorage.setItem("theme", newTheme);
+                    }
+
+                    changeColorTheme();
+                }
 
             }
 

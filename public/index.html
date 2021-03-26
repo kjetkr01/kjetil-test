@@ -41,7 +41,6 @@
 
    <link rel="stylesheet" href="styles/themes/globalThemeValues.css">
 
-
    <link rel="stylesheet" href="styles/index/desktop.css">
    <link rel="stylesheet" href="styles/index/mobile.css">
    <link rel="stylesheet" href="styles/index/common.css">
@@ -62,7 +61,9 @@
 
 </head>
 
-<body class="defaultColorTheme">
+<body>
+
+   <script>changeColorTheme();</script>
 
    <div id="createNewLiftorGoalOverlay" style="display: none;" class="overlay">
       <div id="createNewLiftorGoal" class="createNewLiftorGoal">
@@ -268,8 +269,6 @@
 </body>
 
 <script>
-
-   changeColorTheme();
 
    function intervals() {
 

@@ -99,18 +99,69 @@ async function updateCheckboxSetting(aSetting, aValue) {
         }
     }
 }
+
 //
 
-async function saveApperanceSettings() {
+async function savePreferredApperance() {
 
     if (isUpdatingCheckboxSetting === false) {
 
         isUpdatingCheckboxSetting = true;
 
-        //const theme = document.getElementById("appearanceThemeSelection").value;
-        const colorTheme = document.getElementById("themeColorSelection").value;
-        let value = colorTheme;
-        let setting = "preferredColorTheme";
+        const value = document.getElementById("appearanceThemeSelection").value;
+        const setting = "preferredTheme";
+
+        const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
+        const url = `/user/update/settings/${setting}`;
+
+        const resp = await callServerAPI(body, url);
+
+        if (resp === true) {
+
+            /*const newColorTheme = allowedThemes[value].theme;
+
+            if (newColorTheme !== sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(newColorTheme) === true) {
+                preferredColorTheme = allowedThemes[value].theme;
+                sessionStorage.setItem("colorTheme", preferredColorTheme);
+                changeColorTheme();
+                //lastColorTheme.href = `styles/themes/${preferredColorTheme}.css`;
+                //lastColorTheme.id = `themeStyleCSS-${preferredColorTheme}`;
+            }*/
+
+            if (value === "0" || value === "1" || value === "2") {
+                //sessionStorage.setItem("theme", value);
+
+                if (localStorage.getItem("user")) {
+                    localStorage.setItem("theme", value);
+                } else {
+                    sessionStorage.setItem("theme", value);
+                }
+
+                changeColorTheme();
+            }
+
+            updateUserInfo();
+            //loadSetting();
+            //changeColorTheme();
+            isUpdatingCheckboxSetting = false;
+        }
+    }
+}
+
+
+//
+
+
+//
+
+async function saveColorTheme() {
+
+    if (isUpdatingCheckboxSetting === false) {
+
+        isUpdatingCheckboxSetting = true;
+
+        const value = document.getElementById("themeColorSelection").value;
+        const setting = "preferredColorTheme";
 
         const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
         const url = `/user/update/settings/${setting}`;
@@ -121,9 +172,16 @@ async function saveApperanceSettings() {
 
             const newColorTheme = allowedThemes[value].theme;
 
-            if (newColorTheme !== sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(newColorTheme) === true) {
+            if (newColorTheme !== localStorage.getItem("colorTheme") || sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(newColorTheme) === true) {
                 preferredColorTheme = allowedThemes[value].theme;
-                sessionStorage.setItem("colorTheme", preferredColorTheme);
+                //sessionStorage.setItem("colorTheme", preferredColorTheme);
+
+                if (localStorage.getItem("user")) {
+                    localStorage.setItem("colorTheme", preferredColorTheme);
+                } else {
+                    sessionStorage.setItem("colorTheme", preferredColorTheme);
+                }
+
                 changeColorTheme();
                 //lastColorTheme.href = `styles/themes/${preferredColorTheme}.css`;
                 //lastColorTheme.id = `themeStyleCSS-${preferredColorTheme}`;

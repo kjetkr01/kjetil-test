@@ -166,24 +166,45 @@ function loadAppearancePage() {
 
     settingsGrid.innerHTML = justTextTemplate("Her kan du endre utseende på appen!", "left");
 
+    const theme = localStorage.getItem("theme") || sessionStorage.getItem("theme") || "0";
+
+    const themes = {
+        0: { "name": "Automatisk", "theme": "0" },
+        1: { "name": "Lys", "theme": "1" },
+        2: { "name": "Mørk", "theme": "2" }
+    }
+
+    const themeKeys = Object.keys(themes);
+
+    let appearanceThemeOptionsHTML = "";
+
+    for (let i = 0; i < themeKeys.length; i++) {
+
+        if (theme === themes[themeKeys[i]].theme) {
+            appearanceThemeOptionsHTML += `<option selected="selected" value="${themes[themeKeys[i]].theme}">${themes[themeKeys[i]].name}</option>`;
+        } else {
+            appearanceThemeOptionsHTML += `<option value="${themes[themeKeys[i]].theme}">${themes[themeKeys[i]].name}</option>`;
+        }
+    }
+
     const appearanceThemeHTML = `
     <select id="appearanceThemeSelection">
-       <option value="1">Automatisk</option>
-</select>
+       ${appearanceThemeOptionsHTML}
+    </select>
     `;
 
     settingsGrid.innerHTML += getTemplate("Tema", "appearanceThemeInp", appearanceThemeHTML, "borderTop");
 
-    const themeKeys = Object.keys(allowedThemes);
+    const colorThemeKeys = Object.keys(allowedThemes);
     let themeColorOptionsHTML = "";
     let colorTheme = allowedThemes[0].theme;
-    const preferredTheme = sessionStorage.getItem("colorTheme") || colorTheme;
-    for (let i = 0; i < themeKeys.length; i++) {
+    const preferredTheme = localStorage.getItem("colorTheme") || sessionStorage.getItem("colorTheme") || colorTheme;
+    for (let i = 0; i < colorThemeKeys.length; i++) {
 
-        if (preferredTheme === allowedThemes[themeKeys[i]].theme) {
-            themeColorOptionsHTML += `<option selected="selected" value="${themeKeys[i]}">${allowedThemes[themeKeys[i]].name}</option>`;
+        if (preferredTheme === allowedThemes[colorThemeKeys[i]].theme) {
+            themeColorOptionsHTML += `<option selected="selected" value="${colorThemeKeys[i]}">${allowedThemes[colorThemeKeys[i]].name}</option>`;
         } else {
-            themeColorOptionsHTML += `<option value="${themeKeys[i]}">${allowedThemes[themeKeys[i]].name}</option>`;
+            themeColorOptionsHTML += `<option value="${colorThemeKeys[i]}">${allowedThemes[colorThemeKeys[i]].name}</option>`;
         }
     }
 
@@ -195,9 +216,17 @@ function loadAppearancePage() {
 
     settingsGrid.innerHTML += getTemplate("Farge-tema", "themeColorInp", themeColorSelectionHTML);
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="saveApperanceSettings();">Lagre endringer</button>`, "", "spacingTop");
+    //settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="saveApperanceSettings();">Lagre endringer</button>`, "", "spacingTop");
 
     settingsGrid.innerHTML += getBottomSpacingTemplate();
+
+    document.getElementById("appearanceThemeSelection").addEventListener("change", function (evt) {
+        savePreferredApperance();
+    });
+
+    document.getElementById("themeColorSelection").addEventListener("change", function (evt) {
+        saveColorTheme();
+    });
 }
 
 function loadProgressionInfoPage() {
@@ -223,9 +252,17 @@ function loadProgressionInfoPage() {
 
     settingsGrid.innerHTML += getTemplate("Informasjon", "badeInfoInp", badgeInfoHTML);
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="alert('saveDetails');">Lagre endringer</button>`, "", "spacingTop");
+    //settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="alert('saveDetails');">Lagre endringer</button>`, "", "spacingTop");
 
     settingsGrid.innerHTML += getBottomSpacingTemplate();
+
+    document.getElementById("badgeSizeSelection").addEventListener("change", function (evt) {
+        console.log("changed badgeSizeSelection");
+    });
+
+    document.getElementById("badeInfoSelection").addEventListener("change", function (evt) {
+        console.log("changed badeInfoSelection");
+    });
 }
 
 function loadAboutAppPage(setting) {

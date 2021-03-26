@@ -60,7 +60,9 @@
 
 </head>
 
-<body class="defaultColorTheme">
+<body>
+
+   <script>changeColorTheme();</script>
 
    <div id="createNewLiftorGoalOverlay" style="display: none;" class="overlay">
       <div id="createNewLiftorGoal" class="createNewLiftorGoal">
@@ -307,7 +309,6 @@
       location.href = document.referrer || redirectToFeed();;
    }
 
-   changeColorTheme();
    lockBodyPosition();
    requestAccountDetails();
 
