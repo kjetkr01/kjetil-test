@@ -31,7 +31,7 @@ async function loadLeaderboards() {
 
             leaderboardsTableRowDom.innerHTML += `
           <td>
-             <button id="${currentLeaderboard}" class="leaderboardsList fadeInLeft animate" onclick="getListOfLeaderboard('${currentLeaderboard}');">${currentLeaderboard}</button>
+             <button id="${currentLeaderboard}" class="leaderboardsList fadeInLeft animate pointer" onclick="getListOfLeaderboard('${currentLeaderboard}');">${currentLeaderboard}</button>
           </td>`;
         }
 
@@ -91,10 +91,10 @@ async function getListOfLeaderboard(aLeaderboard) {
                 let svgMedal = null;
 
                 let placementHTML = `${i + 1}.`;
-                let usernameHTML = `<button class="peopleLeaderboardsListName" onClick="viewUser('${resp[i].id}')">${resp[i].username}</button>`;
+                let usernameHTML = `<button class="peopleLeaderboardsListName pointer" onClick="viewUser('${resp[i].id}')">${resp[i].username}</button>`;
 
                 if (resp[i].id === userID) {
-                    usernameHTML = `<button class="accountOwner" onClick="viewUser('${resp[i].id}')">${resp[i].username}</button>`;
+                    usernameHTML = `<button class="accountOwner pointer" onClick="viewUser('${resp[i].id}')">${resp[i].username}</button>`;
                 }
 
                 switch (i) {

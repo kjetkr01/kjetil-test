@@ -27,7 +27,7 @@ function getBadgeGoals(aSize, aBadgeInfo) {
 
         const badgeTemplate = `
 <td>
-<div class="bigBadges fadeInLeft animate ${aBadgeInfo.color}" onClick="alert('${userBadgeInfo.exercise}');">
+<div class="bigBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="alert('${userBadgeInfo.exercise}');">
 
 
 
@@ -109,7 +109,7 @@ Nærmer deg!
 
         const badgeTemplate = `
 <td>
-<div class="smallBadges fadeInLeft animate ${aBadgeInfo.color}" onClick="alert('${userBadgeInfo.exercise}');">
+<div class="smallBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="alert('${userBadgeInfo.exercise}');">
 
 <div id="Gexercise">
 <p id="exercise">
@@ -177,7 +177,7 @@ function getBadgeLift(aSize, aBadgeInfo) {
 
         const badgeTemplate = `
 <td>
-<div class="bigBadges fadeInLeft animate ${aBadgeInfo.color}" onClick="alert('${userBadgeInfo.exercise}');">
+<div class="bigBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="alert('${userBadgeInfo.exercise}');">
 
 
 
@@ -259,7 +259,7 @@ Nærmer deg!
 
         const badgeTemplate = `
 <td>
-<div class="smallBadges fadeInLeft animate ${aBadgeInfo.color}" onClick="alert('${userBadgeInfo.exercise}');">
+<div class="smallBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="alert('${userBadgeInfo.exercise}');">
 
 <!--
 <div id="c1b"></div>
@@ -333,7 +333,7 @@ function getBadgeTrainingsplit(aSize, aBadgeInfo) {
 
         const badgeTemplate = `
 <td>
-<div class="bigBadges fadeInLeft animate ${aBadgeInfo.color}">
+<div class="bigBadges fadeInLeft animate ${aBadgeInfo.color} pointer">
 
 
 
@@ -415,7 +415,7 @@ Nærmer deg!
 
         const badgeTemplate = `
 <td>
-<div class="smallBadgesTrainingsplit fadeInLeft animate ${aBadgeInfo.color}">
+<div class="smallBadgesTrainingsplit fadeInLeft animate ${aBadgeInfo.color} pointer">
 
 <div id="Gday">
 <p id="day">

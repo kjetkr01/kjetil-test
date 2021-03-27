@@ -31,7 +31,7 @@ function getBadgeGoals(aSize, aBadgeInfo) {
 
         const badgeTemplate = `
 <td>
-<div class="bigBadges fadeInLeft animate ${aBadgeInfo.color}" onClick="enableOverlayEdit('goal', '${userBadgeInfo.exercise}');">
+<div class="bigBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('goal', '${userBadgeInfo.exercise}');">
 
 
 
@@ -113,7 +113,7 @@ Nærmer deg!
 
         const badgeTemplate = `
 <td>
-<div class="smallBadges fadeInLeft animate ${aBadgeInfo.color}" onClick="enableOverlayEdit('goal', '${userBadgeInfo.exercise}');">
+<div class="smallBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('goal', '${userBadgeInfo.exercise}');">
 
 <div id="Gexercise">
 <p id="exercise">
@@ -150,7 +150,7 @@ ${userBadgeInfo.msg}
 
         const badgeTemplate = `
 <td>
-<div class="smallBadges fadeInLeft animate emptyBadge" onClick="enableOverlayCreate('goal')">
+<div class="smallBadges fadeInLeft animate emptyBadge pointer" onClick="enableOverlayCreate('goal')">
 
 
 
@@ -231,7 +231,7 @@ function getBadgeLift(aSize, aBadgeInfo) {
 
         const badgeTemplate = `
 <td>
-<div class="bigBadges fadeInLeft animate ${aBadgeInfo.color}" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}');">
+<div class="bigBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}');">
 
 
 
@@ -313,7 +313,7 @@ Nærmer deg!
 
         const badgeTemplate = `
 <td>
-<div class="smallBadges fadeInLeft animate ${aBadgeInfo.color}" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}');">
+<div class="smallBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}');">
 
 <!--
 <div id="c1b"></div>
@@ -359,7 +359,7 @@ ${userBadgeInfo.msg}
 
         const badgeTemplate = `
 <td>
-<div class="smallBadges fadeInLeft animate emptyBadge" onClick="enableOverlayCreate('lift')">
+<div class="smallBadges fadeInLeft animate emptyBadge pointer" onClick="enableOverlayCreate('lift')">
 
 
 
@@ -435,7 +435,7 @@ function getBadgeTrainingsplit(aSize, aBadgeInfo) {
 
         const badgeTemplate = `
 <td>
-<div class="bigBadges fadeInLeft animate ${aBadgeInfo.color}">
+<div class="bigBadges fadeInLeft animate ${aBadgeInfo.color} pointer">
 
 
 
@@ -517,7 +517,7 @@ Nærmer deg!
 
         const badgeTemplate = `
 <td>
-<div class="smallBadgesTrainingsplit fadeInLeft animate ${aBadgeInfo.color}">
+<div class="smallBadgesTrainingsplit fadeInLeft animate ${aBadgeInfo.color} pointer">
 
 <div id="Gday">
 <p id="day">
@@ -549,7 +549,7 @@ ${aBadgeInfo.trainingsplit}
 
         const badgeTemplate = `
         <td>
-        <div class="smallBadgesTrainingsplit fadeInLeft animate emptyBadge" onClick="enableOverlayEditDays();">
+        <div class="smallBadgesTrainingsplit fadeInLeft animate emptyBadge pointer" onClick="enableOverlayEditDays();">
         
         <div id="Gday">
         <p id="day">

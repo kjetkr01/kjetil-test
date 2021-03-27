@@ -69,14 +69,14 @@ async function checkWhoIsWorkingOutToday() {
             if (userID === resp[i].id) {
 
                 peopleWorkoutList.innerHTML += `
-                <button class="accountOwner fadeInUp animate" onClick="viewUser('${resp[i].id}')">${shortenedFullName}</button>
+                <button class="accountOwner fadeInUp animate pointer" onClick="viewUser('${resp[i].id}')">${shortenedFullName}</button>
                 <br>
                 `;
 
             } else {
 
                 peopleWorkoutList.innerHTML += `
-            <button class="peopleWorkoutListName fadeInUp animate" onClick="viewUser('${resp[i].id}')">${shortenedFullName}</button>
+            <button class="peopleWorkoutListName fadeInUp animate pointer" onClick="viewUser('${resp[i].id}')">${shortenedFullName}</button>
             <br>
             `;
 
