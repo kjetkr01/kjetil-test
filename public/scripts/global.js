@@ -546,6 +546,15 @@ async function getAccountDetails(aUserID) {
 
             return resp;
 
+        } else {
+
+            if (userID === viewingUser) {
+                sessionStorage.clear();
+                localStorage.clear();
+                alert("Det har oppstått en feil. Du blir nå logget ut. Vennligst logg inn på nytt");
+                location.reload();
+            }
+
         }
     }
 
