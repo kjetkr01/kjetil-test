@@ -82,6 +82,7 @@ margin-top: 40px;
 
 .userSettingsCenteredItems {
 font-size: 14px;
+word-break: break-all;
 background-color: var(--main-backgroundColor3);
 display: grid;
 width: 100%;

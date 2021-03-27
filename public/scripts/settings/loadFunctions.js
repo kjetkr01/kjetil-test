@@ -334,7 +334,7 @@ async function loadUsersListPage(setting) {
         const allAPIUsersArr = [];
 
         for (let i = 0; i < resp.allAPIUsers.length; i++) {
-            allAPIUsersArr.push(resp.allAPIUsers[i].username);
+            allAPIUsersArr.push(parseInt(resp.allAPIUsers[i].user_id));
         }
 
         let totalAPIUsers = allAPIUsersArr.length;
@@ -371,7 +371,7 @@ async function loadUsersListPage(setting) {
 
                 let hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsAcceptPendingUser" onClick="alert('giveAPIAccess');">Gi API tilgang</button>`;
 
-                if (allAPIUsersArr.includes(currentUser.username)) {
+                if (allAPIUsersArr.includes(currentUser.id)) {
                     hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsDeclinePendingUser" onClick="alert('removeAPIAccess');">Fjern API tilgang</button>`;
                 }
 
@@ -559,11 +559,14 @@ async function loadAPIPage() {
 
 async function loadPrivacyPage() {
 
-    settingsGrid.innerHTML = justTextTemplate(`Her kan du lese om hva appen bruker informasjonen din til. Du kan hente alle dine opplysninger. Og du kan slette kontoen din.`, "left");
+    settingsGrid.innerHTML = justTextTemplate(`${application.name} samler ikke inn data fra brukeren sine.`, "left");
 
     settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="displayInformationAboutUser();">Hent mine opplysninger (JSON)</button><p id="informationAboutUser" style="text-align:left;"></p>`, "", "borderTop");
 
     settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="loadSetting('${ELoadSettings.deleteMe.name}');">Gå til sletting av konto</button>`, "", "spacingTop");
+
+    settingsGrid.innerHTML += getBottomSpacingTemplate();
+
 }
 
 async function loadDeleteMePage() {

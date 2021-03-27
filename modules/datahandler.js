@@ -89,7 +89,7 @@ class StorageHandler {
         const client = new pg.Client(this.credentials);
         let results = false;
         let allUsers = null;
-        let allAPIUsers;
+        let allAPIUsers = null;
         try {
             await client.connect();
             // evt legge til lifts og andre ting brukeren trenger å motta
