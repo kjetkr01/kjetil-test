@@ -84,6 +84,10 @@
          <img id="logo" src="" alt="" draggable="false" class="noselect"></img>
       </div>
 
+      <script>
+         document.getElementById("logo").src = application.logoURL || "";
+      </script>
+
       <div id="Gline">
          <hr id="line" class="noselect">
       </div>
@@ -137,8 +141,6 @@
    if (cachedUsername && cachedUsername !== "null" && cachedUsername !== "undefined") {
       document.getElementById("inp1").value = cachedUsername;
    }
-
-   document.getElementById("logo").src = application.logoURL || "";
 
    document.getElementById("smallTitle").innerHTML = application.name || "";
 

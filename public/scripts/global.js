@@ -554,7 +554,6 @@ async function getAccountDetails(aUserID) {
                 alert("Det har oppstått en feil. Du blir nå logget ut. Vennligst logg inn på nytt");
                 location.reload();
             }
-
         }
     }
 
