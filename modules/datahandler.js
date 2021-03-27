@@ -822,6 +822,84 @@ class StorageHandler {
 
     //
 
+
+
+    //  -------------------------------  get all user information (user)  ------------------------------- //
+
+    async getAllUserInformation(user) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        let userInformation = {};
+
+        try {
+            await client.connect();
+
+            let userInfo = await client.query('SELECT * FROM "users" WHERE id=$1', [user]);
+
+            if (userInfo.rows.length !== 0) {
+                userInfo = userInfo.rows[0];
+                userInformation.UserObject = userInfo;
+                userInfo.password = "Pga sikkerhet, blir ikke passord hentet";
+            }
+
+            let apiInfo = await client.query('SELECT * FROM "api_keys" WHERE user_id=$1', [user]);
+
+            if (apiInfo.rows.length !== 0) {
+                apiInfo = apiInfo.rows[0];
+                userInformation.APIObject = apiInfo;
+            }
+
+            results = true;
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return { "status": results, "information": userInformation };
+    }
+
+    //
+
+    //  -------------------------------  delete account (user)  ------------------------------- //
+
+    async deleteAccount(username, password) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+
+        try {
+            await client.connect();
+
+            let userInfo = await client.query('SELECT "id" FROM "public"."users" WHERE username=$1 AND password=$2', [username, password]);
+
+            if (userInfo.rows.length !== 0) {
+                userInfo = userInfo.rows[0];
+
+                const deleteID = userInfo.id;
+
+                await client.query('DELETE FROM "public"."users" WHERE id=$1', [deleteID]);
+                await client.query('DELETE FROM "public"."api_keys" WHERE user_id=$1', [deleteID]);
+
+                results = true;
+            }
+
+
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return results;
+    }
+
+    //
+
+
     // api only calls
 
     //  -------------------------------  getWorkoutPlanAPI  ------------------------------- //

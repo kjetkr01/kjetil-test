@@ -50,6 +50,15 @@ function loadSetting(aSetting) {
         loadAPIPage();
     }
 
+    else if (setting === ELoadSettings.privacy.name) {
+        cacheCurrentSetting(setting);
+        loadPrivacyPage();
+    }
+
+    else if (setting === ELoadSettings.deleteMe.name) {
+        loadDeleteMePage();
+    }
+
     else {
         document.title = ELoadSettings.settings.name;
         cacheCurrentSetting(ELoadSettings.settings.name);
@@ -102,6 +111,8 @@ async function loadDefaultPage(setting) {
     if (userInfo.hasOwnProperty("apikey")) {
         settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.api.name, "apiDiv");
     }
+
+    settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.privacy.name);
 
     settingsGrid.innerHTML += getLogoutBtn();
 
@@ -515,6 +526,31 @@ async function loadAPIPage() {
             settingsGrid.innerHTML += getBottomSpacingTemplate();
         }
     }
+
+}
+
+async function loadPrivacyPage() {
+
+    settingsGrid.innerHTML = justTextTemplate(`Her kan du lese om hva appen bruker informasjonen din til. Du kan hente alle dine opplysninger. Og du kan slette kontoen din.`, "left");
+
+    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="displayInformationAboutUser();">Hent mine opplysninger (JSON)</button><p id="informationAboutUser" style="text-align:left;"></p>`, "", "borderTop");
+
+    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="loadSetting('${ELoadSettings.deleteMe.name}');">Gå til sletting av konto</button>`, "", "spacingTop");
+}
+
+async function loadDeleteMePage() {
+
+    settingsGrid.innerHTML = justTextTemplate(`Her kan du slette kontoen din. Dette kan ikke angres! <br><br> Du er pålogget som: ${userInfo.displayname}<br>Brukernavn: ${userInfo.username}`, "left");
+
+    settingsGrid.innerHTML += getCenteredTextTemplate("Skriv inn brukernavnet ditt", "", "borderTop");
+    settingsGrid.innerHTML += getCenteredTextTemplate("<input class='settingsInput' id='usernameInpDeletion' type='text' placeholder='Fyll inn'></input>");
+
+    settingsGrid.innerHTML += getCenteredTextTemplate("Skriv inn ditt passordet ditt", "usernameDiv", "spacingTop");
+    settingsGrid.innerHTML += getCenteredTextTemplate("<input class='settingsInput' id='passwordInpDeletion' type='password' placeholder='Fyll inn'></input>");
+
+    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' style='color:red;' onClick="deleteAccount()">Slett kontoen min</button>`, "", "spacingTop");
+
+    settingsGrid.innerHTML += getBottomSpacingTemplate();
 
 }
 

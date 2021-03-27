@@ -35,7 +35,17 @@ const ELoadSettings = {
         name: `API`,
         value: 9
     },
+    privacy: {
+        name: `Personvern`,
+        value: 10
+    },
+    deleteMe: {
+        name: `Slett meg`,
+        value: 11
+    }
 };
+
+// Lage rettigheter eller lignende i innstillinger helt i bunnen? Feks sånn der man kan hente alt av info om brukeren, hva det brukes til ogsånt? Erklæringsting, Personvern ting
 
 async function updateUserInfo() {
 
@@ -173,4 +183,70 @@ function checkIfEdited(aType) {
             }, 10);
         }
     }
+}
+
+async function displayInformationAboutUser() {
+
+    const informationAboutUser = document.getElementById("informationAboutUser");
+    informationAboutUser.innerHTML = `<br>Henter opplysninger...`;
+
+    const body = { "authToken": token, "userInfo": user };
+    const url = `/user/allinformation`;
+
+    const resp = await callServerAPI(body, url);
+
+    if (resp) {
+        informationAboutUser.innerHTML = `<br>${JSON.stringify(resp)}`;
+    } else {
+        informationAboutUser.innerHTML = `<br>Det her oppstått en feil, kunne ikke hente opplysningene dine. Vennligst prøv igjen.`;
+    }
+}
+
+async function deleteAccount() {
+
+    const usernameInpDeletion = document.getElementById("usernameInpDeletion").value;
+    const passwordInpDeletion = document.getElementById("passwordInpDeletion").value;
+
+    if (usernameInpDeletion && usernameInpDeletion.length >= 3 && passwordInpDeletion) {
+
+        if (usernameInpDeletion === username) {
+
+            const confirmAccountDeletion = confirm(`Er du sikkert på at du ønsker å slette kontoen din? Dette kan ikke angres!`);
+
+            if (confirmAccountDeletion === true) {
+
+                // delete account
+
+                const body = { "authToken": token, "userInfo": user, "authorization": "Basic " + window.btoa(`${usernameInpDeletion}:${passwordInpDeletion}`) };
+                const url = `/user/deleteMe`;
+
+                const config = {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                    body: JSON.stringify(body)
+                }
+
+                const response = await fetch(url, config);
+                const data = await response.json();
+
+                if (data.status === true) {
+                    sessionStorage.clear();
+                    localStorage.clear();
+                    alert(`${data.message} Takk for at du var medlem av ${application.name}`);
+                    location.reload();
+                } else {
+                    alert(`Det har oppstått en feil: ${data.message}`);
+                }
+            }
+
+        } else {
+            alert("Brukernavnet stemmer ikke med kontoen")
+        }
+
+    } else {
+        alert("Vennligst fyll ut feltene");
+    }
+
 }

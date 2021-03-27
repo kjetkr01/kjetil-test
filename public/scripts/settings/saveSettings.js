@@ -227,7 +227,6 @@ async function saveDisplayname() {
 
             fixedDisplayname = fixedDisplayname.trimRight();
 
-
             const body = { "authToken": token, "userInfo": user, "newDisplayname": fixedDisplayname };
             const url = `/user/update/displayname`;
 

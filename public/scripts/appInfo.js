@@ -6,7 +6,7 @@ const application = {
     version: {
         state: "alpha",
         major: 3, // major++ = minor = 0 && revision = 0
-        minor: 4, // minor++ = revision = 0
+        minor: 5, // minor++ = revision = 0
         revision: 0,
     },
     lastUpdated: {
@@ -19,8 +19,6 @@ const application = {
         showPlanned: true,
     }
 }
-
-// Lage rettigheter eller lignende i innstillinger helt i bunnen? Feks sånn der man kan hente alt av info om brukeren, hva det brukes til ogsånt? Erklæringsting, Personvern ting
 
 // Slutt
 

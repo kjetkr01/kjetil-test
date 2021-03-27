@@ -25,6 +25,8 @@ const getListOfAllUsersWorkoutToday = require("./modules/user").getListOfAllUser
 const updateDisplayname = require("./modules/user").updateDisplayname;
 const updateUsername = require("./modules/user").updateUsername;
 const updateAboutMe = require("./modules/user").updateAboutMe;
+const getAllUserInformation = require("./modules/user").getAllUserInformation;
+const deleteAccount = require("./modules/user").deleteAccount;
 
 const saveLiftOrGoal = require("./modules/user").saveLiftOrGoal;
 const deleteLiftOrGoal = require("./modules/user").deleteLiftOrGoal;
@@ -710,6 +712,55 @@ server.post("/whoIsWorkingOutToday", auth, async (req, res) => {
           res.status(403).json("error, try again").end();
      }
 
+});
+
+//
+
+// get all information about user
+
+server.post("/user/allinformation", auth, async (req, res) => {
+
+     const currentUser = JSON.parse(req.body.userInfo);
+
+     if (currentUser.id) {
+
+          const resp = await getAllUserInformation(currentUser.id);
+          /* { "status": true, "information": { "username": "kjetkr01", "displayname": "yeet yeetson" } } */
+          if (resp.status === true) {
+               res.status(200).json(resp.information).end();
+          } else {
+               res.status(403).json("Kunne ikke hente informasjon").end();
+          }
+     } else {
+          res.status(403).json("Invalid user").end();
+     }
+});
+
+//
+
+// delete my account
+
+server.post("/user/deleteMe", auth, async (req, res) => {
+
+     const currentUser = JSON.parse(req.body.userInfo);
+
+     const credentials = req.body.authorization.split(' ')[1];
+     const [username, password] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
+
+     if (currentUser.username && username && password) {
+
+          if (currentUser.username === username) {
+
+               const resp = await deleteAccount(currentUser.username, password);
+
+               res.status(200).json({ "status": true, "message": "Brukeren din er nå slettet." }).end();
+          } else {
+               res.status(403).json({ "status": false, "message": "Brukernavnet stemmer ikke med kontoen" }).end();
+          }
+
+     } else {
+          res.status(403).json({ "status": false, "message": "Vennligst fyll ut alle feltene" }).end();
+     }
 });
 
 //

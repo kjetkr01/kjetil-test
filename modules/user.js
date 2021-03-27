@@ -185,6 +185,30 @@ async function updateAboutMe(username, settings) {
     }
 }
 
+
+async function getAllUserInformation(user) {
+    try {
+        const resp = await database.getAllUserInformation(user);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+async function deleteAccount(username, password) {
+    try {
+        password = crypto.createHmac('sha256', secret)
+            .update(password)
+            .digest('hex');
+        const resp = await database.deleteAccount(username, password);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
 module.exports = User;
 module.exports.validateUser = validateUser;
 module.exports.getListOfUsers = getListOfUsers;
@@ -203,3 +227,5 @@ module.exports.updateTrainingDays = updateTrainingDays;
 module.exports.updateDisplayname = updateDisplayname;
 module.exports.updateUsername = updateUsername;
 module.exports.updateAboutMe = updateAboutMe;
+module.exports.getAllUserInformation = getAllUserInformation;
+module.exports.deleteAccount = deleteAccount;
