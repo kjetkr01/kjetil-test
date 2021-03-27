@@ -442,6 +442,7 @@ async function loadPendingUsersPage(setting) {
         const defaultHTML = `
        <p class="settingsPendingUserFullName">Visningsnavn</p>
        <p class="settingsPendingUsername">Brukernavn</p>
+       <p class="settingsPendingUsername">Dager siden forespørselen ble sendt inn</p>
        `;
 
         settingsGrid.innerHTML += getCenteredTextTemplate(defaultHTML, "", "borderTop");
@@ -449,11 +450,38 @@ async function loadPendingUsersPage(setting) {
         const pendingUserKeys = Object.keys(resp);
 
         for (let i = 0; i < pendingUserKeys.length; i++) {
+
+            let msg = "Ikke registrert";
+            if (resp[i].request_date) {
+
+                let requestDate = resp[i].request_date;
+                requestDate = requestDate.split("-");
+
+                if (requestDate[0].length === 4 && requestDate[1] > 0 && requestDate[1] <= 12 && requestDate[1].length <= 2 && requestDate[2] > 0 && requestDate[2] <= 31 && requestDate[2].length <= 2) {
+
+                    const d = new Date();
+                    requestDate = new Date(requestDate[0], (requestDate[1] - 1), requestDate[2]);
+
+                    const daysSinceTime = parseInt((d - requestDate) / (1000 * 3600 * 24));
+
+                    if (d < requestDate) {
+                        //fremtiden
+                    } else if (daysSinceTime > 1) {
+                        msg = `${parseInt(daysSinceTime)} dager siden`;
+                    } else if (daysSinceTime === 1) {
+                        msg = `I går`;
+                    } else if (daysSinceTime === 0) {
+                        msg = `I dag`;
+                    }
+                }
+            }
+
             const pendingTemplateHTML = `
        <p class="settingsPendingUserFullName">${resp[pendingUserKeys[i]].displayname}</p>
        <p class="settingsPendingUsername">${resp[pendingUserKeys[i]].username}</p>
-       <button class="settingsAcceptPendingUser" onClick='acceptPendingUser("${resp[pendingUserKeys[i]].username}", true);'>Godta</button>
-       <button class="settingsDeclinePendingUser" onClick='acceptPendingUser("${resp[pendingUserKeys[i]].username}", false);'>Avslå</button>
+       <p class="settingsPendingUsername">${msg}</p>
+       <button class="settingsAcceptPendingUser pointer" onClick='acceptPendingUser("${resp[pendingUserKeys[i]].username}", true);'>Godta</button>
+       <button class="settingsDeclinePendingUser pointer" onClick='acceptPendingUser("${resp[pendingUserKeys[i]].username}", false);'>Avslå</button>
        `;
 
             settingsGrid.innerHTML += getCenteredTextTemplate(pendingTemplateHTML, "infoAboutApp1", "spacingTop");

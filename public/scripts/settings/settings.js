@@ -143,8 +143,6 @@ function validateUsernameInput() {
     const usernameInp = document.getElementById("usernameInp").value;
     const letters = /^[A-Za-z0-9]+$/;
 
-    console.log(usernameInp)
-
     if (usernameInp.length !== 0 && !usernameInp.match(letters) || event.keyCode === 32) {
         return false;
     }
@@ -167,15 +165,16 @@ function checkIfEdited(aType) {
                 } else {
                     document.getElementById("displaynameSaveBtn").style.display = "none";
                 }
-            }, 10);
-
+            }, 100);
 
         } else if (aType === "username") {
 
             setTimeout(() => {
-                const usernameInp = document.getElementById("usernameInp").value;
+                const usernameInp = document.getElementById("usernameInp");
 
-                if (usernameInp !== userInfo.username) {
+                usernameInp.value = (usernameInp.value).toLowerCase();
+
+                if (usernameInp.value !== userInfo.username) {
                     document.getElementById("usernameSaveBtn").style.display = "inline-block";
                 } else {
                     document.getElementById("usernameSaveBtn").style.display = "none";

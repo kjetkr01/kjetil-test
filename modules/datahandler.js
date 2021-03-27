@@ -31,9 +31,11 @@ class StorageHandler {
                 // checks if username is already taken in users table
                 results = await client.query('SELECT "username" FROM "users" WHERE username=$1', [username]);
 
+                const requestDate = new Date().toISOString().substr(0, 10) || null;
+
                 if (results.rows.length === 0) {
 
-                    results = await client.query('INSERT INTO "public"."pending_users"("username", "password", "displayname") VALUES($1, $2, $3) RETURNING *;', [username, password, displayname]);
+                    results = await client.query('INSERT INTO "public"."pending_users"("username", "password", "displayname", "request_date") VALUES($1, $2, $3, $4) RETURNING *;', [username, password, displayname, requestDate]);
                     results = results.rows[0];
                     client.end();
 
@@ -245,7 +247,7 @@ class StorageHandler {
                 if (onlyNumbers === true) {
                     results = await client.query('SELECT "id" FROM "public"."pending_users"');
                 } else {
-                    results = await client.query('SELECT "id","username","displayname" FROM "public"."pending_users"');
+                    results = await client.query('SELECT "id","username","displayname","request_date" FROM "public"."pending_users"');
                 }
 
                 results = (results.rows.length > 0) ? results.rows : true;

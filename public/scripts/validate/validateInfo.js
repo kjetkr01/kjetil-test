@@ -46,7 +46,7 @@ async function validate(displayname, username, password, confirmpassword) {
 
                         //console.log(fixedDisplayname)
 
-                        const body = { "username": username, "password": password, "displayname": fixedDisplayname };
+                        const body = { "username": username.toLowerCase(), "password": password, "displayname": fixedDisplayname };
                         const url = `/access`;
 
                         const resp = await callServerAPI(body, url);

@@ -88,12 +88,12 @@
       </div>
 
       <div id="Ginp1">
-         <input id="inp1" placeholder="Visningsnavn" type="text" required>
+         <input id="inp1" placeholder="Visningsnavn" maxlength="20" type="text" required>
          </input>
       </div>
 
       <div id="Ginp2">
-         <input id="inp2" placeholder="Brukernavn" type="text" required>
+         <input id="inp2" placeholder="Brukernavn" onkeyup="return checkKeys();" maxlength="20" type="text" required>
          </input>
       </div>
 
@@ -142,6 +142,11 @@
 
    });
 
+   function checkKeys() {
+      const inp2 = document.getElementById("inp2");
+      inp2.value = (inp2.value).toLowerCase();
+   }
+
    async function requestAccess() {
 
       const displayname = document.getElementById("inp1").value;
@@ -154,6 +159,7 @@
       if (resp) {
          const respmsg = document.getElementById("respMsg");
          respmsg.innerHTML = resp;
+         sessionStorage.setItem("cachedUsername", username);
       } else {
          respmsg.innerHTML = errorText;
       }

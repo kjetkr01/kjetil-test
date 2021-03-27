@@ -256,11 +256,13 @@ async function saveUsername() {
 
         const usernameInp = document.getElementById("usernameInp").value;
 
-        const letters = /^[A-Za-z0-9]+$/;
+        const newUsername = usernameInp.toLowerCase();
 
-        if (usernameInp.match(letters)) {
+        const letters = /^[a-z0-9]+$/;
 
-            const body = { "authToken": token, "userInfo": user, "newUsername": usernameInp };
+        if (newUsername.match(letters)) {
+
+            const body = { "authToken": token, "userInfo": user, "newUsername": newUsername };
             const url = `/user/update/username`;
 
             const resp = await callServerAPI(body, url);
@@ -268,8 +270,8 @@ async function saveUsername() {
             if (resp === true) {
                 localStorage.clear();
                 sessionStorage.clear();
-                alert(`Brukernavnet ble endret til: ${usernameInp}. Du blir nå logget ut`);
-                sessionStorage.setItem("cachedUsername", usernameInp);
+                alert(`Brukernavnet ble endret til: ${newUsername}. Du blir nå logget ut`);
+                sessionStorage.setItem("cachedUsername", newUsername);
                 location.reload();
             } else {
                 alert("Brukernavnet er opptatt!")
