@@ -197,12 +197,47 @@ async function saveColorTheme() {
 
 async function saveDisplayname() {
     const displaynameInp = document.getElementById("displaynameInp").value;
-    console.log(displaynameInp);
+
+    let splitDisplayName = displaynameInp.split(" ");
+    let fixedDisplayname = "";
+
+    const letters = /^[A-Za-z0-9 ]+$/;
+
+    if (displaynameInp.match(letters)) {
+
+        for (let i = 0; i < splitDisplayName.length; i++) {
+
+            function upperCaseFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+
+            function lowerCaseAllWordsExceptFirstLetters(string) {
+                return string.replace(/\S*/g, function (word) {
+                    return word.charAt(0) + word.slice(1).toLowerCase();
+                });
+            }
+
+            fixedDisplayname += upperCaseFirstLetter(lowerCaseAllWordsExceptFirstLetters(splitDisplayName[i])) + " ";
+        }
+
+        // fetch and save etc
+
+    } else {
+        alert("Ugyldig visningsnavn!");
+    }
 }
 
 async function saveUsername() {
     const usernameInp = document.getElementById("usernameInp").value;
-    console.log(usernameInp);
+
+    const letters = /^[A-Za-z0-9 ]+$/;
+
+    if (usernameInp.match(letters)) {
+
+        console.log(usernameInp);
+    } else {
+        alert("Ugyldig brukernavn!");
+    }
 }
 
 function updateLocalSettings(aSetting, aValue) {

@@ -62,8 +62,8 @@ async function loadDefaultPage(setting) {
     titleDom.innerHTML = ELoadSettings.settings.name;
     settingsGrid.innerHTML = "";
 
-    settingsGrid.innerHTML += getTemplate("Visningsnavn", "", `<input id="displaynameInp" onKeyup="checkIfEdited('displayname');" style="text-align:right;" class='settingsInput' value='${userInfo.displayname}'></input><button onClick="saveDisplayname();" style="display:none;" id="displaynameSaveBtn" class="settingsButton pointer">Lagre</button>`, "borderTop");
-    settingsGrid.innerHTML += getTemplate("Brukernavn", "", `<input id="usernameInp" onKeyup="checkIfEdited('username');" style="text-align:right;" class='settingsInput' value='${userInfo.username}'></input><button onClick="saveUsername();" style="display:none;" id="usernameSaveBtn" class="settingsButton pointer">Lagre</button>`);
+    settingsGrid.innerHTML += getTemplate("Visningsnavn", "", `<input id="displaynameInp" maxlength="20" onKeydown="return validateDisplaynameInput();" style="text-align:right;" class='settingsInput' value='${userInfo.displayname}'></input><button onClick="saveDisplayname();" style="display:none;" id="displaynameSaveBtn" class="settingsButton pointer">Lagre</button>`, "borderTop");
+    settingsGrid.innerHTML += getTemplate("Brukernavn", "", `<input id="usernameInp" maxlength="20" onKeydown="return validateUsernameInput();" style="text-align:right;" class='settingsInput' value='${userInfo.username}'></input><button onClick="saveUsername();" style="display:none;" id="usernameSaveBtn" class="settingsButton pointer">Lagre</button>`);
 
     settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.password.name, "passwordDiv");
 
