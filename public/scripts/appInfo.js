@@ -7,7 +7,7 @@ const application = {
         state: "alpha",
         major: 3, // major++ = minor = 0 && revision = 0
         minor: 5, // minor++ = revision = 0
-        revision: 3,
+        revision: 4,
     },
     lastUpdated: {
         day: "27",
@@ -68,9 +68,6 @@ const ongoingUpdatesArr = [
 
 const plannedUpdatesText = "Kommende oppdateringer";
 const plannedUpdatesArr = [
-    "TITLE:Logg inn",
-    "Husk meg i 30 dager (istedenfor 7)",
-
     "TITLE:Farge-tema",
     "Lage flere farge-temaer",
 
