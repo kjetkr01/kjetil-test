@@ -1,37 +1,40 @@
 :root {
-
-    --main-footerHeightTop: 17.5px; /*index/leaderboards/account*/
-    --main-footerIconHeight: auto; /*index/leaderboards/account*/
-    --main-footerHeightBottom: 22.5px; /*index/leaderboards/account*/
-    --main-footerIconSize: 28px;
-
+--main-footerHeightTop: 17.5px; /*index/leaderboards/account*/
+--main-footerIconHeight: auto; /*index/leaderboards/account*/
+--main-footerHeightBottom: 22.5px; /*index/leaderboards/account*/
+--main-footerIconSize: 28px;
 }
 
-@media only screen
-    and (device-width : 375px)
-    and (device-height : 812px)
-    ,
-    only screen
-    and (device-width : 375px)
-    and (device-height : 667px)
-    {
-      :root {
-        --main-footerHeightBottom: 40px
-      }
-    }
 
-/* vis større mellomrom hvis iphone x osv?
-var ratio = window.devicePixelRatio || 1;
-  
-    // Define the users device screen dimensions
-    var screen = {
-      width : window.screen.width * ratio,
-      height : window.screen.height * ratio
-    };
-  
-    // iPhone X Detection
-    if (iOS && screen.width == 1125 && screen.height === 2436) {
-      $('body').addClass('iphoneX');
-    }
+/* IOS Design Cheat Sheet: https://kapeli.com/cheat_sheets/iOS_Design.docset/Contents/Resources/Documents/index */
 
-*/
+@media
+/* iPhone 12 Pro Max */
+only screen
+and (device-width : 428px)
+and (device-height : 926px)
+,
+/* iPhone XS Max, iPhone 11 Pro Max */
+only screen
+and (device-width : 414px)
+and (device-height : 896px)
+,
+/* iPhone 12, iPhone 12 Pro */
+only screen
+and (device-width : 390px)
+and (device-height : 844px)
+,
+/* iPhone XR, iPhone 11 */
+only screen
+and (device-width : 414px)
+and (device-height : 896px)
+,
+/* iPhone X, iPhone XS, iPhone 11 Pro */
+only screen
+and (device-width : 375px)
+and (device-height : 812px)
+{
+:root {
+--main-footerHeightBottom: 40px
+}
+}
