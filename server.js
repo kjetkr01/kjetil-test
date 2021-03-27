@@ -753,7 +753,12 @@ server.post("/user/deleteMe", auth, async (req, res) => {
 
                const resp = await deleteAccount(currentUser.username, password);
 
-               res.status(200).json({ "status": true, "message": "Brukeren din er nå slettet." }).end();
+               if (resp === true) {
+                    res.status(200).json({ "status": true, "message": "Brukeren din er nå slettet." }).end();
+               } else {
+                    res.status(200).json({ "status": false, "message": "Brukernavnet eller passordet er feil" }).end();
+               }
+
           } else {
                res.status(403).json({ "status": false, "message": "Brukernavnet stemmer ikke med kontoen" }).end();
           }
