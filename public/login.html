@@ -132,6 +132,12 @@
 
 <script>
 
+   const cachedUsername = sessionStorage.getItem("cachedUsername");
+
+   if (cachedUsername && cachedUsername !== "null" && cachedUsername !== "undefined") {
+      document.getElementById("inp1").value = cachedUsername;
+   }
+
    document.getElementById("logo").src = application.logoURL || "";
 
    document.getElementById("smallTitle").innerHTML = application.name || "";

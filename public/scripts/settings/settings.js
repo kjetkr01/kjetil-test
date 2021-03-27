@@ -88,7 +88,6 @@ function cacheCurrentSetting(aCurrentSetting) {
 function clearAllScrollPos() {
     const ELoadSettingsKeys = Object.keys(ELoadSettings);
     for (let i = 0; i < ELoadSettingsKeys.length; i++) {
-        console.log(123)
         sessionStorage.removeItem(`@scroll-${ELoadSettings[ELoadSettingsKeys[i]].name}`);
     }
 }
@@ -99,6 +98,7 @@ function confirmLogout() {
     if (logout === true) {
         localStorage.clear();
         sessionStorage.clear();
+        sessionStorage.setItem("cachedUsername", username);
         redirectToLogin();
     }
 }
@@ -120,7 +120,7 @@ function validateDisplaynameInput() {
     const displaynameInp = document.getElementById("displaynameInp").value;
     const letters = /^[A-Za-z0-9 ]+$/;
 
-    if (!displaynameInp.match(letters)) {
+    if (displaynameInp.length !== 0 && !displaynameInp.match(letters)) {
         return false;
     }
 
@@ -133,7 +133,9 @@ function validateUsernameInput() {
     const usernameInp = document.getElementById("usernameInp").value;
     const letters = /^[A-Za-z0-9]+$/;
 
-    if (!usernameInp.match(letters) || event.keyCode === 32) {
+    console.log(usernameInp)
+
+    if (usernameInp.length !== 0 && !usernameInp.match(letters) || event.keyCode === 32) {
         return false;
     }
 

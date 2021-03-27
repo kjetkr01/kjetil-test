@@ -191,10 +191,12 @@ async function validateToken() {
 
     const currentPage = window.location.pathname;
 
-    //blacklists login pages
-    if (currentPage === "/access.html" || currentPage === "/login.html") {
+    const blackListedPages = ["/access.html", "/login.html"];
 
-        console.log("blacklisted page, skipped");
+    //blacklists login pages
+    if (blackListedPages.includes(currentPage)) {
+
+        console.log(`"${currentPage}" is a blacklisted page, skipped token verification`);
         return;
 
     } else {
@@ -211,6 +213,7 @@ async function validateToken() {
             } else {
                 localStorage.clear();
                 sessionStorage.clear();
+                sessionStorage.setItem("cachedUsername", username);
                 redirectToLogin();
             }
 
@@ -491,12 +494,16 @@ async function getAccountDetails(aUserID) {
 
     if (token && user && aUserID) {
 
+        isUpdatingUserObject = true;
+
         const viewingUser = aUserID;
 
         const body = { "authToken": token, "userInfo": user, "viewingUser": viewingUser };
         const url = `/users/details/${viewingUser}`;
 
         const resp = await callServerAPI(body, url);
+
+        isUpdatingUserObject = false;
 
         if (resp) {
 

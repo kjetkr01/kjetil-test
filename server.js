@@ -23,6 +23,7 @@ const getUserSettingsAndInfo = require("./modules/user").getUserSettingsAndInfo;
 const updateUserSetting = require("./modules/user").updateUserSetting;
 const getListOfAllUsersWorkoutToday = require("./modules/user").getListOfAllUsersWorkoutToday;
 const updateDisplayname = require("./modules/user").updateDisplayname;
+const updateUsername = require("./modules/user").updateUsername;
 const updateAboutMe = require("./modules/user").updateAboutMe;
 
 const saveLiftOrGoal = require("./modules/user").saveLiftOrGoal;
@@ -440,14 +441,14 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
 server.post("/user/update/displayname", auth, async (req, res) => {
 
      const currentUser = JSON.parse(req.body.userInfo);
-     const displayname = req.body.displayname;
+     const newDisplayname = req.body.newDisplayname;
 
      const letters = /^[A-Za-z0-9 ]+$/;
 
-     if (displayname.match(letters)) {
-          if (displayname.length >= 3 && displayname.length <= 20 && currentUser.username) {
+     if (newDisplayname.match(letters)) {
+          if (newDisplayname.length >= 3 && newDisplayname.length <= 20 && currentUser.username) {
 
-               const resp = await updateDisplayname(currentUser.username, displayname);
+               const resp = await updateDisplayname(currentUser.username, newDisplayname);
 
                if (resp === true) {
                     res.status(200).json(resp).end();
@@ -461,6 +462,38 @@ server.post("/user/update/displayname", auth, async (req, res) => {
 
      } else {
           res.status(403).json("invalid displayname").end();
+     }
+
+});
+
+//
+
+// update username
+
+server.post("/user/update/username", auth, async (req, res) => {
+
+     const currentUser = JSON.parse(req.body.userInfo);
+     const newUsername = req.body.newUsername;
+
+     const letters = /^[A-Za-z0-9]+$/;
+
+     if (newUsername.match(letters)) {
+          if (newUsername.length >= 3 && newUsername.length <= 20 && currentUser.username) {
+
+               const resp = await updateUsername(currentUser.username, newUsername);
+
+               if (resp === true) {
+                    res.status(200).json(resp).end();
+               } else {
+                    res.status(403).json("error, try again").end();
+               }
+
+          } else {
+               res.status(403).json("invalid username").end();
+          }
+
+     } else {
+          res.status(403).json("invalid username").end();
      }
 
 });

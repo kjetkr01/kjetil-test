@@ -157,9 +157,18 @@ async function updateTrainingDays(trainingDays, username) {
 }
 
 
-async function updateDisplayname(username, displayname) {
+async function updateDisplayname(username, newDisplayname) {
     try {
-        const resp = await database.updateDisplayname(username, displayname);
+        const resp = await database.updateDisplayname(username, newDisplayname);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function updateUsername(username, newUsername) {
+    try {
+        const resp = await database.updateUsername(username, newUsername);
         return resp;
     } catch (error) {
         console.error(error);
@@ -192,4 +201,5 @@ module.exports.saveLiftOrGoal = saveLiftOrGoal;
 module.exports.deleteLiftOrGoal = deleteLiftOrGoal;
 module.exports.updateTrainingDays = updateTrainingDays;
 module.exports.updateDisplayname = updateDisplayname;
+module.exports.updateUsername = updateUsername;
 module.exports.updateAboutMe = updateAboutMe;

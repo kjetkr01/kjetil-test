@@ -228,7 +228,7 @@ async function saveDisplayname() {
             fixedDisplayname = fixedDisplayname.trimRight();
 
 
-            const body = { "authToken": token, "userInfo": user, "displayname": fixedDisplayname };
+            const body = { "authToken": token, "userInfo": user, "newDisplayname": fixedDisplayname };
             const url = `/user/update/displayname`;
 
             const resp = await callServerAPI(body, url);
@@ -236,7 +236,8 @@ async function saveDisplayname() {
             if (resp === true) {
                 localStorage.clear();
                 sessionStorage.clear();
-                alert(`Visningsnavet ble endret til: ${fixedDisplayname}. Du blir nå logget ut`)
+                alert(`Visningsnavet ble endret til: ${fixedDisplayname}. Du blir nå logget ut`);
+                sessionStorage.setItem("cachedUsername", username);
                 location.reload();
             } else {
                 alert("Visningsnavet kunne ikke bli oppdatert. Vennligst prøv igjen.")
@@ -249,15 +250,35 @@ async function saveDisplayname() {
 }
 
 async function saveUsername() {
-    const usernameInp = document.getElementById("usernameInp").value;
 
-    const letters = /^[A-Za-z0-9 ]+$/;
+    const confirmSaveUsername = confirm("Hvis du endrer brukernavnet. Må du logge inn på nytt");
 
-    if (usernameInp.match(letters)) {
+    if (confirmSaveUsername === true) {
 
-        console.log(usernameInp);
-    } else {
-        alert("Ugyldig brukernavn!");
+        const usernameInp = document.getElementById("usernameInp").value;
+
+        const letters = /^[A-Za-z0-9]+$/;
+
+        if (usernameInp.match(letters)) {
+
+            const body = { "authToken": token, "userInfo": user, "newUsername": usernameInp };
+            const url = `/user/update/username`;
+
+            const resp = await callServerAPI(body, url);
+
+            if (resp === true) {
+                localStorage.clear();
+                sessionStorage.clear();
+                alert(`Brukernavnet ble endret til: ${usernameInp}. Du blir nå logget ut`);
+                sessionStorage.setItem("cachedUsername", usernameInp);
+                location.reload();
+            } else {
+                alert("Brukernavnet er opptatt!")
+            }
+
+        } else {
+            alert("Ugyldig brukernavn!");
+        }
     }
 }
 

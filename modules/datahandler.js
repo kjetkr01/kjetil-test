@@ -727,7 +727,7 @@ class StorageHandler {
 
     //  -------------------------------  update Displayname (user)  ------------------------------- //
 
-    async updateDisplayname(username, displayname) {
+    async updateDisplayname(username, newDisplayname) {
 
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -735,9 +735,56 @@ class StorageHandler {
         try {
             await client.connect();
 
-            await client.query('UPDATE "users" SET displayname=$1 WHERE username=$2', [displayname, username]);
+            await client.query('UPDATE "users" SET displayname=$1 WHERE username=$2', [newDisplayname, username]);
 
             results = true;
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return results;
+    }
+
+    //
+
+    //  -------------------------------  update Username (user)  ------------------------------- //
+
+    async updateUsername(username, newUsername) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+
+        try {
+            await client.connect();
+
+            //await client.query('UPDATE "users" SET username=$1 WHERE username=$2', [newUsername, username]);
+
+            // checks if username is already taken in pending_users table
+            results = await client.query('SELECT "username" FROM "pending_users" WHERE username=$1', [newUsername]);
+
+            if (results.rows.length === 0) {
+
+                // checks if username is already taken in users table
+                results = await client.query('SELECT "username" FROM "users" WHERE username=$1', [newUsername]);
+
+                if (results.rows.length === 0) {
+
+                    await client.query('UPDATE "users" SET username=$1 WHERE username=$2', [newUsername, username]);
+                    results = true;
+                    client.end();
+
+                } else {
+                    results = false;
+                    client.end();
+                }
+
+            } else {
+                results = false;
+                client.end();
+            }
 
         } catch (err) {
             client.end();

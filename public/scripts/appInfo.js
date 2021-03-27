@@ -6,8 +6,8 @@ const application = {
     version: {
         state: "alpha",
         major: 3, // major++ = minor = 0 && revision = 0
-        minor: 3, // minor++ = revision = 0
-        revision: 7,
+        minor: 4, // minor++ = revision = 0
+        revision: 0,
     },
     lastUpdated: {
         day: "27",
@@ -53,8 +53,8 @@ ${createBtn("Sondre Olsen")}.
 const ongoingUpdatesText = "Pågående oppdateringer";
 const ongoingUpdatesArr = [
     "TITLE:Innstillinger",
-    "Endre: Visningsnavn (90%)",
-    "Endre: Brukernavn (40%)",
+    "Endre: Visningsnavn (99%)",
+    "Endre: Brukernavn (99%)",
     "Oppdatere: Passord (30%)",
     "Oppdatere detaljer: Om deg (90%)",
     "Oppdatere Fremgangs info: Lagre endringer (0%)",
