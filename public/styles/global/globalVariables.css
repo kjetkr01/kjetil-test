@@ -2,10 +2,23 @@
 
     --main-footerHeightTop: 17.5px; /*index/leaderboards/account*/
     --main-footerIconHeight: auto; /*index/leaderboards/account*/
-    --main-footerHeightBottom: 40px; /*index/leaderboards/account*/
+    --main-footerHeightBottom: 22.5px; /*index/leaderboards/account*/
     --main-footerIconSize: 28px;
 
 }
+
+@media only screen
+    and (device-width : 375px)
+    and (device-height : 812px)
+    ,
+    only screen
+    and (device-width : 375px)
+    and (device-height : 667px)
+    {
+      :root {
+        --main-footerHeightBottom: 40px
+      }
+    }
 
 /* vis større mellomrom hvis iphone x osv?
 var ratio = window.devicePixelRatio || 1;

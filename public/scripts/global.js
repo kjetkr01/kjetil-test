@@ -51,9 +51,13 @@ if (user) {
 
         preferredColorTheme = allowedThemes[userDisplayname.preferredColorTheme].theme;
 
-        /*if (preferredColorTheme !== sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(preferredColorTheme) === true) {
-            sessionStorage.setItem("colorTheme", preferredColorTheme);
-        }*/
+        if (preferredColorTheme !== sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(preferredColorTheme) === true) {
+            if (localStorage.getItem("user")) {
+                localStorage.setItem("colorTheme", preferredColorTheme);
+            } else {
+                sessionStorage.setItem("colorTheme", preferredColorTheme);
+            }
+        }
 
         userDisplayname = userDisplayname.displayname;
 
