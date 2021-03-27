@@ -22,6 +22,7 @@ const getUserDetails = require("./modules/user").getUserDetails;
 const getUserSettingsAndInfo = require("./modules/user").getUserSettingsAndInfo;
 const updateUserSetting = require("./modules/user").updateUserSetting;
 const getListOfAllUsersWorkoutToday = require("./modules/user").getListOfAllUsersWorkoutToday;
+const updateDisplayname = require("./modules/user").updateDisplayname;
 const updateAboutMe = require("./modules/user").updateAboutMe;
 
 const saveLiftOrGoal = require("./modules/user").saveLiftOrGoal;
@@ -434,7 +435,37 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
 
 //
 
+// update displayname
 
+server.post("/user/update/displayname", auth, async (req, res) => {
+
+     const currentUser = JSON.parse(req.body.userInfo);
+     const displayname = req.body.displayname;
+
+     const letters = /^[A-Za-z0-9 ]+$/;
+
+     if (displayname.match(letters)) {
+          if (displayname.length >= 3 && displayname.length <= 20 && currentUser.username) {
+
+               const resp = await updateDisplayname(currentUser.username, displayname);
+
+               if (resp === true) {
+                    res.status(200).json(resp).end();
+               } else {
+                    res.status(403).json("error, try again").end();
+               }
+
+          } else {
+               res.status(403).json("invalid displayname").end();
+          }
+
+     } else {
+          res.status(403).json("invalid displayname").end();
+     }
+
+});
+
+//
 
 // update about me information
 
@@ -449,7 +480,6 @@ server.post("/user/update/settings/about/me", auth, async (req, res) => {
                isValid: true,
                msg: ""
           };
-          //validering her???
 
           const gym = settings.gym;
           const age = parseInt(settings.age);

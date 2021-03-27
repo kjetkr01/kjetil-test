@@ -196,34 +196,55 @@ async function saveColorTheme() {
 }
 
 async function saveDisplayname() {
-    const displaynameInp = document.getElementById("displaynameInp").value;
 
-    let splitDisplayName = displaynameInp.split(" ");
-    let fixedDisplayname = "";
+    const confirmSaveDisplayname = confirm("Hvis du endrer visningsnavnet. Må du logge inn på nytt");
 
-    const letters = /^[A-Za-z0-9 ]+$/;
+    if (confirmSaveDisplayname === true) {
 
-    if (displaynameInp.match(letters)) {
+        const displaynameInp = document.getElementById("displaynameInp").value;
 
-        for (let i = 0; i < splitDisplayName.length; i++) {
+        let splitDisplayName = displaynameInp.split(" ");
+        let fixedDisplayname = "";
 
-            function upperCaseFirstLetter(string) {
-                return string.charAt(0).toUpperCase() + string.slice(1);
+        const letters = /^[A-Za-z0-9 ]+$/;
+
+        if (displaynameInp.match(letters)) {
+
+            for (let i = 0; i < splitDisplayName.length; i++) {
+
+                function upperCaseFirstLetter(string) {
+                    return string.charAt(0).toUpperCase() + string.slice(1);
+                }
+
+                function lowerCaseAllWordsExceptFirstLetters(string) {
+                    return string.replace(/\S*/g, function (word) {
+                        return word.charAt(0) + word.slice(1).toLowerCase();
+                    });
+                }
+
+                fixedDisplayname += upperCaseFirstLetter(lowerCaseAllWordsExceptFirstLetters(splitDisplayName[i])) + " ";
             }
 
-            function lowerCaseAllWordsExceptFirstLetters(string) {
-                return string.replace(/\S*/g, function (word) {
-                    return word.charAt(0) + word.slice(1).toLowerCase();
-                });
+            fixedDisplayname = fixedDisplayname.trimRight();
+
+
+            const body = { "authToken": token, "userInfo": user, "displayname": fixedDisplayname };
+            const url = `/user/update/displayname`;
+
+            const resp = await callServerAPI(body, url);
+
+            if (resp === true) {
+                localStorage.clear();
+                sessionStorage.clear();
+                alert(`Visningsnavet ble endret til: ${fixedDisplayname}. Du blir nå logget ut`)
+                location.reload();
+            } else {
+                alert("Visningsnavet kunne ikke bli oppdatert. Vennligst prøv igjen.")
             }
 
-            fixedDisplayname += upperCaseFirstLetter(lowerCaseAllWordsExceptFirstLetters(splitDisplayName[i])) + " ";
+        } else {
+            alert("Ugyldig visningsnavn!");
         }
-
-        // fetch and save etc
-
-    } else {
-        alert("Ugyldig visningsnavn!");
     }
 }
 

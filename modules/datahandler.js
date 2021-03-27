@@ -724,6 +724,32 @@ class StorageHandler {
 
     //
 
+
+    //  -------------------------------  update Displayname (user)  ------------------------------- //
+
+    async updateDisplayname(username, displayname) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+
+        try {
+            await client.connect();
+
+            await client.query('UPDATE "users" SET displayname=$1 WHERE username=$2', [displayname, username]);
+
+            results = true;
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return results;
+    }
+
+    //
+
     //  -------------------------------  update about me (user)  ------------------------------- //
 
     async updateAboutMe(username, settings) {
