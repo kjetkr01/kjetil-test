@@ -7,7 +7,7 @@ const application = {
         state: "alpha",
         major: 3, // major++ = minor = 0 && revision = 0
         minor: 3, // minor++ = revision = 0
-        revision: 4,
+        revision: 5,
     },
     lastUpdated: {
         day: "27",
@@ -150,14 +150,14 @@ function createBtn(aUserFullname, aUserID) {
         const userFullname = aUserFullname;
         const userid = aUserID;
         let onClickLink = "";
-        let hightlightClass = "";
+        let extraClasses = "";
 
         if (userid) {
             onClickLink = `onClick="viewUser('${userid}');"`;
-            hightlightClass = "settingsHightlightUser";
+            extraClasses = "settingsHightlightUser pointer";
         }
 
-        const html = `<button class="settingsButtonUser ${hightlightClass}" ${onClickLink}>${userFullname}</button>`;
+        const html = `<button class="settingsButtonUser ${extraClasses}" ${onClickLink}>${userFullname}</button>`;
 
         return html;
 
