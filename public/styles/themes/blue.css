@@ -1,0 +1,23 @@
+@media (prefers-color-scheme: light) {
+:root {
+--main-headerBackground:  #3e50b4;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
+--main-backgroundColor1: #3e50b4;
+--main-boxShadow: 4px 4px rgba(62,80,180, 0.4);
+
+--main-accountOwnerColor: var(--main-headerBackground);
+}
+}
+
+@media (prefers-color-scheme: dark) {
+:root {
+--main-headerBackground:  #2c3a8a;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
+--main-backgroundColor1: #2c3a8a;
+--main-boxShadow: 4px 4px rgba(44,58,138, 0.4);
+
+--main-accountOwnerColor: #4154c0;
+}
+}
+
+/* javascript add stylesheet hvis man vil ha eget theme? så remove */

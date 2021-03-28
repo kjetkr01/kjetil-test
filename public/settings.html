@@ -12,8 +12,8 @@
 
    <meta name="mobile-web-app-capable" content="yes">
    <meta name="apple-mobile-web-app-capable" content="yes">
-   <meta name="application-name" content="Treningsstatistikk">
-   <meta name="apple-mobile-web-app-title" content="Treningsstatistikk">
+   <meta name="application-name" content="Treningsstatistikken">
+   <meta name="apple-mobile-web-app-title" content="Treningsstatistikken">
    <meta name="msapplication-starturl" content="/">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0">
 
@@ -22,165 +22,101 @@
 
    <!-- -->
 
+   <!-- status bar color -->
+
+   <meta id="themeColor" name="theme-color" content="#357F9B">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+   <!-- -->
+
+   <link rel="stylesheet" href="styles/global/globalVariables.css">
+   <link rel="stylesheet" href="styles/global/globalClasses.css">
+   <link rel="stylesheet" href="styles/global/global.css">
+
+   <!-- themeStyleCSS -->
+   <!--<link id="themeStyleCSS-default" rel="stylesheet" href="styles/themes/default.css">
+   <link id="themeStyleCSS-blue" rel="stylesheet" href="styles/themes/blue.css">-->
+   <!-- themeStyleCSS -->
+   <link id="themeStyleCSS-blue" rel="stylesheet" href="styles/themes/themes.css">
+
+   <link rel="stylesheet" href="styles/themes/globalThemeValues.css">
+
+
+   <link rel="stylesheet" href="styles/settings/desktop.css">
+   <link rel="stylesheet" href="styles/settings/mobile.css">
+   <link rel="stylesheet" href="styles/settings/common.css">
+
+   <link rel="stylesheet" href="styles/settings/settingsGrid.css">
+   <!--<link rel="stylesheet" href="styles/index/progressbar.css">-->
+
+
+   <script src="scripts/appInfo.js" type="text/javascript"></script>
    <script src="scripts/global.js" type="text/javascript"></script>
-   <script src="scripts/validateInfo.js" type="text/javascript"></script>
-   <script src="scripts/script.js" type="text/javascript"></script>
+   <script src="scripts/index/script.js" type="text/javascript"></script>
+
+   <script src="scripts/settings/settings.js" type="text/javascript"></script>
+   <script src="scripts/settings/loadFunctions.js" type="text/javascript"></script>
+   <script src="scripts/settings/templateFunctions.js" type="text/javascript"></script>
+   <script src="scripts/settings/saveSettings.js" type="text/javascript"></script>
 
 </head>
 
 <body>
 
-   <button onClick="redirectToAccount();">Tilbake (min konto)</button>
+   <script>changeColorTheme();</script>
 
-   <h2>Innstillinger:</h2>
+   <section id="page">
 
-   <div id="showSettings"></div>
+      <div id="c1r1"></div>
+      <div id="c2r1"></div>
 
-   <div id="infoDiv"></div>
+      <div id="GbackBtn">
+         <svg id="backBtn" class="backBtnIcon iconsDefaultColor fadeInLeft animate delaySmall pointer" draggable="false"
+            onclick="backToPrevious();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
+            <g id="Layer_2" data-name="Layer 2">
+               <g id="Layer_1-2" data-name="Layer 1">
+                  <polyline class="cls-1" points="21.25 1.24 2.48 20.02 20.45 37.99" />
+               </g>
+            </g>
+         </svg>
+      </div>
+
+      <div id="Gtitle">
+         <p id="title" class="noselect">
+         </p>
+      </div>
+
+      <div id="GsettingsGrid">
+         <p id="settingsGrid">
+         </p>
+      </div>
+
+   </section>
 
 </body>
 
 <script>
 
-   let info = "";
-   let settings = "";
+   lockBodyPosition();
 
-   if (user) {
-      try {
-         myUsername = JSON.parse(user);
-         myUsername = myUsername.username;
-         getUserDetails();
-      } catch (err) {
-         alert(err);
-         redirectToHome();
-      }
-   } else {
-      redirectToHome();
-   }
+   const titleDom = document.getElementById("title");
+   const settingsDom = document.getElementById("GsettingsGrid");
+   const settingsGrid = document.getElementById("settingsGrid");
+   let userInfo = null;
+   let settings = null;
+   let saveNewScrollPos = true;
 
-   async function getUserDetails() {
+   updateUserInfo();
 
-      if (token && user) {
-
-         const resp = await getUpdatedUserObject(true, myUsername);
-
-         if (resp.settings && resp.userInfo) {
-            info = resp;
-            displayInformation();
-
-         } else {
-            alert("Feil, prøv igjen");
-            redirectToHome();
-         }
-
-      }
-
-   }
-
-   function displayInformation() {
-
-      if (!info || !info.settings) {
-         return;
-      }
-
-      settings = info.settings;
-
-      const keys = Object.keys(settings);
-      const showSettingsDiv = document.getElementById("showSettings");
-      showSettingsDiv.innerHTML = "";
-
-      if (keys.length > 0) {
-         for (let i = 0; i < keys.length; i++) {
-            if (settings[keys[i]].value === true) {
-               showSettingsDiv.innerHTML += `<div>${settings[keys[i]].name}<input type="checkbox" id="${keys[i]}Box" checked onClick="updateSetting('${keys[i]}', false)"></div>`;
-            }
-            else if (settings[keys[i]].value === false) {
-               showSettingsDiv.innerHTML += `<div>${settings[keys[i]].name}<input type="checkbox" id="${keys[i]}Box" onClick="updateSetting('${keys[i]}', true)"></div>`;
-            }
-            else if (settings[keys[i]].value === "auto" || settings[keys[i]].value === "light" || settings[keys[i]].value === "dark") {
-
-               switch (settings[keys[i]].value) {
-                  case "auto":
-                     showSettingsDiv.innerHTML += `
-               <label>${settings[keys[i]].name}</label>
-               <select id="preferredColorThemeDom" onChange="checkPreferredColorTheme();">
-               <option value="auto" selected>Automatisk</option>
-               <option value="light">Lys</option>
-               <option value="dark">Mørk</option>
-               </select>`;
-                     break;
-                  case "light":
-                     showSettingsDiv.innerHTML += `
-               <label>${settings[keys[i]].name}</label>
-               <select id="preferredColorThemeDom" onChange="checkPreferredColorTheme();">
-               <option value="auto">Automatisk</option>
-               <option value="light" selected>Lys</option>
-               <option value="dark">Mørk</option>
-               </select>`;
-                     break;
-                  case "dark":
-                     showSettingsDiv.innerHTML += `
-               <label>${settings[keys[i]].name}</label>
-               <select id="preferredColorThemeDom" onChange="checkPreferredColorTheme();">
-               <option value="auto">Automatisk</option>
-               <option value="light">Lys</option>
-               <option value="dark" selected>Mørk</option>
-               </select>`;
-                     break;
-
-               }
-
-
-               //showSettingsDiv.innerHTML += `<div>${settings[keys[i]].name}<input type="checkbox" id="${keys[i]}Box" onClick="updateSetting('${keys[i]}', true)"></div>`;
-            }
+   settingsDom.addEventListener("scroll", function () {
+      if (saveNewScrollPos === true) {
+         const currentScroll = settingsDom.scrollTop;
+         const currentSetting = sessionStorage.getItem("currentSetting");
+         if (currentSetting) {
+            sessionStorage.setItem(`@scroll-${currentSetting}`, currentScroll);
          }
       }
-   }
-
-   function checkPreferredColorTheme() {
-      const preferredColorThemeDom = document.getElementById("preferredColorThemeDom");
-
-      if (preferredColorThemeDom.value !== settings.preferredColorTheme.value) {
-         if (preferredColorThemeDom.value === "auto" || preferredColorThemeDom.value === "light" || preferredColorThemeDom.value === "dark") {
-
-            updateSetting("preferredColorTheme", preferredColorThemeDom.value);
-         }
-
-      }
-
-   }
-
-   async function updateSetting(setting, value) {
-
-      if (!setting || value !== true && value !== false && value !== "auto" && value !== "light" && value !== "dark") {
-         return;
-      } else {
-
-         if (token && user) {
-
-            const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
-            const url = `/user/update/settings/${setting}`;
-
-            const resp = await callServerAPI(body, url);
-
-            console.log(resp)
-
-            if (resp === "updated setting") {
-               /*if (value === true) {
-                  document.getElementById("infoDiv").innerHTML = `${settings[setting].name} er nå slått på!`;
-               } else {
-                  document.getElementById("infoDiv").innerHTML = `${settings[setting].name} er nå slått av!`;
-               }*/
-               getUserDetails();
-            } else {
-               document.getElementById("infoDiv").innerHTML = `En feil har oppstått, innstillingen "${setting}" ble ikke oppdatert.`;
-               setTimeout(function () {
-                  document.getElementById("infoDiv").innerHTML = "";
-               }, 3000);
-            }
-         }
-      }
-   }
+   });
 
 </script>
 

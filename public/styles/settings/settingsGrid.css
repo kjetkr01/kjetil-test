@@ -1,0 +1,421 @@
+/* elements, grid and other for mobile */
+
+* {
+font-family: var(--main-font-Family-Verdana);
+}
+
+/*@media only screen and (max-width: 1024px) {*/ /* 768px var før, men passer bedre med 1024px for ipad */
+
+/* grid */
+
+.userSettingsDefault {
+font-size: 14px;
+background-color: var(--main-backgroundColor3);
+display: grid;
+width: 100%;
+grid-template-areas:
+
+"cS1 cS1 cS1 cS1"
+"cS2 gsSetting gsInfo cS3"
+"cS4 cS4 cS4 cS4"
+;
+
+grid-template-rows: /* nedover */
+
+15.5px /* cS1 */
+auto /* gsSetting osv */
+15.5px /* cS4 */
+;
+
+grid-template-columns: /* bortover */
+20px auto auto 20px;
+}
+
+.userSettingsDefault > #cS1 {
+grid-area: cS1;
+}
+
+.userSettingsDefault > #gsSetting {
+grid-area: gsSetting;
+}
+
+#gsSetting>#sSetting{
+color: var(--main-textColorDark);
+}
+
+.userSettingsDefault > #gsInfo {
+grid-area: gsInfo;
+}
+
+#gsSetting, #gsInfo {
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+line-height: 1.5;
+display: inline-block;
+vertical-align: middle;
+}
+
+#gsInfo>#sInfo{
+float: right;
+text-align: right;
+color: var(--main-accountOwnerColor);
+}
+
+.userSettingsDefault > #cS4 {
+grid-area: cS4;
+}
+
+.borderT {
+border-top: 1px #75757585 solid;
+}
+
+.borderB {
+border-bottom: 1px #75757585 solid;
+}
+
+.spacingTop {
+margin-top: 40px;
+}
+
+
+
+.userSettingsCenteredItems {
+font-size: 14px;
+word-break: break-all;
+background-color: var(--main-backgroundColor3);
+display: grid;
+width: 100%;
+grid-template-areas:
+
+"cSC1"
+"gsCenteredItems"
+"cSC2"
+;
+
+grid-template-rows: /* nedover */
+
+17.5px /* cSC1 */
+auto /* gsCenteredItems osv */
+17.5px /* cSC2 */
+;
+
+grid-template-columns: /* bortover */
+1fr;
+}
+
+.userSettingsCenteredItems > #cSC1 {
+grid-area: cSC1;
+}
+
+.userSettingsCenteredItems > #gsCenteredItems {
+grid-area: gsCenteredItems;
+text-align: center;
+}
+
+#gsCenteredItems {
+color: var(--main-textColorDark);
+margin-right: 20px;
+margin-left: 20px;
+}
+
+.userSettingsCenteredItems > #cSC2 {
+grid-area: cSC2;
+}
+
+.userSettingsLeftItems {
+font-size: 14px;
+background-color: var(--main-backgroundColor3);
+display: grid;
+width: 100vw;
+grid-template-areas:
+
+"cSLC1"
+"gsLeftItems"
+"cSLC2"
+;
+
+grid-template-rows: /* nedover */
+
+17.5px /* cSLC1 */
+auto /* gsLeftItems osv */
+17.5px /* cSLC2 */
+;
+
+grid-template-columns: /* bortover */
+1fr;
+}
+
+.userSettingsLeftItems > #cSLC1 {
+grid-area: cSLC1;
+}
+
+.userSettingsLeftItems > #gsLeftItems {
+grid-area: gsLeftItems;
+text-align: left;
+}
+
+#gsLeftItems {
+color: var(--main-textColorDark);
+margin-right: 20px;
+margin-left: 20px;
+}
+
+.userSettingsLeftItems > #cSLC2 {
+grid-area: cSLC2;
+}
+
+.userSettingsJustText {
+font-size: 14px;
+display: grid;
+width: 100%;
+grid-template-areas:
+
+"cSJC1"
+"gsJustText"
+"cSJC2"
+;
+
+grid-template-rows: /* nedover */
+
+30px /* cSJC1 */
+auto /* gsJustText osv */
+30px /* cSJC2 */
+;
+
+grid-template-columns: /* bortover */
+1fr;
+}
+
+.userSettingsJustText > #cSJC1 {
+grid-area: cSJC1;
+}
+
+.userSettingsJustText > #gsJustText {
+grid-area: gsJustText;
+}
+
+#gsJustText>#sJustText {
+color: var(--main-textColorDark);
+margin-right: 20px;
+margin-left: 20px;
+}
+
+.userSettingsJustText > #cSJC2 {
+grid-area: cSJC2;
+}
+
+
+
+.userSettingsAPIList {
+word-break: break-all;
+font-size: 14px;
+background-color: var(--main-backgroundColor3);
+display: grid;
+width: 100%;
+grid-template-areas:
+
+"cSCA1"
+"gsaCenteredItems"
+"cSCA2"
+;
+
+grid-template-rows: /* nedover */
+
+17.5px /* cSCA1 */
+auto /* gsCenteredItems osv */
+17.5px /* cSCA2 */
+;
+
+grid-template-columns: /* bortover */
+1fr;
+}
+
+.userSettingsAPIList > #cSCA1 {
+grid-area: cSCA1;
+}
+
+.userSettingsAPIList > #gsaCenteredItems {
+grid-area: gsaCenteredItems;
+text-align: left;
+}
+
+#gsaCenteredItems {
+color: var(--main-textColorDark);
+margin-right: 20px;
+margin-left: 20px;
+}
+
+.userSettingsAPIList > #cSCA2 {
+grid-area: cSCA2;
+}
+
+/*}*/
+
+select {
+color: var(--main-accountOwnerColor);
+font-size: 14px;
+text-align: right;
+text-align-last: right;
+appearance: none;
+-webkit-appearance: none;
+-moz-appearance: none;
+border: none;
+background-color: var(--main-backgroundColor3);
+}
+
+input {
+padding: 0;
+}
+
+.settingsIcons {
+height: 20px;
+width: 10px;
+fill:none;
+stroke-miterlimit:10;
+stroke-width:4px;
+
+outline-style: none; 
+-webkit-touch-callout: none;
+-webkit-tap-highlight-color: rgba(0,0,0,0);
+stroke: var(--main-iconsDefaultColor);
+}
+
+.settingsCheckbox {
+position: relative;
+display: inline-block;
+width: 46px;
+height: 24px;
+
+outline-style: none; 
+-webkit-touch-callout: none;
+-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.settingsCheckbox input { 
+opacity: 0;
+width: 0;
+height: 0;
+}
+
+.slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #ccc;
+-webkit-transition: .4s;
+transition: .4s;
+}
+
+.slider:before {
+position: absolute;
+content: "";
+height: 16px;
+width: 16px;
+left: 4px;
+bottom: 4px;
+background-color: white;
+-webkit-transition: .4s;
+transition: .4s;
+}
+
+input:checked + .slider {
+background-color: var(--main-backgroundColor1);
+}
+
+input:focus + .slider {
+box-shadow: 0 0 1px var(--main-backgroundColor1);
+}
+
+input:checked + .slider:before {
+-webkit-transform: translateX(18px);
+-ms-transform: translateX(18px);
+transform: translateX(18px);
+}
+
+/* Rounded sliders */
+.slider.round {
+border-radius: 34px;
+}
+
+.slider.round:before {
+border-radius: 50%;
+}
+
+.settingsInput {
+background-color: transparent;
+border: transparent;
+font-size: 14px;
+color: var(--main-accountOwnerColor);
+text-align: center;
+}
+
+::placeholder{
+text-align: center;
+font-size: 14px;
+color: var(--main-accountOwnerColor);
+}
+
+.settingsButton {
+background-color: transparent;
+border: transparent;
+color: var(--main-textColorDark);
+text-align: center;
+font-size: 14px;
+font-weight: bold;
+}
+
+.settingsApplicationFullVersion {
+margin-top: 10px;
+color: var(--main-textColorDark);
+opacity: 60%;
+font-size: 14px;
+}
+
+.settingsLogo {
+margin-top: 50px;
+margin-bottom: -50px;
+width: 119px;
+height: 119px;
+}
+
+.settingsButtonUser {
+margin: 0;
+padding: 0;
+font-size: 14px;
+font-weight: bold;
+background-color: transparent;
+border: transparent;
+color: var(--main-textColorDark);
+}
+
+.settingsHightlightUser {
+color: var(--main-accountOwnerColor);
+}
+
+.settingsPendingUserFullName {
+font-weight: bold;
+}
+
+.settingsAcceptPendingUser {
+color: green;
+}
+
+.settingsDeclinePendingUser {
+color: red;
+}
+
+.settingsAcceptPendingUser, .settingsDeclinePendingUser {
+font-size: 14px;
+background-color: transparent;
+border: transparent;
+margin-right: 12px;
+margin-left: 12px;
+}
+
+.settingsPendingUsername, .settingsAcceptPendingUser, .settingsDeclinePendingUser {
+margin-top: 10px;
+}

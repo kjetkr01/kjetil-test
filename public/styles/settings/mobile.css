@@ -1,0 +1,82 @@
+/* elements, grid and other for mobile */
+
+/*@media only screen and (max-width: 1024px) {*/ /* 768px var før, men passer bedre med 1024px for ipad */
+
+/* grid */
+
+body>#page {
+overflow-y: auto;
+display: grid;
+width: 100vw;
+height: 100vh;
+grid-template-areas:
+
+"c1r1 c1r1"
+"GbackBtn Gtitle"
+"c2r1 c2r1"
+"GsettingsGrid GsettingsGrid"
+"c3r1 c3r1"
+;
+
+grid-template-rows: /* nedover */
+
+3vh /* c1r1 */
+auto /* header (GbackBtn & Gtitle) */
+3vh /* c2r1 */
+1fr /* GsettingsGrid */
+;
+
+grid-template-columns: /* bortover */
+0px 1fr;
+}
+
+
+
+/* end of grid */
+
+
+
+/* elements */
+
+
+#Gtitle > #title {
+font-size: 20px;
+}
+
+
+/* end of elements */
+
+
+
+/* spacing & other */
+
+
+#page > #c1r1 {
+grid-area: c1r1;
+}
+
+#page > #GbackBtn {
+grid-area: GbackBtn;
+}
+
+#page > #Gtitle {
+grid-area: Gtitle;
+}
+
+#page > #c2r1 {
+grid-area: c2r1;
+}
+
+#page > #GsettingsGrid {
+grid-area: GsettingsGrid;
+overflow-y: auto;
+background-color: var(--main-backgroundColor2);
+}
+
+#c1r1, #GbackBtn, #Gtitle, #c2r1 {
+background-color: var(--main-backgroundColor3);
+}
+
+/* end of spacing & other */
+
+/*}*/

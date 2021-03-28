@@ -2,285 +2,319 @@
 <html>
 
 <head>
-    <title>Laster...</title>
+   <title>Laster...</title>
 
-    <meta charset="utf-8" />
+   <meta charset="utf-8" />
 
-    <!-- manifest -->
+   <!-- manifest -->
 
-    <link rel="manifest" href="manifest.json">
+   <link rel="manifest" href="manifest.json">
 
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Treningsstatistikk">
-    <meta name="apple-mobile-web-app-title" content="Treningsstatistikk">
-    <meta name="msapplication-starturl" content="/">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0">
+   <meta name="mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="application-name" content="Treningsstatistikken">
+   <meta name="apple-mobile-web-app-title" content="Treningsstatistikken">
+   <meta name="msapplication-starturl" content="/">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0">
 
-    <link rel="icon" type="image/png" sizes="192x192" href="images/appIcon.png">
-    <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+   <link rel="icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+   <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="images/appIcon.png">
 
-    <!-- -->
+   <!-- -->
 
-    <link rel="stylesheet" href="styles/global.css">
-    <link rel="stylesheet" href="styles/user.css">
+   <!-- status bar color -->
 
-    <script src="scripts/global.js" type="text/javascript"></script>
-    <script src="scripts/validateInfo.js" type="text/javascript"></script>
-    <script src="scripts/script.js" type="text/javascript"></script>
+   <meta id="themeColor" name="theme-color" content="#357F9B">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <script src="scripts/displayFunctions/displayInformation.js" type="text/javascript"></script>
-    <script src="scripts/displayFunctions/displayLifts.js" type="text/javascript"></script>
-    <script src="scripts/displayFunctions/displayGoals.js" type="text/javascript"></script>
-    <script src="scripts/displayFunctions/displayProgram.js" type="text/javascript"></script>
+   <!-- -->
+
+   <link rel="stylesheet" href="styles/global/globalVariables.css">
+   <link rel="stylesheet" href="styles/global/globalClasses.css">
+   <link rel="stylesheet" href="styles/global/global.css">
+
+   <!-- themeStyleCSS -->
+   <!--<link id="themeStyleCSS-default" rel="stylesheet" href="styles/themes/default.css">
+   <link id="themeStyleCSS-blue" rel="stylesheet" href="styles/themes/blue.css">-->
+   <!-- themeStyleCSS -->
+   <link id="themeStyleCSS-blue" rel="stylesheet" href="styles/themes/themes.css">
+
+   <link rel="stylesheet" href="styles/themes/globalThemeValues.css">
+
+
+   <link rel="stylesheet" href="styles/user/desktop.css">
+   <link rel="stylesheet" href="styles/user/mobile.css">
+   <link rel="stylesheet" href="styles/user/common.css">
+   <link rel="stylesheet" href="styles/user/overlay.css">
+
+   <link rel="stylesheet" href="styles/badges/badges.css">
+   <link rel="stylesheet" href="styles/badges/badgeColors.css">
+   <link rel="stylesheet" href="styles/user/userGrid.css">
+   <!--<link rel="stylesheet" href="styles/index/progressbar.css">-->
+
+   <script src="scripts/appInfo.js" type="text/javascript"></script>
+   <script src="scripts/global.js" type="text/javascript"></script>
+   <script src="scripts/badges/userBadges.js" type="text/javascript"></script>
+   <script src="scripts/user/user.js" type="text/javascript"></script>
+   <script src="scripts/user/editInformation.js" type="text/javascript"></script>
 
 </head>
 
 <body>
 
-    <section id="page">
+   <script>changeColorTheme();</script>
 
-        <!-- spacing items-->
+   <div id="createNewLiftorGoalOverlay" style="display: none;" class="overlay">
+      <div id="createNewLiftorGoal" class="createNewLiftorGoal">
+         <div id="Gtitle1C">
+            <p id="title1C"></p>
+         </div>
+         <div id="Gline1C">
+            <hr id="line1C">
+         </div>
+         <div id="Gtitle2C">
+            <p id="title2C">Øvelse</p>
+         </div>
+         <div id="Gline2C">
+            <hr id="line2C">
+         </div>
+         <div id="Ginp1C">
+            <select id="inp1C" class="selectLiftOrGoal">
+            </select>
+         </div>
+         <div id="Gtitle3C">
+            <p id="title3C">Antall KG</p>
+         </div>
+         <div id="Gline3C">
+            <hr id="line3C">
+         </div>
+         <div id="Ginp2C">
+            <input id="inp2C" class="inputLiftOrGoal" type="text" onkeypress="return onlyAllowedKeys(event,'create')"
+               placeholder="Eks: 35.25"></input>
+         </div>
+         <div id="Gtitle4C">
+            <p id="title4C">Dato</p>
+         </div>
+         <div id="Gline4C">
+            <hr id="line4C">
+         </div>
+         <div id="Ginp3C">
+            <input id="inp3C" class="inputLiftOrGoal" type="date"></input>
+         </div>
+         <div id="GrespC">
+            <p id="respC"></p>
+         </div>
+         <div id="GcancelC">
+            <button id="cancelC" onclick="disableOverlay('createLiftOrGoal');">Avbryt</button>
+         </div>
+         <div id="GsaveC">
+         </div>
+      </div>
+   </div>
 
-        <div id="e1r1"></div>
-        <div id="e2r1"></div>
-        <div id="e3r1"></div>
-        <div id="e4r1"></div>
+   <div id="editLiftorGoalOverlay" style="display: none;" class="overlay">
+      <div id="editLiftorGoal" class="editLiftorGoal">
+         <div id="Gtitle1E">
+            <p id="title1E"></p>
+         </div>
+         <div id="Gline1E">
+            <hr id="line1E">
+         </div>
+         <div id="Gtitle2E">
+            <p id="title2E">Antall KG</p>
+         </div>
+         <div id="Gline2E">
+            <hr id="line2E">
+         </div>
+         <div id="Ginp1E">
+            <input id="inp1E" class="inputLiftOrGoal" type="text" onkeypress="return onlyAllowedKeys(event,'edit')"
+               placeholder="Eks: 35.25"></input>
+         </div>
+         <div id="Gtitle3E">
+            <p id="title3E">Dato</p>
+         </div>
+         <div id="Gline3E">
+            <hr id="line3E">
+         </div>
+         <div id="Ginp2E">
+            <input id="inp2E" class="inputLiftOrGoal" type="date"></input>
+         </div>
+         <div id="Gtitle4E">
+            <p id="title4E">Farge</p>
+         </div>
+         <div id="Gline4E">
+            <hr id="line4E">
+         </div>
+         <div id="Ginp3E">
+            <select id="inp3E" class="selectLiftOrGoal"></select>
+         </div>
+         <div id="GdeleteE">
+         </div>
+         <div id="GrespE">
+            <p id="respE"></p>
+         </div>
+         <div id="GcancelE">
+            <button id="cancelE" onclick="disableOverlay('editLiftOrGoal');">Avbryt</button>
+         </div>
+         <div id="GsaveE">
+         </div>
+      </div>
+   </div>
 
-        <!-- -->
+   <div id="editDaysOverlay" style="display: none;" class="overlay">
+      <div id="editDays" class="editDays">
+         <div id="Gtitle1EditDays">
+            <p id="title1EditDays">Treningsplan</p>
+         </div>
+         <div id="Gline1EditDays">
+            <hr id="line1EditDays">
+         </div>
+         <div id="Gtitle2EditDays">
+            <p id="title2EditDays">Dine dager</p>
+         </div>
+         <div id="Gline2EditDays">
+            <hr id="line2EditDays">
+         </div>
+         <div id="GlistEditDays">
+            <table id="listEditDays" class="daysTable">
 
-        <!-- content items-->
+               <tr>
+                  <td class="daysTabletd">
+                     <label for="Mandag">Mandag</label>
+                  </td>
+                  <td class="daysTabletd">
+                     <input id="Mandag" class="editDaysCheckbox" type="checkbox"></input>
+                  </td>
+               </tr>
 
-        <div id="c1r1"></div>
-        <div id="c2r1"></div>
+               <tr>
+                  <td class="daysTabletd">
+                     <label for="Tirsdag">Tirsdag</label>
+                  </td>
+                  <td class="daysTabletd">
+                     <input id="Tirsdag" class="editDaysCheckbox" type="checkbox"></input>
+                  </td>
+               </tr>
 
-        <div id="c1r2"></div>
-        <div id="c2r2"></div>
-        <div id="c3r2"></div>
-        <div id="c4r2"></div>
-        <div id="c5r2"></div>
-        <div id="c6r2"></div>
+               <tr>
+                  <td class="daysTabletd">
+                     <label for="Onsdag">Onsdag</label>
+                  </td>
+                  <td class="daysTabletd">
+                     <input id="Onsdag" class="editDaysCheckbox" type="checkbox"></input>
+                  </td>
+               </tr>
 
-        <div id="c1r3"></div>
-        <div id="c2r3"></div>
+               <tr>
+                  <td class="daysTabletd">
+                     <label for="Torsdag">Torsdag</label>
+                  </td>
+                  <td class="daysTabletd">
+                     <input id="Torsdag" class="editDaysCheckbox" type="checkbox"></input>
+                  </td>
+               </tr>
 
-        <!-- -->
+               <tr>
+                  <td class="daysTabletd">
+                     <label for="Fredag">Fredag</label>
+                  </td>
+                  <td class="daysTabletd">
+                     <input id="Fredag" class="editDaysCheckbox" type="checkbox"></input>
+                  </td>
+               </tr>
 
-        <!-- element content items-->
+               <tr>
+                  <td class="daysTabletd">
+                     <label for="Lørdag">Lørdag</label>
+                  </td>
+                  <td class="daysTabletd">
+                     <input id="Lørdag" class="editDaysCheckbox" type="checkbox"></input>
+                  </td>
+               </tr>
 
-        <!-- header -->
-
-        <div id="Glinks">
-            <table id="links">
+               <tr>
+                  <td class="daysTabletd">
+                     <label for="Søndag">Søndag</label>
+                  </td>
+                  <td class="daysTabletd">
+                     <input id="Søndag" class="editDaysCheckbox" type="checkbox"></input>
+                  </td>
+               </tr>
 
             </table>
-        </div>
+         </div>
+         <div id="GrespEditDays">
+            <p id="respEditDays"></p>
+         </div>
+         <div id="GcancelEditDays">
+            <button id="cancelEditDays" onclick="disableOverlay('editDays');">Avbryt</button>
+         </div>
+         <div id="GsaveEditDays">
+            <button id="saveEditDays" onclick="saveTrainingDays();">Lagre</button>
+         </div>
+      </div>
+   </div>
 
-        <!-- -->
+   <section id="page">
 
-        <!-- content/middle -->
+      <div id="c1r1"></div>
+      <div id="c2r1"></div>
+      <div id="c3r1"></div>
+      <div id="c4r1"></div>
 
-        <div id="displaynameG">
-            <p id="displayname">
+      <div id="GbackBtn">
+         <!--<img id="backBtn" onclick="returnToPrevious();" draggable="false" class="icons fadeInLeft animate delaySmall"
+            src="images/backIcon.svg" alt="Tilbake">
+         </img>-->
 
-            </p>
-        </div>
+         <svg id="backBtn" class="backBtnIcon fadeInLeft animate delaySmall pointer" style="stroke:white;" draggable="false"
+            onclick="returnToPrevious();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
+            <g id="Layer_2" data-name="Layer 2">
+               <g id="Layer_1-2" data-name="Layer 1">
+                  <polyline class="cls-1" points="21.25 1.24 2.48 20.02 20.45 37.99" />
+               </g>
+            </g>
+         </svg>
+      </div>
 
-        <div id="infoListG">
-            <table id="infoList">
+      <div id="Gtitle">
+         <p id="title" class="noselect fadeInLeft animate">
+         </p>
+      </div>
 
-            </table>
-        </div>
+      <div id="Ggym">
+         <p id="gym" class="noselect fadeIn animate delaySmall">
+         </p>
+      </div>
 
-        <div id="workoutTodayG">
-            <p id="workoutToday">
+      <div id="Ginfo">
+         <table id="info" class="noselect infoTable fadeIn animate delayMedium">
+            <tr id="infoList">
+            </tr>
+         </table>
+      </div>
 
-            </p>
-        </div>
+      <div id="GuserGrid" class="userGrid noselect">
+         <div id="userGrid">
+         </div>
+      </div>
 
-        <div id="listTitleG">
-            <p id="listTitle">
-
-            </p>
-        </div>
-
-        <div id="listG">
-            <table id="list">
-
-            </table>
-        </div>
-
-        <div id="showTotalLiftG">
-            <p id="showTotalLift">
-
-            </p>
-        </div>
-
-        <div id="buttonsG">
-            <table id="buttons">
-
-            </table>
-        </div>
-
-        <div id="backBtnG">
-            <p id="backBtn">
-                <button class="listButton" onClick='window.history.back();'>Tilbake</button>
-            </p>
-        </div>
-
-        <!-- -->
-
-        <!-- footer -->
-
-        <div id="Gfootermenu">
-            <p id="footermenu">
-
-            </p>
-        </div>
-
-        <!-- -->
-
-    </section>
+   </section>
 
 </body>
 
 <script>
 
-    displayLinks("links");
-    checkColorTheme();
+   function returnToPrevious() {
+      location.href = document.referrer || redirectToFeed();;
+   }
 
-    let info = "";
+   lockBodyPosition();
+   requestAccountDetails();
 
-    let displayname = "";
-    let age = "";
-    let height = "";
-    let weight = "";
-    let program = "";
-    let lifts = "";
-    let goals = "";
-
-    const viewingUser = sessionStorage.getItem("ViewingUser");
-    const listTitle = document.getElementById("listTitle");
-    const list = document.getElementById("list");
-
-    if (viewingUser) {
-        document.title = viewingUser + " sin profil";
-        getUserDetails()
-    } else {
-        window.history.back();
-    }
-
-    async function getUserDetails() {
-
-        if (token && user) {
-
-            const body = { "authToken": token, "userInfo": user, "viewingUser": viewingUser };
-            const url = `/users/details/${viewingUser}`;
-
-            const resp = await callServerAPI(body, url);
-
-            if (resp.info) {
-
-                if (resp.info.username) {
-                    info = resp.info;
-                    displayInformation();
-
-                } else {
-                    alert(resp);
-                    window.history.back();
-
-                }
-
-            } else {
-                alert("Brukeren " + viewingUser + " finnes ikke!");
-                window.history.back();
-            }
-        }
-
-    }
-
-    function changelistContent(content) {
-
-        if (content === "lifts" || content === "goal" || content === "plan") {
-
-            list.innerHTML = "";
-            document.getElementById("showTotalLift").innerHTML = "";
-            sessionStorage.setItem("currentListContent", content);
-
-            switch (content) {
-                case "lifts":
-                    displayLifts();
-                    updateButtons(content);
-                    break;
-                case "goal":
-                    displayGoals();
-                    updateButtons(content);
-                    break;
-                case "plan":
-                    displayProgram();
-                    updateButtons(content);
-                    break;
-            }
-
-        } else {
-            changelistContent("lifts");
-        }
-
-    }
-
-    function updateButtons(current) {
-
-        if (!current) {
-            return;
-        }
-
-        // buttons
-
-        const buttons = document.getElementById("buttons");
-
-        let buttonsString = "";
-
-        buttons.innerHTML = "";
-
-        if (Object.entries(lifts).length > 0 && current === "lifts") {
-            //buttons.innerHTML += `<button class="activeColor" onClick="changelistContent('lifts')">Løft</button>`;
-            buttonsString += `<td><button class="activeColor listButton" onClick="changelistContent('lifts')">Løft</button></td>`;
-        } else if (Object.entries(lifts).length > 0) {
-            //buttons.innerHTML += `<button onClick="changelistContent('lifts')">Løft</button>`;
-            buttonsString += `<td><button class="listButton" onClick="changelistContent('lifts')">Løft</button></td>`;
-        }
-
-        if (Object.entries(goals).length > 0 && current === "goal") {
-            //buttons.innerHTML += `<button class="activeColor" onClick="changelistContent('goal')">Mål</button>`;
-            buttonsString += `<td><button class="activeColor listButton" onClick="changelistContent('goal')">Mål</button></td>`;
-        } else if (Object.entries(goals).length > 0) {
-            //buttons.innerHTML += `<button onClick="changelistContent('goal')">Mål</button>`;
-            buttonsString += `<td><button class="listButton" onClick="changelistContent('goal')">Mål</button></td>`;
-        }
-
-        if (Object.entries(program).length > 0) {
-
-            /*let keys = Object.keys(program);
-
-            for (let i = 0; i < Object.entries(program).length; i++) {
-                if (program[keys[i]].length > 0) {*/
-
-            if (current === "plan") {
-                //buttons.innerHTML += `<button class="activeColor" onClick="changelistContent('plan')">Treningsplan</button>`;
-                buttonsString += `<td><button class="activeColor listButton" onClick="changelistContent('plan')">Treningsplan</button></td>`;
-            } else {
-                //buttons.innerHTML += `<button onClick="changelistContent('plan')">Treningsplan</button>`;
-                buttonsString += `<td><button class="listButton" onClick="changelistContent('plan')">Treningsplan</button></td>`;
-            }
-
-            //}
-            //}
-        }
-
-        buttons.innerHTML = `<tr>${buttonsString}</tr>`;
-
-    }
-
+   setInterval(() => {
+      checkConnection("c6r2");
+   }, 5000);
 
 </script>
 

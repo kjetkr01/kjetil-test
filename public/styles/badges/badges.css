@@ -1,0 +1,317 @@
+/* grid for big badges */
+
+
+
+.bigBadges {
+color: var(--main-textColorBadges);
+display: grid;
+margin-right: 10px;
+border-radius: 18px;
+width: 130px;
+height: 180px;
+/*background-color: red;*/
+grid-template-areas:
+
+"c1b c1b"
+"Gprogression Gprogression"
+"c2b c2b"
+"GkgLeft GkgLeft"
+"c3b c3b"
+"Gexercise Gexercise"
+"c4b c4b"
+"Gkg Gkg"
+"c5b c5b"
+"Gmsg Gmsg"
+"c6b c6b"
+;
+grid-template-rows: /* nedover */
+
+10px /* c1b */
+
+30px /* Gprogression */
+
+5px /* c2b */
+
+20px /* GkgLeft */
+
+25px /* c3b */
+
+20px /* Gexercise */
+
+5px /* c4b */
+
+20px /* Gkg */
+
+5px /* c5b */
+
+20px /* Gmsg */
+
+20px /* c6b */
+
+;
+
+grid-template-columns: /* bortover */
+65px 65px;
+}
+
+/* elements */
+
+
+.bigBadges > #c1b {
+grid-area: c1b;
+}
+
+.bigBadges > #Gprogression {
+grid-area: Gprogression;
+}
+
+.bigBadges > #c2b {
+grid-area: c2b;
+}
+
+.bigBadges > #GkgLeft {
+grid-area: GkgLeft;
+}
+
+.bigBadges > #c3b {
+grid-area: c3b;
+}
+
+.bigBadges > #Gexercise {
+grid-area: Gexercise;
+}
+
+.bigBadges > #c4b {
+grid-area: c4b;
+}
+
+.bigBadges > #Gkg {
+grid-area: Gkg;
+}
+
+.bigBadges > #c5b {
+grid-area: c5b;
+}
+
+.bigBadges > #Gmsg {
+grid-area: Gmsg;
+}
+
+.bigBadges > #c6b {
+grid-area: c6b;
+}
+
+
+/* end of grid for big badges */
+
+
+
+
+
+/* grid for small badges */
+
+
+
+.smallBadges {
+color: var(--main-textColorBadges);
+display: grid;
+margin-right: 10px;
+border-radius: 18px;
+width: 130px;
+height: 100px;
+/*background-color: red;*/
+grid-template-areas:
+
+"c1b c1b"
+"Gexercise Gexercise"
+"c2b c2b"
+"Gkg Gkg"
+"c3b c3b"
+"Gmsg Gmsg"
+"c4b c4b"
+;
+grid-template-rows: /* nedover */
+
+20px /* c1b */
+
+20px /* Gexercise */
+
+5px /* c2b */
+
+20px /* Gkg */
+
+5px /* c3b */
+
+20px /* Gmsg */
+
+20px /* c4r2 */
+
+;
+
+grid-template-columns: /* bortover */
+65px 65px;
+}
+
+/* elements */
+
+
+.smallBadges > #c1b {
+grid-area: c1b;
+}
+
+.smallBadges > #Gexercise {
+grid-area: Gexercise;
+}
+
+.smallBadges > #c2b {
+grid-area: c2b;
+}
+
+.smallBadges > #Gkg {
+grid-area: Gkg;
+}
+
+.smallBadges > #c3b {
+grid-area: c3b;
+}
+
+.smallBadges > #Gmsg {
+grid-area: Gmsg;
+}
+
+.smallBadges > #c4b {
+grid-area: c4b;
+}
+
+
+/* end of grid for small badges */
+
+
+
+
+/* grid for small badges (trainingsplit) */
+
+
+
+.smallBadgesTrainingsplit {
+color: var(--main-textColorBadges);
+display: grid;
+margin-right: 10px;
+border-radius: 18px;
+width: 130px;
+height: 100px;
+/*background-color: red;*/
+grid-template-areas:
+
+"c1b c1b"
+"Gday Gday"
+"c2b c2b"
+"GtrainingsplitTxt GtrainingsplitTxt"
+"c3r2 c3r2"
+;
+grid-template-rows: /* nedover */
+
+20px /* c1b */
+
+20px /* Gday */
+
+5px /* c2b */
+
+45px /* GtrainingsplitTxt */
+
+20px /* c3r2 */
+
+;
+
+grid-template-columns: /* bortover */
+65px 65px;
+}
+
+/* elements */
+
+
+.smallBadgesTrainingsplit > #c1b {
+grid-area: c1b;
+}
+
+.smallBadgesTrainingsplit > #Gday {
+grid-area: Gday;
+}
+
+.smallBadgesTrainingsplit > #c2b {
+grid-area: c2b;
+}
+
+.smallBadgesTrainingsplit > #GtrainingsplitTxt {
+grid-area: GtrainingsplitTxt;
+}
+
+.smallBadgesTrainingsplit > #c4b {
+grid-area: c3b;
+}
+
+
+/* end of grid for small badges (trainingsplit) */
+
+
+
+
+/* elements */
+
+
+#Gprogression > #progression {
+margin-right: 10px;
+margin-left: 10px;
+}
+
+#GkgLeft > #kgLeft {
+
+}
+
+#progression, #kgLeft {
+font-size: 13px;
+}
+
+#Gexercise > #exercise {
+font-size: 18px;
+}
+
+#Gday > #day {
+font-size: 18px;
+}
+
+#Gkg > #kg {
+font-size: 16px;
+}
+
+#kg, #exercise, #day {
+font-family: var(--main-font-Family-Verdana);
+}
+
+#progression, #kgLeft, #exercise, #kg, #day {
+font-weight: bold;
+}
+
+#Gmsg > #msg {
+font-size: 14px;
+}
+
+#GtrainingsplitTxt > #trainingsplitTxt {
+font-size: 16px;
+margin-right: 10px;
+margin-left: 10px;
+overflow: hidden;
+white-space:nowrap;
+text-overflow: ellipsis;
+}
+
+#kgLeft, #exercise, #kg, #msg, #day {
+margin-right: 10px;
+margin-left: 10px;
+overflow: hidden;
+white-space:nowrap;
+text-overflow: ellipsis;
+}
+
+
+/* end of elements */

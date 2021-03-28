@@ -12,8 +12,8 @@
 
    <meta name="mobile-web-app-capable" content="yes">
    <meta name="apple-mobile-web-app-capable" content="yes">
-   <meta name="application-name" content="Treningsstatistikk">
-   <meta name="apple-mobile-web-app-title" content="Treningsstatistikk">
+   <meta name="application-name" content="Treningsstatistikken">
+   <meta name="apple-mobile-web-app-title" content="Treningsstatistikken">
    <meta name="msapplication-starturl" content="/">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0">
 
@@ -22,117 +22,247 @@
 
    <!-- -->
 
-   <link rel="stylesheet" href="styles/global.css">
-   <link rel="stylesheet" href="styles/index.css">
+   <!-- status bar color -->
 
+   <meta id="themeColor" name="theme-color" content="#357F9B">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+   <!-- -->
+
+   <link rel="stylesheet" href="styles/global/globalVariables.css">
+   <link rel="stylesheet" href="styles/global/globalClasses.css">
+   <link rel="stylesheet" href="styles/global/global.css">
+
+   <!-- themeStyleCSS -->
+   <!--<link id="themeStyleCSS-default" rel="stylesheet" href="styles/themes/default.css">
+   <link id="themeStyleCSS-blue" rel="stylesheet" href="styles/themes/blue.css">-->
+   <!-- themeStyleCSS -->
+   <link id="themeStyleCSS-blue" rel="stylesheet" href="styles/themes/themes.css">
+
+   <link rel="stylesheet" href="styles/themes/globalThemeValues.css">
+
+   <link rel="stylesheet" href="styles/index/desktop.css">
+   <link rel="stylesheet" href="styles/index/mobile.css">
+   <link rel="stylesheet" href="styles/index/common.css">
+
+   <link rel="stylesheet" href="styles/account/overlay.css">
+
+   <link rel="stylesheet" href="styles/badges/badges.css">
+   <link rel="stylesheet" href="styles/badges/badgeColors.css">
+   <!--<link rel="stylesheet" href="styles/index/progressbar.css">-->
+
+   <script src="scripts/appInfo.js" type="text/javascript"></script>
    <script src="scripts/global.js" type="text/javascript"></script>
-   <script src="scripts/validateInfo.js" type="text/javascript"></script>
-   <script src="scripts/script.js" type="text/javascript"></script>
+   <script src="scripts/index/script.js" type="text/javascript"></script>
+   <script src="scripts/index/index.js" type="text/javascript"></script>
+   <script src="scripts/badges/ownerBadges.js" type="text/javascript"></script>
+
+   <script src="scripts/account/editInformation.js" type="text/javascript"></script>
 
 </head>
 
-
 <body>
+
+   <script>changeColorTheme();</script>
+
+   <div id="createNewLiftorGoalOverlay" style="display: none;" class="overlay">
+      <div id="createNewLiftorGoal" class="createNewLiftorGoal">
+         <div id="Gtitle1C">
+            <p id="title1C"></p>
+         </div>
+         <div id="Gline1C">
+            <hr id="line1C">
+         </div>
+         <div id="Gtitle2C">
+            <p id="title2C">Øvelse</p>
+         </div>
+         <div id="Gline2C">
+            <hr id="line2C">
+         </div>
+         <div id="Ginp1C">
+            <select id="inp1C" class="selectLiftOrGoal">
+            </select>
+         </div>
+         <div id="Gtitle3C">
+            <p id="title3C">Antall KG</p>
+         </div>
+         <div id="Gline3C">
+            <hr id="line3C">
+         </div>
+         <div id="Ginp2C">
+            <input id="inp2C" class="inputLiftOrGoal" type="text" onkeypress="return onlyAllowedKeys(event,'create')"
+               placeholder="Eks: 35.25"></input>
+         </div>
+         <div id="Gtitle4C">
+            <p id="title4C">Dato</p>
+         </div>
+         <div id="Gline4C">
+            <hr id="line4C">
+         </div>
+         <div id="Ginp3C">
+            <input id="inp3C" class="inputLiftOrGoal" type="date"></input>
+         </div>
+         <div id="GrespC">
+            <p id="respC"></p>
+         </div>
+         <div id="GcancelC">
+            <button id="cancelC" onclick="disableOverlay('createLiftOrGoal');">Avbryt</button>
+         </div>
+         <div id="GsaveC">
+         </div>
+      </div>
+   </div>
+
+   <div id="editLiftorGoalOverlay" style="display: none;" class="overlay">
+      <div id="editLiftorGoal" class="editLiftorGoal">
+         <div id="Gtitle1E">
+            <p id="title1E"></p>
+         </div>
+         <div id="Gline1E">
+            <hr id="line1E">
+         </div>
+         <div id="Gtitle2E">
+            <p id="title2E">Antall KG</p>
+         </div>
+         <div id="Gline2E">
+            <hr id="line2E">
+         </div>
+         <div id="Ginp1E">
+            <input id="inp1E" class="inputLiftOrGoal" type="text" onkeypress="return onlyAllowedKeys(event,'edit')"
+               placeholder="Eks: 35.25"></input>
+         </div>
+         <div id="Gtitle3E">
+            <p id="title3E">Dato</p>
+         </div>
+         <div id="Gline3E">
+            <hr id="line3E">
+         </div>
+         <div id="Ginp2E">
+            <input id="inp2E" class="inputLiftOrGoal" type="date"></input>
+         </div>
+         <div id="Gtitle4E">
+            <p id="title4E">Farge</p>
+         </div>
+         <div id="Gline4E">
+            <hr id="line4E">
+         </div>
+         <div id="Ginp3E">
+            <select id="inp3E" onchange="changeOverlayBorderColor();" class="selectLiftOrGoal"></select>
+         </div>
+         <div id="GdeleteE">
+         </div>
+         <div id="GrespE">
+            <p id="respE"></p>
+         </div>
+         <div id="GcancelE">
+            <button id="cancelE" onclick="disableOverlay('editLiftOrGoal');">Avbryt</button>
+         </div>
+         <div id="GsaveE">
+         </div>
+      </div>
+   </div>
 
    <section id="page">
 
-      <!-- spacing items-->
-
-      <div id="e1r1"></div>
-      <div id="e2r1"></div>
-      <div id="e3r1"></div>
-      <div id="e4r1"></div>
-
-      <div id="e1r2"></div>
-      <div id="e2r2"></div>
-      <div id="e3r2"></div>
-      <div id="e4r2"></div>
-
-      <!-- -->
-
-      <!-- content items-->
-
       <div id="c1r1"></div>
       <div id="c2r1"></div>
+      <div id="c3r1"></div>
+      <div id="c4r1"></div>
+      <div id="c5r1"></div>
+      <div id="c6r1"></div>
 
       <div id="c1r2"></div>
       <div id="c2r2"></div>
       <div id="c3r2"></div>
       <div id="c4r2"></div>
       <div id="c5r2"></div>
+      <div id="c6r2"></div>
 
-      <div id="c1r3"></div>
-      <div id="c2r3"></div>
+      <div id="Gtitle">
+         <p id="title" class="noselect">
+         </p>
+      </div>
 
-      <!-- -->
+      <div id="Gname">
+         <p id="name" class="noselect">
+         </p>
+      </div>
 
-      <!-- element content items-->
+      <div id="GsmallTitle">
+         <p id="smallTitle" class="noselect fadeIn animate delaySmall">
+         </p>
+      </div>
 
-      <!-- header -->
-
-      <div id="Glinks">
-         <table id="links">
-
+      <div id="Gbadges" style="min-height: 110px;">
+         <table id="badges" class="noselect">
+            <tr id="badgesTableRow">
+            </tr>
          </table>
       </div>
 
-      <!-- -->
-
-      <!-- content/middle -->
-
-      <div id="usermsg1G">
-         <p id="usermsg1">
-
+      <div id="Gtoday">
+         <p id="today" class="noselect fadeIn animate delaySmall">
          </p>
       </div>
 
-      <div id="usermsg2G">
-         <p id="usermsg2">
+      <div id="Gline">
+         <hr id="line" class="noselect">
+      </div>
 
+      <div id="GpeopleWorkoutTxt">
+         <p id="peopleWorkoutTxt" class="noselect fadeIn animate delaySmall">
          </p>
       </div>
 
-      <div id="usermsg3G">
-         <p id="usermsg3">
-
+      <div id="GpeopleWorkoutList">
+         <p id="peopleWorkoutList" class="noselect">
          </p>
       </div>
 
-      <div id="boardTitleG">
-         <table id="boardTitle">
-
-         </table>
+      <div id="Gfeed" class="noselect pointer">
+         <svg id="feed" class="icons iconsFooterActiveColor" draggable="false" onclick="redirectToFeed();"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.5 33.4">
+            <g id="Layer_2" data-name="Layer 2">
+               <g id="Layer_1-2" data-name="Layer 1">
+                  <rect class="cls-1" x="1.75" y="1.75" width="30" height="30" rx="6" />
+                  <path class="cls-1"
+                     d="M21.47,9.49c0,.06-.23.11-.5.11H9.47c-.28,0-.5,0-.5-.11s.22-.11.5-.11H21C21.24,9.38,21.47,9.43,21.47,9.49Z" />
+                  <path class="cls-1"
+                     d="M18.47,15.45c0,.06-.23.11-.5.11H9.47c-.28,0-.5-.05-.5-.11s.22-.12.5-.12H18C18.24,15.33,18.47,15.39,18.47,15.45Z" />
+               </g>
+            </g>
+         </svg>
       </div>
 
-      <div id="boardG">
-         <table id="board">
-
-         </table>
+      <div id="Gleaderboards" class="noselect pointer">
+         <svg id="leaderboards" class="icons iconsFooterDefaultColor" draggable="false"
+            onclick="redirectToLeaderboards();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.5 33.4">
+            <g id="Layer_2" data-name="Layer 2">
+               <g id="Layer_1-2" data-name="Layer 1">
+                  <rect class="cls-1" x="1.75" y="11.7" width="9.71" height="19.9" rx="3" />
+                  <rect class="cls-1" x="11.9" y="1.75" width="9.71" height="29.85" rx="3" />
+                  <rect class="cls-1" x="22.04" y="15.02" width="9.71" height="16.58" rx="3" />
+                  <line class="cls-2" x1="4.84" y1="31.9" x2="28.66" y2="31.9" />
+                  <line class="cls-1" x1="21.6" y1="15.02" x2="27.38" y2="15.02" />
+                  <line class="cls-1" x1="6.38" y1="11.7" x2="12.15" y2="11.7" />
+               </g>
+            </g>
+         </svg>
       </div>
 
-      <div id="gymtimeG">
-         <p id="gymtime">
-
-         </p>
+      <div id="Gaccount" class="noselect pointer">
+         <svg id="account" class="icons iconsFooterDefaultColor" draggable="false" onclick="redirectToAccount();"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.5 33.5">
+            <g id="Layer_2" data-name="Layer 2">
+               <g id="Layer_1-2" data-name="Layer 1">
+                  <circle class="icons iconsFooterDefaultColor" cx="16.75" cy="16.75" r="15" />
+                  <circle class="icons iconsFooterDefaultColor" cx="16.75" cy="10.95" r="4.46" />
+                  <path class="icons"
+                     d="M7.83,23.25a3.05,3.05,0,0,1,.56-1.48,3.52,3.52,0,0,1,1-.86,12.08,12.08,0,0,1,2.12-1.16,16.64,16.64,0,0,1,4.89-1.07c.62,0,7.27-.18,8.93,3.43a4,4,0,0,1,.33,1.14,10.75,10.75,0,0,1-3.22,3.14A11.54,11.54,0,0,1,16.75,28a10.78,10.78,0,0,1-3.37-.54,10.64,10.64,0,0,1-1.85-.82,11.49,11.49,0,0,1-1.65-1.18A12.67,12.67,0,0,1,7.83,23.25Z" />
+               </g>
+            </g>
+         </svg>
       </div>
-
-      <div id="gymtimesmallG">
-         <p id="gymtimesmall">
-
-         </p>
-      </div>
-
-      <!-- -->
-
-      <!-- footer -->
-
-      <div id="Gfootermenu">
-         <p id="footermenu">
-
-         </p>
-      </div>
-
-      <!-- -->
 
    </section>
 
@@ -140,155 +270,40 @@
 
 <script>
 
-   displayLinks("links");
-   checkColorTheme();
+   lockBodyPosition();
 
-   let savedDay = new Date().getDay();
+   function intervals() {
 
-   setInterval(() => {
+      let savedDay = new Date().getDay();
 
-      const currentDay = new Date().getDay()
-      if (savedDay !== currentDay) {
-         savedDay = currentDay;
-         checkTrainingSplit();
-         checkWhoIsWorkingOutToday();
-      }
+      setInterval(() => {
 
-   }, 1000);
-
-   setInterval(() => {
-      updatePartOfDayMessage();
-   }, 60000);
-
-   let savedMin = "";
-   isGymOpenUpdater();
-   function isGymOpenUpdater() {
-
-      if (showGymCloseTime === true) {
-
-         if (savedMin === new Date().getMinutes()) {
-
-         } else {
-            savedMin = new Date().getMinutes();
-
-            const gymopen = isGymOpen();
-            if (gymopen) {
-               document.getElementById("gymtime").innerHTML = gymopen.message;
-               document.getElementById("gymtimesmall").innerHTML = gymopen.timeLeft;
-            }
+         const currentDay = new Date().getDay()
+         if (savedDay !== currentDay) {
+            savedDay = currentDay;
+            checkWhoIsWorkingOutToday();
          }
 
-         setTimeout(isGymOpenUpdater, 1000);
-      }
+      }, 15000);
+
+      setInterval(() => {
+         displayPartOfDayMsg();
+      }, 60000);
+
+      setInterval(() => {
+         checkConnection("c6r2");
+      }, 5000);
 
    }
 
-   updatePartOfDayMessage();
-   function updatePartOfDayMessage() {
+   intervals();
 
-      const partofdaymsg = partOfDayMessage(userDisplayname);
-      if (partofdaymsg) {
-         document.getElementById("usermsg1").innerHTML = partofdaymsg
-      }
-   }
-
-   checkTrainingSplit();
-   async function checkTrainingSplit() {
-
-      document.getElementById("usermsg2").innerHTML = loadingText;
-
-      const resp = await whatToTrainToday();
-
-      if (resp.length > 0) {
-         document.getElementById("usermsg2").innerHTML = resp;
-      } else {
-         document.getElementById("usermsg2").innerHTML = errorLoadingText;
-      }
-
-   }
-
-   document.getElementById("boardTitleG").innerHTML += `<hr>`;
+   displayPartOfDayMsg();
    checkWhoIsWorkingOutToday();
-   async function checkWhoIsWorkingOutToday() {
+   requestAccountDetails();
+   //displayBadges();
 
-      const board = document.getElementById("board");
-      const boardTitle = document.getElementById("boardTitle");
-      const usermsg3 = document.getElementById("usermsg3");
-
-      usermsg3.innerHTML = loadingText;
-
-      const resp = await whoIsWorkingOutToday();
-
-      if (Object.entries(resp).length > 0) {
-
-         if (Object.entries(resp).length === 1) {
-            usermsg3.innerHTML = `I dag trener ${Object.entries(resp).length} person!`;
-         } else {
-            usermsg3.innerHTML = `I dag trener ${Object.entries(resp).length} personer!`;
-         }
-
-         board.innerHTML = "";
-         boardTitle.innerHTML = "";
-
-         boardTitle.innerHTML = `
-        <tr>
-        <th>Navn</th>
-        <th>Trener</th>
-        </tr>
-        `;
-
-         for (let i = 0; i < Object.entries(resp).length; i++) {
-            /* nytt "versjon" */
-            let splitFullName = resp[i].userFullName.split(" ");
-            let shortenedFullName = "";
-
-            shortenedFullName = splitFullName[0] + " ";
-            for (let j = 1; j < splitFullName.length; j++) {
-               shortenedFullName += `${splitFullName[j][0]}.`;
-            }
-
-            /*board.innerHTML += `
-            <div style="padding-bottom:15px;">
-            <tr>
-            <td id="tdUsernameAndWorkout" onClick="viewUser('${resp[i].username}')">${shortenedFullName}</td>
-            <td id="tdUsernameAndWorkout" onClick="viewUser('${resp[i].username}')">${resp[i].todaysWorkout}</td>
-            </tr>
-            </div>
-            `;*/
-
-            board.innerHTML += `
-            <tr>
-            <td><button id="usernameAndWorkout" onClick="viewUser('${resp[i].username}')">${shortenedFullName}</button></td>
-            <td><button id="usernameAndWorkout" onClick="viewUser('${resp[i].username}')">${resp[i].todaysWorkout}</button></td>
-            </tr>
-            `;
-
-            /* */
-
-            /* gammel versjon */
-            /*
-                        board.innerHTML += `
-                        <tr>
-                        <td>${resp[i].userFullName}</td>
-                        <td>${resp[i].todaysWorkout}</td>
-                        </tr>`;
-                        */
-            /* */
-         }
-      } else {
-         usermsg3.innerHTML = `I dag er det ingen som trener!`;
-      }
-
-   }
-
-   function viewUser(viewUser) {
-
-      if (viewUser) {
-         sessionStorage.setItem("ViewingUser", viewUser);
-         redirectToUser();
-      }
-
-   }
+</script>
 
 </script>
 

@@ -1,0 +1,107 @@
+/* grid for leaderboard (board) */
+
+
+
+.leaderboard {
+display: grid;
+height: auto;
+grid-template-areas:
+
+"Gplacement Gusername Gusername"
+"Gplacement c1b c1b"
+"Gplacement Gweight Gweight"
+;
+grid-template-rows: /* nedover */
+
+auto /* row1 */
+
+0px /* row2 */
+
+auto /* row3 */
+
+;
+
+grid-template-columns: /* bortover */
+auto 1fr 0px;
+}
+
+/* elements */
+
+.leaderboard > #Gplacement {
+grid-area: Gplacement;
+min-width: 40px;
+min-height: 40px;
+}
+
+.leaderboard > #Gusername {
+grid-area: Gusername;
+}
+
+.leaderboard > #Gweight {
+grid-area: Gweight;
+}
+
+
+/* end of grid for leaderboard (board) */
+
+
+#Gplacement>#placement{
+font-size: 22px;
+color: var(--main-textColorDark);
+margin: auto;
+}
+
+#Gusername>#username{
+
+}
+
+#Gweight>#weight{
+font-size: 15px;
+color: #939393;
+}
+
+#username, #weight {
+margin-right: 30px;
+}
+
+#placement, #weight {
+font-family: var(--main-font-Family-Verdana);
+font-weight: bold;
+}
+
+
+/* elements */
+
+
+#Gprogression > #progression {
+margin-right: 10px;
+margin-left: 10px;
+color: var(--main-textColorLight);
+}
+
+
+/* end of elements */
+
+
+.peopleLeaderboardsListName {
+color: var(--main-textColorDark);
+}
+
+.accountOwner {
+color: var(--main-accountOwnerColor);
+}
+
+.peopleLeaderboardsListName, .accountOwner {
+font-size: 16px;
+font-weight: bold;
+font-family: var(--main-font-Family-Verdana);
+background-color: transparent;
+border: transparent;
+}
+
+.boardLine {
+margin-top: 14px;
+margin-bottom: 12px;
+
+opacity: 40%;
+}

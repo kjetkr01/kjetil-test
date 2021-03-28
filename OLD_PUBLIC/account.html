@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Min konto</title>
+
+   <meta charset="utf-8" />
+
+   <!-- manifest -->
+
+   <link rel="manifest" href="manifest.json">
+
+   <meta name="mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="application-name" content="Treningsstatistikk">
+   <meta name="apple-mobile-web-app-title" content="Treningsstatistikk">
+   <meta name="msapplication-starturl" content="/">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0">
+
+   <link rel="icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+   <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+
+   <!-- -->
+
+   <link rel="stylesheet" href="styles/global.css">
+   <link rel="stylesheet" href="styles/account.css">
+
+   <script src="scripts/global.js" type="text/javascript"></script>
+   <script src="scripts/validateInfo.js" type="text/javascript"></script>
+   <script src="scripts/script.js" type="text/javascript"></script>
+
+   <script src="scripts/displayFunctions/displayInformation.js" type="text/javascript"></script>
+   <script src="scripts/displayFunctions/displayLifts.js" type="text/javascript"></script>
+   <script src="scripts/displayFunctions/displayGoals.js" type="text/javascript"></script>
+   <script src="scripts/displayFunctions/displayProgram.js" type="text/javascript"></script>
+
+   <script src="scripts/displayFunctions/displaySettings.js" type="text/javascript"></script>
+   <script src="scripts/displayFunctions/displayRequests.js" type="text/javascript"></script>
+   <script src="scripts/displayFunctions/displayApiKey.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+   <section id="page">
+
+      <!-- spacing items-->
+
+      <div id="e1r1"></div>
+      <div id="e2r1"></div>
+      <div id="e3r1"></div>
+      <div id="e4r1"></div>
+
+      <!-- -->
+
+      <!-- content items-->
+
+      <div id="c1r1"></div>
+      <div id="c2r1"></div>
+
+      <div id="c1r2"></div>
+      <div id="c2r2"></div>
+      <div id="c3r2"></div>
+      <div id="c4r2"></div>
+      <div id="c5r2"></div>
+      <div id="c6r2"></div>
+
+      <div id="c1r3"></div>
+      <div id="c2r3"></div>
+
+      <!-- -->
+
+      <!-- element content items-->
+
+      <!-- header -->
+
+      <div id="Glinks">
+         <table id="links">
+
+         </table>
+      </div>
+
+      <!-- -->
+
+      <!-- content/middle -->
+
+      <div id="displaynameG">
+         <p id="displayname">
+
+         </p>
+      </div>
+
+      <div id="infoListG">
+         <table id="infoList">
+
+         </table>
+      </div>
+
+      <div id="listTitleG">
+         <p id="listTitle">
+
+         </p>
+      </div>
+
+      <div id="listG">
+         <table id="list">
+
+         </table>
+      </div>
+
+      <div id="showTotalLiftG">
+         <p id="showTotalLift">
+
+         </p>
+      </div>
+
+      <div id="buttonsG">
+         <table id="buttons">
+
+         </table>
+      </div>
+
+      <!-- -->
+
+      <!-- footer -->
+
+      <div id="Gfootermenu">
+         <p id="footermenu">
+
+         </p>
+      </div>
+
+      <!-- -->
+
+   </section>
+
+</body>
+
+<script>
+
+   displayLinks("links");
+   checkColorTheme();
+
+   let info = "";
+   let settings = "";
+
+   let displayname = "";
+   let age = "";
+   let height = "";
+   let weight = "";
+   let program = "";
+   let lifts = "";
+   let goals = "";
+
+   let myUsername = "";
+
+   //const infoDiv = document.getElementById("infoDiv");
+   const listTitle = document.getElementById("listTitle");
+   const list = document.getElementById("list");
+
+   if (user) {
+      try {
+         myUsername = JSON.parse(user);
+         myUsername = myUsername.username;
+         getUserDetails();
+      } catch (err) {
+         alert(err);
+         redirectToHome();
+      }
+   } else {
+      redirectToHome();
+   }
+
+   async function getUserDetails() {
+
+      if (token && user) {
+
+         isUpdatingUserObject = true;
+
+         const body = { "authToken": token, "userInfo": user, "viewingUser": myUsername };
+         const url = `/users/details/${myUsername}`;
+
+         const resp = await callServerAPI(body, url);
+
+         if (resp.info && resp.updatedUserObject) {
+
+            if (localStorage.getItem("user")) {
+               localStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
+            } else {
+               sessionStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
+            }
+
+            checkColorTheme();
+
+            const today = new Date();
+            const updatedTxt = today.toLocaleDateString() || true;
+            sessionStorage.setItem("updated", updatedTxt);
+
+            preferredColorTheme = resp.updatedUserObject.preferredColorTheme;
+            isUpdatingUserObject = false;
+
+            info = resp.info;
+            displayInformation();
+         } else {
+            alert("En feil har oppstått");
+            redirectToHome();
+         }
+
+      }
+
+   }
+
+   function changelistContent(content) {
+
+      if (content === "lifts" || content === "goal" || content === "plan" || content === "settings" || content === "requests" || content === "apikey") {
+
+         list.innerHTML = "";
+         document.getElementById("showTotalLift").innerHTML = "";
+         sessionStorage.setItem("currentListContent", content);
+
+         switch (content) {
+            case "lifts":
+               displayLifts();
+               updateButtons(content);
+               break;
+            case "goal":
+               displayGoals();
+               updateButtons(content);
+               break;
+            case "plan":
+               displayProgram();
+               updateButtons(content);
+               break;
+            case "settings":
+               displaySettings();
+               updateButtons(content);
+               break;
+            case "requests":
+               displayRequests();
+               updateButtons(content);
+               break;
+            case "apikey":
+               displayApiKey();
+               updateButtons(content);
+               break;
+         }
+
+      } else {
+         changelistContent("lifts");
+      }
+
+   }
+
+   async function updateButtons(current) {
+
+      if (!current) {
+         return;
+      }
+
+      // buttons
+
+      const buttons = document.getElementById("buttons");
+
+      let buttonsString = "";
+
+      buttons.innerHTML = "";
+
+      if (current === "lifts") {
+         buttonsString += `<td><button class="activeColor listButton" onClick="changelistContent('lifts')">Løft</button></td>`;
+      } else {
+         buttonsString += `<td><button class="listButton" onClick="changelistContent('lifts')">Løft</button></td>`;
+      }
+
+      if (current === "goal") {
+         buttonsString += `<td><button class="activeColor listButton" onClick="changelistContent('goal')">Mål</button></td>`;
+      } else {
+         buttonsString += `<td><button class="listButton" onClick="changelistContent('goal')">Mål</button></td>`;
+      }
+
+      if (current === "plan") {
+         buttonsString += `<td><button class="activeColor listButton" onClick="changelistContent('plan')">Treningsplan</button></td>`;
+      } else {
+         buttonsString += `<td><button class="listButton" onClick="changelistContent('plan')">Treningsplan</button></td>`;
+      }
+
+      buttons.innerHTML = `<tr>${buttonsString}</tr>`;
+
+
+      //buttonsString += `<td><button class="listButton" onClick="logOut();">Logg ut</button></td>`;
+
+      if (info.apikey) {
+
+         let btnTxt = "API";
+
+         if (info.isadmin === true && info.isadmin) {
+
+            if (current === "apikey") {
+               buttonsString = `<td><button class="activeColor listButton" onClick="changelistContent('apikey')">${btnTxt}</button></td><td id="showPendingUsersBtn"><button class="listButton" onClick="changelistContent('requests')">Forespørsler</button></td>`;
+            } else {
+               buttonsString = `<td><button class="listButton" onClick="changelistContent('apikey')">${btnTxt}</button></td><td id="showPendingUsersBtn"><button class="listButton" onClick="changelistContent('requests')">Forespørsler</button></td>`;
+            }
+
+            if (current === "settings") {
+               buttonsString += `<td><button class="activeColor listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
+            } else {
+               buttonsString += `<td><button class="listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
+            }
+
+            buttons.innerHTML += `<tr>${buttonsString}</tr>`;
+
+         } else {
+            if (current === "apikey") {
+               buttonsString = `<td><button class="activeColor listButton" onClick="changelistContent('apikey')">${btnTxt}</button></td>`;
+            } else {
+               buttonsString = `<td><button class="listButton" onClick="changelistContent('apikey')">${btnTxt}</button></td>`;
+            }
+
+            if (current === "settings") {
+               buttonsString += `<td><button class="activeColor listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
+            } else {
+               buttonsString += `<td><button class="listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
+            }
+
+            buttons.innerHTML += `<tr>${buttonsString}</tr>`;
+            buttonsString = `<td></td><td><button class="listButton" onClick='window.history.back();'>Tilbake</button></td>`;
+            buttonsString += `<td><button class="listButton" onClick="logOut();">Logg ut</button></td>`;
+            buttons.innerHTML += `<tr>${buttonsString}</tr>`;
+            return;
+         }
+
+      }
+
+      if (info.isadmin === true && info.isadmin) {
+
+         let btnTxt = "Forespørsler";
+
+         if (token && user) {
+
+            //buttons.innerHTML += `<tr><td id="showPendingUsersBtn">${loadingText}</td> <td><button class="listButton" onClick='window.history.back();'>Tilbake</button></td></tr>`;
+
+            if (document.getElementById("showPendingUsersBtn")) {
+
+               /*buttonsString = `<td><button class="listButton" onClick="logOut();">Logg ut</button></td>`;
+               buttonsString += `<td><button class="listButton" onClick='window.history.back();'>Tilbake</button></td>`;*/
+
+               buttonsString = `<td></td><td><button class="listButton" onClick='window.history.back();'>Tilbake</button></td>`;
+               buttonsString += `<td><button class="listButton" onClick="logOut();">Logg ut</button></td>`;
+               buttons.innerHTML += `<tr>${buttonsString}</tr>`;
+
+               const showPendingUsersBtn = document.getElementById("showPendingUsersBtn");
+
+               const body = { "authToken": token, "userInfo": user, "onlyNumbers": true };
+               const url = `/users/list/pending`;
+
+               const resp = await callServerAPI(body, url);
+
+               if (resp) {
+                  if (resp[0].id) {
+                     btnTxt = `Forespørsler (${resp.length})`;
+                  }
+               }
+
+               if (current === "requests") {
+                  showPendingUsersBtn.innerHTML = `<button class="activeColor listButton" onClick="changelistContent('requests')">${btnTxt}</button>`;
+               } else {
+                  showPendingUsersBtn.innerHTML = `<button class="listButton" onClick="changelistContent('requests')">${btnTxt}</button>`;
+               }
+
+            }
+
+         }
+
+      } else {
+
+         if (current === "settings") {
+            buttonsString = `<td><button class="activeColor listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
+         } else {
+            buttonsString = `<td><button class="listButton" onClick="changelistContent('settings')">Innstillinger</button></td>`;
+         }
+
+         buttonsString += `<td><button class="listButton" onClick='window.history.back();'>Tilbake</button></td>`;
+         buttonsString += `<td><button class="listButton" onClick="logOut();">Logg ut</button></td>`;
+         buttons.innerHTML += `<tr>${buttonsString}</tr>`;
+      }
+
+
+
+   }
+
+   function logOut() {
+      localStorage.clear();
+      sessionStorage.clear();
+      location.reload();
+   }
+
+</script>
+
+</html>

@@ -1,0 +1,29 @@
+/* elements for mobile & desktop */
+
+
+#title, #gym, #info {
+color:var(--main-headerTextColor);
+font-weight: bold;
+font-family: var(--main-font-Family-Verdana);
+}
+
+#gym, #info{
+opacity: 85%;
+}
+
+#c3r1 {
+margin-top: 10px;
+}
+
+.infoTable {
+text-align: center;
+width: 100%;
+margin: 0 auto;
+}
+
+#c1r2, #c3r1 {
+border-top: 1px #75757585 solid;
+}
+
+
+/* end of mobile & desktop */

@@ -2,151 +2,187 @@
 <html>
 
 <head>
-    <title>Logg inn</title>
+   <title>Logg inn</title>
 
-    <meta charset="utf-8" />
+   <meta charset="utf-8" />
 
-    <!-- manifest -->
+   <!-- manifest -->
 
-    <link rel="manifest" href="manifest.json">
+   <link rel="manifest" href="manifest.json">
 
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Treningsstatistikk">
-    <meta name="apple-mobile-web-app-title" content="Treningsstatistikk">
-    <meta name="msapplication-starturl" content="/">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0">
+   <meta name="mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="application-name" content="Treningsstatistikken">
+   <meta name="apple-mobile-web-app-title" content="Treningsstatistikken">
+   <meta name="msapplication-starturl" content="/">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0">
 
-    <link rel="icon" type="image/png" sizes="192x192" href="images/appIcon.png">
-    <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+   <link rel="icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+   <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="images/appIcon.png">
 
-    <!-- -->
+   <!-- -->
 
-    <link rel="stylesheet" href="styles/global.css">
-    <link rel="stylesheet" href="styles/login.css">
+   <!-- status bar color -->
 
-    <script src="scripts/global.js" type="text/javascript"></script>
-    <script src="scripts/validateInfo.js" type="text/javascript"></script>
-    <script src="scripts/script.js" type="text/javascript"></script>
+   <meta id="themeColor" name="theme-color" content="#357F9B">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+   <!-- -->
+
+   <link rel="stylesheet" href="styles/global/globalVariables.css">
+   <link rel="stylesheet" href="styles/global/globalClasses.css">
+   <link rel="stylesheet" href="styles/global/global.css">
+
+   <!-- themeStyleCSS -->
+   <!--<link id="themeStyleCSS-default" rel="stylesheet" href="styles/themes/default.css">
+   <link id="themeStyleCSS-blue" rel="stylesheet" href="styles/themes/blue.css">-->
+   <!-- themeStyleCSS -->
+   <link id="themeStyleCSS-blue" rel="stylesheet" href="styles/themes/themes.css">
+
+   <link rel="stylesheet" href="styles/themes/globalThemeValues.css">
+
+   <link rel="stylesheet" href="styles/login/desktop.css">
+   <link rel="stylesheet" href="styles/login/mobile.css">
+   <link rel="stylesheet" href="styles/login/common.css">
+
+   <script src="scripts/appInfo.js" type="text/javascript"></script>
+   <script src="scripts/global.js" type="text/javascript"></script>
+   <script src="scripts/validate/validateInfo.js" type="text/javascript"></script>
 
 </head>
 
 <body>
 
+   <script>changeColorTheme();</script>
 
-    <section id="page">
+   <section id="page">
 
-        <!-- spacing items-->
+      <div id="c1r2"></div>
+      <div id="c2r2"></div>
+      <div id="c3r2"></div>
+      <div id="c4r2"></div>
+      <div id="c5r2"></div>
+      <div id="c6r2"></div>
+      <div id="c7r2"></div>
+      <div id="c8r2"></div>
+      <div id="c9r2"></div>
+      <div id="c10r2"></div>
 
-        <div id="e1r1"></div>
-        <div id="e2r1"></div>
-        <div id="e3r1"></div>
-        <div id="e4r1"></div>
+      <div id="Gtitle">
+         <p id="title" class="noselect">
+            Logg inn
+         </p>
+      </div>
 
-        <!-- -->
+      <div id="GsmallTitle">
+         <p id="smallTitle" class="noselect">
 
-        <!-- content items-->
+         </p>
+      </div>
 
-        <div id="c1r1"></div>
-        <div id="c2r1"></div>
+      <div id="Glogo">
+         <img id="logo" src="" alt="" draggable="false" class="noselect"></img>
+      </div>
 
-        <div id="c1r2"></div>
-        <div id="c2r2"></div>
-        <div id="c3r2"></div>
+      <script>
+         document.getElementById("logo").src = application.logoURL || "";
+      </script>
 
-        <div id="c1r3"></div>
-        <div id="c2r3"></div>
+      <div id="Gline">
+         <hr id="line" class="noselect">
+      </div>
 
-        <!-- -->
+      <div id="Ginp1">
+         <input id="inp1" placeholder="Brukernavn" maxlength="20" type="text" required>
+         </input>
+      </div>
 
-        <!-- content/middle -->
+      <div id="Ginp2">
+         <input id="inp2" placeholder="Passord" maxlength="20" type="password" required>
+         </input>
+      </div>
 
-        <div id="Glinks">
-            <table id="links">
+      <div id="GrmbrMeBtn">
+         <input id="rmbrMeBtn" type="checkbox" class="noselect">
+         </input>
+      </div>
 
-            </table>
-        </div>
+      <div id="GrmbrMeTxt">
+         <p id="rmbrMeTxt" class="noselect">
+            Husk meg i 30 dager
+         </p>
+      </div>
 
-        <div id="logoG">
-            <!--<img id="logo" draggable="false" src="images/logo.svg">-->
-        </div>
+      <div id="GrespMsg">
+         <p id="respMsg">
+         </p>
+      </div>
 
-        <div id="inp1G">
-            <input id="inp1" type="text" placeholder="Brukernavn">
-        </div>
+      <div id="GloginBtn">
+         <button id="loginBtn" class="noselect pointer" onclick="loginUser();">
+            Logg inn
+         </button>
+      </div>
 
-        <div id="inp2G">
-            <input id="inp2" type="password" placeholder="Passord">
-        </div>
+      <div id="GnoAccBtn">
+         <p id="noAccBtn" class="noselect">
+            <a href="access.html">Ingen konto? <strong>Be om tilgang</strong></a>
+         </p>
+      </div>
 
-        <div id="rmbrmebtnG">
-            <input id="rmbrMe" type="checkbox">
-            <p id="rmbrMeTxt">Husk meg i 7 dager</p>
-        </div>
-
-        <div id="respmsgG">
-            <p id="respmsg">
-                <!-- response.data (resp) -->
-            </p>
-        </div>
-
-        <div id="loginbtnG">
-            <button id="loginbtn" onclick="loginUser()">
-                Logg inn
-            </button>
-        </div>
-
-        <div id="noaccbtnG">
-            <p id="noaccbtn">
-                <a href="access.html" draggable="false">Ingen konto? <strong>Be om tilgang</strong></a>
-            </p>
-        </div>
-
-        <div id="Gfootermenu">
-            <p id="footermenu">
-
-            </p>
-        </div>
-
-        <!-- -->
-
-    </section>
+   </section>
 
 </body>
 
 <script>
 
-    displayLinks("links");
-    checkColorTheme();
+   const cachedUsername = sessionStorage.getItem("cachedUsername");
 
-    addEventListener("keypress", function (evt) {
+   if (cachedUsername && cachedUsername !== "null" && cachedUsername !== "undefined") {
+      document.getElementById("inp1").value = cachedUsername;
+   }
 
-        if (evt.keyCode === 13) {
-            loginUser();
-        }
+   document.getElementById("smallTitle").innerHTML = application.name || "";
 
-    });
+   /* change user color theme? */
 
-    async function loginUser() {
+   //const themeColor = "#357F9B";
 
-        const rmbrMe = document.getElementById("rmbrMe").checked;
+   //document.getElementById("themeColor").content = themeColor;
 
-        const username = document.getElementById("inp1").value;
-        const psw = document.getElementById("inp2").value;
+   /*document.getElementById("page").addEventListener('touchmove', function (evt) {
+      evt.preventDefault();
+   })*/
 
-        if (username && psw) {
+   lockBodyPosition();
 
-            const resp = await login(username, psw, rmbrMe);
+   addEventListener("keypress", function (evt) {
 
-            if (resp === "Login successful") {
-                redirectToHome();
-            } else {
-                const respmsg = document.getElementById("respmsg");
-                respmsg.innerHTML = resp;
-            }
-        }
+      if (evt.keyCode === 13) {
+         loginUser();
+      }
 
-    };
+   });
+
+   async function loginUser() {
+
+      const rmbrMe = document.getElementById("rmbrMeBtn").checked;
+
+      const username = document.getElementById("inp1").value;
+      const psw = document.getElementById("inp2").value;
+
+      if (username && psw) {
+
+         const resp = await login(username, psw, rmbrMe);
+
+         if (resp === "Login successful") {
+            redirectToFeed();
+         } else {
+            const respmsg = document.getElementById("respMsg");
+            respmsg.innerHTML = resp;
+         }
+      }
+   };
 
 </script>
 

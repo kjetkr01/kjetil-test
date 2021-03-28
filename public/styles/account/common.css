@@ -1,0 +1,60 @@
+/* elements for mobile & desktop */
+
+
+#title, #gym, #info {
+color:var(--main-headerTextColor);
+font-weight: bold;
+font-family: var(--main-font-Family-Verdana);
+}
+
+#gym, #info{
+opacity: 85%;
+}
+
+#settings {
+margin-top: 10px;
+}
+
+.infoTable {
+text-align: center;
+width: 100%;
+margin: 0 auto;
+}
+
+.settingsBtn {
+float:right;
+margin-right: 20px;
+word-break: keep-all;
+font-size: 14px; /* 16px før */
+font-weight: bold;
+font-family: var(--main-font-Family-Verdana);
+
+background-color: var(--main-backgroundColor1);
+color: var(--main-textColorLight);
+border-radius: 8px;
+border: 1px var(--main-backgroundColor1) solid;
+box-shadow: var(--main-boxShadow);
+
+height: 30px; /* 35px før */
+width: fit-content;
+}
+
+#feed, #leaderboards, #account  {
+text-align: center;
+display: block;
+margin-left: auto;
+margin-right: auto;
+}
+
+#c6r2 {
+padding-top: 5px;
+font-size: 14px;
+text-align: center;
+}
+
+#c1r2, #Gsettings {
+border-top: 1px #75757585 solid;
+}
+
+
+/* end of mobile & desktop */
