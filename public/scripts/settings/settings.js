@@ -247,5 +247,62 @@ async function deleteAccount() {
     } else {
         alert("Vennligst fyll ut feltene");
     }
+}
 
+async function giveAPIAccess(aUsername, aID) {
+
+    if (aID && aUsername) {
+
+        const giveAPIUsername = aUsername;
+        const giveAPIID = parseInt(aID);
+
+        const confirmGiveAPIAccess = confirm(`Er du sikker på at du ønsker å gi ${giveAPIUsername} (${giveAPIID}) API tilgang?`);
+
+        if (confirmGiveAPIAccess === true) {
+
+            const body = { "authToken": token, "userInfo": user, "giveAPIUserAccess": giveAPIID };
+            const url = `/user/giveAPIAccess`;
+
+            const resp = await callServerAPI(body, url);
+
+            if (resp === true) {
+                alert(`${giveAPIUsername} har nå fått API tilgang!`);
+            } else {
+                alert(`Det har oppståtte en feil. ${giveAPIUsername} kunne ikke få API tilgang.`);
+            }
+
+            loadSetting(ELoadSettings.users.name);
+
+        }
+
+    }
+}
+
+async function removeAPIAccess(aUsername, aID) {
+
+    if (aID && aUsername) {
+
+        const removeAPIUsername = aUsername;
+        const removeAPIID = parseInt(aID);
+
+        const confirmRemoveAPIAccess = confirm(`Er du sikker på at du ønsker å fjerne ${removeAPIUsername} (${removeAPIID}) sin API tilgang?`);
+
+        if (confirmRemoveAPIAccess === true) {
+
+            const body = { "authToken": token, "userInfo": user, "removeAPIUserAccess": removeAPIID };
+            const url = `/user/removeAPIAccess`;
+
+            const resp = await callServerAPI(body, url);
+
+            if (resp === true) {
+                alert(`${removeAPIUsername} har ikke lengre API tilgang!`);
+            } else {
+                alert(`Det har oppståtte en feil. ${removeAPIUsername} kunne ikke fjerne API tilgang.`);
+            }
+
+            loadSetting(ELoadSettings.users.name);
+
+        }
+
+    }
 }

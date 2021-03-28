@@ -902,6 +902,82 @@ class StorageHandler {
     //
 
 
+    //  -------------------------------  give user API Access  ------------------------------- //
+
+    async giveUserAPIAccess(username, giveAPIUserAccess) {
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        try {
+            await client.connect();
+
+            const checkIfAdmin = await client.query('SELECT "username" FROM "users" WHERE username=$1 AND isadmin=true', [username]);
+
+            if (checkIfAdmin.rows.length !== 0) {
+
+                results = await client.query('SELECT "key" FROM "api_keys" WHERE user_id=$1', [giveAPIUserAccess]);
+
+                if (results.rows.length === 0) {
+                    const randomNum = Math.floor(Math.random() * 99999) + giveAPIUserAccess;
+                    let generatedAPIKey = giveAPIUserAccess.toString() + randomNum.toString();
+                    generatedAPIKey = parseInt(generatedAPIKey);
+                    await client.query('INSERT INTO "api_keys" VALUES($1, $2)', [giveAPIUserAccess, generatedAPIKey]);
+                    results = true;
+                } else {
+                    results = false;
+                }
+
+            } else {
+                results = false;
+            }
+
+            client.end();
+        } catch (err) {
+            console.log(err);
+        }
+
+        return results;
+    }
+
+    //
+
+
+    //  -------------------------------  remove user API Access  ------------------------------- //
+
+    async removeUserAPIAccess(username, removeAPIUserAccess) {
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        try {
+            await client.connect();
+
+            const checkIfAdmin = await client.query('SELECT "username" FROM "users" WHERE username=$1 AND isadmin=true', [username]);
+
+            if (checkIfAdmin.rows.length !== 0) {
+
+                results = await client.query('SELECT "key" FROM "api_keys" WHERE user_id=$1', [removeAPIUserAccess]);
+
+                if (results.rows.length !== 0) {
+
+                    await client.query('DELETE FROM "api_keys" WHERE user_id=$1', [removeAPIUserAccess]);
+                    results = true;
+                } else {
+                    results = false;
+                }
+
+            } else {
+                results = false;
+            }
+
+            client.end();
+        } catch (err) {
+            console.log(err);
+        }
+
+        return results;
+    }
+
+    //
+
+
     // api only calls
 
     //  -------------------------------  getWorkoutPlanAPI  ------------------------------- //

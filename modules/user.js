@@ -208,6 +208,24 @@ async function deleteAccount(username, password) {
     }
 }
 
+async function giveUserAPIAccess(username, giveAPIUserAccess) {
+    try {
+        const resp = await database.giveUserAPIAccess(username, giveAPIUserAccess);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function removeUserAPIAccess(username, removeAPIUserAccess) {
+    try {
+        const resp = await database.removeUserAPIAccess(username, removeAPIUserAccess);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 
 module.exports = User;
 module.exports.validateUser = validateUser;
@@ -229,3 +247,5 @@ module.exports.updateUsername = updateUsername;
 module.exports.updateAboutMe = updateAboutMe;
 module.exports.getAllUserInformation = getAllUserInformation;
 module.exports.deleteAccount = deleteAccount;
+module.exports.giveUserAPIAccess = giveUserAPIAccess;
+module.exports.removeUserAPIAccess = removeUserAPIAccess;

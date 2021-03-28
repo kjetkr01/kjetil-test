@@ -369,10 +369,10 @@ async function loadUsersListPage(setting) {
                 let myAccountColor = "";
                 let profileStatus = `<p class="settingsPendingUsername" style="color:green;">Offentlig</p>`;
 
-                let hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsAcceptPendingUser" onClick="alert('giveAPIAccess');">Gi API tilgang</button>`;
+                let hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsAcceptPendingUser pointer" onClick="giveAPIAccess('${currentUser.username}','${currentUser.id}');">Gi API tilgang</button>`;
 
                 if (allAPIUsersArr.includes(currentUser.id)) {
-                    hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsDeclinePendingUser" onClick="alert('removeAPIAccess');">Fjern API tilgang</button>`;
+                    hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsDeclinePendingUser pointer" onClick="removeAPIAccess('${currentUser.username}','${currentUser.id}');">Fjern API tilgang</button>`;
                 }
 
                 if (currentUser.settings.publicProfile === true) {
@@ -394,12 +394,12 @@ async function loadUsersListPage(setting) {
                     ${profileStatus}
                     <p class="settingsPendingUsername">${hasAPIAccessTxt}</p>
                    <br>
-                   <button style="padding:0;margin:0;" class="settingsButton" onClick="viewUser('${currentUser.id}');">Se profil</button>
+                   <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Se profil</button>
                     `;
                 } else {
                     usersTemplateHTML += `
                    <br>
-                   <button style="padding:0;margin:0;" class="settingsButton">Din bruker</button>
+                   <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Din bruker</button>
                     `;
                 }
 
@@ -496,65 +496,73 @@ async function loadPendingUsersPage(setting) {
 
 async function loadAPIPage() {
 
-    const config = {
-        method: "GET",
-        headers: {
-            "content-type": "application/json"
+    if (userInfo.hasOwnProperty("apikey")) {
+
+        const config = {
+            method: "GET",
+            headers: {
+                "content-type": "application/json"
+            }
         }
-    }
 
-    const response = await fetch("/api", config);
-    const data = await response.json();
+        const response = await fetch("/api", config);
+        const data = await response.json();
 
-    if (sessionStorage.getItem("currentSetting") === ELoadSettings.api.name) {
+        if (sessionStorage.getItem("currentSetting") === ELoadSettings.api.name) {
 
-        settingsGrid.innerHTML = justTextTemplate(`${application.name} har ${data.length} APIer.<br>Her kan du se din API key, BrukerID og ulike APIer.`, "left");
+            settingsGrid.innerHTML = justTextTemplate(`${application.name} har ${data.length} APIer.<br>Her kan du se din API key, BrukerID og ulike APIer.`, "left");
 
-        settingsGrid.innerHTML += getTemplate("API Key", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.apikey}' readonly="readonly"></input>`, "borderTop");
-        settingsGrid.innerHTML += getTemplate("BrukerID", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.id}' readonly="readonly"></input>`);
+            settingsGrid.innerHTML += getTemplate("API Key", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.apikey}' readonly="readonly"></input>`, "borderTop");
+            settingsGrid.innerHTML += getTemplate("BrukerID", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.id}' readonly="readonly"></input>`);
 
-        for (let i = 0; i < data.length; i++) {
-            const text = `
+            for (let i = 0; i < data.length; i++) {
+                const text = `
         URL: ${data[i].url}
         <br><br>
         Metode: ${data[i].method}
         `;
 
-            settingsGrid.innerHTML += getAPITextTemplate(text, "", "spacingTop");
+                settingsGrid.innerHTML += getAPITextTemplate(text, "", "spacingTop");
+            }
+
+            settingsGrid.innerHTML += getCenteredTextTemplate("Eksempel:", "", "spacingTop");
+
+            const firstAPIExample = data[0].url.split("/");
+            let currentURL = window.location.href || "";
+            currentURL = currentURL.split("/");
+            currentURL = `${currentURL[0]}/${currentURL[2]}`;
+            const exampleAPIHTML = `/${firstAPIExample[1]}/${userID}/${userInfo.apikey}`;
+            const fullExampleAPIText = `${data[0].method} ${currentURL}${exampleAPIHTML}`;
+
+            settingsGrid.innerHTML += getAPITextTemplate(fullExampleAPIText);
+
+            settingsGrid.innerHTML += getCenteredTextTemplate("Response:", "", "spacingTop");
+
+            let exampleAPIData = sessionStorage.getItem("cachedExAPIResp");
+
+            if (!exampleAPIData) {
+
+                const exampleAPIResponse = await fetch(exampleAPIHTML, config);
+                exampleAPIData = await exampleAPIResponse.json();
+
+                if (!exampleAPIData.hasOwnProperty("error")) {
+                    exampleAPIData = JSON.stringify(exampleAPIData);
+                    sessionStorage.setItem("cachedExAPIResp", exampleAPIData);
+                } else {
+                    exampleAPIData = JSON.stringify(exampleAPIData);
+                }
+            }
+
+            if (sessionStorage.getItem("currentSetting") === ELoadSettings.api.name) {
+
+                settingsGrid.innerHTML += getAPITextTemplate(exampleAPIData);
+
+                settingsGrid.innerHTML += getBottomSpacingTemplate();
+            }
         }
-
-        settingsGrid.innerHTML += getCenteredTextTemplate("Eksempel:", "", "spacingTop");
-
-        const firstAPIExample = data[0].url.split("/");
-        let currentURL = window.location.href || "";
-        currentURL = currentURL.split("/");
-        currentURL = `${currentURL[0]}/${currentURL[2]}`;
-        const exampleAPIHTML = `/${firstAPIExample[1]}/${userID}/${userInfo.apikey}`;
-        const fullExampleAPIText = `${data[0].method} ${currentURL}${exampleAPIHTML}`;
-
-        settingsGrid.innerHTML += getAPITextTemplate(fullExampleAPIText);
-
-        settingsGrid.innerHTML += getCenteredTextTemplate("Response:", "", "spacingTop");
-
-        let exampleAPIData = sessionStorage.getItem("cachedExAPIResp");
-
-        if (!exampleAPIData) {
-
-            const exampleAPIResponse = await fetch(exampleAPIHTML, config);
-            exampleAPIData = await exampleAPIResponse.json();
-            exampleAPIData = JSON.stringify(exampleAPIData);
-            sessionStorage.setItem("cachedExAPIResp", exampleAPIData);
-
-        }
-
-        if (sessionStorage.getItem("currentSetting") === ELoadSettings.api.name) {
-
-            settingsGrid.innerHTML += getAPITextTemplate(exampleAPIData);
-
-            settingsGrid.innerHTML += getBottomSpacingTemplate();
-        }
+    } else {
+        loadSetting(ELoadSettings.settings.name);
     }
-
 }
 
 async function loadPrivacyPage() {

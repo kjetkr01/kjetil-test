@@ -27,6 +27,8 @@ const updateUsername = require("./modules/user").updateUsername;
 const updateAboutMe = require("./modules/user").updateAboutMe;
 const getAllUserInformation = require("./modules/user").getAllUserInformation;
 const deleteAccount = require("./modules/user").deleteAccount;
+const giveUserAPIAccess = require("./modules/user").giveUserAPIAccess;
+const removeUserAPIAccess = require("./modules/user").removeUserAPIAccess;
 
 const saveLiftOrGoal = require("./modules/user").saveLiftOrGoal;
 const deleteLiftOrGoal = require("./modules/user").deleteLiftOrGoal;
@@ -58,8 +60,11 @@ server.use(bodyParser.json({ limit: "5mb" }));
 const maxCharLength = 20;
 const minCharLength = 3;
 
-
-const APICatchErrorJSON = { error: "Det har oppstått et problem!" };
+const APIErrorJSON = {
+     catch: { error: "Det har oppstått et problem!" },
+     access: { error: "Ingen tilgang" },
+     workoutplan: { error: "Brukeren kan ingen treningsplan" },
+}
 
 const day = new Date().getDay();
 let dayTxt = "";
@@ -805,6 +810,54 @@ server.get("/api", function (req, res) {
 
 //
 
+// -------------------------------  give user api access ---------------------- //
+
+server.post("/user/giveAPIAccess", auth, async (req, res) => {
+
+     const currentUser = JSON.parse(req.body.userInfo);
+     const giveAPIUserAccess = req.body.giveAPIUserAccess;
+
+     if (currentUser.username && giveAPIUserAccess) {
+
+          const resp = await giveUserAPIAccess(currentUser.username, giveAPIUserAccess);
+
+          if (resp === true) {
+               res.status(200).json(true).end();
+          } else {
+               res.status(403).json(false).end();
+          }
+
+     } else {
+          res.status(403).json(`Feil, prøv igjen`).end();
+     }
+});
+
+//
+
+// -------------------------------  remove user api access ---------------------- //
+
+server.post("/user/removeAPIAccess", auth, async (req, res) => {
+
+     const currentUser = JSON.parse(req.body.userInfo);
+     const removeAPIAccess = req.body.removeAPIUserAccess;
+
+     if (currentUser.username && removeAPIAccess) {
+
+          const resp = await removeUserAPIAccess(currentUser.username, removeAPIAccess);
+
+          if (resp === true) {
+               res.status(200).json(true).end();
+          } else {
+               res.status(403).json(false).end();
+          }
+
+     } else {
+          res.status(403).json(`Feil, prøv igjen`).end();
+     }
+});
+
+//
+
 // api
 
 server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
@@ -828,39 +881,44 @@ server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
 
                     let workoutTxt = "";
 
-                    if (getWorkoutPlanInfo.isOwner === true) {
-
-                         if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
-                              workoutTxt = `Skal du trene ${program[dayTxt]}`;
-                         } else {
-                              workoutTxt = `Skal du ikke trene`;
-                         }
-
+                    if (program.length === 0 || program.length === undefined) {
+                         res.status(200).json(APIErrorJSON.workoutplan).end();
                     } else {
 
-                         if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
-                              workoutTxt = `Trener ${firstName} ${program[dayTxt]}`;
+                         if (getWorkoutPlanInfo.isOwner === true) {
+
+                              if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
+                                   workoutTxt = `Skal du trene ${program[dayTxt]}`;
+                              } else {
+                                   workoutTxt = `Skal du ikke trene`;
+                              }
+
                          } else {
-                              workoutTxt = `Trener ikke ${firstName}`;
+
+                              if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
+                                   workoutTxt = `Trener ${firstName} ${program[dayTxt]}`;
+                              } else {
+                                   workoutTxt = `Trener ikke ${firstName}`;
+                              }
                          }
-                    }
 
-                    const resp = {
-                         "currentDay": dayTxt.toLocaleLowerCase(),
-                         "todaysWorkout": workoutTxt
-                    }
+                         const resp = {
+                              "currentDay": dayTxt.toLocaleLowerCase(),
+                              "todaysWorkout": workoutTxt
+                         }
 
-                    res.status(200).json(resp).end();
+                         res.status(200).json(resp).end();
+                    }
 
                } else {
-                    res.status(403).json(`ingen tilgang`).end();
+                    res.status(403).json(APIErrorJSON.access).end();
                }
 
           } else {
-               res.status(403).json(`ingen tilgang`).end();
+               res.status(403).json(APIErrorJSON.access).end();
           }
      } catch (err) {
-          res.status(403).json(APICatchErrorJSON).end();
+          res.status(403).json(APIErrorJSON.catch).end();
      }
 })
 
@@ -892,14 +950,14 @@ server.get("/getTotalPB/:user/:key", async function (req, res) {
                     res.status(200).json(resp).end();
 
                } else {
-                    res.status(403).json(`ingen tilgang`).end();
+                    res.status(403).json(APIErrorJSON.access).end();
                }
 
           } else {
-               res.status(403).json(`ingen tilgang`).end();
+               res.status(403).json(APIErrorJSON.access).end();
           }
      } catch (err) {
-          res.status(403).json(APICatchErrorJSON).end();
+          res.status(403).json(APIErrorJSON.catch).end();
      }
 })
 
