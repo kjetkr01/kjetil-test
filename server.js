@@ -881,7 +881,7 @@ server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
 
                     let workoutTxt = "";
 
-                    if (program.length === 0 || program.length === undefined) {
+                    if (Object.keys(program).length === 0) {
                          res.status(200).json(APIErrorJSON.workoutplan).end();
                     } else {
 
