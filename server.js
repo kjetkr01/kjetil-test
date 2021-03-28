@@ -64,6 +64,7 @@ const APIErrorJSON = {
      catch: { error: "Det har oppstått et problem!" },
      access: { error: "Ingen tilgang" },
      workoutplan: { error: "Brukeren kan ingen treningsplan" },
+     lift: { error: "Brukeren har ikke alle løftene for å regne ut totalen (Benkpress, Knebøy og Markløft)" },
 }
 
 const day = new Date().getDay();
@@ -950,7 +951,7 @@ server.get("/getTotalPB/:user/:key", async function (req, res) {
                     res.status(200).json(resp).end();
 
                } else {
-                    res.status(403).json(APIErrorJSON.access).end();
+                    res.status(403).json(APIErrorJSON.lift).end();
                }
 
           } else {
