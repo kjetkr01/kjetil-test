@@ -79,10 +79,11 @@ function backToPrevious() {
     if (titleDom.innerHTML === ELoadSettings.settings.name) {
         clearAllScrollPos();
         redirectToAccount();
+    } else if (titleDom.innerHTML === ELoadSettings.deleteMe.name) {
+        loadSetting(ELoadSettings.privacy.name);
     } else {
         loadSetting(ELoadSettings.settings.name);
     }
-
 }
 
 function cacheCurrentSetting(aCurrentSetting) {

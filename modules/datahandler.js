@@ -799,6 +799,47 @@ class StorageHandler {
 
     //
 
+
+    //  -------------------------------  update Password (user)  ------------------------------- //
+
+    async updatePassword(user, exsistingPsw, newPsw) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        let message = "";
+
+        try {
+            await client.connect();
+
+            results = await client.query('SELECT "password" FROM "users" WHERE id=$1 AND password=$2', [user, exsistingPsw]);
+
+            if (results.rows.length !== 0) {
+
+                if (results.rows[0].password !== newPsw) {
+                    await client.query('UPDATE "users" SET password=$1 WHERE id=$2', [newPsw, user]);
+                    results = true;
+                } else {
+                    message = "Passordet ble ikke endret. Eksisterende passord og nytt passord er like";
+                    results = false;
+                }
+
+            } else {
+                message = "Passordet ble ikke endret. Eksisterende passord er feil";
+                results = false;
+            }
+
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return { "status": results, "message": message };
+    }
+
+    //
+
     //  -------------------------------  update about me (user)  ------------------------------- //
 
     async updateAboutMe(username, settings) {

@@ -87,7 +87,7 @@ min-height: 45px;
 }
 
 #Gname > #name {
-min-height: 11vh;
+min-height: 85px;
 }
 
 #title, #name {
@@ -96,7 +96,7 @@ font-size: 34px;
 
 #GsmallTitle > #smallTitle {
 font-size: 22px;
-min-height: 6vh;
+min-height: 45px;
 }
 
 #title, #name, #smallTitle, #badges, #today, #peopleWorkoutTxt {

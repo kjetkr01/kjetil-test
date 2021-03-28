@@ -244,10 +244,29 @@ function loadProgressionInfoPage() {
 
     settingsGrid.innerHTML = justTextTemplate("Her kan du endre hvor mye informasjon du ønsker å se på startsiden!", "left");
 
+    const badgeSizesObj = {
+        0: { name: "Liten", value: "0" },
+        1: { name: "Stor", value: "1" }
+    }
+
+    let badeSizeOptionsHTML = "";
+
+    const badgeSizesObjKeys = Object.keys(badgeSizesObj);
+
+    for (let i = 0; i < badgeSizesObjKeys.length; i++) {
+
+        const badge = badgeSizesObj[badgeSizesObjKeys[i]];
+
+        if (badge.value === settings.badgeSize) {
+            badeSizeOptionsHTML += `<option selected="selected" value="${badge.value}">${badge.name}</option>`;
+        } else {
+            badeSizeOptionsHTML += `<option value="${badge.value}">${badge.name}</option>`;
+        }
+    }
+
     const badeSizeHTML = `
     <select id="badgeSizeSelection">
-       <option value="1">Stor</option>
-       <option value="2">Liten</option>
+       ${badeSizeOptionsHTML}
     </select>
     `;
 
@@ -268,7 +287,7 @@ function loadProgressionInfoPage() {
     settingsGrid.innerHTML += getBottomSpacingTemplate();
 
     document.getElementById("badgeSizeSelection").addEventListener("change", function (evt) {
-        console.log("changed badgeSizeSelection");
+        updateBadgeSize();
     });
 
     document.getElementById("badeInfoSelection").addEventListener("change", function (evt) {
@@ -283,40 +302,44 @@ function loadAboutAppPage(setting) {
 
     imageURL.onload = function () {
 
-        const imageHTML = `
-    <img id="logo" src="${application.logoURL}" alt="" draggable="false" class="noselect settingsLogo"></img>
-    `;
+        if (sessionStorage.getItem("currentSetting") === ELoadSettings.aboutApp.name) {
 
-        settingsGrid.innerHTML = justTextTemplate(imageHTML, "center");
+            const imageHTML = `
+            <img id="logo" src="${application.logoURL}" alt="" draggable="false" class="noselect settingsLogo"></img>
+            `;
 
-        //document.getElementById("logo").src = application.logoURL;
+            settingsGrid.innerHTML = justTextTemplate(imageHTML, "center");
 
-        const appInfoHTML = `
-    <strong>${application.name}</strong>
-    <br>
-    <p class="settingsApplicationFullVersion">${application.version.full || application.version.fullNumber || ""}</p>
-    `;
+            //document.getElementById("logo").src = application.logoURL;
 
-        settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
+            const appInfoHTML = `
+            <strong>${application.name}</strong>
+            <br>
+            <p class="settingsApplicationFullVersion">${application.version.full || application.version.fullNumber || ""}</p>
+            `;
 
-        settingsGrid.innerHTML += getLeftTextTemplate(aboutAppText, "", "spacingTop");
+            settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
 
-        if (application.updatesInfo.showOnGoing === true) {
-            settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${ongoingUpdatesText}</button>`, "", "spacingTop");
-            settingsGrid.innerHTML += getLeftTextTemplate(ongoingUpdates);
+            settingsGrid.innerHTML += getLeftTextTemplate(aboutAppText, "", "spacingTop");
+
+            if (application.updatesInfo.showOnGoing === true) {
+                settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${ongoingUpdatesText}</button>`, "", "spacingTop");
+                settingsGrid.innerHTML += getLeftTextTemplate(ongoingUpdates);
+            }
+
+            if (application.updatesInfo.showPlanned === true) {
+                settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${plannedUpdatesText}</button>`, "", "spacingTop");
+                settingsGrid.innerHTML += getLeftTextTemplate(plannedUpdates);
+            }
+
+            settingsGrid.innerHTML += getCenteredTextTemplate(aboutAppBottomInfo, "", "spacingTop");
+
+            settingsGrid.innerHTML += getBottomSpacingTemplate();
+
+            scrollToSavedPos(setting);
+            saveNewScrollPos = true;
+
         }
-
-        if (application.updatesInfo.showPlanned === true) {
-            settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${plannedUpdatesText}</button>`, "", "spacingTop");
-            settingsGrid.innerHTML += getLeftTextTemplate(plannedUpdates);
-        }
-
-        settingsGrid.innerHTML += getCenteredTextTemplate(aboutAppBottomInfo, "", "spacingTop");
-
-        settingsGrid.innerHTML += getBottomSpacingTemplate();
-
-        scrollToSavedPos(setting);
-        saveNewScrollPos = true;
 
     }
 }

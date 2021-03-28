@@ -6,13 +6,40 @@ async function updatePassword() {
     const newPsw = document.getElementById("newPsw").value;
     const repeatNewPsw = document.getElementById("repeatNewPsw").value;
 
-
     if (exsistingPsw && newPsw && repeatNewPsw) {
 
-        console.log(exsistingPsw);
-        console.log(newPsw);
-        console.log(repeatNewPsw);
+        if (newPsw === repeatNewPsw) {
 
+            const body = { "authToken": token, "userInfo": user, "authorization": "Basic " + window.btoa(`${exsistingPsw}:${newPsw}`) };
+            const url = `/user/update/password`;
+
+            const config = {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify(body)
+            }
+
+            const response = await fetch(url, config);
+            const data = await response.json();
+
+            if (data.status === true) {
+                localStorage.clear();
+                sessionStorage.clear();
+                alert(`Passordet ble endret. Du blir nå logget ut`);
+                sessionStorage.setItem("cachedUsername", username);
+                location.reload();
+            } else {
+                alert(data.message)
+            }
+
+        } else {
+            alert("Ønskede passord og gjenta ønskede stemmer ikke");
+        }
+
+    } else {
+        alert("Vennligst fyll inn alle feltene.");
     }
 }
 
@@ -193,6 +220,23 @@ async function saveColorTheme() {
             isUpdatingCheckboxSetting = false;
         }
     }
+}
+
+
+async function updateBadgeSize() {
+
+    const value = document.getElementById("badgeSizeSelection").value;
+    const setting = "badgeSize";
+
+    const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
+    const url = `/user/update/settings/${setting}`;
+
+    const resp = await callServerAPI(body, url);
+
+    if (resp === true) {
+        updateUserInfo();
+    }
+
 }
 
 async function saveDisplayname() {

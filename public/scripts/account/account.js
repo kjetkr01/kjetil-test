@@ -29,7 +29,7 @@ function displayInformation(respInfo) {
     userGrid.innerHTML = "";
 
     const info = respInfo;
-    const size = 0;
+    const size = parseInt(info.settings.badgeSize) || 0;
 
     const displayname = info.displayname;
     const gym = info.info.gym;
@@ -171,7 +171,8 @@ Løft (${arr.length})
 
                     arr.sort(function (a, b) { return b.kg - a.kg });
                     for (let i = 0; i < arr.length; i++) {
-                        const badge = getBadgeLift(size, arr[i]);
+                        //const badge = getBadgeLift(size, arr[i]);
+                        const badge = getBadgeLift(0, arr[i]);
 
                         if (badge) {
                             document.getElementById("badgesLiftsTableRow").innerHTML += badge;
@@ -376,7 +377,8 @@ Treningsplan
 
                     for (let i = 0; i < arr.length; i++) {
 
-                        const badge = getBadgeTrainingsplit(size, arr[i]);
+                        //const badge = getBadgeTrainingsplit(size, arr[i]);
+                        const badge = getBadgeTrainingsplit(0, arr[i]);
 
                         if (badge) {
                             document.getElementById("badgesTrainingsplitTableRow").innerHTML += badge;

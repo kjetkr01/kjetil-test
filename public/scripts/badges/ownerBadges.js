@@ -75,19 +75,19 @@ function getBadgeGoals(aSize, aBadgeInfo) {
 
 <div id="GkgLeft">
 <p id="kgLeft">
-15.5 kg igjen
+${userBadgeInfo.msg}
 </p>
 </div>
 
 <div id="Gexercise">
 <p id="exercise">
-Benkpress
+${userBadgeInfo.exercise}
 </p>
 </div>
 
 <div id="Gkg">
 <p id="kg">
-130 kg
+${userBadgeInfo.kg} kg
 </p>
 </div>
 

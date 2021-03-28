@@ -24,6 +24,7 @@ const updateUserSetting = require("./modules/user").updateUserSetting;
 const getListOfAllUsersWorkoutToday = require("./modules/user").getListOfAllUsersWorkoutToday;
 const updateDisplayname = require("./modules/user").updateDisplayname;
 const updateUsername = require("./modules/user").updateUsername;
+const updatePassword = require("./modules/user").updatePassword;
 const updateAboutMe = require("./modules/user").updateAboutMe;
 const getAllUserInformation = require("./modules/user").getAllUserInformation;
 const deleteAccount = require("./modules/user").deleteAccount;
@@ -423,7 +424,7 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
      const setting = req.body.updateSetting;
      const value = req.body.value;
 
-     const allowedSettings = ["publicProfile", "displayLeaderboards", "displayWorkoutList", "preferredTheme", "preferredColorTheme"];
+     const allowedSettings = ["publicProfile", "displayLeaderboards", "displayWorkoutList", "preferredTheme", "preferredColorTheme", "badgeSize"];
      const allowedValues = [true, false, "0", "1", "2"];
 
      if (currentUser.username && allowedSettings.includes(setting) && allowedValues.includes(value)) {
@@ -507,6 +508,38 @@ server.post("/user/update/username", auth, async (req, res) => {
 });
 
 //
+
+
+// update password
+
+server.post("/user/update/password", auth, async (req, res) => {
+
+     const currentUser = JSON.parse(req.body.userInfo);
+     const credentials = req.body.authorization.split(' ')[1];
+     const [exsistingPsw, newPsw] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
+
+     if (currentUser.id && exsistingPsw && newPsw) {
+          if (exsistingPsw !== newPsw) {
+
+               const resp = await updatePassword(currentUser.id, exsistingPsw, newPsw);
+
+               if (resp.status === true) {
+                    res.status(200).json(resp).end();
+               } else {
+                    res.status(403).json(resp).end();
+               }
+
+          } else {
+               res.status(403).json({ "status": false, "message": "Passordet ble ikke endret. Eksisterende passord og nytt passord er like" }).end();
+          }
+
+     } else {
+          res.status(403).json({ "status": false, "message": "Det har oppstått en feil" }).end();
+     }
+});
+
+//
+
 
 // update about me information
 

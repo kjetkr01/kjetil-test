@@ -176,6 +176,22 @@ async function updateUsername(username, newUsername) {
 }
 
 
+async function updatePassword(user, exsistingPsw, newPsw) {
+    try {
+        exsistingPsw = crypto.createHmac('sha256', secret)
+            .update(exsistingPsw)
+            .digest('hex');
+        newPsw = crypto.createHmac('sha256', secret)
+            .update(newPsw)
+            .digest('hex');
+        const resp = await database.updatePassword(user, exsistingPsw, newPsw);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
 async function updateAboutMe(username, settings) {
     try {
         const resp = await database.updateAboutMe(username, settings);
@@ -244,6 +260,7 @@ module.exports.deleteLiftOrGoal = deleteLiftOrGoal;
 module.exports.updateTrainingDays = updateTrainingDays;
 module.exports.updateDisplayname = updateDisplayname;
 module.exports.updateUsername = updateUsername;
+module.exports.updatePassword = updatePassword;
 module.exports.updateAboutMe = updateAboutMe;
 module.exports.getAllUserInformation = getAllUserInformation;
 module.exports.deleteAccount = deleteAccount;
