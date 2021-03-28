@@ -51,7 +51,7 @@ ${createBtn("Sondre Olsen")}.
 const ongoingUpdatesText = "Pågående oppdateringer";
 const ongoingUpdatesArr = [
     "TITLE:Innstillinger",
-    "Oppdatere Fremgangs info: Lagre endringer (50%)",
+    "Oppdatere Fremgangs info: Lagre endringer (60%)",
     "Brukere (90%)",
     "Personvern (60%)",
 ];

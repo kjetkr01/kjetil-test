@@ -378,6 +378,14 @@ Treningsplan
 
     /// ------------ end of displayTrainingsplit --------------- ///
 
+    userGrid.innerHTML += `
+<div id="GmemberSince">
+<p id="memberSince" class="fadeIn animate delaySmall">
+Medlem siden<br>28.03.2021
+</p>
+</div>
+`;
+
 }
 
  // end of displayInformation

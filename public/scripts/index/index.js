@@ -164,7 +164,7 @@ async function displayBadges(aInfo) {
     const size = parseInt(info.settings.badgeSize) || 0;
 
     if (size === 1) {
-        document.getElementById("Gbadges").style.minHeight = "180px";
+        document.getElementById("Gbadges").style.minHeight = "200px";
     }
 
     const lifts = info.lifts;
