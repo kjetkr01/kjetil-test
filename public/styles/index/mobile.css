@@ -36,11 +36,11 @@ grid-template-rows: /* nedover */
 
 3vh /* c1r1 */
 
-45px /* title */
+auto /* title */
 
-11vh /* Gname */
+auto /* Gname */
 
-6vh /* smallTitle */
+auto /* smallTitle */
 
 5px /* c2r1 */
 
@@ -83,11 +83,11 @@ grid-template-columns: /* bortover */
 
 
 #Gtitle > #title {
-
+min-height: 45px;
 }
 
 #Gname > #name {
-
+min-height: 11vh;
 }
 
 #title, #name {
@@ -96,6 +96,7 @@ font-size: 34px;
 
 #GsmallTitle > #smallTitle {
 font-size: 22px;
+min-height: 6vh;
 }
 
 #title, #name, #smallTitle, #badges, #today, #peopleWorkoutTxt {

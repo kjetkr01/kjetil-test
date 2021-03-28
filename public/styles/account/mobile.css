@@ -31,7 +31,7 @@ grid-template-rows: /* nedover */
 
 3vh /* c1r1 */
 
-50px /* Gtitle */
+auto /* Gtitle */
 
 auto /* Ggym */
 
@@ -66,15 +66,15 @@ grid-template-columns: /* bortover */
 
 
 #Gtitle > #title {
-
+min-height: 50px;
 }
 
 #Ggym > #gym {
-min-height: 6vh;
+min-height: 36px;
 }
 
 #Ginfo > #info {
-min-height: 4.10vh;
+min-height: 30px;
 margin-top: 10px;
 }
 

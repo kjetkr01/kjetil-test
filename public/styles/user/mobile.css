@@ -30,7 +30,7 @@ grid-template-rows: /* nedover */
 
 auto /* GbackBtn */
 
-40px /* Gtitle */
+auto /* Gtitle */
 
 auto /* Ggym */
 
@@ -64,15 +64,15 @@ margin-left: 20px;
 
 
 #Gtitle > #title {
-
+min-height: 40px;
 }
 
 #Ggym > #gym {
-min-height: 6vh;
+/*min-height: 6vh;*/
 }
 
 #Ginfo > #info {
-min-height: 4.10vh;
+/*min-height: 4.10vh;*/
 margin-top: 10px;
 }
 
