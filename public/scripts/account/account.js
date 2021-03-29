@@ -36,6 +36,7 @@ function displayInformation(respInfo) {
     const age = info.info.age;
     const height = info.info.height;
     const weight = info.info.weight;
+    const memberSince = info.member_since;
 
     liftsLeft = new TliftsLeft(info.liftsLeft);
     goalsLeft = new TgoalsLeft(info.goalsLeft);
@@ -398,13 +399,36 @@ Treningsplan
 
     /// ------------ end of displayTrainingsplit --------------- ///
 
-    userGrid.innerHTML += `
-<div id="GmemberSince">
-<p id="memberSince" class="fadeIn animate delaySmall">
-Medlem siden<br>28.03.2021
-</p>
-</div>
-`;
+    if (memberSince) {
+
+        const splitDate = memberSince.split("-");
+
+        const day = splitDate[2];
+        const month = splitDate[1];
+        const year = splitDate[0];
+        let string = "";
+
+        if (day && month && year) {
+            if (day.length === 1 || day.length === 2 && month.length === 1 || month.length === 2 && year.length === 4) {
+
+                string = new Date(`${year}-${month}-${day}`);
+                if (isNaN(string)) {
+                    string = `${day}.${month}..${year}`;
+                } else {
+                    string = new Date(`${year}-${month}-${day}`).toLocaleDateString();
+                }
+            }
+        }
+
+        userGrid.innerHTML += `
+        <div id="GmemberSince">
+        <p id="memberSince" class="fadeIn animate delaySmall">
+        Medlem siden<br>${string}
+        </p>
+        </div>
+        `;
+
+    }
 
 }
 

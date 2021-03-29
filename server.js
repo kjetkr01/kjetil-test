@@ -5,28 +5,40 @@ const server = express();
 const port = (process.env.PORT || 8080);
 server.set('port', port);
 server.use(express.static('public'));
+server.use(bodyParser.urlencoded({ limit: "5mb", extended: true, parameterLimit: 1000000 }));
+server.use(bodyParser.json({ limit: "5mb" }));
 
-// user api calls
+
+// ----------------------------- Module Requirements ----------------------- //
+
+
+
+/* auth */
 
 const auth = require("./modules/auth");
 
+/* */
+
+
+
+/* token */
+
+const createToken = require("./modules/token").createToken;
+
+/* */
+
+
+
+/* user */
+
 const user = require("./modules/user");
 const validateUser = require("./modules/user").validateUser;
-const getListOfUsers = require("./modules/user").getListOfUsers;
-const getListOfLeaderboards = require("./modules/user").getListOfLeaderboards;
-const getListOfUsersLeaderboard = require("./modules/user").getListOfUsersLeaderboard;
-const getListOfPendingUsers = require("./modules/user").getListOfPendingUsers;
 const acceptOrDenyUser = require("./modules/user").acceptOrDenyUser;
-const getWorkoutSplit = require("./modules/user").getWorkoutSplit;
-const getUserDetails = require("./modules/user").getUserDetails;
-const getUserSettingsAndInfo = require("./modules/user").getUserSettingsAndInfo;
 const updateUserSetting = require("./modules/user").updateUserSetting;
-const getListOfAllUsersWorkoutToday = require("./modules/user").getListOfAllUsersWorkoutToday;
 const updateDisplayname = require("./modules/user").updateDisplayname;
 const updateUsername = require("./modules/user").updateUsername;
 const updatePassword = require("./modules/user").updatePassword;
 const updateAboutMe = require("./modules/user").updateAboutMe;
-const getAllUserInformation = require("./modules/user").getAllUserInformation;
 const deleteAccount = require("./modules/user").deleteAccount;
 const giveUserAPIAccess = require("./modules/user").giveUserAPIAccess;
 const removeUserAPIAccess = require("./modules/user").removeUserAPIAccess;
@@ -35,25 +47,48 @@ const saveLiftOrGoal = require("./modules/user").saveLiftOrGoal;
 const deleteLiftOrGoal = require("./modules/user").deleteLiftOrGoal;
 const updateTrainingDays = require("./modules/user").updateTrainingDays;
 
+/* */
+
+
+
+/* get.js */
+
+const getListOfUsers = require("./modules/get").getListOfUsers;
+const getListOfLeaderboards = require("./modules/get").getListOfLeaderboards;
+const getListOfUsersLeaderboard = require("./modules/get").getListOfUsersLeaderboard;
+const getListOfPendingUsers = require("./modules/get").getListOfPendingUsers;
+const getWorkoutSplit = require("./modules/get").getWorkoutSplit;
+const getUserDetails = require("./modules/get").getUserDetails;
+const getUserSettingsAndInfo = require("./modules/get").getUserSettingsAndInfo;
+const getListOfAllUsersWorkoutToday = require("./modules/get").getListOfAllUsersWorkoutToday;
+const getAllUserInformation = require("./modules/get").getAllUserInformation;
+
+/* */
+
+
+
+/* API */
+
+const getWorkoutPlanAPI = require("./modules/API").getWorkoutPlanAPI;
+const getTotalPBAPI = require("./modules/API").getTotalPBAPI;
+
+/* */
+
+
+
+/* arrayList */
+
 const allowedLifts = require("./arrayLists").allowedLifts;
 const allowedGoals = require("./arrayLists").allowedGoals;
 const badgeColors = require("./arrayLists").badgeColors;
 
 const allowedTrainingDays = require("./arrayLists").allowedTrainingDays;
 
-const createToken = require("./modules/token").createToken;
+/* */
 
-// api only
 
-const getWorkoutPlanAPI = require("./modules/API").getWorkoutPlanAPI;
-const getTotalPBAPI = require("./modules/API").getTotalPBAPI;
+// ----------------------------- End Of Module Requirements ----------------------- //
 
-//
-
-//
-
-server.use(bodyParser.urlencoded({ limit: "5mb", extended: true, parameterLimit: 1000000 }));
-server.use(bodyParser.json({ limit: "5mb" }));
 
 
 // ----------------------------- globale variabler ----------------------- //
