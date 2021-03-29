@@ -419,7 +419,7 @@ function disableOverlay() {
 
     const createNewLiftorGoalOverlay = document.getElementById("createNewLiftorGoalOverlay");
     const editLiftorGoalOverlay = document.getElementById("editLiftorGoalOverlay");
-    const editDaysOverlay = document.getElementById("editDaysOverlay");
+    const editDaysOverlay = document.getElementById("editworkoutPlanOverlay");
 
     if (createNewLiftorGoalOverlay) {
         createNewLiftorGoalOverlay.style.display = "none";
@@ -441,11 +441,11 @@ const allowedDays = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørda
 
 function enableOverlayEditDays() {
 
-    const respMsg = document.getElementById("respEditDays");
+    const respMsg = document.getElementById("respworkoutPlans");
 
     respMsg.textContent = "";
 
-    for (let i = 0; i < allowedDays.length; i++) {
+    /*for (let i = 0; i < allowedDays.length; i++) {
         if (document.getElementById(allowedDays[i])) {
             document.getElementById(allowedDays[i]).checked = false;
         }
@@ -464,9 +464,9 @@ function enableOverlayEditDays() {
                 }
             }
         }
-    }
+    }*/
 
-    document.getElementById("editDaysOverlay").style.display = "block";
+    document.getElementById("editworkoutPlanOverlay").style.display = "block";
 
 }
 
