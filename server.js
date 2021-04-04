@@ -160,9 +160,9 @@ server.post("/access", async function (req, res) {
 
 
 
-// -------------------------------  login / autenticate user ---------------------- //
+// -------------------------------  login / authenticate user ---------------------- //
 
-server.post("/autenticate", async function (req, res) {
+server.post("/authenticate", async function (req, res) {
 
      const credentials = req.body.authorization.split(' ')[1];
      const [username, password] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
@@ -180,7 +180,7 @@ server.post("/autenticate", async function (req, res) {
                     "id": requestUser.userInfo.id,
                     "username": requestUser.userInfo.username,
                     "displayname": requestUser.userInfo.displayname,
-                    "preferredColorTheme": requestUser.userInfo.settings.preferredColorTheme,
+                    "preferredColorTheme": requestUser.userInfo.preferredcolortheme,
                }
                const sessionToken = createToken(requestUser.userInfo);
                res.status(200).json({ "authToken": sessionToken, "user": userInfo }).end();
@@ -390,8 +390,8 @@ server.post("/users/details/:user", auth, async (req, res) => {
                                    "id": resp.userDetails.id,
                                    "username": resp.userDetails.username,
                                    "displayname": resp.userDetails.displayname,
-                                   "preferredColorTheme": resp.userDetails.settings.preferredColorTheme,
-                                   "preferredTheme": resp.userDetails.settings.preferredTheme
+                                   "preferredColorTheme": resp.userDetails.settings.preferredcolortheme,
+                                   "preferredTheme": resp.userDetails.settings.preferredtheme
                               }
 
                               res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo }).end();

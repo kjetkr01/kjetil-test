@@ -87,16 +87,16 @@ function displayInformation(respInfo) {
 
     if (lifts) {
         liftsInfo = new Tlifts(info.lifts);
-        displayLifts(info.liftsLeft.length > 0);
+        //displayLifts(info.liftsLeft.length > 0);
     }
 
     if (goals) {
         goalsInfo = new Tgoals(info.goals);
-        displayGoals(info.goalsLeft.length > 0);
+        //displayGoals(info.goalsLeft.length > 0);
     }
 
     if (program) {
-        displayTrainingsplit();
+        //displayTrainingsplit();
     }
 
 
