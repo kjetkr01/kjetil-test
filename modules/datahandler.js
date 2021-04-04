@@ -327,7 +327,9 @@ class StorageHandler {
                             const goals = {};
                             const info = { "height": 0, "age": 0, "weight": 0, "gym": "" };
 
-                            await client.query('INSERT INTO "public"."users"("username", "password", "displayname", "settings", "trainingsplit", "lifts", "goals", "info", "isadmin") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;', [newUserUsername, newUserPassword, newUserDisplayname, settings, trainingSplit, lifts, goals, info, false]);
+                            const memberSinceDate = new Date().toISOString().substr(0, 10) || null;
+
+                            await client.query('INSERT INTO "public"."users"("username", "password", "displayname", "settings", "trainingsplit", "lifts", "goals", "info", "isadmin", "member_since") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *;', [newUserUsername, newUserPassword, newUserDisplayname, settings, trainingSplit, lifts, goals, info, false, memberSinceDate]);
                             results = true;
                         }
 
@@ -414,7 +416,7 @@ class StorageHandler {
                 //if owner then access anyways / admins get access anyways
                 if (results.rows[0].settings.publicProfile === false || viewingUser === userID || isAdmin === true) {
                     if (viewingUser === userID) {
-                        results = await client.query('SELECT "id","username","displayname","settings","trainingsplit","lifts","goals","info","isadmin" FROM "users" WHERE id=$1', [userID]);
+                        results = await client.query('SELECT "id","username","displayname","settings","trainingsplit","lifts","goals","info","isadmin","member_since" FROM "users" WHERE id=$1', [userID]);
 
                         if (results.rows[0]) {
                             results = results.rows[0];
@@ -454,7 +456,7 @@ class StorageHandler {
                         }
 
                     } else {
-                        results = await client.query('SELECT "username","displayname","trainingsplit","lifts","goals","info" FROM "users" WHERE id=$1', [viewingUser]);
+                        results = await client.query('SELECT "username","displayname","trainingsplit","lifts","goals","info","member_since" FROM "users" WHERE id=$1', [viewingUser]);
                         results = results.rows[0];
                     }
                     userDetails = results;
@@ -795,6 +797,47 @@ class StorageHandler {
 
         client.end();
         return results;
+    }
+
+    //
+
+
+    //  -------------------------------  update Password (user)  ------------------------------- //
+
+    async updatePassword(user, exsistingPsw, newPsw) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        let message = "";
+
+        try {
+            await client.connect();
+
+            results = await client.query('SELECT "password" FROM "users" WHERE id=$1 AND password=$2', [user, exsistingPsw]);
+
+            if (results.rows.length !== 0) {
+
+                if (results.rows[0].password !== newPsw) {
+                    await client.query('UPDATE "users" SET password=$1 WHERE id=$2', [newPsw, user]);
+                    results = true;
+                } else {
+                    message = "Passordet ble ikke endret. Eksisterende passord og nytt passord er like";
+                    results = false;
+                }
+
+            } else {
+                message = "Passordet ble ikke endret. Eksisterende passord er feil";
+                results = false;
+            }
+
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return { "status": results, "message": message };
     }
 
     //

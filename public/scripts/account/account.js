@@ -36,6 +36,7 @@ function displayInformation(respInfo) {
     const age = info.info.age;
     const height = info.info.height;
     const weight = info.info.weight;
+    const memberSince = info.member_since;
 
     liftsLeft = new TliftsLeft(info.liftsLeft);
     goalsLeft = new TgoalsLeft(info.goalsLeft);
@@ -171,7 +172,8 @@ Løft (${arr.length})
 
                     arr.sort(function (a, b) { return b.kg - a.kg });
                     for (let i = 0; i < arr.length; i++) {
-                        const badge = getBadgeLift(size, arr[i]);
+                        //const badge = getBadgeLift(size, arr[i]);
+                        const badge = getBadgeLift(0, arr[i]);
 
                         if (badge) {
                             document.getElementById("badgesLiftsTableRow").innerHTML += badge;
@@ -376,7 +378,8 @@ Treningsplan
 
                     for (let i = 0; i < arr.length; i++) {
 
-                        const badge = getBadgeTrainingsplit(size, arr[i]);
+                        //const badge = getBadgeTrainingsplit(size, arr[i]);
+                        const badge = getBadgeTrainingsplit(0, arr[i]);
 
                         if (badge) {
                             document.getElementById("badgesTrainingsplitTableRow").innerHTML += badge;
@@ -395,6 +398,37 @@ Treningsplan
     }
 
     /// ------------ end of displayTrainingsplit --------------- ///
+
+    if (memberSince) {
+
+        const splitDate = memberSince.split("-");
+
+        const day = splitDate[2];
+        const month = splitDate[1];
+        const year = splitDate[0];
+        let string = "";
+
+        if (day && month && year) {
+            if (day.length === 1 || day.length === 2 && month.length === 1 || month.length === 2 && year.length === 4) {
+
+                string = new Date(`${year}-${month}-${day}`);
+                if (isNaN(string)) {
+                    string = `${day}.${month}..${year}`;
+                } else {
+                    string = new Date(`${year}-${month}-${day}`).toLocaleDateString();
+                }
+            }
+        }
+
+        userGrid.innerHTML += `
+        <div id="GmemberSince">
+        <p id="memberSince" class="fadeIn animate delaySmall">
+        Medlem siden<br>${string}
+        </p>
+        </div>
+        `;
+
+    }
 
 }
 

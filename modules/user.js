@@ -20,7 +20,6 @@ class User {
             console.error(error);
         }
     }
-
 }
 
 async function validateUser(username, password) {
@@ -39,42 +38,6 @@ async function validateUser(username, password) {
     }
 }
 
-async function getListOfUsers(username) {
-    try {
-        const resp = await database.getListOfAllUsers(username);
-        return resp;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-async function getListOfLeaderboards() {
-    try {
-        const resp = await database.getListOfLeaderboards();
-        return resp;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-async function getListOfUsersLeaderboard(leaderboard) {
-    try {
-        const resp = await database.getListOfUsersLeaderboard(leaderboard);
-        return resp;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-async function getListOfPendingUsers(username, onlyNumbers) {
-    try {
-        const resp = await database.getListOfPendingUsers(username, onlyNumbers);
-        return resp;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
 async function acceptOrDenyUser(username, pendingUser, acceptOrDeny) {
     try {
         const resp = await database.acceptOrDenyUser(username, pendingUser, acceptOrDeny);
@@ -84,45 +47,9 @@ async function acceptOrDenyUser(username, pendingUser, acceptOrDeny) {
     }
 }
 
-async function getWorkoutSplit(username) {
-    try {
-        const resp = await database.getWorkoutSplit(username);
-        return resp;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-async function getUserDetails(viewingUser, userID) {
-    try {
-        const resp = await database.getUserDetails(viewingUser, userID);
-        return resp;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-async function getUserSettingsAndInfo(username) {
-    try {
-        const resp = await database.getUserSettingsAndInfo(username);
-        return resp;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
 async function updateUserSetting(username, setting, value) {
     try {
         const resp = await database.updateUserSetting(username, setting, value);
-        return resp;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-async function getListOfAllUsersWorkoutToday(dayTxt) {
-    try {
-        const resp = await database.getListOfAllUsersWorkoutToday(dayTxt);
         return resp;
     } catch (error) {
         console.error(error);
@@ -176,6 +103,21 @@ async function updateUsername(username, newUsername) {
 }
 
 
+async function updatePassword(user, exsistingPsw, newPsw) {
+    try {
+        exsistingPsw = crypto.createHmac('sha256', secret)
+            .update(exsistingPsw)
+            .digest('hex');
+        newPsw = crypto.createHmac('sha256', secret)
+            .update(newPsw)
+            .digest('hex');
+        const resp = await database.updatePassword(user, exsistingPsw, newPsw);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function updateAboutMe(username, settings) {
     try {
         const resp = await database.updateAboutMe(username, settings);
@@ -184,17 +126,6 @@ async function updateAboutMe(username, settings) {
         console.error(error);
     }
 }
-
-
-async function getAllUserInformation(user) {
-    try {
-        const resp = await database.getAllUserInformation(user);
-        return resp;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
 
 async function deleteAccount(username, password) {
     try {
@@ -229,23 +160,15 @@ async function removeUserAPIAccess(username, removeAPIUserAccess) {
 
 module.exports = User;
 module.exports.validateUser = validateUser;
-module.exports.getListOfUsers = getListOfUsers;
-module.exports.getListOfLeaderboards = getListOfLeaderboards;
-module.exports.getListOfUsersLeaderboard = getListOfUsersLeaderboard;
-module.exports.getListOfPendingUsers = getListOfPendingUsers;
 module.exports.acceptOrDenyUser = acceptOrDenyUser;
-module.exports.getWorkoutSplit = getWorkoutSplit;
-module.exports.getUserDetails = getUserDetails;
-module.exports.getUserSettingsAndInfo = getUserSettingsAndInfo;
 module.exports.updateUserSetting = updateUserSetting;
-module.exports.getListOfAllUsersWorkoutToday = getListOfAllUsersWorkoutToday;
 module.exports.saveLiftOrGoal = saveLiftOrGoal;
 module.exports.deleteLiftOrGoal = deleteLiftOrGoal;
 module.exports.updateTrainingDays = updateTrainingDays;
 module.exports.updateDisplayname = updateDisplayname;
 module.exports.updateUsername = updateUsername;
+module.exports.updatePassword = updatePassword;
 module.exports.updateAboutMe = updateAboutMe;
-module.exports.getAllUserInformation = getAllUserInformation;
 module.exports.deleteAccount = deleteAccount;
 module.exports.giveUserAPIAccess = giveUserAPIAccess;
 module.exports.removeUserAPIAccess = removeUserAPIAccess;

@@ -36,7 +36,7 @@ function enableOverlayCreate(aType) {
                 for (let i = 0; i < liftsLeftInfo.length; i++) {
                     inp1.innerHTML += `<option value="${liftsLeftInfo[i]}">${liftsLeftInfo[i]}`;
                 }
-                Gsave.innerHTML = `<button id="saveC" onclick="saveLiftOrGoal('lift','create');">Lagre</button>`;
+                Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('lift','create');">Lagre</button>`;
             }
 
             createNewLiftorGoalOverlay.style.display = "block";
@@ -49,7 +49,7 @@ function enableOverlayCreate(aType) {
                 for (let i = 0; i < goalsLeftInfo.length; i++) {
                     inp1.innerHTML += `<option value="${goalsLeftInfo[i]}">${goalsLeftInfo[i]}`;
                 }
-                Gsave.innerHTML = `<button id="saveC" onclick="saveLiftOrGoal('goal','create');">Lagre</button>`;
+                Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('goal','create');">Lagre</button>`;
             }
 
             createNewLiftorGoalOverlay.style.display = "block";
@@ -107,8 +107,8 @@ function enableOverlayEdit(aType, aExercise) {
             if (lifts[exercise]) {
                 inp1.value = lifts[exercise].ORM;
                 inp2.value = lifts[exercise].PRdate;
-                GdeleteE.innerHTML = `<button id="deleteE" onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift');">Slett løftet</button>`;
-                Gsave.innerHTML = `<button id="saveE" onclick="saveLiftOrGoal('lift','edit');">Lagre</button>`;
+                GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift');">Slett løftet</button>`;
+                Gsave.innerHTML = `<button id="saveE" class="pointer" onclick="saveLiftOrGoal('lift','edit');">Lagre</button>`;
 
                 for (let i = 0; i < badgeColorsValues.length; i++) {
                     if (badgeColorsValues[i][0] === lifts[exercise].color) {
@@ -136,8 +136,8 @@ function enableOverlayEdit(aType, aExercise) {
             if (goals[exercise]) {
                 inp1.value = goals[exercise].goal;
                 inp2.value = goals[exercise].Goaldate;
-                GdeleteE.innerHTML = `<button id="deleteE" onclick="deleteLiftOrGoalConfirm('${exercise}', 'goal');">Slett målet</button>`;
-                Gsave.innerHTML = `<button id="saveE" onclick="saveLiftOrGoal('goal','edit');">Lagre</button>`;
+                GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'goal');">Slett målet</button>`;
+                Gsave.innerHTML = `<button id="saveE" class="pointer" onclick="saveLiftOrGoal('goal','edit');">Lagre</button>`;
 
                 for (let i = 0; i < badgeColorsValues.length; i++) {
                     if (badgeColorsValues[i][0] === goals[exercise].color) {
@@ -419,7 +419,7 @@ function disableOverlay() {
 
     const createNewLiftorGoalOverlay = document.getElementById("createNewLiftorGoalOverlay");
     const editLiftorGoalOverlay = document.getElementById("editLiftorGoalOverlay");
-    const editDaysOverlay = document.getElementById("editDaysOverlay");
+    const editDaysOverlay = document.getElementById("editworkoutPlanOverlay");
 
     if (createNewLiftorGoalOverlay) {
         createNewLiftorGoalOverlay.style.display = "none";
@@ -441,11 +441,11 @@ const allowedDays = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørda
 
 function enableOverlayEditDays() {
 
-    const respMsg = document.getElementById("respEditDays");
+    const respMsg = document.getElementById("respworkoutPlans");
 
     respMsg.textContent = "";
 
-    for (let i = 0; i < allowedDays.length; i++) {
+    /*for (let i = 0; i < allowedDays.length; i++) {
         if (document.getElementById(allowedDays[i])) {
             document.getElementById(allowedDays[i]).checked = false;
         }
@@ -464,9 +464,9 @@ function enableOverlayEditDays() {
                 }
             }
         }
-    }
+    }*/
 
-    document.getElementById("editDaysOverlay").style.display = "block";
+    document.getElementById("editworkoutPlanOverlay").style.display = "block";
 
 }
 

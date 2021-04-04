@@ -105,7 +105,7 @@
             <p id="respC"></p>
          </div>
          <div id="GcancelC">
-            <button id="cancelC" onclick="disableOverlay('createLiftOrGoal');">Avbryt</button>
+            <button id="cancelC" class="pointer" onclick="disableOverlay('createLiftOrGoal');">Avbryt</button>
          </div>
          <div id="GsaveC">
          </div>
@@ -154,13 +154,14 @@
             <p id="respE"></p>
          </div>
          <div id="GcancelE">
-            <button id="cancelE" onclick="disableOverlay('editLiftOrGoal');">Avbryt</button>
+            <button id="cancelE" class="pointer" onclick="disableOverlay('editLiftOrGoal');">Avbryt</button>
          </div>
          <div id="GsaveE">
          </div>
       </div>
    </div>
 
+   <!--
    <div id="editDaysOverlay" style="display: none;" class="overlay">
       <div id="editDays" class="editDays">
          <div id="Gtitle1EditDays">
@@ -247,10 +248,57 @@
             <p id="respEditDays"></p>
          </div>
          <div id="GcancelEditDays">
-            <button id="cancelEditDays" onclick="disableOverlay('editDays');">Avbryt</button>
+            <button id="cancelEditDays" class="pointer" onclick="disableOverlay('editDays');">Avbryt</button>
          </div>
          <div id="GsaveEditDays">
-            <button id="saveEditDays" onclick="saveTrainingDays();">Lagre</button>
+            <button id="saveEditDays" class="pointer" onclick="saveTrainingDays();">Lagre</button>
+         </div>
+      </div>
+   </div>
+   -->
+
+   <div id="editworkoutPlanOverlay" style="display: none;" class="overlay">
+      <div id="workoutPlans" class="workoutPlans">
+         <div id="Gtitle1workoutPlans">
+            <p id="title1workoutPlans">Treningsplan</p>
+         </div>
+         <div id="Gline1workoutPlans">
+            <hr id="line1workoutPlans">
+         </div>
+         <div id="Gtitle2workoutPlans">
+            <p id="title2workoutPlans">Dine planer</p>
+         </div>
+         <div id="Gline2workoutPlans">
+            <hr id="line2workoutPlans">
+         </div>
+         <div id="GlistworkoutPlans">
+            <select id="listworkoutPlans">
+               <option value="0">Plan 1</option>
+               <option selected="selected" value="1">Plan 2</option>
+            </select>
+         </div>
+         <div id="GeditplanworkoutPlans">
+            <button id="editplanworkoutPlans">Rediger</button>
+         </div>
+         <div id="Gtitle3workoutPlans">
+            <p id="title3workoutPlans">Aktiv plan</p>
+         </div>
+         <div id="Gline3workoutPlans">
+            <hr id="line3workoutPlans">
+         </div>
+         <div id="GtextworkoutPlans">
+            <p id="textworkoutPlans">
+               plan 2
+            </p>
+         </div>
+         <div id="GrespworkoutPlans">
+            <p id="respworkoutPlans"></p>
+         </div>
+         <div id="GcancelworkoutPlans">
+            <button id="cancelworkoutPlans" class="pointer" onclick="disableOverlay('editDays');">Avbryt</button>
+         </div>
+         <div id="GsaveworkoutPlans">
+            <button id="saveworkoutPlans" class="pointer" onclick="saveTrainingDays();">Lagre</button>
          </div>
       </div>
    </div>

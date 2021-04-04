@@ -541,7 +541,6 @@ async function getAccountDetails(aUserID) {
 
                     changeColorTheme();
                 }
-
             }
 
             return resp;

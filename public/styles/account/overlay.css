@@ -646,7 +646,7 @@ grid-area: c7oE;
 /* end of spacing & other */
 
 
-.overlay>.editDays {
+.overlay>.workoutPlans {
 position: absolute;
 top: 50%;
 left: 50%;
@@ -665,48 +665,65 @@ border-radius: 16px;
 display: grid;
 grid-template-areas:
 
-"c1oE c1oE c1oE"
-"Gtitle1EditDays Gtitle1EditDays Gtitle1EditDays"
-"Gline1EditDays Gline1EditDays Gline1EditDays"
-"c2oE c2oE c2oE"
+"c1oWP c1oWP c1oWP"
+"Gtitle1workoutPlans Gtitle1workoutPlans Gtitle1workoutPlans"
+"Gline1workoutPlans Gline1workoutPlans Gline1workoutPlans"
+"c2oWP c2oWP c2oWP"
 
-"Gtitle2EditDays Gtitle2EditDays Gtitle2EditDays"
-"Gline2EditDays Gline2EditDays Gline2EditDays"
-"GlistEditDays GlistEditDays GlistEditDays"
-"c3oE c3oE c3oE"
+"Gtitle2workoutPlans Gtitle2workoutPlans Gtitle2workoutPlans"
+"Gline2workoutPlans Gline2workoutPlans Gline2workoutPlans"
+"GlistworkoutPlans GlistworkoutPlans GlistworkoutPlans"
+"GeditplanworkoutPlans GeditplanworkoutPlans GeditplanworkoutPlans"
+"c3oWP c3oWP c3oWP"
 
-"GrespEditDays GrespEditDays GrespEditDays"
-"GcancelEditDays c4oE GsaveEditDays"
-"c5oE c5oE c5oE"
+"Gtitle3workoutPlans Gtitle3workoutPlans Gtitle3workoutPlans"
+"Gline3workoutPlans Gline3workoutPlans Gline3workoutPlans"
+"GtextworkoutPlans GtextworkoutPlans GtextworkoutPlans"
+"c4oWP c4oWP c4oWP"
+
+"GrespworkoutPlans GrespworkoutPlans GrespworkoutPlans"
+"GcancelworkoutPlans c5oWP GsaveworkoutPlans"
+"c6oWP c6oWP c6oWP"
 ;
 
 grid-template-rows: /* nedover */
 
-2vh /* c1oE */
+2vh /* c1oWP */
 
-30px /* Gtitle1E */
+30px /* Gtitle1workoutPlans */
 
-10px /* Gline1E */
+10px /* Gline1workoutPlans */
 
-6vh /* c2oE */
-
-
-
-25px /* Gtitle2E */
-
-10px /* Gline2E */
-
-auto /* GlistE */
-
-4vh /* c3oE */
+6vh /* c2oWP */
 
 
 
-auto /* GrespE */
+25px /* Gtitle2workoutPlans */
 
-30px /* GbuttonsE */
+10px /* Gline2workoutPlans */
 
-2vh /* c5oE */
+auto /* GlistworkoutPlans */
+
+auto /* GeditplanworkoutPlans */
+
+4vh /* c3oWP */
+
+
+
+25px /* Gtitle3workoutPlans */
+
+10px /* Gline3workoutPlans */
+
+auto /* GtextworkoutPlans */
+
+4vh /* c4oWP */
+
+
+auto /* GrespworkoutPlans */
+
+30px /* GbuttonsworkoutPlans */
+
+2vh /* c6oWP */
 
 ;
 
@@ -714,72 +731,63 @@ grid-template-columns: /* bortover */
 1fr 1fr 1fr;
 }
 
-
-
-/* end of grid */
-
-
-
 /* elements */
 
 
 
-#Gtitle1EditDays > #title1EditDays {
+#Gtitle1workoutPlans > #title1workoutPlans {
 font-size: 22px;
 }
 
-#Gline1EditDays > #line1EditDays {
+#Gline1workoutPlans > #line1workoutPlans {
 width: 250px;
 }
 
-#Gline2EditDays > #line2EditDays {
+#Gline2workoutPlans > #line2workoutPlans {
 }
 
-#GlistEditDays > #listEditDays {
+#Gline3workoutPlans > #line3workoutPlans {
+}
+
+#GtextworkoutPlans > #textworkoutPlans {
 font-size: 16px;
+color: var(--main-accountOwnerColor);
 }
 
-.daysTable {
-margin-left: auto;
-margin-right: auto;
-width: 40%;
+#line2workoutPlans,#line3workoutPlans{
+width: 125px;
 }
 
-.daysTabletd {
-width: 60%;
-color: var(--main-textColorDark);
-}
-
-.editDaysCheckbox {
-background-color: red;
-height: 16px;
-width: 16px;
-
+#GlistworkoutPlans > #listworkoutPlans {
+font-size: 16px;
+text-align: center;
+text-align-last: center;
 appearance: none;
 -webkit-appearance: none;
 -moz-appearance: none;
 border: none;
-border-radius: 10px;
+color: var(--main-textColorDark);
+background-color: var(--main-backgroundColor2);
 }
 
-.editDaysCheckbox:checked {
-background-color: green;
+#GeditplanworkoutPlans > #editplanworkoutPlans {
+
 }
 
-#GcancelEditDays > #cancelEditDays {
+#GcancelworkoutPlans > #cancelworkoutPlans {
 }
 
-#GsaveEditDays > #saveEditDays {
+#GsaveworkoutPlans > #saveworkoutPlans {
 color: var(--main-backgroundColor1);
 }
 
-#GrespEditDays > #respEditDays {
+#GrespworkoutPlans > #respworkoutPlans {
 color: var(--main-textColorDark);
 margin: 20px;
 font-size: 16px;
 }
 
-#cancelEditDays, #saveEditDays {
+#cancelworkoutPlans, #saveworkoutPlans, #editplanworkoutPlans {
 font-size: 16px;
 font-weight: bold;
 height: 30px;
@@ -789,25 +797,24 @@ border-radius: 4px;
 border: transparent;
 }
 
-#line2EditDays {
-width: 125px;
+#Gtitle2workoutPlans > #title2workoutPlans {
 }
 
-#Gtitle2EditDays > #title2EditDays {
+#Gtitle3workoutPlans > #title3workoutPlans {
 }
 
-#title2EditDays {
+#title2workoutPlans, #title3workoutPlans {
 font-size: 18px;
 }
 
-#title1EditDays, #title2EditDays {
+#title1workoutPlans, #title2workoutPlans, #title3workoutPlans {
 color: var(--main-textColorDark);
 font-family: var(--main-font-Family-Verdana);
 font-weight: bold;
 }
 
 
-#line1EditDays, #line2EditDays {
+#line1workoutPlans, #line2workoutPlans, #line3workoutPlans {
 text-align: center;
 display: block;
 margin-left: auto;
@@ -827,58 +834,76 @@ border: var(--main-lineBorder);
 
 
 
-.editDays > #c1oE {
-grid-area: c1oE;
+.workoutPlans > #c1oWP {
+grid-area: c1oWP;
 }
 
-.editDays > #Gtitle1EditDays {
-grid-area: Gtitle1EditDays;
+.workoutPlans > #Gtitle1workoutPlans {
+grid-area: Gtitle1workoutPlans;
 }
 
-.editDays > #Gline1EditDays {
-grid-area: Gline1EditDays;
+.workoutPlans > #Gline1workoutPlans {
+grid-area: Gline1workoutPlans;
 }
 
-.editDays > #c2oE {
-grid-area: c2oE;
+.workoutPlans > #c2oWP {
+grid-area: c2oWP;
 }
 
-.editDays > #Gtitle2EditDays {
-grid-area: Gtitle2EditDays;
+.workoutPlans > #Gtitle2workoutPlans {
+grid-area: Gtitle2workoutPlans;
 }
 
-.editDays > #Gline2EditDays {
-grid-area: Gline2EditDays;
+.workoutPlans > #Gline2workoutPlans {
+grid-area: Gline2workoutPlans;
 }
 
-.editDays > #GlistEditDays {
-grid-area: GlistEditDays;
-overflow-y: auto;
-padding-top: 10px;
+.workoutPlans > #GlistworkoutPlans {
+grid-area: GlistworkoutPlans;
 }
 
-.editDays > #c3oE {
-grid-area: c3oE;
+.workoutPlans > #GeditplanworkoutPlans{
+grid-area: GeditplanworkoutPlans;
 }
 
-.editDays > #GrespEditDays {
-grid-area: GrespEditDays;
+.workoutPlans > #c3oWP {
+grid-area: c3oWP;
 }
 
-.editDays > #GcancelEditDays {
-grid-area: GcancelEditDays;
+.workoutPlans > #Gtitle3workoutPlans {
+grid-area: Gtitle3workoutPlans;
 }
 
-.editDays > #c6oE {
-grid-area: c4oE;
+.workoutPlans > #Gline3workoutPlans {
+grid-area: Gline3workoutPlans;
 }
 
-.editDays > #GsaveEditDays {
-grid-area: GsaveEditDays;
+.workoutPlans > #GtextworkoutPlans {
+grid-area: GtextworkoutPlans;
 }
 
-.editDays > #c7oE {
-grid-area: c5oE;
+.workoutPlans > #c4oWP {
+grid-area: c4oWP;
+}
+
+.workoutPlans > #GrespworkoutPlans {
+grid-area: GrespworkoutPlans;
+}
+
+.workoutPlans > #GcancelworkoutPlans {
+grid-area: GcancelworkoutPlans;
+}
+
+.workoutPlans > #c5oWP {
+grid-area: c5oWP;
+}
+
+.workoutPlans > #GsaveworkoutPlans {
+grid-area: GsaveworkoutPlans;
+}
+
+.workoutPlans > #c6oWP {
+grid-area: c6oWP;
 }
 
 /* end of spacing & other */

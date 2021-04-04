@@ -24,6 +24,7 @@ grid-template-areas:
 "GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit GlineTrainingsplit"
 "GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit GbadgesTrainingsplit"
 "c10r1 c10r1 c10r1 c10r1 c10r1 c10r1 c10r1"
+"GmemberSince GmemberSince GmemberSince GmemberSince GmemberSince GmemberSince GmemberSince"
 ;
 
 grid-template-rows: /* nedover */
@@ -53,6 +54,8 @@ auto /* GbadgesGoals */
 auto /* GbadgesTrainingsplit */
 
 30px /* c10r1 */
+
+auto /* GmemberSince */
 ;
 
 grid-template-columns: /* bortover */
@@ -126,6 +129,18 @@ font-weight: bold;
 font-family: var(--main-font-Family-Verdana);
 }
 
+#GmemberSince > #memberSince{
+font-size: 15px;
+margin-top: 20px;
+margin-bottom: 20px;
+margin-left: 20px;
+margin-right: 20px;
+text-align: center;
+color:var(--main-textColorDark);
+font-weight: bold;
+font-family: var(--main-font-Family-Verdana);
+}
+
 /* end of elements */
 
 
@@ -178,6 +193,10 @@ grid-area: GbadgesTrainingsplit;
 
 .userTable > #c10r1 {
 grid-area: c10r1;
+}
+
+.userTable > #GmemberSince {
+grid-area: GmemberSince;
 }
 
 #GbadgesLifts, #GbadgesGoals, #GbadgesTrainingsplit {
