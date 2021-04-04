@@ -133,16 +133,16 @@ ${firstName[0]} har ingen løft, mål eller treningsplan
 
         if (lifts) {
             liftsInfo = new Tlifts(info.lifts);
-            displayLifts();
+            //displayLifts();
         }
 
         if (goals) {
             goalsInfo = new Tgoals(info.goals);
-            displayGoals();
+            //displayGoals();
         }
 
         if (program) {
-            displayTrainingsplit();
+            //displayTrainingsplit();
         }
 
     }

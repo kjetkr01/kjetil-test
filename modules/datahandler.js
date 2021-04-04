@@ -551,25 +551,20 @@ class StorageHandler {
             await client.connect();
 
             results = await client.query(`
-            SELECT users.username, user_settings.*
+            SELECT users.username, users.isadmin, user_settings.publicprofile
             FROM users, user_settings
             WHERE users.id=$1
-            AND users.id = user_settings.user_id
-            `,
+            AND users.id = user_settings.user_id`,
                 [viewingUser]);
 
-            let isAdmin = await client.query(`
-            SELECT username, isadmin
-            FROM users
-            WHERE id = $1`,
-                [userID]);
-
-            isAdmin = isAdmin.rows[0].isadmin;
             username = results.rows[0].username;
 
             if (results.rows[0] !== undefined) {
+                results = results.rows[0];
+                const isAdmin = results.isadmin;
+                const publicProfile = results.publicprofile;
                 //if owner then access anyways / admins get access anyways
-                if (results.rows[0].publicprofile === false || viewingUser === userID || isAdmin === true) {
+                if (publicProfile === true || viewingUser === userID || isAdmin === true) {
                     if (viewingUser === userID) {
                         results = await client.query(`
                         SELECT users.id, users.username, users.displayname, users.member_since, users.isadmin
@@ -656,58 +651,6 @@ class StorageHandler {
                         }
 
                         userCacheObj.badgeColors = badgeColors;
-
-                        /*results = await client.query(`
-                        SELECT users.id, users.username, users.displayname, users.member_since, users.isadmin, user_settings.*, user_trainingsplit.*, user_lifts.*, user_goals.*, user_details.*
-                        FROM users, user_settings, user_trainingsplit, user_lifts, user_goals, user_details
-                        WHERE users.id=$1
-                        AND users.id = user_settings.user_id
-                        AND users.id = user_trainingsplit.user_id
-                        AND users.id = user_lifts.user_id
-                        AND users.id = user_goals.user_id
-                        AND users.id = user_details.user_id`,
-                            [userID]);
- 
-                        if (results.rows[0]) {
-                            results = results.rows[0];
-                            const userID = results.id;
- 
-                            const hasAccessToApi = await client.query(`
-                            SELECT apikey
-                            FROM user_api
-                            WHERE user_id = $1`,
-                                [userID]);
- 
-                            const liftsLeft = [];
-                            const goalsLeft = [];
- 
-                            const liftKeys = Object.keys(results.lifts);
- 
-                            for (let i = 0; i < allowedLifts.length; i++) {
-                                if (liftKeys.includes(allowedLifts[i])) {
-                                } else {
-                                    liftsLeft.push(allowedLifts[i]);
-                                }
-                            }
- 
-                            const goalKeys = Object.keys(results.goals);
- 
-                            for (let i = 0; i < allowedGoals.length; i++) {
-                                if (goalKeys.includes(allowedGoals[i])) {
-                                } else {
-                                    goalsLeft.push(allowedGoals[i]);
-                                }
-                            }
- 
-                            results.liftsLeft = liftsLeft;
-                            results.goalsLeft = goalsLeft;
- 
-                            if (hasAccessToApi.rows[0] !== undefined) {
-                                results.apikey = hasAccessToApi.rows[0].key;
-                            }
- 
-                            results.badgeColors = badgeColors;
-                        }*/
 
                     } else {
                         results = await client.query(`
@@ -1238,20 +1181,51 @@ class StorageHandler {
         try {
             await client.connect();
 
-            let userInfo = await client.query('SELECT * FROM "users" WHERE id=$1', [user]);
+            //lage noe lignende som når man spør om bruker info? Per kolonne liksom
+            /*let userInfo = await client.query(`
+            SELECT *
+            FROM users, user_details, user_settings, user_lifts, user_goals
+            WHERE users.id = $1
+            AND users.id = user_details.user_id
+            AND users.id = user_settings.user_id
+            AND users.id = user_lifts.user_id
+            AND users.id = user_goals.user_id`,
+                [user]);
 
             if (userInfo.rows.length !== 0) {
                 userInfo = userInfo.rows[0];
-                userInformation.UserObject = userInfo;
+                userInformation = userInfo;
                 userInfo.password = "Pga sikkerhet, blir ikke passord hentet";
             }
 
-            let apiInfo = await client.query('SELECT * FROM "api_keys" WHERE user_id=$1', [user]);
+            let trainingsplitInfo = await client.query(`
+                SELECT user_trainingsplit.*
+                FROM users, user_trainingsplit
+                WHERE users.id = $1
+                AND users.id = user_trainingsplit.user_id`,
+                [user]);
+
+            if (trainingsplitInfo.rows.length !== 0) {
+                trainingsplitInfo = trainingsplitInfo.rows[0];
+                console.log(trainingsplitInfo);
+                userInformation.trainingsplit = trainingsplitInfo
+            }
+
+            let apiInfo = await client.query(`
+                SELECT user_api.*
+                FROM users, user_api
+                WHERE users.id = $1
+                AND users.id = user_api.user_id`,
+                [user]);
 
             if (apiInfo.rows.length !== 0) {
                 apiInfo = apiInfo.rows[0];
-                userInformation.APIObject = apiInfo;
-            }
+                console.log(apiInfo)
+            }*/
+
+            //console.log(userInformation)
+
+            client.end();
 
             results = true;
 
@@ -1276,15 +1250,54 @@ class StorageHandler {
         try {
             await client.connect();
 
-            let userInfo = await client.query('SELECT "id" FROM "public"."users" WHERE username=$1 AND password=$2', [username, password]);
+            let userInfo = await client.query(`
+            SELECT id
+            FROM users
+            WHERE username = $1
+            AND password = $2`,
+                [username, password]);
 
             if (userInfo.rows.length !== 0) {
-                userInfo = userInfo.rows[0];
 
-                const deleteID = userInfo.id;
+                const deleteID = userInfo.rows[0].id;
 
-                await client.query('DELETE FROM "public"."users" WHERE id=$1', [deleteID]);
-                await client.query('DELETE FROM "public"."api_keys" WHERE user_id=$1', [deleteID]);
+                //await client.query('DELETE FROM "public"."users" WHERE id=$1', [deleteID]);
+                //await client.query('DELETE FROM "public"."api_keys" WHERE user_id=$1', [deleteID]);
+
+                await client.query(`
+                DELETE FROM user_trainingsplit
+                WHERE user_id=$1`,
+                    [deleteID]);
+
+                await client.query(`
+                DELETE FROM user_settings
+                WHERE user_id=$1`,
+                    [deleteID]);
+
+                await client.query(`
+                DELETE FROM user_lifts
+                WHERE user_id=$1`,
+                    [deleteID]);
+
+                await client.query(`
+                DELETE FROM user_goals
+                WHERE user_id=$1`,
+                    [deleteID]);
+
+                await client.query(`
+                DELETE FROM user_details
+                WHERE user_id=$1`,
+                    [deleteID]);
+
+                await client.query(`
+                DELETE FROM user_api
+                WHERE user_id=$1`,
+                    [deleteID]);
+
+                await client.query(`
+                DELETE FROM users
+                WHERE id=$1`,
+                    [deleteID]);
 
                 results = true;
             }
