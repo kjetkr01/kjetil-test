@@ -1,8 +1,8 @@
 //allowedLifts
-module.exports.allowedLifts = ["Benkpress", "Knebøy", "Markløft", "Skulderpress"];
+module.exports.allowedLifts = ["benkpress", "knebøy", "markløft", "skulderpress"];
 
 //allowedGoals
-module.exports.allowedGoals = ["Benkpress", "Knebøy", "Markløft", "Skulderpress"];
+module.exports.allowedGoals = ["benkpress", "knebøy", "markløft", "skulderpress"];
 
 //badgeColors
 const gradientTxt = "(gradient)";

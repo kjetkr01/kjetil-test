@@ -159,29 +159,35 @@ class StorageHandler {
 
         try {
             await client.connect();
+
             results = await client.query(`
-            SELECT users.username, user_settings.*, user_lifts.user_id
+            SELECT user_lifts.*
             FROM users, user_settings, user_lifts
             WHERE users.id = user_settings.user_id
-            AND users.id = user_lifts.user_id`);
+            AND user_settings.displayleaderboards = true
+            AND users.id = user_lifts.user_id
+            `);
 
-            for (let i = 0; i < results.rows.length; i++) {
-                if (results.rows[i].settings.displayleaderboards === true) {
+            const leaderboardLifts = results.rows;
 
-                    const getLeaderboard = Object.keys(results.rows[i].lifts);
+            for (let i = 0; i < leaderboardLifts.length; i++) {
 
-                    if (getLeaderboard.includes("benkpress") && getLeaderboard.includes("bnebøy") && getLeaderboard.includes("markløft")) {
-                        const updateNumber = parseInt(leaderboards["Totalt"]) || 0;
-                        leaderboards["Totalt"] = updateNumber + 1;
+                const lifts = leaderboardLifts[i];
+                delete lifts.user_id;
+                const liftKeys = Object.keys(lifts);
+
+                if (liftKeys.includes("benkpress") && liftKeys.includes("knebøy") && liftKeys.includes("markløft")) {
+                    if (Object.entries(lifts.benkpress).length > 0 && Object.entries(lifts.knebøy).length > 0 && Object.entries(lifts.markløft).length > 0) {
+                        const updateNumber = parseInt(leaderboards["totalt"]) || 0;
+                        leaderboards["totalt"] = updateNumber + 1;
                     }
+                }
 
-                    for (let j = 0; j < getLeaderboard.length; j++) {
-                        const isAllowedLift = allowedLifts.includes(getLeaderboard[j]);
-
-                        if (isAllowedLift === true) {
-
-                            const updateNumber = parseInt(leaderboards[getLeaderboard[j]]) || 0;
-                            leaderboards[getLeaderboard[j]] = updateNumber + 1;
+                for (let j = 0; j < liftKeys.length; j++) {
+                    if (allowedLifts.includes(liftKeys[j])) {
+                        if (Object.entries(lifts[liftKeys[j]]).length > 0) {
+                            const updateNumber = parseInt(lifts[liftKeys[j]]) || 0;
+                            leaderboards[liftKeys[j]] = updateNumber + 1;
                         }
                     }
                 }
@@ -204,36 +210,112 @@ class StorageHandler {
     async getListOfUsersLeaderboard(leaderboard) {
         const client = new pg.Client(this.credentials);
         let results = null;
+        const infoList = [];
+        const reps = "1"; // kan evt endre utfra hva brukeren spør om?
         try {
             await client.connect();
 
-            results = await client.query(`
-            SELECT users.username, user_settings.*, user_lifts.user_id
-            FROM users, user_settings, user_lifts
-            WHERE users.id = user_settings.user_id
-            AND users.id = user_lifts.user_id`);
+            if (allowedLifts.includes(leaderboard) || leaderboard === "totalt") {
 
-            //let counter = 1;
-            //let info = {};
-            let infoList = [];
+                if (leaderboard === "totalt") {
 
-            if (leaderboard === "Totalt") {
+                    if (reps === "1") {
 
-                for (let i = 0; i < results.rows.length; i++) {
+                        results = await client.query(`
+                        SELECT users.id, users.username, user_lifts.benkpress, user_lifts.knebøy, user_lifts.markløft
+                        FROM users, user_settings, user_lifts
+                        WHERE users.id = user_settings.user_id
+                        AND user_settings.displayleaderboards = true
+                        AND users.id = user_lifts.user_id`);
 
-                    const currentUsersLift = results.rows[i].lifts;
+                        for (let i = 0; i < results.rows.length; i++) {
 
-                    if (results.rows[i].settings.displayLeaderboards === true && leaderboard === "Totalt") {
+                            const currentUser = results.rows[i];
+                            const id = currentUser.id;
+                            const username = currentUser.username;
 
-                        if (currentUsersLift.Benkpress && currentUsersLift.Knebøy && currentUsersLift.Markløft) {
+                            let benkpressKG = null;
+                            let knebøyKG = null;
+                            let markløftKG = null;
 
-                            if (currentUsersLift.Benkpress.ORM !== 0 && currentUsersLift.Benkpress.ORM !== "") {
-                                if (currentUsersLift.Knebøy.ORM !== 0 && currentUsersLift.Knebøy.ORM !== "") {
-                                    if (currentUsersLift.Markløft.ORM !== 0 && currentUsersLift.Markløft.ORM !== "") {
+                            const benkpressLifts = currentUser.benkpress;
+                            const benkpressLiftsKeys = Object.keys(benkpressLifts);
+                            for (let i = 0; i < benkpressLiftsKeys.length; i++) {
 
-                                        const totalORM = parseFloat(currentUsersLift.Benkpress.ORM) + parseFloat(currentUsersLift.Knebøy.ORM) + parseFloat(currentUsersLift.Markløft.ORM);
-                                        infoList.push({ "id": results.rows[i].id, "username": results.rows[i].username, [leaderboard]: totalORM.toFixed(2) });
+                                const liftIndex = benkpressLifts[benkpressLiftsKeys[i]];
+
+                                if (liftIndex.reps === reps) {
+                                    if (liftIndex.kg && liftIndex.kg !== 0 && liftIndex.kg !== "0") {
+                                        benkpressKG = parseFloat(liftIndex.kg);
                                     }
+                                }
+                            }
+
+                            if (benkpressKG) {
+
+                                const knebøyLifts = currentUser.knebøy;
+                                const knebøyLiftsKeys = Object.keys(knebøyLifts);
+                                for (let i = 0; i < knebøyLiftsKeys.length; i++) {
+
+                                    const liftIndex = knebøyLifts[knebøyLiftsKeys[i]];
+
+                                    if (liftIndex.reps === reps) {
+                                        if (liftIndex.kg && liftIndex.kg !== 0 && liftIndex.kg !== "0") {
+                                            knebøyKG = parseFloat(liftIndex.kg);
+                                        }
+                                    }
+                                }
+
+                                if (knebøyKG) {
+
+                                    const markløftLifts = currentUser.markløft;
+                                    const markløftLiftsKeys = Object.keys(markløftLifts);
+                                    for (let i = 0; i < markløftLiftsKeys.length; i++) {
+
+                                        const liftIndex = markløftLifts[markløftLiftsKeys[i]];
+
+                                        if (liftIndex.reps === reps) {
+                                            if (liftIndex.kg && liftIndex.kg !== 0 && liftIndex.kg !== "0") {
+                                                markløftKG = parseFloat(liftIndex.kg);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (benkpressKG && knebøyKG && markløftKG) {
+                                const calcTotal = benkpressKG + knebøyKG + markløftKG;
+                                infoList.push({ "id": id, "username": username, [leaderboard]: calcTotal.toFixed(2) });
+                            }
+
+                        }
+                    }
+
+                } else {
+
+                    results = await client.query(`
+                    SELECT users.id, users.username, user_lifts.${leaderboard}
+                    FROM users, user_settings, user_lifts
+                    WHERE users.id = user_settings.user_id
+                    AND user_settings.displayleaderboards = true
+                    AND users.id = user_lifts.user_id`);
+
+                    for (let i = 0; i < results.rows.length; i++) {
+
+                        const currentUser = results.rows[i];
+                        const id = currentUser.id;
+                        const username = currentUser.username;
+                        const exerciseLifts = currentUser[leaderboard];
+
+                        const exerciseLiftsKeys = Object.keys(exerciseLifts);
+
+                        for (let i = 0; i < exerciseLiftsKeys.length; i++) {
+
+                            const liftIndex = exerciseLifts[exerciseLiftsKeys[i]];
+
+                            if (liftIndex.reps === reps) {
+                                if (liftIndex.kg && liftIndex.kg !== 0 && liftIndex.kg !== "0") {
+                                    infoList.push({ "id": id, "username": username, [leaderboard]: parseFloat(liftIndex.kg) });
                                 }
                             }
                         }
@@ -241,25 +323,10 @@ class StorageHandler {
 
                 }
 
-            } else {
+                //console.log(infoList)
 
-                for (let i = 0; i < results.rows.length; i++) {
-                    const currentUsersLift = results.rows[i].lifts;
-                    if (results.rows[i].settings.displayLeaderboards === true && currentUsersLift[leaderboard]) {
-
-                        if (currentUsersLift[leaderboard].ORM && currentUsersLift[leaderboard].ORM !== 0 && currentUsersLift[leaderboard].ORM !== "") {
-                            //info[counter] = { "username": results.rows[i].username, [leaderboard]: results.rows[i].lifts[leaderboard].ORM };
-                            infoList.push({ "id": results.rows[i].id, "username": results.rows[i].username, [leaderboard]: parseFloat(results.rows[i].lifts[leaderboard].ORM) });
-                            //counter++;
-                        }
-
-                    }
-
-                }
+                results = infoList;
             }
-
-            //results = info;
-            results = infoList;
 
             client.end();
         } catch (err) {
@@ -600,45 +667,45 @@ class StorageHandler {
                         AND users.id = user_goals.user_id
                         AND users.id = user_details.user_id`,
                             [userID]);
-
+ 
                         if (results.rows[0]) {
                             results = results.rows[0];
                             const userID = results.id;
-
+ 
                             const hasAccessToApi = await client.query(`
                             SELECT apikey
                             FROM user_api
                             WHERE user_id = $1`,
                                 [userID]);
-
+ 
                             const liftsLeft = [];
                             const goalsLeft = [];
-
+ 
                             const liftKeys = Object.keys(results.lifts);
-
+ 
                             for (let i = 0; i < allowedLifts.length; i++) {
                                 if (liftKeys.includes(allowedLifts[i])) {
                                 } else {
                                     liftsLeft.push(allowedLifts[i]);
                                 }
                             }
-
+ 
                             const goalKeys = Object.keys(results.goals);
-
+ 
                             for (let i = 0; i < allowedGoals.length; i++) {
                                 if (goalKeys.includes(allowedGoals[i])) {
                                 } else {
                                     goalsLeft.push(allowedGoals[i]);
                                 }
                             }
-
+ 
                             results.liftsLeft = liftsLeft;
                             results.goalsLeft = goalsLeft;
-
+ 
                             if (hasAccessToApi.rows[0] !== undefined) {
                                 results.apikey = hasAccessToApi.rows[0].key;
                             }
-
+ 
                             results.badgeColors = badgeColors;
                         }*/
 
