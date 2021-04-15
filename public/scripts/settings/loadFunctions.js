@@ -78,22 +78,22 @@ async function loadDefaultPage(setting) {
 
     settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.aboutMe.name, "aboutDiv", "spacingTop");
 
-    if (settings.publicProfile === true) {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Privat profil", "profileVisibilityDiv", true, "publicProfile", "spacingTop");
+    if (settings.publicprofile === true) {
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Privat profil", "profileVisibilityDiv", true, "publicprofile", "spacingTop");
     } else {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Privat profil", "profileVisibilityDiv", false, "publicProfile", "spacingTop");
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Privat profil", "profileVisibilityDiv", false, "publicprofile", "spacingTop");
     }
 
-    if (settings.displayLeaderboards === true) {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Ledertavler synlighet", "leaderboardsVisibilityDiv", true, "displayLeaderboards");
+    if (settings.displayleaderboards === true) {
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Ledertavler synlighet", "leaderboardsVisibilityDiv", true, "displayleaderboards");
     } else {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Ledertavler synlighet", "leaderboardsVisibilityDiv", false, "displayLeaderboards");
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Ledertavler synlighet", "leaderboardsVisibilityDiv", false, "displayleaderboards");
     }
 
-    if (settings.displayWorkoutList === true) {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", "workoutTodayListDiv", true, "displayWorkoutList");
+    if (settings.displayworkoutlist === true) {
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", "workoutTodayListDiv", true, "displayworkoutlist");
     } else {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", "workoutTodayListDiv", false, "displayWorkoutList");
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", "workoutTodayListDiv", false, "displayworkoutlist");
     }
 
     settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.apperance.name, "appearanceDiv", "spacingTop");
@@ -245,8 +245,8 @@ function loadProgressionInfoPage() {
     settingsGrid.innerHTML = justTextTemplate("Her kan du endre hvor mye informasjon du ønsker å se på startsiden!", "left");
 
     const badgeSizesObj = {
-        0: { name: "Liten", value: "0" },
-        1: { name: "Stor", value: "1" }
+        0: { name: "Liten", value: 0 },
+        1: { name: "Stor", value: 1 }
     }
 
     let badeSizeOptionsHTML = "";
@@ -257,7 +257,7 @@ function loadProgressionInfoPage() {
 
         const badge = badgeSizesObj[badgeSizesObjKeys[i]];
 
-        if (badge.value === settings.badgeSize) {
+        if (badge.value === settings.badgesize) {
             badeSizeOptionsHTML += `<option selected="selected" value="${badge.value}">${badge.name}</option>`;
         } else {
             badeSizeOptionsHTML += `<option value="${badge.value}">${badge.name}</option>`;
@@ -419,7 +419,7 @@ async function loadUsersListPage(setting) {
                     hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsDeclinePendingUser pointer" onClick="removeAPIAccess('${currentUser.username}','${currentUser.id}');">Fjern API tilgang</button>`;
                 }
 
-                if (currentUser.settings.publicProfile === true) {
+                if (currentUser.publicprofile === true) {
                     profileStatus = `<p class="settingsPendingUsername" style="color:red;">Privat</p>`;
                 }
 
@@ -499,7 +499,8 @@ async function loadPendingUsersPage(setting) {
             if (resp[i].request_date) {
 
                 let requestDate = resp[i].request_date;
-                requestDate = requestDate.split("-");
+                requestDate = requestDate.split("T");
+                requestDate = requestDate[0].split("-");
 
                 if (requestDate[0].length === 4 && requestDate[1] > 0 && requestDate[1] <= 12 && requestDate[1].length <= 2 && requestDate[2] > 0 && requestDate[2] <= 31 && requestDate[2].length <= 2) {
 

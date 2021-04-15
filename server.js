@@ -459,7 +459,7 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
      const setting = req.body.updateSetting;
      const value = req.body.value;
 
-     const allowedSettings = ["publicProfile", "displayLeaderboards", "displayWorkoutList", "preferredTheme", "preferredColorTheme", "badgeSize"];
+     const allowedSettings = ["publicprofile", "displayleaderboards", "displayworkoutlist", "preferredtheme", "preferredcolortheme", "badgesize"];
      const allowedValues = [true, false, "0", "1", "2"];
 
      if (currentUser.username && allowedSettings.includes(setting) && allowedValues.includes(value)) {

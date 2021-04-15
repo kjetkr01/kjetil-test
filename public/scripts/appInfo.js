@@ -5,13 +5,13 @@ const application = {
     logoURL: "images/appIcon.png",
     version: {
         state: "alpha",
-        major: 3, // major++ = minor = 0 && revision = 0
-        minor: 5, // minor++ = revision = 0
-        revision: 16,
+        major: 4, // major++ = minor = 0 && revision = 0
+        minor: 0, // minor++ = revision = 0
+        revision: 0,
     },
     lastUpdated: {
-        day: "28",
-        month: "03",
+        day: "15",
+        month: "04",
         year: "2021"
     },
     updatesInfo: {

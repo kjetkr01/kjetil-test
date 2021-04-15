@@ -136,7 +136,7 @@ async function savePreferredApperance() {
         isUpdatingCheckboxSetting = true;
 
         const value = document.getElementById("appearanceThemeSelection").value;
-        const setting = "preferredTheme";
+        const setting = "preferredtheme";
 
         const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
         const url = `/user/update/settings/${setting}`;
@@ -188,7 +188,7 @@ async function saveColorTheme() {
         isUpdatingCheckboxSetting = true;
 
         const value = document.getElementById("themeColorSelection").value;
-        const setting = "preferredColorTheme";
+        const setting = "preferredcolortheme";
 
         const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
         const url = `/user/update/settings/${setting}`;
@@ -226,7 +226,7 @@ async function saveColorTheme() {
 async function updateBadgeSize() {
 
     const value = document.getElementById("badgeSizeSelection").value;
-    const setting = "badgeSize";
+    const setting = "badgesize";
 
     const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
     const url = `/user/update/settings/${setting}`;

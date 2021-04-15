@@ -34,8 +34,8 @@ class StorageHandler {
 
                 // checks if username is already taken in users table
                 results = await client.query(`
-                SELECT "username"
-                FROM "users"
+                SELECT username
+                FROM users
                 WHERE username=$1`,
                     [username]);
 
@@ -124,7 +124,8 @@ class StorageHandler {
             if (checkIfAdmin.rows.length !== 0) {
                 allAPIUsers = await client.query(`
                 SELECT user_id
-                FROM user_api`);
+                FROM user_api
+                WHERE user_api.apikey IS NOT null`);
 
                 allAPIUsers = allAPIUsers.rows;
 
@@ -618,8 +619,10 @@ class StorageHandler {
 
                         const hasAccessToApi = await client.query(`
                             SELECT apikey
-                            FROM user_api
-                            WHERE user_id = $1`,
+                            FROM users, user_api
+                            WHERE users.id = $1
+                            AND users.id = user_api.user_id
+                            AND apikey IS NOT null`,
                             [userIDReq]);
 
                         const liftsLeft = [];
@@ -657,7 +660,7 @@ class StorageHandler {
                         SELECT users.username, users.displayname, users.member_since
                         FROM users
                         WHERE users.id=$1`,
-                            [userID]);
+                            [viewingUser]);
 
                         userCacheObj = results.rows[0];
 
@@ -666,7 +669,7 @@ class StorageHandler {
                         FROM users, user_details
                         WHERE users.id = $1
                         AND users.id = user_details.user_id`,
-                            [userID]);
+                            [viewingUser]);
 
                         delete results.rows[0].user_id;
                         userCacheObj.info = results.rows[0];
@@ -676,7 +679,7 @@ class StorageHandler {
                         FROM users, user_lifts
                         WHERE users.id = $1
                         AND users.id = user_lifts.user_id`,
-                            [userID]);
+                            [viewingUser]);
 
                         delete results.rows[0].user_id;
                         userCacheObj.lifts = results.rows[0];
@@ -686,7 +689,7 @@ class StorageHandler {
                         FROM users, user_goals
                         WHERE users.id = $1
                         AND users.id = user_goals.user_id`,
-                            [userID]);
+                            [viewingUser]);
 
                         delete results.rows[0].user_id;
                         userCacheObj.goals = results.rows[0];
@@ -759,11 +762,7 @@ class StorageHandler {
         try {
             await client.connect();
 
-            console.log("fix update")
-
-            client.end();
-
-            results = await client.query(`
+            /*results = await client.query(`
             SELECT user_settings.*
             FROM users, user_settings
             WHERE users.username = $1
@@ -778,7 +777,19 @@ class StorageHandler {
             UPDATE user_settings
             SET settings=$1
             WHERE username=$2`,
-                [newSettings, username]);
+                [newSettings, username]);*/
+
+            const user_id = await client.query(`
+            SELECT id
+            FROM users
+            WHERE username = $1`,
+                [username]);
+
+            await client.query(`
+            UPDATE user_settings
+            SET ${setting} = ${value}
+            WHERE user_id = $1`,
+                [user_id.rows[0].id]);
 
             results = true;
 
@@ -1040,7 +1051,11 @@ class StorageHandler {
         try {
             await client.connect();
 
-            await client.query('UPDATE "users" SET displayname=$1 WHERE username=$2', [newDisplayname, username]);
+            await client.query(`
+            UPDATE users
+            SET displayname = $1
+            WHERE username = $2`,
+                [newDisplayname, username]);
 
             results = true;
 
@@ -1068,16 +1083,28 @@ class StorageHandler {
             //await client.query('UPDATE "users" SET username=$1 WHERE username=$2', [newUsername, username]);
 
             // checks if username is already taken in pending_users table
-            results = await client.query('SELECT "username" FROM "pending_users" WHERE username=$1', [newUsername]);
+            results = await client.query(`
+            SELECT username
+            FROM pending_users
+            WHERE username = $1`,
+                [newUsername]);
 
             if (results.rows.length === 0) {
 
                 // checks if username is already taken in users table
-                results = await client.query('SELECT "username" FROM "users" WHERE username=$1', [newUsername]);
+                results = await client.query(`
+                SELECT username
+                FROM users
+                WHERE username = $1`,
+                    [newUsername]);
 
                 if (results.rows.length === 0) {
 
-                    await client.query('UPDATE "users" SET username=$1 WHERE username=$2', [newUsername, username]);
+                    await client.query(`
+                    UPDATE users
+                    SET username = $1
+                    WHERE username = $2`,
+                        [newUsername, username]);
                     results = true;
                     client.end();
 
@@ -1114,12 +1141,21 @@ class StorageHandler {
         try {
             await client.connect();
 
-            results = await client.query('SELECT "password" FROM "users" WHERE id=$1 AND password=$2', [user, exsistingPsw]);
+            results = await client.query(`
+            SELECT password
+            FROM users
+            WHERE id = $1
+            AND password = $2`,
+                [user, exsistingPsw]);
 
             if (results.rows.length !== 0) {
 
                 if (results.rows[0].password !== newPsw) {
-                    await client.query('UPDATE "users" SET password=$1 WHERE id=$2', [newPsw, user]);
+                    await client.query(`
+                    UPDATE users
+                    SET password = $1
+                    WHERE id = $2`,
+                        [newPsw, user]);
                     results = true;
                 } else {
                     message = "Passordet ble ikke endret. Eksisterende passord og nytt passord er like";
@@ -1145,7 +1181,7 @@ class StorageHandler {
 
     //  -------------------------------  update about me (user)  ------------------------------- //
 
-    async updateAboutMe(username, settings) {
+    async updateAboutMe(username, aboutme) {
 
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -1153,9 +1189,50 @@ class StorageHandler {
         try {
             await client.connect();
 
-            await client.query('UPDATE "users" SET info=$1 WHERE username=$2', [settings, username]);
+            //await client.query('UPDATE "users" SET info=$1 WHERE username=$2', [settings, username]);
 
-            results = true;
+            const user_id = await client.query(`
+            SELECT id
+            FROM users
+            WHERE username = $1`,
+                [username]);
+
+            if (user_id.rows[0].id) {
+
+                const aboutMeKeys = Object.keys(aboutme);
+
+                const allowedAboutMe = ["gym", "age", "height", "weight"];
+
+                if (aboutMeKeys.length === 4) {
+
+                    let valid = false;
+
+                    for (let i = 0; i < allowedAboutMe.length; i++) {
+                        if (allowedAboutMe.includes(aboutMeKeys[i])) {
+                            valid = true;
+                        } else {
+                            valid = false;
+                        }
+                    }
+
+                    if (valid === true) {
+
+                        const gymValue = aboutme.gym;
+                        const ageValue = aboutme.age;
+                        const heightValue = aboutme.height;
+                        const weightValue = aboutme.weight;
+
+                        await client.query(`
+                            UPDATE user_details
+                            SET gym = $2, age = $3, height = $4, weight = $5
+                            WHERE user_id = $1`,
+                            [user_id.rows[0].id, gymValue, ageValue, heightValue, weightValue]);
+
+                    }
+                }
+
+                results = true;
+            }
 
         } catch (err) {
             client.end();
@@ -1324,17 +1401,34 @@ class StorageHandler {
         try {
             await client.connect();
 
-            const checkIfAdmin = await client.query('SELECT "username" FROM "users" WHERE username=$1 AND isadmin=true', [username]);
+            const checkIfAdmin = await client.query(`
+            SELECT username
+            FROM users
+            WHERE username = $1
+            AND isadmin=true`,
+                [username]);
 
             if (checkIfAdmin.rows.length !== 0) {
 
-                results = await client.query('SELECT "key" FROM "api_keys" WHERE user_id=$1', [giveAPIUserAccess]);
+                results = await client.query(`
+                SELECT user_api.apikey
+                FROM users, user_api
+                WHERE users.id=$1
+                AND users.id = user_api.user_id
+                AND user_api.apikey IS NOT null`,
+                    [giveAPIUserAccess]);
 
                 if (results.rows.length === 0) {
                     const randomNum = Math.floor(Math.random() * 99999) + giveAPIUserAccess;
                     let generatedAPIKey = giveAPIUserAccess.toString() + randomNum.toString();
                     generatedAPIKey = parseInt(generatedAPIKey);
-                    await client.query('INSERT INTO "api_keys" VALUES($1, $2)', [giveAPIUserAccess, generatedAPIKey]);
+                    //await client.query('INSERT INTO "api_keys" VALUES($1, $2)', [giveAPIUserAccess, generatedAPIKey]);
+                    await client.query(`
+                    UPDATE user_api
+                    SET apikey = $2
+                    WHERE user_api.user_id = $1`,
+                        [giveAPIUserAccess, generatedAPIKey]);
+
                     results = true;
                 } else {
                     results = false;
@@ -1363,15 +1457,32 @@ class StorageHandler {
         try {
             await client.connect();
 
-            const checkIfAdmin = await client.query('SELECT "username" FROM "users" WHERE username=$1 AND isadmin=true', [username]);
+            const checkIfAdmin = await client.query(`
+            SELECT username
+            FROM users
+            WHERE username = $1
+            AND isadmin=true`,
+                [username]);
 
             if (checkIfAdmin.rows.length !== 0) {
 
-                results = await client.query('SELECT "key" FROM "api_keys" WHERE user_id=$1', [removeAPIUserAccess]);
+                results = await client.query(`
+                SELECT user_api.apikey
+                FROM users, user_api
+                WHERE users.id=$1
+                AND users.id = user_api.user_id
+                AND user_api.apikey IS NOT null`,
+                    [removeAPIUserAccess]);
 
                 if (results.rows.length !== 0) {
 
-                    await client.query('DELETE FROM "api_keys" WHERE user_id=$1', [removeAPIUserAccess]);
+                    //await client.query('DELETE FROM "api_keys" WHERE user_id=$1', [removeAPIUserAccess]);
+                    await client.query(`
+                    UPDATE user_api
+                    SET apikey = default
+                    WHERE user_api.user_id = $1`,
+                        [removeAPIUserAccess]);
+
                     results = true;
                 } else {
                     results = false;
@@ -1406,7 +1517,12 @@ class StorageHandler {
         try {
             await client.connect();
 
-            results = await client.query('SELECT "user_id" FROM "api_keys" WHERE key=$1', [key]);
+            results = await client.query(`
+            SELECT user_id
+            FROM user_api
+            WHERE apikey = $1
+            AND apikey IS NOT null`,
+                [key]);
 
             if (results.rows.length === 0) {
 
@@ -1418,15 +1534,23 @@ class StorageHandler {
                     isOwner = true;
                 }
 
-                results = await client.query('SELECT "settings" FROM "users" WHERE id=$1', [user]);
+                results = await client.query(`
+                SELECT publicprofile
+                FROM user_settings
+                WHERE user_id = $1`,
+                    [user]);
 
                 if (results.rows.length === 0) {
                     results = false;
                 } else {
-                    const userHasPublicProfile = results.rows[0].settings.publicProfile;
+                    const userHasPublicProfile = results.rows[0].publicprofile;
 
                     if (userHasPublicProfile === false || isOwner === true) {
-                        results = await client.query('SELECT "trainingsplit","displayname" FROM "users" WHERE id=$1', [user]);
+                        //results = await client.query(`SELECT "trainingsplit","displayname" FROM "users" WHERE id=$1`, [user]);
+
+                        console.log("fix trainingsplit");
+
+                        client.end();
 
                         if (results.rows.length === 0) {
                             results = false;
@@ -1468,7 +1592,12 @@ class StorageHandler {
         try {
             await client.connect();
 
-            results = await client.query('SELECT "user_id" FROM "api_keys" WHERE key=$1', [key]);
+            results = await client.query(`
+            SELECT user_id
+            FROM user_api
+            WHERE apikey = $1
+            AND apikey IS NOT null`,
+                [key]);
 
             if (results.rows.length === 0) {
 
@@ -1480,51 +1609,89 @@ class StorageHandler {
                     isOwner = true;
                 }
 
-                results = await client.query('SELECT "settings" FROM "users" WHERE id=$1', [user]);
+                results = await client.query(`
+                SELECT publicprofile
+                FROM user_settings
+                WHERE user_id = $1`,
+                    [user]);
 
                 if (results.rows.length === 0) {
                     results = false;
                 } else {
-                    const userHasPublicProfile = results.rows[0].settings.publicProfile;
+                    const userHasPublicProfile = results.rows[0].publicprofile;
 
                     if (userHasPublicProfile === false || isOwner === true) {
-                        results = await client.query('SELECT "lifts","displayname" FROM "users" WHERE id=$1', [user]);
 
-                        if (results.rows.length === 0) {
-                            results = false;
-                        } else {
+                        results = await client.query(`
+                        SELECT users.id, users.username, user_lifts.benkpress, user_lifts.knebøy, user_lifts.markløft
+                        FROM users, user_lifts
+                        WHERE users.id = $1
+                        AND users.id = user_lifts.user_id`, [user]);
 
-                            info = results.rows[0];
+                        if (results.rows.length !== 0) {
 
-                            if (info.lifts.hasOwnProperty("Benkpress") && info.lifts.hasOwnProperty("Knebøy") && info.lifts.hasOwnProperty("Markløft")) {
+                            const currentUser = results.rows[0];
 
-                                const currentUsersLift = results.rows[0].lifts;
+                            let benkpressKG = null;
+                            let knebøyKG = null;
+                            let markløftKG = null;
+                            const reps = "1";
 
-                                if (currentUsersLift.Benkpress.ORM !== 0 && currentUsersLift.Benkpress.ORM !== "") {
-                                    if (currentUsersLift.Knebøy.ORM !== 0 && currentUsersLift.Knebøy.ORM !== "") {
-                                        if (currentUsersLift.Markløft.ORM !== 0 && currentUsersLift.Markløft.ORM !== "") {
+                            const benkpressLifts = currentUser.benkpress;
+                            const benkpressLiftsKeys = Object.keys(benkpressLifts);
+                            for (let i = 0; i < benkpressLiftsKeys.length; i++) {
 
-                                            const totalORMKG = parseFloat(currentUsersLift.Benkpress.ORM) + parseFloat(currentUsersLift.Knebøy.ORM) + parseFloat(currentUsersLift.Markløft.ORM);
-                                            const totalORMLBS = totalORMKG * 2.20462262;
-                                            info.kg = totalORMKG.toFixed(2);
-                                            info.lbs = totalORMLBS.toFixed(2);
-                                            results = true;
+                                const liftIndex = benkpressLifts[benkpressLiftsKeys[i]];
+
+                                if (liftIndex.reps === reps) {
+                                    if (liftIndex.kg && liftIndex.kg !== 0 && liftIndex.kg !== "0") {
+                                        benkpressKG = parseFloat(liftIndex.kg);
+                                    }
+                                }
+                            }
+
+                            if (benkpressKG) {
+
+                                const knebøyLifts = currentUser.knebøy;
+                                const knebøyLiftsKeys = Object.keys(knebøyLifts);
+                                for (let i = 0; i < knebøyLiftsKeys.length; i++) {
+
+                                    const liftIndex = knebøyLifts[knebøyLiftsKeys[i]];
+
+                                    if (liftIndex.reps === reps) {
+                                        if (liftIndex.kg && liftIndex.kg !== 0 && liftIndex.kg !== "0") {
+                                            knebøyKG = parseFloat(liftIndex.kg);
                                         }
                                     }
                                 }
 
-                            } else {
-                                info = {};
-                                results = false;
+                                if (knebøyKG) {
+
+                                    const markløftLifts = currentUser.markløft;
+                                    const markløftLiftsKeys = Object.keys(markløftLifts);
+                                    for (let i = 0; i < markløftLiftsKeys.length; i++) {
+
+                                        const liftIndex = markløftLifts[markløftLiftsKeys[i]];
+
+                                        if (liftIndex.reps === reps) {
+                                            if (liftIndex.kg && liftIndex.kg !== 0 && liftIndex.kg !== "0") {
+                                                markløftKG = parseFloat(liftIndex.kg);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (benkpressKG && knebøyKG && markløftKG) {
+                                const totalORMKG = benkpressKG + knebøyKG + markløftKG;
+                                const totalORMLBS = totalORMKG * 2.20462262;
+                                info.kg = totalORMKG.toFixed(2);
+                                info.lbs = totalORMLBS.toFixed(2);
+                                results = true;
                             }
                         }
-
-                    } else {
-                        results = false;
                     }
-
                 }
-
             }
 
             client.end();
