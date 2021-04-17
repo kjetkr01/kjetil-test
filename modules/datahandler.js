@@ -552,7 +552,7 @@ class StorageHandler {
             await client.connect();
 
             results = await client.query(`
-            SELECT users.username, users.isadmin, user_settings.publicprofile
+            SELECT users.username, user_settings.publicprofile
             FROM users, user_settings
             WHERE users.id=$1
             AND users.id = user_settings.user_id`,
@@ -562,7 +562,16 @@ class StorageHandler {
 
             if (results.rows[0] !== undefined) {
                 results = results.rows[0];
-                const isAdmin = results.isadmin;
+
+                let isAdmin = await client.query(`
+                SELECT users.isadmin
+                FROM users
+                WHERE users.id=$1`,
+                    [userID]);
+
+                isAdmin = isAdmin.rows[0].isadmin || false;
+
+                //const isAdmin = results.isadmin;
                 const publicProfile = results.publicprofile;
                 //if owner then access anyways / admins get access anyways
                 if (publicProfile === true || viewingUser === userID || isAdmin === true) {
@@ -819,19 +828,24 @@ class StorageHandler {
         try {
             await client.connect();
 
-            results = await client.query(`
-            SELECT users.id, users.displayname, user_settings.*, user_trainingsplit.*
-            FROM users, user_settings, user_trainingsplit`);
+            const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+            const dayNum = new Date().getDay();
 
-            //let counter = 0;
+            const day = days[dayNum];
 
-            for (let i = 0; i < results.rows.length; i++) {
-                const todaysWorkout = results.rows[i].trainingsplit[dayTxt];
+            const workoutUsers = await client.query(`
+                        SELECT users.id, users.displayname, ${day}
+                        FROM users, user_settings, user_trainingsplit
+                        WHERE users.id = user_settings.user_id
+                        AND users.id = user_trainingsplit.user_id
+                        AND user_settings.displayworkoutlist = true
+                        AND user_settings.activetrainingsplit = user_trainingsplit.trainingsplit_id`);
+
+            for (let i = 0; i < workoutUsers.rows.length; i++) {
+                const todaysWorkout = workoutUsers.rows[i][day].short;
                 if (todaysWorkout) {
-                    if (results.rows[i].settings.displayWorkoutList === true && todaysWorkout.length > 0 && todaysWorkout !== "Fri") {
-                        //info[counter] = { "username": results.rows[i].username, "userFullName": results.rows[i].displayname, "todaysWorkout": todaysWorkout };
-                        //counter++;
-                        infoList.push({ "id": results.rows[i].id, "userFullName": results.rows[i].displayname, "todaysWorkout": todaysWorkout });
+                    if (todaysWorkout.length > 0 && todaysWorkout !== "Fri") {
+                        infoList.push({ "id": workoutUsers.rows[i].id, "userFullName": workoutUsers.rows[i].displayname, "todaysWorkout": todaysWorkout });
                     }
                 }
             }
@@ -1530,7 +1544,7 @@ class StorageHandler {
 
             } else {
 
-                if (results.rows[0].user_id === user) {
+                if ((results.rows[0].user_id).toString() === user) {
                     isOwner = true;
                 }
 
@@ -1545,18 +1559,61 @@ class StorageHandler {
                 } else {
                     const userHasPublicProfile = results.rows[0].publicprofile;
 
-                    if (userHasPublicProfile === false || isOwner === true) {
+                    if (userHasPublicProfile === true || isOwner === true) {
                         //results = await client.query(`SELECT "trainingsplit","displayname" FROM "users" WHERE id=$1`, [user]);
 
-                        console.log("fix trainingsplit");
+                        results = await client.query(`
+                        SELECT activetrainingsplit
+                        FROM user_settings
+                        WHERE user_id = $1`,
+                            [user]);
 
-                        client.end();
+                        if (results.rows.length !== 0) {
 
-                        if (results.rows.length === 0) {
-                            results = false;
+                            if (results.rows[0].hasOwnProperty("activetrainingsplit")) {
+
+                                const activetrainingsplit = results.rows[0].activetrainingsplit;
+                                const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+                                const dayNum = new Date().getDay();
+
+                                const day = days[dayNum];
+
+                                results = await client.query(`
+                                SELECT ${day}
+                                FROM user_trainingsplit
+                                WHERE user_id = $1
+                                AND trainingsplit_id = $2`,
+                                    [user, activetrainingsplit]);
+
+                                if (results.rows.length !== 0) {
+
+                                    info.workout = results.rows[0][day].short;
+
+                                    results = await client.query(`
+                                    SELECT displayname
+                                    FROM users
+                                    WHERE id = $1`,
+                                        [user]);
+
+                                    if (results.rows.length !== 0) {
+
+                                        info.displayname = results.rows[0].displayname;
+                                        results = true;
+
+                                    } else {
+                                        results = false;
+                                    }
+
+                                } else {
+                                    results = false;
+                                }
+
+                            } else {
+                                results = false;
+                            }
+
                         } else {
-                            info = results.rows[0]
-                            results = true;
+                            results = false;
                         }
 
                     } else {
@@ -1605,7 +1662,7 @@ class StorageHandler {
 
             } else {
 
-                if (results.rows[0].id === user) {
+                if ((results.rows[0].user_id).toString() === user) {
                     isOwner = true;
                 }
 
@@ -1620,7 +1677,7 @@ class StorageHandler {
                 } else {
                     const userHasPublicProfile = results.rows[0].publicprofile;
 
-                    if (userHasPublicProfile === false || isOwner === true) {
+                    if (userHasPublicProfile === true || isOwner === true) {
 
                         results = await client.query(`
                         SELECT users.id, users.username, user_lifts.benkpress, user_lifts.knebøy, user_lifts.markløft

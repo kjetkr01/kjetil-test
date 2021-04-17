@@ -943,41 +943,37 @@ server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
 
                if (getWorkoutPlanInfo.status === true) {
 
-                    const program = getWorkoutPlanInfo.info.trainingsplit;
+                    const workout = getWorkoutPlanInfo.info.workout;
                     let firstName = getWorkoutPlanInfo.info.displayname
                     firstName = firstName.split(" ");
                     firstName = firstName[0];
 
                     let workoutTxt = "";
 
-                    if (Object.keys(program).length === 0) {
-                         res.status(200).json(APIErrorJSON.workoutplan).end();
+                    if (getWorkoutPlanInfo.isOwner === true) {
+
+                         if (workout && workout.length > 0 && workout !== "Fri") {
+                              workoutTxt = `Skal du trene ${workout}`;
+                         } else {
+                              workoutTxt = `Skal du ikke trene`;
+                         }
+
                     } else {
 
-                         if (getWorkoutPlanInfo.isOwner === true) {
-
-                              if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
-                                   workoutTxt = `Skal du trene ${program[dayTxt]}`;
-                              } else {
-                                   workoutTxt = `Skal du ikke trene`;
-                              }
-
+                         if (workout && workout.length > 0 && workout !== "Fri") {
+                              workoutTxt = `Trener ${firstName} ${workout}`;
                          } else {
-
-                              if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
-                                   workoutTxt = `Trener ${firstName} ${program[dayTxt]}`;
-                              } else {
-                                   workoutTxt = `Trener ikke ${firstName}`;
-                              }
+                              workoutTxt = `Trener ikke ${firstName}`;
                          }
-
-                         const resp = {
-                              "currentDay": dayTxt.toLocaleLowerCase(),
-                              "todaysWorkout": workoutTxt
-                         }
-
-                         res.status(200).json(resp).end();
                     }
+
+                    const resp = {
+                         "currentDay": dayTxt.toLocaleLowerCase(),
+                         "todaysWorkout": workoutTxt
+                    }
+
+                    res.status(200).json(resp).end();
+                    //}
 
                } else {
                     res.status(403).json(APIErrorJSON.access).end();

@@ -79,9 +79,9 @@ async function loadDefaultPage(setting) {
     settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.aboutMe.name, "aboutDiv", "spacingTop");
 
     if (settings.publicprofile === true) {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Privat profil", "profileVisibilityDiv", true, "publicprofile", "spacingTop");
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Offentlig profil", "profileVisibilityDiv", true, "publicprofile", "spacingTop");
     } else {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Privat profil", "profileVisibilityDiv", false, "publicprofile", "spacingTop");
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Offentlig profil", "profileVisibilityDiv", false, "publicprofile", "spacingTop");
     }
 
     if (settings.displayleaderboards === true) {
@@ -411,7 +411,7 @@ async function loadUsersListPage(setting) {
 
                 const currentUser = resp.allUsers[usersKeys[i]];
                 let myAccountColor = "";
-                let profileStatus = `<p class="settingsPendingUsername" style="color:green;">Offentlig</p>`;
+                let profileStatus = `<p class="settingsPendingUsername" style="color:red;">Privat</p>`;
 
                 let hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsAcceptPendingUser pointer" onClick="giveAPIAccess('${currentUser.username}','${currentUser.id}');">Gi API tilgang</button>`;
 
@@ -420,7 +420,7 @@ async function loadUsersListPage(setting) {
                 }
 
                 if (currentUser.publicprofile === true) {
-                    profileStatus = `<p class="settingsPendingUsername" style="color:red;">Privat</p>`;
+                    profileStatus = `<p class="settingsPendingUsername" style="color:green;">Offentlig</p>`;
                 }
 
                 if (currentUser.username === username) {
