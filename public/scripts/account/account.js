@@ -84,10 +84,9 @@ function displayInformation(respInfo) {
     } else {
         document.getElementById("infoList").textContent = "";
     }
-
     if (lifts) {
         liftsInfo = new Tlifts(info.lifts);
-        //displayLifts(info.liftsLeft.length > 0);
+        displayLifts(info.liftsLeft.length > 0);
     }
 
     if (goals) {
@@ -115,36 +114,49 @@ function displayInformation(respInfo) {
 
                 for (let i = 0; i < keys.length; i++) {
 
-                    const liftKeys = lifts[keys[i]];
+                    const exerciseLift = lifts[keys[i]];
+                    const exerciseLiftKeys = Object.keys(exerciseLift);
 
-                    if (liftKeys.ORM !== "0" && liftKeys.ORM !== 0 && liftKeys.ORM !== "") {
+                    for (let j = 0; j < exerciseLiftKeys.length; j++) {
 
-                        const color = liftKeys.color || "redBadgeG";
+                        const liftKeys = exerciseLift[exerciseLiftKeys[j]];
 
-                        const prDateArr = liftKeys.PRdate.split("-");
+                        if (liftKeys) {
+                            if (liftKeys.kg !== "0" && liftKeys.kg !== 0 && liftKeys.kg !== "") {
 
-                        if (prDateArr.length === 3) {
+                                const color = liftKeys.color || "redBadgeG";
 
-                            if (prDateArr[0].length === 4 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2 && prDateArr[2] > 0 && prDateArr[2] <= 31 && prDateArr[2].length <= 2) {
+                                const prDateArr = liftKeys.date.split("-");
 
-                                const d = new Date();
-                                const prDate = new Date(prDateArr[0], (prDateArr[1] - 1), prDateArr[2]);
+                                if (prDateArr.length === 3) {
 
-                                const daysSinceTime = parseInt((d - prDate) / (1000 * 3600 * 24));
+                                    if (prDateArr[0].length === 4 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2 && prDateArr[2] > 0 && prDateArr[2] <= 31 && prDateArr[2].length <= 2) {
 
-                                if (d < prDate) {
-                                    //fremtiden
-                                } else if (daysSinceTime > 1) {
-                                    msg = `${parseInt(daysSinceTime)} dager siden`;
-                                } else if (daysSinceTime === 1) {
-                                    msg = `I går`;
-                                } else if (daysSinceTime === 0) {
-                                    msg = `I dag`;
+                                        const d = new Date();
+                                        const prDate = new Date(prDateArr[0], (prDateArr[1] - 1), prDateArr[2]);
+
+                                        const daysSinceTime = parseInt((d - prDate) / (1000 * 3600 * 24));
+
+                                        if (d < prDate) {
+                                            //fremtiden
+                                        } else if (daysSinceTime > 1) {
+                                            msg = `${parseInt(daysSinceTime)} dager siden`;
+                                        } else if (daysSinceTime === 1) {
+                                            msg = `I går`;
+                                        } else if (daysSinceTime === 0) {
+                                            msg = `I dag`;
+                                        }
+                                    }
                                 }
+
+                                function capitalizeFirstLetter(string) {
+                                    return string.charAt(0).toUpperCase() + string.slice(1);
+                                }
+
+                                arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": liftKeys.kg, "msg": msg, "color": color });
+
                             }
                         }
-
-                        arr.push({ "exercise": keys[i], "kg": liftKeys.ORM, "msg": msg, "color": color });
 
                     }
                 }
