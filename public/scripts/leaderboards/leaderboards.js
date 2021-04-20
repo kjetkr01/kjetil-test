@@ -27,11 +27,16 @@ async function loadLeaderboards() {
         firstLeaderboard = leaderboardsArrOrder[0].leaderboard[0];
 
         for (let i = 0; i < leaderboardsArrOrder.length; i++) {
+
             const currentLeaderboard = leaderboardsArrOrder[i].leaderboard[0];
+
+            function capitalizeFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
 
             leaderboardsTableRowDom.innerHTML += `
           <td>
-             <button id="${currentLeaderboard}" class="leaderboardsList fadeInLeft animate pointer" onclick="getListOfLeaderboard('${currentLeaderboard}');">${currentLeaderboard}</button>
+             <button id="${currentLeaderboard}" class="leaderboardsList fadeInLeft animate pointer" onclick="getListOfLeaderboard('${currentLeaderboard}');">${capitalizeFirstLetter(currentLeaderboard)}</button>
           </td>`;
         }
 

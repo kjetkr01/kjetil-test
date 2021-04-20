@@ -235,9 +235,10 @@ class StorageHandler {
                             const id = currentUser.id;
                             const username = currentUser.username;
 
-                            let benkpressKG = null;
-                            let knebøyKG = null;
-                            let markløftKG = null;
+                            let benkpressKG = 0;
+                            let knebøyKG = 0;
+                            let markløftKG = 0;
+                            const reps = "1";
 
                             const benkpressLifts = currentUser.benkpress;
                             const benkpressLiftsKeys = Object.keys(benkpressLifts);
@@ -247,12 +248,15 @@ class StorageHandler {
 
                                 if (liftIndex.reps === reps) {
                                     if (liftIndex.kg && liftIndex.kg !== 0 && liftIndex.kg !== "0") {
-                                        benkpressKG = parseFloat(liftIndex.kg);
+                                        const currentKG = parseFloat(liftIndex.kg);
+                                        if (currentKG > benkpressKG) {
+                                            benkpressKG = currentKG;
+                                        }
                                     }
                                 }
                             }
 
-                            if (benkpressKG) {
+                            if (benkpressKG > 0) {
 
                                 const knebøyLifts = currentUser.knebøy;
                                 const knebøyLiftsKeys = Object.keys(knebøyLifts);
@@ -262,12 +266,15 @@ class StorageHandler {
 
                                     if (liftIndex.reps === reps) {
                                         if (liftIndex.kg && liftIndex.kg !== 0 && liftIndex.kg !== "0") {
-                                            knebøyKG = parseFloat(liftIndex.kg);
+                                            const currentKG = parseFloat(liftIndex.kg);
+                                            if (currentKG > knebøyKG) {
+                                                knebøyKG = currentKG;
+                                            }
                                         }
                                     }
                                 }
 
-                                if (knebøyKG) {
+                                if (knebøyKG > 0) {
 
                                     const markløftLifts = currentUser.markløft;
                                     const markløftLiftsKeys = Object.keys(markløftLifts);
@@ -277,14 +284,17 @@ class StorageHandler {
 
                                         if (liftIndex.reps === reps) {
                                             if (liftIndex.kg && liftIndex.kg !== 0 && liftIndex.kg !== "0") {
-                                                markløftKG = parseFloat(liftIndex.kg);
+                                                const currentKG = parseFloat(liftIndex.kg);
+                                                if (currentKG > markløftKG) {
+                                                    markløftKG = currentKG;
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
 
-                            if (benkpressKG && knebøyKG && markløftKG) {
+                            if (benkpressKG > 0 && knebøyKG > 0 && markløftKG > 0) {
                                 const calcTotal = benkpressKG + knebøyKG + markløftKG;
                                 infoList.push({ "id": id, "username": username, [leaderboard]: calcTotal.toFixed(2) });
                             }
@@ -306,25 +316,29 @@ class StorageHandler {
                         const currentUser = results.rows[i];
                         const id = currentUser.id;
                         const username = currentUser.username;
-                        const exerciseLifts = currentUser[leaderboard];
 
+                        const exerciseLifts = currentUser[leaderboard];
                         const exerciseLiftsKeys = Object.keys(exerciseLifts);
+                        let highestKG = 0;
 
                         for (let i = 0; i < exerciseLiftsKeys.length; i++) {
-
                             const liftIndex = exerciseLifts[exerciseLiftsKeys[i]];
-
                             if (liftIndex.reps === reps) {
                                 if (liftIndex.kg && liftIndex.kg !== 0 && liftIndex.kg !== "0") {
-                                    infoList.push({ "id": id, "username": username, [leaderboard]: parseFloat(liftIndex.kg) });
+                                    const currentKG = parseFloat(liftIndex.kg);
+
+                                    if (currentKG > highestKG) {
+                                        highestKG = currentKG;
+                                    }
                                 }
                             }
                         }
+
+                        if (highestKG > 0) {
+                            infoList.push({ "id": id, "username": username, [leaderboard]: highestKG });
+                        }
                     }
-
                 }
-
-                //console.log(infoList)
 
                 results = infoList;
             }
@@ -1689,9 +1703,9 @@ class StorageHandler {
 
                             const currentUser = results.rows[0];
 
-                            let benkpressKG = null;
-                            let knebøyKG = null;
-                            let markløftKG = null;
+                            let benkpressKG = 0;
+                            let knebøyKG = 0;
+                            let markløftKG = 0;
                             const reps = "1";
 
                             const benkpressLifts = currentUser.benkpress;
@@ -1702,12 +1716,15 @@ class StorageHandler {
 
                                 if (liftIndex.reps === reps) {
                                     if (liftIndex.kg && liftIndex.kg !== 0 && liftIndex.kg !== "0") {
-                                        benkpressKG = parseFloat(liftIndex.kg);
+                                        const currentKG = parseFloat(liftIndex.kg);
+                                        if (currentKG > benkpressKG) {
+                                            benkpressKG = currentKG;
+                                        }
                                     }
                                 }
                             }
 
-                            if (benkpressKG) {
+                            if (benkpressKG > 0) {
 
                                 const knebøyLifts = currentUser.knebøy;
                                 const knebøyLiftsKeys = Object.keys(knebøyLifts);
@@ -1717,12 +1734,15 @@ class StorageHandler {
 
                                     if (liftIndex.reps === reps) {
                                         if (liftIndex.kg && liftIndex.kg !== 0 && liftIndex.kg !== "0") {
-                                            knebøyKG = parseFloat(liftIndex.kg);
+                                            const currentKG = parseFloat(liftIndex.kg);
+                                            if (currentKG > knebøyKG) {
+                                                knebøyKG = currentKG;
+                                            }
                                         }
                                     }
                                 }
 
-                                if (knebøyKG) {
+                                if (knebøyKG > 0) {
 
                                     const markløftLifts = currentUser.markløft;
                                     const markløftLiftsKeys = Object.keys(markløftLifts);
@@ -1732,14 +1752,17 @@ class StorageHandler {
 
                                         if (liftIndex.reps === reps) {
                                             if (liftIndex.kg && liftIndex.kg !== 0 && liftIndex.kg !== "0") {
-                                                markløftKG = parseFloat(liftIndex.kg);
+                                                const currentKG = parseFloat(liftIndex.kg);
+                                                if (currentKG > markløftKG) {
+                                                    markløftKG = currentKG;
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
 
-                            if (benkpressKG && knebøyKG && markløftKG) {
+                            if (benkpressKG > 0 && knebøyKG > 0 && markløftKG > 0) {
                                 const totalORMKG = benkpressKG + knebøyKG + markløftKG;
                                 const totalORMLBS = totalORMKG * 2.20462262;
                                 info.kg = totalORMKG.toFixed(2);
