@@ -20,3 +20,14 @@ module.exports.badgeColors = {
 
 //allowedTrainingDays
 module.exports.allowedTrainingDays = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"];
+
+
+//maximum allowed lifts
+module.exports.maxLifts = {
+    default: 25
+};
+
+//maximum allowed goals
+module.exports.maxGoals = {
+    default: 25
+};

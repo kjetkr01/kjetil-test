@@ -3,6 +3,8 @@ const dbCredentials = process.env.DATABASE_URL || require("../localenv").credent
 const allowedLifts = require("../arrayLists").allowedLifts;
 const allowedGoals = require("../arrayLists").allowedGoals;
 const badgeColors = require("../arrayLists").badgeColors;
+const maxLifts = require("../arrayLists").maxLifts;
+const maxGoals = require("../arrayLists").maxGoals;
 
 class StorageHandler {
 
@@ -648,26 +650,37 @@ class StorageHandler {
                             AND apikey IS NOT null`,
                             [userIDReq]);
 
-                        const liftsLeft = [];
-                        const goalsLeft = [];
-
                         const liftKeys = Object.keys(userCacheObj.lifts);
 
-                        for (let i = 0; i < allowedLifts.length; i++) {
-                            if (liftKeys.includes(allowedLifts[i])) {
-                            } else {
-                                liftsLeft.push(allowedLifts[i]);
+                        let liftsUsed = 0;
+
+                        for (let i = 0; i < liftKeys.length; i++) {
+
+                            const lifts = userCacheObj.lifts;
+                            const liftPerExerciseKeys = Object.keys(lifts[liftKeys[i]]);
+
+                            for (let j = 0; j < liftPerExerciseKeys.length; j++) {
+                                liftsUsed++;
                             }
                         }
+
+                        const liftsLeft = maxLifts.default - liftsUsed;
 
                         const goalKeys = Object.keys(userCacheObj.goals);
 
-                        for (let i = 0; i < allowedGoals.length; i++) {
-                            if (goalKeys.includes(allowedGoals[i])) {
-                            } else {
-                                goalsLeft.push(allowedGoals[i]);
+                        let goalsUsed = 0;
+
+                        for (let i = 0; i < goalKeys.length; i++) {
+
+                            const goals = userCacheObj.goals;
+                            const goalsPerExerciseKeys = Object.keys(goals[goalKeys[i]]);
+
+                            for (let j = 0; j < goalsPerExerciseKeys.length; j++) {
+                                goalsUsed++;
                             }
                         }
+
+                        const goalsLeft = maxGoals.default - goalsUsed;
 
                         userCacheObj.liftsLeft = liftsLeft;
                         userCacheObj.goalsLeft = goalsLeft;
@@ -784,23 +797,6 @@ class StorageHandler {
 
         try {
             await client.connect();
-
-            /*results = await client.query(`
-            SELECT user_settings.*
-            FROM users, user_settings
-            WHERE users.username = $1
-            AND users.id = user_settings.user_id`,
-                [username]);
-
-            const newSettings = results.rows[0].settings;
-
-            newSettings[setting] = value;
-
-            await client.query(`
-            UPDATE user_settings
-            SET settings=$1
-            WHERE username=$2`,
-                [newSettings, username]);*/
 
             const user_id = await client.query(`
             SELECT id
