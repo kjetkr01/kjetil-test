@@ -86,12 +86,12 @@ function displayInformation(respInfo) {
     }
     if (lifts) {
         liftsInfo = new Tlifts(info.lifts);
-        displayLifts(info.liftsLeft.length > 0);
+        displayLifts(info.liftsLeft > 0);
     }
 
     if (goals) {
         goalsInfo = new Tgoals(info.goals);
-        //displayGoals(info.goalsLeft.length > 0);
+        //displayGoals(info.goalsLeft > 0);
     }
 
     if (program) {
@@ -116,6 +116,8 @@ function displayInformation(respInfo) {
 
                     const exerciseLift = lifts[keys[i]];
                     const exerciseLiftKeys = Object.keys(exerciseLift);
+
+                    let index = 0;
 
                     for (let j = 0; j < exerciseLiftKeys.length; j++) {
 
@@ -153,11 +155,11 @@ function displayInformation(respInfo) {
                                     return string.charAt(0).toUpperCase() + string.slice(1);
                                 }
 
-                                arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": liftKeys.kg, "msg": msg, "color": color });
+                                arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": liftKeys.kg, "msg": msg, "color": color, "index": index });
 
                             }
                         }
-
+                        index++;
                     }
                 }
 
@@ -185,7 +187,8 @@ Løft (${arr.length})
                     arr.sort(function (a, b) { return b.kg - a.kg });
                     for (let i = 0; i < arr.length; i++) {
                         //const badge = getBadgeLift(size, arr[i]);
-                        const badge = getBadgeLift(0, arr[i]);
+                        
+                        const badge = getBadgeLift(0, arr[i], arr[i].index);
 
                         if (badge) {
                             document.getElementById("badgesLiftsTableRow").innerHTML += badge;

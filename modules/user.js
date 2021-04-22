@@ -56,18 +56,18 @@ async function updateUserSetting(username, setting, value) {
     }
 }
 
-async function saveLiftOrGoal(username, exercise, kg, date, type, color) {
+async function saveLiftOrGoal(userid, reps, exercise, kg, date, type, color) {
     try {
-        const resp = await database.saveLiftOrGoal(username, exercise, kg, date, type, color);
+        const resp = await database.saveLiftOrGoal(userid, reps, exercise, kg, date, type, color);
         return resp;
     } catch (error) {
         console.error(error);
     }
 }
 
-async function deleteLiftOrGoal(username, exercise, type) {
+async function deleteLiftOrGoal(userid, exercise, type, index) {
     try {
-        const resp = await database.deleteLiftOrGoal(username, exercise, type);
+        const resp = await database.deleteLiftOrGoal(userid, exercise, type, index);
         return resp;
     } catch (error) {
         console.error(error);

@@ -654,7 +654,7 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
      const info = req.body.info;
      const currentUser = JSON.parse(req.body.userInfo);
 
-     if (currentUser.username && info.exercise && info.kg && info.date && info.type === "lift" || info.type === "goal") {
+     if (currentUser.id && info.exercise && info.kg && info.date && info.type === "lift" || info.type === "goal") {
 
           let isValid = false;
 
@@ -684,8 +684,10 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
                }
           }
 
+          info.reps = "1";
+
           if (isValid === true) {
-               const saveLiftOrGoalResp = await saveLiftOrGoal(currentUser.username, info.exercise, info.kg, info.date, info.type, color);
+               const saveLiftOrGoalResp = await saveLiftOrGoal(currentUser.id, info.reps, info.exercise, info.kg, info.date, info.type, color);
                res.status(200).json(saveLiftOrGoalResp).end();
           } else {
                res.status(403).json("invalid information").end();
@@ -705,7 +707,7 @@ server.post("/user/delete/liftOrGoal/:info", auth, async (req, res) => {
      const info = req.body.info;
      const currentUser = JSON.parse(req.body.userInfo);
 
-     if (currentUser.username && info.exercise && info.type === "lift" || info.type === "goal") {
+     if (currentUser.id && info.exercise && info.type === "lift" || info.type === "goal") {
 
           let isValid = false;
 
@@ -726,7 +728,7 @@ server.post("/user/delete/liftOrGoal/:info", auth, async (req, res) => {
           }
 
           if (isValid === true) {
-               const saveLiftOrGoalResp = await deleteLiftOrGoal(currentUser.username, info.exercise, info.type);
+               const saveLiftOrGoalResp = await deleteLiftOrGoal(currentUser.id, info.exercise, info.type, info.index);
                res.status(200).json(saveLiftOrGoalResp).end();
           } else {
                res.status(403).json("invalid information").end();

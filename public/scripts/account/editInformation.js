@@ -32,9 +32,18 @@ function enableOverlayCreate(aType) {
             title1.textContent = "Legg til nytt løft";
             const liftsLeftInfo = liftsLeft.info();
 
-            if (liftsLeftInfo.length > 0) {
+            const allowedExercises = ["benkpress", "markløft", "knebøy", "skulderpess"];
+
+            /*if (liftsLeftInfo.length > 0) {
                 for (let i = 0; i < liftsLeftInfo.length; i++) {
                     inp1.innerHTML += `<option value="${liftsLeftInfo[i]}">${liftsLeftInfo[i]}`;
+                }
+                Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('lift','create');">Lagre</button>`;
+            }*/
+
+            if (allowedExercises.length > 0) {
+                for (let i = 0; i < allowedExercises.length; i++) {
+                    inp1.innerHTML += `<option value="${allowedExercises[i]}">${allowedExercises[i]}`;
                 }
                 Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('lift','create');">Lagre</button>`;
             }
@@ -61,12 +70,18 @@ function enableOverlayCreate(aType) {
 }
 
 
-function enableOverlayEdit(aType, aExercise) {
+function enableOverlayEdit(aType, aExercise, aIndex) {
 
-    if (aType && aExercise) {
+    if (aType && aExercise && aIndex >= 0) {
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
 
         const type = aType;
-        const exercise = aExercise;
+        const exercise = aExercise.toLowerCase();
+        const exerciseCapitalizedFirst = capitalizeFirstLetter(exercise);
+        const index = aIndex;
         const editLiftorGoal = document.getElementById("editLiftorGoal");
         const title1 = document.getElementById("title1E");
         const inp1 = document.getElementById("inp1E");
@@ -80,12 +95,10 @@ function enableOverlayEdit(aType, aExercise) {
         editLiftorGoal.style.border = "";
 
         if (type === "goal") {
-            title1.textContent = exercise + " (mål)";
+            title1.textContent = exerciseCapitalizedFirst + " (mål)";
         } else {
-            title1.textContent = exercise + " (løft)";
+            title1.textContent = exerciseCapitalizedFirst + " (løft)";
         }
-
-        title1.value = exercise;
 
         inp1.value = "";
         inp2.value = "";
@@ -104,29 +117,31 @@ function enableOverlayEdit(aType, aExercise) {
             const badgeColorsInfo = badgeColors.info();
             const badgeColorsValues = Object.entries(badgeColorsInfo);
 
-            if (lifts[exercise]) {
-                inp1.value = lifts[exercise].ORM;
-                inp2.value = lifts[exercise].PRdate;
-                GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift');">Slett løftet</button>`;
+            if (lifts[exercise][index]) {
+                inp1.value = lifts[exercise][index].kg;
+                inp2.value = lifts[exercise][index].date;
+                GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift', ${index});">Slett løftet</button>`;
                 Gsave.innerHTML = `<button id="saveE" class="pointer" onclick="saveLiftOrGoal('lift','edit');">Lagre</button>`;
 
+                const color = lifts[exercise][index].color;
+
                 for (let i = 0; i < badgeColorsValues.length; i++) {
-                    if (badgeColorsValues[i][0] === lifts[exercise].color) {
+                    if (badgeColorsValues[i][0] === color) {
                         inp3.innerHTML += `<option selected="selected" value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}</option>`;
                     } else {
                         inp3.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}</option>`;
                     }
                 }
 
-                if (badgeColorBorders.hasOwnProperty(lifts[exercise].color)) {
-                    document.getElementById("editLiftorGoal").style.border = `1px solid #${badgeColorBorders[lifts[exercise].color]}`;
+                if (badgeColorBorders.hasOwnProperty(color)) {
+                    document.getElementById("editLiftorGoal").style.border = `1px solid #${badgeColorBorders[color]}`;
                 }
+
+                editLiftorGoalOverlay.style.display = "block";
 
             } else {
                 alert("Det har oppstått et problem!");
             }
-
-            editLiftorGoalOverlay.style.display = "block";
 
         } else if (type === "goal" && goalsInfo) {
             const goals = goalsInfo.info();
@@ -151,11 +166,12 @@ function enableOverlayEdit(aType, aExercise) {
                     document.getElementById("editLiftorGoal").style.border = `1px solid #${badgeColorBorders[goals[exercise].color]}`;
                 }
 
+                editLiftorGoalOverlay.style.display = "block";
+
             } else {
                 alert("Det har oppstått et problem!");
             }
 
-            editLiftorGoalOverlay.style.display = "block";
         } else {
             alert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
         }
@@ -312,24 +328,25 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aType, aColor) {
     return { "isValid": isValid, "msg": msg, "info": info };
 }
 
-function deleteLiftOrGoalConfirm(aExercise, aType) {
+function deleteLiftOrGoalConfirm(aExercise, aType, aIndex) {
 
     if (aExercise && aType) {
 
         const type = aType;
         const exercise = aExercise;
+        const index = aIndex;
 
         if (type === "lift") {
             const confirmation = confirm(`Er du sikkert på at du vil slette løftet ditt: "${exercise}" ?`);
             if (confirmation === true) {
-                deleteLiftOrGoal(exercise, type);
+                deleteLiftOrGoal(exercise, type, index);
             }
         }
 
         if (type === "goal") {
             const confirmation = confirm(`Er du sikkert på at du vil slette målet ditt: "${exercise}" ?`);
             if (confirmation === true) {
-                deleteLiftOrGoal(exercise, type);
+                deleteLiftOrGoal(exercise, type, index);
             }
         }
 
@@ -339,7 +356,7 @@ function deleteLiftOrGoalConfirm(aExercise, aType) {
     }
 }
 
-async function deleteLiftOrGoal(aExercise, aType) {
+async function deleteLiftOrGoal(aExercise, aType, aIndex) {
 
     if (aExercise && aType) {
 
@@ -347,6 +364,7 @@ async function deleteLiftOrGoal(aExercise, aType) {
 
         const type = aType;
         const exercise = aExercise;
+        const index = aIndex;
         let typeMsg = "Løftet";
 
         if (aType === "goal") {
@@ -355,7 +373,7 @@ async function deleteLiftOrGoal(aExercise, aType) {
 
         respMsg.textContent = `Sletter ${exercise}...`;
 
-        const info = { "exercise": exercise, "type": type };
+        const info = { "exercise": exercise, "type": type, "index": index };
 
         const body = { "authToken": token, "userInfo": user, "info": info };
         const url = `/user/delete/liftOrGoal/:${info}`;

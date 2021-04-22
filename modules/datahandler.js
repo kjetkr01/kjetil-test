@@ -878,7 +878,7 @@ class StorageHandler {
 
     //  -------------------------------  save/update lift or goal  ------------------------------- //
 
-    async saveLiftOrGoal(username, exercise, kg, date, type, color) {
+    async saveLiftOrGoal(userid, reps, exercise, kg, date, type, color) {
 
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -889,26 +889,25 @@ class StorageHandler {
             if (type === "lift") {
 
                 results = await client.query(`
-                SELECT user_lifts
-                FROM users, user_lifts
-                WHERE users.username = $1
-                AND users.id = user_lifts.user_id`,
-                    [username]);
+                SELECT ${exercise}
+                FROM user_lifts
+                WHERE user_id = $1`,
+                    [userid]);
 
-                const updatedLifts = results.rows[0].lifts;
-                updatedLifts[exercise] = { "ORM": kg, "PRdate": date, "color": color };
+                if (results.rows.length === 1) {
 
-                console.log("fix update lifts")
+                    const lifts = results.rows[0][exercise];
+                    lifts.push({ "reps": reps, "kg": kg, "date": date, "color": color });
 
-                client.end();
+                    await client.query(`
+                    UPDATE user_lifts
+                    SET ${exercise} = $1
+                    WHERE user_id = $2`,
+                        [JSON.stringify(lifts), userid]);
 
-                await client.query(`
-                UPDATE user_lifts
-                SET lifts=$1
-                WHERE username=$2`,
-                    [updatedLifts, username]);
+                    results = true;
 
-                results = true;
+                }
 
             } else if (type === "goal") {
 
@@ -952,7 +951,7 @@ class StorageHandler {
 
     //  -------------------------------  delete lift or goal  ------------------------------- //
 
-    async deleteLiftOrGoal(username, exercise, type) {
+    async deleteLiftOrGoal(userid, exercise, type, index) {
 
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -963,26 +962,25 @@ class StorageHandler {
             if (type === "lift") {
 
                 results = await client.query(`
-                SELECT user_lifts
-                FROM users, user_lifts
-                WHERE users.username=$1
-                AND users.id = user_lifts.user_id`,
-                    [username]);
+                SELECT ${exercise}
+                FROM user_lifts
+                WHERE user_id = $1`,
+                    [userid]);
 
-                const updatedLifts = results.rows[0].lifts;
-                delete updatedLifts[exercise];
+                if (results.rows.length === 1) {
 
-                console.log("fix delete lifts")
+                    const lifts = results.rows[0][exercise];
+                    lifts.splice(index, 1);
 
-                client.end();
+                    await client.query(`
+                    UPDATE user_lifts
+                    SET ${exercise} = $1
+                    WHERE user_id = $2`,
+                        [JSON.stringify(lifts), userid]);
 
-                await client.query(`
-                UPDATE user_lifts
-                SET lifts=$1
-                WHERE username=$2`,
-                    [updatedLifts, username]);
+                    results = true;
 
-                results = true;
+                }
 
             } else if (type === "goal") {
 
