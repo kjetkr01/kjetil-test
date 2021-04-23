@@ -7,10 +7,10 @@ const application = {
         state: "alpha",
         major: 4, // major++ = minor = 0 && revision = 0
         minor: 2, // minor++ = revision = 0
-        revision: 1,
+        revision: 2,
     },
     lastUpdated: {
-        day: "23",
+        day: "24",
         month: "04",
         year: "2021"
     },
@@ -27,7 +27,7 @@ application.version.full = `Versjon ${application.version.fullNumber} (${applica
 application.lastUpdated.date = getDateFormat(application.lastUpdated.day, application.lastUpdated.month, application.lastUpdated.year);
 
 const aboutAppText = `
-${application.name} er et app prosjekt utviklet av ${createBtn("Kjetil Kristiansen", "3")}.
+${application.name} er et app prosjekt utviklet av ${createBtn("Kjetil Kristiansen", "2")}.
 
 <br><br>
 Appen ble hovedsakling laget for å enkelt se ORM (One Rep Max) i ulike løft.
@@ -39,10 +39,10 @@ Siden appen er koblet til et database system, vil muligheten for å se andre bru
 
 <br><br>
 Hjelp til design:
-${createBtn("Christoffer Simonsen", "2")},
+${createBtn("Christoffer Simonsen", "3")},
 ${createBtn("Christian Jenssen")},
 ${createBtn("Mandius Abelsen")},
-${createBtn("Szilard Andri Reynisson", "41")},
+${createBtn("Szilard Andri Reynisson", "4")},
 ${createBtn("Sondre Olsen")}.
 `;
 

@@ -38,16 +38,9 @@ function enableOverlayCreate(aType) {
 
             respMsg.innerHTML = `Du kan lage ${liftsLeftInfo} løft til`;
 
-            /*if (liftsLeftInfo.length > 0) {
-                for (let i = 0; i < liftsLeftInfo.length; i++) {
-                    inp1.innerHTML += `<option value="${liftsLeftInfo[i]}">${liftsLeftInfo[i]}`;
-                }
-                Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('lift','create');">Lagre</button>`;
-            }*/
-
             if (allowedExercises.length > 0) {
                 for (let i = 0; i < allowedExercises.length; i++) {
-                    inp1.innerHTML += `<option value="${allowedExercises[i]}">${allowedExercises[i]}`;
+                    inp1.innerHTML += `<option value="${allowedExercises[i]}">${capitalizeFirstLetter(allowedExercises[i])}`;
                 }
                 Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('lift','create');">Lagre</button>`;
             }
@@ -60,16 +53,9 @@ function enableOverlayCreate(aType) {
 
             respMsg.innerHTML = `Du kan lage ${goalsLeftInfo} mål til`;
 
-            /*if (goalsLeftInfo.length > 0) {
-                for (let i = 0; i < goalsLeftInfo.length; i++) {
-                    inp1.innerHTML += `<option value="${goalsLeftInfo[i]}">${goalsLeftInfo[i]}`;
-                }
-                Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('goal','create');">Lagre</button>`;
-            }*/
-
             if (allowedExercises.length > 0) {
                 for (let i = 0; i < allowedExercises.length; i++) {
-                    inp1.innerHTML += `<option value="${allowedExercises[i]}">${allowedExercises[i]}`;
+                    inp1.innerHTML += `<option value="${allowedExercises[i]}">${capitalizeFirstLetter(allowedExercises[i])}`;
                 }
                 Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('goal','create');">Lagre</button>`;
             }
@@ -86,10 +72,6 @@ function enableOverlayCreate(aType) {
 function enableOverlayEdit(aType, aExercise, aIndex) {
 
     if (aType && aExercise && aIndex >= 0) {
-
-        function capitalizeFirstLetter(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
-        }
 
         const type = aType;
         const exercise = aExercise.toLowerCase();

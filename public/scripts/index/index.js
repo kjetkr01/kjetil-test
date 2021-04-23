@@ -292,10 +292,6 @@ async function displayBadges(aInfo) {
                     msg = `${kgUntilGoal} kg igjen`;
                 }
 
-                function capitalizeFirstLetter(string) {
-                    return string.charAt(0).toUpperCase() + string.slice(1);
-                }
-
                 arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": goalKg, "kgLeft": kgUntilGoal, "msg": msg, "color": color, "index": index });
 
             }
