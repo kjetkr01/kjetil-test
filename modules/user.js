@@ -56,9 +56,9 @@ async function updateUserSetting(username, setting, value) {
     }
 }
 
-async function saveLiftOrGoal(userid, reps, exercise, kg, date, type, color) {
+async function saveLiftOrGoal(userid, info, color) {
     try {
-        const resp = await database.saveLiftOrGoal(userid, reps, exercise, kg, date, type, color);
+        const resp = await database.saveLiftOrGoal(userid, info, color);
         return resp;
     } catch (error) {
         console.error(error);

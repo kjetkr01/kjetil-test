@@ -6,11 +6,11 @@ const application = {
     version: {
         state: "alpha",
         major: 4, // major++ = minor = 0 && revision = 0
-        minor: 1, // minor++ = revision = 0
+        minor: 2, // minor++ = revision = 0
         revision: 0,
     },
     lastUpdated: {
-        day: "17",
+        day: "23",
         month: "04",
         year: "2021"
     },

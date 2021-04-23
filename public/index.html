@@ -58,6 +58,7 @@
    <script src="scripts/badges/ownerBadges.js" type="text/javascript"></script>
 
    <script src="scripts/account/editInformation.js" type="text/javascript"></script>
+   <script src="scripts/overlay/overlay.js" type="text/javascript"></script>
 
 </head>
 
@@ -65,102 +66,9 @@
 
    <script>changeColorTheme();</script>
 
-   <div id="createNewLiftorGoalOverlay" style="display: none;" class="overlay">
-      <div id="createNewLiftorGoal" class="createNewLiftorGoal">
-         <div id="Gtitle1C">
-            <p id="title1C"></p>
-         </div>
-         <div id="Gline1C">
-            <hr id="line1C">
-         </div>
-         <div id="Gtitle2C">
-            <p id="title2C">Øvelse</p>
-         </div>
-         <div id="Gline2C">
-            <hr id="line2C">
-         </div>
-         <div id="Ginp1C">
-            <select id="inp1C" class="selectLiftOrGoal">
-            </select>
-         </div>
-         <div id="Gtitle3C">
-            <p id="title3C">Antall KG</p>
-         </div>
-         <div id="Gline3C">
-            <hr id="line3C">
-         </div>
-         <div id="Ginp2C">
-            <input id="inp2C" class="inputLiftOrGoal" type="text" onkeypress="return onlyAllowedKeys(event,'create')"
-               placeholder="Eks: 35.25"></input>
-         </div>
-         <div id="Gtitle4C">
-            <p id="title4C">Dato</p>
-         </div>
-         <div id="Gline4C">
-            <hr id="line4C">
-         </div>
-         <div id="Ginp3C">
-            <input id="inp3C" class="inputLiftOrGoal" type="date"></input>
-         </div>
-         <div id="GrespC">
-            <p id="respC"></p>
-         </div>
-         <div id="GcancelC">
-            <button id="cancelC" class="pointer" onclick="disableOverlay('createLiftOrGoal');">Avbryt</button>
-         </div>
-         <div id="GsaveC">
-         </div>
-      </div>
-   </div>
+   <div id="createNewLiftorGoalOverlay" style="display: none;" class="overlay"></div>
 
-   <div id="editLiftorGoalOverlay" style="display: none;" class="overlay">
-      <div id="editLiftorGoal" class="editLiftorGoal">
-         <div id="Gtitle1E">
-            <p id="title1E"></p>
-         </div>
-         <div id="Gline1E">
-            <hr id="line1E">
-         </div>
-         <div id="Gtitle2E">
-            <p id="title2E">Antall KG</p>
-         </div>
-         <div id="Gline2E">
-            <hr id="line2E">
-         </div>
-         <div id="Ginp1E">
-            <input id="inp1E" class="inputLiftOrGoal" type="text" onkeypress="return onlyAllowedKeys(event,'edit')"
-               placeholder="Eks: 35.25"></input>
-         </div>
-         <div id="Gtitle3E">
-            <p id="title3E">Dato</p>
-         </div>
-         <div id="Gline3E">
-            <hr id="line3E">
-         </div>
-         <div id="Ginp2E">
-            <input id="inp2E" class="inputLiftOrGoal" type="date"></input>
-         </div>
-         <div id="Gtitle4E">
-            <p id="title4E">Farge</p>
-         </div>
-         <div id="Gline4E">
-            <hr id="line4E">
-         </div>
-         <div id="Ginp3E">
-            <select id="inp3E" onchange="changeOverlayBorderColor();" class="selectLiftOrGoal"></select>
-         </div>
-         <div id="GdeleteE">
-         </div>
-         <div id="GrespE">
-            <p id="respE"></p>
-         </div>
-         <div id="GcancelE">
-            <button id="cancelE" class="pointer" onclick="disableOverlay('editLiftOrGoal');">Avbryt</button>
-         </div>
-         <div id="GsaveE">
-         </div>
-      </div>
-   </div>
+   <div id="editLiftorGoalOverlay" style="display: none;" class="overlay"></div>
 
    <section id="page">
 
@@ -271,6 +179,8 @@
 <script>
 
    lockBodyPosition();
+   getCreateNewLiftorGoalOverlay();
+   getEditLiftorGoalOverlay();
 
    function intervals() {
 
@@ -301,7 +211,7 @@
    displayPartOfDayMsg();
    checkWhoIsWorkingOutToday();
    requestAccountDetails();
-   //displayBadges();
+  // displayBadges();
 
 </script>
 

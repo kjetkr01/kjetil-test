@@ -878,10 +878,18 @@ class StorageHandler {
 
     //  -------------------------------  save/update lift or goal  ------------------------------- //
 
-    async saveLiftOrGoal(userid, reps, exercise, kg, date, type, color) {
-
+    async saveLiftOrGoal(userid, info, color) {
+        //userid, info, color
+        //userid, reps, exercise, kg, date, type, color
         const client = new pg.Client(this.credentials);
         let results = false;
+
+        const exercise = info.exercise;
+        const kg = info.kg;
+        const reps = info.reps;
+        const date = info.date;
+        const type = info.type;
+        const index = info.index;
 
         try {
             await client.connect();
@@ -897,7 +905,13 @@ class StorageHandler {
                 if (results.rows.length === 1) {
 
                     const lifts = results.rows[0][exercise];
-                    lifts.push({ "reps": reps, "kg": kg, "date": date, "color": color });
+                    const lift = { "reps": reps, "kg": kg, "date": date, "color": color };
+
+                    if (index >= 0 && index !== null) {
+                        lifts[index] = lift;
+                    } else {
+                        lifts.push(lift);
+                    }
 
                     await client.query(`
                     UPDATE user_lifts
@@ -912,27 +926,30 @@ class StorageHandler {
             } else if (type === "goal") {
 
                 results = await client.query(`
-                SELECT user_goals
-                FROM users, user_goals
-                WHERE users.username = $1
-                AND users.id = user_goals.user_id`,
-                    [username]);
+                SELECT ${exercise}
+                FROM user_goals
+                WHERE user_id = $1`,
+                    [userid]);
 
-                const updatedGoals = results.rows[0].goals;
+                if (results.rows.length === 1) {
 
-                updatedGoals[exercise] = { "goal": kg, "Goaldate": date, "color": color };
+                    const goals = results.rows[0][exercise];
+                    const goal = { "reps": reps, "kg": kg, "date": date, "color": color };
 
-                console.log("fix update goals")
+                    if (index >= 0 && index !== null) {
+                        goals[index] = goal;
+                    } else {
+                        goals.push(goal);
+                    }
 
-                client.end();
+                    await client.query(`
+                    UPDATE user_goals
+                    SET ${exercise} = $1
+                    WHERE user_id = $2`,
+                        [JSON.stringify(goals), userid]);
 
-                await client.query(`
-                UPDATE user_goals
-                SET goals=$1
-                WHERE username=$2`,
-                    [updatedGoals, username]);
-
-                results = true;
+                    results = true;
+                }
             }
 
             client.end();
@@ -985,23 +1002,25 @@ class StorageHandler {
             } else if (type === "goal") {
 
                 results = await client.query(`
-                SELECT user_goals
-                FROM users, user_goals
-                WHERE users.username=$1
-                AND users.id = user_goals.user_id`,
-                    [username]);
+                SELECT ${exercise}
+                FROM user_goals
+                WHERE user_id = $1`,
+                    [userid]);
 
-                const updatedGoals = results.rows[0].goals;
-                delete updatedGoals[exercise];
+                if (results.rows.length === 1) {
 
-                console.log("fix delete goals")
+                    const goals = results.rows[0][exercise];
+                    goals.splice(index, 1);
 
-                client.end();
+                    await client.query(`
+                    UPDATE user_goals
+                    SET ${exercise} = $1
+                    WHERE user_id = $2`,
+                        [JSON.stringify(goals), userid]);
 
-                await client.query('UPDATE "users" SET goals=$1 WHERE username=$2', [updatedGoals, username]);
+                    results = true;
 
-                results = true;
-
+                }
             }
 
 
@@ -1290,33 +1309,33 @@ class StorageHandler {
             AND users.id = user_lifts.user_id
             AND users.id = user_goals.user_id`,
                 [user]);
-
+ 
             if (userInfo.rows.length !== 0) {
                 userInfo = userInfo.rows[0];
                 userInformation = userInfo;
                 userInfo.password = "Pga sikkerhet, blir ikke passord hentet";
             }
-
+ 
             let trainingsplitInfo = await client.query(`
                 SELECT user_trainingsplit.*
                 FROM users, user_trainingsplit
                 WHERE users.id = $1
                 AND users.id = user_trainingsplit.user_id`,
                 [user]);
-
+ 
             if (trainingsplitInfo.rows.length !== 0) {
                 trainingsplitInfo = trainingsplitInfo.rows[0];
                 console.log(trainingsplitInfo);
                 userInformation.trainingsplit = trainingsplitInfo
             }
-
+ 
             let apiInfo = await client.query(`
                 SELECT user_api.*
                 FROM users, user_api
                 WHERE users.id = $1
                 AND users.id = user_api.user_id`,
                 [user]);
-
+ 
             if (apiInfo.rows.length !== 0) {
                 apiInfo = apiInfo.rows[0];
                 console.log(apiInfo)

@@ -1,5 +1,7 @@
 let liftsLeft = null, goalsLeft = null, liftsInfo = null, goalsInfo = null, badgeColors = null, traningsplitInfo = null;
 
+const allowedExercises = ["benkpress", "markløft", "knebøy", "skulderpress"];
+
 function enableOverlayCreate(aType) {
 
     if (aType) {
@@ -9,6 +11,7 @@ function enableOverlayCreate(aType) {
         const inp1 = document.getElementById("inp1C");
         const inp2 = document.getElementById("inp2C");
         const inp3 = document.getElementById("inp3C");
+        const inp4 = document.getElementById("inp4C");
         const Gsave = document.getElementById("GsaveC");
         const respMsg = document.getElementById("respC");
 
@@ -20,19 +23,20 @@ function enableOverlayCreate(aType) {
         inp1.innerHTML = "";
         inp2.value = "";
         inp3.value = "";
+        inp4.value = "";
         Gsave.innerHTML = "";
         respMsg.innerHTML = "";
 
         if (today) {
-            inp3.value = today;
-            inp3.setAttribute('max', today);
+            inp4.value = today;
+            inp4.setAttribute('max', today);
         }
 
         if (type === "lift" && liftsLeft) {
             title1.textContent = "Legg til nytt løft";
             const liftsLeftInfo = liftsLeft.info();
 
-            const allowedExercises = ["benkpress", "markløft", "knebøy", "skulderpess"];
+            respMsg.innerHTML = `Du kan lage ${liftsLeftInfo} løft til`;
 
             /*if (liftsLeftInfo.length > 0) {
                 for (let i = 0; i < liftsLeftInfo.length; i++) {
@@ -54,9 +58,18 @@ function enableOverlayCreate(aType) {
             title1.textContent = "Legg til nytt mål";
             const goalsLeftInfo = goalsLeft.info();
 
-            if (goalsLeftInfo.length > 0) {
+            respMsg.innerHTML = `Du kan lage ${goalsLeftInfo} mål til`;
+
+            /*if (goalsLeftInfo.length > 0) {
                 for (let i = 0; i < goalsLeftInfo.length; i++) {
                     inp1.innerHTML += `<option value="${goalsLeftInfo[i]}">${goalsLeftInfo[i]}`;
+                }
+                Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('goal','create');">Lagre</button>`;
+            }*/
+
+            if (allowedExercises.length > 0) {
+                for (let i = 0; i < allowedExercises.length; i++) {
+                    inp1.innerHTML += `<option value="${allowedExercises[i]}">${allowedExercises[i]}`;
                 }
                 Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('goal','create');">Lagre</button>`;
             }
@@ -87,6 +100,7 @@ function enableOverlayEdit(aType, aExercise, aIndex) {
         const inp1 = document.getElementById("inp1E");
         const inp2 = document.getElementById("inp2E");
         const inp3 = document.getElementById("inp3E");
+        const inp4 = document.getElementById("inp4E");
         const GdeleteE = document.getElementById("GdeleteE");
         const Gsave = document.getElementById("GsaveE");
         const respMsg = document.getElementById("respE");
@@ -100,36 +114,41 @@ function enableOverlayEdit(aType, aExercise, aIndex) {
             title1.textContent = exerciseCapitalizedFirst + " (løft)";
         }
 
+        title1.value = exercise;
+
         inp1.value = "";
         inp2.value = "";
-        inp3.innerHTML = "";
+        inp3.value = "";
+        inp4.innerHTML = "";
         Gsave.innerHTML = "";
         respMsg.innerHTML = "";
 
         const today = new Date().toISOString().substr(0, 10) || null;
 
         if (today) {
-            inp2.setAttribute('max', today);
+            inp3.setAttribute('max', today);
         }
 
         if (type === "lift" && liftsInfo) {
             const lifts = liftsInfo.info();
             const badgeColorsInfo = badgeColors.info();
             const badgeColorsValues = Object.entries(badgeColorsInfo);
+            const lift = lifts[exercise][index];
 
-            if (lifts[exercise][index]) {
-                inp1.value = lifts[exercise][index].kg;
-                inp2.value = lifts[exercise][index].date;
+            if (lift) {
+                inp1.value = lift.kg;
+                inp2.value = lift.reps;
+                inp3.value = lift.date;
                 GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift', ${index});">Slett løftet</button>`;
-                Gsave.innerHTML = `<button id="saveE" class="pointer" onclick="saveLiftOrGoal('lift','edit');">Lagre</button>`;
+                Gsave.innerHTML = `<button id="saveE" class="pointer" onclick="saveLiftOrGoal('lift','edit', ${index});">Lagre</button>`;
 
-                const color = lifts[exercise][index].color;
+                const color = lift.color;
 
                 for (let i = 0; i < badgeColorsValues.length; i++) {
                     if (badgeColorsValues[i][0] === color) {
-                        inp3.innerHTML += `<option selected="selected" value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}</option>`;
+                        inp4.innerHTML += `<option selected="selected" value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}</option>`;
                     } else {
-                        inp3.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}</option>`;
+                        inp4.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}</option>`;
                     }
                 }
 
@@ -148,22 +167,27 @@ function enableOverlayEdit(aType, aExercise, aIndex) {
             const badgeColorsInfo = badgeColors.info();
             const badgeColorsValues = Object.entries(badgeColorsInfo);
 
-            if (goals[exercise]) {
-                inp1.value = goals[exercise].goal;
-                inp2.value = goals[exercise].Goaldate;
-                GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'goal');">Slett målet</button>`;
-                Gsave.innerHTML = `<button id="saveE" class="pointer" onclick="saveLiftOrGoal('goal','edit');">Lagre</button>`;
+            const goal = goals[exercise][index];
+
+            if (goal) {
+                inp1.value = goal.kg;
+                inp2.value = goal.reps;
+                inp3.value = goal.date;
+                GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'goal', ${index});">Slett målet</button>`;
+                Gsave.innerHTML = `<button id="saveE" class="pointer" onclick="saveLiftOrGoal('goal','edit', ${index});">Lagre</button>`;
+
+                const color = goal.color;
 
                 for (let i = 0; i < badgeColorsValues.length; i++) {
-                    if (badgeColorsValues[i][0] === goals[exercise].color) {
-                        inp3.innerHTML += `<option selected="selected" value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}</option>`;
+                    if (badgeColorsValues[i][0] === color) {
+                        inp4.innerHTML += `<option selected="selected" value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}</option>`;
                     } else {
-                        inp3.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}</option>`;
+                        inp4.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}</option>`;
                     }
                 }
 
-                if (badgeColorBorders.hasOwnProperty(goals[exercise].color)) {
-                    document.getElementById("editLiftorGoal").style.border = `1px solid #${badgeColorBorders[goals[exercise].color]}`;
+                if (badgeColorBorders.hasOwnProperty(color)) {
+                    document.getElementById("editLiftorGoal").style.border = `1px solid #${badgeColorBorders[color]}`;
                 }
 
                 editLiftorGoalOverlay.style.display = "block";
@@ -226,11 +250,11 @@ function Ttrainingsplit(aTrainingsplit) {
     }
 }
 
-async function saveLiftOrGoal(aType, editOrCreate) {
+async function saveLiftOrGoal(aType, editOrCreate, aIndex) {
 
     if (aType === "lift" || aType === "goal" && editOrCreate === "edit" || editOrCreate === "create") {
 
-        let respMsg = null, inp1 = null, inp2 = null, inp3 = null, color = 0;
+        let respMsg = null, inp1 = null, inp2 = null, inp3 = null, inp4, color = 0, index = null;
 
         if (editOrCreate === "create") {
             respMsg = document.getElementById("respC");
@@ -238,6 +262,7 @@ async function saveLiftOrGoal(aType, editOrCreate) {
             inp1 = document.getElementById("inp1C").value;
             inp2 = document.getElementById("inp2C").value;
             inp3 = document.getElementById("inp3C").value;
+            inp4 = document.getElementById("inp4C").value;
         }
 
         if (editOrCreate === "edit") {
@@ -246,10 +271,13 @@ async function saveLiftOrGoal(aType, editOrCreate) {
             inp1 = document.getElementById("title1E").value;
             inp2 = document.getElementById("inp1E").value;
             inp3 = document.getElementById("inp2E").value;
-            color = document.getElementById("inp3E").value;
+            inp4 = document.getElementById("inp3E").value;
+            color = document.getElementById("inp4E").value;
+
+            index = aIndex;
         }
 
-        const validateInfo = validateLiftOrGoal(inp1, inp2, inp3, aType, color);
+        const validateInfo = validateLiftOrGoal(inp1, inp2, inp3, inp4, aType, color, index);
 
         if (validateInfo.isValid === true && validateInfo.info) {
             respMsg.textContent = "Lagrer...";
@@ -279,7 +307,7 @@ async function saveLiftOrGoal(aType, editOrCreate) {
     }
 }
 
-function validateLiftOrGoal(aInp1, aInp2, aInp3, aType, aColor) {
+function validateLiftOrGoal(aInp1, aInp2, aInp3, aInp4, aType, aColor, aIndex) {
 
     let isValid = false;
     let msg = "Vennligst fyll ut alle feltene!";
@@ -289,9 +317,11 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aType, aColor) {
 
         const input1 = aInp1;
         const input2 = aInp2;
-        const input3 = aInp3;
+        const input3 = parseInt(aInp3);
+        const input4 = aInp4;
         const type = aType;
         const color = aColor;
+        const index = aIndex;
 
         const onlyNumbers = /^[0-9.]+$/;
 
@@ -303,12 +333,19 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aType, aColor) {
             return { "isValid": isValid, "msg": msg };
         }
 
+        if (input3 > 0) {
+
+        } else {
+            msg = "Reps er ugyldig! Eksempel: 4";
+            return { "isValid": isValid, "msg": msg };
+        }
+
         //Date format = YYYY-MM-DD
-        const checkDateFormat = input3.split("-");
+        const checkDateFormat = input4.split("-");
 
         const today = new Date().toISOString().substr(0, 10);
 
-        if (input3 > today) {
+        if (input4 > today) {
             msg = "Dato kan ikke være i fremtiden!";
             return { "isValid": isValid, "msg": msg };
         }
@@ -319,7 +356,7 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aType, aColor) {
             return { "isValid": isValid, "msg": msg };
         }
 
-        info = { "exercise": input1, "kg": input2, "date": input3, "type": type, "color": color };
+        info = { "exercise": input1, "kg": input2, "reps": input3, "date": input4, "type": type, "color": color, "index": index };
 
         isValid = true;
 
@@ -400,33 +437,56 @@ async function deleteLiftOrGoal(aExercise, aType, aIndex) {
 }
 
 
-function onlyAllowedKeys(evt, editOrCreate) {
+function onlyAllowedKeys(evt, editOrCreate, aType) {
     const code = (evt.which) ? evt.which : evt.keyCode;
 
     if (editOrCreate === "create" || editOrCreate === "edit") {
 
-        let inp2 = document.getElementById("inp2C").value;
+        const type = aType;
 
-        if (editOrCreate === "edit") {
-            inp2 = document.getElementById("inp1E").value;
-        }
+        if (type === "kg") {
 
-        if (inp2.length <= 5) {
+            let inp2 = document.getElementById("inp2C").value;
 
-            let length = 0;
-
-            if (inp2.match(/\./g)) {
-                length = inp2.match(/\./g).length;
+            if (editOrCreate === "edit") {
+                inp2 = document.getElementById("inp1E").value;
             }
 
-            if (code >= 48 && code <= 57 || code === 46 && length === 0) {
-                return true;
+            if (inp2.length <= 5) {
+
+                let length = 0;
+
+                if (inp2.match(/\./g)) {
+                    length = inp2.match(/\./g).length;
+                }
+
+                if (code >= 48 && code <= 57 || code === 46 && length === 0) {
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
                 return false;
             }
-        } else {
-            return false;
+
+        } else if (type === "reps") {
+
+            let inp3 = document.getElementById("inp3C").value;
+
+            if (editOrCreate === "edit") {
+                inp3 = document.getElementById("inp2E").value;
+            }
+
+            if (inp3 > 100) {
+
+                return false;
+
+            } else {
+                return true;
+            }
+
         }
+
     } else {
         return false;
     }

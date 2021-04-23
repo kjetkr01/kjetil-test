@@ -178,7 +178,7 @@ async function displayBadges(aInfo) {
     const badgesTableRowDom = document.getElementById("badgesTableRow");
     badgesTableRowDom.innerHTML = "";
 
-    if (Object.entries(goals).length > 0) {
+    /*if (Object.entries(goals).length > 0) {
 
         const goalKeys = Object.keys(goals);
 
@@ -243,6 +243,92 @@ async function displayBadges(aInfo) {
         if (badge) {
             badgesTableRowDom.innerHTML = badge;
         }
+    }*/
+
+    let hasGoalsLeft = info.goalsLeft > 0;
+
+    const keys = Object.keys(goals);
+
+    const arr = [];
+
+    for (let i = 0; i < keys.length; i++) {
+
+        let kgUntilGoal = 0, msg = "", index = 0;
+
+        const exerciseGoal = goals[keys[i]];
+        const exerciseGoalKeys = Object.keys(exerciseGoal);
+
+        for (let j = 0; j < exerciseGoalKeys.length; j++) {
+
+            const goalKeys = exerciseGoal[exerciseGoalKeys[j]];
+
+            if (goalKeys) {
+
+                const color = goalKeys.color || "redBadgeG";
+                const goalReps = goalKeys.reps;
+                const goalKg = parseFloat(goalKeys.kg);
+
+                let currentLiftPR = 0;
+
+                const liftKeys = Object.keys(lifts[keys[i]]);
+
+                for (let f = 0; f < liftKeys.length; f++) {
+                    const lift = lifts[keys[i]][f];
+                    if (lift.reps === "1" && goalReps === "1") {
+                        currentLiftPR = parseInt(lift.kg);
+                        console.log(currentLiftPR)
+                        console.log(goalKg)
+                        console.log("1 rm");
+                    } else if (lift.kg === goalKg) {
+                        console.log("reps left");
+                    }
+                }
+
+                kgUntilGoal = goalKg - currentLiftPR;
+
+                if (kgUntilGoal <= 0) {
+                    msg = "Målet er nådd!";
+                } else {
+                    msg = `${kgUntilGoal} kg igjen`;
+                }
+
+                function capitalizeFirstLetter(string) {
+                    return string.charAt(0).toUpperCase() + string.slice(1);
+                }
+
+                arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": goalKg, "kgLeft": kgUntilGoal, "msg": msg, "color": color, "index": index });
+
+            }
+            index++;
+        }
+
     }
+
+    arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
+
+    if (arr.length > 0) {
+        smallTitle.textContent = "Din fremgang";
+    } else {
+        smallTitle.textContent = "Du har ingen mål enda!";
+    }
+
+    for (let i = 0; i < arr.length; i++) {
+
+        const badge = getBadgeGoals(size, arr[i], arr[i].index);
+
+        if (badge && badgesTableRowDom) {
+            badgesTableRowDom.innerHTML += badge;
+        }
+    }
+
+    if (hasGoalsLeft === true || Object.entries(goals).length === 0) {
+
+        const badge = getBadgeGoals();
+
+        if (badge && badgesTableRowDom) {
+            badgesTableRowDom.innerHTML += badge;
+        }
+    }
+
 }
 

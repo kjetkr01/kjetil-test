@@ -684,10 +684,16 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
                }
           }
 
-          info.reps = "1";
+          if (isValid === true) {
+               if (info.reps > 0) {
+                    info.reps = info.reps.toString();
+               } else {
+                    isValid = false;
+               }
+          }
 
           if (isValid === true) {
-               const saveLiftOrGoalResp = await saveLiftOrGoal(currentUser.id, info.reps, info.exercise, info.kg, info.date, info.type, color);
+               const saveLiftOrGoalResp = await saveLiftOrGoal(currentUser.id, info, color);
                res.status(200).json(saveLiftOrGoalResp).end();
           } else {
                res.status(403).json("invalid information").end();

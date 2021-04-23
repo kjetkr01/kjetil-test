@@ -91,7 +91,7 @@ function displayInformation(respInfo) {
 
     if (goals) {
         goalsInfo = new Tgoals(info.goals);
-        //displayGoals(info.goalsLeft > 0);
+        displayGoals(info.goalsLeft > 0);
     }
 
     if (program) {
@@ -103,69 +103,64 @@ function displayInformation(respInfo) {
 
     function displayLifts(hasLiftsLeft) {
 
-        if (Object.entries(lifts).length > 0) {
+        const keys = Object.keys(lifts);
 
-            const keys = Object.keys(lifts);
+        const arr = [];
 
-            if (keys.length > 0) {
+        for (let i = 0; i < keys.length; i++) {
 
-                const arr = [];
-                let msg = "";
+            let msg = "", index = 0;
 
-                for (let i = 0; i < keys.length; i++) {
+            const exerciseLift = lifts[keys[i]];
+            const exerciseLiftKeys = Object.keys(exerciseLift);
 
-                    const exerciseLift = lifts[keys[i]];
-                    const exerciseLiftKeys = Object.keys(exerciseLift);
+            for (let j = 0; j < exerciseLiftKeys.length; j++) {
 
-                    let index = 0;
+                const liftKeys = exerciseLift[exerciseLiftKeys[j]];
 
-                    for (let j = 0; j < exerciseLiftKeys.length; j++) {
+                if (liftKeys) {
+                    if (liftKeys.kg !== "0" && liftKeys.kg !== 0 && liftKeys.kg !== "") {
 
-                        const liftKeys = exerciseLift[exerciseLiftKeys[j]];
+                        const color = liftKeys.color || "redBadgeG";
 
-                        if (liftKeys) {
-                            if (liftKeys.kg !== "0" && liftKeys.kg !== 0 && liftKeys.kg !== "") {
+                        const prDateArr = liftKeys.date.split("-");
 
-                                const color = liftKeys.color || "redBadgeG";
+                        if (prDateArr.length === 3) {
 
-                                const prDateArr = liftKeys.date.split("-");
+                            if (prDateArr[0].length === 4 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2 && prDateArr[2] > 0 && prDateArr[2] <= 31 && prDateArr[2].length <= 2) {
 
-                                if (prDateArr.length === 3) {
+                                const d = new Date();
+                                const prDate = new Date(prDateArr[0], (prDateArr[1] - 1), prDateArr[2]);
 
-                                    if (prDateArr[0].length === 4 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2 && prDateArr[2] > 0 && prDateArr[2] <= 31 && prDateArr[2].length <= 2) {
+                                const daysSinceTime = parseInt((d - prDate) / (1000 * 3600 * 24));
 
-                                        const d = new Date();
-                                        const prDate = new Date(prDateArr[0], (prDateArr[1] - 1), prDateArr[2]);
-
-                                        const daysSinceTime = parseInt((d - prDate) / (1000 * 3600 * 24));
-
-                                        if (d < prDate) {
-                                            //fremtiden
-                                        } else if (daysSinceTime > 1) {
-                                            msg = `${parseInt(daysSinceTime)} dager siden`;
-                                        } else if (daysSinceTime === 1) {
-                                            msg = `I går`;
-                                        } else if (daysSinceTime === 0) {
-                                            msg = `I dag`;
-                                        }
-                                    }
+                                if (d < prDate) {
+                                    //fremtiden
+                                } else if (daysSinceTime > 1) {
+                                    msg = `${parseInt(daysSinceTime)} dager siden`;
+                                } else if (daysSinceTime === 1) {
+                                    msg = `I går`;
+                                } else if (daysSinceTime === 0) {
+                                    msg = `I dag`;
                                 }
-
-                                function capitalizeFirstLetter(string) {
-                                    return string.charAt(0).toUpperCase() + string.slice(1);
-                                }
-
-                                arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": liftKeys.kg, "msg": msg, "color": color, "index": index });
-
                             }
                         }
-                        index++;
+
+                        function capitalizeFirstLetter(string) {
+                            return string.charAt(0).toUpperCase() + string.slice(1);
+                        }
+
+                        arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": liftKeys.kg, "msg": msg, "color": color, "index": index });
+
                     }
                 }
+                index++;
+            }
+        }
 
-                if (arr.length > 0) {
+        if (arr.length > 0) {
 
-                    userGrid.innerHTML += `
+            userGrid.innerHTML += `
 <div id="Glifts">
 <p id="lifts" class="fadeIn animate delaySmall">
 Løft (${arr.length})
@@ -184,20 +179,20 @@ Løft (${arr.length})
 </div>
 `;
 
-                    arr.sort(function (a, b) { return b.kg - a.kg });
-                    for (let i = 0; i < arr.length; i++) {
-                        //const badge = getBadgeLift(size, arr[i]);
-                        
-                        const badge = getBadgeLift(0, arr[i], arr[i].index);
+            arr.sort(function (a, b) { return b.kg - a.kg });
+            for (let i = 0; i < arr.length; i++) {
+                //const badge = getBadgeLift(size, arr[i]);
 
-                        if (badge) {
-                            document.getElementById("badgesLiftsTableRow").innerHTML += badge;
-                        }
-                    }
+                const badge = getBadgeLift(0, arr[i], arr[i].index);
+                const badgesLiftsTableRow = document.getElementById("badgesLiftsTableRow");
+
+                if (badge && badgesLiftsTableRow) {
+                    badgesLiftsTableRow.innerHTML += badge;
                 }
-
             }
+
         } else {
+
             userGrid.innerHTML += `
 <div id="Glifts">
 <p id="lifts" class="fadeIn animate delaySmall">
@@ -222,9 +217,10 @@ Løft
         if (hasLiftsLeft === true || Object.entries(lifts).length === 0) {
 
             const badge = getBadgeLift();
+            const badgesLiftsTableRow = document.getElementById("badgesLiftsTableRow");
 
-            if (badge) {
-                document.getElementById("badgesLiftsTableRow").innerHTML += badge;
+            if (badge && badgesLiftsTableRow) {
+                badgesLiftsTableRow.innerHTML += badge;
             }
         }
 
@@ -239,45 +235,66 @@ Løft
 
     function displayGoals(hasGoalsLeft) {
 
-        if (Object.entries(goals).length > 0) {
+        const keys = Object.keys(goals);
 
-            const goalKeys = Object.keys(goals);
+        const arr = [];
 
-            const arr = [];
-            let kgUntilGoal = 0, msg = "";
+        for (let i = 0; i < keys.length; i++) {
 
-            for (let i = 0; i < Object.entries(goals).length; i++) {
+            let kgUntilGoal = 0, msg = "", index = 0;
 
-                if (goalKeys[i]) {
+            const exerciseGoal = goals[keys[i]];
+            const exerciseGoalKeys = Object.keys(exerciseGoal);
 
-                    if (goals[goalKeys[i]].goal > 0) {
+            for (let j = 0; j < exerciseGoalKeys.length; j++) {
 
-                        const color = goals[goalKeys[i]].color || "redBadgeG";
+                const goalKeys = exerciseGoal[exerciseGoalKeys[j]];
 
-                        const currentGoalPR = parseFloat(goals[goalKeys[i]].goal);
-                        let currentLiftPR = 0;
+                if (goalKeys) {
 
-                        if (lifts[goalKeys[i]]) {
-                            currentLiftPR = parseFloat(lifts[goalKeys[i]].ORM);
+                    const color = goalKeys.color || "redBadgeG";
+                    const goalReps = goalKeys.reps;
+                    const goalKg = parseFloat(goalKeys.kg);
+
+                    let currentLiftPR = 0;
+
+                    const liftKeys = Object.keys(lifts[keys[i]]);
+
+                    for (let f = 0; f < liftKeys.length; f++) {
+                        const lift = lifts[keys[i]][f];
+                        if (lift.reps === "1" && goalReps === "1") {
+                            currentLiftPR = parseInt(lift.kg);
+                            console.log(currentLiftPR)
+                            console.log(goalKg)
+                            console.log("1 rm");
+                        } else if (lift.kg === goalKg) {
+                            console.log("reps left");
                         }
-
-                        kgUntilGoal = currentGoalPR - currentLiftPR;
-
-                        if (kgUntilGoal <= 0) {
-                            msg = "Målet er nådd!";
-                        } else {
-                            msg = `${kgUntilGoal} kg igjen`;
-                        }
-
-                        arr.push({ "exercise": goalKeys[i], "kg": currentGoalPR, "kgLeft": kgUntilGoal, "msg": msg, "color": color });
                     }
+
+                    kgUntilGoal = goalKg - currentLiftPR;
+
+                    if (kgUntilGoal <= 0) {
+                        msg = "Målet er nådd!";
+                    } else {
+                        msg = `${kgUntilGoal} kg igjen`;
+                    }
+
+                    function capitalizeFirstLetter(string) {
+                        return string.charAt(0).toUpperCase() + string.slice(1);
+                    }
+
+                    arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": goalKg, "kgLeft": kgUntilGoal, "msg": msg, "color": color, "index": index });
+
                 }
+                index++;
             }
 
-            if (arr.length > 0) {
+        }
 
+        if (arr.length > 0) {
 
-                userGrid.innerHTML += `
+            userGrid.innerHTML += `
 <div id="Ggoals">
 <p id="goals" class="fadeIn animate delaySmall">
 Mål (${arr.length})
@@ -296,15 +313,16 @@ Mål (${arr.length})
 </div>
 `;
 
-                arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
+            arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
 
-                for (let i = 0; i < arr.length; i++) {
+            for (let i = 0; i < arr.length; i++) {
 
-                    const badge = getBadgeGoals(size, arr[i]);
+                const badge = getBadgeGoals(size, arr[i], arr[i].index);
 
-                    if (badge) {
-                        document.getElementById("badgesGoalsTableRow").innerHTML += badge;
-                    }
+                const badgesGoalsTableRow = document.getElementById("badgesGoalsTableRow");
+
+                if (badge && badgesGoalsTableRow) {
+                    badgesGoalsTableRow.innerHTML += badge;
                 }
             }
         } else {
@@ -332,8 +350,10 @@ Mål
 
             const badge = getBadgeGoals();
 
-            if (badge) {
-                document.getElementById("badgesGoalsTableRow").innerHTML += badge;
+            const badgesGoalsTableRow = document.getElementById("badgesGoalsTableRow");
+
+            if (badge && badgesGoalsTableRow) {
+                badgesGoalsTableRow.innerHTML += badge;
             }
         }
 

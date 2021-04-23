@@ -161,6 +161,7 @@
       if (resp) {
          const respmsg = document.getElementById("respMsg");
          respmsg.innerHTML = resp;
+         console.log(resp)
          sessionStorage.setItem("cachedUsername", username);
       } else {
          respmsg.innerHTML = errorText;
