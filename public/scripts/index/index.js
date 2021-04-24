@@ -276,7 +276,7 @@ async function displayBadges(aInfo) {
                 for (let f = 0; f < liftKeys.length; f++) {
                     const lift = lifts[keys[i]][f];
                     if (lift.reps === "1" && goalReps === "1") {
-                        currentLiftPR = parseInt(lift.kg);
+                        currentLiftPR = parseFloat(lift.kg);
                         console.log(currentLiftPR)
                         console.log(goalKg)
                         console.log("1 rm");
