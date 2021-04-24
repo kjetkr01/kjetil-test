@@ -138,7 +138,7 @@ ${firstName[0]} har ingen løft, mål eller treningsplan
 
         if (goals) {
             goalsInfo = new Tgoals(info.goals);
-            //displayGoals();
+            displayGoals();
         }
 
         if (program) {
@@ -152,67 +152,70 @@ ${firstName[0]} har ingen løft, mål eller treningsplan
 
     function displayLifts() {
 
-        if (Object.entries(lifts).length > 0) {
+        const keys = Object.keys(lifts);
 
-            const keys = Object.keys(lifts);
+        if (keys.length > 0) {
 
-            if (keys.length > 0) {
+            const arr = [];
+            let msg = "";
 
-                const arr = [];
-                let msg = "";
+            for (let i = 0; i < keys.length; i++) {
 
-                for (let i = 0; i < keys.length; i++) {
+                const exerciseLift = lifts[keys[i]];
+                const exerciseLiftKeys = Object.keys(exerciseLift);
 
-                    const exerciseLift = lifts[keys[i]];
-                    const exerciseLiftKeys = Object.keys(exerciseLift);
+                for (let j = 0; j < exerciseLiftKeys.length; j++) {
 
-                    for (let j = 0; j < exerciseLiftKeys.length; j++) {
+                    const liftKeys = exerciseLift[exerciseLiftKeys[j]];
 
-                        const liftKeys = exerciseLift[exerciseLiftKeys[j]];
+                    if (liftKeys) {
+                        if (liftKeys.kg !== "0" && liftKeys.kg !== 0 && liftKeys.kg !== "") {
 
-                        if (liftKeys) {
-                            if (liftKeys.kg !== "0" && liftKeys.kg !== 0 && liftKeys.kg !== "") {
+                            const color = liftKeys.color || "redBadgeG";
 
-                                const color = liftKeys.color || "redBadgeG";
+                            if (liftKeys.reps === "1") {
+                                msg = `ORM / 1 rep`;
+                            } else {
+                                msg = `${liftKeys.reps} reps`;
+                            }
 
-                                const prDateArr = liftKeys.date.split("-");
+                            /*const prDateArr = liftKeys.date.split("-");
 
-                                if (prDateArr.length === 3) {
+                            if (prDateArr.length === 3) {
 
-                                    if (prDateArr[0].length === 4 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2 && prDateArr[2] > 0 && prDateArr[2] <= 31 && prDateArr[2].length <= 2) {
+                                if (prDateArr[0].length === 4 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2 && prDateArr[2] > 0 && prDateArr[2] <= 31 && prDateArr[2].length <= 2) {
 
-                                        const d = new Date();
-                                        const prDate = new Date(prDateArr[0], (prDateArr[1] - 1), prDateArr[2]);
+                                    const d = new Date();
+                                    const prDate = new Date(prDateArr[0], (prDateArr[1] - 1), prDateArr[2]);
 
-                                        const daysSinceTime = parseInt((d - prDate) / (1000 * 3600 * 24));
+                                    const daysSinceTime = parseInt((d - prDate) / (1000 * 3600 * 24));
 
-                                        if (d < prDate) {
-                                            //fremtiden
-                                        } else if (daysSinceTime > 1) {
-                                            msg = `${parseInt(daysSinceTime)} dager siden`;
-                                        } else if (daysSinceTime === 1) {
-                                            msg = `I går`;
-                                        } else if (daysSinceTime === 0) {
-                                            msg = `I dag`;
-                                        }
+                                    if (d < prDate) {
+                                        //fremtiden
+                                    } else if (daysSinceTime > 1) {
+                                        msg = `${parseInt(daysSinceTime)} dager siden`;
+                                    } else if (daysSinceTime === 1) {
+                                        msg = `I går`;
+                                    } else if (daysSinceTime === 0) {
+                                        msg = `I dag`;
                                     }
                                 }
+                            }*/
 
-                                function capitalizeFirstLetter(string) {
-                                    return string.charAt(0).toUpperCase() + string.slice(1);
-                                }
-
-                                arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": liftKeys.kg, "msg": msg, "color": color });
-
+                            function capitalizeFirstLetter(string) {
+                                return string.charAt(0).toUpperCase() + string.slice(1);
                             }
+
+                            arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": liftKeys.kg, "msg": msg, "color": color });
+
                         }
-
                     }
+
                 }
+            }
+            if (arr.length > 0) {
 
-                if (arr.length > 0) {
-
-                    userGrid.innerHTML += `
+                userGrid.innerHTML += `
 <div id="Glifts">
 <p id="lifts" class="fadeIn animate delaySmall">
 Løft (${arr.length})
@@ -231,16 +234,14 @@ Løft (${arr.length})
 </div>
 `;
 
-                    arr.sort(function (a, b) { return b.kg - a.kg });
-                    for (let i = 0; i < arr.length; i++) {
-                        const badge = getBadgeLift(size, arr[i]);
+                arr.sort(function (a, b) { return b.kg - a.kg });
+                for (let i = 0; i < arr.length; i++) {
+                    const badge = getBadgeLift(size, arr[i], arr[i].id);
 
-                        if (badge) {
-                            document.getElementById("badgesLiftsTableRow").innerHTML += badge;
-                        }
+                    if (badge) {
+                        document.getElementById("badgesLiftsTableRow").innerHTML += badge;
                     }
                 }
-
             }
         }
     }
@@ -254,45 +255,62 @@ Løft (${arr.length})
 
     function displayGoals() {
 
-        if (Object.entries(goals).length > 0) {
+        const keys = Object.keys(goals);
 
-            const goalKeys = Object.keys(goals);
+        const arr = [];
 
-            const arr = [];
+        for (let i = 0; i < keys.length; i++) {
+
             let kgUntilGoal = 0, msg = "";
 
-            for (let i = 0; i < Object.entries(goals).length; i++) {
+            const exerciseGoal = goals[keys[i]];
+            const exerciseGoalKeys = Object.keys(exerciseGoal);
 
-                if (goalKeys[i]) {
+            for (let j = 0; j < exerciseGoalKeys.length; j++) {
 
-                    if (goals[goalKeys[i]].goal > 0) {
+                const goalKeys = exerciseGoal[exerciseGoalKeys[j]];
 
-                        const color = goals[goalKeys[i]].color || "redBadgeG";
+                if (goalKeys) {
 
-                        const currentGoalPR = parseFloat(goals[goalKeys[i]].goal);
-                        let currentLiftPR = 0;
+                    const id = goalKeys.id;
+                    const color = goalKeys.color || "redBadgeG";
+                    const goalReps = goalKeys.reps;
+                    const goalKg = parseFloat(goalKeys.kg);
 
-                        if (lifts[goalKeys[i]]) {
-                            currentLiftPR = parseFloat(lifts[goalKeys[i]].ORM);
+                    let currentLiftPR = 0;
+
+                    const liftKeys = Object.keys(lifts[keys[i]]);
+
+                    for (let f = 0; f < liftKeys.length; f++) {
+                        const lift = lifts[keys[i]][f];
+                        if (lift.reps === "1" && goalReps === "1") {
+                            currentLiftPR = parseFloat(lift.kg);
+                            console.log(currentLiftPR)
+                            console.log(goalKg)
+                            console.log("1 rm");
+                        } else if (lift.kg === goalKg) {
+                            console.log("reps left");
                         }
-
-                        kgUntilGoal = currentGoalPR - currentLiftPR;
-
-                        if (kgUntilGoal <= 0) {
-                            msg = "Målet er nådd!";
-                        } else {
-                            msg = `${kgUntilGoal} kg igjen`;
-                        }
-
-                        arr.push({ "exercise": goalKeys[i], "kg": currentGoalPR, "kgLeft": kgUntilGoal, "msg": msg, "color": color });
                     }
+
+                    kgUntilGoal = goalKg - currentLiftPR;
+
+                    if (kgUntilGoal <= 0) {
+                        msg = "Målet er nådd!";
+                    } else {
+                        msg = `${kgUntilGoal} kg igjen`;
+                    }
+
+                    arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": goalKg, "kgLeft": kgUntilGoal, "msg": msg, "color": color, "id": id });
+
                 }
             }
 
-            if (arr.length > 0) {
+        }
 
+        if (arr.length > 0) {
 
-                userGrid.innerHTML += `
+            userGrid.innerHTML += `
 <div id="Ggoals">
 <p id="goals" class="fadeIn animate delaySmall">
 Mål (${arr.length})
@@ -311,15 +329,16 @@ Mål (${arr.length})
 </div>
 `;
 
-                arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
+            arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
 
-                for (let i = 0; i < arr.length; i++) {
+            for (let i = 0; i < arr.length; i++) {
 
-                    const badge = getBadgeGoals(size, arr[i]);
+                const badge = getBadgeGoals(size, arr[i], arr[i].id);
 
-                    if (badge) {
-                        document.getElementById("badgesGoalsTableRow").innerHTML += badge;
-                    }
+                const badgesGoalsTableRow = document.getElementById("badgesGoalsTableRow");
+
+                if (badge && badgesGoalsTableRow) {
+                    badgesGoalsTableRow.innerHTML += badge;
                 }
             }
         }
