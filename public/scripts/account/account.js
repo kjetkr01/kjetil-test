@@ -124,7 +124,9 @@ function displayInformation(respInfo) {
                         const id = liftKeys.id;
                         const color = liftKeys.color || "redBadgeG";
 
-                        const prDateArr = liftKeys.date.split("-");
+                        msg = `${liftKeys.reps} reps`;
+
+                        /*const prDateArr = liftKeys.date.split("-");
 
                         if (prDateArr.length === 3) {
 
@@ -145,7 +147,7 @@ function displayInformation(respInfo) {
                                     msg = `I dag`;
                                 }
                             }
-                        }
+                        }*/
 
                         arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": liftKeys.kg, "msg": msg, "color": color, "id": id });
 
@@ -260,7 +262,7 @@ Løft
                     for (let f = 0; f < liftKeys.length; f++) {
                         const lift = lifts[keys[i]][f];
                         if (lift.reps === "1" && goalReps === "1") {
-                            currentLiftPR = parseInt(lift.kg);
+                            currentLiftPR = parseFloat(lift.kg);
                             console.log(currentLiftPR)
                             console.log(goalKg)
                             console.log("1 rm");

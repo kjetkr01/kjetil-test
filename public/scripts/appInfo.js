@@ -7,7 +7,7 @@ const application = {
         state: "alpha",
         major: 4, // major++ = minor = 0 && revision = 0
         minor: 2, // minor++ = revision = 0
-        revision: 3,
+        revision: 4,
     },
     lastUpdated: {
         day: "24",
@@ -20,6 +20,8 @@ const application = {
     }
 }
 
+const github_user_website = "kjetkr01.github.io";
+
 // Slutt
 
 application.version.fullNumber = `${application.version.major}.${application.version.minor}.${application.version.revision}`;
@@ -28,7 +30,7 @@ application.lastUpdated.date = getDateFormat(application.lastUpdated.day, applic
 
 const aboutAppText = `
 ${application.name} er et app prosjekt utviklet av ${createBtn("Kjetil Kristiansen", "2")}.
-kjetkr01.github.io
+<a href="https://${github_user_website}/">${github_user_website}</a>
 <br><br>
 Appen ble hovedsakling laget for å enkelt se ORM (One Rep Max) i ulike løft.
 Kunne lage mål i ulike øvelser og enkelt sjekke progresjon og hvor langt man er unna målet.
