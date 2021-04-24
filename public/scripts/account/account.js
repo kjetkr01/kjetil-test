@@ -103,7 +103,7 @@ function displayInformation(respInfo) {
 
     function displayLifts(hasLiftsLeft) {
 
-        let sortBy = sessionStorage.getItem("display_lifts");
+        let sortBy = localStorage.getItem("display_lifts_owner");
 
         let showLifts = lifts;
 
@@ -113,6 +113,7 @@ function displayInformation(respInfo) {
                 showLifts = lifts[sortBy];
                 if (showLifts.length === 0) {
                     sortBy = null;
+                    localStorage.removeItem("display_lifts_owner");
                 }
 
             }
@@ -186,12 +187,14 @@ function displayInformation(respInfo) {
             }
         }
 
+        const selectHTML = `<select id="changeLiftFilter" class="changeFilterSelect" onchange="sortByLiftsOrGoalOwner('changeLiftFilter', 'lift');"></select>`;
+
         if (arr.length > 0) {
 
             userGrid.innerHTML += `
 <div id="Glifts">
 <p id="lifts" class="fadeIn animate delaySmall">
-Løft (${arr.length}) <select id="changeFilter" onchange="sortByLifts('changeFilter');"></select>
+Løft: ${selectHTML}
 </p>
 </div>
 
@@ -209,25 +212,31 @@ Løft (${arr.length}) <select id="changeFilter" onchange="sortByLifts('changeFil
 
             if (sortBy) {
                 if (allowedExercises.includes(sortBy)) {
-                    document.getElementById("lifts").innerHTML = `Løft: ${capitalizeFirstLetter(sortBy)} (${arr.length}) <select id="changeFilter" onchange="sortByLifts('changeFilter');"></select>`;
+                    document.getElementById("lifts").innerHTML = `Løft: ${selectHTML}`;
                 }
             }
 
-            document.getElementById("changeFilter").innerHTML = `<option value="null">Alle</option>`;
+            document.getElementById("changeLiftFilter").innerHTML = `<option id="totalLifts" value="null"></option>`;
+
+            let totalCount = 0;
 
             for (let x = 0; x < keys.length; x++) {
 
                 if (lifts[keys[x]].length > 0) {
 
-                    let html = `<option value="${keys[x]}">${capitalizeFirstLetter(keys[x])}</option>`;
+                    totalCount++;
+
+                    let html = `<option value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${lifts[keys[x]].length})</option>`;
 
                     if (keys[x] === sortBy) {
-                        html = `<option selected="selected" value="${keys[x]}">${capitalizeFirstLetter(keys[x])}</option>`;
+                        html = `<option selected="selected" value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${lifts[keys[x]].length})</option>`;
                     }
 
-                    document.getElementById("changeFilter").innerHTML += html;
+                    document.getElementById("changeLiftFilter").innerHTML += html;
                 }
             }
+
+            document.getElementById("totalLifts").innerHTML = `Alle (${totalCount})`;
 
             arr.sort(function (a, b) { return b.kg - a.kg });
             for (let i = 0; i < arr.length; i++) {
@@ -283,15 +292,41 @@ Løft
 
     function displayGoals(hasGoalsLeft) {
 
+        let sortBy = localStorage.getItem("display_goals_owner");
+
+        let showGoals = goals;
+
+        if (sortBy) {
+            if (allowedExercises.includes(sortBy)) {
+
+                showGoals = goals[sortBy];
+                if (showGoals.length === 0) {
+                    sortBy = null;
+                    localStorage.removeItem("display_goals_owner");
+                }
+            }
+        }
+
         const keys = Object.keys(goals);
 
         const arr = [];
 
-        for (let i = 0; i < keys.length; i++) {
+        if (sortBy === null) {
+            for (let i = 0; i < keys.length; i++) {
+                const exerciseGoal = goals[keys[i]];
+                displayPerExercise(exerciseGoal, keys[i]);
+            }
+        } else {
+            const exerciseGoal = showGoals;
+            displayPerExercise(exerciseGoal, sortBy);
+        }
 
-            let kgUntilGoal = 0, msg = "";
+        function displayPerExercise(aExerciseGoal, aCurrent) {
 
-            const exerciseGoal = goals[keys[i]];
+            let kgUntilGoal = 0, repsUntilGoal = 0, msg = "";
+
+            const exerciseGoal = aExerciseGoal;
+            const current = aCurrent;
             const exerciseGoalKeys = Object.keys(exerciseGoal);
 
             for (let j = 0; j < exerciseGoalKeys.length; j++) {
@@ -302,46 +337,55 @@ Løft
 
                     const id = goalKeys.id;
                     const color = goalKeys.color || "redBadgeG";
-                    const goalReps = goalKeys.reps;
+                    const goalReps = parseInt(goalKeys.reps);
                     const goalKg = parseFloat(goalKeys.kg);
 
                     let currentLiftPR = 0;
 
-                    const liftKeys = Object.keys(lifts[keys[i]]);
+                    const liftKeys = Object.keys(lifts[current]);
 
                     for (let f = 0; f < liftKeys.length; f++) {
-                        const lift = lifts[keys[i]][f];
-                        if (lift.reps === "1" && goalReps === "1") {
-                            currentLiftPR = parseFloat(lift.kg);
-                            console.log(currentLiftPR)
-                            console.log(goalKg)
-                            console.log("1 rm");
-                        } else if (lift.kg === goalKg) {
-                            console.log("reps left");
+                        const lift = lifts[current][f];
+                        const liftReps = parseInt(lift.reps);
+                        const liftKg = parseFloat(lift.kg);
+
+                        if (liftKg === goalKg) {
+                            repsUntilGoal = goalReps - liftReps;
+
+                            if (repsUntilGoal <= 0) {
+                                msg = "Målet er nådd!";
+                            } else if (repsUntilGoal === 1) {
+                                msg = `1 rep igjen`;
+                            } else {
+                                msg = `${repsUntilGoal} reps igjen`;
+                            }
+
+                        } else {
+                            currentLiftPR = liftKg;
+                            kgUntilGoal = goalKg - currentLiftPR;
+                            if (kgUntilGoal <= 0) {
+                                msg = "Målet er nådd!";
+                            } else {
+                                msg = `${kgUntilGoal} kg igjen`;
+                            }
                         }
                     }
 
-                    kgUntilGoal = goalKg - currentLiftPR;
 
-                    if (kgUntilGoal <= 0) {
-                        msg = "Målet er nådd!";
-                    } else {
-                        msg = `${kgUntilGoal} kg igjen`;
-                    }
-
-                    arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": goalKg, "kgLeft": kgUntilGoal, "msg": msg, "color": color, "id": id });
+                    arr.push({ "exercise": capitalizeFirstLetter(current), "kg": goalKg, "kgLeft": kgUntilGoal, "msg": msg, "color": color, "id": id });
 
                 }
             }
-
         }
+
+        const selectHTML = `<select id="changeGoalFilter" class="changeFilterSelect" onchange="sortByLiftsOrGoalOwner('changeGoalFilter', 'goal');"></select>`;
 
         if (arr.length > 0) {
 
             userGrid.innerHTML += `
 <div id="Ggoals">
 <p id="goals" class="fadeIn animate delaySmall">
-Mål (${arr.length})
+Mål: ${selectHTML}
 </p>
 </div>
 
@@ -356,6 +400,34 @@ Mål (${arr.length})
 </table>
 </div>
 `;
+
+            if (sortBy) {
+                if (allowedExercises.includes(sortBy)) {
+                    document.getElementById("goals").innerHTML = `Mål: ${selectHTML}`;
+                }
+            }
+
+            document.getElementById("changeGoalFilter").innerHTML = `<option id="totalGoals" value="null"></option>`;
+
+            let totalCount = 0;
+
+            for (let x = 0; x < keys.length; x++) {
+
+                if (goals[keys[x]].length > 0) {
+
+                    totalCount++;
+
+                    let html = `<option value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${goals[keys[x]].length})</option>`;
+
+                    if (keys[x] === sortBy) {
+                        html = `<option selected="selected" value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${goals[keys[x]].length})</option>`;
+                    }
+
+                    document.getElementById("changeGoalFilter").innerHTML += html;
+                }
+            }
+
+            document.getElementById("totalGoals").innerHTML = `Alle (${totalCount})`;
 
             arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
 

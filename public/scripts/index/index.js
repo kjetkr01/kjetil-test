@@ -161,7 +161,7 @@ async function displayBadges(aInfo) {
 
     const smallTitle = document.getElementById("smallTitle");
 
-    const size = parseInt(info.settings.badgeSize) || 0;
+    const size = parseInt(info.settings.badgesize) || 0;
 
     if (size === 1) {
         document.getElementById("Gbadges").style.minHeight = "200px";
@@ -177,73 +177,6 @@ async function displayBadges(aInfo) {
 
     const badgesTableRowDom = document.getElementById("badgesTableRow");
     badgesTableRowDom.innerHTML = "";
-
-    /*if (Object.entries(goals).length > 0) {
-
-        const goalKeys = Object.keys(goals);
-
-        const arr = [];
-        let kgUntilGoal = 0, msg = "";
-
-        for (let i = 0; i < Object.entries(goals).length; i++) {
-
-            if (goalKeys[i]) {
-
-                if (goals[goalKeys[i]].goal > 0) {
-
-                    const currentGoalPR = parseFloat(goals[goalKeys[i]].goal);
-                    let currentLiftPR = 0;
-                    const color = goals[goalKeys[i]].color || "redBadge";
-
-                    if (lifts[goalKeys[i]]) {
-                        currentLiftPR = parseFloat(lifts[goalKeys[i]].ORM);
-                    }
-
-                    kgUntilGoal = currentGoalPR - currentLiftPR;
-
-                    if (kgUntilGoal <= 0) {
-                        msg = "Målet er nådd!";
-                    } else {
-                        msg = `${kgUntilGoal} kg igjen`;
-                    }
-
-                    arr.push({ "exercise": goalKeys[i], "kg": currentGoalPR, "kgLeft": kgUntilGoal, "msg": msg, "color": color });
-                }
-            }
-
-        }
-
-        arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
-
-        smallTitle.textContent = "Din fremgang";
-
-        for (let i = 0; i < arr.length; i++) {
-
-            const badge = getBadgeGoals(size, arr[i]);
-
-            if (badge) {
-                badgesTableRowDom.innerHTML += badge;
-            }
-        }
-
-        if (info.goalsLeft.length > 0 === true || Object.entries(goals).length === 0) {
-
-            const badge = getBadgeGoals();
-
-            if (badge) {
-                badgesTableRowDom.innerHTML += badge;
-            }
-        }
-
-    } else {
-        const badge = getBadgeGoals();
-
-        smallTitle.textContent = "Du har ingen mål enda!";
-
-        if (badge) {
-            badgesTableRowDom.innerHTML = badge;
-        }
-    }*/
 
     let hasGoalsLeft = info.goalsLeft > 0;
 
@@ -266,7 +199,7 @@ async function displayBadges(aInfo) {
 
                 const id = goalKeys.id;
                 const color = goalKeys.color || "redBadgeG";
-                const goalReps = goalKeys.reps;
+                const goalReps = parseInt(goalKeys.reps);
                 const goalKg = parseFloat(goalKeys.kg);
 
                 let currentLiftPR = 0;
@@ -275,22 +208,29 @@ async function displayBadges(aInfo) {
 
                 for (let f = 0; f < liftKeys.length; f++) {
                     const lift = lifts[keys[i]][f];
-                    if (lift.reps === "1" && goalReps === "1") {
-                        currentLiftPR = parseFloat(lift.kg);
-                        console.log(currentLiftPR)
-                        console.log(goalKg)
-                        console.log("1 rm");
-                    } else if (lift.kg === goalKg) {
-                        console.log("reps left");
+                    const liftReps = parseInt(lift.reps);
+                    const liftKg = parseFloat(lift.kg);
+
+                    if (liftKg === goalKg) {
+                        repsUntilGoal = goalReps - liftReps;
+
+                        if (repsUntilGoal <= 0) {
+                            msg = "Målet er nådd!";
+                        } else if (repsUntilGoal === 1) {
+                            msg = `1 rep igjen`;
+                        } else {
+                            msg = `${repsUntilGoal} reps igjen`;
+                        }
+
+                    } else {
+                        currentLiftPR = liftKg;
+                        kgUntilGoal = goalKg - currentLiftPR;
+                        if (kgUntilGoal <= 0) {
+                            msg = "Målet er nådd!";
+                        } else {
+                            msg = `${kgUntilGoal} kg igjen`;
+                        }
                     }
-                }
-
-                kgUntilGoal = goalKg - currentLiftPR;
-
-                if (kgUntilGoal <= 0) {
-                    msg = "Målet er nådd!";
-                } else {
-                    msg = `${kgUntilGoal} kg igjen`;
                 }
 
                 arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": goalKg, "kgLeft": kgUntilGoal, "msg": msg, "color": color, "id": id });

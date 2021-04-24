@@ -205,3 +205,17 @@ overflow-x: scroll;
 /* end of spacing & other */
 
 /*}*/
+
+
+.changeFilterSelect {
+    font-size: 20px;
+    color:var(--main-accountOwnerColor);
+    font-weight: bold;
+    font-family: var(--main-font-Family-Verdana);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: none;
+    outline: none;
+    background-color: var(--main-backgroundColor2);
+    }

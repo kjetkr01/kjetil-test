@@ -39,8 +39,14 @@ function enableOverlayCreate(aType) {
             respMsg.innerHTML = `Du kan lage ${liftsLeftInfo} løft til`;
 
             if (allowedExercises.length > 0) {
+                const currentlySorting = localStorage.getItem("display_lifts_owner");
                 for (let i = 0; i < allowedExercises.length; i++) {
-                    inp1.innerHTML += `<option value="${allowedExercises[i]}">${capitalizeFirstLetter(allowedExercises[i])}`;
+
+                    if (allowedExercises[i] === currentlySorting && allowedExercises.includes(currentlySorting)) {
+                        inp1.innerHTML += `<option selected="selected" value="${allowedExercises[i]}">${capitalizeFirstLetter(allowedExercises[i])}`;
+                    } else {
+                        inp1.innerHTML += `<option value="${allowedExercises[i]}">${capitalizeFirstLetter(allowedExercises[i])}`;
+                    }
                 }
                 Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('lift','create');">Lagre</button>`;
             }
@@ -54,8 +60,13 @@ function enableOverlayCreate(aType) {
             respMsg.innerHTML = `Du kan lage ${goalsLeftInfo} mål til`;
 
             if (allowedExercises.length > 0) {
+                const currentlySorting = localStorage.getItem("display_goals_owner");
                 for (let i = 0; i < allowedExercises.length; i++) {
-                    inp1.innerHTML += `<option value="${allowedExercises[i]}">${capitalizeFirstLetter(allowedExercises[i])}`;
+                    if (allowedExercises[i] === currentlySorting && allowedExercises.includes(currentlySorting)) {
+                        inp1.innerHTML += `<option selected="selected" value="${allowedExercises[i]}">${capitalizeFirstLetter(allowedExercises[i])}`;
+                    } else {
+                        inp1.innerHTML += `<option value="${allowedExercises[i]}">${capitalizeFirstLetter(allowedExercises[i])}`;
+                    }
                 }
                 Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('goal','create');">Lagre</button>`;
             }

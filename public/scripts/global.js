@@ -530,7 +530,7 @@ async function getAccountDetails(aUserID) {
 
                 const newTheme = resp.updatedUserObject.preferredTheme;
 
-                if (newTheme === "0" || newTheme === "1" || newTheme === "2") {
+                if (newTheme === 0 || newTheme === 1 || newTheme === 2) {
                     //localStorage.setItem("theme", newTheme);
 
                     if (localStorage.getItem("user")) {
@@ -607,15 +607,27 @@ function capitalizeFirstLetter(string) {
 
 //
 
-function sortByLifts(aDom) {
+function sortByLiftsOrGoalOwner(aDom, aType) {
 
     const dom = document.getElementById(aDom);
+    const type = aType;
 
-    if (dom) {
-        if (allowedExercises.includes(dom.value)) {
-            sessionStorage.setItem('display_lifts', dom.value);
-        } else {
-            sessionStorage.removeItem('display_lifts');
+    if (dom && type) {
+
+        if (type === "lift") {
+            if (allowedExercises.includes(dom.value)) {
+                localStorage.setItem('display_lifts_owner', dom.value);
+            } else {
+                localStorage.removeItem('display_lifts_owner');
+            }
+        }
+
+        if (type === "goal") {
+            if (allowedExercises.includes(dom.value)) {
+                localStorage.setItem('display_goals_owner', dom.value);
+            } else {
+                localStorage.removeItem('display_goals_owner');
+            }
         }
     }
 

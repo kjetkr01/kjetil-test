@@ -527,8 +527,8 @@ width: fit-content;
 }
 
 #Ginp4E > #inp4E {
-    width: fit-content;
-    }
+width: fit-content;
+}
 
 #GcancelE > #cancelE {
 }
@@ -683,20 +683,20 @@ grid-area: c5oE;
 }
 
 .editLiftorGoal > #Gtitle5E {
-    grid-area: Gtitle5E;
-    }
-    
-    .editLiftorGoal > #Gline5E {
-    grid-area: Gline5E;
-    }
-    
-    .editLiftorGoal > #Ginp4E {
-    grid-area: Ginp4E;
-    }
-    
-    .editLiftorGoal > #c6oE {
-    grid-area: c6oE;
-    }
+grid-area: Gtitle5E;
+}
+
+.editLiftorGoal > #Gline5E {
+grid-area: Gline5E;
+}
+
+.editLiftorGoal > #Ginp4E {
+grid-area: Ginp4E;
+}
+
+.editLiftorGoal > #c6oE {
+grid-area: c6oE;
+}
 
 .editLiftorGoal > #GdeleteE {
 grid-area: GdeleteE;
