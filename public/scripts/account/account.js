@@ -191,7 +191,7 @@ function displayInformation(respInfo) {
             userGrid.innerHTML += `
 <div id="Glifts">
 <p id="lifts" class="fadeIn animate delaySmall">
-Løft (${arr.length}) <button onClick="sessionStorage.setItem('display_lifts', 'benkpress')">Trykk, så oppdater siden (må ha benkpress)</button>
+Løft (${arr.length}) <select id="changeFilter" onchange="sortByLifts('changeFilter');"></select>
 </p>
 </div>
 
@@ -209,7 +209,23 @@ Løft (${arr.length}) <button onClick="sessionStorage.setItem('display_lifts', '
 
             if (sortBy) {
                 if (allowedExercises.includes(sortBy)) {
-                    document.getElementById("lifts").innerHTML = `Løft: ${capitalizeFirstLetter(sortBy)} (${arr.length})`;
+                    document.getElementById("lifts").innerHTML = `Løft: ${capitalizeFirstLetter(sortBy)} (${arr.length}) <select id="changeFilter" onchange="sortByLifts('changeFilter');"></select>`;
+                }
+            }
+
+            document.getElementById("changeFilter").innerHTML = `<option value="null">Alle</option>`;
+
+            for (let x = 0; x < keys.length; x++) {
+
+                if (lifts[keys[x]].length > 0) {
+
+                    let html = `<option value="${keys[x]}">${capitalizeFirstLetter(keys[x])}</option>`;
+
+                    if (keys[x] === sortBy) {
+                        html = `<option selected="selected" value="${keys[x]}">${capitalizeFirstLetter(keys[x])}</option>`;
+                    }
+
+                    document.getElementById("changeFilter").innerHTML += html;
                 }
             }
 
@@ -261,8 +277,6 @@ Løft
     }
 
     /// ------------ end of displayLifts --------------- ///
-
-
 
 
     /// ------------ start of displayGoals --------------- ///

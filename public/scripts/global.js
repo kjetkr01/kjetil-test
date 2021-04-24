@@ -605,6 +605,25 @@ function capitalizeFirstLetter(string) {
 
 //
 
+//
+
+function sortByLifts(aDom) {
+
+    const dom = document.getElementById(aDom);
+
+    if (dom) {
+        if (allowedExercises.includes(dom.value)) {
+            sessionStorage.setItem('display_lifts', dom.value);
+        } else {
+            sessionStorage.removeItem('display_lifts');
+        }
+    }
+
+    location.reload();
+}
+
+//
+
 // redirect functions
 
 function redirectToLogin() {
