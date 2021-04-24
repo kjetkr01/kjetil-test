@@ -103,15 +103,41 @@ function displayInformation(respInfo) {
 
     function displayLifts(hasLiftsLeft) {
 
+        let sortBy = sessionStorage.getItem("display_lifts");
+
+        let showLifts = lifts;
+
+        if (sortBy) {
+            if (allowedExercises.includes(sortBy)) {
+
+                showLifts = lifts[sortBy];
+                if (showLifts.length === 0) {
+                    sortBy = null;
+                }
+
+            }
+        }
+
         const keys = Object.keys(lifts);
 
         const arr = [];
 
-        for (let i = 0; i < keys.length; i++) {
+        if (sortBy === null) {
+            for (let i = 0; i < keys.length; i++) {
+                const exerciseLift = lifts[keys[i]];
+                displayPerExercise(exerciseLift, keys[i]);
+            }
+        } else {
+            const exerciseLift = showLifts;
+            displayPerExercise(exerciseLift, sortBy);
+        }
+
+        function displayPerExercise(aExerciseLift, aCurrent) {
 
             let msg = "";
 
-            const exerciseLift = lifts[keys[i]];
+            const exerciseLift = aExerciseLift;
+            const current = aCurrent;
             const exerciseLiftKeys = Object.keys(exerciseLift);
 
             for (let j = 0; j < exerciseLiftKeys.length; j++) {
@@ -131,16 +157,16 @@ function displayInformation(respInfo) {
                         }
 
                         /*const prDateArr = liftKeys.date.split("-");
-
+    
                         if (prDateArr.length === 3) {
-
+    
                             if (prDateArr[0].length === 4 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2 && prDateArr[2] > 0 && prDateArr[2] <= 31 && prDateArr[2].length <= 2) {
-
+    
                                 const d = new Date();
                                 const prDate = new Date(prDateArr[0], (prDateArr[1] - 1), prDateArr[2]);
-
+    
                                 const daysSinceTime = parseInt((d - prDate) / (1000 * 3600 * 24));
-
+    
                                 if (d < prDate) {
                                     //fremtiden
                                 } else if (daysSinceTime > 1) {
@@ -153,7 +179,7 @@ function displayInformation(respInfo) {
                             }
                         }*/
 
-                        arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": liftKeys.kg, "msg": msg, "color": color, "id": id });
+                        arr.push({ "exercise": capitalizeFirstLetter(current), "kg": liftKeys.kg, "msg": msg, "color": color, "id": id });
 
                     }
                 }
@@ -165,7 +191,7 @@ function displayInformation(respInfo) {
             userGrid.innerHTML += `
 <div id="Glifts">
 <p id="lifts" class="fadeIn animate delaySmall">
-Løft (${arr.length})
+Løft (${arr.length}) <button onClick="sessionStorage.setItem('display_lifts', 'benkpress')">Trykk, så oppdater siden (må ha benkpress)</button>
 </p>
 </div>
 
@@ -180,6 +206,12 @@ Løft (${arr.length})
 </table>
 </div>
 `;
+
+            if (sortBy) {
+                if (allowedExercises.includes(sortBy)) {
+                    document.getElementById("lifts").innerHTML = `Løft: ${capitalizeFirstLetter(sortBy)} (${arr.length})`;
+                }
+            }
 
             arr.sort(function (a, b) { return b.kg - a.kg });
             for (let i = 0; i < arr.length; i++) {
@@ -399,7 +431,7 @@ Treningsplan
                     if (programKeys === "0" || programKeys === 0 || programKeys === "") {
                         programKeys = "Fri";
                     }
-*/
+    */
 
                     arr.push({ "day": keys[i], "trainingsplit": programKeys, "color": color });
 

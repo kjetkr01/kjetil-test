@@ -7,7 +7,7 @@ const application = {
         state: "alpha",
         major: 4, // major++ = minor = 0 && revision = 0
         minor: 2, // minor++ = revision = 0
-        revision: 6,
+        revision: 7,
     },
     lastUpdated: {
         day: "24",
@@ -105,7 +105,7 @@ Full redesign: ${getDateFormat("19", "01", "2021")}
 <br><br>
 Sist oppdatert: ${calcDaysSinceUpdate()}
 <br><br>
-<a href="https://${github_user_website}/">${github_user_website}</a>
+<a href="https://${github_user_website}/" target="_blank">${github_user_website}</a>
 `;
 
 // array to html
