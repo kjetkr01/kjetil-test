@@ -1,19 +1,19 @@
-function getBadgeGoals(aSize, aBadgeInfo, aIndex) {
+function getBadgeGoals(aSize, aBadgeInfo, aId) {
     try {
 
-        if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.exercise && aBadgeInfo.kg && aBadgeInfo.kgLeft && aBadgeInfo.msg && aIndex) {
+        if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.exercise && aBadgeInfo.kg && aBadgeInfo.kgLeft && aBadgeInfo.msg && aId) {
 
             const size = aSize;
             const badgeInfo = aBadgeInfo;
-            const index = aIndex;
+            const id = aId;
 
             switch (size) {
                 case 0:
-                    return smallBadge(badgeInfo, index);
+                    return smallBadge(badgeInfo, id);
                 case 1:
-                    return bigBadge(badgeInfo, index);
+                    return bigBadge(badgeInfo, id);
                 default:
-                    return smallBadge(badgeInfo, index);
+                    return smallBadge(badgeInfo, id);
             }
 
         } else {
@@ -28,11 +28,11 @@ function getBadgeGoals(aSize, aBadgeInfo, aIndex) {
 
     // bigBadge with goal
 
-    function bigBadge(userBadgeInfo, aIndex) {
+    function bigBadge(userBadgeInfo, aId) {
 
         const badgeTemplate = `
 <td>
-<div class="bigBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('goal', '${userBadgeInfo.exercise}', ${aIndex});">
+<div class="bigBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('goal', '${userBadgeInfo.exercise}', '${aId}');">
 
 
 
@@ -110,11 +110,11 @@ Nærmer deg!
 
     // smallBadge with goal
 
-    function smallBadge(userBadgeInfo, aIndex) {
+    function smallBadge(userBadgeInfo, aId) {
 
         const badgeTemplate = `
 <td>
-<div class="smallBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('goal', '${userBadgeInfo.exercise}', ${aIndex});">
+<div class="smallBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('goal', '${userBadgeInfo.exercise}', '${aId}');">
 
 <div id="Gexercise">
 <p id="exercise">
@@ -199,22 +199,22 @@ nytt mål
 
 
 
-function getBadgeLift(aSize, aBadgeInfo, aIndex) {
+function getBadgeLift(aSize, aBadgeInfo, aId) {
 
     try {
-        if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.exercise && aBadgeInfo.kg && aBadgeInfo.msg && aIndex) {
+        if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.exercise && aBadgeInfo.kg && aBadgeInfo.msg && aId) {
 
             const size = aSize;
             const badgeInfo = aBadgeInfo;
-            const index = aIndex;
+            const id = aId;
 
             switch (size) {
                 case 0:
-                    return smallBadge(badgeInfo, index);
+                    return smallBadge(badgeInfo, id);
                 case 1:
-                    return bigBadge(badgeInfo, index);
+                    return bigBadge(badgeInfo, id);
                 default:
-                    return smallBadge(badgeInfo, index);
+                    return smallBadge(badgeInfo, id);
             }
 
         } else {
@@ -229,11 +229,11 @@ function getBadgeLift(aSize, aBadgeInfo, aIndex) {
 
     // bigBadge with lift
 
-    function bigBadge(userBadgeInfo, aIndex) {
+    function bigBadge(userBadgeInfo, aId) {
 
         const badgeTemplate = `
 <td>
-<div class="bigBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}', ${aIndex});">
+<div class="bigBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}', '${aId}');">
 
 
 
@@ -311,11 +311,11 @@ Nærmer deg!
 
     // smallBadge with lift
 
-    function smallBadge(userBadgeInfo, aIndex) {
+    function smallBadge(userBadgeInfo, aId) {
 
         const badgeTemplate = `
 <td>
-<div class="smallBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}', ${aIndex});">
+<div class="smallBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}', '${aId}');">
 
 <!--
 <div id="c1b"></div>

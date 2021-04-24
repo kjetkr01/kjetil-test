@@ -109,7 +109,7 @@ function displayInformation(respInfo) {
 
         for (let i = 0; i < keys.length; i++) {
 
-            let msg = "", index = 0;
+            let msg = "";
 
             const exerciseLift = lifts[keys[i]];
             const exerciseLiftKeys = Object.keys(exerciseLift);
@@ -121,6 +121,7 @@ function displayInformation(respInfo) {
                 if (liftKeys) {
                     if (liftKeys.kg !== "0" && liftKeys.kg !== 0 && liftKeys.kg !== "") {
 
+                        const id = liftKeys.id;
                         const color = liftKeys.color || "redBadgeG";
 
                         const prDateArr = liftKeys.date.split("-");
@@ -146,11 +147,10 @@ function displayInformation(respInfo) {
                             }
                         }
 
-                        arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": liftKeys.kg, "msg": msg, "color": color, "index": index });
+                        arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": liftKeys.kg, "msg": msg, "color": color, "id": id });
 
                     }
                 }
-                index++;
             }
         }
 
@@ -179,7 +179,7 @@ Løft (${arr.length})
             for (let i = 0; i < arr.length; i++) {
                 //const badge = getBadgeLift(size, arr[i]);
 
-                const badge = getBadgeLift(0, arr[i], arr[i].index);
+                const badge = getBadgeLift(0, arr[i], arr[i].id);
                 const badgesLiftsTableRow = document.getElementById("badgesLiftsTableRow");
 
                 if (badge && badgesLiftsTableRow) {
@@ -237,7 +237,7 @@ Løft
 
         for (let i = 0; i < keys.length; i++) {
 
-            let kgUntilGoal = 0, msg = "", index = 0;
+            let kgUntilGoal = 0, msg = "";
 
             const exerciseGoal = goals[keys[i]];
             const exerciseGoalKeys = Object.keys(exerciseGoal);
@@ -248,6 +248,7 @@ Løft
 
                 if (goalKeys) {
 
+                    const id = goalKeys.id;
                     const color = goalKeys.color || "redBadgeG";
                     const goalReps = goalKeys.reps;
                     const goalKg = parseFloat(goalKeys.kg);
@@ -276,10 +277,9 @@ Løft
                         msg = `${kgUntilGoal} kg igjen`;
                     }
 
-                    arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": goalKg, "kgLeft": kgUntilGoal, "msg": msg, "color": color, "index": index });
+                    arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": goalKg, "kgLeft": kgUntilGoal, "msg": msg, "color": color, "id": id });
 
                 }
-                index++;
             }
 
         }
@@ -309,7 +309,7 @@ Mål (${arr.length})
 
             for (let i = 0; i < arr.length; i++) {
 
-                const badge = getBadgeGoals(size, arr[i], arr[i].index);
+                const badge = getBadgeGoals(size, arr[i], arr[i].id);
 
                 const badgesGoalsTableRow = document.getElementById("badgesGoalsTableRow");
 

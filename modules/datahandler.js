@@ -889,67 +889,74 @@ class StorageHandler {
         const reps = info.reps;
         const date = info.date;
         const type = info.type;
-        const index = info.index;
+        const id = info.id;
 
         try {
             await client.connect();
 
-            if (type === "lift") {
+            let table = "user_lifts";
 
-                results = await client.query(`
+            if (type === "goal") {
+                table = "user_goals";
+            }
+
+            results = await client.query(`
                 SELECT ${exercise}
-                FROM user_lifts
+                FROM ${table}
                 WHERE user_id = $1`,
-                    [userid]);
+                [userid]);
 
-                if (results.rows.length === 1) {
+            if (results.rows.length === 1) {
 
-                    const lifts = results.rows[0][exercise];
-                    const lift = { "reps": reps, "kg": kg, "date": date, "color": color };
+                const liftsOrGoals = results.rows[0][exercise];
 
-                    if (index >= 0 && index !== null) {
-                        lifts[index] = lift;
-                    } else {
-                        lifts.push(lift);
+                const liftOrGoal = { "id": id, "reps": reps, "kg": kg, "date": date, "color": color };
+
+                if (id === null) {
+                    generateRandomID();
+                }
+
+                function generateRandomID() {
+
+                    let random = Math.floor(Math.random() * ((liftsOrGoals.length + 1) * 99999));
+                    random = liftsOrGoals.length + random.toString();
+
+                    for (let i = 0; i < liftsOrGoals.length; i++) {
+                        const current = liftsOrGoals[i].id;
+                        if (random === current) {
+                            generateRandomID();
+                        }
                     }
 
-                    await client.query(`
-                    UPDATE user_lifts
-                    SET ${exercise} = $1
-                    WHERE user_id = $2`,
-                        [JSON.stringify(lifts), userid]);
-
-                    results = true;
+                    liftOrGoal.id = random;
 
                 }
 
-            } else if (type === "goal") {
+                let modify = false;
+                let index = null;
 
-                results = await client.query(`
-                SELECT ${exercise}
-                FROM user_goals
-                WHERE user_id = $1`,
-                    [userid]);
-
-                if (results.rows.length === 1) {
-
-                    const goals = results.rows[0][exercise];
-                    const goal = { "reps": reps, "kg": kg, "date": date, "color": color };
-
-                    if (index >= 0 && index !== null) {
-                        goals[index] = goal;
-                    } else {
-                        goals.push(goal);
+                for (let i = 0; i < liftsOrGoals.length; i++) {
+                    const current = liftsOrGoals[i].id;
+                    if (id === current) {
+                        modify = true;
+                        index = i;
                     }
+                }
 
-                    await client.query(`
-                    UPDATE user_goals
+                if (modify === true && index >= 0) {
+                    liftsOrGoals[index] = liftOrGoal;
+                } else {
+                    liftsOrGoals.push(liftOrGoal);
+                }
+
+                await client.query(`
+                    UPDATE ${table}
                     SET ${exercise} = $1
                     WHERE user_id = $2`,
-                        [JSON.stringify(goals), userid]);
+                    [JSON.stringify(liftsOrGoals), userid]);
 
-                    results = true;
-                }
+                results = true;
+
             }
 
             client.end();
@@ -968,7 +975,12 @@ class StorageHandler {
 
     //  -------------------------------  delete lift or goal  ------------------------------- //
 
-    async deleteLiftOrGoal(userid, exercise, type, index) {
+    async deleteLiftOrGoal(userid, info) {
+
+        const exercise = info.exercise;
+        const type = info.type;
+        const id = info.id;
+        //info.exercise, info.type, info.index
 
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -976,53 +988,47 @@ class StorageHandler {
         try {
             await client.connect();
 
-            if (type === "lift") {
+            let table = "user_lifts";
 
-                results = await client.query(`
-                SELECT ${exercise}
-                FROM user_lifts
-                WHERE user_id = $1`,
-                    [userid]);
-
-                if (results.rows.length === 1) {
-
-                    const lifts = results.rows[0][exercise];
-                    lifts.splice(index, 1);
-
-                    await client.query(`
-                    UPDATE user_lifts
-                    SET ${exercise} = $1
-                    WHERE user_id = $2`,
-                        [JSON.stringify(lifts), userid]);
-
-                    results = true;
-
-                }
-
-            } else if (type === "goal") {
-
-                results = await client.query(`
-                SELECT ${exercise}
-                FROM user_goals
-                WHERE user_id = $1`,
-                    [userid]);
-
-                if (results.rows.length === 1) {
-
-                    const goals = results.rows[0][exercise];
-                    goals.splice(index, 1);
-
-                    await client.query(`
-                    UPDATE user_goals
-                    SET ${exercise} = $1
-                    WHERE user_id = $2`,
-                        [JSON.stringify(goals), userid]);
-
-                    results = true;
-
-                }
+            if (type === "goal") {
+                table = "user_goals";
             }
 
+            results = await client.query(`
+                SELECT ${exercise}
+                FROM ${table}
+                WHERE user_id = $1`,
+                [userid]);
+
+            if (results.rows.length === 1) {
+
+                const liftsOrGoals = results.rows[0][exercise];
+
+                function findWithAttr(value) {
+                    for (var i = 0; i < liftsOrGoals.length; i += 1) {
+                        if (liftsOrGoals[i].id === value) {
+                            return i;
+                        }
+                    }
+                    return -1;
+                }
+
+                const index = findWithAttr(id);
+                if (index >= 0) {
+
+                    liftsOrGoals.splice(index, 1);
+
+                    await client.query(`
+                    UPDATE ${table}
+                    SET ${exercise} = $1
+                    WHERE user_id = $2`,
+                        [JSON.stringify(liftsOrGoals), userid]);
+
+                    results = true;
+
+                }
+
+            }
 
             client.end();
 

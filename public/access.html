@@ -161,7 +161,6 @@
       if (resp) {
          const respmsg = document.getElementById("respMsg");
          respmsg.innerHTML = resp;
-         console.log(resp);
          if (resp.includes("Du har nå bedt om tilgang!")) {
             sessionStorage.setItem("cachedUsername", username);
          }

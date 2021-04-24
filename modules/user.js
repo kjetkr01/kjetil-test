@@ -65,9 +65,9 @@ async function saveLiftOrGoal(userid, info, color) {
     }
 }
 
-async function deleteLiftOrGoal(userid, exercise, type, index) {
+async function deleteLiftOrGoal(userid, info) {
     try {
-        const resp = await database.deleteLiftOrGoal(userid, exercise, type, index);
+        const resp = await database.deleteLiftOrGoal(userid, info);
         return resp;
     } catch (error) {
         console.error(error);

@@ -253,7 +253,7 @@ async function displayBadges(aInfo) {
 
     for (let i = 0; i < keys.length; i++) {
 
-        let kgUntilGoal = 0, msg = "", index = 0;
+        let kgUntilGoal = 0, msg = "";
 
         const exerciseGoal = goals[keys[i]];
         const exerciseGoalKeys = Object.keys(exerciseGoal);
@@ -264,6 +264,7 @@ async function displayBadges(aInfo) {
 
             if (goalKeys) {
 
+                const id = goalKeys.id;
                 const color = goalKeys.color || "redBadgeG";
                 const goalReps = goalKeys.reps;
                 const goalKg = parseFloat(goalKeys.kg);
@@ -292,10 +293,9 @@ async function displayBadges(aInfo) {
                     msg = `${kgUntilGoal} kg igjen`;
                 }
 
-                arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": goalKg, "kgLeft": kgUntilGoal, "msg": msg, "color": color, "index": index });
+                arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": goalKg, "kgLeft": kgUntilGoal, "msg": msg, "color": color, "id": id });
 
             }
-            index++;
         }
 
     }
@@ -310,7 +310,7 @@ async function displayBadges(aInfo) {
 
     for (let i = 0; i < arr.length; i++) {
 
-        const badge = getBadgeGoals(size, arr[i], arr[i].index);
+        const badge = getBadgeGoals(size, arr[i], arr[i].id);
 
         if (badge && badgesTableRowDom) {
             badgesTableRowDom.innerHTML += badge;

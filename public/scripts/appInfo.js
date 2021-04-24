@@ -7,7 +7,7 @@ const application = {
         state: "alpha",
         major: 4, // major++ = minor = 0 && revision = 0
         minor: 2, // minor++ = revision = 0
-        revision: 2,
+        revision: 3,
     },
     lastUpdated: {
         day: "24",
@@ -28,7 +28,7 @@ application.lastUpdated.date = getDateFormat(application.lastUpdated.day, applic
 
 const aboutAppText = `
 ${application.name} er et app prosjekt utviklet av ${createBtn("Kjetil Kristiansen", "2")}.
-
+kjetkr01.github.io
 <br><br>
 Appen ble hovedsakling laget for å enkelt se ORM (One Rep Max) i ulike løft.
 Kunne lage mål i ulike øvelser og enkelt sjekke progresjon og hvor langt man er unna målet.
@@ -72,9 +72,8 @@ const plannedUpdatesArr = [
     "Lage flere farge-temaer",
 
     "TITLE:Løft/Mål",
-    "Slå av sletting av løft og mål i Innstillinger. Passord for å slå det av igjen",
+    "Slå av sletting av løft og mål i Innstillinger.",
     "Legge til flere løft og mål. Foreløpi bare: Benkpress, Knebøy, Markløft, Skulderpress",
-    "Kunne velge opp til 3 løft per øvelse. Velge antall reps",
 
     "TITLE:Treningsplan",
     "Opp til 4 treningsplaner",

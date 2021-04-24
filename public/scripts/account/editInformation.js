@@ -69,14 +69,14 @@ function enableOverlayCreate(aType) {
 }
 
 
-function enableOverlayEdit(aType, aExercise, aIndex) {
+function enableOverlayEdit(aType, aExercise, aId) {
 
-    if (aType && aExercise && aIndex >= 0) {
+    if (aType && aExercise) {
 
         const type = aType;
         const exercise = aExercise.toLowerCase();
         const exerciseCapitalizedFirst = capitalizeFirstLetter(exercise);
-        const index = aIndex;
+        const id = aId;
         const editLiftorGoal = document.getElementById("editLiftorGoal");
         const title1 = document.getElementById("title1E");
         const inp1 = document.getElementById("inp1E");
@@ -112,17 +112,34 @@ function enableOverlayEdit(aType, aExercise, aIndex) {
         }
 
         if (type === "lift" && liftsInfo) {
+
             const lifts = liftsInfo.info();
             const badgeColorsInfo = badgeColors.info();
             const badgeColorsValues = Object.entries(badgeColorsInfo);
-            const lift = lifts[exercise][index];
+
+            let lift = lifts[exercise];
+
+            function findWithAttr(value) {
+                for (var i = 0; i < lift.length; i += 1) {
+                    if (lift[i].id === value) {
+                        return i;
+                    }
+                }
+                return -1;
+            }
+
+            const index = findWithAttr(id);
+
+            if (index >= 0) {
+                lift = lifts[exercise][index];
+            }
 
             if (lift) {
                 inp1.value = lift.kg;
                 inp2.value = lift.reps;
                 inp3.value = lift.date;
-                GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift', ${index});">Slett løftet</button>`;
-                Gsave.innerHTML = `<button id="saveE" class="pointer" onclick="saveLiftOrGoal('lift','edit', ${index});">Lagre</button>`;
+                GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift', '${id}');">Slett løftet</button>`;
+                Gsave.innerHTML = `<button id="saveE" class="pointer" onclick="saveLiftOrGoal('lift','edit', '${id}');">Lagre</button>`;
 
                 const color = lift.color;
 
@@ -149,14 +166,29 @@ function enableOverlayEdit(aType, aExercise, aIndex) {
             const badgeColorsInfo = badgeColors.info();
             const badgeColorsValues = Object.entries(badgeColorsInfo);
 
-            const goal = goals[exercise][index];
+            let goal = goals[exercise];
+
+            function findWithAttr(value) {
+                for (var i = 0; i < goal.length; i += 1) {
+                    if (goal[i].id === value) {
+                        return i;
+                    }
+                }
+                return -1;
+            }
+
+            const index = findWithAttr(id);
+
+            if (index >= 0) {
+                goal = goals[exercise][index];
+            }
 
             if (goal) {
                 inp1.value = goal.kg;
                 inp2.value = goal.reps;
                 inp3.value = goal.date;
-                GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'goal', ${index});">Slett målet</button>`;
-                Gsave.innerHTML = `<button id="saveE" class="pointer" onclick="saveLiftOrGoal('goal','edit', ${index});">Lagre</button>`;
+                GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'goal', '${id}');">Slett målet</button>`;
+                Gsave.innerHTML = `<button id="saveE" class="pointer" onclick="saveLiftOrGoal('goal','edit', '${id}');">Lagre</button>`;
 
                 const color = goal.color;
 
@@ -232,11 +264,16 @@ function Ttrainingsplit(aTrainingsplit) {
     }
 }
 
-async function saveLiftOrGoal(aType, editOrCreate, aIndex) {
+let isSaving = false;
+async function saveLiftOrGoal(aType, editOrCreate, aId) {
+
+    if (isSaving === true) {
+        return;
+    }
 
     if (aType === "lift" || aType === "goal" && editOrCreate === "edit" || editOrCreate === "create") {
 
-        let respMsg = null, inp1 = null, inp2 = null, inp3 = null, inp4, color = 0, index = null;
+        let respMsg = null, inp1 = null, inp2 = null, inp3 = null, inp4, color = 0, id = null;
 
         if (editOrCreate === "create") {
             respMsg = document.getElementById("respC");
@@ -256,12 +293,13 @@ async function saveLiftOrGoal(aType, editOrCreate, aIndex) {
             inp4 = document.getElementById("inp3E").value;
             color = document.getElementById("inp4E").value;
 
-            index = aIndex;
+            id = aId;
         }
 
-        const validateInfo = validateLiftOrGoal(inp1, inp2, inp3, inp4, aType, color, index);
+        const validateInfo = validateLiftOrGoal(inp1, inp2, inp3, inp4, aType, color, id);
 
         if (validateInfo.isValid === true && validateInfo.info) {
+            isSaving = true;
             respMsg.textContent = "Lagrer...";
 
             const body = { "authToken": token, "userInfo": user, "info": validateInfo.info };
@@ -289,7 +327,7 @@ async function saveLiftOrGoal(aType, editOrCreate, aIndex) {
     }
 }
 
-function validateLiftOrGoal(aInp1, aInp2, aInp3, aInp4, aType, aColor, aIndex) {
+function validateLiftOrGoal(aInp1, aInp2, aInp3, aInp4, aType, aColor, aId) {
 
     let isValid = false;
     let msg = "Vennligst fyll ut alle feltene!";
@@ -303,7 +341,7 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aInp4, aType, aColor, aIndex) {
         const input4 = aInp4;
         const type = aType;
         const color = aColor;
-        const index = aIndex;
+        const id = aId;
 
         const onlyNumbers = /^[0-9.]+$/;
 
@@ -338,7 +376,7 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aInp4, aType, aColor, aIndex) {
             return { "isValid": isValid, "msg": msg };
         }
 
-        info = { "exercise": input1, "kg": input2, "reps": input3, "date": input4, "type": type, "color": color, "index": index };
+        info = { "exercise": input1, "kg": input2, "reps": input3, "date": input4, "type": type, "color": color, "id": id };
 
         isValid = true;
 
@@ -347,25 +385,25 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aInp4, aType, aColor, aIndex) {
     return { "isValid": isValid, "msg": msg, "info": info };
 }
 
-function deleteLiftOrGoalConfirm(aExercise, aType, aIndex) {
+function deleteLiftOrGoalConfirm(aExercise, aType, aId) {
 
     if (aExercise && aType) {
 
         const type = aType;
         const exercise = aExercise;
-        const index = aIndex;
+        const id = aId;
 
         if (type === "lift") {
             const confirmation = confirm(`Er du sikkert på at du vil slette løftet ditt: "${exercise}" ?`);
             if (confirmation === true) {
-                deleteLiftOrGoal(exercise, type, index);
+                deleteLiftOrGoal(exercise, type, id);
             }
         }
 
         if (type === "goal") {
             const confirmation = confirm(`Er du sikkert på at du vil slette målet ditt: "${exercise}" ?`);
             if (confirmation === true) {
-                deleteLiftOrGoal(exercise, type, index);
+                deleteLiftOrGoal(exercise, type, id);
             }
         }
 
@@ -375,7 +413,7 @@ function deleteLiftOrGoalConfirm(aExercise, aType, aIndex) {
     }
 }
 
-async function deleteLiftOrGoal(aExercise, aType, aIndex) {
+async function deleteLiftOrGoal(aExercise, aType, aId) {
 
     if (aExercise && aType) {
 
@@ -383,7 +421,7 @@ async function deleteLiftOrGoal(aExercise, aType, aIndex) {
 
         const type = aType;
         const exercise = aExercise;
-        const index = aIndex;
+        const id = aId;
         let typeMsg = "Løftet";
 
         if (aType === "goal") {
@@ -392,7 +430,7 @@ async function deleteLiftOrGoal(aExercise, aType, aIndex) {
 
         respMsg.textContent = `Sletter ${exercise}...`;
 
-        const info = { "exercise": exercise, "type": type, "index": index };
+        const info = { "exercise": exercise, "type": type, "id": id };
 
         const body = { "authToken": token, "userInfo": user, "info": info };
         const url = `/user/delete/liftOrGoal/:${info}`;

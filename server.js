@@ -734,7 +734,7 @@ server.post("/user/delete/liftOrGoal/:info", auth, async (req, res) => {
           }
 
           if (isValid === true) {
-               const saveLiftOrGoalResp = await deleteLiftOrGoal(currentUser.id, info.exercise, info.type, info.index);
+               const saveLiftOrGoalResp = await deleteLiftOrGoal(currentUser.id, info);
                res.status(200).json(saveLiftOrGoalResp).end();
           } else {
                res.status(403).json("invalid information").end();
