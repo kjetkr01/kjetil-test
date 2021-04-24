@@ -689,8 +689,6 @@ class StorageHandler {
                             userCacheObj.apikey = hasAccessToApi.rows[0].apikey;
                         }
 
-                        userCacheObj.badgeColors = badgeColors;
-
                     } else {
                         results = await client.query(`
                         SELECT users.username, users.displayname, users.member_since
@@ -730,7 +728,7 @@ class StorageHandler {
                         delete results.rows[0].user_id;
                         userCacheObj.goals = results.rows[0];
                     }
-                    //userDetails = results;
+                    userCacheObj.badgeColors = badgeColors;
                     userDetails = userCacheObj;
                     results = true;
                 } else {

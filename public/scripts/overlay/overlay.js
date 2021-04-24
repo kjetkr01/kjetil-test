@@ -1,10 +1,10 @@
 // createNewLiftorGoalOverlay
 function getCreateNewLiftorGoalOverlay() {
 
-    if (document.getElementById("createNewLiftorGoal") === null) {
+   if (document.getElementById("createNewLiftorGoal") === null) {
 
 
-        const html = `
+      const html = `
         
         <div id="createNewLiftorGoal" class="createNewLiftorGoal">
          <div id="Gtitle1C">
@@ -64,10 +64,10 @@ function getCreateNewLiftorGoalOverlay() {
 
         `;
 
-        document.getElementById("createNewLiftorGoalOverlay").innerHTML = html;
+      document.getElementById("createNewLiftorGoalOverlay").innerHTML = html;
 
 
-    }
+   }
 
 }
 
@@ -76,10 +76,10 @@ function getCreateNewLiftorGoalOverlay() {
 // editLiftorGoalOverlay
 function getEditLiftorGoalOverlay() {
 
-    if (document.getElementById("editLiftorGoal") === null) {
+   if (document.getElementById("editLiftorGoal") === null) {
 
 
-        const html = `
+      const html = `
         
         <div id="editLiftorGoal" class="editLiftorGoal">
          <div id="Gtitle1E">
@@ -140,9 +140,75 @@ function getEditLiftorGoalOverlay() {
 
         `;
 
-        document.getElementById("editLiftorGoalOverlay").innerHTML = html;
+      document.getElementById("editLiftorGoalOverlay").innerHTML = html;
 
 
-    }
+   }
+
+}
+
+
+// viewLiftorGoalOverlay
+function getViewLiftorGoalOverlay() {
+
+   if (document.getElementById("viewLiftorGoal") === null) {
+
+
+      const html = `
+       
+       <div id="viewLiftorGoal" class="viewLiftorGoal">
+        <div id="Gtitle1E">
+           <p id="title1E"></p>
+        </div>
+        <div id="Gline1E">
+           <hr id="line1E">
+        </div>
+        <div id="Gtitle2E">
+           <p id="title2E">Antall KG</p>
+        </div>
+        <div id="Gline2E">
+           <hr id="line2E">
+        </div>
+        <div id="Ginp1E">
+           <p id="inp1E" class="inputLiftOrGoal"></p>
+        </div>
+        <div id="Gtitle3E">
+           <p id="title3E">Reps</p>
+        </div>
+        <div id="Gline3E">
+           <hr id="line3E">
+        </div>
+        <div id="Ginp2E">
+           <p id="inp2E" class="inputLiftOrGoal"></p>
+        </div>
+        <div id="Gtitle4E">
+           <p id="title4E">Dato</p>
+        </div>
+        <div id="Gline4E">
+           <hr id="line4E">
+        </div>
+        <div id="Ginp3E">
+           <p id="inp3E" class="inputLiftOrGoal"></p>
+        </div>
+        <div id="Gtitle5E">
+           <p id="title5E">Farge</p>
+        </div>
+        <div id="Gline5E">
+           <hr id="line5E">
+        </div>
+        <div id="Ginp4E">
+           <p id="inp4E" class="selectLiftOrGoal"></p>
+        </div>
+        <div id="GcancelE">
+           <button id="cancelE" class="pointer" onclick="disableOverlay('viewLiftOrGoal');">Lukk</button>
+        </div>
+     </div>
+
+       `;
+
+      document.getElementById("viewLiftorGoalOverlay").innerHTML = html;
+
+
+   }
 
 }

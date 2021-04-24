@@ -1,7 +1,5 @@
 let liftsLeft = null, goalsLeft = null, liftsInfo = null, goalsInfo = null, badgeColors = null, traningsplitInfo = null;
 
-const allowedExercises = ["benkpress", "markløft", "knebøy", "skulderpress"];
-
 function enableOverlayCreate(aType) {
 
     if (aType) {
@@ -633,12 +631,12 @@ async function saveTrainingDays() {
 
 function changeOverlayBorderColor() {
 
-    const inp3Val = document.getElementById("inp3E");
+    const inpVal = document.getElementById("inp4E");
 
-    if (inp3Val) {
+    if (inpVal) {
 
-        if (badgeColorBorders.hasOwnProperty(inp3Val.value)) {
-            document.getElementById("editLiftorGoal").style.border = `1px solid #${badgeColorBorders[inp3Val.value]}`;
+        if (badgeColorBorders.hasOwnProperty(inpVal.value)) {
+            document.getElementById("editLiftorGoal").style.border = `1px solid #${badgeColorBorders[inpVal.value]}`;
         }
     }
 }

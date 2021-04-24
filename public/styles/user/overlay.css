@@ -13,17 +13,12 @@ height: 100%;
 width: 100%;
 }
 
-.inputLiftOrGoal, .selectLiftOrGoal { 
+.inputLiftOrGoal { 
 text-align: center;
-text-align-last: center;
-appearance: none;
--webkit-appearance: none;
--moz-appearance: none;
-border: none;
-background-color: var(--main-backgroundColor2);
 }
 
-.overlay>.createNewLiftorGoal {
+
+.overlay>.viewLiftorGoal {
 position: absolute;
 top: 50%;
 left: 50%;
@@ -31,312 +26,7 @@ transform: translate(-50%,-50%);
 -ms-transform: translate(-50%,-50%);
 width: 90%;
 max-width: 550px;
-height: 60%;
-overflow-y: scroll;
-
-background-color: var(--main-backgroundColor2);
-
-border: 1px solid var(--main-backgroundColor1);
-border-radius: 16px;
-
-display: grid;
-grid-template-areas:
-
-"c1oC c1oC c1oC"
-"Gtitle1C Gtitle1C Gtitle1C"
-"Gline1C Gline1C Gline1C"
-"c2oC c2oC c2oC"
-
-"Gtitle2C Gtitle2C Gtitle2C"
-"Gline2C Gline2C Gline2C"
-"Ginp1C Ginp1C Ginp1C"
-"c3oC c3oC c3oC"
-
-"Gtitle3C Gtitle3C Gtitle3C"
-"Gline3C Gline3C Gline3C"
-"Ginp2C Ginp2C Ginp2C"
-"c4oC c4oC c4oC"
-
-"Gtitle4C Gtitle4C Gtitle4C"
-"Gline4C Gline4C Gline4C"
-"Ginp3C Ginp3C Ginp3C"
-"c5oC c5oC c5oC"
-
-"GrespC GrespC GrespC"
-"GcancelC c6oC GsaveC"
-"c7oC c7oC c7oC"
-;
-
-grid-template-rows: /* nedover */
-
-2vh /* c1oC */
-
-30px /* Gtitle1C */
-
-10px /* Gline1C */
-
-1fr /* c2oC */
-
-
-
-25px /* Gtitle2C */
-
-10px /* Gline2C */
-
-auto /* Ginp1C */
-
-4vh /* c3oC */
-
-
-
-25px /* Gtitle3C */
-
-10px /* Gline3C */
-
-auto /* Ginp2C */
-
-4vh /* c4oC */
-
-
-
-25px /* Gtitle4C */
-
-10px /* Gline4C */
-
-auto /* Ginp3C */
-
-1fr /* c5oC */
-
-
-
-auto /* GrespC */
-
-30px /* GbuttonsC */
-
-2vh /* c7oC */
-
-;
-
-grid-template-columns: /* bortover */
-1fr 1fr 1fr;
-}
-
-
-
-/* end of grid */
-
-
-
-/* elements */
-
-#Gtitle1C > #title1C {
-font-size: 22px;
-}
-
-#Gline1C > #line1C {
-width: 250px;
-}
-
-#Gline2C > #line2C {
-}
-
-#Gline3C > #line3C {
-}
-
-#Gline4C > #line4C {
-
-}
-
-#Ginp1C > #inp1C {
-width: fit-content;
-}
-
-#Ginp2C > #inp2C {
-width: fit-content;
-}
-
-#Ginp3C > #inp3C {
-width: fit-content;
-}
-
-#GrespC > #respC {
-color: var(--main-textColorDark);
-margin: 20px;
-font-size: 16px;
-}
-
-#GcancelC > #cancelC {
-}
-
-#GsaveC > #saveC {
-color: var(--main-backgroundColor1);
-}
-
-#cancelC, #saveC {
-font-size: 16px;
-font-weight: bold;
-height: 30px;
-
-background-color: rgb(212, 212, 212);
-border-radius: 4px;
-border: transparent;
-}
-
-#inp1C, #inp2C, #inp3C {
-color: var(--main-textColorDark);
-font-family: var(--main-font-Family-Verdana);
-font-size: 16px;
-}
-
-::placeholder {
-color: var(--main-textColorDark);
-font-family: var(--main-font-Family-Verdana);
-font-size: 16px;
-opacity: 85%;
-}
-
-#line2C, #line3C, #line4C {
-width: 125px;
-}
-
-#Gtitle2C > #title2C {
-}
-
-#Gtitle3C > #title3C {
-}
-
-#Gtitle4C > #title4C {
-}
-
-#title2C, #title3C, #title4C {
-font-size: 18px;
-}
-
-#title1C, #title2C, #title3C, #title4C {
-color: var(--main-textColorDark);
-font-family: var(--main-font-Family-Verdana);
-font-weight: bold;
-}
-
-#line1C, #line2C, #line3C, #line4C {
-text-align: center;
-display: block;
-margin-left: auto;
-margin-right: auto;
-
-opacity: 40%;
-border: var(--main-lineBorder);
-}
-
-
-
-/* end of elements */
-
-
-
-/* spacing & other */
-
-
-
-.createNewLiftorGoal > #c1oC {
-grid-area: c1oC;
-}
-
-.createNewLiftorGoal > #Gtitle1C {
-grid-area: Gtitle1C;
-}
-
-.createNewLiftorGoal > #Gline1C {
-grid-area: Gline1C;
-}
-
-.createNewLiftorGoal > #c2oC {
-grid-area: c2oC;
-}
-
-.createNewLiftorGoal > #Gtitle2C {
-grid-area: Gtitle2C;
-}
-
-.createNewLiftorGoal > #Gline2C {
-grid-area: Gline2C;
-}
-
-.createNewLiftorGoal > #Ginp1C {
-grid-area: Ginp1C;
-}
-
-.createNewLiftorGoal > #c3oC {
-grid-area: c3oC;
-}
-
-.createNewLiftorGoal > #Gtitle3C {
-grid-area: Gtitle3C;
-}
-
-.createNewLiftorGoal > #Gline3C {
-grid-area: Gline3C;
-}
-
-.createNewLiftorGoal > #Ginp2C {
-grid-area: Ginp2C;
-}
-
-.createNewLiftorGoal > #c4oC {
-grid-area: c4oC;
-}
-
-.createNewLiftorGoal > #Gtitle4C {
-grid-area: Gtitle4C;
-}
-
-.createNewLiftorGoal > #Gline4C {
-grid-area: Gline4C;
-}
-
-.createNewLiftorGoal > #Ginp3C {
-grid-area: Ginp3C;
-}
-
-.createNewLiftorGoal > #c5oC {
-grid-area: c5oC;
-}
-
-.createNewLiftorGoal > #GrespC {
-grid-area: GrespC;
-}
-
-.createNewLiftorGoal > #GcancelC {
-grid-area: GcancelC;
-}
-
-.createNewLiftorGoal > #c6oC {
-grid-area: c6oC;
-}
-
-.createNewLiftorGoal > #GsaveC {
-grid-area: GsaveC;
-}
-
-.createNewLiftorGoal > #c7oC {
-grid-area: c7oC;
-}
-
-/* end of spacing & other */
-
-
-
-
-
-.overlay>.editLiftorGoal {
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%,-50%);
--ms-transform: translate(-50%,-50%);
-width: 90%;
-max-width: 550px;
-height: 60%;
+height: 70%;
 overflow-y: scroll;
 
 background-color: var(--main-backgroundColor2);
@@ -367,10 +57,13 @@ grid-template-areas:
 "Ginp3E Ginp3E Ginp3E"
 "c5oE c5oE c5oE"
 
-"GdeleteE GdeleteE GdeleteE"
-"GrespE GrespE GrespE"
-"GcancelE c6oE GsaveE"
-"c7oE c7oE c7oE"
+"Gtitle5E Gtitle5E Gtitle5E"
+"Gline5E Gline5E Gline5E"
+"Ginp4E Ginp4E Ginp4E"
+"c6oE c6oE c6oE"
+
+"GcancelE c7oE c7oE"
+"c8oE c8oE c8oE"
 ;
 
 grid-template-rows: /* nedover */
@@ -411,13 +104,17 @@ auto /* Ginp2E */
 
 auto /* Ginp3E */
 
-1fr /* c5oE */
+4vh /* c5oE */
 
 
+25px /* Gtitle5E */
 
-30px /* GdeleteE */
+10px /* Gline5E */
 
-auto /* GrespE */
+auto /* Ginp4E */
+
+1fr /* c6oE */
+
 
 30px /* GbuttonsE */
 
@@ -458,39 +155,25 @@ width: 250px;
 #Gline4E > #line4E {
 }
 
+#Gline5E > #line5E {
+}
+
 #Ginp1E > #inp1E {
-width: fit-content;
 }
 
 #Ginp2E > #inp2E {
-width: fit-content;
 }
 
 #Ginp3E > #inp3E {
-width: fit-content;
+}
+
+#Ginp4E > #inp4E {
 }
 
 #GcancelE > #cancelE {
 }
 
-#GdeleteE > #deleteE {
-}
-
-#deleteE {
-color:red;
-}
-
-#GsaveE > #saveE {
-color: var(--main-backgroundColor1);
-}
-
-#GrespE > #respE {
-color: var(--main-textColorDark);
-margin: 20px;
-font-size: 16px;
-}
-
-#deleteE, #cancelE, #saveE {
+#cancelE {
 font-size: 16px;
 font-weight: bold;
 height: 30px;
@@ -500,20 +183,13 @@ border-radius: 4px;
 border: transparent;
 }
 
-#inp1E, #inp2E, #inp3E {
+#inp1E, #inp2E, #inp3E, #inp4E {
 color: var(--main-textColorDark);
 font-family: var(--main-font-Family-Verdana);
 font-size: 16px;
 }
 
-::placeholder {
-color: var(--main-textColorDark);
-font-family: var(--main-font-Family-Verdana);
-font-size: 16px;
-opacity: 85%;
-}
-
-#line2E, #line3E, #line4E {
+#line2E, #line3E, #line4E, #line5E {
 width: 125px;
 }
 
@@ -526,18 +202,21 @@ width: 125px;
 #Gtitle4E > #title4E {
 }
 
-#title2E, #title3E, #title4E {
+#Gtitle5E > #title5E {
+}
+
+#title2E, #title3E, #title4E, #title5E  {
 font-size: 18px;
 }
 
-#title1E, #title2E, #title3E, #title4E {
+#title1E, #title2E, #title3E, #title4E, #title5E {
 color: var(--main-textColorDark);
 font-family: var(--main-font-Family-Verdana);
 font-weight: bold;
 }
 
 
-#line1E, #line2E, #line3E, #line4E {
+#line1E, #line2E, #line3E, #line4E, #line5E {
 text-align: center;
 display: block;
 margin-left: auto;
@@ -555,330 +234,96 @@ border: var(--main-lineBorder);
 
 /* spacing & other */
 
-.editLiftorGoal > #c1oE {
+.viewLiftorGoal > #c1oE {
 grid-area: c1oE;
 }
 
-.editLiftorGoal > #Gtitle1E {
+.viewLiftorGoal > #Gtitle1E {
 grid-area: Gtitle1E;
 }
 
-.editLiftorGoal > #Gline1E {
+.viewLiftorGoal > #Gline1E {
 grid-area: Gline1E;
 }
 
-.editLiftorGoal > #c2oE {
+.viewLiftorGoal > #c2oE {
 grid-area: c2oE;
 }
 
-.editLiftorGoal > #Gtitle2E {
+.viewLiftorGoal > #Gtitle2E {
 grid-area: Gtitle2E;
 }
 
-.editLiftorGoal > #Gline2E {
+.viewLiftorGoal > #Gline2E {
 grid-area: Gline2E;
 }
 
-.editLiftorGoal > #Ginp1E {
+.viewLiftorGoal > #Ginp1E {
 grid-area: Ginp1E;
 }
 
-.editLiftorGoal > #c3oE {
+.viewLiftorGoal > #c3oE {
 grid-area: c3oE;
 }
 
-.editLiftorGoal > #Gtitle3E {
+.viewLiftorGoal > #Gtitle3E {
 grid-area: Gtitle3E;
 }
 
-.editLiftorGoal > #Gline3E {
+.viewLiftorGoal > #Gline3E {
 grid-area: Gline3E;
 }
 
-.editLiftorGoal > #Ginp2E {
+.viewLiftorGoal > #Ginp2E {
 grid-area: Ginp2E;
 }
 
-.editLiftorGoal > #c4oE {
+.viewLiftorGoal > #c4oE {
 grid-area: c4oE;
 }
 
-.editLiftorGoal > #Gtitle4E {
+.viewLiftorGoal > #Gtitle4E {
 grid-area: Gtitle4E;
 }
 
-.editLiftorGoal > #Gline4E {
+.viewLiftorGoal > #Gline4E {
 grid-area: Gline4E;
 }
 
-.editLiftorGoal > #Ginp3E {
+.viewLiftorGoal > #Ginp3E {
 grid-area: Ginp3E;
 }
 
-.editLiftorGoal > #c5oE {
+.viewLiftorGoal > #c5oE {
 grid-area: c5oE;
 }
 
-.editLiftorGoal > #GdeleteE {
-grid-area: GdeleteE;
+.viewLiftorGoal > #Gtitle5E {
+grid-area: Gtitle5E;
 }
 
-.editLiftorGoal > #GrespE {
-grid-area: GrespE;
+.viewLiftorGoal > #Gline5E {
+grid-area: Gline5E;
 }
 
-.editLiftorGoal > #GcancelE {
-grid-area: GcancelE;
+.viewLiftorGoal > #Ginp4E {
+grid-area: Ginp4E;
 }
 
-.editLiftorGoal > #c6oE {
+.viewLiftorGoal > #c6oE {
 grid-area: c6oE;
 }
 
-.editLiftorGoal > #GsaveE {
-grid-area: GsaveE;
+.viewLiftorGoal > #GcancelE {
+grid-area: GcancelE;
 }
 
-.editLiftorGoal > #c7oE {
+.viewLiftorGoal > #c7oE {
 grid-area: c7oE;
 }
 
-/* end of spacing & other */
-
-
-.overlay>.editDays {
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%,-50%);
--ms-transform: translate(-50%,-50%);
-width: 90%;
-max-width: 550px;
-height: 60%;
-overflow-y: scroll;
-
-background-color: var(--main-backgroundColor2);
-
-border: 1px solid var(--main-backgroundColor1);
-border-radius: 16px;
-
-display: grid;
-grid-template-areas:
-
-"c1oE c1oE c1oE"
-"Gtitle1EditDays Gtitle1EditDays Gtitle1EditDays"
-"Gline1EditDays Gline1EditDays Gline1EditDays"
-"c2oE c2oE c2oE"
-
-"Gtitle2EditDays Gtitle2EditDays Gtitle2EditDays"
-"Gline2EditDays Gline2EditDays Gline2EditDays"
-"GlistEditDays GlistEditDays GlistEditDays"
-"c3oE c3oE c3oE"
-
-"GrespEditDays GrespEditDays GrespEditDays"
-"GcancelEditDays c4oE GsaveEditDays"
-"c5oE c5oE c5oE"
-;
-
-grid-template-rows: /* nedover */
-
-2vh /* c1oE */
-
-30px /* Gtitle1E */
-
-10px /* Gline1E */
-
-6vh /* c2oE */
-
-
-
-25px /* Gtitle2E */
-
-10px /* Gline2E */
-
-auto /* GlistE */
-
-4vh /* c3oE */
-
-
-
-auto /* GrespE */
-
-30px /* GbuttonsE */
-
-2vh /* c5oE */
-
-;
-
-grid-template-columns: /* bortover */
-1fr 1fr 1fr;
-}
-
-
-
-/* end of grid */
-
-
-
-/* elements */
-
-
-
-#Gtitle1EditDays > #title1EditDays {
-font-size: 22px;
-}
-
-#Gline1EditDays > #line1EditDays {
-width: 250px;
-}
-
-#Gline2EditDays > #line2EditDays {
-}
-
-#GlistEditDays > #listEditDays {
-font-size: 16px;
-}
-
-.daysTable {
-margin-left: auto;
-margin-right: auto;
-width: 40%;
-}
-
-.daysTabletd {
-width: 60%;
-color: var(--main-textColorDark);
-}
-
-.editDaysCheckbox {
-background-color: red;
-height: 16px;
-width: 16px;
-
-appearance: none;
--webkit-appearance: none;
--moz-appearance: none;
-border: none;
-border-radius: 10px;
-}
-
-.editDaysCheckbox:checked {
-background-color: green;
-}
-
-#GcancelEditDays > #cancelEditDays {
-}
-
-#GsaveEditDays > #saveEditDays {
-color: var(--main-backgroundColor1);
-}
-
-#GrespEditDays > #respEditDays {
-color: var(--main-textColorDark);
-margin: 20px;
-font-size: 16px;
-}
-
-#cancelEditDays, #saveEditDays {
-font-size: 16px;
-font-weight: bold;
-height: 30px;
-
-background-color: rgb(212, 212, 212);
-border-radius: 4px;
-border: transparent;
-}
-
-#line2EditDays {
-width: 125px;
-}
-
-#Gtitle2EditDays > #title2EditDays {
-}
-
-#title2EditDays {
-font-size: 18px;
-}
-
-#title1EditDays, #title2EditDays {
-color: var(--main-textColorDark);
-font-family: var(--main-font-Family-Verdana);
-font-weight: bold;
-}
-
-
-#line1EditDays, #line2EditDays {
-text-align: center;
-display: block;
-margin-left: auto;
-margin-right: auto;
-
-opacity: 40%;
-border: var(--main-lineBorder);
-}
-
-
-
-/* end of elements */
-
-
-
-/* spacing & other */
-
-
-
-.editDays > #c1oE {
-grid-area: c1oE;
-}
-
-.editDays > #Gtitle1EditDays {
-grid-area: Gtitle1EditDays;
-}
-
-.editDays > #Gline1EditDays {
-grid-area: Gline1EditDays;
-}
-
-.editDays > #c2oE {
-grid-area: c2oE;
-}
-
-.editDays > #Gtitle2EditDays {
-grid-area: Gtitle2EditDays;
-}
-
-.editDays > #Gline2EditDays {
-grid-area: Gline2EditDays;
-}
-
-.editDays > #GlistEditDays {
-grid-area: GlistEditDays;
-overflow-y: auto;
-padding-top: 10px;
-}
-
-.editDays > #c3oE {
-grid-area: c3oE;
-}
-
-.editDays > #GrespEditDays {
-grid-area: GrespEditDays;
-}
-
-.editDays > #GcancelEditDays {
-grid-area: GcancelEditDays;
-}
-
-.editDays > #c6oE {
-grid-area: c4oE;
-}
-
-.editDays > #GsaveEditDays {
-grid-area: GsaveEditDays;
-}
-
-.editDays > #c7oE {
-grid-area: c5oE;
+.viewLiftorGoal > #c8oE {
+grid-area: c8oE;
 }
 
 /* end of spacing & other */

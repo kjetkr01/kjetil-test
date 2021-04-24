@@ -152,73 +152,75 @@ ${firstName[0]} har ingen løft, mål eller treningsplan
 
     function displayLifts() {
 
+        let sortBy = sessionStorage.getItem("display_lifts_visitor");
+
+        let showLifts = lifts;
+
+        if (sortBy) {
+            if (allowedExercises.includes(sortBy)) {
+
+                showLifts = lifts[sortBy];
+                if (showLifts.length === 0) {
+                    sortBy = null;
+                    sessionStorage.removeItem("display_lifts_visitor");
+                }
+
+            }
+        }
+
         const keys = Object.keys(lifts);
 
-        if (keys.length > 0) {
+        const arr = [];
 
-            const arr = [];
+        if (sortBy === null) {
+            for (let i = 0; i < keys.length; i++) {
+                const exerciseLift = lifts[keys[i]];
+                displayPerExercise(exerciseLift, keys[i]);
+            }
+        } else {
+            const exerciseLift = showLifts;
+            displayPerExercise(exerciseLift, sortBy);
+        }
+
+        function displayPerExercise(aExerciseLift, aCurrent) {
+
             let msg = "";
 
-            for (let i = 0; i < keys.length; i++) {
+            const exerciseLift = aExerciseLift;
+            const current = aCurrent;
+            const exerciseLiftKeys = Object.keys(exerciseLift);
 
-                const exerciseLift = lifts[keys[i]];
-                const exerciseLiftKeys = Object.keys(exerciseLift);
+            for (let j = 0; j < exerciseLiftKeys.length; j++) {
 
-                for (let j = 0; j < exerciseLiftKeys.length; j++) {
+                const liftKeys = exerciseLift[exerciseLiftKeys[j]];
 
-                    const liftKeys = exerciseLift[exerciseLiftKeys[j]];
+                if (liftKeys) {
+                    if (liftKeys.kg !== "0" && liftKeys.kg !== 0 && liftKeys.kg !== "") {
 
-                    if (liftKeys) {
-                        if (liftKeys.kg !== "0" && liftKeys.kg !== 0 && liftKeys.kg !== "") {
+                        const id = liftKeys.id;
+                        const color = liftKeys.color || "redBadgeG";
 
-                            const color = liftKeys.color || "redBadgeG";
-
-                            if (liftKeys.reps === "1") {
-                                msg = `ORM / 1 rep`;
-                            } else {
-                                msg = `${liftKeys.reps} reps`;
-                            }
-
-                            /*const prDateArr = liftKeys.date.split("-");
-
-                            if (prDateArr.length === 3) {
-
-                                if (prDateArr[0].length === 4 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2 && prDateArr[2] > 0 && prDateArr[2] <= 31 && prDateArr[2].length <= 2) {
-
-                                    const d = new Date();
-                                    const prDate = new Date(prDateArr[0], (prDateArr[1] - 1), prDateArr[2]);
-
-                                    const daysSinceTime = parseInt((d - prDate) / (1000 * 3600 * 24));
-
-                                    if (d < prDate) {
-                                        //fremtiden
-                                    } else if (daysSinceTime > 1) {
-                                        msg = `${parseInt(daysSinceTime)} dager siden`;
-                                    } else if (daysSinceTime === 1) {
-                                        msg = `I går`;
-                                    } else if (daysSinceTime === 0) {
-                                        msg = `I dag`;
-                                    }
-                                }
-                            }*/
-
-                            function capitalizeFirstLetter(string) {
-                                return string.charAt(0).toUpperCase() + string.slice(1);
-                            }
-
-                            arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": liftKeys.kg, "msg": msg, "color": color });
-
+                        if (liftKeys.reps === "1") {
+                            msg = `ORM / 1 rep`;
+                        } else {
+                            msg = `${liftKeys.reps} reps`;
                         }
-                    }
 
+                        arr.push({ "exercise": capitalizeFirstLetter(current), "kg": liftKeys.kg, "msg": msg, "color": color, "id": id });
+
+                    }
                 }
             }
-            if (arr.length > 0) {
+        }
 
-                userGrid.innerHTML += `
+        const selectHTML = `<select id="changeLiftFilter" class="changeFilterSelect" onchange="sortByLiftsOrGoalVisitor('changeLiftFilter', 'lift');"></select>`;
+
+        if (arr.length > 0) {
+
+            userGrid.innerHTML += `
 <div id="Glifts">
 <p id="lifts" class="fadeIn animate delaySmall">
-Løft (${arr.length})
+Løft: ${selectHTML}
 </p>
 </div>
 
@@ -234,13 +236,43 @@ Løft (${arr.length})
 </div>
 `;
 
-                arr.sort(function (a, b) { return b.kg - a.kg });
-                for (let i = 0; i < arr.length; i++) {
-                    const badge = getBadgeLift(size, arr[i], arr[i].id);
+            if (sortBy) {
+                if (allowedExercises.includes(sortBy)) {
+                    document.getElementById("lifts").innerHTML = `Løft: ${selectHTML}`;
+                }
+            }
 
-                    if (badge) {
-                        document.getElementById("badgesLiftsTableRow").innerHTML += badge;
+            document.getElementById("changeLiftFilter").innerHTML = `<option id="totalLifts" value="null"></option>`;
+
+            let totalCount = 0;
+
+            for (let x = 0; x < keys.length; x++) {
+
+                if (lifts[keys[x]].length > 0) {
+
+                    totalCount++;
+
+                    let html = `<option value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${lifts[keys[x]].length})</option>`;
+
+                    if (keys[x] === sortBy) {
+                        html = `<option selected="selected" value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${lifts[keys[x]].length})</option>`;
                     }
+
+                    document.getElementById("changeLiftFilter").innerHTML += html;
+                }
+            }
+
+            document.getElementById("totalLifts").innerHTML = `Alle (${totalCount})`;
+
+            arr.sort(function (a, b) { return b.kg - a.kg });
+            for (let i = 0; i < arr.length; i++) {
+                //const badge = getBadgeLift(size, arr[i]);
+
+                const badge = getBadgeLift(0, arr[i], arr[i].id);
+                const badgesLiftsTableRow = document.getElementById("badgesLiftsTableRow");
+
+                if (badge && badgesLiftsTableRow) {
+                    badgesLiftsTableRow.innerHTML += badge;
                 }
             }
         }
@@ -255,15 +287,41 @@ Løft (${arr.length})
 
     function displayGoals() {
 
+        let sortBy = sessionStorage.getItem("display_goals_visitor");
+
+        let showGoals = goals;
+
+        if (sortBy) {
+            if (allowedExercises.includes(sortBy)) {
+
+                showGoals = goals[sortBy];
+                if (showGoals.length === 0) {
+                    sortBy = null;
+                    sessionStorage.removeItem("display_goals_visitor");
+                }
+            }
+        }
+
         const keys = Object.keys(goals);
 
         const arr = [];
 
-        for (let i = 0; i < keys.length; i++) {
+        if (sortBy === null) {
+            for (let i = 0; i < keys.length; i++) {
+                const exerciseGoal = goals[keys[i]];
+                displayPerExercise(exerciseGoal, keys[i]);
+            }
+        } else {
+            const exerciseGoal = showGoals;
+            displayPerExercise(exerciseGoal, sortBy);
+        }
 
-            let kgUntilGoal = 0, msg = "";
+        function displayPerExercise(aExerciseGoal, aCurrent) {
 
-            const exerciseGoal = goals[keys[i]];
+            let kgUntilGoal = 0, repsUntilGoal = 0, msg = "";
+
+            const exerciseGoal = aExerciseGoal;
+            const current = aCurrent;
             const exerciseGoalKeys = Object.keys(exerciseGoal);
 
             for (let j = 0; j < exerciseGoalKeys.length; j++) {
@@ -274,46 +332,55 @@ Løft (${arr.length})
 
                     const id = goalKeys.id;
                     const color = goalKeys.color || "redBadgeG";
-                    const goalReps = goalKeys.reps;
+                    const goalReps = parseInt(goalKeys.reps);
                     const goalKg = parseFloat(goalKeys.kg);
 
                     let currentLiftPR = 0;
 
-                    const liftKeys = Object.keys(lifts[keys[i]]);
+                    const liftKeys = Object.keys(lifts[current]);
 
                     for (let f = 0; f < liftKeys.length; f++) {
-                        const lift = lifts[keys[i]][f];
-                        if (lift.reps === "1" && goalReps === "1") {
-                            currentLiftPR = parseFloat(lift.kg);
-                            console.log(currentLiftPR)
-                            console.log(goalKg)
-                            console.log("1 rm");
-                        } else if (lift.kg === goalKg) {
-                            console.log("reps left");
+                        const lift = lifts[current][f];
+                        const liftReps = parseInt(lift.reps);
+                        const liftKg = parseFloat(lift.kg);
+
+                        if (liftKg === goalKg) {
+                            repsUntilGoal = goalReps - liftReps;
+
+                            if (repsUntilGoal <= 0) {
+                                msg = "Målet er nådd!";
+                            } else if (repsUntilGoal === 1) {
+                                msg = `1 rep igjen`;
+                            } else {
+                                msg = `${repsUntilGoal} reps igjen`;
+                            }
+
+                        } else {
+                            currentLiftPR = liftKg;
+                            kgUntilGoal = goalKg - currentLiftPR;
+                            if (kgUntilGoal <= 0) {
+                                msg = "Målet er nådd!";
+                            } else {
+                                msg = `${kgUntilGoal} kg igjen`;
+                            }
                         }
                     }
 
-                    kgUntilGoal = goalKg - currentLiftPR;
 
-                    if (kgUntilGoal <= 0) {
-                        msg = "Målet er nådd!";
-                    } else {
-                        msg = `${kgUntilGoal} kg igjen`;
-                    }
-
-                    arr.push({ "exercise": capitalizeFirstLetter(keys[i]), "kg": goalKg, "kgLeft": kgUntilGoal, "msg": msg, "color": color, "id": id });
+                    arr.push({ "exercise": capitalizeFirstLetter(current), "kg": goalKg, "kgLeft": kgUntilGoal, "msg": msg, "color": color, "id": id });
 
                 }
             }
-
         }
+
+        const selectHTML = `<select id="changeGoalFilter" class="changeFilterSelect" onchange="sortByLiftsOrGoalVisitor('changeGoalFilter', 'goal');"></select>`;
 
         if (arr.length > 0) {
 
             userGrid.innerHTML += `
 <div id="Ggoals">
 <p id="goals" class="fadeIn animate delaySmall">
-Mål (${arr.length})
+Mål: ${selectHTML}
 </p>
 </div>
 
@@ -328,6 +395,34 @@ Mål (${arr.length})
 </table>
 </div>
 `;
+
+            if (sortBy) {
+                if (allowedExercises.includes(sortBy)) {
+                    document.getElementById("goals").innerHTML = `Mål: ${selectHTML}`;
+                }
+            }
+
+            document.getElementById("changeGoalFilter").innerHTML = `<option id="totalGoals" value="null"></option>`;
+
+            let totalCount = 0;
+
+            for (let x = 0; x < keys.length; x++) {
+
+                if (goals[keys[x]].length > 0) {
+
+                    totalCount++;
+
+                    let html = `<option value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${goals[keys[x]].length})</option>`;
+
+                    if (keys[x] === sortBy) {
+                        html = `<option selected="selected" value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${goals[keys[x]].length})</option>`;
+                    }
+
+                    document.getElementById("changeGoalFilter").innerHTML += html;
+                }
+            }
+
+            document.getElementById("totalGoals").innerHTML = `Alle (${totalCount})`;
 
             arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
 

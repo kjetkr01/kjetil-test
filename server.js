@@ -99,7 +99,7 @@ const minCharLength = 3;
 const APIErrorJSON = {
      catch: { error: "Det har oppstått et problem!" },
      access: { error: "Ingen tilgang" },
-     workoutplan: { error: "Brukeren kan ingen treningsplan" },
+     workoutplan: { error: "Brukeren har ingen treningsplan" },
      lift: { error: "Brukeren har ikke alle nødvendige løft for å regne ut totalen. Må ha 1 rep av Benkpress, Knebøy og Markløft" },
 }
 
@@ -981,10 +981,9 @@ server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
                     }
 
                     res.status(200).json(resp).end();
-                    //}
 
                } else {
-                    res.status(403).json(APIErrorJSON.access).end();
+                    res.status(403).json(APIErrorJSON.workoutplan).end();
                }
 
           } else {

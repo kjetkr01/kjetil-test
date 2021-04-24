@@ -57,6 +57,7 @@
    <script src="scripts/badges/userBadges.js" type="text/javascript"></script>
    <script src="scripts/user/user.js" type="text/javascript"></script>
    <script src="scripts/user/editInformation.js" type="text/javascript"></script>
+   <script src="scripts/overlay/overlay.js" type="text/javascript"></script>
 
 </head>
 
@@ -64,196 +65,7 @@
 
    <script>changeColorTheme();</script>
 
-   <div id="createNewLiftorGoalOverlay" style="display: none;" class="overlay">
-      <div id="createNewLiftorGoal" class="createNewLiftorGoal">
-         <div id="Gtitle1C">
-            <p id="title1C"></p>
-         </div>
-         <div id="Gline1C">
-            <hr id="line1C">
-         </div>
-         <div id="Gtitle2C">
-            <p id="title2C">Øvelse</p>
-         </div>
-         <div id="Gline2C">
-            <hr id="line2C">
-         </div>
-         <div id="Ginp1C">
-            <select id="inp1C" class="selectLiftOrGoal">
-            </select>
-         </div>
-         <div id="Gtitle3C">
-            <p id="title3C">Antall KG</p>
-         </div>
-         <div id="Gline3C">
-            <hr id="line3C">
-         </div>
-         <div id="Ginp2C">
-            <input id="inp2C" class="inputLiftOrGoal" type="text" onkeypress="return onlyAllowedKeys(event,'create')"
-               placeholder="Eks: 35.25"></input>
-         </div>
-         <div id="Gtitle4C">
-            <p id="title4C">Dato</p>
-         </div>
-         <div id="Gline4C">
-            <hr id="line4C">
-         </div>
-         <div id="Ginp3C">
-            <input id="inp3C" class="inputLiftOrGoal" type="date"></input>
-         </div>
-         <div id="GrespC">
-            <p id="respC"></p>
-         </div>
-         <div id="GcancelC">
-            <button id="cancelC" onclick="disableOverlay('createLiftOrGoal');">Avbryt</button>
-         </div>
-         <div id="GsaveC">
-         </div>
-      </div>
-   </div>
-
-   <div id="editLiftorGoalOverlay" style="display: none;" class="overlay">
-      <div id="editLiftorGoal" class="editLiftorGoal">
-         <div id="Gtitle1E">
-            <p id="title1E"></p>
-         </div>
-         <div id="Gline1E">
-            <hr id="line1E">
-         </div>
-         <div id="Gtitle2E">
-            <p id="title2E">Antall KG</p>
-         </div>
-         <div id="Gline2E">
-            <hr id="line2E">
-         </div>
-         <div id="Ginp1E">
-            <input id="inp1E" class="inputLiftOrGoal" type="text" onkeypress="return onlyAllowedKeys(event,'edit')"
-               placeholder="Eks: 35.25"></input>
-         </div>
-         <div id="Gtitle3E">
-            <p id="title3E">Dato</p>
-         </div>
-         <div id="Gline3E">
-            <hr id="line3E">
-         </div>
-         <div id="Ginp2E">
-            <input id="inp2E" class="inputLiftOrGoal" type="date"></input>
-         </div>
-         <div id="Gtitle4E">
-            <p id="title4E">Farge</p>
-         </div>
-         <div id="Gline4E">
-            <hr id="line4E">
-         </div>
-         <div id="Ginp3E">
-            <select id="inp3E" class="selectLiftOrGoal"></select>
-         </div>
-         <div id="GdeleteE">
-         </div>
-         <div id="GrespE">
-            <p id="respE"></p>
-         </div>
-         <div id="GcancelE">
-            <button id="cancelE" onclick="disableOverlay('editLiftOrGoal');">Avbryt</button>
-         </div>
-         <div id="GsaveE">
-         </div>
-      </div>
-   </div>
-
-   <div id="editDaysOverlay" style="display: none;" class="overlay">
-      <div id="editDays" class="editDays">
-         <div id="Gtitle1EditDays">
-            <p id="title1EditDays">Treningsplan</p>
-         </div>
-         <div id="Gline1EditDays">
-            <hr id="line1EditDays">
-         </div>
-         <div id="Gtitle2EditDays">
-            <p id="title2EditDays">Dine dager</p>
-         </div>
-         <div id="Gline2EditDays">
-            <hr id="line2EditDays">
-         </div>
-         <div id="GlistEditDays">
-            <table id="listEditDays" class="daysTable">
-
-               <tr>
-                  <td class="daysTabletd">
-                     <label for="Mandag">Mandag</label>
-                  </td>
-                  <td class="daysTabletd">
-                     <input id="Mandag" class="editDaysCheckbox" type="checkbox"></input>
-                  </td>
-               </tr>
-
-               <tr>
-                  <td class="daysTabletd">
-                     <label for="Tirsdag">Tirsdag</label>
-                  </td>
-                  <td class="daysTabletd">
-                     <input id="Tirsdag" class="editDaysCheckbox" type="checkbox"></input>
-                  </td>
-               </tr>
-
-               <tr>
-                  <td class="daysTabletd">
-                     <label for="Onsdag">Onsdag</label>
-                  </td>
-                  <td class="daysTabletd">
-                     <input id="Onsdag" class="editDaysCheckbox" type="checkbox"></input>
-                  </td>
-               </tr>
-
-               <tr>
-                  <td class="daysTabletd">
-                     <label for="Torsdag">Torsdag</label>
-                  </td>
-                  <td class="daysTabletd">
-                     <input id="Torsdag" class="editDaysCheckbox" type="checkbox"></input>
-                  </td>
-               </tr>
-
-               <tr>
-                  <td class="daysTabletd">
-                     <label for="Fredag">Fredag</label>
-                  </td>
-                  <td class="daysTabletd">
-                     <input id="Fredag" class="editDaysCheckbox" type="checkbox"></input>
-                  </td>
-               </tr>
-
-               <tr>
-                  <td class="daysTabletd">
-                     <label for="Lørdag">Lørdag</label>
-                  </td>
-                  <td class="daysTabletd">
-                     <input id="Lørdag" class="editDaysCheckbox" type="checkbox"></input>
-                  </td>
-               </tr>
-
-               <tr>
-                  <td class="daysTabletd">
-                     <label for="Søndag">Søndag</label>
-                  </td>
-                  <td class="daysTabletd">
-                     <input id="Søndag" class="editDaysCheckbox" type="checkbox"></input>
-                  </td>
-               </tr>
-
-            </table>
-         </div>
-         <div id="GrespEditDays">
-            <p id="respEditDays"></p>
-         </div>
-         <div id="GcancelEditDays">
-            <button id="cancelEditDays" onclick="disableOverlay('editDays');">Avbryt</button>
-         </div>
-         <div id="GsaveEditDays">
-            <button id="saveEditDays" onclick="saveTrainingDays();">Lagre</button>
-         </div>
-      </div>
-   </div>
+   <div id="viewLiftorGoalOverlay" style="display: none;" class="overlay"></div>
 
    <section id="page">
 
@@ -267,8 +79,9 @@
             src="images/backIcon.svg" alt="Tilbake">
          </img>-->
 
-         <svg id="backBtn" class="backBtnIcon fadeInLeft animate delaySmall pointer" style="stroke:white;" draggable="false"
-            onclick="returnToPrevious();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
+         <svg id="backBtn" class="backBtnIcon fadeInLeft animate delaySmall pointer" style="stroke:white;"
+            draggable="false" onclick="returnToPrevious();" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 22.49 39.22">
             <g id="Layer_2" data-name="Layer 2">
                <g id="Layer_1-2" data-name="Layer 1">
                   <polyline class="cls-1" points="21.25 1.24 2.48 20.02 20.45 37.99" />
@@ -305,11 +118,25 @@
 
 <script>
 
+   const referrer = sessionStorage.getItem("visit_user_referrer");
+
+   if (referrer !== document.referrer && document.referrer !== document.URL) {
+      sessionStorage.setItem("visit_user_referrer", document.referrer);
+   }
+
    function returnToPrevious() {
-      location.href = document.referrer || redirectToFeed();;
+
+      const redirect = sessionStorage.getItem("visit_user_referrer");
+
+      if (redirect) {
+         location.href = redirect;
+      } else {
+         redirectToFeed();
+      }
    }
 
    lockBodyPosition();
+   getViewLiftorGoalOverlay();
    requestAccountDetails();
 
    setInterval(() => {

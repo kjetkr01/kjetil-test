@@ -31,6 +31,8 @@ const badgeColorBorders = {
     "blueBadge": `626BE3`,
 }
 
+const allowedExercises = ["benkpress", "markløft", "knebøy", "skulderpress"];
+
 const themeKeys = Object.keys(allowedThemes);
 const checkAllowedThemes = [];
 for (let i = 0; i < themeKeys.length; i++) {
@@ -634,6 +636,33 @@ function sortByLiftsOrGoalOwner(aDom, aType) {
     location.reload();
 }
 
+function sortByLiftsOrGoalVisitor(aDom, aType) {
+
+    const dom = document.getElementById(aDom);
+    const type = aType;
+
+    if (dom && type) {
+
+        if (type === "lift") {
+            if (allowedExercises.includes(dom.value)) {
+                sessionStorage.setItem('display_lifts_visitor', dom.value);
+            } else {
+                sessionStorage.removeItem('display_lifts_visitor');
+            }
+        }
+
+        if (type === "goal") {
+            if (allowedExercises.includes(dom.value)) {
+                sessionStorage.setItem('display_goals_visitor', dom.value);
+            } else {
+                sessionStorage.removeItem('display_goals_visitor');
+            }
+        }
+    }
+
+    location.reload();
+}
+
 //
 
 // redirect functions
@@ -670,6 +699,8 @@ function redirectToUser() {
         if (userID === parseInt(viewingUser)) {
             redirectToAccount();
         } else {
+            sessionStorage.removeItem('display_goals_visitor');
+            sessionStorage.removeItem('display_lifts_visitor');
             location.href = "user.html";
         }
     } else {

@@ -4,10 +4,10 @@ const application = {
     name: "Treningstatistikken",
     logoURL: "images/appIcon.png",
     version: {
-        state: "alpha",
+        state: "alpha 72%",
         major: 4, // major++ = minor = 0 && revision = 0
-        minor: 2, // minor++ = revision = 0
-        revision: 10,
+        minor: 3, // minor++ = revision = 0
+        revision: 0,
     },
     lastUpdated: {
         day: "24",
@@ -20,8 +20,6 @@ const application = {
     }
 }
 
-const github_user_website = "kjetkr01.github.io";
-
 // Slutt
 
 application.version.fullNumber = `${application.version.major}.${application.version.minor}.${application.version.revision}`;
@@ -33,7 +31,7 @@ ${application.name} er et app prosjekt utviklet av ${createBtn("Kjetil Kristians
 
 <br><br>
 Appen ble hovedsakling laget for å enkelt se ORM (One Rep Max) i ulike løft.
-Kunne lage mål i ulike øvelser og enkelt sjekke progresjon og hvor langt man er unna målet.
+Kunne lage mål i ulike øvelser og enkelt sjekke progresjon før man er i mål.
 
 <br><br>
 Ha muligheten til å opprette treningsplaner, samt legge inn øvelser per dag.
@@ -54,12 +52,16 @@ const ongoingUpdatesText = "Pågående oppdateringer";
 const ongoingUpdatesArr = [
     "TITLE:Innstillinger",
     "Oppdatere Fremgangs info: Lagre endringer (60%)",
-    "Brukere (90%)",
     "Personvern (60%)",
     "TITLE:Treningsplan",
     "Endre hvordan treningsplanen funker (30%)",
     "Kunne velge aktiv treningsplan (0%)",
     "Kunne redigere treningsplanen (0%)",
+    "TITLE:Ledertavler",
+    "Kunne 'søke' etter antall reps",
+    "TITLE:Annet",
+    "Optimalisering",
+    "Endring i hvordan animasjoner/lasting av data funker"
 ];
 
 //
@@ -78,10 +80,10 @@ const plannedUpdatesArr = [
     "Legge til flere løft og mål. Foreløpi bare: Benkpress, Knebøy, Markløft, Skulderpress",
 
     "TITLE:Treningsplan",
-    "Opp til 4 treningsplaner",
+    "Opp til ~4/5 treningsplaner (mulig flere)",
     "Egendefinert navn per plan",
     "Velge aktiv treningsplan",
-    "Elementer: nr, øvelse, resp, sets, % utfra ORM, rpe, notis (kun for brukeren)",
+    "Elementer: nr, øvelse, reps, sets, % utfra ORM?, rpe, notis (noti er kun for brukeren)",
     "Kunne lagre/kopiere andre brukere sine planer",
 
     "TITLE:Badges",
@@ -90,9 +92,10 @@ const plannedUpdatesArr = [
 
     "TITLE:Offline support",
     "Se treningsplan, løft, mål offline",
+    "Offline eller bruk av caching",
 
     "TITLE:Desktop design",
-    "Lage desktop design",
+    "Optimalisere desktop design",
 ];
 
 //
@@ -105,7 +108,7 @@ Full redesign: ${getDateFormat("19", "01", "2021")}
 <br><br>
 Sist oppdatert: ${calcDaysSinceUpdate()}
 <br><br>
-<a href="https://${github_user_website}/" target="_blank">${github_user_website}</a>
+<a href="https://kjetkr01.github.io/" target="_blank">kjetkr01.github.io</a>
 `;
 
 // array to html
