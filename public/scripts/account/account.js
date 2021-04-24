@@ -124,7 +124,11 @@ function displayInformation(respInfo) {
                         const id = liftKeys.id;
                         const color = liftKeys.color || "redBadgeG";
 
-                        msg = `${liftKeys.reps} reps`;
+                        if (liftKeys.reps === "1") {
+                            msg = `ORM / 1 rep`;
+                        } else {
+                            msg = `${liftKeys.reps} reps`;
+                        }
 
                         /*const prDateArr = liftKeys.date.split("-");
 

@@ -30,7 +30,7 @@ application.lastUpdated.date = getDateFormat(application.lastUpdated.day, applic
 
 const aboutAppText = `
 ${application.name} er et app prosjekt utviklet av ${createBtn("Kjetil Kristiansen", "2")}.
-<a href="https://${github_user_website}/">${github_user_website}</a>
+
 <br><br>
 Appen ble hovedsakling laget for å enkelt se ORM (One Rep Max) i ulike løft.
 Kunne lage mål i ulike øvelser og enkelt sjekke progresjon og hvor langt man er unna målet.
@@ -104,6 +104,8 @@ Prosjekt oppstart: ${getDateFormat("20", "11", "2020")}
 Full redesign: ${getDateFormat("19", "01", "2021")}
 <br><br>
 Sist oppdatert: ${calcDaysSinceUpdate()}
+<br><br>
+<a href="https://${github_user_website}/">${github_user_website}</a>
 `;
 
 // array to html
