@@ -35,7 +35,7 @@ grid-template-rows: /* nedover */
 
 auto /* GbadgesLifts */
 
-30px /* c8r1 */
+0px /* c8r1 */
 
 
 50px /* Ggoals */
@@ -44,7 +44,7 @@ auto /* GbadgesLifts */
 
 auto /* GbadgesGoals */
 
-30px /* c9r1 */
+0px /* c9r1 */
 
 
 50px /* Gtrainingsplit */
@@ -53,7 +53,7 @@ auto /* GbadgesGoals */
 
 auto /* GbadgesTrainingsplit */
 
-30px /* c10r1 */
+0px /* c10r1 */
 
 auto /* GmemberSince */
 ;
@@ -116,7 +116,8 @@ margin-right: auto;
 #badgesLifts, #badgesGoals, #badgesTrainingsplit {
 margin-left: 12px;
 margin-right: 12px;
-margin-bottom: 20px;
+margin-top: 5px;
+margin-bottom: 35px;
 }
 
 #lifts, #goals, #trainingsplit {
