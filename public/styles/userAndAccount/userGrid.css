@@ -210,8 +210,9 @@ overflow-x: scroll;
 
 .changeFilterSelect {
 font-size: 20px;
-color:var(--main-accountOwnerColor);
-font-weight: bold;
+/*color: var(--main-accountOwnerColor);*/
+color: var(--main-textColorDark);
+/*font-weight: bold;*/
 font-family: var(--main-font-Family-Verdana);
 appearance: none;
 -webkit-appearance: none;

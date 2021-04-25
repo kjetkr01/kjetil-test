@@ -224,8 +224,6 @@ Løft: ${selectHTML}
 
                 if (lifts[keys[x]].length > 0) {
 
-                    totalCount++;
-
                     let html = `<option value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${lifts[keys[x]].length})</option>`;
 
                     if (keys[x] === sortBy) {
@@ -233,7 +231,13 @@ Løft: ${selectHTML}
                     }
 
                     document.getElementById("changeLiftFilter").innerHTML += html;
+
+                    const currentLiftKeys = lifts[keys[x]];
+                    for (let z = 0; z < currentLiftKeys.length; z++) {
+                        totalCount++;
+                    }
                 }
+
             }
 
             document.getElementById("totalLifts").innerHTML = `Alle (${totalCount})`;
@@ -415,8 +419,6 @@ Mål: ${selectHTML}
 
                 if (goals[keys[x]].length > 0) {
 
-                    totalCount++;
-
                     let html = `<option value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${goals[keys[x]].length})</option>`;
 
                     if (keys[x] === sortBy) {
@@ -424,6 +426,11 @@ Mål: ${selectHTML}
                     }
 
                     document.getElementById("changeGoalFilter").innerHTML += html;
+
+                    const currentGoalKeys = goals[keys[x]];
+                    for (let z = 0; z < currentGoalKeys.length; z++) {
+                        totalCount++;
+                    }
                 }
             }
 
