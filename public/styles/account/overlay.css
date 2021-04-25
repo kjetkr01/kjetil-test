@@ -20,6 +20,7 @@ appearance: none;
 -webkit-appearance: none;
 -moz-appearance: none;
 border: none;
+outline: none;
 background-color: var(--main-backgroundColor2);
 }
 
@@ -124,7 +125,7 @@ auto /* Ginp4C */
 
 auto /* GrespC */
 
-30px /* GbuttonsC */
+40px /* GbuttonsC */
 
 2vh /* c8oC */
 
@@ -472,7 +473,7 @@ auto /* Ginp4E */
 
 auto /* GrespE */
 
-30px /* GbuttonsE */
+40px /* GbuttonsE */
 
 2vh /* c7oE */
 
