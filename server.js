@@ -392,7 +392,8 @@ server.post("/users/details/:user", auth, async (req, res) => {
                               "gym": resp.userDetails.info.gym,
                               "age": resp.userDetails.info.age,
                               "height": resp.userDetails.info.height,
-                              "weight": resp.userDetails.info.weight
+                              "weight": resp.userDetails.info.weight,
+                              "member_since": resp.userDetails.member_since
                          }
 
                          if (viewingUser === userID) {

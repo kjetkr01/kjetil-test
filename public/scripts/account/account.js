@@ -45,6 +45,31 @@ async function requestAccountDetails() {
             infoList.textContent = "";
         }
 
+        if (cacheDetails.hasOwnProperty("member_since")) {
+
+            const splitDate = cacheDetails.member_since.split("-");
+
+            const day = splitDate[2];
+            const month = splitDate[1];
+            const year = splitDate[0];
+            let string = "";
+
+            if (day && month && year) {
+                if (day.length === 1 || day.length === 2 && month.length === 1 || month.length === 2 && year.length === 4) {
+
+                    string = new Date(`${year}-${month}-${day}`);
+                    if (isNaN(string)) {
+                        string = `${day}.${month}.${year}`;
+                    } else {
+                        string = new Date(`${year}-${month}-${day}`).toLocaleDateString();
+                    }
+                }
+            }
+
+            document.getElementById("memberSince").classList = "";
+            document.getElementById("memberSince").innerHTML = `Medlem siden<br>${string}`;
+        }
+
     } catch {
         sessionStorage.removeItem("cacheDetails_owner");
     }
@@ -74,7 +99,6 @@ function displayInformation(respInfo) {
     }
 
     const userGrid = document.getElementById("userGrid");
-    userGrid.innerHTML = "";
 
     const info = respInfo;
     const size = 0;
@@ -151,6 +175,8 @@ function displayInformation(respInfo) {
 
     function displayLifts(hasLiftsLeft) {
 
+        document.getElementById("badgesLiftsTableRow").innerHTML = "";
+
         let sortBy = localStorage.getItem("display_lifts_owner");
 
         let showLifts = lifts;
@@ -216,25 +242,6 @@ function displayInformation(respInfo) {
 
         if (arr.length > 0) {
 
-            userGrid.innerHTML += `
-<div id="Glifts">
-<p id="lifts" class="fadeIn animate delaySmall">
-Løft: ${selectHTML}
-</p>
-</div>
-
-<div id="GlineLifts">
-<hr id="lineLifts" class="fadeIn animate delayMedium">
-</div>
-
-<div id="GbadgesLifts">
-<table id="badgesLifts">
-<tr id="badgesLiftsTableRow">
-</tr>
-</table>
-</div>
-`;
-
             if (sortBy) {
                 if (allowedExercises.includes(sortBy)) {
                     document.getElementById("lifts").innerHTML = `Løft: ${selectHTML}`;
@@ -279,27 +286,6 @@ Løft: ${selectHTML}
                 }
             }
 
-        } else {
-
-            userGrid.innerHTML += `
-<div id="Glifts">
-<p id="lifts" class="fadeIn animate delaySmall">
-Løft
-</p>
-</div>
-
-<div id="GlineLifts">
-<hr id="lineLifts" class="fadeIn animate delayMedium">
-</div>
-
-<div id="GbadgesLifts">
-<table id="badgesLifts">
-<tr id="badgesLiftsTableRow">
-</tr>
-</table>
-</div>
-`;
-
         }
 
         if (hasLiftsLeft === true || Object.entries(lifts).length === 0) {
@@ -320,6 +306,8 @@ Løft
     /// ------------ start of displayGoals --------------- ///
 
     function displayGoals(hasGoalsLeft) {
+
+        document.getElementById("badgesGoalsTableRow").innerHTML = "";
 
         let sortBy = localStorage.getItem("display_goals_owner");
 
@@ -400,7 +388,6 @@ Løft
                         }
                     }
 
-
                     arr.push({ "exercise": capitalizeFirstLetter(current), "kg": goalKg, "kgLeft": kgUntilGoal, "msg": msg, "color": color, "id": id });
 
                 }
@@ -410,25 +397,6 @@ Løft
         const selectHTML = `<select id="changeGoalFilter" class="changeFilterSelect pointer" onchange="sortByLiftsOrGoalOwner('changeGoalFilter', 'goal');"></select>`;
 
         if (arr.length > 0) {
-
-            userGrid.innerHTML += `
-<div id="Ggoals">
-<p id="goals" class="fadeIn animate delaySmall">
-Mål: ${selectHTML}
-</p>
-</div>
-
-<div id="GlineGoals">
-<hr id="lineGoals" class="fadeIn animate delayMedium">
-</div>
-
-<div id="GbadgesGoals">
-<table id="badgesGoals">
-<tr id="badgesGoalsTableRow">
-</tr>
-</table>
-</div>
-`;
 
             if (sortBy) {
                 if (allowedExercises.includes(sortBy)) {
@@ -473,25 +441,6 @@ Mål: ${selectHTML}
                     badgesGoalsTableRow.innerHTML += badge;
                 }
             }
-        } else {
-            userGrid.innerHTML += `
-<div id="Ggoals">
-<p id="goals" class="fadeIn animate delaySmall">
-Mål
-</p>
-</div>
-
-<div id="GlineGoals">
-<hr id="lineGoals" class="fadeIn animate delayMedium">
-</div>
-
-<div id="GbadgesGoals">
-<table id="badgesGoals">
-<tr id="badgesGoalsTableRow">
-</tr>
-</table>
-</div>
-`;
         }
 
         if (hasGoalsLeft === true || Object.entries(goals).length === 0) {
@@ -603,13 +552,7 @@ Treningsplan
             }
         }
 
-        userGrid.innerHTML += `
-        <div id="GmemberSince">
-        <p id="memberSince" class="fadeIn animate delaySmall">
-        Medlem siden<br>${string}
-        </p>
-        </div>
-        `;
+        document.getElementById("memberSince").innerHTML = `Medlem siden<br>${string}`;
 
     }
 
