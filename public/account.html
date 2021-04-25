@@ -254,7 +254,9 @@
 
             <div id="Glifts">
                <p id="lifts">
-                  Løft
+                  Løft:
+                  <select id="changeLiftFilter" class="changeFilterSelect pointer"
+                     onchange="sortByLiftsOrGoalOwner('changeLiftFilter', 'lift');"></select>
                </p>
             </div>
 
@@ -272,7 +274,9 @@
 
             <div id="Ggoals">
                <p id="goals">
-                  Mål
+                  Mål:
+                  <select id="changeGoalFilter" class="changeFilterSelect pointer"
+                     onchange="sortByLiftsOrGoalOwner('changeGoalFilter', 'goal');"></select>
                </p>
             </div>
 

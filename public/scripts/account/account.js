@@ -285,7 +285,8 @@ function displayInformation(respInfo) {
                     badgesLiftsTableRow.innerHTML += badge;
                 }
             }
-
+        } else {
+            document.getElementById("lifts").innerHTML = `Du har ingen løft enda!`;
         }
 
         if (hasLiftsLeft === true || Object.entries(lifts).length === 0) {
@@ -441,6 +442,8 @@ function displayInformation(respInfo) {
                     badgesGoalsTableRow.innerHTML += badge;
                 }
             }
+        } else {
+            document.getElementById("goals").innerHTML = `Du har ingen mål enda!`;
         }
 
         if (hasGoalsLeft === true || Object.entries(goals).length === 0) {
