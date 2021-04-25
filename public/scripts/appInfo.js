@@ -4,10 +4,10 @@ const application = {
     name: "Treningstatistikken",
     logoURL: "images/appIcon.png",
     version: {
-        state: "alpha 76%",
+        state: "alpha 77%",
         major: 4, // major++ = minor = 0 && revision = 0
         minor: 3, // minor++ = revision = 0
-        revision: 7,
+        revision: 8,
     },
     lastUpdated: {
         day: "25",
@@ -51,14 +51,11 @@ ${createBtn("Sondre Olsen")}.
 const ongoingUpdatesText = "Pågående oppdateringer";
 const ongoingUpdatesArr = [
     "TITLE:Innstillinger",
-    "Oppdatere Fremgangs info: Lagre endringer (60%)",
-    "Personvern (74%)",
+    "Personvern (75%)",
     "TITLE:Treningsplan",
     "Endre hvordan treningsplanen funker (30%)",
     "Kunne velge aktiv treningsplan (0%)",
     "Kunne redigere treningsplanen (0%)",
-    "TITLE:Ledertavler",
-    "Kunne 'søke' etter antall reps",
     "TITLE:Annet",
     "Optimalisering",
     "Endring i hvordan animasjoner/lasting av data funker"

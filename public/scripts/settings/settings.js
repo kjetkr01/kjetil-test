@@ -220,7 +220,7 @@ async function displayInformationAboutUser() {
                         if (keys[i] !== "løft" && keys[i] !== "mål") {
 
                             informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys[j])}: ${second}<br>`;
-                            
+
                         } else {
 
                             if (second.length > 0) {

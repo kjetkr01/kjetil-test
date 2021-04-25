@@ -213,7 +213,7 @@ ${firstName[0]} har ingen løft, mål eller treningsplan
             }
         }
 
-        const selectHTML = `<select id="changeLiftFilter" class="changeFilterSelect" onchange="sortByLiftsOrGoalVisitor('changeLiftFilter', 'lift');"></select>`;
+        const selectHTML = `<select id="changeLiftFilter" class="changeFilterSelect pointer" onchange="sortByLiftsOrGoalVisitor('changeLiftFilter', 'lift');"></select>`;
 
         if (arr.length > 0) {
 
@@ -269,7 +269,6 @@ Løft: ${selectHTML}
 
             arr.sort(function (a, b) { return b.kg - a.kg });
             for (let i = 0; i < arr.length; i++) {
-                //const badge = getBadgeLift(size, arr[i]);
 
                 const badge = getBadgeLift(0, arr[i], arr[i].id);
                 const badgesLiftsTableRow = document.getElementById("badgesLiftsTableRow");
@@ -376,7 +375,7 @@ Løft: ${selectHTML}
             }
         }
 
-        const selectHTML = `<select id="changeGoalFilter" class="changeFilterSelect" onchange="sortByLiftsOrGoalVisitor('changeGoalFilter', 'goal');"></select>`;
+        const selectHTML = `<select id="changeGoalFilter" class="changeFilterSelect pointer" onchange="sortByLiftsOrGoalVisitor('changeGoalFilter', 'goal');"></select>`;
 
         if (arr.length > 0) {
 

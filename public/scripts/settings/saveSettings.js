@@ -1,5 +1,4 @@
 // update password
-
 async function updatePassword() {
 
     const exsistingPsw = document.getElementById("exsistingPsw").value;
@@ -236,7 +235,20 @@ async function updateBadgeSize() {
     if (resp === true) {
         updateUserInfo();
     }
+}
 
+async function updateBadgeDetails() {
+    const value = document.getElementById("badgeDetailsSelection").value;
+    const setting = "badgedetails";
+
+    const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
+    const url = `/user/update/settings/${setting}`;
+
+    const resp = await callServerAPI(body, url);
+
+    if (resp === true) {
+        updateUserInfo();
+    }
 }
 
 async function saveDisplayname() {

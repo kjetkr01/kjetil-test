@@ -274,34 +274,34 @@ function loadProgressionInfoPage() {
 
     /* */
 
-    const badgeInfoObj = {
-        0: { name: "Alt", value: "0" },
-        1: { name: "KG igjen", value: "1" },
-        2: { name: "% fremgang", value: "2" }
+    const badgeDetailsObj = {
+        0: { name: "Alt", value: 0 },
+        1: { name: "KG igjen", value: 1 },
+        2: { name: "% fremgang", value: 2 }
     }
 
-    let badeInfoOptionsHTML = "";
+    let badgeDetailsOptionsHTML = "";
 
-    const badgeInfoObjKeys = Object.keys(badgeInfoObj);
+    const badgeDetailsObjKeys = Object.keys(badgeDetailsObj);
 
-    for (let i = 0; i < badgeInfoObjKeys.length; i++) {
+    for (let i = 0; i < badgeDetailsObjKeys.length; i++) {
 
-        const badge = badgeInfoObj[badgeInfoObjKeys[i]];
+        const badge = badgeDetailsObj[badgeDetailsObjKeys[i]];
 
-        if (badge.value === settings.badgeInfo) {
-            badeInfoOptionsHTML += `<option selected="selected" value="${badge.value}">${badge.name}</option>`;
+        if (badge.value === settings.badgedetails) {
+            badgeDetailsOptionsHTML += `<option selected="selected" value="${badge.value}">${badge.name}</option>`;
         } else {
-            badeInfoOptionsHTML += `<option value="${badge.value}">${badge.name}</option>`;
+            badgeDetailsOptionsHTML += `<option value="${badge.value}">${badge.name}</option>`;
         }
     }
 
-    const badgeInfoHTML = `
-    <select id="badeInfoSelection">
-       ${badeInfoOptionsHTML}
+    const badgeDetailsHTML = `
+    <select id="badgeDetailsSelection">
+       ${badgeDetailsOptionsHTML}
     </select>
     `;
 
-    settingsGrid.innerHTML += getTemplate("Informasjon", "badeInfoInp", badgeInfoHTML);
+    settingsGrid.innerHTML += getTemplate("Informasjon", "badgeDetailsInp", badgeDetailsHTML);
 
     //settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="alert('saveDetails');">Lagre endringer</button>`, "", "spacingTop");
 
@@ -311,8 +311,8 @@ function loadProgressionInfoPage() {
         updateBadgeSize();
     });
 
-    document.getElementById("badeInfoSelection").addEventListener("change", function (evt) {
-        console.log("changed badeInfoSelection");
+    document.getElementById("badgeDetailsSelection").addEventListener("change", function (evt) {
+        updateBadgeDetails();
     });
 }
 
@@ -615,11 +615,11 @@ async function loadPrivacyPage() {
     settingsGrid.innerHTML = justTextTemplate(`${application.name} samler ikke inn data fra brukeren sine.`, "left");
 
     settingsGrid.innerHTML += getCenteredTextTemplate(`
-    <button id="detailsAboutMyAccountBtn" class='settingsButton' onClick="displayInformationAboutUser();">Hent mine opplysninger</button>
+    <button id="detailsAboutMyAccountBtn" class='settingsButton pointer' onClick="displayInformationAboutUser();">Hent mine opplysninger</button>
     <p id="informationAboutUser" style="text-align:left;"></p>
     `, "", "borderTop");
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="loadSetting('${ELoadSettings.deleteMe.name}');">Gå til sletting av konto</button>`, "", "spacingTop");
+    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton pointer' onClick="loadSetting('${ELoadSettings.deleteMe.name}');">Gå til sletting av konto</button>`, "", "spacingTop");
 
     settingsGrid.innerHTML += getBottomSpacingTemplate();
 

@@ -157,29 +157,6 @@ function displayInformation(respInfo) {
                             msg = `${liftKeys.reps} reps`;
                         }
 
-                        /*const prDateArr = liftKeys.date.split("-");
-    
-                        if (prDateArr.length === 3) {
-    
-                            if (prDateArr[0].length === 4 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2 && prDateArr[2] > 0 && prDateArr[2] <= 31 && prDateArr[2].length <= 2) {
-    
-                                const d = new Date();
-                                const prDate = new Date(prDateArr[0], (prDateArr[1] - 1), prDateArr[2]);
-    
-                                const daysSinceTime = parseInt((d - prDate) / (1000 * 3600 * 24));
-    
-                                if (d < prDate) {
-                                    //fremtiden
-                                } else if (daysSinceTime > 1) {
-                                    msg = `${parseInt(daysSinceTime)} dager siden`;
-                                } else if (daysSinceTime === 1) {
-                                    msg = `I går`;
-                                } else if (daysSinceTime === 0) {
-                                    msg = `I dag`;
-                                }
-                            }
-                        }*/
-
                         arr.push({ "exercise": capitalizeFirstLetter(current), "kg": liftKeys.kg, "msg": msg, "color": color, "id": id });
 
                     }
@@ -187,7 +164,7 @@ function displayInformation(respInfo) {
             }
         }
 
-        const selectHTML = `<select id="changeLiftFilter" class="changeFilterSelect" onchange="sortByLiftsOrGoalOwner('changeLiftFilter', 'lift');"></select>`;
+        const selectHTML = `<select id="changeLiftFilter" class="changeFilterSelect pointer" onchange="sortByLiftsOrGoalOwner('changeLiftFilter', 'lift');"></select>`;
 
         if (arr.length > 0) {
 
@@ -382,7 +359,7 @@ Løft
             }
         }
 
-        const selectHTML = `<select id="changeGoalFilter" class="changeFilterSelect" onchange="sortByLiftsOrGoalOwner('changeGoalFilter', 'goal');"></select>`;
+        const selectHTML = `<select id="changeGoalFilter" class="changeFilterSelect pointer" onchange="sortByLiftsOrGoalOwner('changeGoalFilter', 'goal');"></select>`;
 
         if (arr.length > 0) {
 

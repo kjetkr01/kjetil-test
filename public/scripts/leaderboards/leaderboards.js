@@ -170,7 +170,7 @@ async function getListOfLeaderboard(aLeaderboard) {
 
             }
 
-            const selectHTML = `<select id="leaderboardReps" class="changeLeaderboardRepsSelect" onchange="changeLeaderboardReps();"></select>`;
+            const selectHTML = `<select id="leaderboardReps" class="changeLeaderboardRepsSelect pointer" onchange="changeLeaderboardReps();"></select>`;
 
             if (Object.keys(resp).length === 1) {
                 //usermsg1.textContent = "Det er " + parseInt(Object.keys(resp).length) + " bruker på tavlen";
