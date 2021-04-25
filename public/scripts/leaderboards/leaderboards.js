@@ -1,6 +1,7 @@
 let previousLeaderboard = "";
 let firstLeaderboard = null;
 let repsList = [];
+let retryLoadOnce = true;
 
 async function loadLeaderboards() {
 
@@ -52,7 +53,12 @@ async function loadLeaderboards() {
         getListOfLeaderboard();
     } else {
         sessionStorage.removeItem("leaderboards_filter_reps");
-        usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Det finnes ingen ledertavler!`);
+        if (retryLoadOnce === true) {
+            loadLeaderboards();
+            retryLoadOnce = false;
+        } else {
+            usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Fant ingen ledertavler!`);
+        }
     }
 
 }

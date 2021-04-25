@@ -208,29 +208,32 @@ async function displayInformationAboutUser() {
             try {
 
                 for (let i = 0; i < keys.length; i++) {
-                    informationAboutUser.innerHTML += `<br><h2>${capitalizeFirstLetter(keys[i])}</h2>`;
+
                     const first = resp[keys[i]];
                     const extraKeys = Object.keys(first);
+
+                    informationAboutUser.innerHTML += `<br><h2>${capitalizeFirstLetter(keys[i])}</h2>`;
 
                     for (let j = 0; j < extraKeys.length; j++) {
                         const second = first[extraKeys[j]];
 
-                        if (keys[i] !== "lifts" && keys[i] !== "goals") {
+                        if (keys[i] !== "løft" && keys[i] !== "mål") {
 
                             informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys[j])}: ${second}<br>`;
-
+                            
                         } else {
 
-                            const extraKeys2 = Object.keys(second);
+                            if (second.length > 0) {
+                                const extraKeys2 = Object.keys(second);
+                                informationAboutUser.innerHTML += `<br><h3>${capitalizeFirstLetter(extraKeys[j])}</h3>`;
 
-                            informationAboutUser.innerHTML += `<br><h3>${capitalizeFirstLetter(extraKeys[j])}</h3>`;
-
-                            for (let k = 0; k < extraKeys2.length; k++) {
-                                const third = second[extraKeys2[k]];
-                                const extraKeys3 = Object.keys(third);
-                                informationAboutUser.innerHTML += `<br>`;
-                                for (let x = 0; x < extraKeys3.length; x++) {
-                                    informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys3[x])}: ${third[extraKeys3[x]]}<br>`;
+                                for (let k = 0; k < extraKeys2.length; k++) {
+                                    const third = second[extraKeys2[k]];
+                                    const extraKeys3 = Object.keys(third);
+                                    informationAboutUser.innerHTML += `<br>`;
+                                    for (let x = 0; x < extraKeys3.length; x++) {
+                                        informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys3[x])}: ${third[extraKeys3[x]]}<br>`;
+                                    }
                                 }
                             }
                         }

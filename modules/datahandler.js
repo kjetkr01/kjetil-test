@@ -1357,7 +1357,7 @@ class StorageHandler {
                     delete userInfo.rows[0].isadmin;
                 }
                 userInfo.rows[0].password = "Pga sikkerhet, blir ikke passord hentet";
-                userInformation.user = userInfo.rows[0];
+                userInformation.bruker = userInfo.rows[0];
             }
 
             const userDetails = await client.query(`
@@ -1368,7 +1368,7 @@ class StorageHandler {
 
             if (userDetails.rows.length > 0) {
                 delete userDetails.rows[0].user_id;
-                userInformation.details = userDetails.rows[0];
+                userInformation.detaljer = userDetails.rows[0];
             }
 
             const userSettings = await client.query(`
@@ -1379,7 +1379,7 @@ class StorageHandler {
 
             if (userSettings.rows.length > 0) {
                 delete userSettings.rows[0].user_id;
-                userInformation.settings = userSettings.rows[0];
+                userInformation.innstillinger = userSettings.rows[0];
             }
 
             const userLifts = await client.query(`
@@ -1390,7 +1390,7 @@ class StorageHandler {
 
             if (userLifts.rows.length > 0) {
                 delete userLifts.rows[0].user_id;
-                userInformation.lifts = userLifts.rows[0];
+                userInformation.løft = userLifts.rows[0];
             }
 
             const userGoals = await client.query(`
@@ -1401,7 +1401,7 @@ class StorageHandler {
 
             if (userGoals.rows.length > 0) {
                 delete userGoals.rows[0].user_id;
-                userInformation.goals = userGoals.rows[0];
+                userInformation.mål = userGoals.rows[0];
             }
 
             const userTrainingsplit = await client.query(`
@@ -1412,7 +1412,7 @@ class StorageHandler {
 
             if (userTrainingsplit.rows.length > 0) {
                 delete userTrainingsplit.rows[0].user_id;
-                userInformation.trainingsplit = userTrainingsplit.rows[0];
+                userInformation.treningsplan = userTrainingsplit.rows[0];
             }
 
             client.end();

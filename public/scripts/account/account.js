@@ -571,7 +571,7 @@ Treningsplan
 
                 string = new Date(`${year}-${month}-${day}`);
                 if (isNaN(string)) {
-                    string = `${day}.${month}..${year}`;
+                    string = `${day}.${month}.${year}`;
                 } else {
                     string = new Date(`${year}-${month}-${day}`).toLocaleDateString();
                 }
