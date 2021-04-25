@@ -154,7 +154,7 @@ class StorageHandler {
 
     //  -------------------------------  get a list of all leaderboards in application  ------------------------------- //
 
-    async getListOfLeaderboards() {
+    async getListOfLeaderboards(reps) {
         const client = new pg.Client(this.credentials);
         let results = false;
 
@@ -181,16 +181,49 @@ class StorageHandler {
 
                 if (liftKeys.includes("benkpress") && liftKeys.includes("knebøy") && liftKeys.includes("markløft")) {
                     if (Object.entries(lifts.benkpress).length > 0 && Object.entries(lifts.knebøy).length > 0 && Object.entries(lifts.markløft).length > 0) {
-                        const updateNumber = parseInt(leaderboards["totalt"]) || 0;
-                        leaderboards["totalt"] = updateNumber + 1;
+                        const benkpress = lifts.benkpress;
+                        const knebøy = lifts.knebøy;
+                        const markløft = lifts.markløft;
+                        let benchpressOk = false;
+                        let squatOk = false;
+
+                        for (let k = 0; k < benkpress.length; k++) {
+                            if (benkpress[k].reps === reps) {
+                                benchpressOk = true;
+                                break;
+                            }
+                        }
+
+                        if (benchpressOk === true) {
+                            for (let k = 0; k < knebøy.length; k++) {
+                                if (knebøy[k].reps === reps) {
+                                    squatOk = true;
+                                    break;
+                                }
+                            }
+
+                            if (squatOk === true) {
+                                for (let k = 0; k < markløft.length; k++) {
+                                    if (markløft[k].reps === reps) {
+                                        const updateNumber = parseInt(leaderboards["totalt"]) || 0;
+                                        leaderboards["totalt"] = updateNumber + 1;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 
                 for (let j = 0; j < liftKeys.length; j++) {
                     if (allowedLifts.includes(liftKeys[j])) {
-                        if (Object.entries(lifts[liftKeys[j]]).length > 0) {
-                            const updateNumber = parseInt(lifts[liftKeys[j]]) || 0;
-                            leaderboards[liftKeys[j]] = updateNumber + 1;
+                        const extra = lifts[liftKeys[j]];
+                        for (let k = 0; k < extra.length; k++) {
+                            if (extra[k].reps === reps) {
+                                const updateNumber = parseInt(leaderboards[liftKeys[j]]) || 0;
+                                leaderboards[liftKeys[j]] = updateNumber + 1;
+                                break;
+                            }
                         }
                     }
                 }
@@ -1302,50 +1335,6 @@ class StorageHandler {
 
         try {
             await client.connect();
-
-            //lage noe lignende som når man spør om bruker info? Per kolonne liksom
-            /*let userInfo = await client.query(`
-            SELECT *
-            FROM users, user_details, user_settings, user_lifts, user_goals
-            WHERE users.id = $1
-            AND users.id = user_details.user_id
-            AND users.id = user_settings.user_id
-            AND users.id = user_lifts.user_id
-            AND users.id = user_goals.user_id`,
-                [user]);
- 
-            if (userInfo.rows.length !== 0) {
-                userInfo = userInfo.rows[0];
-                userInformation = userInfo;
-                userInfo.password = "Pga sikkerhet, blir ikke passord hentet";
-            }
- 
-            let trainingsplitInfo = await client.query(`
-                SELECT user_trainingsplit.*
-                FROM users, user_trainingsplit
-                WHERE users.id = $1
-                AND users.id = user_trainingsplit.user_id`,
-                [user]);
- 
-            if (trainingsplitInfo.rows.length !== 0) {
-                trainingsplitInfo = trainingsplitInfo.rows[0];
-                console.log(trainingsplitInfo);
-                userInformation.trainingsplit = trainingsplitInfo
-            }
- 
-            let apiInfo = await client.query(`
-                SELECT user_api.*
-                FROM users, user_api
-                WHERE users.id = $1
-                AND users.id = user_api.user_id`,
-                [user]);
- 
-            if (apiInfo.rows.length !== 0) {
-                apiInfo = apiInfo.rows[0];
-                console.log(apiInfo)
-            }*/
-
-            //console.log(userInformation)
 
             const userInfo = await client.query(`
             SELECT *

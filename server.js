@@ -234,7 +234,9 @@ server.post("/users/list/all", auth, async (req, res) => {
 
 server.post("/users/list/all/leaderboards", auth, async (req, res) => {
 
-     const resp = await getListOfLeaderboards();
+     const reps = req.body.reps || "1";
+
+     const resp = await getListOfLeaderboards(reps);
 
      if (resp.status === true) {
 

@@ -111,8 +111,10 @@ function enableOverlayEdit(aType, aExercise, aId) {
         inp2.value = "";
         inp3.value = "";
         inp4.innerHTML = "";
+        GdeleteE.innerHTML = "";
         Gsave.innerHTML = "";
         respMsg.innerHTML = "";
+        const showDeleteBtn = true;
 
         const today = new Date().toISOString().substr(0, 10) || null;
 
@@ -147,7 +149,9 @@ function enableOverlayEdit(aType, aExercise, aId) {
                 inp1.value = lift.kg;
                 inp2.value = lift.reps;
                 inp3.value = lift.date;
-                GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift', '${id}');">Slett løftet</button>`;
+                if (showDeleteBtn === true) {
+                    GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift', '${id}');">Slett løftet</button>`;
+                }
                 Gsave.innerHTML = `<button id="saveE" class="pointer" onclick="saveLiftOrGoal('lift','edit', '${id}');">Lagre</button>`;
 
                 const color = lift.color;
@@ -196,7 +200,9 @@ function enableOverlayEdit(aType, aExercise, aId) {
                 inp1.value = goal.kg;
                 inp2.value = goal.reps;
                 inp3.value = goal.date;
-                GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'goal', '${id}');">Slett målet</button>`;
+                if (showDeleteBtn === true) {
+                    GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'goal', '${id}');">Slett målet</button>`;
+                }
                 Gsave.innerHTML = `<button id="saveE" class="pointer" onclick="saveLiftOrGoal('goal','edit', '${id}');">Lagre</button>`;
 
                 const color = goal.color;

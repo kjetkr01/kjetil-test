@@ -3,7 +3,9 @@ let firstLeaderboard = null;
 
 async function loadLeaderboards() {
 
-    const body = { "authToken": token, "userInfo": user };
+    const reps = sessionStorage.getItem("leaderboards_filter_reps") || "1";
+
+    const body = { "authToken": token, "userInfo": user, "reps": reps };
     const url = `/users/list/all/leaderboards`;
 
     const resp = await callServerAPI(body, url);
@@ -16,7 +18,8 @@ async function loadLeaderboards() {
 
             const keys = Object.keys(resp);
 
-            leaderboardsArrOrder.push({ "leaderboard": [keys[i]], "usersCount": resp[keys[i]] })
+            leaderboardsArrOrder.push({ "leaderboard": [keys[i]], "usersCount": resp[keys[i]] });
+
         }
 
         leaderboardsArrOrder.sort(function (a, b) { return b.usersCount - a.usersCount });
@@ -29,6 +32,7 @@ async function loadLeaderboards() {
         for (let i = 0; i < leaderboardsArrOrder.length; i++) {
 
             const currentLeaderboard = leaderboardsArrOrder[i].leaderboard[0];
+            const usersCount = leaderboardsArrOrder[i].usersCount;
 
             function capitalizeFirstLetter(string) {
                 return string.charAt(0).toUpperCase() + string.slice(1);
@@ -36,12 +40,13 @@ async function loadLeaderboards() {
 
             leaderboardsTableRowDom.innerHTML += `
           <td>
-             <button id="${currentLeaderboard}" class="leaderboardsList fadeInLeft animate pointer" onclick="getListOfLeaderboard('${currentLeaderboard}');">${capitalizeFirstLetter(currentLeaderboard)}</button>
+             <button id="${currentLeaderboard}" class="leaderboardsList fadeInLeft animate pointer" onclick="getListOfLeaderboard('${currentLeaderboard}');">${capitalizeFirstLetter(currentLeaderboard)} (${usersCount})</button>
           </td>`;
         }
 
         getListOfLeaderboard();
     } else {
+        sessionStorage.removeItem("leaderboards_filter_reps");
         usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Det finnes ingen ledertavler!`);
     }
 
@@ -152,12 +157,21 @@ async function getListOfLeaderboard(aLeaderboard) {
 
             }
 
+            const reps = sessionStorage.getItem("leaderboards_filter_reps") || "1";
+            let repsText = ``;
+
+            if (reps === "1") {
+                repsText = `ORM / 1 rep<br>`;
+            } else {
+                repsText = `${reps} reps<br>`;
+            }
+
             if (Object.keys(resp).length === 1) {
                 //usermsg1.textContent = "Det er " + parseInt(Object.keys(resp).length) + " bruker på tavlen";
-                usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Det er 1 bruker på tavlen`);
+                usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`${repsText}Det er 1 bruker på tavlen`);
             } else {
                 //usermsg1.textContent = "Det er " + parseInt(Object.keys(resp).length) + " brukere på tavlen";
-                usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Det er ${parseInt(Object.keys(resp).length)} brukere på tavlen`);
+                usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`${repsText}Det er ${parseInt(Object.keys(resp).length)} brukere på tavlen`);
             }
 
             leaderboardIsLoading = false;

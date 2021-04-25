@@ -9,9 +9,9 @@ async function getListOfUsers(username) {
     }
 }
 
-async function getListOfLeaderboards() {
+async function getListOfLeaderboards(reps) {
     try {
-        const resp = await database.getListOfLeaderboards();
+        const resp = await database.getListOfLeaderboards(reps);
         return resp;
     } catch (error) {
         console.error(error);
