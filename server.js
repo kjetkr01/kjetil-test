@@ -240,7 +240,7 @@ server.post("/users/list/all/leaderboards", auth, async (req, res) => {
 
      if (resp.status === true) {
 
-          res.status(200).json(resp.leaderboards).end();
+          res.status(200).json({ "leaderboards": resp.leaderboards, "repsList": resp.repsList }).end();
 
      } else {
           res.status(403).json(`Feil, prøv igjen`).end();
@@ -255,10 +255,11 @@ server.post("/users/list/all/leaderboards", auth, async (req, res) => {
 server.post("/users/list/all/leaderboards/:leaderboard", auth, async (req, res) => {
 
      const leaderboard = req.body.leaderboard;
+     const reps = req.body.reps || "1";
 
      if (leaderboard) {
 
-          const listOfUsersLeaderboard = await getListOfUsersLeaderboard(leaderboard);
+          const listOfUsersLeaderboard = await getListOfUsersLeaderboard(leaderboard, reps);
 
           if (listOfUsersLeaderboard) {
 

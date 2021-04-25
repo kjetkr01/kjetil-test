@@ -1,5 +1,6 @@
 let previousLeaderboard = "";
 let firstLeaderboard = null;
+let repsList = [];
 
 async function loadLeaderboards() {
 
@@ -10,15 +11,19 @@ async function loadLeaderboards() {
 
     const resp = await callServerAPI(body, url);
 
-    if (Object.entries(resp).length > 0) {
+    const leaderboards = resp.leaderboards;
+
+    repsList = resp.repsList;
+
+    if (Object.entries(leaderboards).length > 0) {
 
         const leaderboardsArrOrder = [];
 
-        for (let i = 0; i < Object.entries(resp).length; i++) {
+        for (let i = 0; i < Object.entries(leaderboards).length; i++) {
 
-            const keys = Object.keys(resp);
+            const keys = Object.keys(leaderboards);
 
-            leaderboardsArrOrder.push({ "leaderboard": [keys[i]], "usersCount": resp[keys[i]] });
+            leaderboardsArrOrder.push({ "leaderboard": [keys[i]], "usersCount": leaderboards[keys[i]] });
 
         }
 
@@ -60,11 +65,13 @@ async function getListOfLeaderboard(aLeaderboard) {
         aLeaderboard = firstLeaderboard;
     }
 
-    if (leaderboardIsLoading === true) {
+    if (leaderboardIsLoading === true || previousLeaderboard === aLeaderboard) {
         return;
     }
 
     if (token && user && aLeaderboard) {
+
+        const reps = sessionStorage.getItem("leaderboards_filter_reps") || "1";
         const ViewingLeaderboard = aLeaderboard;
         leaderboardIsLoading = true;
 
@@ -81,7 +88,7 @@ async function getListOfLeaderboard(aLeaderboard) {
 
         list.innerHTML = "";
 
-        const body = { "authToken": token, "userInfo": user, "leaderboard": ViewingLeaderboard };
+        const body = { "authToken": token, "userInfo": user, "leaderboard": ViewingLeaderboard, "reps": reps };
         const url = `/users/list/all/leaderboards/${ViewingLeaderboard}`;
 
         const resp = await callServerAPI(body, url);
@@ -157,21 +164,34 @@ async function getListOfLeaderboard(aLeaderboard) {
 
             }
 
-            const reps = sessionStorage.getItem("leaderboards_filter_reps") || "1";
-            let repsText = ``;
-
-            if (reps === "1") {
-                repsText = `ORM / 1 rep<br>`;
-            } else {
-                repsText = `${reps} reps<br>`;
-            }
+            const selectHTML = `<select id="leaderboardReps" class="changeLeaderboardRepsSelect" onchange="changeLeaderboardReps();"></select>`;
 
             if (Object.keys(resp).length === 1) {
                 //usermsg1.textContent = "Det er " + parseInt(Object.keys(resp).length) + " bruker på tavlen";
-                usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`${repsText}Det er 1 bruker på tavlen`);
+                usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Filter: ${selectHTML}<br>Det er 1 bruker på tavlen`);
             } else {
                 //usermsg1.textContent = "Det er " + parseInt(Object.keys(resp).length) + " brukere på tavlen";
-                usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`${repsText}Det er ${parseInt(Object.keys(resp).length)} brukere på tavlen`);
+                usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Filter: ${selectHTML}<br>Det er ${parseInt(Object.keys(resp).length)} brukere på tavlen`);
+            }
+
+            for (let x = 0; x < repsList.length; x++) {
+
+                if (repsList[x] !== "0") {
+
+                    let repsText = "";
+                    if (repsList[x] === "1") {
+                        repsText = `ORM / 1 rep`;
+                    } else {
+                        repsText = `${repsList[x]} reps`;
+                    }
+
+                    let html = `<option value="${repsList[x]}">${repsText}</option>`;
+                    if (repsList[x] === reps) {
+                        html = `<option selected="selected" value="${repsList[x]}">${repsText}</option>`;
+                    }
+
+                    document.getElementById("leaderboardReps").innerHTML += html;
+                }
             }
 
             leaderboardIsLoading = false;
@@ -199,5 +219,16 @@ function peopleLeaderboardsTxtHTML(aInput) {
     </p>`;
 
     return htmlInfo;
+
+}
+
+
+function changeLeaderboardReps() {
+
+    const reps = document.getElementById("leaderboardReps").value;
+
+    sessionStorage.setItem("leaderboards_filter_reps", reps);
+
+    location.reload();
 
 }

@@ -159,6 +159,7 @@ class StorageHandler {
         let results = false;
 
         let leaderboards = {};
+        const repsList = [];
 
         try {
             await client.connect();
@@ -179,35 +180,37 @@ class StorageHandler {
                 delete lifts.user_id;
                 const liftKeys = Object.keys(lifts);
 
-                if (liftKeys.includes("benkpress") && liftKeys.includes("knebøy") && liftKeys.includes("markløft")) {
-                    if (Object.entries(lifts.benkpress).length > 0 && Object.entries(lifts.knebøy).length > 0 && Object.entries(lifts.markløft).length > 0) {
-                        const benkpress = lifts.benkpress;
-                        const knebøy = lifts.knebøy;
-                        const markløft = lifts.markløft;
-                        let benchpressOk = false;
-                        let squatOk = false;
+                if (reps === "1") {
+                    if (liftKeys.includes("benkpress") && liftKeys.includes("knebøy") && liftKeys.includes("markløft")) {
+                        if (Object.entries(lifts.benkpress).length > 0 && Object.entries(lifts.knebøy).length > 0 && Object.entries(lifts.markløft).length > 0) {
+                            const benkpress = lifts.benkpress;
+                            const knebøy = lifts.knebøy;
+                            const markløft = lifts.markløft;
+                            let benchpressOk = false;
+                            let squatOk = false;
 
-                        for (let k = 0; k < benkpress.length; k++) {
-                            if (benkpress[k].reps === reps) {
-                                benchpressOk = true;
-                                break;
-                            }
-                        }
-
-                        if (benchpressOk === true) {
-                            for (let k = 0; k < knebøy.length; k++) {
-                                if (knebøy[k].reps === reps) {
-                                    squatOk = true;
+                            for (let k = 0; k < benkpress.length; k++) {
+                                if (benkpress[k].reps === reps) {
+                                    benchpressOk = true;
                                     break;
                                 }
                             }
 
-                            if (squatOk === true) {
-                                for (let k = 0; k < markløft.length; k++) {
-                                    if (markløft[k].reps === reps) {
-                                        const updateNumber = parseInt(leaderboards["totalt"]) || 0;
-                                        leaderboards["totalt"] = updateNumber + 1;
+                            if (benchpressOk === true) {
+                                for (let k = 0; k < knebøy.length; k++) {
+                                    if (knebøy[k].reps === reps) {
+                                        squatOk = true;
                                         break;
+                                    }
+                                }
+
+                                if (squatOk === true) {
+                                    for (let k = 0; k < markløft.length; k++) {
+                                        if (markløft[k].reps === reps) {
+                                            const updateNumber = parseInt(leaderboards["totalt"]) || 0;
+                                            leaderboards["totalt"] = updateNumber + 1;
+                                            break;
+                                        }
                                     }
                                 }
                             }
@@ -218,16 +221,23 @@ class StorageHandler {
                 for (let j = 0; j < liftKeys.length; j++) {
                     if (allowedLifts.includes(liftKeys[j])) {
                         const extra = lifts[liftKeys[j]];
+                        let done = false;
                         for (let k = 0; k < extra.length; k++) {
-                            if (extra[k].reps === reps) {
+                            if (extra[k].reps === reps && done === false) {
                                 const updateNumber = parseInt(leaderboards[liftKeys[j]]) || 0;
                                 leaderboards[liftKeys[j]] = updateNumber + 1;
-                                break;
+                                done = true;
+                            }
+
+                            if (!repsList.includes(extra[k].reps)) {
+                                repsList.push(extra[k].reps);
                             }
                         }
                     }
                 }
             }
+
+            repsList.sort();
 
             results = true;
 
@@ -236,18 +246,18 @@ class StorageHandler {
             console.log(err);
         }
 
-        return { "leaderboards": leaderboards, "status": results };
+        return { "leaderboards": leaderboards, "repsList": repsList, "status": results };
     }
 
     //
 
     //  -------------------------------  get a info about a specific leaderboard (users and numbers)  ------------------------------- //
 
-    async getListOfUsersLeaderboard(leaderboard) {
+    async getListOfUsersLeaderboard(leaderboard, reps) {
         const client = new pg.Client(this.credentials);
         let results = null;
         const infoList = [];
-        const reps = "1"; // kan evt endre utfra hva brukeren spør om?
+
         try {
             await client.connect();
 
