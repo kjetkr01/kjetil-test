@@ -1347,6 +1347,75 @@ class StorageHandler {
 
             //console.log(userInformation)
 
+            const userInfo = await client.query(`
+            SELECT *
+            FROM users
+            WHERE id = $1`,
+                [user]);
+
+            if (userInfo.rows.length > 0) {
+                if (userInfo.rows[0].isadmin !== true) {
+                    delete userInfo.rows[0].isadmin;
+                }
+                userInfo.rows[0].password = "Pga sikkerhet, blir ikke passord hentet";
+                userInformation.user = userInfo.rows[0];
+            }
+
+            const userDetails = await client.query(`
+            SELECT *
+            FROM user_details
+            WHERE user_id = $1`,
+                [user]);
+
+            if (userDetails.rows.length > 0) {
+                delete userDetails.rows[0].user_id;
+                userInformation.details = userDetails.rows[0];
+            }
+
+            const userSettings = await client.query(`
+            SELECT *
+            FROM user_settings
+            WHERE user_id = $1`,
+                [user]);
+
+            if (userSettings.rows.length > 0) {
+                delete userSettings.rows[0].user_id;
+                userInformation.settings = userSettings.rows[0];
+            }
+
+            const userLifts = await client.query(`
+            SELECT *
+            FROM user_lifts
+            WHERE user_id = $1`,
+                [user]);
+
+            if (userLifts.rows.length > 0) {
+                delete userLifts.rows[0].user_id;
+                userInformation.lifts = userLifts.rows[0];
+            }
+
+            const userGoals = await client.query(`
+            SELECT *
+            FROM user_goals
+            WHERE user_id = $1`,
+                [user]);
+
+            if (userGoals.rows.length > 0) {
+                delete userGoals.rows[0].user_id;
+                userInformation.goals = userGoals.rows[0];
+            }
+
+            const userTrainingsplit = await client.query(`
+            SELECT *
+            FROM user_trainingsplit
+            WHERE user_id = $1`,
+                [user]);
+
+            if (userTrainingsplit.rows.length > 0) {
+                delete userTrainingsplit.rows[0].user_id;
+                userInformation.trainingsplit = userTrainingsplit.rows[0];
+            }
+
             client.end();
 
             results = true;
@@ -1382,9 +1451,6 @@ class StorageHandler {
             if (userInfo.rows.length !== 0) {
 
                 const deleteID = userInfo.rows[0].id;
-
-                //await client.query('DELETE FROM "public"."users" WHERE id=$1', [deleteID]);
-                //await client.query('DELETE FROM "public"."api_keys" WHERE user_id=$1', [deleteID]);
 
                 await client.query(`
                 DELETE FROM user_trainingsplit

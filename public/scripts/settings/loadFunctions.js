@@ -614,7 +614,10 @@ async function loadPrivacyPage() {
 
     settingsGrid.innerHTML = justTextTemplate(`${application.name} samler ikke inn data fra brukeren sine.`, "left");
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="displayInformationAboutUser();">Hent mine opplysninger (JSON)</button><p id="informationAboutUser" style="text-align:left;"></p>`, "", "borderTop");
+    settingsGrid.innerHTML += getCenteredTextTemplate(`
+    <button id="detailsAboutMyAccountBtn" class='settingsButton' onClick="displayInformationAboutUser();">Hent mine opplysninger</button>
+    <p id="informationAboutUser" style="text-align:left;"></p>
+    `, "", "borderTop");
 
     settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="loadSetting('${ELoadSettings.deleteMe.name}');">Gå til sletting av konto</button>`, "", "spacingTop");
 

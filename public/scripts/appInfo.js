@@ -4,13 +4,13 @@ const application = {
     name: "Treningstatistikken",
     logoURL: "images/appIcon.png",
     version: {
-        state: "alpha 74%",
+        state: "alpha 75%",
         major: 4, // major++ = minor = 0 && revision = 0
         minor: 3, // minor++ = revision = 0
-        revision: 2,
+        revision: 3,
     },
     lastUpdated: {
-        day: "24",
+        day: "25",
         month: "04",
         year: "2021"
     },
@@ -52,7 +52,7 @@ const ongoingUpdatesText = "Pågående oppdateringer";
 const ongoingUpdatesArr = [
     "TITLE:Innstillinger",
     "Oppdatere Fremgangs info: Lagre endringer (60%)",
-    "Personvern (60%)",
+    "Personvern (74%)",
     "TITLE:Treningsplan",
     "Endre hvordan treningsplanen funker (30%)",
     "Kunne velge aktiv treningsplan (0%)",
@@ -90,7 +90,7 @@ const plannedUpdatesArr = [
     "Lage flere badge farger",
     "Lage større versjon av badge (mål-badge)",
 
-    "TITLE:Offline support",
+    "TITLE:Offline/caching support",
     "Se treningsplan, løft, mål offline",
     "Offline eller bruk av caching",
 
@@ -104,12 +104,13 @@ const plannedUpdatesArr = [
 const aboutAppBottomInfo = `
 Prosjekt oppstart: ${getDateFormat("20", "11", "2020")}
 <br><br>
-Full redesign: ${getDateFormat("19", "01", "2021")}
-<br><br>
 Sist oppdatert: ${calcDaysSinceUpdate()}
 <br><br>
 <a href="https://kjetkr01.github.io/" target="_blank">kjetkr01.github.io</a>
 `;
+/*
+Full redesign: ${getDateFormat("19", "01", "2021")}
+*/
 
 // array to html
 let ongoingUpdates = "", plannedUpdates = "";

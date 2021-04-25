@@ -188,17 +188,70 @@ function checkIfEdited(aType) {
 async function displayInformationAboutUser() {
 
     const informationAboutUser = document.getElementById("informationAboutUser");
-    informationAboutUser.innerHTML = `<br>Henter opplysninger...`;
 
-    const body = { "authToken": token, "userInfo": user };
-    const url = `/user/allinformation`;
+    // prevents spam loading of information
+    if (informationAboutUser.innerHTML.length < 150) {
 
-    const resp = await callServerAPI(body, url);
+        informationAboutUser.innerHTML = `<br>Henter opplysninger...`;
 
-    if (resp) {
-        informationAboutUser.innerHTML = `<br>${JSON.stringify(resp)}`;
-    } else {
-        informationAboutUser.innerHTML = `<br>Det her oppstått en feil, kunne ikke hente opplysningene dine. Vennligst prøv igjen.`;
+        const body = { "authToken": token, "userInfo": user };
+        const url = `/user/allinformation`;
+
+        const resp = await callServerAPI(body, url);
+
+        informationAboutUser.innerHTML = "";
+
+        if (resp) {
+
+            const keys = Object.keys(resp);
+
+            try {
+
+                for (let i = 0; i < keys.length; i++) {
+                    informationAboutUser.innerHTML += `<br><h2>${capitalizeFirstLetter(keys[i])}</h2>`;
+                    const first = resp[keys[i]];
+                    const extraKeys = Object.keys(first);
+
+                    for (let j = 0; j < extraKeys.length; j++) {
+                        const second = first[extraKeys[j]];
+
+                        if (keys[i] !== "lifts" && keys[i] !== "goals") {
+
+                            informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys[j])}: ${second}<br>`;
+
+                        } else {
+
+                            const extraKeys2 = Object.keys(second);
+
+                            informationAboutUser.innerHTML += `<br><h3>${capitalizeFirstLetter(extraKeys[j])}</h3>`;
+
+                            for (let k = 0; k < extraKeys2.length; k++) {
+                                const third = second[extraKeys2[k]];
+                                const extraKeys3 = Object.keys(third);
+                                informationAboutUser.innerHTML += `<br>`;
+                                for (let x = 0; x < extraKeys3.length; x++) {
+                                    informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys3[x])}: ${third[extraKeys3[x]]}<br>`;
+                                }
+                            }
+                        }
+                    }
+                }
+
+            } catch {
+
+                informationAboutUser.innerHTML = `Data vises som JSON<br>`;
+
+                for (let i = 0; i < keys.length; i++) {
+                    informationAboutUser.innerHTML += `<br><strong>${capitalizeFirstLetter(keys[i])}</strong>`;
+                    informationAboutUser.innerHTML += `<br>${JSON.stringify(resp[keys[i]])}<br>`;
+                }
+            }
+
+            document.getElementById("detailsAboutMyAccountBtn").innerHTML = "Mine opplysninger";
+
+        } else {
+            informationAboutUser.innerHTML = `<br>Det her oppstått en feil, kunne ikke hente opplysningene dine. Vennligst prøv igjen.`;
+        }
     }
 }
 
