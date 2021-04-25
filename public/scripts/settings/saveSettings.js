@@ -85,8 +85,9 @@ async function updateAboutMe() {
         document.getElementById("updateAboutMeBtn").innerHTML = data;
 
         setTimeout(() => {
-            location.reload();
-        }, 5000);
+            updateUserInfo();
+            isUpdatingAboutMe = false;
+        }, 2000);
     }
 }
 

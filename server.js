@@ -633,7 +633,7 @@ server.post("/user/update/settings/about/me", auth, async (req, res) => {
                const resp = await updateAboutMe(currentUser.username, updateSettings);
 
                if (resp === true) {
-                    res.status(200).json("Endringer er blitt oppdatert!").end();
+                    res.status(200).json("Endringer har blitt oppdatert!").end();
                } else {
                     res.status(403).json("error, try again").end();
                }

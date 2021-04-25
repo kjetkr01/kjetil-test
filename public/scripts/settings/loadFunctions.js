@@ -166,9 +166,42 @@ function loadAboutMePage() {
     settingsGrid.innerHTML += getTemplate("Høyde", "", `<input id="heightInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.height}' type="number">cm</input>`, "spacingTop");
     settingsGrid.innerHTML += getTemplate("Vekt", "", `<input id="weightInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.weight}' type="number">kg</input>`);
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(`<button id="updateAboutMeBtn" class='settingsButton' onClick="updateAboutMe();">Oppdater detaljer</button>`, "", "spacingTop");
+    settingsGrid.innerHTML += getCenteredTextTemplate(`<button id="updateAboutMeBtn" class='settingsButton' onClick="aboutMeResetValues();">Tilbakestill verdier</button>`, "", "spacingTop");
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="aboutMeResetValues();">Tilbakestill verdier</button>`, "", "spacingTop");
+    const checkIfEdited = setInterval(() => {
+
+        if (!document.getElementById("gymInp") || isUpdatingAboutMe === true) {
+            clearInterval(checkIfEdited);
+        } else {
+
+            const updateAboutMeBtn = document.getElementById("updateAboutMeBtn");
+            const gymInp = document.getElementById("gymInp").value;
+            const ageInp = document.getElementById("ageInp").value;
+            const heightInp = document.getElementById("heightInp").value;
+            const weightInp = document.getElementById("weightInp").value;
+
+            const updateTxt = "Oppdater detaljer";
+            const resetTxt = "Tilbakestill verdier";
+
+            const change =
+                gymInp !== userInfo.info.gym
+                ||
+                ageInp !== userInfo.info.age.toString()
+                ||
+                heightInp !== userInfo.info.height.toString()
+                ||
+                weightInp !== userInfo.info.weight.toString();
+
+            if (change === false && updateAboutMeBtn.innerHTML !== resetTxt) {
+                updateAboutMeBtn.innerHTML = resetTxt;
+                updateAboutMeBtn.setAttribute("onClick", "aboutMeResetValues();");
+            } else if (change === true && updateAboutMeBtn.innerHTML !== updateTxt) {
+                updateAboutMeBtn.innerHTML = updateTxt;
+                updateAboutMeBtn.setAttribute("onClick", "updateAboutMe();");
+            }
+        }
+
+    }, 1000);
 
     settingsGrid.innerHTML += getBottomSpacingTemplate();
 }
@@ -295,8 +328,13 @@ function loadProgressionInfoPage() {
         }
     }
 
+    let disabledTxt = "";
+    if (settings.badgesize === badgeSizesObj[0].value) {
+        disabledTxt = "disabled";
+    }
+
     const badgeDetailsHTML = `
-    <select id="badgeDetailsSelection">
+    <select ${disabledTxt} id="badgeDetailsSelection">
        ${badgeDetailsOptionsHTML}
     </select>
     `;

@@ -331,7 +331,6 @@ async function giveAPIAccess(aUsername, aID) {
             loadSetting(ELoadSettings.users.name);
 
         }
-
     }
 }
 
