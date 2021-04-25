@@ -1,6 +1,54 @@
 // requestAccountDetails
 
 async function requestAccountDetails() {
+
+    try {
+        const cacheDetails = JSON.parse(sessionStorage.getItem("cacheDetails_owner"));
+        if (cacheDetails.hasOwnProperty("displayname")) {
+            const title = document.getElementById("title");
+            title.classList = "noselect";
+            title.textContent = cacheDetails.displayname;
+        }
+        if (cacheDetails.hasOwnProperty("gym")) {
+            const gym = document.getElementById("gym");
+            gym.classList = "noselect";
+            gym.textContent = cacheDetails.gym;
+        }
+
+        let infoString = "";
+
+        const age = cacheDetails.age;
+        const height = cacheDetails.height;
+        const weight = cacheDetails.weight;
+
+        if (age) {
+            if (age >= 15) {
+                infoString += `<td>${age} år</td>`;
+            }
+        }
+        if (height) {
+            if (height >= 140) {
+                infoString += `<td>${height} cm</td>`;
+            }
+        }
+        if (weight) {
+            if (weight >= 40) {
+                infoString += `<td>${weight} kg</td>`;
+            }
+        }
+        const infoList = document.getElementById("infoList");
+        document.getElementById("info").classList = "noselect infoTable";
+
+        if (infoString) {
+            infoList.innerHTML = infoString;
+        } else {
+            infoList.textContent = "";
+        }
+
+    } catch {
+        sessionStorage.removeItem("cacheDetails_owner");
+    }
+
     const resp = await getAccountDetails(userID);
 
     if (resp) {

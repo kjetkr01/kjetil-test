@@ -4,6 +4,53 @@ async function requestAccountDetails() {
 
     const viewingUser = sessionStorage.getItem("ViewingUser");
 
+    try {
+        const cacheDetails = JSON.parse(sessionStorage.getItem(`cacheDetails_visitor_${viewingUser}`));
+        if (cacheDetails.hasOwnProperty("displayname")) {
+            const title = document.getElementById("title");
+            title.classList = "noselect";
+            title.textContent = cacheDetails.displayname;
+        }
+        if (cacheDetails.hasOwnProperty("gym")) {
+            const gym = document.getElementById("gym");
+            gym.classList = "noselect";
+            gym.textContent = cacheDetails.gym;
+        }
+
+        let infoString = "";
+
+        const age = cacheDetails.age;
+        const height = cacheDetails.height;
+        const weight = cacheDetails.weight;
+
+        if (age) {
+            if (age >= 15) {
+                infoString += `<td>${age} år</td>`;
+            }
+        }
+        if (height) {
+            if (height >= 140) {
+                infoString += `<td>${height} cm</td>`;
+            }
+        }
+        if (weight) {
+            if (weight >= 40) {
+                infoString += `<td>${weight} kg</td>`;
+            }
+        }
+        const infoList = document.getElementById("infoList");
+        document.getElementById("info").classList = "noselect infoTable";
+
+        if (infoString) {
+            infoList.innerHTML = infoString;
+        } else {
+            infoList.textContent = "";
+        }
+
+    } catch {
+        sessionStorage.removeItem(`cacheDetails_visitor_${viewingUser}`);
+    }
+
     if (viewingUser) {
 
         if (userID === parseInt(viewingUser)) {
@@ -14,6 +61,9 @@ async function requestAccountDetails() {
 
             if (resp) {
                 if (resp.hasOwnProperty("info")) {
+                    if (resp.cacheDetails) {
+                        sessionStorage.setItem(`cacheDetails_visitor_${viewingUser}`, JSON.stringify(resp.cacheDetails));
+                    }
                     displayInformation(resp.info);
                     return;
                 } else if (resp.includes("sin profil er privat!") === true) {

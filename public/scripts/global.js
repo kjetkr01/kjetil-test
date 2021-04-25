@@ -516,6 +516,10 @@ async function getAccountDetails(aUserID) {
                     sessionStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
                 }
 
+                if (resp.hasOwnProperty("cacheDetails")) {
+                    sessionStorage.setItem("cacheDetails_owner", JSON.stringify(resp.cacheDetails));
+                }
+
                 const newColorTheme = allowedThemes[resp.updatedUserObject.preferredColorTheme].theme;
 
                 if (preferredColorTheme !== newColorTheme && checkAllowedThemes.includes(newColorTheme) === true) {

@@ -387,6 +387,14 @@ server.post("/users/details/:user", auth, async (req, res) => {
                if (resp.status === true) {
                     if (resp.userDetails !== false) {
 
+                         const cacheDetails = {
+                              "displayname": resp.userDetails.displayname,
+                              "gym": resp.userDetails.info.gym,
+                              "age": resp.userDetails.info.age,
+                              "height": resp.userDetails.info.height,
+                              "weight": resp.userDetails.info.weight
+                         }
+
                          if (viewingUser === userID) {
 
                               const updatedUserInfo = {
@@ -397,9 +405,9 @@ server.post("/users/details/:user", auth, async (req, res) => {
                                    "preferredTheme": resp.userDetails.settings.preferredtheme
                               }
 
-                              res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo }).end();
+                              res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo, "cacheDetails": cacheDetails }).end();
                          } else {
-                              res.status(200).json({ "info": resp.userDetails }).end();
+                              res.status(200).json({ "info": resp.userDetails, "cacheDetails": cacheDetails }).end();
                          }
 
                     } else {

@@ -173,10 +173,8 @@ async function getListOfLeaderboard(aLeaderboard) {
             const selectHTML = `<select id="leaderboardReps" class="changeLeaderboardRepsSelect pointer" onchange="changeLeaderboardReps();"></select>`;
 
             if (Object.keys(resp).length === 1) {
-                //usermsg1.textContent = "Det er " + parseInt(Object.keys(resp).length) + " bruker på tavlen";
                 usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Filter: ${selectHTML}<br>Det er 1 bruker på tavlen`);
             } else {
-                //usermsg1.textContent = "Det er " + parseInt(Object.keys(resp).length) + " brukere på tavlen";
                 usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Filter: ${selectHTML}<br>Det er ${parseInt(Object.keys(resp).length)} brukere på tavlen`);
             }
 
