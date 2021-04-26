@@ -1,3 +1,5 @@
+let lifts = null, goals = null, size = 0;
+
 function displayPartOfDayMsg() {
 
     if (userDisplayname) {
@@ -21,12 +23,18 @@ async function checkWhoIsWorkingOutToday() {
     const peopleWorkoutList = document.getElementById("peopleWorkoutList");
     const peopleWorkoutTxt = document.getElementById("peopleWorkoutTxt");
 
-    const resp = await whoIsWorkingOutToday();
+    peopleWorkoutList.innerHTML = "";
+    peopleWorkoutTxt.innerHTML = "";
+
+    const cached_peopleWorkoutTxt = sessionStorage.getItem("cached_peopleWorkoutTxt");
+    if (cached_peopleWorkoutTxt) {
+        peopleWorkoutTxt.classList = "noselect";
+        peopleWorkoutTxt.innerHTML = cached_peopleWorkoutTxt;
+    }
 
     currentDayInfo();
 
-    peopleWorkoutList.innerHTML = "";
-    peopleWorkoutTxt.innerHTML = "";
+    const resp = await whoIsWorkingOutToday();
 
     if (resp.length > 0) {
 
@@ -88,6 +96,8 @@ async function checkWhoIsWorkingOutToday() {
         peopleWorkoutTxt.innerHTML = `I dag er det ingen som trener`;
     }
 
+    sessionStorage.setItem("cached_peopleWorkoutTxt", peopleWorkoutTxt.innerHTML);
+
 }
 
 
@@ -136,10 +146,33 @@ function currentDayInfo() {
 // requestAccountDetails
 
 async function requestAccountDetails() {
+
+    try {
+        lifts = JSON.parse(sessionStorage.getItem("cachedLifts_owner"));
+        goals = JSON.parse(sessionStorage.getItem("cachedGoals_owner"));
+
+        if (goals && lifts) {
+            showGoalBadgeAnimations = false;
+            document.getElementById("smallTitle").classList = "noselect";
+            displayGoals();
+        }
+
+    } catch {
+        sessionStorage.removeItem("cacheDetails_owner");
+        sessionStorage.removeItem("cachedLifts_owner");
+        sessionStorage.removeItem("cachedHasLiftsLeft_owner");
+        sessionStorage.removeItem("cachedGoals_owner");
+        sessionStorage.removeItem("cachedHasGoalsLeft_owner");
+    }
+
     const resp = await getAccountDetails(userID);
 
     if (resp) {
         if (resp.hasOwnProperty("info")) {
+            sessionStorage.setItem("cachedLifts_owner", JSON.stringify(resp.info.lifts));
+            sessionStorage.setItem("cachedHasLiftsLeft_owner", resp.info.liftsLeft > 0);
+            sessionStorage.setItem("cachedGoals_owner", JSON.stringify(resp.info.goals));
+            sessionStorage.setItem("cachedHasGoalsLeft_owner", resp.info.goalsLeft > 0);
             displayBadges(resp.info);
             return;
         }
@@ -159,26 +192,32 @@ async function displayBadges(aInfo) {
 
     const info = aInfo;
 
-    const smallTitle = document.getElementById("smallTitle");
-
-    const size = parseInt(info.settings.badgesize) || 0;
+    size = 0;//parseInt(info.settings.badgesize) || 0;
 
     if (size === 1) {
         document.getElementById("Gbadges").style.minHeight = "200px";
     }
 
-    const lifts = info.lifts;
-    const goals = info.goals;
+    lifts = info.lifts;
+    goals = info.goals;
     goalsLeft = new TgoalsLeft(info.goalsLeft);
     if (info.goals) {
         goalsInfo = new Tgoals(info.goals);
         badgeColors = new TbadgeColors(info.badgeColors);
     }
 
+    displayGoals();
+
+}
+
+function displayGoals() {
+
+    hasGoalsLeft = sessionStorage.getItem("cachedHasGoalsLeft_owner") === "true" || false;
+
+    const smallTitle = document.getElementById("smallTitle");
+
     const badgesTableRowDom = document.getElementById("badgesTableRow");
     badgesTableRowDom.innerHTML = "";
-
-    let hasGoalsLeft = info.goalsLeft > 0;
 
     const keys = Object.keys(goals);
 
@@ -265,6 +304,4 @@ async function displayBadges(aInfo) {
             badgesTableRowDom.innerHTML += badge;
         }
     }
-
 }
-

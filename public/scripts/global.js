@@ -517,7 +517,7 @@ async function getAccountDetails(aUserID) {
                 }
 
                 if (resp.hasOwnProperty("cacheDetails")) {
-                    sessionStorage.setItem("cacheDetails_owner", JSON.stringify(resp.cacheDetails));
+                    sessionStorage.setItem("cachedDetails_owner", JSON.stringify(resp.cacheDetails));
                 }
 
                 const newColorTheme = allowedThemes[resp.updatedUserObject.preferredColorTheme].theme;
@@ -626,6 +626,8 @@ function sortByLiftsOrGoalOwner(aDom, aType) {
             } else {
                 localStorage.removeItem('display_lifts_owner');
             }
+
+            displayLifts();
         }
 
         if (type === "goal") {
@@ -634,10 +636,9 @@ function sortByLiftsOrGoalOwner(aDom, aType) {
             } else {
                 localStorage.removeItem('display_goals_owner');
             }
+            displayGoals();
         }
     }
-
-    location.reload();
 }
 
 function sortByLiftsOrGoalVisitor(aDom, aType) {

@@ -5,23 +5,23 @@ async function requestAccountDetails() {
     const viewingUser = sessionStorage.getItem("ViewingUser");
 
     try {
-        const cacheDetails = JSON.parse(sessionStorage.getItem(`cacheDetails_visitor_${viewingUser}`));
-        if (cacheDetails.hasOwnProperty("displayname")) {
+        const cachedDetails = JSON.parse(sessionStorage.getItem(`cachedDetails_visitor_${viewingUser}`));
+        if (cachedDetails.hasOwnProperty("displayname")) {
             const title = document.getElementById("title");
             title.classList = "noselect";
-            title.textContent = cacheDetails.displayname;
+            title.textContent = cachedDetails.displayname;
         }
-        if (cacheDetails.hasOwnProperty("gym")) {
+        if (cachedDetails.hasOwnProperty("gym")) {
             const gym = document.getElementById("gym");
             gym.classList = "noselect";
-            gym.textContent = cacheDetails.gym;
+            gym.textContent = cachedDetails.gym;
         }
 
         let infoString = "";
 
-        const age = cacheDetails.age;
-        const height = cacheDetails.height;
-        const weight = cacheDetails.weight;
+        const age = cachedDetails.age;
+        const height = cachedDetails.height;
+        const weight = cachedDetails.weight;
 
         if (age) {
             if (age >= 15) {
@@ -48,7 +48,7 @@ async function requestAccountDetails() {
         }
 
     } catch {
-        sessionStorage.removeItem(`cacheDetails_visitor_${viewingUser}`);
+        sessionStorage.removeItem(`cachedDetails_visitor_${viewingUser}`);
     }
 
     if (viewingUser) {
@@ -62,7 +62,7 @@ async function requestAccountDetails() {
             if (resp) {
                 if (resp.hasOwnProperty("info")) {
                     if (resp.cacheDetails) {
-                        sessionStorage.setItem(`cacheDetails_visitor_${viewingUser}`, JSON.stringify(resp.cacheDetails));
+                        sessionStorage.setItem(`cachedDetails_visitor_${viewingUser}`, JSON.stringify(resp.cacheDetails));
                     }
                     displayInformation(resp.info);
                     return;

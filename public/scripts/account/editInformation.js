@@ -461,7 +461,10 @@ async function deleteLiftOrGoal(aExercise, aType, aId) {
                 location.reload();
             }, 2000);
         } else {
-            respMsg.textContent = "Kunne ikke slette" + exercise;
+            respMsg.textContent = "Kunne ikke slette " + exercise;
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
         }
 
 

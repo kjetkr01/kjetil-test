@@ -5,7 +5,37 @@ let retryLoadOnce = true;
 
 async function loadLeaderboards() {
 
+    const leaderboardsTableRowDom = document.getElementById("leaderboardsTableRow");
+    leaderboardsTableRowDom.innerHTML = "";
+    let leaderboardListAnimation = "fadeInLeft animate";
+
     const reps = sessionStorage.getItem("leaderboards_filter_reps") || "1";
+
+    try {
+
+        const cached_leaderboardsArrOrder = JSON.parse(sessionStorage.getItem("cached_leaderboardsArrOrder"));
+
+
+        if (cached_leaderboardsArrOrder) {
+            leaderboardListAnimation = "";
+            for (let i = 0; i < cached_leaderboardsArrOrder.length; i++) {
+
+                const currentLeaderboard = cached_leaderboardsArrOrder[i].leaderboard[0];
+                const usersCount = cached_leaderboardsArrOrder[i].usersCount;
+
+                function capitalizeFirstLetter(string) {
+                    return string.charAt(0).toUpperCase() + string.slice(1);
+                }
+
+                leaderboardsTableRowDom.innerHTML += `
+          <td>
+             <button id="${currentLeaderboard}" class="leaderboardsList pointer" onclick="getListOfLeaderboard('${currentLeaderboard}');">${capitalizeFirstLetter(currentLeaderboard)} (${usersCount})</button>
+          </td>`;
+            }
+        }
+    } catch {
+        sessionStorage.removeItem("cached_leaderboardsArrOrder");
+    }
 
     const body = { "authToken": token, "userInfo": user, "reps": reps };
     const url = `/users/list/all/leaderboards`;
@@ -28,12 +58,13 @@ async function loadLeaderboards() {
 
         }
 
+        sessionStorage.setItem("cached_leaderboardsArrOrder", JSON.stringify(leaderboardsArrOrder));
+
         leaderboardsArrOrder.sort(function (a, b) { return b.usersCount - a.usersCount });
 
-        const leaderboardsTableRowDom = document.getElementById("leaderboardsTableRow");
-        leaderboardsTableRowDom.innerHTML = "";
-
         firstLeaderboard = leaderboardsArrOrder[0].leaderboard[0];
+
+        leaderboardsTableRowDom.innerHTML = "";
 
         for (let i = 0; i < leaderboardsArrOrder.length; i++) {
 
@@ -46,7 +77,7 @@ async function loadLeaderboards() {
 
             leaderboardsTableRowDom.innerHTML += `
           <td>
-             <button id="${currentLeaderboard}" class="leaderboardsList fadeInLeft animate pointer" onclick="getListOfLeaderboard('${currentLeaderboard}');">${capitalizeFirstLetter(currentLeaderboard)} (${usersCount})</button>
+             <button id="${currentLeaderboard}" class="leaderboardsList ${leaderboardListAnimation} pointer" onclick="getListOfLeaderboard('${currentLeaderboard}');">${capitalizeFirstLetter(currentLeaderboard)} (${usersCount})</button>
           </td>`;
         }
 
