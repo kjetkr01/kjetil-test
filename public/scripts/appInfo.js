@@ -4,13 +4,13 @@ const application = {
     name: "Treningstatistikken",
     logoURL: "images/appIcon.png",
     version: {
-        state: "alpha 81%",
+        state: "alpha 82%",
         major: 4, // major++ = minor = 0 && revision = 0
-        minor: 2, // minor++ = revision = 0
-        revision: 0,
+        minor: 3, // minor++ = revision = 0
+        revision: 1,
     },
     lastUpdated: {
-        day: "26",
+        day: "27",
         month: "04",
         year: "2021"
     },

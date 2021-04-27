@@ -194,5 +194,9 @@ outline-style: none;
 }
 
 .pointer {
-    cursor: pointer;
+cursor: pointer;
+}
+
+:disabled {
+opacity:60%;
 }

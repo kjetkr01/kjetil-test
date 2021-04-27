@@ -152,8 +152,9 @@ async function requestAccountDetails() {
         goals = JSON.parse(sessionStorage.getItem("cachedGoals_owner"));
 
         if (goals && lifts) {
-            showGoalBadgeAnimations = false;
+            goalsInfo = new Tgoals(goals);
             document.getElementById("smallTitle").classList = "noselect";
+            showGoalBadgeAnimations = false;
             displayGoals();
         }
 
@@ -198,15 +199,34 @@ async function displayBadges(aInfo) {
         document.getElementById("Gbadges").style.minHeight = "200px";
     }
 
+    let updateGoals = true;
+
+    try {
+
+        const checkExistingLifts = JSON.stringify(lifts);
+        const checkUpdatedLifts = JSON.stringify(info.lifts);
+
+        const checkExistingGoals = JSON.stringify(goals);
+        const checkUpdatedGoals = JSON.stringify(info.goals);
+
+        if (checkExistingLifts === checkUpdatedLifts && checkExistingGoals === checkUpdatedGoals) {
+            updateGoals = false;
+            console.log("skipped update lifts/goals");
+        }
+
+    } catch {
+
+    }
+
     lifts = info.lifts;
     goals = info.goals;
     goalsLeft = new TgoalsLeft(info.goalsLeft);
-    if (info.goals) {
-        goalsInfo = new Tgoals(info.goals);
-        badgeColors = new TbadgeColors(info.badgeColors);
-    }
+    badgeColors = new TbadgeColors(info.badgeColors);
 
-    displayGoals();
+    if (updateGoals === true) {
+        goalsInfo = new Tgoals(info.goals);
+        displayGoals();
+    }
 
 }
 

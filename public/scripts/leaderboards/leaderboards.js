@@ -2,19 +2,34 @@ let previousLeaderboard = "";
 let firstLeaderboard = null;
 let repsList = [];
 let retryLoadOnce = true;
+let viewingLeaderboard = null;
+let showPeopleLeaderboardsTxtAnimation = true;
 
 async function loadLeaderboards() {
+
+    const reps = sessionStorage.getItem("leaderboards_filter_reps") || "1";
+
+    let repsText = "";
+    if (reps === "1") {
+        repsText = `ORM / 1 rep`;
+    } else {
+        repsText = `${reps} reps`;
+    }
+
+    if (repsText) {
+        const usermsg1 = document.getElementById("peopleLeaderboardsTxt");
+        usermsg1.classList = "noselect";
+        usermsg1.innerHTML = `Filter: <select class="changeLeaderboardRepsSelect" disabled><option>${repsText}</option></select><br>Det er 1 bruker på tavlen`;
+        showPeopleLeaderboardsTxtAnimation = false;
+    }
 
     const leaderboardsTableRowDom = document.getElementById("leaderboardsTableRow");
     leaderboardsTableRowDom.innerHTML = "";
     let leaderboardListAnimation = "fadeInLeft animate";
 
-    const reps = sessionStorage.getItem("leaderboards_filter_reps") || "1";
-
     try {
 
         const cached_leaderboardsArrOrder = JSON.parse(sessionStorage.getItem("cached_leaderboardsArrOrder"));
-
 
         if (cached_leaderboardsArrOrder) {
             leaderboardListAnimation = "";
@@ -33,6 +48,7 @@ async function loadLeaderboards() {
           </td>`;
             }
         }
+
     } catch {
         sessionStorage.removeItem("cached_leaderboardsArrOrder");
     }
@@ -50,12 +66,16 @@ async function loadLeaderboards() {
 
         const leaderboardsArrOrder = [];
 
+        const cached_viewingLeaderboard = sessionStorage.getItem("cached_viewingLeaderboard");
+
         for (let i = 0; i < Object.entries(leaderboards).length; i++) {
 
             const keys = Object.keys(leaderboards);
 
             leaderboardsArrOrder.push({ "leaderboard": [keys[i]], "usersCount": leaderboards[keys[i]] });
-
+            if (keys[i] === cached_viewingLeaderboard) {
+                viewingLeaderboard = cached_viewingLeaderboard;
+            }
         }
 
         sessionStorage.setItem("cached_leaderboardsArrOrder", JSON.stringify(leaderboardsArrOrder));
@@ -99,7 +119,7 @@ let leaderboardIsLoading = false;
 async function getListOfLeaderboard(aLeaderboard) {
 
     if (!aLeaderboard) {
-        aLeaderboard = firstLeaderboard;
+        aLeaderboard = viewingLeaderboard || firstLeaderboard;
     }
 
     if (leaderboardIsLoading === true || previousLeaderboard === aLeaderboard) {
@@ -109,34 +129,63 @@ async function getListOfLeaderboard(aLeaderboard) {
     if (token && user && aLeaderboard) {
 
         const reps = sessionStorage.getItem("leaderboards_filter_reps") || "1";
-        const ViewingLeaderboard = aLeaderboard;
+        viewingLeaderboard = aLeaderboard;
         leaderboardIsLoading = true;
 
-        if (document.getElementById(ViewingLeaderboard)) {
+        sessionStorage.setItem("cached_viewingLeaderboard", viewingLeaderboard);
 
+        if (document.getElementById(viewingLeaderboard)) {
             if (document.getElementById(previousLeaderboard)) {
                 document.getElementById(previousLeaderboard).classList.remove("active");
             }
 
-            document.getElementById(ViewingLeaderboard).classList.add("active");
+            document.getElementById(viewingLeaderboard).classList.add("active");
         };
-
-        usermsg1.innerHTML = "";
 
         list.innerHTML = "";
 
-        const body = { "authToken": token, "userInfo": user, "leaderboard": ViewingLeaderboard, "reps": reps };
-        const url = `/users/list/all/leaderboards/${ViewingLeaderboard}`;
+        const body = { "authToken": token, "userInfo": user, "leaderboard": viewingLeaderboard, "reps": reps };
+        const url = `/users/list/all/leaderboards/${viewingLeaderboard}`;
 
         const resp = await callServerAPI(body, url);
 
+        usermsg1.innerHTML = "";
+
+        const selectHTML = `<select id="leaderboardReps" class="changeLeaderboardRepsSelect pointer" onchange="changeLeaderboardReps();"></select>`;
+
+        if (Object.keys(resp).length === 1) {
+            usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Filter: ${selectHTML}<br>Det er 1 bruker på tavlen`);
+        } else {
+            usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Filter: ${selectHTML}<br>Det er ${parseInt(Object.keys(resp).length)} brukere på tavlen`);
+        }
+
+        for (let x = 0; x < repsList.length; x++) {
+
+            if (repsList[x] !== "0") {
+
+                let repsText = "";
+                if (repsList[x] === "1") {
+                    repsText = `ORM / 1 rep`;
+                } else {
+                    repsText = `${repsList[x]} reps`;
+                }
+
+                let html = `<option value="${repsList[x]}">${repsText}</option>`;
+                if (repsList[x] === reps) {
+                    html = `<option selected="selected" value="${repsList[x]}">${repsText}</option>`;
+                }
+
+                document.getElementById("leaderboardReps").innerHTML += html;
+            }
+        }
+
         list.innerHTML = "";
-        previousLeaderboard = ViewingLeaderboard;
+        previousLeaderboard = viewingLeaderboard;
 
         if (Object.keys(resp).length > 0) {
 
             // sorts leaderboard in correct order, from highest to lowest
-            resp.sort(function (a, b) { return b[ViewingLeaderboard] - a[ViewingLeaderboard] });
+            resp.sort(function (a, b) { return b[viewingLeaderboard] - a[viewingLeaderboard] });
             //
 
             for (let i = 0; i < Object.keys(resp).length; i++) {
@@ -192,7 +241,7 @@ async function getListOfLeaderboard(aLeaderboard) {
              </div>
              <div id="Gweight">
                 <div id="weight">
-                   <p>${resp[i][ViewingLeaderboard]} kg</p>
+                   <p>${resp[i][viewingLeaderboard]} kg</p>
                 </div>
              </div>
           </div>
@@ -201,40 +250,12 @@ async function getListOfLeaderboard(aLeaderboard) {
 
             }
 
-            const selectHTML = `<select id="leaderboardReps" class="changeLeaderboardRepsSelect pointer" onchange="changeLeaderboardReps();"></select>`;
-
-            if (Object.keys(resp).length === 1) {
-                usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Filter: ${selectHTML}<br>Det er 1 bruker på tavlen`);
-            } else {
-                usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Filter: ${selectHTML}<br>Det er ${parseInt(Object.keys(resp).length)} brukere på tavlen`);
-            }
-
-            for (let x = 0; x < repsList.length; x++) {
-
-                if (repsList[x] !== "0") {
-
-                    let repsText = "";
-                    if (repsList[x] === "1") {
-                        repsText = `ORM / 1 rep`;
-                    } else {
-                        repsText = `${repsList[x]} reps`;
-                    }
-
-                    let html = `<option value="${repsList[x]}">${repsText}</option>`;
-                    if (repsList[x] === reps) {
-                        html = `<option selected="selected" value="${repsList[x]}">${repsText}</option>`;
-                    }
-
-                    document.getElementById("leaderboardReps").innerHTML += html;
-                }
-            }
-
             leaderboardIsLoading = false;
 
         } else {
             //usermsg1.textContent = errorLoadingText;
             usermsg1.innerHTML = peopleLeaderboardsTxtHTML();
-            alert(`Ledertavlen ${ViewingLeaderboard} finnes ikke!`);
+            alert(`Ledertavlen ${viewingLeaderboard} finnes ikke!`);
             window.history.back();
         }
 
@@ -248,8 +269,13 @@ function peopleLeaderboardsTxtHTML(aInput) {
 
     const inputInfo = aInput || errorLoadingText;
 
+    peopleLeaderboardsTxtAnimation = "fadeIn animate delaySmall";
+    if (showPeopleLeaderboardsTxtAnimation === false) {
+        peopleLeaderboardsTxtAnimation = "";
+    }
+
     const htmlInfo = `
-    <p id="peopleLeaderboardsTxt" class="noselect fadeIn animate delaySmall">
+    <p id="peopleLeaderboardsTxt" class="noselect ${peopleLeaderboardsTxtAnimation}">
     ${inputInfo}
     </p>`;
 

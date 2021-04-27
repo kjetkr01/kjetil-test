@@ -13,11 +13,13 @@ async function requestAccountDetails() {
 
         if (lifts) {
             showLiftBadgeAnimations = false;
+            liftsInfo = new Tlifts(lifts);
             displayLifts();
         }
 
         if (goals) {
             showGoalBadgeAnimations = false;
+            goalsInfo = new Tgoals(goals);
             displayGoals();
         }
 
@@ -135,12 +137,38 @@ function displayInformation(respInfo) {
     const weight = info.info.weight;
     memberSince = info.member_since;
 
+    let updateLifts = true, updateGoals = true;
+
     liftsLeft = new TliftsLeft(info.liftsLeft);
     goalsLeft = new TgoalsLeft(info.goalsLeft);
 
     traningsplitInfo = new Ttrainingsplit(info.trainingsplit);
 
     badgeColors = new TbadgeColors(info.badgeColors);
+
+    try {
+
+        const checkExistingLifts = JSON.stringify(lifts);
+        const checkUpdatedLifts = JSON.stringify(info.lifts);
+
+        const checkExistingGoals = JSON.stringify(goals);
+        const checkUpdatedGoals = JSON.stringify(info.goals);
+
+        if (checkExistingLifts === checkUpdatedLifts) {
+            updateLifts = false;
+            console.log("skipped update lifts");
+        }
+
+        if (checkExistingGoals === checkUpdatedGoals) {
+            updateGoals = false;
+            console.log("skipped update goals");
+        }
+
+    } catch {
+
+    }
+
+    //console.log(Object.is(lifts, info.lifts));
 
     lifts = info.lifts;
     goals = info.goals;
@@ -181,12 +209,13 @@ function displayInformation(respInfo) {
     } else {
         document.getElementById("infoList").textContent = "";
     }
-    if (lifts) {
+
+    if (lifts && updateLifts === true) {
         liftsInfo = new Tlifts(info.lifts);
         displayLifts(info.liftsLeft > 0);
     }
 
-    if (goals) {
+    if (goals && updateGoals === true) {
         goalsInfo = new Tgoals(info.goals);
         displayGoals(info.goalsLeft > 0);
     }
