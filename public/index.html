@@ -187,7 +187,15 @@
 
    if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js');
-      document.getElementById("c6r2").innerHTML = "Service Worker Installed!";
+      document.getElementById("c6r2").innerHTML = "Service Worker Installed!<button onClick='removeServiceWorker();'>Fjern</button>";
+   }
+
+   function removeServiceWorker() {
+      navigator.serviceWorker.getRegistrations().then(function (registrations) {
+         for (let registration of registrations) {
+            registration.unregister()
+         }
+      })
    }
 
    lockBodyPosition();
@@ -214,7 +222,7 @@
 
       setInterval(() => {
          checkConnection("c6r2");
-      }, 5000);
+      }, 1000);
 
    }
 

@@ -75,75 +75,81 @@ async function loadLeaderboards() {
 
     const resp = await callServerAPI(body, url);
 
-    const leaderboards = resp.leaderboards;
+    if (resp) {
 
-    repsList = resp.repsList;
+        if (resp.hasOwnProperty("leaderboards") && resp.hasOwnProperty("repsList")) {
 
-    if (Object.entries(leaderboards).length > 0) {
+            const leaderboards = resp.leaderboards;
 
-        const leaderboardsArrOrder = [];
+            repsList = resp.repsList;
 
-        for (let i = 0; i < Object.entries(leaderboards).length; i++) {
+            if (Object.entries(leaderboards).length > 0) {
 
-            const keys = Object.keys(leaderboards);
+                const leaderboardsArrOrder = [];
 
-            leaderboardsArrOrder.push({ "leaderboard": [keys[i]], "usersCount": leaderboards[keys[i]] });
-            if (keys[i] === cached_viewingLeaderboard) {
-                viewingLeaderboard = cached_viewingLeaderboard;
-            }
-        }
+                for (let i = 0; i < Object.entries(leaderboards).length; i++) {
 
-        leaderboardsArrOrder.sort(function (a, b) { return b.usersCount - a.usersCount });
+                    const keys = Object.keys(leaderboards);
 
-        localStorage.setItem("cached_leaderboardsArrOrder", JSON.stringify(leaderboardsArrOrder));
-
-        try {
-
-            const checkExistingLeaderboardsArrOrder = JSON.stringify(cached_leaderboardsArrOrder);
-            const checkUpdatedLeaderboardsArrOrder = JSON.stringify(leaderboardsArrOrder);
-
-            if (checkExistingLeaderboardsArrOrder === checkUpdatedLeaderboardsArrOrder) {
-                updateLeaderboardList = false;
-                console.log("skipped update leaderboardsArr");
-            }
-
-        } catch {
-
-        }
-
-        if (updateLeaderboardList === true) {
-            firstLeaderboard = leaderboardsArrOrder[0].leaderboard[0];
-
-            leaderboardsTableRowDom.innerHTML = "";
-
-            for (let i = 0; i < leaderboardsArrOrder.length; i++) {
-
-                const currentLeaderboard = leaderboardsArrOrder[i].leaderboard[0];
-                const usersCount = leaderboardsArrOrder[i].usersCount;
-
-                function capitalizeFirstLetter(string) {
-                    return string.charAt(0).toUpperCase() + string.slice(1);
+                    leaderboardsArrOrder.push({ "leaderboard": [keys[i]], "usersCount": leaderboards[keys[i]] });
+                    if (keys[i] === cached_viewingLeaderboard) {
+                        viewingLeaderboard = cached_viewingLeaderboard;
+                    }
                 }
 
-                leaderboardsTableRowDom.innerHTML += `
+                leaderboardsArrOrder.sort(function (a, b) { return b.usersCount - a.usersCount });
+
+                localStorage.setItem("cached_leaderboardsArrOrder", JSON.stringify(leaderboardsArrOrder));
+
+                try {
+
+                    const checkExistingLeaderboardsArrOrder = JSON.stringify(cached_leaderboardsArrOrder);
+                    const checkUpdatedLeaderboardsArrOrder = JSON.stringify(leaderboardsArrOrder);
+
+                    if (checkExistingLeaderboardsArrOrder === checkUpdatedLeaderboardsArrOrder) {
+                        updateLeaderboardList = false;
+                        console.log("skipped update leaderboardsArr");
+                    }
+
+                } catch {
+
+                }
+
+                if (updateLeaderboardList === true) {
+                    firstLeaderboard = leaderboardsArrOrder[0].leaderboard[0];
+
+                    leaderboardsTableRowDom.innerHTML = "";
+
+                    for (let i = 0; i < leaderboardsArrOrder.length; i++) {
+
+                        const currentLeaderboard = leaderboardsArrOrder[i].leaderboard[0];
+                        const usersCount = leaderboardsArrOrder[i].usersCount;
+
+                        function capitalizeFirstLetter(string) {
+                            return string.charAt(0).toUpperCase() + string.slice(1);
+                        }
+
+                        leaderboardsTableRowDom.innerHTML += `
           <td>
              <button id="${currentLeaderboard}" class="leaderboardsList fadeInLeft animate pointer" onclick="getListOfLeaderboard('${currentLeaderboard}');">${capitalizeFirstLetter(currentLeaderboard)} (${usersCount})</button>
           </td>`;
-            }
+                    }
 
-            if (scrollToX) {
-                document.getElementById("GlistOfLeaderboards").scrollTo(scrollToX, 0);
-            }
-        }
+                    if (scrollToX) {
+                        document.getElementById("GlistOfLeaderboards").scrollTo(scrollToX, 0);
+                    }
+                }
 
-        getListOfLeaderboard();
-    } else {
-        sessionStorage.removeItem("leaderboards_filter_reps");
-        if (retryLoadOnce === true) {
-            loadLeaderboards();
-            retryLoadOnce = false;
-        } else {
-            usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Fant ingen ledertavler!`);
+                getListOfLeaderboard();
+            } else {
+                sessionStorage.removeItem("leaderboards_filter_reps");
+                if (retryLoadOnce === true) {
+                    loadLeaderboards();
+                    retryLoadOnce = false;
+                } else {
+                    usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Fant ingen ledertavler!`);
+                }
+            }
         }
     }
 }

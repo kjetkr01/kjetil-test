@@ -592,9 +592,6 @@ function checkConnection(aDom) {
                     location.reload();
                 }, 2500);
             }
-            else {
-                domElement.textContent = "";
-            }
         }
 
     }
