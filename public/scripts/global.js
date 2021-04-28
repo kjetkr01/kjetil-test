@@ -621,6 +621,7 @@ function sortByLiftsOrGoalOwner(aDom, aType) {
     if (dom && type) {
 
         if (type === "lift") {
+            showLiftBadgeAnimations = true;
             if (allowedExercises.includes(dom.value)) {
                 localStorage.setItem('display_lifts_owner', dom.value);
             } else {
@@ -631,6 +632,7 @@ function sortByLiftsOrGoalOwner(aDom, aType) {
         }
 
         if (type === "goal") {
+            showGoalBadgeAnimations = true;
             if (allowedExercises.includes(dom.value)) {
                 localStorage.setItem('display_goals_owner', dom.value);
             } else {

@@ -132,8 +132,6 @@ function displayInformation(respInfo) {
         return;
     }
 
-    const userGrid = document.getElementById("userGrid");
-
     const info = respInfo;
     size = 0;
 
@@ -187,10 +185,12 @@ function displayInformation(respInfo) {
 
     if (updateLifts === true) {
         lifts = info.lifts;
+        showLiftBadgeAnimations = true;
     }
 
     if (updateGoals === true) {
         goals = info.goals;
+        showGoalBadgeAnimations = true;
     }
 
     //console.log(Object.is(lifts, info.lifts));
@@ -238,7 +238,7 @@ function displayInformation(respInfo) {
         displayLifts(info.liftsLeft > 0);
     }
 
-    if (goals && updateGoals === true) {
+    if (goals && updateGoals === true || lifts && updateLifts === true) {
         goalsInfo = new Tgoals(info.goals);
         displayGoals(info.goalsLeft > 0);
     }

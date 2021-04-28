@@ -197,8 +197,7 @@ async function displayBadges(aInfo) {
     }
 
     const info = aInfo;
-
-    size = 0;//parseInt(info.settings.badgesize) || 0;
+    size = 0//info.settings.badgesize || 0;
 
     if (size === 1) {
         document.getElementById("Gbadges").style.minHeight = "200px";
@@ -238,6 +237,7 @@ async function displayBadges(aInfo) {
     if (updateGoals === true) {
         lifts = info.lifts;
         goals = info.goals;
+        showGoalBadgeAnimations = true;
     }
 
     goalsLeft = new TgoalsLeft(info.goalsLeft);

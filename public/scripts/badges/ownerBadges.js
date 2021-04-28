@@ -1,15 +1,19 @@
 let showLiftBadgeAnimations = true;
 let showGoalBadgeAnimations = true;
 let showTrainingsplitBadgeAnimations = true;
-let liftBadgeAnimations = "fadeInLeft animate";
-let goalBadgeAnimations = "fadeInLeft animate";
-let trainingsplitBadgeAnimations = "fadeInLeft animate";
+
+const animationClasses = "fadeInLeft animate"
+let liftBadgeAnimations = "";
+let goalBadgeAnimations = "";
+let trainingsplitBadgeAnimations = "";
 
 function getBadgeGoals(aSize, aBadgeInfo, aId) {
     try {
 
         if (showGoalBadgeAnimations === false) {
             goalBadgeAnimations = "";
+        } else {
+            goalBadgeAnimations = animationClasses;
         }
 
         if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.exercise && aBadgeInfo.kg && aBadgeInfo.kgLeft && aBadgeInfo.msg && aId) {
@@ -215,7 +219,9 @@ function getBadgeLift(aSize, aBadgeInfo, aId) {
     try {
 
         if (showLiftBadgeAnimations === false) {
-            goalBadgeAnimations = "";
+            liftBadgeAnimations = "";
+        } else {
+            liftBadgeAnimations = animationClasses;
         }
 
         if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.exercise && aBadgeInfo.kg && aBadgeInfo.msg && aId) {
@@ -249,7 +255,7 @@ function getBadgeLift(aSize, aBadgeInfo, aId) {
 
         const badgeTemplate = `
 <td>
-<div class="bigBadges ${goalBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}', '${aId}');">
+<div class="bigBadges ${liftBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}', '${aId}');">
 
 
 
@@ -331,7 +337,7 @@ Nærmer deg!
 
         const badgeTemplate = `
 <td>
-<div class="smallBadges ${goalBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}', '${aId}');">
+<div class="smallBadges ${liftBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}', '${aId}');">
 
 <!--
 <div id="c1b"></div>
@@ -377,7 +383,7 @@ ${userBadgeInfo.msg}
 
         const badgeTemplate = `
 <td>
-<div class="smallBadges ${goalBadgeAnimations} emptyBadge pointer" onClick="enableOverlayCreate('lift')">
+<div class="smallBadges ${liftBadgeAnimations} emptyBadge pointer" onClick="enableOverlayCreate('lift')">
 
 
 
@@ -425,7 +431,9 @@ function getBadgeTrainingsplit(aSize, aBadgeInfo) {
     try {
 
         if (showTrainingsplitBadgeAnimations === false) {
-            badgeAnimations = "";
+            trainingsplitBadgeAnimations = "";
+        } else {
+            trainingsplitBadgeAnimations = animationClasses;
         }
 
         if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.day && aBadgeInfo.trainingsplit) {
