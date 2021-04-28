@@ -185,14 +185,18 @@
 
 <script>
 
-   setInterval(() => {
+   let check = setInterval(() => {
+
       if (navigator.serviceWorker) {
-         if (navigator.serviceWorker.hasOwnProperty("controller")) {
-            if (navigator.serviceWorker.controller.hasOwnProperty("state")) {
-               document.getElementById("c6r2").innerHTML = "Service Worker Active!<button onClick='removeServiceWorker();'>Fjern</button>";
+         if (navigator.serviceWorker.controller) {
+            if (navigator.serviceWorker.controller.state && navigator.serviceWorker.controller.state === "activated") {
+               //document.getElementById("c6r2").innerHTML = "Service Worker Active!<button onClick='removeServiceWorker();'>Fjern</button>";
+               alert(`Service Worker Active V3 (test)`);
+               clearInterval(check);
             }
          }
       }
+
    }, 1000);
 
    if ('serviceWorker' in navigator) {
