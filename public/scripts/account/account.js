@@ -104,8 +104,10 @@ async function requestAccountDetails() {
     }
 
     const resp = await getAccountDetails(userID);
+    console.log(resp)
 
     if (resp) {
+
         if (resp.hasOwnProperty("info")) {
             sessionStorage.setItem("cachedLifts_owner", JSON.stringify(resp.info.lifts));
             sessionStorage.setItem("cachedHasLiftsLeft_owner", resp.info.liftsLeft > 0);
@@ -117,8 +119,8 @@ async function requestAccountDetails() {
         }
     }
 
-    alert("Det har oppstått en feil!");
-    redirectToFeed();
+    //alert("Det har oppstått en feil!");
+    //redirectToFeed();
 }
 
 // end of requestAccountDetails

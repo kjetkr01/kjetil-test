@@ -187,6 +187,7 @@
 
    if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js');
+      document.getElementById("c6r2").innerHTML = "Service Worker Installed!";
    }
 
    lockBodyPosition();
