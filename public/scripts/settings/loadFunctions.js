@@ -650,7 +650,17 @@ async function loadAPIPage() {
 
 async function loadPrivacyPage() {
 
-    settingsGrid.innerHTML = justTextTemplate(`${application.name} samler ikke inn data fra brukeren sine.`, "left");
+    let state = null;
+
+    if (navigator.serviceWorker) {
+        if (navigator.serviceWorker.controller) {
+           if (navigator.serviceWorker.controller.state) {
+            state = navigator.serviceWorker.controller.state;
+           }
+        }
+     }
+
+    settingsGrid.innerHTML = justTextTemplate(`${application.name} samler ikke inn data fra brukeren sine.<br>Din Service Worker Cache Name: ${cacheName} State: ${state}`, "left");
 
     settingsGrid.innerHTML += getCenteredTextTemplate(`
     <button id="detailsAboutMyAccountBtn" class='settingsButton pointer' onClick="displayInformationAboutUser();">Hent mine opplysninger</button>

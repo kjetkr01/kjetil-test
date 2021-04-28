@@ -1,4 +1,4 @@
-const cacheName = 'js13kPWA-v4';
+const cacheName = 'js13kPWA-v7';
 const appShellFiles = [
     'index.html',
     'service-worker.js',
