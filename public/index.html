@@ -65,6 +65,7 @@
 <body>
 
    <script>
+
       if (!sessionStorage.getItem("user") && !localStorage.getItem("user")) {
          redirectToLogin();
       }
@@ -184,6 +185,10 @@
 
 <script>
 
+   if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+   }
+
    lockBodyPosition();
    getCreateNewLiftorGoalOverlay();
    getEditLiftorGoalOverlay();
@@ -212,12 +217,12 @@
 
    }
 
-   //intervals();
+   intervals();
 
    displayPartOfDayMsg();
    checkWhoIsWorkingOutToday();
    requestAccountDetails();
-      // displayBadges();
+   //displayBadges();
 
 </script>
 

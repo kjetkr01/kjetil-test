@@ -553,12 +553,12 @@ async function getAccountDetails(aUserID) {
 
         } else {
 
-            if (userID === viewingUser) {
+            /*if (userID === viewingUser) {
                 sessionStorage.clear();
                 localStorage.clear();
                 alert("Det har oppstått en feil. Du blir nå logget ut. Vennligst logg inn på nytt");
                 location.reload();
-            }
+            }*/
         }
     }
 
