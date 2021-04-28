@@ -64,7 +64,13 @@
 
 <body>
 
-   <script>changeColorTheme();</script>
+   <script>
+      if (!sessionStorage.getItem("user") && !localStorage.getItem("user")) {
+         redirectToLogin();
+      }
+
+      changeColorTheme()
+   </script>
 
    <div id="createNewLiftorGoalOverlay" style="display: none;" class="overlay"></div>
 
@@ -178,46 +184,40 @@
 
 <script>
 
-   if (!sessionStorage.getItem("user") && !localStorage.getItem("user")) {
-      redirectToLogin();
-   } else {
+   lockBodyPosition();
+   getCreateNewLiftorGoalOverlay();
+   getEditLiftorGoalOverlay();
 
-      lockBodyPosition();
-      getCreateNewLiftorGoalOverlay();
-      getEditLiftorGoalOverlay();
+   function intervals() {
 
-      function intervals() {
+      let savedDay = new Date().getDay();
 
-         let savedDay = new Date().getDay();
+      setInterval(() => {
 
-         setInterval(() => {
+         const currentDay = new Date().getDay()
+         if (savedDay !== currentDay) {
+            savedDay = currentDay;
+            checkWhoIsWorkingOutToday();
+         }
 
-            const currentDay = new Date().getDay()
-            if (savedDay !== currentDay) {
-               savedDay = currentDay;
-               checkWhoIsWorkingOutToday();
-            }
+      }, 15000);
 
-         }, 15000);
+      setInterval(() => {
+         displayPartOfDayMsg();
+      }, 60000);
 
-         setInterval(() => {
-            displayPartOfDayMsg();
-         }, 60000);
-
-         setInterval(() => {
-            checkConnection("c6r2");
-         }, 5000);
-
-      }
-
-      //intervals();
-
-      displayPartOfDayMsg();
-      checkWhoIsWorkingOutToday();
-      requestAccountDetails();
-      // displayBadges();
+      setInterval(() => {
+         checkConnection("c6r2");
+      }, 5000);
 
    }
+
+   //intervals();
+
+   displayPartOfDayMsg();
+   checkWhoIsWorkingOutToday();
+   requestAccountDetails();
+      // displayBadges();
 
 </script>
 
