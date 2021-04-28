@@ -178,7 +178,9 @@
 
 <script>
 
-   if (sessionStorage.getItem("user")) {
+   if (!sessionStorage.getItem("user") && !localStorage.getItem("user")) {
+      redirectToLogin();
+   } else {
 
       lockBodyPosition();
       getCreateNewLiftorGoalOverlay();
@@ -214,9 +216,7 @@
       checkWhoIsWorkingOutToday();
       requestAccountDetails();
       // displayBadges();
-      
-   } else {
-      redirectToLogin();
+
    }
 
 </script>
