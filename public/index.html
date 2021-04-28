@@ -185,9 +185,18 @@
 
 <script>
 
+   setInterval(() => {
+      if (navigator.serviceWorker) {
+         if (navigator.serviceWorker.hasOwnProperty("controller")) {
+            if (navigator.serviceWorker.controller.hasOwnProperty("state")) {
+               document.getElementById("c6r2").innerHTML = "Service Worker Active!<button onClick='removeServiceWorker();'>Fjern</button>";
+            }
+         }
+      }
+   }, 1000);
+
    if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js');
-      document.getElementById("c6r2").innerHTML = "Service Worker Installed!<button onClick='removeServiceWorker();'>Fjern</button>";
    }
 
    function removeServiceWorker() {

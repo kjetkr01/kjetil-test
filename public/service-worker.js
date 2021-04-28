@@ -1,4 +1,4 @@
-const cacheName = 'js13kPWA-v1';
+const cacheName = 'js13kPWA-v2';
 const appShellFiles = [
     'index.html',
     'service-worker.js',
@@ -22,7 +22,8 @@ const appShellFiles = [
 const contentToCache = appShellFiles;
 
 self.addEventListener('install', (e) => {
-    console.log('[Service Worker] Install');
+    self.skipWaiting();
+    console.log(`[Service Worker] Install - ${cacheName}`);
     e.waitUntil((async () => {
         const cache = await caches.open(cacheName);
         console.log('[Service Worker] Caching all: app shell and content');
@@ -34,13 +35,13 @@ self.addEventListener('fetch', (e) => {
     e.respondWith((async () => {
 
         const r = await caches.match(e.request);
-        console.log(`[Service Worker] Fetching resource: ${e.request.url}`);
+        //console.log(`[Service Worker] Fetching resource: ${e.request.url}`);
         if (r) { return r; }
         const response = await fetch(e.request);
         const cache = await caches.open(cacheName);
 
         if (e.request.method !== "POST") {
-            console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
+            //console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
             cache.put(e.request, response.clone());
         }
         return response;
