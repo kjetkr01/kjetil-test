@@ -8,6 +8,7 @@ let showPeopleLeaderboardsTxtAnimation = true;
 async function loadLeaderboards() {
 
     const reps = sessionStorage.getItem("leaderboards_filter_reps") || "1";
+    const scrollToX = sessionStorage.getItem("leaderboards_scrollX");
 
     let repsText = "";
     if (reps === "1") {
@@ -27,6 +28,7 @@ async function loadLeaderboards() {
     leaderboardsTableRowDom.innerHTML = "";
     let leaderboardListAnimation = "fadeInLeft animate";
 
+    //ikke last inn på nytt hvis arr er likt?
     try {
 
         const cached_leaderboardsArrOrder = JSON.parse(sessionStorage.getItem("cached_leaderboardsArrOrder"));
@@ -101,6 +103,10 @@ async function loadLeaderboards() {
           </td>`;
         }
 
+        if (scrollToX) {
+            document.getElementById("GlistOfLeaderboards").scrollTo(scrollToX, 0);
+        }
+
         getListOfLeaderboard();
     } else {
         sessionStorage.removeItem("leaderboards_filter_reps");
@@ -111,7 +117,6 @@ async function loadLeaderboards() {
             usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Fant ingen ledertavler!`);
         }
     }
-
 }
 
 let leaderboardIsLoading = false;
@@ -289,6 +294,8 @@ function changeLeaderboardReps() {
     const reps = document.getElementById("leaderboardReps").value;
 
     sessionStorage.setItem("leaderboards_filter_reps", reps);
+    sessionStorage.removeItem("cached_viewingLeaderboard");
+    sessionStorage.removeItem("leaderboards_scrollX");
 
     location.reload();
 

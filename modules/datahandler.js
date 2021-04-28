@@ -237,7 +237,9 @@ class StorageHandler {
                 }
             }
 
-            repsList.sort();
+            repsList.sort(function (a, b) {
+                return a - b;
+            });
 
             results = true;
 
