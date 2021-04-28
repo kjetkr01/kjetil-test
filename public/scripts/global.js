@@ -638,6 +638,7 @@ function sortByLiftsOrGoalOwner(aDom, aType) {
             } else {
                 localStorage.removeItem('display_goals_owner');
             }
+
             displayGoals();
         }
     }
@@ -656,6 +657,8 @@ function sortByLiftsOrGoalVisitor(aDom, aType) {
             } else {
                 sessionStorage.removeItem('display_lifts_visitor');
             }
+
+            displayLifts();
         }
 
         if (type === "goal") {
@@ -664,10 +667,12 @@ function sortByLiftsOrGoalVisitor(aDom, aType) {
             } else {
                 sessionStorage.removeItem('display_goals_visitor');
             }
+
+            displayGoals();
         }
     }
 
-    location.reload();
+    //location.reload();
 }
 
 //

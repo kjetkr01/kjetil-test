@@ -109,6 +109,50 @@
 
       <div id="GuserGrid" class="userGrid noselect">
          <div id="userGrid">
+
+            <div id="Glifts" class="hidden">
+               <p id="lifts">
+                  Løft:
+                  <select id="changeLiftFilter" class="changeFilterSelect pointer"
+                     onchange="sortByLiftsOrGoalVisitor('changeLiftFilter', 'lift');"></select>
+               </p>
+            </div>
+
+            <div id="GlineLifts" class="hidden">
+               <hr id="lineLifts">
+            </div>
+
+            <div id="GbadgesLifts" style="min-height: 160px;" class="hidden">
+               <table id="badgesLifts">
+                  <tr id="badgesLiftsTableRow">
+                  </tr>
+               </table>
+            </div>
+
+
+            <div id="Ggoals" class="hidden">
+               <p id="goals">
+                  Mål:
+                  <select id="changeGoalFilter" class="changeFilterSelect pointer"
+                     onchange="sortByLiftsOrGoalVisitor('changeGoalFilter', 'goal');"></select>
+               </p>
+            </div>
+
+            <div id="GlineGoals" class="hidden">
+               <hr id="lineGoals">
+            </div>
+
+            <div id="GbadgesGoals" style="min-height: 160px;" class="hidden">
+               <table id="badgesGoals">
+                  <tr id="badgesGoalsTableRow">
+                  </tr>
+               </table>
+            </div>
+
+            <div id="GmemberSince">
+               <p id="memberSince" class="fadeIn animate delaySmall"></p>
+            </div>
+
          </div>
       </div>
 

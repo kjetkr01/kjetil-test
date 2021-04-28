@@ -45,3 +45,7 @@ background: rgb(179, 179, 179);
 ::-webkit-scrollbar-thumb:hover {
 background: rgb(141, 141, 141); 
 }
+
+.hidden {
+display: none;
+}
