@@ -517,7 +517,7 @@ async function getAccountDetails(aUserID) {
                 }
 
                 if (resp.hasOwnProperty("cacheDetails")) {
-                    sessionStorage.setItem("cachedDetails_owner", JSON.stringify(resp.cacheDetails));
+                    localStorage.setItem("cachedDetails_owner", JSON.stringify(resp.cacheDetails));
                 }
 
                 const newColorTheme = allowedThemes[resp.updatedUserObject.preferredColorTheme].theme;

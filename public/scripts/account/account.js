@@ -8,10 +8,10 @@ let memberSince = null;
 async function requestAccountDetails() {
 
     try {
-        const cacheDetails = JSON.parse(sessionStorage.getItem("cachedDetails_owner"));
-        lifts = JSON.parse(sessionStorage.getItem("cachedLifts_owner"));
-        goals = JSON.parse(sessionStorage.getItem("cachedGoals_owner"));
-        badgeColorsJSON = JSON.parse(sessionStorage.getItem("cachedBadgeColors"));
+        const cacheDetails = JSON.parse(localStorage.getItem("cachedDetails_owner"));
+        lifts = JSON.parse(localStorage.getItem("cachedLifts_owner"));
+        goals = JSON.parse(localStorage.getItem("cachedGoals_owner"));
+        badgeColorsJSON = JSON.parse(localStorage.getItem("cachedBadgeColors"));
 
         if (lifts) {
             showLiftBadgeAnimations = false;
@@ -96,24 +96,23 @@ async function requestAccountDetails() {
         }
 
     } catch {
-        sessionStorage.removeItem("cacheDetails_owner");
-        sessionStorage.removeItem("cachedLifts_owner");
-        sessionStorage.removeItem("cachedHasLiftsLeft_owner");
-        sessionStorage.removeItem("cachedGoals_owner");
-        sessionStorage.removeItem("cachedHasGoalsLeft_owner");
+        localStorage.removeItem("cacheDetails_owner");
+        localStorage.removeItem("cachedLifts_owner");
+        localStorage.removeItem("cachedHasLiftsLeft_owner");
+        localStorage.removeItem("cachedGoals_owner");
+        localStorage.removeItem("cachedHasGoalsLeft_owner");
     }
 
     const resp = await getAccountDetails(userID);
-    console.log(resp)
 
     if (resp) {
 
         if (resp.hasOwnProperty("info")) {
-            sessionStorage.setItem("cachedLifts_owner", JSON.stringify(resp.info.lifts));
-            sessionStorage.setItem("cachedHasLiftsLeft_owner", resp.info.liftsLeft > 0);
-            sessionStorage.setItem("cachedGoals_owner", JSON.stringify(resp.info.goals));
-            sessionStorage.setItem("cachedHasGoalsLeft_owner", resp.info.goalsLeft > 0);
-            sessionStorage.setItem("cachedBadgeColors", JSON.stringify(resp.info.badgeColors));
+            localStorage.setItem("cachedLifts_owner", JSON.stringify(resp.info.lifts));
+            localStorage.setItem("cachedHasLiftsLeft_owner", resp.info.liftsLeft > 0);
+            localStorage.setItem("cachedGoals_owner", JSON.stringify(resp.info.goals));
+            localStorage.setItem("cachedHasGoalsLeft_owner", resp.info.goalsLeft > 0);
+            localStorage.setItem("cachedBadgeColors", JSON.stringify(resp.info.badgeColors));
             displayInformation(resp.info);
             return;
         }
@@ -258,7 +257,7 @@ function displayInformation(respInfo) {
 
 function displayLifts(hasLiftsLeft) {
 
-    hasLiftsLeft = sessionStorage.getItem("cachedHasLiftsLeft_owner") === "true" || false;
+    hasLiftsLeft = localStorage.getItem("cachedHasLiftsLeft_owner") === "true" || false;
 
     document.getElementById("badgesLiftsTableRow").innerHTML = "";
 
@@ -388,7 +387,7 @@ function displayLifts(hasLiftsLeft) {
 
 function displayGoals(hasGoalsLeft) {
 
-    hasGoalsLeft = sessionStorage.getItem("cachedHasGoalsLeft_owner") === "true" || false;
+    hasGoalsLeft = localStorage.getItem("cachedHasGoalsLeft_owner") === "true" || false;
 
     document.getElementById("badgesGoalsTableRow").innerHTML = "";
 

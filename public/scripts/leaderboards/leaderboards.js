@@ -20,7 +20,7 @@ async function loadLeaderboards() {
     //ikke last inn på nytt hvis arr er likt?
     try {
 
-        const cached_leaderboardUserTxt = sessionStorage.getItem("cached_leaderboardUserTxt");
+        const cached_leaderboardUserTxt = localStorage.getItem("cached_leaderboardUserTxt");
 
         if (cached_leaderboardUserTxt) {
 
@@ -39,8 +39,8 @@ async function loadLeaderboards() {
             }
         }
 
-        cached_leaderboardsArrOrder = JSON.parse(sessionStorage.getItem("cached_leaderboardsArrOrder"));
-        cached_viewingLeaderboard = sessionStorage.getItem("cached_viewingLeaderboard");
+        cached_leaderboardsArrOrder = JSON.parse(localStorage.getItem("cached_leaderboardsArrOrder"));
+        cached_viewingLeaderboard = localStorage.getItem("cached_viewingLeaderboard");
 
         if (cached_leaderboardsArrOrder) {
             for (let i = 0; i < cached_leaderboardsArrOrder.length; i++) {
@@ -60,7 +60,7 @@ async function loadLeaderboards() {
         }
 
     } catch {
-        sessionStorage.removeItem("cached_leaderboardsArrOrder");
+        localStorage.removeItem("cached_leaderboardsArrOrder");
     }
 
     if (document.getElementById(cached_viewingLeaderboard)) {
@@ -95,7 +95,7 @@ async function loadLeaderboards() {
 
         leaderboardsArrOrder.sort(function (a, b) { return b.usersCount - a.usersCount });
 
-        sessionStorage.setItem("cached_leaderboardsArrOrder", JSON.stringify(leaderboardsArrOrder));
+        localStorage.setItem("cached_leaderboardsArrOrder", JSON.stringify(leaderboardsArrOrder));
 
         try {
 
@@ -166,7 +166,7 @@ async function getListOfLeaderboard(aLeaderboard) {
         viewingLeaderboard = aLeaderboard;
         leaderboardIsLoading = true;
 
-        sessionStorage.setItem("cached_viewingLeaderboard", viewingLeaderboard);
+        localStorage.setItem("cached_viewingLeaderboard", viewingLeaderboard);
 
         if (document.getElementById(viewingLeaderboard)) {
             if (document.getElementById(previousLeaderboard)) {
@@ -196,7 +196,7 @@ async function getListOfLeaderboard(aLeaderboard) {
 
         usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Filter: ${selectHTML}<br>${leaderboardsUserTxt}`);
 
-        sessionStorage.setItem("cached_leaderboardUserTxt", leaderboardsUserTxt);
+        localStorage.setItem("cached_leaderboardUserTxt", leaderboardsUserTxt);
 
         for (let x = 0; x < repsList.length; x++) {
 
@@ -328,7 +328,7 @@ function changeLeaderboardReps() {
     const reps = document.getElementById("leaderboardReps").value;
 
     sessionStorage.setItem("leaderboards_filter_reps", reps);
-    sessionStorage.removeItem("cached_viewingLeaderboard");
+    localStorage.removeItem("cached_viewingLeaderboard");
     sessionStorage.removeItem("leaderboards_scrollX");
 
     location.reload();

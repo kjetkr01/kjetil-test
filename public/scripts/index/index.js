@@ -26,7 +26,7 @@ async function checkWhoIsWorkingOutToday() {
     peopleWorkoutList.innerHTML = "";
     peopleWorkoutTxt.innerHTML = "";
 
-    const cached_peopleWorkoutTxt = sessionStorage.getItem("cached_peopleWorkoutTxt");
+    const cached_peopleWorkoutTxt = localStorage.getItem("cached_peopleWorkoutTxt");
     if (cached_peopleWorkoutTxt) {
         peopleWorkoutTxt.classList = "noselect";
         peopleWorkoutTxt.innerHTML = cached_peopleWorkoutTxt;
@@ -96,7 +96,7 @@ async function checkWhoIsWorkingOutToday() {
         peopleWorkoutTxt.innerHTML = `I dag er det ingen som trener`;
     }
 
-    sessionStorage.setItem("cached_peopleWorkoutTxt", peopleWorkoutTxt.innerHTML);
+    localStorage.setItem("cached_peopleWorkoutTxt", peopleWorkoutTxt.innerHTML);
 
 }
 
@@ -148,9 +148,9 @@ function currentDayInfo() {
 async function requestAccountDetails() {
 
     try {
-        lifts = JSON.parse(sessionStorage.getItem("cachedLifts_owner"));
-        goals = JSON.parse(sessionStorage.getItem("cachedGoals_owner"));
-        badgeColorsJSON = JSON.parse(sessionStorage.getItem("cachedBadgeColors"));
+        lifts = JSON.parse(localStorage.getItem("cachedLifts_owner"));
+        goals = JSON.parse(localStorage.getItem("cachedGoals_owner"));
+        badgeColorsJSON = JSON.parse(localStorage.getItem("cachedBadgeColors"));
 
         if (goals && lifts) {
             goalsInfo = new Tgoals(goals);
@@ -164,21 +164,21 @@ async function requestAccountDetails() {
         }
 
     } catch {
-        sessionStorage.removeItem("cacheDetails_owner");
-        sessionStorage.removeItem("cachedLifts_owner");
-        sessionStorage.removeItem("cachedHasLiftsLeft_owner");
-        sessionStorage.removeItem("cachedGoals_owner");
-        sessionStorage.removeItem("cachedHasGoalsLeft_owner");
+        localStorage.removeItem("cacheDetails_owner");
+        localStorage.removeItem("cachedLifts_owner");
+        localStorage.removeItem("cachedHasLiftsLeft_owner");
+        localStorage.removeItem("cachedGoals_owner");
+        localStorage.removeItem("cachedHasGoalsLeft_owner");
     }
 
     const resp = await getAccountDetails(userID);
 
     if (resp) {
         if (resp.hasOwnProperty("info")) {
-            sessionStorage.setItem("cachedLifts_owner", JSON.stringify(resp.info.lifts));
-            sessionStorage.setItem("cachedHasLiftsLeft_owner", resp.info.liftsLeft > 0);
-            sessionStorage.setItem("cachedGoals_owner", JSON.stringify(resp.info.goals));
-            sessionStorage.setItem("cachedHasGoalsLeft_owner", resp.info.goalsLeft > 0);
+            localStorage.setItem("cachedLifts_owner", JSON.stringify(resp.info.lifts));
+            localStorage.setItem("cachedHasLiftsLeft_owner", resp.info.liftsLeft > 0);
+            localStorage.setItem("cachedGoals_owner", JSON.stringify(resp.info.goals));
+            localStorage.setItem("cachedHasGoalsLeft_owner", resp.info.goalsLeft > 0);
             displayBadges(resp.info);
             return;
         }
@@ -252,7 +252,7 @@ async function displayBadges(aInfo) {
 
 function displayGoals() {
 
-    hasGoalsLeft = sessionStorage.getItem("cachedHasGoalsLeft_owner") === "true" || false;
+    hasGoalsLeft = localStorage.getItem("cachedHasGoalsLeft_owner") === "true" || false;
 
     const smallTitle = document.getElementById("smallTitle");
 
