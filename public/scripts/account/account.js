@@ -1,6 +1,7 @@
 // requestAccountDetails
 let lifts = null;
 let goals = null;
+let badgeColorsJSON = null;
 let size = 0;
 let memberSince = null;
 
@@ -10,6 +11,7 @@ async function requestAccountDetails() {
         const cacheDetails = JSON.parse(sessionStorage.getItem("cachedDetails_owner"));
         lifts = JSON.parse(sessionStorage.getItem("cachedLifts_owner"));
         goals = JSON.parse(sessionStorage.getItem("cachedGoals_owner"));
+        badgeColorsJSON = JSON.parse(sessionStorage.getItem("cachedBadgeColors"));
 
         if (lifts) {
             showLiftBadgeAnimations = false;
@@ -21,6 +23,10 @@ async function requestAccountDetails() {
             showGoalBadgeAnimations = false;
             goalsInfo = new Tgoals(goals);
             displayGoals();
+        }
+
+        if (badgeColorsJSON) {
+            badgeColors = new TbadgeColors(badgeColorsJSON);
         }
 
         if (cacheDetails.hasOwnProperty("displayname")) {
@@ -105,6 +111,7 @@ async function requestAccountDetails() {
             sessionStorage.setItem("cachedHasLiftsLeft_owner", resp.info.liftsLeft > 0);
             sessionStorage.setItem("cachedGoals_owner", JSON.stringify(resp.info.goals));
             sessionStorage.setItem("cachedHasGoalsLeft_owner", resp.info.goalsLeft > 0);
+            sessionStorage.setItem("cachedBadgeColors", JSON.stringify(resp.info.badgeColors));
             displayInformation(resp.info);
             return;
         }
@@ -137,14 +144,12 @@ function displayInformation(respInfo) {
     const weight = info.info.weight;
     memberSince = info.member_since;
 
-    let updateLifts = true, updateGoals = true;
+    let updateLifts = true, updateGoals = true, updateBadgeColors = true;
 
     liftsLeft = new TliftsLeft(info.liftsLeft);
     goalsLeft = new TgoalsLeft(info.goalsLeft);
 
     traningsplitInfo = new Ttrainingsplit(info.trainingsplit);
-
-    badgeColors = new TbadgeColors(info.badgeColors);
 
     try {
 
@@ -153,6 +158,9 @@ function displayInformation(respInfo) {
 
         const checkExistingGoals = JSON.stringify(goals);
         const checkUpdatedGoals = JSON.stringify(info.goals);
+
+        const checkExistingBadgeColors = JSON.stringify(badgeColorsJSON);
+        const checkUpdatedBadgeColors = JSON.stringify(info.badgeColors);
 
         if (checkExistingLifts === checkUpdatedLifts) {
             updateLifts = false;
@@ -164,14 +172,29 @@ function displayInformation(respInfo) {
             console.log("skipped update goals");
         }
 
+        if (checkExistingBadgeColors === checkUpdatedBadgeColors) {
+            updateBadgeColors = false;
+            console.log("skipped update badgeColors");
+        }
+
     } catch {
 
     }
 
+    if (updateBadgeColors === true) {
+        badgeColors = new TbadgeColors(info.badgeColors);
+    }
+
+    if (updateLifts === true) {
+        lifts = info.lifts;
+    }
+
+    if (updateGoals === true) {
+        goals = info.goals;
+    }
+
     //console.log(Object.is(lifts, info.lifts));
 
-    lifts = info.lifts;
-    goals = info.goals;
     const program = info.trainingsplit;
 
     if (displayname) {
@@ -302,11 +325,7 @@ function displayLifts(hasLiftsLeft) {
 
     if (arr.length > 0) {
 
-        if (sortBy) {
-            if (allowedExercises.includes(sortBy)) {
-                document.getElementById("lifts").innerHTML = `Løft: ${selectHTML}`;
-            }
-        }
+        document.getElementById("lifts").innerHTML = `Løft: ${selectHTML}`;
 
         document.getElementById("changeLiftFilter").innerHTML = `<option id="totalLifts" value="null"></option>`;
 
@@ -460,11 +479,7 @@ function displayGoals(hasGoalsLeft) {
 
     if (arr.length > 0) {
 
-        if (sortBy) {
-            if (allowedExercises.includes(sortBy)) {
-                document.getElementById("goals").innerHTML = `Mål: ${selectHTML}`;
-            }
-        }
+        document.getElementById("goals").innerHTML = `Mål: ${selectHTML}`;
 
         document.getElementById("changeGoalFilter").innerHTML = `<option id="totalGoals" value="null"></option>`;
 

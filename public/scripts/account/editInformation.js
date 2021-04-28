@@ -149,6 +149,9 @@ function enableOverlayEdit(aType, aExercise, aId) {
                 inp1.value = lift.kg;
                 inp2.value = lift.reps;
                 inp3.value = lift.date;
+
+                //document.getElementById("Ginp3E").innerHTML += "<br>" + getDaysSinceAndDate(lift.date).daysSinceMsg;
+
                 if (showDeleteBtn === true) {
                     GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift', '${id}');">Slett løftet</button>`;
                 }

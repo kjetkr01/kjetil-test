@@ -64,35 +64,9 @@ function enableOverlayView(aType, aExercise, aId) {
                 inp1.innerHTML = lift.kg;
                 inp2.innerHTML = lift.reps;
 
-                const prDateArr = lift.date.split("-");
-                let daysSinceTxt = "";
+                const daysSinceAndDate = getDaysSinceAndDate(lift.date);
 
-                let date = "";
-
-                if (prDateArr.length === 3) {
-
-                    if (prDateArr[0].length === 4 && prDateArr[1] > 0 && prDateArr[1] <= 12 && prDateArr[1].length <= 2 && prDateArr[2] > 0 && prDateArr[2] <= 31 && prDateArr[2].length <= 2) {
-
-                        const d = new Date();
-                        const prDate = new Date(prDateArr[0], (prDateArr[1] - 1), prDateArr[2]);
-
-                        date = getDateFormat(prDateArr[2], prDateArr[1], prDateArr[0]);
-
-                        const daysSinceTime = parseInt((d - prDate) / (1000 * 3600 * 24));
-
-                        if (d < prDate) {
-                            //fremtiden
-                        } else if (daysSinceTime > 1) {
-                            daysSinceTxt = `${parseInt(daysSinceTime)} dager siden`;
-                        } else if (daysSinceTime === 1) {
-                            daysSinceTxt = `I går`;
-                        } else if (daysSinceTime === 0) {
-                            daysSinceTxt = `I dag`;
-                        }
-                    }
-                }
-
-                inp3.innerHTML = `${date}<br>${daysSinceTxt}`;
+                inp3.innerHTML = `${daysSinceAndDate.fixedDate}<br>${daysSinceAndDate.daysSinceMsg}`;
 
                 const color = lift.color;
 
@@ -137,7 +111,10 @@ function enableOverlayView(aType, aExercise, aId) {
             if (goal) {
                 inp1.innerHTML = goal.kg;
                 inp2.innerHTML = goal.reps;
-                inp3.innerHTML = goal.date;
+
+                const daysSinceAndDate = getDaysSinceAndDate(goal.date);
+
+                inp3.innerHTML = `${daysSinceAndDate.fixedDate}<br>${daysSinceAndDate.daysSinceMsg}`;
 
                 const color = goal.color;
 

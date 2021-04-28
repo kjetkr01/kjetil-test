@@ -670,6 +670,40 @@ function sortByLiftsOrGoalVisitor(aDom, aType) {
 
 //
 
+//
+
+function getDaysSinceAndDate(aDate) {
+    let daysSinceMsg = "";
+    let fixedDate = "";
+    const dateArr = aDate.split("-");
+    if (dateArr.length === 3) {
+
+        if (dateArr[0].length === 4 && dateArr[1] > 0 && dateArr[1] <= 12 && dateArr[1].length <= 2 && dateArr[2] > 0 && dateArr[2] <= 31 && dateArr[2].length <= 2) {
+
+            const d = new Date();
+            const date = new Date(dateArr[0], (dateArr[1] - 1), dateArr[2]);
+
+            fixedDate = getDateFormat(dateArr[2], dateArr[1], dateArr[0]);
+
+            const daysSinceTime = parseInt((d - date) / (1000 * 3600 * 24));
+
+            if (d < date) {
+                //fremtiden
+            } else if (daysSinceTime > 1) {
+                daysSinceMsg = `${parseInt(daysSinceTime)} dager siden`;
+            } else if (daysSinceTime === 1) {
+                daysSinceMsg = `I går`;
+            } else if (daysSinceTime === 0) {
+                daysSinceMsg = `I dag`;
+            }
+        }
+    }
+
+    return { "daysSinceMsg": daysSinceMsg, "fixedDate": fixedDate };
+}
+
+//
+
 // redirect functions
 
 function redirectToLogin() {

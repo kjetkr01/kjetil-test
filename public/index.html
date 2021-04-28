@@ -178,40 +178,43 @@
 
 <script>
 
-   lockBodyPosition();
-   getCreateNewLiftorGoalOverlay();
-   getEditLiftorGoalOverlay();
+   if (sessionStorage.getItem("user")) {
 
-   function intervals() {
+      lockBodyPosition();
+      getCreateNewLiftorGoalOverlay();
+      getEditLiftorGoalOverlay();
 
-      let savedDay = new Date().getDay();
+      function intervals() {
 
-      setInterval(() => {
+         let savedDay = new Date().getDay();
 
-         const currentDay = new Date().getDay()
-         if (savedDay !== currentDay) {
-            savedDay = currentDay;
-            checkWhoIsWorkingOutToday();
-         }
+         setInterval(() => {
 
-      }, 15000);
+            const currentDay = new Date().getDay()
+            if (savedDay !== currentDay) {
+               savedDay = currentDay;
+               checkWhoIsWorkingOutToday();
+            }
 
-      setInterval(() => {
-         displayPartOfDayMsg();
-      }, 60000);
+         }, 15000);
 
-      setInterval(() => {
-         checkConnection("c6r2");
-      }, 5000);
+         setInterval(() => {
+            displayPartOfDayMsg();
+         }, 60000);
 
+         setInterval(() => {
+            checkConnection("c6r2");
+         }, 5000);
+
+      }
+
+      //intervals();
+
+      displayPartOfDayMsg();
+      checkWhoIsWorkingOutToday();
+      requestAccountDetails();
+      // displayBadges();
    }
-
-   //intervals();
-
-   displayPartOfDayMsg();
-   checkWhoIsWorkingOutToday();
-   requestAccountDetails();
-  // displayBadges();
 
 </script>
 

@@ -1,4 +1,4 @@
-let lifts = null, goals = null, size = 0;
+let lifts = null, goals = null, size = 0, badgeColorsJSON = null;;
 
 function displayPartOfDayMsg() {
 
@@ -150,12 +150,17 @@ async function requestAccountDetails() {
     try {
         lifts = JSON.parse(sessionStorage.getItem("cachedLifts_owner"));
         goals = JSON.parse(sessionStorage.getItem("cachedGoals_owner"));
+        badgeColorsJSON = JSON.parse(sessionStorage.getItem("cachedBadgeColors"));
 
         if (goals && lifts) {
             goalsInfo = new Tgoals(goals);
             document.getElementById("smallTitle").classList = "noselect";
             showGoalBadgeAnimations = false;
             displayGoals();
+        }
+
+        if (badgeColorsJSON) {
+            badgeColors = new TbadgeColors(badgeColorsJSON);
         }
 
     } catch {
@@ -199,7 +204,7 @@ async function displayBadges(aInfo) {
         document.getElementById("Gbadges").style.minHeight = "200px";
     }
 
-    let updateGoals = true;
+    let updateGoals = true, updateBadgeColors = true;
 
     try {
 
@@ -209,17 +214,32 @@ async function displayBadges(aInfo) {
         const checkExistingGoals = JSON.stringify(goals);
         const checkUpdatedGoals = JSON.stringify(info.goals);
 
+        const checkExistingBadgeColors = JSON.stringify(badgeColorsJSON);
+        const checkUpdatedBadgeColors = JSON.stringify(info.badgeColors);
+
         if (checkExistingLifts === checkUpdatedLifts && checkExistingGoals === checkUpdatedGoals) {
             updateGoals = false;
             console.log("skipped update lifts/goals");
+        }
+
+        if (checkExistingBadgeColors === checkUpdatedBadgeColors) {
+            updateBadgeColors = false;
+            console.log("skipped update badgeColors");
         }
 
     } catch {
 
     }
 
-    lifts = info.lifts;
-    goals = info.goals;
+    if (updateBadgeColors === true) {
+        badgeColors = new TbadgeColors(info.badgeColors);
+    }
+
+    if (updateGoals === true) {
+        lifts = info.lifts;
+        goals = info.goals;
+    }
+
     goalsLeft = new TgoalsLeft(info.goalsLeft);
     badgeColors = new TbadgeColors(info.badgeColors);
 
