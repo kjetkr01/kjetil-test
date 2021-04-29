@@ -194,10 +194,10 @@ async function displayInformationAboutUser() {
 
         informationAboutUser.innerHTML = `<br>Henter opplysninger...`;
 
-        const body = { "authToken": token, "userInfo": user };
+        const infoHeader = {};
         const url = `/user/allinformation`;
 
-        const resp = await callServerAPI(body, url);
+        const resp = await callServerAPIPost(infoHeader, url);
 
         informationAboutUser.innerHTML = "";
 
@@ -317,10 +317,10 @@ async function giveAPIAccess(aUsername, aID) {
 
         if (confirmGiveAPIAccess === true) {
 
-            const body = { "authToken": token, "userInfo": user, "giveAPIUserAccess": giveAPIID };
+            const infoHeader = { "giveAPIUserAccess": giveAPIID };
             const url = `/user/giveAPIAccess`;
 
-            const resp = await callServerAPI(body, url);
+            const resp = await callServerAPIPost(infoHeader, url);
 
             if (resp === true) {
                 alert(`${giveAPIUsername} har nå fått API tilgang!`);
@@ -345,10 +345,10 @@ async function removeAPIAccess(aUsername, aID) {
 
         if (confirmRemoveAPIAccess === true) {
 
-            const body = { "authToken": token, "userInfo": user, "removeAPIUserAccess": removeAPIID };
+            const infoHeader = { "removeAPIUserAccess": removeAPIID };
             const url = `/user/removeAPIAccess`;
 
-            const resp = await callServerAPI(body, url);
+            const resp = await callServerAPIPost(infoHeader, url);
 
             if (resp === true) {
                 alert(`${removeAPIUsername} har ikke lengre API tilgang!`);
@@ -361,4 +361,22 @@ async function removeAPIAccess(aUsername, aID) {
         }
 
     }
+}
+
+// returns approximate size of a single cache (in bytes)
+function cacheSize(c) {
+    return c.keys().then(a => {
+        return Promise.all(
+            a.map(req => c.match(req).then(res => res.clone().blob().then(b => b.size)))
+        ).then(a => a.reduce((acc, n) => acc + n, 0));
+    });
+}
+
+// returns approximate size of all caches (in bytes)
+function cachesSize() {
+    return caches.keys().then(a => {
+        return Promise.all(
+            a.map(n => caches.open(n).then(c => cacheSize(c)))
+        ).then(a => a.reduce((acc, n) => acc + n, 0));
+    });
 }

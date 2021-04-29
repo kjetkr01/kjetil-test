@@ -167,25 +167,29 @@ server.post("/application", async function (req, res) {
 // -------------------------------  ask for access / new user ---------------------- //
 
 server.post("/access", async function (req, res) {
-     const username = req.body.username;
-     const password = req.body.password;
-     const displayname = req.body.displayname;
+     try {
+          let info = req.headers.info;
+          info = JSON.parse(info);
+          const credentials = info.authorization.split(' ')[1];
+          const [username, password, displayname] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
 
-     if (username && password && displayname) {
+          if (username && password && displayname) {
 
-          const newUser = new user(username, password, displayname);
-          const resp = await newUser.addToPendingList();
+               const newUser = new user(username, password, displayname);
+               const resp = await newUser.addToPendingList();
 
-          if (resp === null) {
-               res.status(401).json("Brukernavnet er opptatt!").end();
+               if (resp === null) {
+                    res.status(401).json("Brukernavnet er opptatt!").end();
+               } else {
+                    res.status(200).json("Du har nå bedt om tilgang!").end();
+               }
+
           } else {
-               res.status(200).json("Du har nå bedt om tilgang!").end();
+               res.status(403).json(`Feil, prøv igjen`).end();
           }
-
-     } else {
+     } catch {
           res.status(403).json(`Feil, prøv igjen`).end();
      }
-
 });
 
 //
@@ -195,35 +199,37 @@ server.post("/access", async function (req, res) {
 // -------------------------------  login / authenticate user ---------------------- //
 
 server.post("/authenticate", async function (req, res) {
+     try {
+          let info = req.headers.info;
+          info = JSON.parse(info);
 
-     const credentials = req.body.authorization.split(' ')[1];
-     const [username, password] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
+          const credentials = info.authorization.split(' ')[1];
+          const [username, password] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
 
-     if (username && password) {
+          if (username && password) {
 
-          /*const requestUser = new user(username, password);
-          const isValid = await requestUser.validate();*/
+               const requestUser = await validateUser(username, password);
+               const isValid = requestUser.isValid;
 
-          const requestUser = await validateUser(username, password);
-          const isValid = requestUser.isValid;
-
-          if (isValid) {
-               const userInfo = {
-                    "id": requestUser.userInfo.id,
-                    "username": requestUser.userInfo.username,
-                    "displayname": requestUser.userInfo.displayname,
-                    "preferredColorTheme": requestUser.userInfo.preferredcolortheme,
+               if (isValid) {
+                    const userInfo = {
+                         "id": requestUser.userInfo.id,
+                         "username": requestUser.userInfo.username,
+                         "displayname": requestUser.userInfo.displayname,
+                         "preferredColorTheme": requestUser.userInfo.preferredcolortheme,
+                    }
+                    const sessionToken = createToken(requestUser.userInfo);
+                    res.status(200).json({ "authToken": sessionToken, "user": userInfo }).end();
+               } else {
+                    res.status(403).json("Brukernavn eller passord er feil!").end();
                }
-               const sessionToken = createToken(requestUser.userInfo);
-               res.status(200).json({ "authToken": sessionToken, "user": userInfo }).end();
-          } else {
-               res.status(403).json("Brukernavn eller passord er feil!").end();
-          }
 
-     } else {
+          } else {
+               res.status(403).json(`Feil, prøv igjen`).end();
+          }
+     } catch {
           res.status(403).json(`Feil, prøv igjen`).end();
      }
-
 });
 
 //
@@ -232,32 +238,34 @@ server.post("/authenticate", async function (req, res) {
 // -------------------------------  get list of users ---------------------- //
 
 server.post("/users/list/all", auth, async (req, res) => {
+     try {
+          let username = req.headers.userinfo;
+          username = JSON.parse(username);
+          username = username.username;
 
-     let username = req.body.userInfo;
-     username = JSON.parse(username);
-     username = username.username;
+          if (username) {
 
-     if (username) {
+               const listOfUsers = await getListOfUsers(username);
 
-          const listOfUsers = await getListOfUsers(username);
+               if (listOfUsers.status === true) {
 
-          if (listOfUsers.status === true) {
+                    const respWithUsers = {
+                         "allUsers": listOfUsers.allUsers,
+                         "allAPIUsers": listOfUsers.allAPIUsers
+                    }
 
-               const respWithUsers = {
-                    "allUsers": listOfUsers.allUsers,
-                    "allAPIUsers": listOfUsers.allAPIUsers
+                    res.status(200).json(respWithUsers).end();
+
+               } else {
+                    res.status(403).json(`Feil, prøv igjen`).end();
                }
-
-               res.status(200).json(respWithUsers).end();
 
           } else {
                res.status(403).json(`Feil, prøv igjen`).end();
           }
-
-     } else {
+     } catch {
           res.status(403).json(`Feil, prøv igjen`).end();
      }
-
 });
 
 //
@@ -265,16 +273,22 @@ server.post("/users/list/all", auth, async (req, res) => {
 // -------------------------------  get list of users on leaderboard ---------------------- //
 
 server.post("/users/list/all/leaderboards", auth, async (req, res) => {
+     try {
+          let info = req.headers.info;
+          info = JSON.parse(info);
 
-     const reps = req.body.reps || "1";
+          const reps = info.reps || "1";
 
-     const resp = await getListOfLeaderboards(reps);
+          const resp = await getListOfLeaderboards(reps);
 
-     if (resp.status === true) {
+          if (resp.status === true) {
 
-          res.status(200).json({ "leaderboards": resp.leaderboards, "repsList": resp.repsList }).end();
+               res.status(200).json({ "leaderboards": resp.leaderboards, "repsList": resp.repsList }).end();
 
-     } else {
+          } else {
+               res.status(403).json(`Feil, prøv igjen`).end();
+          }
+     } catch {
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 
@@ -286,25 +300,31 @@ server.post("/users/list/all/leaderboards", auth, async (req, res) => {
 
 server.post("/users/list/all/leaderboards/:leaderboard", auth, async (req, res) => {
 
-     const leaderboard = req.body.leaderboard;
-     const reps = req.body.reps || "1";
+     try {
+          let info = req.headers.info;
+          info = JSON.parse(info);
 
-     if (leaderboard) {
+          const leaderboard = info.leaderboard;
+          const reps = info.reps || "1";
 
-          const listOfUsersLeaderboard = await getListOfUsersLeaderboard(leaderboard, reps);
+          if (leaderboard) {
 
-          if (listOfUsersLeaderboard) {
+               const listOfUsersLeaderboard = await getListOfUsersLeaderboard(leaderboard, reps);
 
-               res.status(200).json(listOfUsersLeaderboard).end();
+               if (listOfUsersLeaderboard) {
+
+                    res.status(200).json(listOfUsersLeaderboard).end();
+
+               } else {
+                    res.status(403).json(`Feil, prøv igjen`).end();
+               }
 
           } else {
                res.status(403).json(`Feil, prøv igjen`).end();
           }
-
-     } else {
+     } catch(err) {
           res.status(403).json(`Feil, prøv igjen`).end();
      }
-
 });
 
 //
@@ -322,7 +342,7 @@ server.post("/users/list/pending", auth, async (req, res) => {
           onlyNumbers = true;
      }
 
-     let username = req.body.userInfo;
+     let username = req.headers.userinfo;
      username = JSON.parse(username);
      username = username.username;
 
@@ -381,7 +401,7 @@ server.post("/users/pending/:user/:acceptOrDeny", auth, async (req, res) => {
 
 server.post("/user/whatToTrainToday", auth, async (req, res) => {
 
-     let username = req.body.userInfo;
+     let username = req.headers.userinfo;
      username = JSON.parse(username);
      username = username.username;
 
@@ -405,11 +425,14 @@ server.post("/user/whatToTrainToday", auth, async (req, res) => {
 
 server.post("/users/details/:user", auth, async (req, res) => {
 
-     let userID = req.body.userInfo;
+     let userID = req.headers.userinfo;
      userID = JSON.parse(userID);
      userID = parseInt(userID.id);
 
-     const viewingUser = parseInt(req.body.viewingUser);
+     let info = req.headers.info;
+     info = JSON.parse(info);
+
+     const viewingUser = parseInt(info.viewingUser);
 
      if (typeof viewingUser === "number" && typeof userID === "number") {
           if (userID && viewingUser) {
@@ -468,7 +491,7 @@ server.post("/users/details/:user", auth, async (req, res) => {
 
 server.post("/user/details/settingsInfo", auth, async (req, res) => {
 
-     const currentUser = JSON.parse(req.body.userInfo);
+     const currentUser = JSON.parse(req.headers.userinfo);
 
      if (currentUser.username) {
 
@@ -846,7 +869,7 @@ server.post("/whoIsWorkingOutToday", auth, async (req, res) => {
 
 server.post("/user/allinformation", auth, async (req, res) => {
 
-     const currentUser = JSON.parse(req.body.userInfo);
+     const currentUser = JSON.parse(req.headers.userinfo);
 
      if (currentUser.id) {
 
@@ -900,11 +923,11 @@ server.post("/user/deleteMe", auth, async (req, res) => {
 
 server.post("/validate", auth, async (req, res) => {
 
-     //const currentUser = JSON.parse(req.body.userInfo);
+     //const currentUser = JSON.parse(req.headers.userinfo);
 
      //console.log("valid, current user: " + currentUser.username); // test / grei log i terminal
 
-     res.status(200).json("Ok").end();
+     res.status(200).json({ "status": "ok" }).end();
 
 });
 

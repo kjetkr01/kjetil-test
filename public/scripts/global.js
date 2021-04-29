@@ -205,10 +205,10 @@ async function validateToken() {
 
         if (token && user) {
 
-            const body = { "authToken": token, "userInfo": user };
+            const infoHeader = {};
             const url = `/validate`;
 
-            const resp = await callServerAPI(body, url);
+            const resp = await callServerAPIPost(infoHeader, url);
 
             if (resp) {
 
@@ -225,36 +225,34 @@ async function validateToken() {
     }
 }
 
-async function callServerAPI(body, url) {
+async function callServerAPIPost(aInfoHeader, aUrl) {
 
     if (!window.navigator.onLine) {
         return;
     }
 
-    if (!body || !url) {
+    if (!aUrl) {
         return;
     }
 
     const config = {
         method: "POST",
         headers: {
-            "content-type": "application/json"
-        },
-        body: JSON.stringify(body)
+            "content-type": "application/json",
+            "authtoken": token,
+            "userinfo": user,
+            "info": JSON.stringify(aInfoHeader)
+        }
     }
 
-    const response = await fetch(url, config);
+    const response = await fetch(aUrl, config);
     const data = await response.json();
-    //console.log(response.status);
 
     if (response.status === 200 || data.includes("opptatt") || data.includes("privat")) {
         return data;
     } else {
         console.log("not returning data, recieved status:" + response.status)
     }
-
-    //return { "response": response, "data": data };
-
 }
 
 // show different links based if user is logged in or not
@@ -500,10 +498,10 @@ async function getAccountDetails(aUserID) {
 
         const viewingUser = aUserID;
 
-        const body = { "authToken": token, "userInfo": user, "viewingUser": viewingUser };
+        const infoHeader = { "viewingUser": viewingUser };
         const url = `/users/details/${viewingUser}`;
 
-        const resp = await callServerAPI(body, url);
+        const resp = await callServerAPIPost(infoHeader, url);
 
         isUpdatingUserObject = false;
 
@@ -708,11 +706,16 @@ function getDaysSinceAndDate(aDate) {
 
 //
 
-async function updateApplication() {
+function updateApplication() {
 
     deleteAllCaches();
     updateServiceWorker();
 
+}
+
+function deleteCachesAndUnregisterSW() {
+    removeServiceWorker();
+    deleteAllCaches();
 }
 
 function removeServiceWorker() {
@@ -720,7 +723,6 @@ function removeServiceWorker() {
         for (let registration of registrations) {
             registration.unregister();
         }
-        alert("REMOVED service workers");
     });
 }
 

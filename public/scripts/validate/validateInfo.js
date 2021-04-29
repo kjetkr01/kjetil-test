@@ -45,11 +45,10 @@ async function validate(displayname, username, password, confirmpassword) {
                         fixedDisplayname = fixedDisplayname.trimRight();
 
                         //console.log(fixedDisplayname)
-
-                        const body = { "username": username.toLowerCase(), "password": password, "displayname": fixedDisplayname };
+                        const infoHeader = { "authorization": "Basic " + window.btoa(`${username.toLowerCase()}:${password}:${fixedDisplayname}`) };
                         const url = `/access`;
 
-                        const resp = await callServerAPI(body, url);
+                        const resp = await callServerAPIPost(infoHeader, url);
 
                         if (resp) {
                             message = resp;//"godkjent";
@@ -91,11 +90,11 @@ async function login(username, password, rmbrMe) {
 
         if (username.length >= minCharLength && username.length <= maxCharLength) {
 
-            const body = { "authorization": "Basic " + window.btoa(`${username}:${password}`) };
+            const infoHeader = { "authorization": "Basic " + window.btoa(`${username}:${password}`) };
 
             const url = `/authenticate`;
 
-            const resp = await callServerAPI(body, url);
+            const resp = await callServerAPIPost(infoHeader, url);
 
             if (resp) {
 

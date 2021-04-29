@@ -121,10 +121,10 @@ async function loadDefaultPage(setting) {
     if (userInfo.hasOwnProperty("isadmin")) {
         if (userInfo.isadmin === true) {
 
-            const body = { "authToken": token, "userInfo": user, "onlyNumbers": true };
+            const infoHeader = {"onlyNumbers": true };
             const url = `/users/list/pending`;
 
-            const resp = await callServerAPI(body, url);
+            const resp = await callServerAPIPost(infoHeader, url);
 
             if (resp) {
                 if (resp[0].hasOwnProperty("id")) {
@@ -373,10 +373,10 @@ async function loadAboutAppPage(setting) {
 
             let newUpdateTxt = "";
 
-            const body = {};
+            const infoHeader = {};
             const url = `/application`;
 
-            const serverApplication = await callServerAPI(body, url);
+            const serverApplication = await callServerAPIPost(infoHeader, url);
             if (serverApplication) {
 
                 if (serverApplication.version.fullNumber !== application.version.fullNumber) {
@@ -411,7 +411,7 @@ async function loadAboutAppPage(setting) {
 
             settingsGrid.innerHTML += getCenteredTextTemplate(aboutAppBottomInfo, "", "spacingTop");
 
-            let state = null;
+            let state = "not active";
             if (navigator.serviceWorker) {
                 if (navigator.serviceWorker.controller) {
                     if (navigator.serviceWorker.controller.state) {
@@ -421,12 +421,14 @@ async function loadAboutAppPage(setting) {
             }
 
             const allCaches = await caches.keys();
+            const totalCacheSizeBytes = await cachesSize();
+            const totalCacheSizeMB = parseFloat(totalCacheSizeBytes / 1000000).toFixed(2);
             settingsGrid.innerHTML += getCenteredTextTemplate(`
-            Service Worker State: ${state}
+            Service Worker: ${state}
             <br>
-            ${allCaches}
+            ${allCaches} ~ ${totalCacheSizeMB || 0} MB
             <br>
-            <button class="settingsButton" onClick="deleteAllCaches();removeServiceWorker();">Tøm cache/unregister</button>
+            <button class="settingsButton" onClick="deleteCachesAndUnregisterSW();">Tøm cache</button>
             `, "left", "spacingTop");
 
             settingsGrid.innerHTML += getBottomSpacingTemplate();
@@ -440,10 +442,10 @@ async function loadAboutAppPage(setting) {
 
 async function loadUsersListPage(setting) {
 
-    const body = { "authToken": token, "userInfo": user };
+    const infoHeader = {};
     const url = `/users/list/all`;
 
-    const resp = await callServerAPI(body, url);
+    const resp = await callServerAPIPost(infoHeader, url);
 
     if (resp.hasOwnProperty("allUsers") && resp.hasOwnProperty("allAPIUsers") && sessionStorage.getItem("currentSetting") === ELoadSettings.users.name) {
 
@@ -535,10 +537,10 @@ async function loadPendingUsersPage(setting) {
     titleDom.innerHTML = ELoadSettings.pendingUsers.name;
     document.title = ELoadSettings.pendingUsers.name;
 
-    const body = { "authToken": token, "userInfo": user };
+    const infoHeader = {};
     const url = `/users/list/pending`;
 
-    const resp = await callServerAPI(body, url);
+    const resp = await callServerAPIPost(infoHeader, url);
 
     let totalRequests = 0;
     if (resp[0].hasOwnProperty("username")) {
@@ -730,10 +732,10 @@ async function acceptPendingUser(username, acceptOrDeny) {
     const confirmPress = confirm("Er du sikker på at du vil " + statusMsg + " " + username + " sin forespørsel?");
     if (confirmPress === true) {
 
-        const body = { "authToken": token, "userInfo": user, "pendingUser": username, "acceptOrDeny": acceptOrDeny };
+        const infoHeader = { "pendingUser": username, "acceptOrDeny": acceptOrDeny };
         const url = `/users/pending/${username}/${acceptOrDeny}`;
 
-        const results = await callServerAPI(body, url);
+        const results = await callServerAPIPost(infoHeader, url);
 
         if (results === "Ok") {
             alert(statusMsg2 + username);

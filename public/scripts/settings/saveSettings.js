@@ -113,10 +113,10 @@ async function updateCheckboxSetting(aSetting, aValue) {
         const setting = aSetting;
         const value = aValue;
 
-        const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
+        const infoHeader = { "updateSetting": setting, "value": value };
         const url = `/user/update/settings/${setting}`;
 
-        const resp = await callServerAPI(body, url);
+        const resp = await callServerAPIPost(infoHeader, url);
 
         if (resp === true) {
             //updateUserInfo();
@@ -138,10 +138,10 @@ async function savePreferredApperance() {
         const value = document.getElementById("appearanceThemeSelection").value;
         const setting = "preferredtheme";
 
-        const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
+        const infoHeader = { "updateSetting": setting, "value": value };
         const url = `/user/update/settings/${setting}`;
 
-        const resp = await callServerAPI(body, url);
+        const resp = await callServerAPIPost(infoHeader, url);
 
         if (resp === true) {
 
@@ -190,10 +190,10 @@ async function saveColorTheme() {
         const value = document.getElementById("themeColorSelection").value;
         const setting = "preferredcolortheme";
 
-        const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
+        const infoHeader = { "updateSetting": setting, "value": value };
         const url = `/user/update/settings/${setting}`;
 
-        const resp = await callServerAPI(body, url);
+        const resp = await callServerAPIPost(infoHeader, url);
 
         if (resp === true) {
 
@@ -228,10 +228,10 @@ async function updateBadgeSize() {
     const value = document.getElementById("badgeSizeSelection").value;
     const setting = "badgesize";
 
-    const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
+    const infoHeader = { "updateSetting": setting, "value": value };
     const url = `/user/update/settings/${setting}`;
 
-    const resp = await callServerAPI(body, url);
+    const resp = await callServerAPIPost(infoHeader, url);
 
     if (resp === true) {
         updateUserInfo();
@@ -242,10 +242,10 @@ async function updateBadgeDetails() {
     const value = document.getElementById("badgeDetailsSelection").value;
     const setting = "badgedetails";
 
-    const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
+    const infoHeader = { "updateSetting": setting, "value": value };
     const url = `/user/update/settings/${setting}`;
 
-    const resp = await callServerAPI(body, url);
+    const resp = await callServerAPIPost(infoHeader, url);
 
     if (resp === true) {
         updateUserInfo();
@@ -284,10 +284,10 @@ async function saveDisplayname() {
 
             fixedDisplayname = fixedDisplayname.trimRight();
 
-            const body = { "authToken": token, "userInfo": user, "newDisplayname": fixedDisplayname };
+            const infoHeader = { "newDisplayname": fixedDisplayname };
             const url = `/user/update/displayname`;
 
-            const resp = await callServerAPI(body, url);
+            const resp = await callServerAPIPost(infoHeader, url);
 
             if (resp === true) {
                 localStorage.clear();
@@ -319,10 +319,10 @@ async function saveUsername() {
 
         if (newUsername.match(letters)) {
 
-            const body = { "authToken": token, "userInfo": user, "newUsername": newUsername };
+            const infoHeader = { "newUsername": newUsername };
             const url = `/user/update/username`;
 
-            const resp = await callServerAPI(body, url);
+            const resp = await callServerAPIPost(infoHeader, url);
 
             if (resp === true) {
                 localStorage.clear();

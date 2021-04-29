@@ -70,10 +70,10 @@ async function loadLeaderboards() {
         }
     };
 
-    const body = { "authToken": token, "userInfo": user, "reps": reps };
+    const infoHeader = { "reps": reps };
     const url = `/users/list/all/leaderboards`;
 
-    const resp = await callServerAPI(body, url);
+    const resp = await callServerAPIPost(infoHeader, url);
 
     if (resp) {
 
@@ -184,10 +184,10 @@ async function getListOfLeaderboard(aLeaderboard) {
 
         list.innerHTML = "";
 
-        const body = { "authToken": token, "userInfo": user, "leaderboard": viewingLeaderboard, "reps": reps };
+        const infoHeader = { "leaderboard": viewingLeaderboard, "reps": reps };
         const url = `/users/list/all/leaderboards/${viewingLeaderboard}`;
 
-        const resp = await callServerAPI(body, url);
+        const resp = await callServerAPIPost(infoHeader, url);
 
         usermsg1.innerHTML = "";
         let leaderboardsUserTxt = "";

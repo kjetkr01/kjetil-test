@@ -138,10 +138,10 @@ async function whatToTrainToday() {
 
     if (token && user) {
 
-        const body = { "authToken": token, "userInfo": user };
+        const infoHeader = {};
         const url = `/user/whatToTrainToday`;
 
-        const resp = await callServerAPI(body, url);
+        const resp = await callServerAPIPost(infoHeader, url);
 
         if (resp) {
 
@@ -197,10 +197,10 @@ async function whoIsWorkingOutToday() {
 
     if (token && user) {
 
-        const body = { "authToken": token, "userInfo": user };
+        const infoHeader = {};
         const url = `/whoIsWorkingOutToday`;
 
-        const resp = await callServerAPI(body, url);
+        const resp = await callServerAPIPost(infoHeader, url);
 
         if (resp) {
             info = resp;

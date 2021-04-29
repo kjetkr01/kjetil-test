@@ -320,10 +320,10 @@ async function saveLiftOrGoal(aType, editOrCreate, aId) {
             isSaving = true;
             respMsg.textContent = "Lagrer...";
 
-            const body = { "authToken": token, "userInfo": user, "info": validateInfo.info };
+            const infoHeader = { "info": validateInfo.info };
             const url = `/user/update/liftOrGoal/:${validateInfo.info}`;
 
-            const resp = await callServerAPI(body, url);
+            const resp = await callServerAPIPost(infoHeader, url);
 
             if (resp === true) {
                 respMsg.textContent = "Lagret!";
@@ -450,10 +450,10 @@ async function deleteLiftOrGoal(aExercise, aType, aId) {
 
         const info = { "exercise": exercise, "type": type, "id": id };
 
-        const body = { "authToken": token, "userInfo": user, "info": info };
+        const infoHeader = { "info": info };
         const url = `/user/delete/liftOrGoal/:${info}`;
 
-        const resp = await callServerAPI(body, url);
+        const resp = await callServerAPIPost(infoHeader, url);
 
         if (resp === true) {
             respMsg.textContent = `${typeMsg} ble slettet!`;
@@ -616,10 +616,10 @@ async function saveTrainingDays() {
     if (trainingDays.length <= allowedDays.length) {
 
         respMsg.textContent = "Lagrer...";
-        const body = { "authToken": token, "userInfo": user, "trainingDays": trainingDays };
+        const infoHeader = { "trainingDays": trainingDays };
         const url = `/user/update/trainingDays/${trainingDays}`;
 
-        const resp = await callServerAPI(body, url);
+        const resp = await callServerAPIPost(infoHeader, url);
 
         if (resp === true) {
             respMsg.textContent = "Lagret!";
