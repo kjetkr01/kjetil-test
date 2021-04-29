@@ -86,6 +86,28 @@ const allowedTrainingDays = require("./arrayLists").allowedTrainingDays;
 
 /* */
 
+const application = {
+     name: "Treningstatistikken",
+     logoURL: "images/appIcon.png",
+     version: {
+          state: "alpha 84%",
+          major: 4, // major++ = minor = 0 && revision = 0
+          minor: 3, // minor++ = revision = 0
+          revision: 17,
+     },
+     lastUpdated: {
+          day: "29",
+          month: "04",
+          year: "2021"
+     },
+     updatesInfo: {
+          showOnGoing: true,
+          showPlanned: true,
+     }
+}
+
+application.version.fullNumber = `${application.version.major}.${application.version.minor}.${application.version.revision}`;
+application.version.full = `Versjon ${application.version.fullNumber} (${application.version.state})`;
 
 // ----------------------------- End Of Module Requirements ----------------------- //
 
@@ -129,6 +151,16 @@ switch (day) {
           dayTxt = "Lørdag";
           break;
 }
+
+//
+
+// -------------------------------  get application details ---------------------- //
+
+server.post("/application", async function (req, res) {
+
+     res.status(200).json(application).end();
+
+});
 
 //
 

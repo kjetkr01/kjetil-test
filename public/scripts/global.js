@@ -710,8 +710,9 @@ function getDaysSinceAndDate(aDate) {
 
 async function updateApplication() {
 
+    deleteAllCaches();
+    updateServiceWorker();
 
-    
 }
 
 function removeServiceWorker() {
@@ -728,16 +729,15 @@ function updateServiceWorker() {
         for (let registration of registrations) {
             registration.update();
         }
-        alert("Updated service workers");
     });
 }
 
 async function deleteAllCaches() {
     const cachesKeys = await caches.keys();
     for (let i = 0; i < cachesKeys.length; i++) {
-        alert(`deleted: ${cachesKeys[i]}`);
         await caches.delete(cachesKeys[i]);
     }
+    location.reload();
 }
 
 // redirect functions

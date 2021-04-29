@@ -354,12 +354,12 @@ function loadProgressionInfoPage() {
     });
 }
 
-function loadAboutAppPage(setting) {
+async function loadAboutAppPage(setting) {
 
     const imageURL = new Image();
     imageURL.src = application.logoURL;
 
-    imageURL.onload = function () {
+    imageURL.onload = async function () {
 
         if (sessionStorage.getItem("currentSetting") === ELoadSettings.aboutApp.name) {
 
@@ -371,16 +371,27 @@ function loadAboutAppPage(setting) {
 
             //document.getElementById("logo").src = application.logoURL;
 
+            let newUpdateTxt = "";
+
+            const body = {};
+            const url = `/application`;
+
+            const serverApplication = await callServerAPI(body, url);
+            if (serverApplication) {
+
+                if (serverApplication.version.fullNumber !== application.version.fullNumber) {
+                    newUpdateTxt = `
+                <br>
+                Nyeste versjon: ${serverApplication.version.fullNumber}<br>
+                <button class="settingsButton" onClick="updateApplication();">Oppdater</button>`;
+                }
+            }
+
             const appInfoHTML = `
             <strong>${application.name}</strong>
             <br>
             <p class="settingsApplicationFullVersion">${application.version.full || application.version.fullNumber || ""}
-            <br>
-            <button onClick="updateServiceWorker();">Oppdater</button>
-            <button onClick="removeServiceWorker();">Fjern</button>
-            <button onClick="deleteAllCaches();">Tøm caches</button>
-            <br>Oppdater
-            
+            ${newUpdateTxt}
             </p>
             `;
 
@@ -399,6 +410,24 @@ function loadAboutAppPage(setting) {
             }
 
             settingsGrid.innerHTML += getCenteredTextTemplate(aboutAppBottomInfo, "", "spacingTop");
+
+            let state = null;
+            if (navigator.serviceWorker) {
+                if (navigator.serviceWorker.controller) {
+                    if (navigator.serviceWorker.controller.state) {
+                        state = navigator.serviceWorker.controller.state;
+                    }
+                }
+            }
+
+            const allCaches = await caches.keys();
+            settingsGrid.innerHTML += getCenteredTextTemplate(`
+            Service Worker State: ${state}
+            <br>
+            ${allCaches}
+            <br>
+            <button class="settingsButton" onClick="deleteAllCaches();">Tøm cache</button>
+            `, "left", "spacingTop");
 
             settingsGrid.innerHTML += getBottomSpacingTemplate();
 
@@ -656,31 +685,7 @@ async function loadAPIPage() {
 
 async function loadPrivacyPage() {
 
-    let state = null;
-
-    if (navigator.serviceWorker) {
-        if (navigator.serviceWorker.controller) {
-            if (navigator.serviceWorker.controller.state) {
-                state = navigator.serviceWorker.controller.state;
-            }
-        }
-    }
-
-    const allCaches = await caches.keys();
-    let cacheTxt = "";
-    if (allCaches.length === 1) {
-        cacheTxt = `Det finnes ${allCaches.length} cache (${allCaches})`;
-    } else {
-        cacheTxt = `Det finnes ${allCaches.length} caches (${allCaches})`;
-    }
-
-    settingsGrid.innerHTML = justTextTemplate(`
-    ${application.name} samler ikke inn data fra brukeren sine.
-    <br>
-    ${cacheTxt}
-    <br>
-    Service Worker State: ${state}
-    `, "left");
+    settingsGrid.innerHTML = justTextTemplate(`${application.name} samler ikke inn data fra brukeren sine.`, "left");
 
     settingsGrid.innerHTML += getCenteredTextTemplate(`
     <button id="detailsAboutMyAccountBtn" class='settingsButton pointer' onClick="displayInformationAboutUser();">Hent mine opplysninger</button>
