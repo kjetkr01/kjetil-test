@@ -349,16 +349,6 @@
 
 <script>
 
-   removeServiceWorker();
-   function removeServiceWorker() {
-      navigator.serviceWorker.getRegistrations().then(function (registrations) {
-         for (let registration of registrations) {
-            registration.unregister();
-         }
-         alert("REMOVED service worker");
-      })
-   }
-
    lockBodyPosition();
    getCreateNewLiftorGoalOverlay();
    getEditLiftorGoalOverlay();

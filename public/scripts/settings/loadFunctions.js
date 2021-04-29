@@ -359,48 +359,54 @@ function loadAboutAppPage(setting) {
     const imageURL = new Image();
     imageURL.src = application.logoURL;
 
-    imageURL.onload = function () {
+    //imageURL.onload = function () {
 
-        if (sessionStorage.getItem("currentSetting") === ELoadSettings.aboutApp.name) {
+    if (sessionStorage.getItem("currentSetting") === ELoadSettings.aboutApp.name) {
 
-            const imageHTML = `
+        const imageHTML = `
             <img id="logo" src="${application.logoURL}" alt="" draggable="false" class="noselect settingsLogo"></img>
             `;
 
-            settingsGrid.innerHTML = justTextTemplate(imageHTML, "center");
+        settingsGrid.innerHTML = justTextTemplate(imageHTML, "center");
 
-            //document.getElementById("logo").src = application.logoURL;
+        //document.getElementById("logo").src = application.logoURL;
 
-            const appInfoHTML = `
+        const appInfoHTML = `
             <strong>${application.name}</strong>
             <br>
-            <p class="settingsApplicationFullVersion">${application.version.full || application.version.fullNumber || ""}</p>
+            <p class="settingsApplicationFullVersion">${application.version.full || application.version.fullNumber || ""}
+            <br>
+            <button onClick="updateServiceWorker();">Oppdater</button>
+            <button onClick="removeServiceWorker();">Fjern</button>
+            <br>Oppdater
+            
+            </p>
             `;
 
-            settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
+        settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
 
-            settingsGrid.innerHTML += getLeftTextTemplate(aboutAppText, "", "spacingTop");
+        settingsGrid.innerHTML += getLeftTextTemplate(aboutAppText, "", "spacingTop");
 
-            if (application.updatesInfo.showOnGoing === true) {
-                settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${ongoingUpdatesText}</button>`, "", "spacingTop");
-                settingsGrid.innerHTML += getLeftTextTemplate(ongoingUpdates);
-            }
-
-            if (application.updatesInfo.showPlanned === true) {
-                settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${plannedUpdatesText}</button>`, "", "spacingTop");
-                settingsGrid.innerHTML += getLeftTextTemplate(plannedUpdates);
-            }
-
-            settingsGrid.innerHTML += getCenteredTextTemplate(aboutAppBottomInfo, "", "spacingTop");
-
-            settingsGrid.innerHTML += getBottomSpacingTemplate();
-
-            scrollToSavedPos(setting);
-            saveNewScrollPos = true;
-
+        if (application.updatesInfo.showOnGoing === true) {
+            settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${ongoingUpdatesText}</button>`, "", "spacingTop");
+            settingsGrid.innerHTML += getLeftTextTemplate(ongoingUpdates);
         }
 
+        if (application.updatesInfo.showPlanned === true) {
+            settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${plannedUpdatesText}</button>`, "", "spacingTop");
+            settingsGrid.innerHTML += getLeftTextTemplate(plannedUpdates);
+        }
+
+        settingsGrid.innerHTML += getCenteredTextTemplate(aboutAppBottomInfo, "", "spacingTop");
+
+        settingsGrid.innerHTML += getBottomSpacingTemplate();
+
+        scrollToSavedPos(setting);
+        saveNewScrollPos = true;
+
     }
+
+    //}
 }
 
 async function loadUsersListPage(setting) {
@@ -654,11 +660,11 @@ async function loadPrivacyPage() {
 
     if (navigator.serviceWorker) {
         if (navigator.serviceWorker.controller) {
-           if (navigator.serviceWorker.controller.state) {
-            state = navigator.serviceWorker.controller.state;
-           }
+            if (navigator.serviceWorker.controller.state) {
+                state = navigator.serviceWorker.controller.state;
+            }
         }
-     }
+    }
 
     settingsGrid.innerHTML = justTextTemplate(`${application.name} samler ikke inn data fra brukeren sine.<br>Din Service Worker Cache Name: ${cacheName} State: ${state}`, "left");
 

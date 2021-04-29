@@ -708,6 +708,24 @@ function getDaysSinceAndDate(aDate) {
 
 //
 
+function removeServiceWorker() {
+    navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        for (let registration of registrations) {
+            registration.unregister();
+        }
+        alert("REMOVED service workers");
+    })
+}
+
+function updateServiceWorker() {
+    navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        for (let registration of registrations) {
+            registration.update();
+        }
+        alert("Updated service workers");
+    })
+}
+
 // redirect functions
 
 function redirectToLogin() {
