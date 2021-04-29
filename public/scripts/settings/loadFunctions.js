@@ -378,6 +378,7 @@ function loadAboutAppPage(setting) {
             <br>
             <button onClick="updateServiceWorker();">Oppdater</button>
             <button onClick="removeServiceWorker();">Fjern</button>
+            <button onClick="deleteAllCaches();">Tøm caches</button>
             <br>Oppdater
             
             </p>

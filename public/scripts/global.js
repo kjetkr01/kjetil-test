@@ -726,6 +726,14 @@ function updateServiceWorker() {
     })
 }
 
+async function deleteAllCaches() {
+    const cachesKeys = await caches.keys();
+    for (let i = 0; i < cachesKeys.length; i++) {
+        alert(`deleted: ${cachesKeys[i]}`);
+        await caches.delete(cachesKeys[i]);
+    }
+}
+
 // redirect functions
 
 function redirectToLogin() {
