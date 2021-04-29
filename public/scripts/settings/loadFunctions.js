@@ -78,22 +78,22 @@ async function loadDefaultPage(setting) {
 
     settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.aboutMe.name, "aboutDiv", "spacingTop");
 
-    if (settings.publicProfile === true) {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Privat profil", "profileVisibilityDiv", true, "publicProfile", "spacingTop");
+    if (settings.publicprofile === true) {
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Offentlig profil", "profileVisibilityDiv", true, "publicprofile", "spacingTop");
     } else {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Privat profil", "profileVisibilityDiv", false, "publicProfile", "spacingTop");
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Offentlig profil", "profileVisibilityDiv", false, "publicprofile", "spacingTop");
     }
 
-    if (settings.displayLeaderboards === true) {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Ledertavler synlighet", "leaderboardsVisibilityDiv", true, "displayLeaderboards");
+    if (settings.displayleaderboards === true) {
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Ledertavler synlighet", "leaderboardsVisibilityDiv", true, "displayleaderboards");
     } else {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Ledertavler synlighet", "leaderboardsVisibilityDiv", false, "displayLeaderboards");
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Ledertavler synlighet", "leaderboardsVisibilityDiv", false, "displayleaderboards");
     }
 
-    if (settings.displayWorkoutList === true) {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", "workoutTodayListDiv", true, "displayWorkoutList");
+    if (settings.displayworkoutlist === true) {
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", "workoutTodayListDiv", true, "displayworkoutlist");
     } else {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", "workoutTodayListDiv", false, "displayWorkoutList");
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", "workoutTodayListDiv", false, "displayworkoutlist");
     }
 
     settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.apperance.name, "appearanceDiv", "spacingTop");
@@ -166,9 +166,42 @@ function loadAboutMePage() {
     settingsGrid.innerHTML += getTemplate("Høyde", "", `<input id="heightInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.height}' type="number">cm</input>`, "spacingTop");
     settingsGrid.innerHTML += getTemplate("Vekt", "", `<input id="weightInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.weight}' type="number">kg</input>`);
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(`<button id="updateAboutMeBtn" class='settingsButton' onClick="updateAboutMe();">Oppdater detaljer</button>`, "", "spacingTop");
+    settingsGrid.innerHTML += getCenteredTextTemplate(`<button id="updateAboutMeBtn" class='settingsButton' onClick="aboutMeResetValues();">Tilbakestill verdier</button>`, "", "spacingTop");
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="aboutMeResetValues();">Tilbakestill verdier</button>`, "", "spacingTop");
+    const checkIfEdited = setInterval(() => {
+
+        if (!document.getElementById("gymInp") || isUpdatingAboutMe === true) {
+            clearInterval(checkIfEdited);
+        } else {
+
+            const updateAboutMeBtn = document.getElementById("updateAboutMeBtn");
+            const gymInp = document.getElementById("gymInp").value;
+            const ageInp = document.getElementById("ageInp").value;
+            const heightInp = document.getElementById("heightInp").value;
+            const weightInp = document.getElementById("weightInp").value;
+
+            const updateTxt = "Oppdater detaljer";
+            const resetTxt = "Tilbakestill verdier";
+
+            const change =
+                gymInp !== userInfo.info.gym
+                ||
+                ageInp !== userInfo.info.age.toString()
+                ||
+                heightInp !== userInfo.info.height.toString()
+                ||
+                weightInp !== userInfo.info.weight.toString();
+
+            if (change === false && updateAboutMeBtn.innerHTML !== resetTxt) {
+                updateAboutMeBtn.innerHTML = resetTxt;
+                updateAboutMeBtn.setAttribute("onClick", "aboutMeResetValues();");
+            } else if (change === true && updateAboutMeBtn.innerHTML !== updateTxt) {
+                updateAboutMeBtn.innerHTML = updateTxt;
+                updateAboutMeBtn.setAttribute("onClick", "updateAboutMe();");
+            }
+        }
+
+    }, 1000);
 
     settingsGrid.innerHTML += getBottomSpacingTemplate();
 }
@@ -245,8 +278,8 @@ function loadProgressionInfoPage() {
     settingsGrid.innerHTML = justTextTemplate("Her kan du endre hvor mye informasjon du ønsker å se på startsiden!", "left");
 
     const badgeSizesObj = {
-        0: { name: "Liten", value: "0" },
-        1: { name: "Stor", value: "1" }
+        0: { name: "Liten", value: 0 },
+        1: { name: "Stor", value: 1 }
     }
 
     let badeSizeOptionsHTML = "";
@@ -257,7 +290,7 @@ function loadProgressionInfoPage() {
 
         const badge = badgeSizesObj[badgeSizesObjKeys[i]];
 
-        if (badge.value === settings.badgeSize) {
+        if (badge.value === settings.badgesize) {
             badeSizeOptionsHTML += `<option selected="selected" value="${badge.value}">${badge.name}</option>`;
         } else {
             badeSizeOptionsHTML += `<option value="${badge.value}">${badge.name}</option>`;
@@ -274,34 +307,39 @@ function loadProgressionInfoPage() {
 
     /* */
 
-    const badgeInfoObj = {
-        0: { name: "Alt", value: "0" },
-        1: { name: "KG igjen", value: "1" },
-        2: { name: "% fremgang", value: "2" }
+    const badgeDetailsObj = {
+        0: { name: "Alt", value: 0 },
+        1: { name: "KG igjen", value: 1 },
+        2: { name: "% fremgang", value: 2 }
     }
 
-    let badeInfoOptionsHTML = "";
+    let badgeDetailsOptionsHTML = "";
 
-    const badgeInfoObjKeys = Object.keys(badgeInfoObj);
+    const badgeDetailsObjKeys = Object.keys(badgeDetailsObj);
 
-    for (let i = 0; i < badgeInfoObjKeys.length; i++) {
+    for (let i = 0; i < badgeDetailsObjKeys.length; i++) {
 
-        const badge = badgeInfoObj[badgeInfoObjKeys[i]];
+        const badge = badgeDetailsObj[badgeDetailsObjKeys[i]];
 
-        if (badge.value === settings.badgeInfo) {
-            badeInfoOptionsHTML += `<option selected="selected" value="${badge.value}">${badge.name}</option>`;
+        if (badge.value === settings.badgedetails) {
+            badgeDetailsOptionsHTML += `<option selected="selected" value="${badge.value}">${badge.name}</option>`;
         } else {
-            badeInfoOptionsHTML += `<option value="${badge.value}">${badge.name}</option>`;
+            badgeDetailsOptionsHTML += `<option value="${badge.value}">${badge.name}</option>`;
         }
     }
 
-    const badgeInfoHTML = `
-    <select id="badeInfoSelection">
-       ${badeInfoOptionsHTML}
+    let disabledTxt = "";
+    if (settings.badgesize === badgeSizesObj[0].value) {
+        disabledTxt = "disabled";
+    }
+
+    const badgeDetailsHTML = `
+    <select ${disabledTxt} id="badgeDetailsSelection">
+       ${badgeDetailsOptionsHTML}
     </select>
     `;
 
-    settingsGrid.innerHTML += getTemplate("Informasjon", "badeInfoInp", badgeInfoHTML);
+    settingsGrid.innerHTML += getTemplate("Informasjon", "badgeDetailsInp", badgeDetailsHTML);
 
     //settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="alert('saveDetails');">Lagre endringer</button>`, "", "spacingTop");
 
@@ -311,17 +349,17 @@ function loadProgressionInfoPage() {
         updateBadgeSize();
     });
 
-    document.getElementById("badeInfoSelection").addEventListener("change", function (evt) {
-        console.log("changed badeInfoSelection");
+    document.getElementById("badgeDetailsSelection").addEventListener("change", function (evt) {
+        updateBadgeDetails();
     });
 }
 
-function loadAboutAppPage(setting) {
+async function loadAboutAppPage(setting) {
 
     const imageURL = new Image();
     imageURL.src = application.logoURL;
 
-    imageURL.onload = function () {
+    imageURL.onload = async function () {
 
         if (sessionStorage.getItem("currentSetting") === ELoadSettings.aboutApp.name) {
 
@@ -333,10 +371,28 @@ function loadAboutAppPage(setting) {
 
             //document.getElementById("logo").src = application.logoURL;
 
+            let newUpdateTxt = "";
+
+            const body = {};
+            const url = `/application`;
+
+            const serverApplication = await callServerAPI(body, url);
+            if (serverApplication) {
+
+                if (serverApplication.version.fullNumber !== application.version.fullNumber) {
+                    newUpdateTxt = `
+                <br>
+                Nyeste versjon: ${serverApplication.version.fullNumber}<br>
+                <button class="settingsButton" onClick="updateApplication();">Oppdater</button>`;
+                }
+            }
+
             const appInfoHTML = `
             <strong>${application.name}</strong>
             <br>
-            <p class="settingsApplicationFullVersion">${application.version.full || application.version.fullNumber || ""}</p>
+            <p class="settingsApplicationFullVersion">${application.version.full || application.version.fullNumber || ""}
+            ${newUpdateTxt}
+            </p>
             `;
 
             settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
@@ -355,13 +411,30 @@ function loadAboutAppPage(setting) {
 
             settingsGrid.innerHTML += getCenteredTextTemplate(aboutAppBottomInfo, "", "spacingTop");
 
+            let state = null;
+            if (navigator.serviceWorker) {
+                if (navigator.serviceWorker.controller) {
+                    if (navigator.serviceWorker.controller.state) {
+                        state = navigator.serviceWorker.controller.state;
+                    }
+                }
+            }
+
+            const allCaches = await caches.keys();
+            settingsGrid.innerHTML += getCenteredTextTemplate(`
+            Service Worker State: ${state}
+            <br>
+            ${allCaches}
+            <br>
+            <button class="settingsButton" onClick="deleteAllCaches();removeServiceWorker();">Tøm cache/unregister</button>
+            `, "left", "spacingTop");
+
             settingsGrid.innerHTML += getBottomSpacingTemplate();
 
             scrollToSavedPos(setting);
             saveNewScrollPos = true;
 
         }
-
     }
 }
 
@@ -411,7 +484,7 @@ async function loadUsersListPage(setting) {
 
                 const currentUser = resp.allUsers[usersKeys[i]];
                 let myAccountColor = "";
-                let profileStatus = `<p class="settingsPendingUsername" style="color:green;">Offentlig</p>`;
+                let profileStatus = `<p class="settingsPendingUsername" style="color:red;">Privat</p>`;
 
                 let hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsAcceptPendingUser pointer" onClick="giveAPIAccess('${currentUser.username}','${currentUser.id}');">Gi API tilgang</button>`;
 
@@ -419,8 +492,8 @@ async function loadUsersListPage(setting) {
                     hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsDeclinePendingUser pointer" onClick="removeAPIAccess('${currentUser.username}','${currentUser.id}');">Fjern API tilgang</button>`;
                 }
 
-                if (currentUser.settings.publicProfile === true) {
-                    profileStatus = `<p class="settingsPendingUsername" style="color:red;">Privat</p>`;
+                if (currentUser.publicprofile === true) {
+                    profileStatus = `<p class="settingsPendingUsername" style="color:green;">Offentlig</p>`;
                 }
 
                 if (currentUser.username === username) {
@@ -499,7 +572,8 @@ async function loadPendingUsersPage(setting) {
             if (resp[i].request_date) {
 
                 let requestDate = resp[i].request_date;
-                requestDate = requestDate.split("-");
+                requestDate = requestDate.split("T");
+                requestDate = requestDate[0].split("-");
 
                 if (requestDate[0].length === 4 && requestDate[1] > 0 && requestDate[1] <= 12 && requestDate[1].length <= 2 && requestDate[2] > 0 && requestDate[2] <= 31 && requestDate[2].length <= 2) {
 
@@ -613,9 +687,12 @@ async function loadPrivacyPage() {
 
     settingsGrid.innerHTML = justTextTemplate(`${application.name} samler ikke inn data fra brukeren sine.`, "left");
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="displayInformationAboutUser();">Hent mine opplysninger (JSON)</button><p id="informationAboutUser" style="text-align:left;"></p>`, "", "borderTop");
+    settingsGrid.innerHTML += getCenteredTextTemplate(`
+    <button id="detailsAboutMyAccountBtn" class='settingsButton pointer' onClick="displayInformationAboutUser();">Hent mine opplysninger</button>
+    <p id="informationAboutUser" style="text-align:left;"></p>
+    `, "", "borderTop");
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="loadSetting('${ELoadSettings.deleteMe.name}');">Gå til sletting av konto</button>`, "", "spacingTop");
+    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton pointer' onClick="loadSetting('${ELoadSettings.deleteMe.name}');">Gå til sletting av konto</button>`, "", "spacingTop");
 
     settingsGrid.innerHTML += getBottomSpacingTemplate();
 

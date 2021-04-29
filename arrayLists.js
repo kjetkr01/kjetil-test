@@ -1,8 +1,8 @@
 //allowedLifts
-module.exports.allowedLifts = ["Benkpress", "Knebøy", "Markløft", "Skulderpress"];
+module.exports.allowedLifts = ["benkpress", "knebøy", "markløft", "skulderpress"];
 
 //allowedGoals
-module.exports.allowedGoals = ["Benkpress", "Knebøy", "Markløft", "Skulderpress"];
+module.exports.allowedGoals = ["benkpress", "knebøy", "markløft", "skulderpress"];
 
 //badgeColors
 const gradientTxt = "(gradient)";
@@ -20,3 +20,14 @@ module.exports.badgeColors = {
 
 //allowedTrainingDays
 module.exports.allowedTrainingDays = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"];
+
+
+//maximum allowed lifts
+module.exports.maxLifts = {
+    default: 25
+};
+
+//maximum allowed goals
+module.exports.maxGoals = {
+    default: 25
+};

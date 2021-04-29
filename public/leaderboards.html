@@ -150,15 +150,25 @@
 
 <script>
 
+   if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+   }
+
    lockBodyPosition();
    loadLeaderboards();
 
    const list = document.getElementById("peopleLeaderboardsList");
    const usermsg1 = document.getElementById("GpeopleLeaderboardsTxt");
+   const GlistOfLeaderboards = document.getElementById("GlistOfLeaderboards");
 
    setInterval(() => {
       checkConnection("c6r2");
-   }, 5000);
+   }, 1000);
+
+   GlistOfLeaderboards.addEventListener("scroll", function () {
+      const scrollX = GlistOfLeaderboards.scrollLeft;
+      sessionStorage.setItem("leaderboards_scrollX", scrollX);
+   });
 
 </script>
 

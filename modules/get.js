@@ -9,18 +9,18 @@ async function getListOfUsers(username) {
     }
 }
 
-async function getListOfLeaderboards() {
+async function getListOfLeaderboards(reps) {
     try {
-        const resp = await database.getListOfLeaderboards();
+        const resp = await database.getListOfLeaderboards(reps);
         return resp;
     } catch (error) {
         console.error(error);
     }
 }
 
-async function getListOfUsersLeaderboard(leaderboard) {
+async function getListOfUsersLeaderboard(leaderboard, reps) {
     try {
-        const resp = await database.getListOfUsersLeaderboard(leaderboard);
+        const resp = await database.getListOfUsersLeaderboard(leaderboard, reps);
         return resp;
     } catch (error) {
         console.error(error);

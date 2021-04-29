@@ -1,5 +1,4 @@
 // update password
-
 async function updatePassword() {
 
     const exsistingPsw = document.getElementById("exsistingPsw").value;
@@ -86,8 +85,9 @@ async function updateAboutMe() {
         document.getElementById("updateAboutMeBtn").innerHTML = data;
 
         setTimeout(() => {
-            location.reload();
-        }, 5000);
+            updateUserInfo();
+            isUpdatingAboutMe = false;
+        }, 2000);
     }
 }
 
@@ -136,7 +136,7 @@ async function savePreferredApperance() {
         isUpdatingCheckboxSetting = true;
 
         const value = document.getElementById("appearanceThemeSelection").value;
-        const setting = "preferredTheme";
+        const setting = "preferredtheme";
 
         const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
         const url = `/user/update/settings/${setting}`;
@@ -188,7 +188,7 @@ async function saveColorTheme() {
         isUpdatingCheckboxSetting = true;
 
         const value = document.getElementById("themeColorSelection").value;
-        const setting = "preferredColorTheme";
+        const setting = "preferredcolortheme";
 
         const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
         const url = `/user/update/settings/${setting}`;
@@ -226,7 +226,7 @@ async function saveColorTheme() {
 async function updateBadgeSize() {
 
     const value = document.getElementById("badgeSizeSelection").value;
-    const setting = "badgeSize";
+    const setting = "badgesize";
 
     const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
     const url = `/user/update/settings/${setting}`;
@@ -236,7 +236,20 @@ async function updateBadgeSize() {
     if (resp === true) {
         updateUserInfo();
     }
+}
 
+async function updateBadgeDetails() {
+    const value = document.getElementById("badgeDetailsSelection").value;
+    const setting = "badgedetails";
+
+    const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
+    const url = `/user/update/settings/${setting}`;
+
+    const resp = await callServerAPI(body, url);
+
+    if (resp === true) {
+        updateUserInfo();
+    }
 }
 
 async function saveDisplayname() {

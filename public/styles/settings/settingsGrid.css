@@ -4,6 +4,10 @@
 font-family: var(--main-font-Family-Verdana);
 }
 
+select {
+outline: none;
+}
+
 /*@media only screen and (max-width: 1024px) {*/ /* 768px var før, men passer bedre med 1024px for ipad */
 
 /* grid */

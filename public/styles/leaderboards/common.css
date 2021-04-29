@@ -47,6 +47,7 @@ border-top: 1px #75757585 solid;
 
 .leaderboardsList {
 word-break: keep-all;
+white-space: nowrap;
 margin-right: 10px;
 font-size: 16px;
 font-weight: bold;
@@ -88,3 +89,17 @@ fill: #CD7F32;
 }
 
 /* end of mobile & desktop */
+
+.changeLeaderboardRepsSelect {
+font-size: 16px;
+/*color: var(--main-accountOwnerColor);*/
+color: var(--main-textColorDark);
+/*font-weight: bold;*/
+font-family: var(--main-font-Family-Verdana);
+appearance: none;
+-webkit-appearance: none;
+-moz-appearance: none;
+border: none;
+outline: none;
+background-color: var(--main-backgroundColor2);
+}

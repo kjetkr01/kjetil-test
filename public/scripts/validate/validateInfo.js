@@ -93,7 +93,7 @@ async function login(username, password, rmbrMe) {
 
             const body = { "authorization": "Basic " + window.btoa(`${username}:${password}`) };
 
-            const url = `/autenticate`;
+            const url = `/authenticate`;
 
             const resp = await callServerAPI(body, url);
 

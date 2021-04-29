@@ -125,7 +125,7 @@ function partOfDayMessage(displayName) {
         message = `God ${partOfDay}.`;
     }
 
-    return {"message": message, "firstName": firstName};
+    return { "message": message, "firstName": firstName };
 }
 
 

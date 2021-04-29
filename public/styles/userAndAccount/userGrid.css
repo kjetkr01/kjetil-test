@@ -35,7 +35,7 @@ grid-template-rows: /* nedover */
 
 auto /* GbadgesLifts */
 
-30px /* c8r1 */
+0px /* c8r1 */
 
 
 50px /* Ggoals */
@@ -44,7 +44,7 @@ auto /* GbadgesLifts */
 
 auto /* GbadgesGoals */
 
-30px /* c9r1 */
+0px /* c9r1 */
 
 
 50px /* Gtrainingsplit */
@@ -53,7 +53,7 @@ auto /* GbadgesGoals */
 
 auto /* GbadgesTrainingsplit */
 
-30px /* c10r1 */
+0px /* c10r1 */
 
 auto /* GmemberSince */
 ;
@@ -105,7 +105,6 @@ margin-right: 20px;
 
 #lineLifts, #lineGoals, #lineTrainingsplit {
 opacity: 40%;
-border: 1px #757575 thin;
 margin-top: 10px;
 margin-bottom: 10px;
 text-align: center;
@@ -117,7 +116,8 @@ margin-right: auto;
 #badgesLifts, #badgesGoals, #badgesTrainingsplit {
 margin-left: 12px;
 margin-right: 12px;
-margin-bottom: 20px;
+margin-top: 5px;
+margin-bottom: 35px;
 }
 
 #lifts, #goals, #trainingsplit {
@@ -130,14 +130,13 @@ font-family: var(--main-font-Family-Verdana);
 }
 
 #GmemberSince > #memberSince{
-font-size: 15px;
+font-size: 14px;
 margin-top: 20px;
 margin-bottom: 20px;
 margin-left: 20px;
 margin-right: 20px;
 text-align: center;
 color:var(--main-textColorDark);
-font-weight: bold;
 font-family: var(--main-font-Family-Verdana);
 }
 
@@ -206,3 +205,18 @@ overflow-x: scroll;
 /* end of spacing & other */
 
 /*}*/
+
+
+.changeFilterSelect {
+font-size: 20px;
+/*color: var(--main-accountOwnerColor);*/
+color: var(--main-textColorDark);
+/*font-weight: bold;*/
+font-family: var(--main-font-Family-Verdana);
+appearance: none;
+-webkit-appearance: none;
+-moz-appearance: none;
+border: none;
+outline: none;
+background-color: var(--main-backgroundColor2);
+}

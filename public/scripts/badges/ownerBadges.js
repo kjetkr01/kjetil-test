@@ -1,18 +1,34 @@
-function getBadgeGoals(aSize, aBadgeInfo) {
+let showLiftBadgeAnimations = true;
+let showGoalBadgeAnimations = true;
+let showTrainingsplitBadgeAnimations = true;
+
+const animationClasses = "fadeInLeft animate"
+let liftBadgeAnimations = "";
+let goalBadgeAnimations = "";
+let trainingsplitBadgeAnimations = "";
+
+function getBadgeGoals(aSize, aBadgeInfo, aId) {
     try {
 
-        if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.exercise && aBadgeInfo.kg && aBadgeInfo.kgLeft && aBadgeInfo.msg) {
+        if (showGoalBadgeAnimations === false) {
+            goalBadgeAnimations = "";
+        } else {
+            goalBadgeAnimations = animationClasses;
+        }
+
+        if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.exercise && aBadgeInfo.kg && aBadgeInfo.kgLeft && aBadgeInfo.msg && aId) {
 
             const size = aSize;
             const badgeInfo = aBadgeInfo;
+            const id = aId;
 
             switch (size) {
                 case 0:
-                    return smallBadge(badgeInfo);
+                    return smallBadge(badgeInfo, id);
                 case 1:
-                    return bigBadge(badgeInfo);
+                    return bigBadge(badgeInfo, id);
                 default:
-                    return smallBadge(badgeInfo);
+                    return smallBadge(badgeInfo, id);
             }
 
         } else {
@@ -27,11 +43,11 @@ function getBadgeGoals(aSize, aBadgeInfo) {
 
     // bigBadge with goal
 
-    function bigBadge(userBadgeInfo) {
+    function bigBadge(userBadgeInfo, aId) {
 
         const badgeTemplate = `
 <td>
-<div class="bigBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('goal', '${userBadgeInfo.exercise}');">
+<div class="bigBadges ${goalBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('goal', '${userBadgeInfo.exercise}', '${aId}');">
 
 
 
@@ -109,11 +125,11 @@ Nærmer deg!
 
     // smallBadge with goal
 
-    function smallBadge(userBadgeInfo) {
+    function smallBadge(userBadgeInfo, aId) {
 
         const badgeTemplate = `
 <td>
-<div class="smallBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('goal', '${userBadgeInfo.exercise}');">
+<div class="smallBadges ${goalBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('goal', '${userBadgeInfo.exercise}', '${aId}');">
 
 <div id="Gexercise">
 <p id="exercise">
@@ -150,7 +166,7 @@ ${userBadgeInfo.msg}
 
         const badgeTemplate = `
 <td>
-<div class="smallBadges fadeInLeft animate emptyBadge pointer" onClick="enableOverlayCreate('goal')">
+<div class="smallBadges ${goalBadgeAnimations} emptyBadge pointer" onClick="enableOverlayCreate('goal')">
 
 
 
@@ -198,21 +214,29 @@ nytt mål
 
 
 
-function getBadgeLift(aSize, aBadgeInfo) {
+function getBadgeLift(aSize, aBadgeInfo, aId) {
 
     try {
-        if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.exercise && aBadgeInfo.kg && aBadgeInfo.msg) {
+
+        if (showLiftBadgeAnimations === false) {
+            liftBadgeAnimations = "";
+        } else {
+            liftBadgeAnimations = animationClasses;
+        }
+
+        if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.exercise && aBadgeInfo.kg && aBadgeInfo.msg && aId) {
 
             const size = aSize;
             const badgeInfo = aBadgeInfo;
+            const id = aId;
 
             switch (size) {
                 case 0:
-                    return smallBadge(badgeInfo);
+                    return smallBadge(badgeInfo, id);
                 case 1:
-                    return bigBadge(badgeInfo);
+                    return bigBadge(badgeInfo, id);
                 default:
-                    return smallBadge(badgeInfo);
+                    return smallBadge(badgeInfo, id);
             }
 
         } else {
@@ -227,11 +251,11 @@ function getBadgeLift(aSize, aBadgeInfo) {
 
     // bigBadge with lift
 
-    function bigBadge(userBadgeInfo) {
+    function bigBadge(userBadgeInfo, aId) {
 
         const badgeTemplate = `
 <td>
-<div class="bigBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}');">
+<div class="bigBadges ${liftBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}', '${aId}');">
 
 
 
@@ -309,11 +333,11 @@ Nærmer deg!
 
     // smallBadge with lift
 
-    function smallBadge(userBadgeInfo) {
+    function smallBadge(userBadgeInfo, aId) {
 
         const badgeTemplate = `
 <td>
-<div class="smallBadges fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}');">
+<div class="smallBadges ${liftBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}', '${aId}');">
 
 <!--
 <div id="c1b"></div>
@@ -359,7 +383,7 @@ ${userBadgeInfo.msg}
 
         const badgeTemplate = `
 <td>
-<div class="smallBadges fadeInLeft animate emptyBadge pointer" onClick="enableOverlayCreate('lift')">
+<div class="smallBadges ${liftBadgeAnimations} emptyBadge pointer" onClick="enableOverlayCreate('lift')">
 
 
 
@@ -405,6 +429,13 @@ nytt løft
 function getBadgeTrainingsplit(aSize, aBadgeInfo) {
 
     try {
+
+        if (showTrainingsplitBadgeAnimations === false) {
+            trainingsplitBadgeAnimations = "";
+        } else {
+            trainingsplitBadgeAnimations = animationClasses;
+        }
+
         if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.day && aBadgeInfo.trainingsplit) {
 
             const size = aSize;
@@ -435,7 +466,7 @@ function getBadgeTrainingsplit(aSize, aBadgeInfo) {
 
         const badgeTemplate = `
 <td>
-<div class="bigBadges fadeInLeft animate ${aBadgeInfo.color} pointer">
+<div class="bigBadges ${trainingsplitBadgeAnimations} ${aBadgeInfo.color} pointer">
 
 
 
@@ -517,7 +548,7 @@ Nærmer deg!
 
         const badgeTemplate = `
 <td>
-<div class="smallBadgesTrainingsplit fadeInLeft animate ${aBadgeInfo.color} pointer">
+<div class="smallBadgesTrainingsplit ${trainingsplitBadgeAnimations} ${aBadgeInfo.color} pointer">
 
 <div id="Gday">
 <p id="day">
@@ -549,7 +580,7 @@ ${aBadgeInfo.trainingsplit}
 
         const badgeTemplate = `
         <td>
-        <div class="smallBadgesTrainingsplit fadeInLeft animate emptyBadge pointer" onClick="enableOverlayEditDays();">
+        <div class="smallBadgesTrainingsplit ${trainingsplitBadgeAnimations} emptyBadge pointer" onClick="enableOverlayEditDays();">
         
         <div id="Gday">
         <p id="day">

@@ -86,6 +86,28 @@ const allowedTrainingDays = require("./arrayLists").allowedTrainingDays;
 
 /* */
 
+const application = {
+     name: "Treningstatistikken",
+     logoURL: "images/appIcon.png",
+     version: {
+          state: "alpha 84%",
+          major: 4, // major++ = minor = 0 && revision = 0
+          minor: 3, // minor++ = revision = 0
+          revision: 20,
+     },
+     lastUpdated: {
+          day: "29",
+          month: "04",
+          year: "2021"
+     },
+     updatesInfo: {
+          showOnGoing: true,
+          showPlanned: true,
+     }
+}
+
+application.version.fullNumber = `${application.version.major}.${application.version.minor}.${application.version.revision}`;
+application.version.full = `Versjon ${application.version.fullNumber} (${application.version.state})`;
 
 // ----------------------------- End Of Module Requirements ----------------------- //
 
@@ -99,8 +121,8 @@ const minCharLength = 3;
 const APIErrorJSON = {
      catch: { error: "Det har oppstått et problem!" },
      access: { error: "Ingen tilgang" },
-     workoutplan: { error: "Brukeren kan ingen treningsplan" },
-     lift: { error: "Brukeren har ikke alle løftene for å regne ut totalen (Benkpress, Knebøy og Markløft)" },
+     workoutplan: { error: "Brukeren har ingen treningsplan" },
+     lift: { error: "Brukeren har ikke alle nødvendige løft for å regne ut totalen. Må ha 1 rep av Benkpress, Knebøy og Markløft" },
 }
 
 const day = new Date().getDay();
@@ -132,6 +154,16 @@ switch (day) {
 
 //
 
+// -------------------------------  get application details ---------------------- //
+
+server.post("/application", async function (req, res) {
+
+     res.status(200).json(application).end();
+
+});
+
+//
+
 // -------------------------------  ask for access / new user ---------------------- //
 
 server.post("/access", async function (req, res) {
@@ -160,9 +192,9 @@ server.post("/access", async function (req, res) {
 
 
 
-// -------------------------------  login / autenticate user ---------------------- //
+// -------------------------------  login / authenticate user ---------------------- //
 
-server.post("/autenticate", async function (req, res) {
+server.post("/authenticate", async function (req, res) {
 
      const credentials = req.body.authorization.split(' ')[1];
      const [username, password] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
@@ -180,7 +212,7 @@ server.post("/autenticate", async function (req, res) {
                     "id": requestUser.userInfo.id,
                     "username": requestUser.userInfo.username,
                     "displayname": requestUser.userInfo.displayname,
-                    "preferredColorTheme": requestUser.userInfo.settings.preferredColorTheme,
+                    "preferredColorTheme": requestUser.userInfo.preferredcolortheme,
                }
                const sessionToken = createToken(requestUser.userInfo);
                res.status(200).json({ "authToken": sessionToken, "user": userInfo }).end();
@@ -234,11 +266,13 @@ server.post("/users/list/all", auth, async (req, res) => {
 
 server.post("/users/list/all/leaderboards", auth, async (req, res) => {
 
-     const resp = await getListOfLeaderboards();
+     const reps = req.body.reps || "1";
+
+     const resp = await getListOfLeaderboards(reps);
 
      if (resp.status === true) {
 
-          res.status(200).json(resp.leaderboards).end();
+          res.status(200).json({ "leaderboards": resp.leaderboards, "repsList": resp.repsList }).end();
 
      } else {
           res.status(403).json(`Feil, prøv igjen`).end();
@@ -253,10 +287,11 @@ server.post("/users/list/all/leaderboards", auth, async (req, res) => {
 server.post("/users/list/all/leaderboards/:leaderboard", auth, async (req, res) => {
 
      const leaderboard = req.body.leaderboard;
+     const reps = req.body.reps || "1";
 
      if (leaderboard) {
 
-          const listOfUsersLeaderboard = await getListOfUsersLeaderboard(leaderboard);
+          const listOfUsersLeaderboard = await getListOfUsersLeaderboard(leaderboard, reps);
 
           if (listOfUsersLeaderboard) {
 
@@ -384,19 +419,28 @@ server.post("/users/details/:user", auth, async (req, res) => {
                if (resp.status === true) {
                     if (resp.userDetails !== false) {
 
+                         const cacheDetails = {
+                              "displayname": resp.userDetails.displayname,
+                              "gym": resp.userDetails.info.gym,
+                              "age": resp.userDetails.info.age,
+                              "height": resp.userDetails.info.height,
+                              "weight": resp.userDetails.info.weight,
+                              "member_since": resp.userDetails.member_since
+                         }
+
                          if (viewingUser === userID) {
 
                               const updatedUserInfo = {
                                    "id": resp.userDetails.id,
                                    "username": resp.userDetails.username,
                                    "displayname": resp.userDetails.displayname,
-                                   "preferredColorTheme": resp.userDetails.settings.preferredColorTheme,
-                                   "preferredTheme": resp.userDetails.settings.preferredTheme
+                                   "preferredColorTheme": resp.userDetails.settings.preferredcolortheme,
+                                   "preferredTheme": resp.userDetails.settings.preferredtheme
                               }
 
-                              res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo }).end();
+                              res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo, "cacheDetails": cacheDetails }).end();
                          } else {
-                              res.status(200).json({ "info": resp.userDetails }).end();
+                              res.status(200).json({ "info": resp.userDetails, "cacheDetails": cacheDetails }).end();
                          }
 
                     } else {
@@ -459,7 +503,7 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
      const setting = req.body.updateSetting;
      const value = req.body.value;
 
-     const allowedSettings = ["publicProfile", "displayLeaderboards", "displayWorkoutList", "preferredTheme", "preferredColorTheme", "badgeSize"];
+     const allowedSettings = ["publicprofile", "displayleaderboards", "displayworkoutlist", "preferredtheme", "preferredcolortheme", "badgesize", "badgedetails"];
      const allowedValues = [true, false, "0", "1", "2"];
 
      if (currentUser.username && allowedSettings.includes(setting) && allowedValues.includes(value)) {
@@ -630,7 +674,7 @@ server.post("/user/update/settings/about/me", auth, async (req, res) => {
                const resp = await updateAboutMe(currentUser.username, updateSettings);
 
                if (resp === true) {
-                    res.status(200).json("Endringer er blitt oppdatert!").end();
+                    res.status(200).json("Endringer har blitt oppdatert!").end();
                } else {
                     res.status(403).json("error, try again").end();
                }
@@ -654,7 +698,7 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
      const info = req.body.info;
      const currentUser = JSON.parse(req.body.userInfo);
 
-     if (currentUser.username && info.exercise && info.kg && info.date && info.type === "lift" || info.type === "goal") {
+     if (currentUser.id && info.exercise && info.kg && info.date && info.type === "lift" || info.type === "goal") {
 
           let isValid = false;
 
@@ -685,7 +729,15 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
           }
 
           if (isValid === true) {
-               const saveLiftOrGoalResp = await saveLiftOrGoal(currentUser.username, info.exercise, info.kg, info.date, info.type, color);
+               if (info.reps > 0) {
+                    info.reps = info.reps.toString();
+               } else {
+                    isValid = false;
+               }
+          }
+
+          if (isValid === true) {
+               const saveLiftOrGoalResp = await saveLiftOrGoal(currentUser.id, info, color);
                res.status(200).json(saveLiftOrGoalResp).end();
           } else {
                res.status(403).json("invalid information").end();
@@ -705,7 +757,7 @@ server.post("/user/delete/liftOrGoal/:info", auth, async (req, res) => {
      const info = req.body.info;
      const currentUser = JSON.parse(req.body.userInfo);
 
-     if (currentUser.username && info.exercise && info.type === "lift" || info.type === "goal") {
+     if (currentUser.id && info.exercise && info.type === "lift" || info.type === "goal") {
 
           let isValid = false;
 
@@ -726,7 +778,7 @@ server.post("/user/delete/liftOrGoal/:info", auth, async (req, res) => {
           }
 
           if (isValid === true) {
-               const saveLiftOrGoalResp = await deleteLiftOrGoal(currentUser.username, info.exercise, info.type);
+               const saveLiftOrGoalResp = await deleteLiftOrGoal(currentUser.id, info);
                res.status(200).json(saveLiftOrGoalResp).end();
           } else {
                res.status(403).json("invalid information").end();
@@ -943,44 +995,39 @@ server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
 
                if (getWorkoutPlanInfo.status === true) {
 
-                    const program = getWorkoutPlanInfo.info.trainingsplit;
+                    const workout = getWorkoutPlanInfo.info.workout;
                     let firstName = getWorkoutPlanInfo.info.displayname
                     firstName = firstName.split(" ");
                     firstName = firstName[0];
 
                     let workoutTxt = "";
 
-                    if (Object.keys(program).length === 0) {
-                         res.status(200).json(APIErrorJSON.workoutplan).end();
+                    if (getWorkoutPlanInfo.isOwner === true) {
+
+                         if (workout && workout.length > 0 && workout !== "Fri") {
+                              workoutTxt = `Skal du trene ${workout}`;
+                         } else {
+                              workoutTxt = `Skal du ikke trene`;
+                         }
+
                     } else {
 
-                         if (getWorkoutPlanInfo.isOwner === true) {
-
-                              if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
-                                   workoutTxt = `Skal du trene ${program[dayTxt]}`;
-                              } else {
-                                   workoutTxt = `Skal du ikke trene`;
-                              }
-
+                         if (workout && workout.length > 0 && workout !== "Fri") {
+                              workoutTxt = `Trener ${firstName} ${workout}`;
                          } else {
-
-                              if (program[dayTxt].length > 0 && program[dayTxt] !== "Fri") {
-                                   workoutTxt = `Trener ${firstName} ${program[dayTxt]}`;
-                              } else {
-                                   workoutTxt = `Trener ikke ${firstName}`;
-                              }
+                              workoutTxt = `Trener ikke ${firstName}`;
                          }
-
-                         const resp = {
-                              "currentDay": dayTxt.toLocaleLowerCase(),
-                              "todaysWorkout": workoutTxt
-                         }
-
-                         res.status(200).json(resp).end();
                     }
 
+                    const resp = {
+                         "currentDay": dayTxt.toLocaleLowerCase(),
+                         "todaysWorkout": workoutTxt
+                    }
+
+                    res.status(200).json(resp).end();
+
                } else {
-                    res.status(403).json(APIErrorJSON.access).end();
+                    res.status(403).json(APIErrorJSON.workoutplan).end();
                }
 
           } else {

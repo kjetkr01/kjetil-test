@@ -31,6 +31,8 @@ const badgeColorBorders = {
     "blueBadge": `626BE3`,
 }
 
+const allowedExercises = ["benkpress", "markløft", "knebøy", "skulderpress"];
+
 const themeKeys = Object.keys(allowedThemes);
 const checkAllowedThemes = [];
 for (let i = 0; i < themeKeys.length; i++) {
@@ -514,6 +516,10 @@ async function getAccountDetails(aUserID) {
                     sessionStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
                 }
 
+                if (resp.hasOwnProperty("cacheDetails")) {
+                    localStorage.setItem("cachedDetails_owner", JSON.stringify(resp.cacheDetails));
+                }
+
                 const newColorTheme = allowedThemes[resp.updatedUserObject.preferredColorTheme].theme;
 
                 if (preferredColorTheme !== newColorTheme && checkAllowedThemes.includes(newColorTheme) === true) {
@@ -530,7 +536,7 @@ async function getAccountDetails(aUserID) {
 
                 const newTheme = resp.updatedUserObject.preferredTheme;
 
-                if (newTheme === "0" || newTheme === "1" || newTheme === "2") {
+                if (newTheme === 0 || newTheme === 1 || newTheme === 2) {
                     //localStorage.setItem("theme", newTheme);
 
                     if (localStorage.getItem("user")) {
@@ -547,12 +553,12 @@ async function getAccountDetails(aUserID) {
 
         } else {
 
-            if (userID === viewingUser) {
+            /*if (userID === viewingUser) {
                 sessionStorage.clear();
                 localStorage.clear();
                 alert("Det har oppstått en feil. Du blir nå logget ut. Vennligst logg inn på nytt");
                 location.reload();
-            }
+            }*/
         }
     }
 
@@ -586,9 +592,6 @@ function checkConnection(aDom) {
                     location.reload();
                 }, 2500);
             }
-            else {
-                domElement.textContent = "";
-            }
         }
 
     }
@@ -596,6 +599,146 @@ function checkConnection(aDom) {
 }
 
 //
+
+//
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+//
+
+//
+
+function sortByLiftsOrGoalOwner(aDom, aType) {
+
+    const dom = document.getElementById(aDom);
+    const type = aType;
+
+    if (dom && type) {
+
+        if (type === "lift") {
+            showLiftBadgeAnimations = true;
+            if (allowedExercises.includes(dom.value)) {
+                localStorage.setItem('display_lifts_owner', dom.value);
+            } else {
+                localStorage.removeItem('display_lifts_owner');
+            }
+
+            displayLifts();
+        }
+
+        if (type === "goal") {
+            showGoalBadgeAnimations = true;
+            if (allowedExercises.includes(dom.value)) {
+                localStorage.setItem('display_goals_owner', dom.value);
+            } else {
+                localStorage.removeItem('display_goals_owner');
+            }
+
+            displayGoals();
+        }
+    }
+}
+
+function sortByLiftsOrGoalVisitor(aDom, aType) {
+
+    const dom = document.getElementById(aDom);
+    const type = aType;
+
+    if (dom && type) {
+
+        if (type === "lift") {
+            if (allowedExercises.includes(dom.value)) {
+                sessionStorage.setItem('display_lifts_visitor', dom.value);
+            } else {
+                sessionStorage.removeItem('display_lifts_visitor');
+            }
+
+            displayLifts();
+        }
+
+        if (type === "goal") {
+            if (allowedExercises.includes(dom.value)) {
+                sessionStorage.setItem('display_goals_visitor', dom.value);
+            } else {
+                sessionStorage.removeItem('display_goals_visitor');
+            }
+
+            displayGoals();
+        }
+    }
+
+    //location.reload();
+}
+
+//
+
+//
+
+function getDaysSinceAndDate(aDate) {
+    let daysSinceMsg = "";
+    let fixedDate = "";
+    const dateArr = aDate.split("-");
+    if (dateArr.length === 3) {
+
+        if (dateArr[0].length === 4 && dateArr[1] > 0 && dateArr[1] <= 12 && dateArr[1].length <= 2 && dateArr[2] > 0 && dateArr[2] <= 31 && dateArr[2].length <= 2) {
+
+            const d = new Date();
+            const date = new Date(dateArr[0], (dateArr[1] - 1), dateArr[2]);
+
+            fixedDate = getDateFormat(dateArr[2], dateArr[1], dateArr[0]);
+
+            const daysSinceTime = parseInt((d - date) / (1000 * 3600 * 24));
+
+            if (d < date) {
+                //fremtiden
+            } else if (daysSinceTime > 1) {
+                daysSinceMsg = `${parseInt(daysSinceTime)} dager siden`;
+            } else if (daysSinceTime === 1) {
+                daysSinceMsg = `I går`;
+            } else if (daysSinceTime === 0) {
+                daysSinceMsg = `I dag`;
+            }
+        }
+    }
+
+    return { "daysSinceMsg": daysSinceMsg, "fixedDate": fixedDate };
+}
+
+//
+
+async function updateApplication() {
+
+    deleteAllCaches();
+    updateServiceWorker();
+
+}
+
+function removeServiceWorker() {
+    navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        for (let registration of registrations) {
+            registration.unregister();
+        }
+        alert("REMOVED service workers");
+    });
+}
+
+function updateServiceWorker() {
+    navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        for (let registration of registrations) {
+            registration.update();
+        }
+    });
+}
+
+async function deleteAllCaches() {
+    const cachesKeys = await caches.keys();
+    for (let i = 0; i < cachesKeys.length; i++) {
+        await caches.delete(cachesKeys[i]);
+    }
+    location.reload();
+}
 
 // redirect functions
 
@@ -631,6 +774,8 @@ function redirectToUser() {
         if (userID === parseInt(viewingUser)) {
             redirectToAccount();
         } else {
+            sessionStorage.removeItem('display_goals_visitor');
+            sessionStorage.removeItem('display_lifts_visitor');
             location.href = "user.html";
         }
     } else {
