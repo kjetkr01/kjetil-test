@@ -426,7 +426,7 @@ async function loadAboutAppPage(setting) {
             <br>
             ${allCaches}
             <br>
-            <button class="settingsButton" onClick="deleteAllCaches();">Tøm cache</button>
+            <button class="settingsButton" onClick="deleteAllCaches();removeServiceWorker();">Tøm cache/unregister</button>
             `, "left", "spacingTop");
 
             settingsGrid.innerHTML += getBottomSpacingTemplate();
