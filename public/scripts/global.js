@@ -708,13 +708,19 @@ function getDaysSinceAndDate(aDate) {
 
 //
 
+async function updateApplication() {
+
+
+    
+}
+
 function removeServiceWorker() {
     navigator.serviceWorker.getRegistrations().then(function (registrations) {
         for (let registration of registrations) {
             registration.unregister();
         }
         alert("REMOVED service workers");
-    })
+    });
 }
 
 function updateServiceWorker() {
@@ -723,7 +729,7 @@ function updateServiceWorker() {
             registration.update();
         }
         alert("Updated service workers");
-    })
+    });
 }
 
 async function deleteAllCaches() {

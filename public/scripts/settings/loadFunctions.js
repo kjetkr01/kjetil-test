@@ -667,7 +667,21 @@ async function loadPrivacyPage() {
         }
     }
 
-    settingsGrid.innerHTML = justTextTemplate(`${application.name} samler ikke inn data fra brukeren sine.<br>Din Service Worker Cache Name: ${cacheName} State: ${state}`, "left");
+    const allCaches = await caches.keys();
+    let cacheTxt = "";
+    if (allCaches.length === 1) {
+        cacheTxt = `Det finnes ${allCaches.length} cache (${allCaches})`;
+    } else {
+        cacheTxt = `Det finnes ${allCaches.length} caches (${allCaches})`;
+    }
+
+    settingsGrid.innerHTML = justTextTemplate(`
+    ${application.name} samler ikke inn data fra brukeren sine.
+    <br>
+    ${cacheTxt}
+    <br>
+    Service Worker State: ${state}
+    `, "left");
 
     settingsGrid.innerHTML += getCenteredTextTemplate(`
     <button id="detailsAboutMyAccountBtn" class='settingsButton pointer' onClick="displayInformationAboutUser();">Hent mine opplysninger</button>
