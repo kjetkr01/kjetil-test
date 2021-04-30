@@ -4,7 +4,10 @@ function loadSetting(aSetting) {
         settings = JSON.parse(sessionStorage.getItem("userSettings"));
     }
 
-    const setting = aSetting || sessionStorage.getItem("currentSetting") || ELoadSettings.settings.name;
+    let setting = aSetting || sessionStorage.getItem("currentSetting") || ELoadSettings.settings.name;
+    if (setting === `${ELoadSettings.aboutApp.name} (1)`) {
+        setting = ELoadSettings.aboutApp.name;
+    }
     saveNewScrollPos = false;
     titleDom.innerHTML = setting;
     document.title = setting;
@@ -99,7 +102,13 @@ async function loadDefaultPage(setting) {
     settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.apperance.name, "appearanceDiv", "spacingTop");
     settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.progressionInfo.name, "appearanceDiv");
 
-    settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.aboutApp.name, "aboutAppDiv", "spacingTop");
+    let aboutAppTxt = `${ELoadSettings.aboutApp.name}`;
+
+    if (sessionStorage.getItem("settings_notification_update") === "true") {
+        aboutAppTxt = `${ELoadSettings.aboutApp.name} (1)`;
+    }
+
+    settingsGrid.innerHTML += getTemplateWithBtn(aboutAppTxt, "aboutAppDiv", "spacingTop");
 
     if (userInfo.hasOwnProperty("isadmin")) {
         if (userInfo.isadmin === true) {
@@ -121,7 +130,7 @@ async function loadDefaultPage(setting) {
     if (userInfo.hasOwnProperty("isadmin")) {
         if (userInfo.isadmin === true) {
 
-            const infoHeader = {"onlyNumbers": true };
+            const infoHeader = { "onlyNumbers": true };
             const url = `/users/list/pending`;
 
             const resp = await callServerAPIPost(infoHeader, url);
@@ -384,6 +393,7 @@ async function loadAboutAppPage(setting) {
                 <br>
                 Nyeste versjon: ${serverApplication.version.fullNumber}<br>
                 <button class="settingsButton" onClick="updateApplication();">Oppdater</button>`;
+                sessionStorage.setItem("settings_notification_update", true);
                 }
             }
 

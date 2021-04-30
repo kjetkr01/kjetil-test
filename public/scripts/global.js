@@ -708,6 +708,8 @@ function getDaysSinceAndDate(aDate) {
 
 function updateApplication() {
 
+    sessionStorage.removeItem("settings_notification_update");
+
     deleteAllCaches();
     updateServiceWorker();
 
