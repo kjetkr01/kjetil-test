@@ -74,7 +74,9 @@ async function updateAboutMe() {
         const config = {
             method: "POST",
             headers: {
-                "content-type": "application/json"
+                "content-type": "application/json",
+                "authtoken": token,
+                "userinfo": user,
             },
             body: JSON.stringify(body)
         }

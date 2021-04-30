@@ -86,28 +86,7 @@ const allowedTrainingDays = require("./arrayLists").allowedTrainingDays;
 
 /* */
 
-const application = {
-     name: "Treningstatistikken",
-     logoURL: "images/appIcon.png",
-     version: {
-          state: "alpha 84%",
-          major: 4, // major++ = minor = 0 && revision = 0
-          minor: 3, // minor++ = revision = 0
-          revision: 20,
-     },
-     lastUpdated: {
-          day: "29",
-          month: "04",
-          year: "2021"
-     },
-     updatesInfo: {
-          showOnGoing: true,
-          showPlanned: true,
-     }
-}
-
-application.version.fullNumber = `${application.version.major}.${application.version.minor}.${application.version.revision}`;
-application.version.full = `Versjon ${application.version.fullNumber} (${application.version.state})`;
+const application = require("./public/ts_application").ts_application;
 
 // ----------------------------- End Of Module Requirements ----------------------- //
 
@@ -168,9 +147,7 @@ server.post("/application", async function (req, res) {
 
 server.post("/access", async function (req, res) {
      try {
-          let info = req.headers.info;
-          info = JSON.parse(info);
-          const credentials = info.authorization.split(' ')[1];
+          const credentials = req.body.authorization.split(' ')[1];
           const [username, password, displayname] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
 
           if (username && password && displayname) {
@@ -187,7 +164,8 @@ server.post("/access", async function (req, res) {
           } else {
                res.status(403).json(`Feil, prøv igjen`).end();
           }
-     } catch {
+     } catch (err) {
+          console.log(err);
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 });
@@ -200,10 +178,7 @@ server.post("/access", async function (req, res) {
 
 server.post("/authenticate", async function (req, res) {
      try {
-          let info = req.headers.info;
-          info = JSON.parse(info);
-
-          const credentials = info.authorization.split(' ')[1];
+          const credentials = req.body.authorization.split(' ')[1];
           const [username, password] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
 
           if (username && password) {
@@ -227,7 +202,8 @@ server.post("/authenticate", async function (req, res) {
           } else {
                res.status(403).json(`Feil, prøv igjen`).end();
           }
-     } catch {
+     } catch (err) {
+          console.log(err);
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 });
@@ -263,7 +239,8 @@ server.post("/users/list/all", auth, async (req, res) => {
           } else {
                res.status(403).json(`Feil, prøv igjen`).end();
           }
-     } catch {
+     } catch (err) {
+          console.log(err);
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 });
@@ -274,10 +251,8 @@ server.post("/users/list/all", auth, async (req, res) => {
 
 server.post("/users/list/all/leaderboards", auth, async (req, res) => {
      try {
-          let info = req.headers.info;
-          info = JSON.parse(info);
 
-          const reps = info.reps || "1";
+          const reps = req.body.reps || "1";
 
           const resp = await getListOfLeaderboards(reps);
 
@@ -288,7 +263,8 @@ server.post("/users/list/all/leaderboards", auth, async (req, res) => {
           } else {
                res.status(403).json(`Feil, prøv igjen`).end();
           }
-     } catch {
+     } catch (err) {
+          console.log(err);
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 
@@ -301,11 +277,8 @@ server.post("/users/list/all/leaderboards", auth, async (req, res) => {
 server.post("/users/list/all/leaderboards/:leaderboard", auth, async (req, res) => {
 
      try {
-          let info = req.headers.info;
-          info = JSON.parse(info);
-
-          const leaderboard = info.leaderboard;
-          const reps = info.reps || "1";
+          const leaderboard = req.body.leaderboard;
+          const reps = req.body.reps || "1";
 
           if (leaderboard) {
 
@@ -322,7 +295,8 @@ server.post("/users/list/all/leaderboards/:leaderboard", auth, async (req, res) 
           } else {
                res.status(403).json(`Feil, prøv igjen`).end();
           }
-     } catch(err) {
+     } catch (err) {
+          console.log(err);
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 });
@@ -333,37 +307,37 @@ server.post("/users/list/all/leaderboards/:leaderboard", auth, async (req, res) 
 // -------------------------------  get list of pending users (requests) ---------------------- //
 
 server.post("/users/list/pending", auth, async (req, res) => {
+     try {
 
-     //kun for admins...
+          let onlyNumbers = false;
 
-     let onlyNumbers = false;
-
-     if (req.body.onlyNumbers) {
-          onlyNumbers = true;
-     }
-
-     let username = req.headers.userinfo;
-     username = JSON.parse(username);
-     username = username.username;
-
-     const listOfPendingUsers = await getListOfPendingUsers(username, onlyNumbers);
-
-     // list of pending status ??
-
-     if (listOfPendingUsers !== false) {
-
-          if (listOfPendingUsers && listOfPendingUsers !== true) {
-               res.status(200).json(listOfPendingUsers).end();
-          } else {
-               res.status(200).json(`Det finnes ingen forespørseler!`).end();
+          if (req.body.onlyNumbers) {
+               onlyNumbers = true;
           }
 
+          let username = req.headers.userinfo;
+          username = JSON.parse(username);
+          username = username.username;
 
+          const listOfPendingUsers = await getListOfPendingUsers(username, onlyNumbers);
 
-     } else {
+          // list of pending status ??
+
+          if (listOfPendingUsers !== false) {
+
+               if (listOfPendingUsers && listOfPendingUsers !== true) {
+                    res.status(200).json(listOfPendingUsers).end();
+               } else {
+                    res.status(200).json(`Det finnes ingen forespørseler!`).end();
+               }
+
+          } else {
+               res.status(403).json(`Feil, prøv igjen`).end();
+          }
+     } catch (err) {
+          console.log(err);
           res.status(403).json(`Feil, prøv igjen`).end();
      }
-
 });
 
 //
@@ -371,26 +345,29 @@ server.post("/users/list/pending", auth, async (req, res) => {
 // -------------------------------  accept or deny pending user ---------------------- //
 
 server.post("/users/pending/:user/:acceptOrDeny", auth, async (req, res) => {
+     try {
 
-     //kun for admins...
+          let username = req.headers.userinfo;
+          username = JSON.parse(username);
+          username = username.username;
 
-     let username = req.body.userInfo;
-     username = JSON.parse(username);
-     username = username.username;
+          const pendingUser = req.body.pendingUser;
+          const acceptOrDeny = req.body.acceptOrDeny;
 
-     const pendingUser = req.body.pendingUser;
-     const acceptOrDeny = req.body.acceptOrDeny;
+          if (username && pendingUser) {
 
-     if (username && pendingUser) {
+               const resp = await acceptOrDenyUser(username, pendingUser, acceptOrDeny);
 
-          const resp = await acceptOrDenyUser(username, pendingUser, acceptOrDeny);
-
-          if (resp === true) {
-               res.status(200).json("Ok").end();
+               if (resp === true) {
+                    res.status(200).json("Ok").end();
+               } else {
+                    res.status(403).json(`Feil, prøv igjen`).end();
+               }
           } else {
                res.status(403).json(`Feil, prøv igjen`).end();
           }
-     } else {
+     } catch (err) {
+          console.log(err);
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 });
@@ -400,21 +377,26 @@ server.post("/users/pending/:user/:acceptOrDeny", auth, async (req, res) => {
 // -------------------------------  whatToTrainToday (user) ---------------------- //
 
 server.post("/user/whatToTrainToday", auth, async (req, res) => {
+     try {
 
-     let username = req.headers.userinfo;
-     username = JSON.parse(username);
-     username = username.username;
+          let username = req.headers.userinfo;
+          username = JSON.parse(username);
+          username = username.username;
 
-     if (username) {
+          if (username) {
 
-          const resp = await getWorkoutSplit(username);
+               const resp = await getWorkoutSplit(username);
 
-          if (resp.status === true) {
-               res.status(200).json(resp.program).end();
+               if (resp.status === true) {
+                    res.status(200).json(resp.program).end();
+               } else {
+                    res.status(403).json(`Feil, prøv igjen`).end();
+               }
           } else {
                res.status(403).json(`Feil, prøv igjen`).end();
           }
-     } else {
+     } catch (err) {
+          console.log(err);
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 });
@@ -424,63 +406,65 @@ server.post("/user/whatToTrainToday", auth, async (req, res) => {
 // -------------------------------  get user details (view userPage) ---------------------- //
 
 server.post("/users/details/:user", auth, async (req, res) => {
+     try {
 
-     let userID = req.headers.userinfo;
-     userID = JSON.parse(userID);
-     userID = parseInt(userID.id);
+          let userID = req.headers.userinfo;
+          userID = JSON.parse(userID);
+          userID = parseInt(userID.id);
 
-     let info = req.headers.info;
-     info = JSON.parse(info);
+          const viewingUser = parseInt(req.body.viewingUser);
 
-     const viewingUser = parseInt(info.viewingUser);
+          if (typeof viewingUser === "number" && typeof userID === "number") {
+               if (userID && viewingUser) {
 
-     if (typeof viewingUser === "number" && typeof userID === "number") {
-          if (userID && viewingUser) {
+                    const resp = await getUserDetails(viewingUser, userID);
 
-               const resp = await getUserDetails(viewingUser, userID);
+                    if (resp.status === true) {
+                         if (resp.userDetails !== false) {
 
-               if (resp.status === true) {
-                    if (resp.userDetails !== false) {
-
-                         const cacheDetails = {
-                              "displayname": resp.userDetails.displayname,
-                              "gym": resp.userDetails.info.gym,
-                              "age": resp.userDetails.info.age,
-                              "height": resp.userDetails.info.height,
-                              "weight": resp.userDetails.info.weight,
-                              "member_since": resp.userDetails.member_since
-                         }
-
-                         if (viewingUser === userID) {
-
-                              const updatedUserInfo = {
-                                   "id": resp.userDetails.id,
-                                   "username": resp.userDetails.username,
+                              const cacheDetails = {
                                    "displayname": resp.userDetails.displayname,
-                                   "preferredColorTheme": resp.userDetails.settings.preferredcolortheme,
-                                   "preferredTheme": resp.userDetails.settings.preferredtheme
+                                   "gym": resp.userDetails.info.gym,
+                                   "age": resp.userDetails.info.age,
+                                   "height": resp.userDetails.info.height,
+                                   "weight": resp.userDetails.info.weight,
+                                   "member_since": resp.userDetails.member_since
                               }
 
-                              res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo, "cacheDetails": cacheDetails }).end();
-                         } else {
-                              res.status(200).json({ "info": resp.userDetails, "cacheDetails": cacheDetails }).end();
-                         }
+                              if (viewingUser === userID) {
 
+                                   const updatedUserInfo = {
+                                        "id": resp.userDetails.id,
+                                        "username": resp.userDetails.username,
+                                        "displayname": resp.userDetails.displayname,
+                                        "preferredColorTheme": resp.userDetails.settings.preferredcolortheme,
+                                        "preferredTheme": resp.userDetails.settings.preferredtheme
+                                   }
+
+                                   res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo, "cacheDetails": cacheDetails }).end();
+                              } else {
+                                   res.status(200).json({ "info": resp.userDetails, "cacheDetails": cacheDetails }).end();
+                              }
+
+                         } else {
+
+                              if (resp.username) {
+                                   res.status(403).json(`${resp.username} sin profil er privat!`).end();
+                              } else {
+                                   res.status(403).json(`Brukeren sin profil er privat!`).end();
+                              }
+                         }
                     } else {
-
-                         if (resp.username) {
-                              res.status(403).json(`${resp.username} sin profil er privat!`).end();
-                         } else {
-                              res.status(403).json(`Brukeren sin profil er privat!`).end();
-                         }
+                         res.status(403).json(`Brukeren finnes ikke!`).end();
                     }
                } else {
-                    res.status(403).json(`Brukeren finnes ikke!`).end();
+                    res.status(403).json(`Feil, prøv igjen`).end();
                }
           } else {
                res.status(403).json(`Feil, prøv igjen`).end();
           }
-     } else {
+     } catch (err) {
+          console.log(err);
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 });
@@ -490,30 +474,34 @@ server.post("/users/details/:user", auth, async (req, res) => {
 // get user settings and info
 
 server.post("/user/details/settingsInfo", auth, async (req, res) => {
+     try {
 
-     const currentUser = JSON.parse(req.headers.userinfo);
+          const currentUser = JSON.parse(req.headers.userinfo);
 
-     if (currentUser.username) {
+          if (currentUser.username) {
 
-          const resp = await getUserSettingsAndInfo(currentUser.username);
+               const resp = await getUserSettingsAndInfo(currentUser.username);
 
-          const userInfo = {
-               "id": resp.userDetails.id,
-               "username": resp.userDetails.username,
-               "displayname": resp.userDetails.displayname,
-               "preferredColorTheme": resp.userDetails.settings.preferredColorTheme,
-          }
+               const userInfo = {
+                    "id": resp.userDetails.id,
+                    "username": resp.userDetails.username,
+                    "displayname": resp.userDetails.displayname,
+                    "preferredColorTheme": resp.userDetails.settings.preferredColorTheme,
+               }
 
-          if (resp.status === true) {
-               res.status(200).json({ "settings": resp.userDetails.settings, "userInfo": userInfo }).end();
+               if (resp.status === true) {
+                    res.status(200).json({ "settings": resp.userDetails.settings, "userInfo": userInfo }).end();
+               } else {
+                    res.status(403).json("error, try again").end();
+               }
+
           } else {
-               res.status(403).json("error, try again").end();
+               res.status(403).json("invalid user").end();
           }
-
-     } else {
+     } catch (err) {
+          console.log(err);
           res.status(403).json("invalid user").end();
      }
-
 });
 
 //
@@ -521,28 +509,32 @@ server.post("/user/details/settingsInfo", auth, async (req, res) => {
 // update user settings
 
 server.post("/user/update/settings/:setting", auth, async (req, res) => {
+     try {
 
-     const currentUser = JSON.parse(req.body.userInfo);
-     const setting = req.body.updateSetting;
-     const value = req.body.value;
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const setting = req.body.updateSetting;
+          const value = req.body.value;
 
-     const allowedSettings = ["publicprofile", "displayleaderboards", "displayworkoutlist", "preferredtheme", "preferredcolortheme", "badgesize", "badgedetails"];
-     const allowedValues = [true, false, "0", "1", "2"];
+          const allowedSettings = ["publicprofile", "displayleaderboards", "displayworkoutlist", "preferredtheme", "preferredcolortheme", "badgesize", "badgedetails"];
+          const allowedValues = [true, false, "0", "1", "2"];
 
-     if (currentUser.username && allowedSettings.includes(setting) && allowedValues.includes(value)) {
+          if (currentUser.username && allowedSettings.includes(setting) && allowedValues.includes(value)) {
 
-          const resp = await updateUserSetting(currentUser.username, setting, value);
+               const resp = await updateUserSetting(currentUser.username, setting, value);
 
-          if (resp === true) {
-               res.status(200).json(resp).end();
+               if (resp === true) {
+                    res.status(200).json(resp).end();
+               } else {
+                    res.status(403).json("error, try again").end();
+               }
+
           } else {
-               res.status(403).json("error, try again").end();
+               res.status(403).json("invalid user").end();
           }
-
-     } else {
+     } catch (err) {
+          console.log(err);
           res.status(403).json("invalid user").end();
      }
-
 });
 
 //
@@ -550,31 +542,35 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
 // update displayname
 
 server.post("/user/update/displayname", auth, async (req, res) => {
+     try {
 
-     const currentUser = JSON.parse(req.body.userInfo);
-     const newDisplayname = req.body.newDisplayname;
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const newDisplayname = req.body.newDisplayname;
 
-     const letters = /^[A-Za-z0-9 ]+$/;
+          const letters = /^[A-Za-z0-9 ]+$/;
 
-     if (newDisplayname.match(letters)) {
-          if (newDisplayname.length >= 3 && newDisplayname.length <= 20 && currentUser.username) {
+          if (newDisplayname.match(letters)) {
+               if (newDisplayname.length >= 3 && newDisplayname.length <= 20 && currentUser.username) {
 
-               const resp = await updateDisplayname(currentUser.username, newDisplayname);
+                    const resp = await updateDisplayname(currentUser.username, newDisplayname);
 
-               if (resp === true) {
-                    res.status(200).json(resp).end();
+                    if (resp === true) {
+                         res.status(200).json(resp).end();
+                    } else {
+                         res.status(403).json("error, try again").end();
+                    }
+
                } else {
-                    res.status(403).json("error, try again").end();
+                    res.status(403).json("invalid displayname").end();
                }
 
           } else {
                res.status(403).json("invalid displayname").end();
           }
-
-     } else {
+     } catch (err) {
+          console.log(err);
           res.status(403).json("invalid displayname").end();
      }
-
 });
 
 //
@@ -582,31 +578,35 @@ server.post("/user/update/displayname", auth, async (req, res) => {
 // update username
 
 server.post("/user/update/username", auth, async (req, res) => {
+     try {
 
-     const currentUser = JSON.parse(req.body.userInfo);
-     const newUsername = req.body.newUsername;
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const newUsername = req.body.newUsername;
 
-     const letters = /^[A-Za-z0-9]+$/;
+          const letters = /^[A-Za-z0-9]+$/;
 
-     if (newUsername.match(letters)) {
-          if (newUsername.length >= 3 && newUsername.length <= 20 && currentUser.username) {
+          if (newUsername.match(letters)) {
+               if (newUsername.length >= 3 && newUsername.length <= 20 && currentUser.username) {
 
-               const resp = await updateUsername(currentUser.username, newUsername);
+                    const resp = await updateUsername(currentUser.username, newUsername);
 
-               if (resp === true) {
-                    res.status(200).json(resp).end();
+                    if (resp === true) {
+                         res.status(200).json(resp).end();
+                    } else {
+                         res.status(403).json("error, try again").end();
+                    }
+
                } else {
-                    res.status(403).json("error, try again").end();
+                    res.status(403).json("invalid username").end();
                }
 
           } else {
                res.status(403).json("invalid username").end();
           }
-
-     } else {
+     } catch (err) {
+          console.log(err);
           res.status(403).json("invalid username").end();
      }
-
 });
 
 //
@@ -615,27 +615,32 @@ server.post("/user/update/username", auth, async (req, res) => {
 // update password
 
 server.post("/user/update/password", auth, async (req, res) => {
+     try {
 
-     const currentUser = JSON.parse(req.body.userInfo);
-     const credentials = req.body.authorization.split(' ')[1];
-     const [exsistingPsw, newPsw] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const credentials = req.body.authorization.split(' ')[1];
+          const [exsistingPsw, newPsw] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
 
-     if (currentUser.id && exsistingPsw && newPsw) {
-          if (exsistingPsw !== newPsw) {
+          if (currentUser.id && exsistingPsw && newPsw) {
+               if (exsistingPsw !== newPsw) {
 
-               const resp = await updatePassword(currentUser.id, exsistingPsw, newPsw);
+                    const resp = await updatePassword(currentUser.id, exsistingPsw, newPsw);
 
-               if (resp.status === true) {
-                    res.status(200).json(resp).end();
+                    if (resp.status === true) {
+                         res.status(200).json(resp).end();
+                    } else {
+                         res.status(403).json(resp).end();
+                    }
+
                } else {
-                    res.status(403).json(resp).end();
+                    res.status(403).json({ "status": false, "message": "Passordet ble ikke endret. Eksisterende passord og nytt passord er like" }).end();
                }
 
           } else {
-               res.status(403).json({ "status": false, "message": "Passordet ble ikke endret. Eksisterende passord og nytt passord er like" }).end();
+               res.status(403).json({ "status": false, "message": "Det har oppstått en feil" }).end();
           }
-
-     } else {
+     } catch (err) {
+          console.log(err);
           res.status(403).json({ "status": false, "message": "Det har oppstått en feil" }).end();
      }
 });
@@ -646,66 +651,71 @@ server.post("/user/update/password", auth, async (req, res) => {
 // update about me information
 
 server.post("/user/update/settings/about/me", auth, async (req, res) => {
+     try {
 
-     const currentUser = JSON.parse(req.body.userInfo);
-     const settings = req.body.updateSettings;
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const settings = req.body.updateSettings;
 
-     if (settings.hasOwnProperty("gym") && settings.hasOwnProperty("age") && settings.hasOwnProperty("height") && settings.hasOwnProperty("weight") && currentUser.hasOwnProperty("username")) {
+          if (settings.hasOwnProperty("gym") && settings.hasOwnProperty("age") && settings.hasOwnProperty("height") && settings.hasOwnProperty("weight") && currentUser.hasOwnProperty("username")) {
 
-          let info = {
-               isValid: true,
-               msg: ""
-          };
+               let info = {
+                    isValid: true,
+                    msg: ""
+               };
 
-          const gym = settings.gym;
-          const age = parseInt(settings.age);
-          const height = parseFloat(settings.height);
-          const weight = parseFloat(settings.weight);
+               const gym = settings.gym;
+               const age = parseInt(settings.age);
+               const height = parseFloat(settings.height);
+               const weight = parseFloat(settings.weight);
 
-          const letters = /^[ÆØÅæøåA-Za-z0-9\s]+$/;
+               const letters = /^[ÆØÅæøåA-Za-z0-9\s]+$/;
 
-          if (settings.gym.length > 30 || !gym.match(letters) && gym !== "") {
-               info.isValid = false;
-               if (!gym.match(letters)) {
-                    info.msg = `Treningssenter er ugyldig`;
+               if (settings.gym.length > 30 || !gym.match(letters) && gym !== "") {
+                    info.isValid = false;
+                    if (!gym.match(letters)) {
+                         info.msg = `Treningssenter er ugyldig`;
+                    } else {
+                         info.msg = `Treningssenter overskrider 30 bokstaver`;
+                    }
+               }
+               else if (settings.age.length > 2 || isNaN(age) === true) {
+                    info.isValid = false;
+                    info.msg = `Alder er ugyldig. Eks: 20`;
+               }
+               else if (settings.height.length > 6 || isNaN(height) === true || height > 205) {
+                    info.isValid = false;
+                    info.msg = `Høyde er ugyldig. Eks: 183.25`;
+               }
+               else if (settings.weight.length > 6 || isNaN(weight) === true || weight > 140) {
+                    info.isValid = false;
+                    info.msg = `Vekt er ugyldig. Eks: 83.5`;
+               }
+
+               if (info.isValid === true) {
+
+                    const updateSettings = {
+                         gym: gym,
+                         age: age,
+                         height: height,
+                         weight: weight
+                    }
+
+                    const resp = await updateAboutMe(currentUser.username, updateSettings);
+
+                    if (resp === true) {
+                         res.status(200).json("Endringer har blitt oppdatert!").end();
+                    } else {
+                         res.status(403).json("error, try again").end();
+                    }
                } else {
-                    info.msg = `Treningssenter overskrider 30 bokstaver`;
-               }
-          }
-          else if (settings.age.length > 2 || isNaN(age) === true) {
-               info.isValid = false;
-               info.msg = `Alder er ugyldig. Eks: 20`;
-          }
-          else if (settings.height.length > 6 || isNaN(height) === true || height > 205) {
-               info.isValid = false;
-               info.msg = `Høyde er ugyldig. Eks: 183.25`;
-          }
-          else if (settings.weight.length > 6 || isNaN(weight) === true || weight > 140) {
-               info.isValid = false;
-               info.msg = `Vekt er ugyldig. Eks: 83.5`;
-          }
-
-          if (info.isValid === true) {
-
-               const updateSettings = {
-                    gym: gym,
-                    age: age,
-                    height: height,
-                    weight: weight
+                    res.status(403).json(info.msg).end();
                }
 
-               const resp = await updateAboutMe(currentUser.username, updateSettings);
-
-               if (resp === true) {
-                    res.status(200).json("Endringer har blitt oppdatert!").end();
-               } else {
-                    res.status(403).json("error, try again").end();
-               }
           } else {
-               res.status(403).json(info.msg).end();
+               res.status(403).json("invalid settings").end();
           }
-
-     } else {
+     } catch (err) {
+          console.log(err);
           res.status(403).json("invalid settings").end();
      }
 });
@@ -717,56 +727,61 @@ server.post("/user/update/settings/about/me", auth, async (req, res) => {
 // save user lifts & goals
 
 server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
+     try {
 
-     const info = req.body.info;
-     const currentUser = JSON.parse(req.body.userInfo);
+          const info = req.body.info;
+          const currentUser = JSON.parse(req.headers.userinfo);
 
-     if (currentUser.id && info.exercise && info.kg && info.date && info.type === "lift" || info.type === "goal") {
+          if (currentUser.id && info.exercise && info.kg && info.date && info.type === "lift" || info.type === "goal") {
 
-          let isValid = false;
+               let isValid = false;
 
-          // fikse slik at den heller teller antall feil og om det er 0 feil, så fortsett!! sånn som i "/user/update/trainingDays/:info"
+               // fikse slik at den heller teller antall feil og om det er 0 feil, så fortsett!! sånn som i "/user/update/trainingDays/:info"
 
-          const badgeColorValues = Object.entries(badgeColors);
+               const badgeColorValues = Object.entries(badgeColors);
 
-          let color = badgeColorValues[0][0];
+               let color = badgeColorValues[0][0];
 
-          for (let i = 0; i < badgeColorValues.length; i++) {
-               if (info.color === badgeColorValues[i][0]) {
-                    color = badgeColorValues[i][0];
+               for (let i = 0; i < badgeColorValues.length; i++) {
+                    if (info.color === badgeColorValues[i][0]) {
+                         color = badgeColorValues[i][0];
+                    }
                }
-          }
 
-          for (let i = 0; i < allowedLifts.length; i++) {
-               if (info.exercise === allowedLifts[i]) {
-                    isValid = true;
-               }
-          }
-
-          if (isValid === false) {
-               for (let i = 0; i < allowedGoals.length; i++) {
-                    if (info.exercise === allowedGoals[i]) {
+               for (let i = 0; i < allowedLifts.length; i++) {
+                    if (info.exercise === allowedLifts[i]) {
                          isValid = true;
                     }
                }
-          }
 
-          if (isValid === true) {
-               if (info.reps > 0) {
-                    info.reps = info.reps.toString();
-               } else {
-                    isValid = false;
+               if (isValid === false) {
+                    for (let i = 0; i < allowedGoals.length; i++) {
+                         if (info.exercise === allowedGoals[i]) {
+                              isValid = true;
+                         }
+                    }
                }
-          }
 
-          if (isValid === true) {
-               const saveLiftOrGoalResp = await saveLiftOrGoal(currentUser.id, info, color);
-               res.status(200).json(saveLiftOrGoalResp).end();
+               if (isValid === true) {
+                    if (info.reps > 0) {
+                         info.reps = info.reps.toString();
+                    } else {
+                         isValid = false;
+                    }
+               }
+
+               if (isValid === true) {
+                    const saveLiftOrGoalResp = await saveLiftOrGoal(currentUser.id, info, color);
+                    res.status(200).json(saveLiftOrGoalResp).end();
+               } else {
+                    res.status(403).json("invalid information").end();
+               }
+
           } else {
                res.status(403).json("invalid information").end();
           }
-
-     } else {
+     } catch (err) {
+          console.log(err);
           res.status(403).json("invalid information").end();
      }
 });
@@ -776,38 +791,43 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
 // delete user lifts & goals
 
 server.post("/user/delete/liftOrGoal/:info", auth, async (req, res) => {
+     try {
 
-     const info = req.body.info;
-     const currentUser = JSON.parse(req.body.userInfo);
+          const info = req.body.info;
+          const currentUser = JSON.parse(req.headers.userinfo);
 
-     if (currentUser.id && info.exercise && info.type === "lift" || info.type === "goal") {
+          if (currentUser.id && info.exercise && info.type === "lift" || info.type === "goal") {
 
-          let isValid = false;
+               let isValid = false;
 
-          // fikse slik at den heller teller antall feil og om det er 0 feil, så fortsett!! sånn som i "/user/update/trainingDays/:info"
+               // fikse slik at den heller teller antall feil og om det er 0 feil, så fortsett!! sånn som i "/user/update/trainingDays/:info"
 
-          for (let i = 0; i < allowedLifts.length; i++) {
-               if (info.exercise === allowedLifts[i]) {
-                    isValid = true;
-               }
-          }
-
-          if (isValid === false) {
-               for (let i = 0; i < allowedGoals.length; i++) {
-                    if (info.exercise === allowedGoals[i]) {
+               for (let i = 0; i < allowedLifts.length; i++) {
+                    if (info.exercise === allowedLifts[i]) {
                          isValid = true;
                     }
                }
-          }
 
-          if (isValid === true) {
-               const saveLiftOrGoalResp = await deleteLiftOrGoal(currentUser.id, info);
-               res.status(200).json(saveLiftOrGoalResp).end();
+               if (isValid === false) {
+                    for (let i = 0; i < allowedGoals.length; i++) {
+                         if (info.exercise === allowedGoals[i]) {
+                              isValid = true;
+                         }
+                    }
+               }
+
+               if (isValid === true) {
+                    const saveLiftOrGoalResp = await deleteLiftOrGoal(currentUser.id, info);
+                    res.status(200).json(saveLiftOrGoalResp).end();
+               } else {
+                    res.status(403).json("invalid information").end();
+               }
+
           } else {
                res.status(403).json("invalid information").end();
           }
-
-     } else {
+     } catch (err) {
+          console.log(err);
           res.status(403).json("invalid information").end();
      }
 });
@@ -817,34 +837,38 @@ server.post("/user/delete/liftOrGoal/:info", auth, async (req, res) => {
 // update which days the user is training
 
 server.post("/user/update/trainingDays/:info", auth, async (req, res) => {
+     try {
 
-     const trainingDays = req.body.trainingDays;
-     const currentUser = JSON.parse(req.body.userInfo);
+          const trainingDays = req.body.trainingDays;
+          const currentUser = JSON.parse(req.headers.userinfo);
 
-     let isNotValidCounter = 0;
+          let isNotValidCounter = 0;
 
-     if (trainingDays[0] !== "none") {
+          if (trainingDays[0] !== "none") {
 
-          for (let i = 0; i < trainingDays.length; i++) {
-               if (!allowedTrainingDays.includes(trainingDays[i])) {
-                    isNotValidCounter++;
+               for (let i = 0; i < trainingDays.length; i++) {
+                    if (!allowedTrainingDays.includes(trainingDays[i])) {
+                         isNotValidCounter++;
+                    }
                }
           }
-     }
 
-     if (isNotValidCounter === 0) {
-          const resp = await updateTrainingDays(trainingDays, currentUser.username);
+          if (isNotValidCounter === 0) {
+               const resp = await updateTrainingDays(trainingDays, currentUser.username);
 
-          if (resp === true) {
-               res.status(200).json(true).end();
+               if (resp === true) {
+                    res.status(200).json(true).end();
+               } else {
+                    res.status(403).json("error, try again").end();
+               }
+
           } else {
-               res.status(403).json("error, try again").end();
+               res.status(403).json("invalid information").end();
           }
-
-     } else {
+     } catch (err) {
+          console.log(err);
           res.status(403).json("invalid information").end();
      }
-
 });
 
 //
@@ -852,15 +876,19 @@ server.post("/user/update/trainingDays/:info", auth, async (req, res) => {
 // get list of all people who are working out today (only public users)
 
 server.post("/whoIsWorkingOutToday", auth, async (req, res) => {
+     try {
 
-     const resp = await getListOfAllUsersWorkoutToday(dayTxt);
+          const resp = await getListOfAllUsersWorkoutToday(dayTxt);
 
-     if (resp.status === true) {
-          res.status(200).json(resp.info).end();
-     } else {
+          if (resp.status === true) {
+               res.status(200).json(resp.info).end();
+          } else {
+               res.status(403).json("error, try again").end();
+          }
+     } catch (err) {
+          console.log(err);
           res.status(403).json("error, try again").end();
      }
-
 });
 
 //
@@ -868,19 +896,24 @@ server.post("/whoIsWorkingOutToday", auth, async (req, res) => {
 // get all information about user
 
 server.post("/user/allinformation", auth, async (req, res) => {
+     try {
 
-     const currentUser = JSON.parse(req.headers.userinfo);
+          const currentUser = JSON.parse(req.headers.userinfo);
 
-     if (currentUser.id) {
+          if (currentUser.id) {
 
-          const resp = await getAllUserInformation(currentUser.id);
-          /* { "status": true, "information": { "username": "kjetkr01", "displayname": "yeet yeetson" } } */
-          if (resp.status === true) {
-               res.status(200).json(resp.information).end();
+               const resp = await getAllUserInformation(currentUser.id);
+               /* { "status": true, "information": { "username": "kjetkr01", "displayname": "yeet yeetson" } } */
+               if (resp.status === true) {
+                    res.status(200).json(resp.information).end();
+               } else {
+                    res.status(403).json("Kunne ikke hente informasjon").end();
+               }
           } else {
-               res.status(403).json("Kunne ikke hente informasjon").end();
+               res.status(403).json("Invalid user").end();
           }
-     } else {
+     } catch (err) {
+          console.log(err);
           res.status(403).json("Invalid user").end();
      }
 });
@@ -890,29 +923,34 @@ server.post("/user/allinformation", auth, async (req, res) => {
 // delete my account
 
 server.post("/user/deleteMe", auth, async (req, res) => {
+     try {
 
-     const currentUser = JSON.parse(req.body.userInfo);
+          const currentUser = JSON.parse(req.headers.userinfo);
 
-     const credentials = req.body.authorization.split(' ')[1];
-     const [username, password] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
+          const credentials = req.body.authorization.split(' ')[1];
+          const [username, password] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
 
-     if (currentUser.username && username && password) {
+          if (currentUser.username && username && password) {
 
-          if (currentUser.username === username) {
+               if (currentUser.username === username) {
 
-               const resp = await deleteAccount(currentUser.username, password);
+                    const resp = await deleteAccount(currentUser.username, password);
 
-               if (resp === true) {
-                    res.status(200).json({ "status": true, "message": "Brukeren din er nå slettet." }).end();
+                    if (resp === true) {
+                         res.status(200).json({ "status": true, "message": "Brukeren din er nå slettet." }).end();
+                    } else {
+                         res.status(200).json({ "status": false, "message": "Brukernavnet eller passordet er feil" }).end();
+                    }
+
                } else {
-                    res.status(200).json({ "status": false, "message": "Brukernavnet eller passordet er feil" }).end();
+                    res.status(403).json({ "status": false, "message": "Brukernavnet stemmer ikke med kontoen" }).end();
                }
 
           } else {
-               res.status(403).json({ "status": false, "message": "Brukernavnet stemmer ikke med kontoen" }).end();
+               res.status(403).json({ "status": false, "message": "Vennligst fyll ut alle feltene" }).end();
           }
-
-     } else {
+     } catch (err) {
+          console.log(err);
           res.status(403).json({ "status": false, "message": "Vennligst fyll ut alle feltene" }).end();
      }
 });
@@ -957,21 +995,26 @@ server.get("/api", function (req, res) {
 // -------------------------------  give user api access ---------------------- //
 
 server.post("/user/giveAPIAccess", auth, async (req, res) => {
+     try {
 
-     const currentUser = JSON.parse(req.body.userInfo);
-     const giveAPIUserAccess = req.body.giveAPIUserAccess;
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const giveAPIUserAccess = req.body.giveAPIUserAccess;
 
-     if (currentUser.username && giveAPIUserAccess) {
+          if (currentUser.username && giveAPIUserAccess) {
 
-          const resp = await giveUserAPIAccess(currentUser.username, giveAPIUserAccess);
+               const resp = await giveUserAPIAccess(currentUser.username, giveAPIUserAccess);
 
-          if (resp === true) {
-               res.status(200).json(true).end();
+               if (resp === true) {
+                    res.status(200).json(true).end();
+               } else {
+                    res.status(403).json(false).end();
+               }
+
           } else {
-               res.status(403).json(false).end();
+               res.status(403).json(`Feil, prøv igjen`).end();
           }
-
-     } else {
+     } catch (err) {
+          console.log(err);
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 });
@@ -981,21 +1024,26 @@ server.post("/user/giveAPIAccess", auth, async (req, res) => {
 // -------------------------------  remove user api access ---------------------- //
 
 server.post("/user/removeAPIAccess", auth, async (req, res) => {
+     try {
 
-     const currentUser = JSON.parse(req.body.userInfo);
-     const removeAPIAccess = req.body.removeAPIUserAccess;
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const removeAPIAccess = req.body.removeAPIUserAccess;
 
-     if (currentUser.username && removeAPIAccess) {
+          if (currentUser.username && removeAPIAccess) {
 
-          const resp = await removeUserAPIAccess(currentUser.username, removeAPIAccess);
+               const resp = await removeUserAPIAccess(currentUser.username, removeAPIAccess);
 
-          if (resp === true) {
-               res.status(200).json(true).end();
+               if (resp === true) {
+                    res.status(200).json(true).end();
+               } else {
+                    res.status(403).json(false).end();
+               }
+
           } else {
-               res.status(403).json(false).end();
+               res.status(403).json(`Feil, prøv igjen`).end();
           }
-
-     } else {
+     } catch (err) {
+          console.log(err);
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 });
@@ -1005,11 +1053,11 @@ server.post("/user/removeAPIAccess", auth, async (req, res) => {
 // api
 
 server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
-
-     const url = req.url;
-     const urlInfo = url.split("/");
-
      try {
+
+          const url = req.url;
+          const urlInfo = url.split("/");
+
           if (urlInfo[1] === "getWorkoutInfo" && urlInfo[2].length < maxCharLength && urlInfo[3].length < maxCharLength) {
                const user = urlInfo[2];
                const key = urlInfo[3];
@@ -1057,6 +1105,7 @@ server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
                res.status(403).json(APIErrorJSON.access).end();
           }
      } catch (err) {
+          console.log(err);
           res.status(403).json(APIErrorJSON.catch).end();
      }
 })
@@ -1067,11 +1116,11 @@ server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
 // api
 
 server.get("/getTotalPB/:user/:key", async function (req, res) {
-
-     const url = req.url;
-     const urlInfo = url.split("/");
-
      try {
+
+          const url = req.url;
+          const urlInfo = url.split("/");
+
           if (urlInfo[1] === "getTotalPB" && urlInfo[2].length < maxCharLength && urlInfo[3].length < maxCharLength) {
                const user = urlInfo[2];
                const key = urlInfo[3];
@@ -1096,6 +1145,7 @@ server.get("/getTotalPB/:user/:key", async function (req, res) {
                res.status(403).json(APIErrorJSON.access).end();
           }
      } catch (err) {
+          console.log(err);
           res.status(403).json(APIErrorJSON.catch).end();
      }
 })

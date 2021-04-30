@@ -225,7 +225,7 @@ async function validateToken() {
     }
 }
 
-async function callServerAPIPost(aInfoHeader, aUrl) {
+async function callServerAPIPost(aInfoBody, aUrl) {
 
     if (!window.navigator.onLine) {
         return;
@@ -241,8 +241,8 @@ async function callServerAPIPost(aInfoHeader, aUrl) {
             "content-type": "application/json",
             "authtoken": token,
             "userinfo": user,
-            "info": JSON.stringify(aInfoHeader)
-        }
+        },
+        body: JSON.stringify(aInfoBody)
     }
 
     const response = await fetch(aUrl, config);

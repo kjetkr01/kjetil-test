@@ -1,16 +1,16 @@
 // Oppdatere disse når ny commit
 
-const application = {
+/*const application = {
     name: "Treningstatistikken",
     logoURL: "images/appIcon.png",
     version: {
-        state: "alpha 84%",
+        state: "alpha 85%",
         major: 4, // major++ = minor = 0 && revision = 0
         minor: 3, // minor++ = revision = 0
-        revision: 20,
+        revision: 26,
     },
     lastUpdated: {
-        day: "29",
+        day: "30",
         month: "04",
         year: "2021"
     },
@@ -23,7 +23,8 @@ const application = {
 // Slutt
 
 application.version.fullNumber = `${application.version.major}.${application.version.minor}.${application.version.revision}`;
-application.version.full = `Versjon ${application.version.fullNumber} (${application.version.state})`;
+application.version.full = `Versjon ${application.version.fullNumber} (${application.version.state})`;*/
+const application = ts_application.ts_application;
 application.lastUpdated.date = getDateFormat(application.lastUpdated.day, application.lastUpdated.month, application.lastUpdated.year);
 
 const aboutAppText = `
