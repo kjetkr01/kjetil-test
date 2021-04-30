@@ -128,8 +128,6 @@
       <div id="GnoAccBtn">
          <p id="noAccBtn" class="noselect">
             <a href="access.html">Ingen konto? <strong>Be om tilgang</strong></a>
-            <br>
-            <button onClick="deleteCachesAndUnregisterSW();">Tøm cache</button>
          </p>
       </div>
 
@@ -166,7 +164,7 @@
       }
 
    });
-
+   let loginTries = 0;
    async function loginUser() {
 
       const rmbrMe = document.getElementById("rmbrMeBtn").checked;
@@ -181,6 +179,12 @@
          if (resp === "Login successful") {
             redirectToFeed();
          } else {
+            loginTries++;
+            if (loginTries === 2) {
+               document.getElementById("noAccBtn").innerHTML += `<br>
+            <br>
+            Problemer med innlogging? Prøv:<button onClick="deleteCachesAndUnregisterSW();">Tøm cache</button>`;
+            }
             const respmsg = document.getElementById("respMsg");
             respmsg.innerHTML = resp;
          }
