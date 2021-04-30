@@ -727,6 +727,7 @@ function updateApplication() {
 
 function deleteCachesAndUnregisterSW() {
     const confirmDeleteCache = confirm("Er du sikker på at du ønsker å tømme caches (Offline modus vil være utilgjengelig frem til ny cache blir lastet ned)");
+
     if (confirmDeleteCache === true) {
         removeServiceWorker();
         deleteAllCaches();
