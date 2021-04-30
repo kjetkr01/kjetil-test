@@ -706,18 +706,31 @@ function getDaysSinceAndDate(aDate) {
 
 //
 
+async function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        const registration = await navigator.serviceWorker.register('service-worker.js');
+    }
+}
+
 function updateApplication() {
-
-    sessionStorage.removeItem("settings_notification_update");
-
-    deleteAllCaches();
-    updateServiceWorker();
-
+    if (window.navigator.onLine) {
+        const confirmUpdate = confirm("Ønsker du å oppdatere? (Krever internett tilkobling)");
+        if (confirmUpdate === true) {
+            sessionStorage.removeItem("settings_notification_update");
+            removeServiceWorker();
+            deleteAllCaches();
+        }
+    } else {
+        alert("Kunne ikke oppdatere! Krever internett tilkobling");
+    }
 }
 
 function deleteCachesAndUnregisterSW() {
-    removeServiceWorker();
-    deleteAllCaches();
+    const confirmDeleteCache = confirm("Er du sikker på at du ønsker å tømme caches (Offline modus vil være utilgjengelig frem til ny cache blir lastet ned)");
+    if (confirmDeleteCache === true) {
+        removeServiceWorker();
+        deleteAllCaches();
+    }
 }
 
 function removeServiceWorker() {

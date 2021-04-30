@@ -150,10 +150,8 @@
 </body>
 
 <script>
-
-   if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js');
-   }
+   checkConnection("c6r2");
+   registerServiceWorker();
 
    lockBodyPosition();
    loadLeaderboards();

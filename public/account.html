@@ -349,12 +349,11 @@
 </body>
 
 <script>
-
+   checkConnection("c6r2");
    checkForUpdate();
    async function checkForUpdate() {
       const serverApplication = await callServerAPIPost({}, `/application`);
       if (serverApplication) {
-
          if (serverApplication.version.fullNumber !== application.version.fullNumber) {
             sessionStorage.setItem("settings_notification_update", true);
             document.getElementById("settings").innerHTML = `Innstillinger (1)`;
@@ -365,9 +364,7 @@
       }
    }
 
-   if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js');
-   }
+   registerServiceWorker();
 
    lockBodyPosition();
    getCreateNewLiftorGoalOverlay();

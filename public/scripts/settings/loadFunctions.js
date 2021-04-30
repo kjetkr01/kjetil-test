@@ -393,14 +393,14 @@ async function loadAboutAppPage(setting) {
                 <br>
                 Nyeste versjon: ${serverApplication.version.fullNumber}<br>
                 <button class="settingsButton" onClick="updateApplication();">Oppdater</button>`;
-                sessionStorage.setItem("settings_notification_update", true);
+                    sessionStorage.setItem("settings_notification_update", true);
                 }
             }
 
             const appInfoHTML = `
             <strong>${application.name}</strong>
             <br>
-            <p class="settingsApplicationFullVersion">${application.version.full || application.version.fullNumber || ""}
+            <p id="applicationVersionEtc" class="settingsApplicationFullVersion">${application.version.full || application.version.fullNumber || ""}
             ${newUpdateTxt}
             </p>
             `;

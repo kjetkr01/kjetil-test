@@ -1,5 +1,6 @@
 const cacheName = 'js13kPWA-v8';
 const appShellFiles = [
+    'images/appIcon.png',
     'index.html',
     'service-worker.js',
     'styles/themes/themes.css',
@@ -15,12 +16,11 @@ const appShellFiles = [
     'scripts/index/index.js',
     'scripts/badges/ownerBadges.js',
     'scripts/account/editInformation.js',
-    'scripts/overlay/overlay.js'
+    'scripts/overlay/overlay.js',
+    'ts_application.js',
 ];
 
-
 const contentToCache = appShellFiles;
-
 self.addEventListener('install', (e) => {
     self.skipWaiting();
     console.log(`[Service Worker] Install - ${cacheName}`);
@@ -28,6 +28,7 @@ self.addEventListener('install', (e) => {
         const cache = await caches.open(cacheName);
         console.log('[Service Worker] Caching all: app shell and content');
         await cache.addAll(contentToCache);
+        console.log('[Service Worker] Downloaded: app shell and content');
     })());
 });
 
