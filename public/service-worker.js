@@ -1,4 +1,4 @@
-const cacheName = 'js13kPWA-v9';
+const cacheName = 'js13kPWA-v10';
 const appShellFiles = [
     'images/appIcon.png',
     'index.html',
