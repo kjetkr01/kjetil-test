@@ -15,7 +15,8 @@ function enableOverlayCreate(aType) {
 
         const createNewLiftorGoalOverlay = document.getElementById("createNewLiftorGoalOverlay");
 
-        const today = new Date().toISOString().substr(0, 10) || null;
+        const tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+        const today = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1).substr(0, 10);
 
         title1.innerHTML = "";
         inp1.innerHTML = "";
@@ -125,7 +126,8 @@ function enableOverlayEdit(aType, aExercise, aId) {
         respMsg.innerHTML = "";
         const showDeleteBtn = true;
 
-        const today = new Date().toISOString().substr(0, 10) || null;
+        const tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+        const today = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1).substr(0, 10);
 
         if (today) {
             inp3.setAttribute('max', today);
@@ -409,7 +411,8 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aInp4, aType, aColor, aId) {
             //Date format = YYYY-MM-DD
             const checkDateFormat = input4.split("-");
 
-            const today = new Date().toISOString().substr(0, 10);
+            const tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+            const today = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1).substr(0, 10);
 
             if (input4 > today) {
                 msg = "Dato kan ikke være i fremtiden!";

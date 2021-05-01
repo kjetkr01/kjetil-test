@@ -111,10 +111,6 @@ async function login(username, password, rmbrMe) {
                         sessionStorage.setItem("user", JSON.stringify(resp.user));
                     }
 
-                    const today = new Date();
-                    const updatedTxt = today.toLocaleDateString() || true;
-                    sessionStorage.setItem("updated", updatedTxt);
-
                     message = "Login successful";
                 } else {
                     message = "Det har oppstått en feil.";

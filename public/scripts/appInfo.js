@@ -1,29 +1,3 @@
-// Oppdatere disse når ny commit
-
-/*const application = {
-    name: "Treningstatistikken",
-    logoURL: "images/appIcon.png",
-    version: {
-        state: "alpha 85%",
-        major: 4, // major++ = minor = 0 && revision = 0
-        minor: 3, // minor++ = revision = 0
-        revision: 26,
-    },
-    lastUpdated: {
-        day: "30",
-        month: "04",
-        year: "2021"
-    },
-    updatesInfo: {
-        showOnGoing: true,
-        showPlanned: true,
-    }
-}
-
-// Slutt
-
-application.version.fullNumber = `${application.version.major}.${application.version.minor}.${application.version.revision}`;
-application.version.full = `Versjon ${application.version.fullNumber} (${application.version.state})`;*/
 const application = ts_application.ts_application;
 application.lastUpdated.date = getDateFormat(application.lastUpdated.day, application.lastUpdated.month, application.lastUpdated.year);
 
@@ -159,7 +133,6 @@ function createBtn(aUserFullname, aUserID) {
         const html = `<button class="settingsButtonUser ${extraClasses}" ${onClickLink}>${userFullname}</button>`;
 
         return html;
-
     }
 }
 
@@ -182,7 +155,6 @@ function getDateFormat(aDay, aMonth, aYear) {
             }
         }
     }
-
     return string;
 }
 
@@ -206,7 +178,5 @@ function calcDaysSinceUpdate() {
     } else {
         string = application.lastUpdated.date;
     }
-
     return string;
-
 }

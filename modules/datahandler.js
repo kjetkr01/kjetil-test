@@ -41,7 +41,8 @@ class StorageHandler {
                 WHERE username=$1`,
                     [username]);
 
-                const requestDate = new Date().toISOString().substr(0, 10) || null;
+                const tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+                const requestDate = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1).substr(0, 10);
 
                 if (results.rows.length === 0) {
 
