@@ -200,33 +200,6 @@
 
    //sessionStorage.setItem("updated_version_text", `Treningstatistikken ble oppdatert til 4.3.78`);
 
-   if (sessionStorage.getItem("updated_version_text")) {
-      const updatedVersionOverlay = document.getElementById("updatedVersionOverlay");
-      const updateAlert = sessionStorage.getItem("updated_version_text");
-      const informationUV = document.getElementById("informationUV");
-
-      updatedVersionOverlay.style.display = "block";
-
-      informationUV.innerHTML = updateAlert;
-      const closingInUV = document.getElementById("closingInUV");
-      let secondsLeft = 3;
-      closingInUV.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
-      let countDown = setInterval(() => {
-         secondsLeft--;
-         if (secondsLeft <= 0) {
-            clearInterval(countDown);
-
-            informationUV.innerHTML = "";
-            closingInUV.innerHTML = "";
-            updatedVersionOverlay.style.display = "none";
-         } else {
-            closingInUV.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
-         }
-      }, 1000);
-
-      sessionStorage.removeItem("updated_version_text");
-   }
-
    checkForUpdate();
    async function checkForUpdate() {
       const serverApplication = await callServerAPIPost({}, `/application`);
@@ -245,6 +218,35 @@
          }
       }
    }
+
+   setTimeout(() => {
+      if (sessionStorage.getItem("updated_version_text")) {
+         const updatedVersionOverlay = document.getElementById("updatedVersionOverlay");
+         const updateAlert = sessionStorage.getItem("updated_version_text");
+         const informationUV = document.getElementById("informationUV");
+
+         updatedVersionOverlay.style.display = "block";
+
+         informationUV.innerHTML = updateAlert;
+         const closingInUV = document.getElementById("closingInUV");
+         let secondsLeft = 3;
+         closingInUV.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
+         let countDown = setInterval(() => {
+            secondsLeft--;
+            if (secondsLeft <= 0) {
+               clearInterval(countDown);
+
+               informationUV.innerHTML = "";
+               closingInUV.innerHTML = "";
+               updatedVersionOverlay.style.display = "none";
+            } else {
+               closingInUV.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
+            }
+         }, 1000);
+
+         sessionStorage.removeItem("updated_version_text");
+      }
+   }, 100);
 
    lockBodyPosition();
    getCreateNewLiftorGoalOverlay();
