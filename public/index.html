@@ -199,7 +199,7 @@
    registerServiceWorker();
 
    //sessionStorage.setItem("updated_version_text", `Treningstatistikken ble oppdatert til 4.3.78`);
-
+   
    checkForUpdate();
    async function checkForUpdate() {
       const serverApplication = await callServerAPIPost({}, `/application`);
