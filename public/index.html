@@ -196,7 +196,7 @@
             if (automaticUpdates === true) {
                console.log("trying to automatic update");
                updateApplication(false);
-               alert("updated to newest version!");
+               alert(`${serverApplication.name} ble oppdatert til ${serverApplication.version.fullNumber}`);
             }
 
             sessionStorage.setItem("settings_notification_update", true);
