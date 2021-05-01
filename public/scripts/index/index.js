@@ -152,6 +152,12 @@ async function requestAccountDetails() {
         goals = JSON.parse(localStorage.getItem("cachedGoals_owner"));
         badgeColorsJSON = JSON.parse(localStorage.getItem("cachedBadgeColors"));
 
+        const cachedGoalsLeft = JSON.parse(localStorage.getItem("cachedGoalsLeft_owner"));
+
+        if (cachedGoalsLeft) {
+            goalsLeft = new TgoalsLeft(cachedGoalsLeft);
+        }
+
         if (goals && lifts) {
             goalsInfo = new Tgoals(goals);
             document.getElementById("smallTitle").classList = "noselect";
@@ -240,10 +246,8 @@ async function displayBadges(aInfo) {
         showGoalBadgeAnimations = true;
     }
 
-    goalsLeft = new TgoalsLeft(info.goalsLeft);
-    badgeColors = new TbadgeColors(info.badgeColors);
-
     if (updateGoals === true) {
+        goalsLeft = new TgoalsLeft(info.goalsLeft);
         goalsInfo = new Tgoals(info.goals);
         displayGoals();
     }

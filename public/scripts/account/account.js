@@ -21,7 +21,7 @@ async function requestAccountDetails() {
         }
 
         if (cachedGoalsLeft) {
-            goalsLeft = new TgoalsLeft(info.goalsLeft);
+            goalsLeft = new TgoalsLeft(cachedGoalsLeft);
         }
 
         if (lifts) {

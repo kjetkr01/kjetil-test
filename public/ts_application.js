@@ -1,6 +1,7 @@
 (function (exports) {
 
     // Oppdatere disse når ny commit
+    const updateCount = 150;
 
     const app = {
         name: "Treningstatistikken",
@@ -8,8 +9,8 @@
         version: {
             state: "alpha 84%",
             major: 4, // major++ = minor = 0 && revision = 0
-            minor: 3, // minor++ = revision = 0
-            revision: 98,
+            minor: 4, // minor++ = revision = 0
+            revision: 0,
         },
         lastUpdated: {
             day: "01",
