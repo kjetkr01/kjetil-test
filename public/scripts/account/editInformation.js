@@ -2,92 +2,87 @@ let liftsLeft = null, goalsLeft = null, liftsInfo = null, goalsInfo = null, badg
 
 function enableOverlayCreate(aType) {
 
-    if (navigator.onLine) {
+    if (aType) {
 
-        if (aType) {
+        const type = aType;
+        const title1 = document.getElementById("title1C");
+        const inp1 = document.getElementById("inp1C");
+        const inp2 = document.getElementById("inp2C");
+        const inp3 = document.getElementById("inp3C");
+        const inp4 = document.getElementById("inp4C");
+        const Gsave = document.getElementById("GsaveC");
+        const respMsg = document.getElementById("respC");
 
-            const type = aType;
-            const title1 = document.getElementById("title1C");
-            const inp1 = document.getElementById("inp1C");
-            const inp2 = document.getElementById("inp2C");
-            const inp3 = document.getElementById("inp3C");
-            const inp4 = document.getElementById("inp4C");
-            const Gsave = document.getElementById("GsaveC");
-            const respMsg = document.getElementById("respC");
+        const createNewLiftorGoalOverlay = document.getElementById("createNewLiftorGoalOverlay");
 
-            const createNewLiftorGoalOverlay = document.getElementById("createNewLiftorGoalOverlay");
+        const today = new Date().toISOString().substr(0, 10) || null;
 
-            const today = new Date().toISOString().substr(0, 10) || null;
+        title1.innerHTML = "";
+        inp1.innerHTML = "";
+        inp2.value = "";
+        inp3.value = "";
+        inp4.value = "";
+        Gsave.innerHTML = "";
+        respMsg.innerHTML = "";
 
-            title1.innerHTML = "";
-            inp1.innerHTML = "";
-            inp2.value = "";
-            inp3.value = "";
-            inp4.value = "";
-            Gsave.innerHTML = "";
-            respMsg.innerHTML = "";
-
-            if (today) {
-                inp4.value = today;
-                inp4.setAttribute('max', today);
-            }
-
-            if (type === "lift" && liftsLeft) {
-                title1.textContent = "Legg til nytt løft";
-                const liftsLeftInfo = liftsLeft.info();
-
-                respMsg.innerHTML = `Du kan lage ${liftsLeftInfo} løft til`;
-
-                if (allowedExercises.length > 0) {
-                    const currentlySorting = localStorage.getItem("display_lifts_owner");
-                    for (let i = 0; i < allowedExercises.length; i++) {
-
-                        if (allowedExercises[i] === currentlySorting && allowedExercises.includes(currentlySorting)) {
-                            inp1.innerHTML += `<option selected="selected" value="${allowedExercises[i]}">${capitalizeFirstLetter(allowedExercises[i])}`;
-                        } else {
-                            inp1.innerHTML += `<option value="${allowedExercises[i]}">${capitalizeFirstLetter(allowedExercises[i])}`;
-                        }
-                    }
-
-                    if (navigator.onLine) {
-                        Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('lift','create');">Lagre</button>`;
-                    } else {
-                        Gsave.innerHTML = `<button id="saveC" disabled onclick="saveLiftOrGoal('lift','create');">Lagre</button>`;
-                    }
-                }
-
-                createNewLiftorGoalOverlay.style.display = "block";
-
-            } else if (type === "goal" && goalsLeft) {
-                title1.textContent = "Legg til nytt mål";
-                const goalsLeftInfo = goalsLeft.info();
-
-                respMsg.innerHTML = `Du kan lage ${goalsLeftInfo} mål til`;
-
-                if (allowedExercises.length > 0) {
-                    const currentlySorting = localStorage.getItem("display_goals_owner");
-                    for (let i = 0; i < allowedExercises.length; i++) {
-                        if (allowedExercises[i] === currentlySorting && allowedExercises.includes(currentlySorting)) {
-                            inp1.innerHTML += `<option selected="selected" value="${allowedExercises[i]}">${capitalizeFirstLetter(allowedExercises[i])}`;
-                        } else {
-                            inp1.innerHTML += `<option value="${allowedExercises[i]}">${capitalizeFirstLetter(allowedExercises[i])}`;
-                        }
-                    }
-                    if (navigator.onLine) {
-                        Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('goal','create');">Lagre</button>`;
-                    } else {
-                        Gsave.innerHTML = `<button id="saveC" disabled onclick="saveLiftOrGoal('goal','create');">Lagre</button>`;
-                    }
-                }
-
-                createNewLiftorGoalOverlay.style.display = "block";
-            } else {
-                alert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
-                return;
-            }
+        if (today) {
+            inp4.value = today;
+            inp4.setAttribute('max', today);
         }
-    } else {
-        alert("Det kreves internettforbindelse for å opprette løft/mål");
+
+        if (type === "lift" && liftsLeft) {
+            title1.textContent = "Legg til nytt løft";
+            const liftsLeftInfo = liftsLeft.info();
+
+            respMsg.innerHTML = `Du kan lage ${liftsLeftInfo} løft til`;
+
+            if (allowedExercises.length > 0) {
+                const currentlySorting = localStorage.getItem("display_lifts_owner");
+                for (let i = 0; i < allowedExercises.length; i++) {
+
+                    if (allowedExercises[i] === currentlySorting && allowedExercises.includes(currentlySorting)) {
+                        inp1.innerHTML += `<option selected="selected" value="${allowedExercises[i]}">${capitalizeFirstLetter(allowedExercises[i])}`;
+                    } else {
+                        inp1.innerHTML += `<option value="${allowedExercises[i]}">${capitalizeFirstLetter(allowedExercises[i])}`;
+                    }
+                }
+
+                if (navigator.onLine) {
+                    Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('lift','create');">Lagre</button>`;
+                } else {
+                    Gsave.innerHTML = `<button id="saveC" disabled onclick="saveLiftOrGoal('lift','create');">Lagre</button>`;
+                }
+            }
+
+            createNewLiftorGoalOverlay.style.display = "block";
+
+        } else if (type === "goal" && goalsLeft) {
+            title1.textContent = "Legg til nytt mål";
+            const goalsLeftInfo = goalsLeft.info();
+
+            respMsg.innerHTML = `Du kan lage ${goalsLeftInfo} mål til`;
+
+            if (allowedExercises.length > 0) {
+                const currentlySorting = localStorage.getItem("display_goals_owner");
+                for (let i = 0; i < allowedExercises.length; i++) {
+                    if (allowedExercises[i] === currentlySorting && allowedExercises.includes(currentlySorting)) {
+                        inp1.innerHTML += `<option selected="selected" value="${allowedExercises[i]}">${capitalizeFirstLetter(allowedExercises[i])}`;
+                    } else {
+                        inp1.innerHTML += `<option value="${allowedExercises[i]}">${capitalizeFirstLetter(allowedExercises[i])}`;
+                    }
+                }
+                if (navigator.onLine) {
+                    Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('goal','create');">Lagre</button>`;
+                } else {
+                    Gsave.innerHTML = `<button id="saveC" disabled onclick="saveLiftOrGoal('goal','create');">Lagre</button>`;
+                }
+            }
+
+            createNewLiftorGoalOverlay.style.display = "block";
+        } else {
+            alert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
+            return;
+        }
     }
 }
 

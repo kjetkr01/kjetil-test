@@ -13,6 +13,17 @@ async function requestAccountDetails() {
         goals = JSON.parse(localStorage.getItem("cachedGoals_owner"));
         badgeColorsJSON = JSON.parse(localStorage.getItem("cachedBadgeColors"));
 
+        const cachedLiftsLeft = JSON.parse(localStorage.getItem("cachedLiftsLeft_owner"));
+        const cachedGoalsLeft = JSON.parse(localStorage.getItem("cachedGoalsLeft_owner"));
+
+        if (cachedLiftsLeft) {
+            liftsLeft = new TliftsLeft(cachedLiftsLeft);
+        }
+
+        if (cachedGoalsLeft) {
+            goalsLeft = new TgoalsLeft(info.goalsLeft);
+        }
+
         if (lifts) {
             showLiftBadgeAnimations = false;
             liftsInfo = new Tlifts(lifts);
@@ -109,9 +120,9 @@ async function requestAccountDetails() {
 
         if (resp.hasOwnProperty("info")) {
             localStorage.setItem("cachedLifts_owner", JSON.stringify(resp.info.lifts));
-            localStorage.setItem("cachedHasLiftsLeft_owner", resp.info.liftsLeft > 0);
+            localStorage.setItem("cachedLiftsLeft_owner", resp.info.liftsLeft);
             localStorage.setItem("cachedGoals_owner", JSON.stringify(resp.info.goals));
-            localStorage.setItem("cachedHasGoalsLeft_owner", resp.info.goalsLeft > 0);
+            localStorage.setItem("cachedGoalsLeft_owner", resp.info.goalsLeft);
             localStorage.setItem("cachedBadgeColors", JSON.stringify(resp.info.badgeColors));
             displayInformation(resp.info);
             return;
@@ -144,9 +155,6 @@ function displayInformation(respInfo) {
     memberSince = info.member_since;
 
     let updateLifts = true, updateGoals = true, updateBadgeColors = true;
-
-    liftsLeft = new TliftsLeft(info.liftsLeft);
-    goalsLeft = new TgoalsLeft(info.goalsLeft);
 
     traningsplitInfo = new Ttrainingsplit(info.trainingsplit);
 
@@ -235,11 +243,13 @@ function displayInformation(respInfo) {
     }
 
     if (lifts && updateLifts === true) {
+        liftsLeft = new TliftsLeft(info.liftsLeft);
         liftsInfo = new Tlifts(info.lifts);
         displayLifts(info.liftsLeft > 0);
     }
 
     if (goals && updateGoals === true || lifts && updateLifts === true) {
+        goalsLeft = new TgoalsLeft(info.goalsLeft);
         goalsInfo = new Tgoals(info.goals);
         displayGoals(info.goalsLeft > 0);
     }
@@ -257,7 +267,7 @@ function displayInformation(respInfo) {
 
 function displayLifts(hasLiftsLeft) {
 
-    hasLiftsLeft = localStorage.getItem("cachedHasLiftsLeft_owner") === "true" || false;
+    hasLiftsLeft = localStorage.getItem("cachedLiftsLeft_owner") > 0 || false;
 
     document.getElementById("badgesLiftsTableRow").innerHTML = "";
 
@@ -387,7 +397,7 @@ function displayLifts(hasLiftsLeft) {
 
 function displayGoals(hasGoalsLeft) {
 
-    hasGoalsLeft = localStorage.getItem("cachedHasGoalsLeft_owner") === "true" || false;
+    hasGoalsLeft = localStorage.getItem("cachedGoalsLeft_owner") > 0 || false;
 
     document.getElementById("badgesGoalsTableRow").innerHTML = "";
 
