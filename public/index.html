@@ -77,6 +77,17 @@
 
    <div id="editLiftorGoalOverlay" style="display: none;" class="overlay"></div>
 
+   <div id="updatedVersionOverlay" style="display: block;" class="overlay">
+      <div id="updatedVersion" class="updatedVersion">
+         <div id="GinformationUV">
+            <p id="informationUV"></p>
+         </div>
+         <div id="GclosingInUV">
+            <p id="closingInUV"></p>
+         </div>
+      </div>
+   </div>
+
    <section id="page">
 
       <div id="c1r1"></div>
@@ -187,12 +198,33 @@
    checkConnection("c6r2");
    registerServiceWorker();
 
-   if (sessionStorage.getItem("showUpdateAlert")) {
-      const updateAlert = sessionStorage.getItem("showUpdateAlert");
-      sessionStorage.removeItem("showUpdateAlert");
-      setTimeout(() => {
+   sessionStorage.setItem("updated_version_text", `Treningstatistikken ble oppdatert til 4.3.78`);
+
+   if (sessionStorage.getItem("updated_version_text")) {
+      const updateAlert = sessionStorage.getItem("updated_version_text");
+      const informationUV = document.getElementById("informationUV");
+
+      informationUV.innerHTML = updateAlert;
+      const closingInUV = document.getElementById("closingInUV");
+      let secondsLeft = 3;
+      closingInUV.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
+      let countDown = setInterval(() => {
+         secondsLeft--;
+         if (secondsLeft <= 0) {
+            clearInterval(countDown);
+
+            informationUV.innerHTML = "";
+            closingInUV.innerHTML = "";
+            document.getElementById("updatedVersionOverlay").style.display = "none";
+         } else {
+            closingInUV.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
+         }
+      }, 1000);
+
+      //sessionStorage.removeItem("showUpdateAlert");
+      /*setTimeout(() => {
          alert(updateAlert);
-      }, 500);
+      }, 500);*/
    }
 
    checkForUpdate();
@@ -203,7 +235,7 @@
 
             if (automaticUpdates === true) {
                updateApplication(false);
-               sessionStorage.setItem("showUpdateAlert", `${serverApplication.name} ble oppdatert til ${serverApplication.version.fullNumber}`);
+               sessionStorage.setItem("updated_version_text", `${serverApplication.name} ble oppdatert til ${serverApplication.version.fullNumber}`);
             }
 
             sessionStorage.setItem("settings_notification_update", true);
