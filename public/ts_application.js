@@ -1,21 +1,28 @@
 (function (exports) {
 
     // Oppdatere disse når ny commit
-    const updateCount = 150;
+
+    const updates = 780;
+    const updateDay = "01.05.2021";
+
+    // Slutt
+
+    const expectedUpdates = 940;
+    const upd = updateDay.split(".");
 
     const app = {
         name: "Treningstatistikken",
         logoURL: "images/appIcon.png",
         version: {
-            state: "alpha 84%",
-            major: 4, // major++ = minor = 0 && revision = 0
-            minor: 4, // minor++ = revision = 0
+            state: "",
+            major: 0, // major++ = minor = 0 && revision = 0 // 4
+            minor: 0, // minor++ = revision = 0 // 4
             revision: 0,
         },
         lastUpdated: {
-            day: "01",
-            month: "05",
-            year: "2021"
+            day: upd[0],
+            month: upd[1],
+            year: upd[2]
         },
         updatesInfo: {
             showOnGoing: true,
@@ -23,7 +30,31 @@
         }
     }
 
-    // Slutt
+    if (updates / expectedUpdates >= 1) {
+        app.version.state = `alpha 100%`;
+    } else {
+        app.version.state = `alpha ${parseFloat((updates / expectedUpdates) * 100).toFixed(1)}%`;
+    }
+
+    const majorCount = 150;
+    const minorCount = 25;
+
+    let rest = updates;
+
+    if (rest / majorCount >= 1) {
+        app.version.major = parseInt(rest / majorCount);
+        rest = rest - (app.version.major * majorCount);
+    }
+
+    if (rest > 0) {
+        if (rest / minorCount >= 1) {
+            app.version.minor = parseInt(rest / minorCount);
+            rest = rest - (app.version.minor * minorCount);
+        }
+        if (rest > 0) {
+            app.version.revision = rest;
+        }
+    }
 
     app.version.fullNumber = `${app.version.major}.${app.version.minor}.${app.version.revision}`;
     app.version.full = `Versjon ${app.version.fullNumber} (${app.version.state})`;

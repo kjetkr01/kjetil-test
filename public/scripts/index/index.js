@@ -182,9 +182,9 @@ async function requestAccountDetails() {
     if (resp) {
         if (resp.hasOwnProperty("info")) {
             localStorage.setItem("cachedLifts_owner", JSON.stringify(resp.info.lifts));
-            localStorage.setItem("cachedHasLiftsLeft_owner", resp.info.liftsLeft > 0);
+            localStorage.setItem("cachedLiftsLeft_owner", resp.info.liftsLeft);
             localStorage.setItem("cachedGoals_owner", JSON.stringify(resp.info.goals));
-            localStorage.setItem("cachedHasGoalsLeft_owner", resp.info.goalsLeft > 0);
+            localStorage.setItem("cachedGoalsLeft_owner", resp.info.goalsLeft);
             displayBadges(resp.info);
             return;
         }
@@ -256,7 +256,7 @@ async function displayBadges(aInfo) {
 
 function displayGoals() {
 
-    hasGoalsLeft = localStorage.getItem("cachedHasGoalsLeft_owner") === "true" || false;
+    hasGoalsLeft = localStorage.getItem("cachedGoalsLeft_owner") > 0 || false;
 
     const smallTitle = document.getElementById("smallTitle");
 
