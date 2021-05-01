@@ -208,25 +208,22 @@
 
             if (automaticUpdates === true) {
                updateApplication(false);
-               sessionStorage.setItem("updated_version_text", `${serverApplication.name} ble oppdatert til ${serverApplication.version.fullNumber}`);
+               localStorage.setItem("updated_version_text", `${serverApplication.name} ble oppdatert til ${serverApplication.version.fullNumber}`);
             }
 
-            sessionStorage.setItem("settings_notification_update", true);
+            localStorage.setItem("settings_notification_update", true);
 
          } else {
-            sessionStorage.removeItem("settings_notification_update");
+            localStorage.removeItem("settings_notification_update");
          }
       }
    }
 
-   setTimeout(() => {
-      updatedNotification();
-   }, 250);
-
+   updatedNotification();
    function updatedNotification() {
-      if (sessionStorage.getItem("updated_version_text")) {
+      if (localStorage.getItem("updated_version_text")) {
          const updatedVersionOverlay = document.getElementById("updatedVersionOverlay");
-         const updateAlert = sessionStorage.getItem("updated_version_text");
+         const updateAlert = localStorage.getItem("updated_version_text");
          const informationUV = document.getElementById("informationUV");
 
          updatedVersionOverlay.style.display = "block";
@@ -248,7 +245,7 @@
             }
          }, 1000);
 
-         sessionStorage.removeItem("updated_version_text");
+         localStorage.removeItem("updated_version_text");
       }
    }
 
