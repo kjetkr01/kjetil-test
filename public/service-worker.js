@@ -1,6 +1,6 @@
 const cacheName = 'js13kPWA-v12';
 
-const appShellFiles = [
+const contentToCache = [
     '/account.html',
     '/images/appIcon.png',
     '/index.html',
@@ -54,7 +54,6 @@ const appShellFiles = [
     '/user.html',
 ]
 
-const contentToCache = appShellFiles;
 self.addEventListener('install', (e) => {
     self.skipWaiting();
     console.log(`[Service Worker] Install - ${cacheName}`);

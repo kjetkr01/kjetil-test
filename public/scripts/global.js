@@ -716,7 +716,6 @@ async function registerServiceWorker() {
                 console.log(`[Service Worker] Registration successful, scope is: ${registration.scope}`);
             })
             .catch(function (error) {
-                alert('Service worker registration failed, error:', error);
                 console.log(`[Service Worker] Registration failed, error: ${error}`);
             });
     }
