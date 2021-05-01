@@ -565,7 +565,7 @@ async function loadUsersListPage(setting) {
         scrollToSavedPos(setting);
         saveNewScrollPos = true;
     } else {
-        settingsGrid.innerHTML = justTextTemplate("Ingen internettforbindelse", "left");
+        settingsGrid.innerHTML = justTextTemplate("Kunne ikke laste inn listen med brukere. Ingen internettforbindelse", "left");
     }
 }
 
@@ -651,7 +651,7 @@ async function loadPendingUsersPage(setting) {
         scrollToSavedPos(setting);
         saveNewScrollPos = true;
     } else {
-        settingsGrid.innerHTML = justTextTemplate("Ingen internettforbindelse", "left");
+        settingsGrid.innerHTML = justTextTemplate("Kunne ikke laste inn listen med forespørsler. Ingen internettforbindelse", "left");
     }
 }
 
@@ -660,17 +660,17 @@ async function loadAPIPage() {
 
         if (userInfo.hasOwnProperty("apikey")) {
 
-            const config = {
-                method: "GET",
-                headers: {
-                    "content-type": "application/json"
-                }
-            }
-
-            const response = await fetch("/api", config);
-            const data = await response.json();
-
             if (sessionStorage.getItem("currentSetting") === ELoadSettings.api.name) {
+
+                const config = {
+                    method: "GET",
+                    headers: {
+                        "content-type": "application/json"
+                    }
+                }
+
+                const response = await fetch("/api", config);
+                const data = await response.json();
 
                 settingsGrid.innerHTML = justTextTemplate(`${application.name} har ${data.length} APIer.<br>Her kan du se din API key, BrukerID og ulike APIer.`, "left");
 
@@ -679,10 +679,10 @@ async function loadAPIPage() {
 
                 for (let i = 0; i < data.length; i++) {
                     const text = `
-        URL: ${data[i].url}
-        <br><br>
-        Metode: ${data[i].method}
-        `;
+                    URL: ${data[i].url}
+                    <br><br>
+                    Metode: ${data[i].method}
+                    `;
 
                     settingsGrid.innerHTML += getAPITextTemplate(text, "", "spacingTop");
                 }
@@ -716,7 +716,6 @@ async function loadAPIPage() {
                 }
 
                 if (sessionStorage.getItem("currentSetting") === ELoadSettings.api.name) {
-
                     settingsGrid.innerHTML += getAPITextTemplate(exampleAPIData);
 
                     settingsGrid.innerHTML += getBottomSpacingTemplate();
@@ -726,7 +725,7 @@ async function loadAPIPage() {
             loadSetting(ELoadSettings.settings.name);
         }
     } else {
-        settingsGrid.innerHTML = justTextTemplate("Ingen internettforbindelse", "left");
+        settingsGrid.innerHTML = justTextTemplate("Kunne ikke laste inn listen med APIer. Ingen internettforbindelse", "left");
     }
 }
 

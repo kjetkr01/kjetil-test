@@ -57,6 +57,9 @@ const ongoingUpdatesArr = [
     "Endre hvordan treningsplanen funker (30%)",
     "Kunne velge aktiv treningsplan (0%)",
     "Kunne redigere treningsplanen (0%)",
+    "TITLE:Offline/caching support",
+    "Se treningsplan, løft, mål offline",
+    "Offline og bruk av caching",
     "TITLE:Annet",
     "Optimalisering",
     "Endring i hvordan animasjoner/lasting av data funker"
@@ -87,10 +90,6 @@ const plannedUpdatesArr = [
     "TITLE:Badges",
     "Lage flere badge farger",
     "Lage større versjon av badge (mål-badge)",
-
-    "TITLE:Offline/caching support",
-    "Se treningsplan, løft, mål offline",
-    "Offline eller bruk av caching",
 
     "TITLE:Desktop design",
     "Optimalisere desktop design",
