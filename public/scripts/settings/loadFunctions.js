@@ -169,11 +169,11 @@ function loadAboutMePage() {
 
     settingsGrid.innerHTML = justTextTemplate("Her kan du velge høyde, vekt og alder. Om profilen din er offentlig, vises dette til andre brukere", "left");
 
-    settingsGrid.innerHTML += getTemplate("Treningssenter", "", `<input id="gymInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.gym}' maxlength="30"></input>`, "borderTop");
-    settingsGrid.innerHTML += getTemplate("Alder", "", `<input id="ageInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.age}' type="number">år</input>`);
+    settingsGrid.innerHTML += getTemplate("Treningssenter", "", `<input id="gymInp" style="text-align:right;" class='settingsInput' value='${userInfo.gym}' maxlength="30"></input>`, "borderTop");
+    settingsGrid.innerHTML += getTemplate("Alder", "", `<input id="ageInp" style="text-align:right;" class='settingsInput' value='${userInfo.age}' type="number">år</input>`);
 
-    settingsGrid.innerHTML += getTemplate("Høyde", "", `<input id="heightInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.height}' type="number">cm</input>`, "spacingTop");
-    settingsGrid.innerHTML += getTemplate("Vekt", "", `<input id="weightInp" style="text-align:right;" class='settingsInput' value='${userInfo.info.weight}' type="number">kg</input>`);
+    settingsGrid.innerHTML += getTemplate("Høyde", "", `<input id="heightInp" style="text-align:right;" class='settingsInput' value='${userInfo.height}' type="number">cm</input>`, "spacingTop");
+    settingsGrid.innerHTML += getTemplate("Vekt", "", `<input id="weightInp" style="text-align:right;" class='settingsInput' value='${userInfo.weight}' type="number">kg</input>`);
 
     settingsGrid.innerHTML += getCenteredTextTemplate(`<button id="updateAboutMeBtn" class='settingsButton' onClick="aboutMeResetValues();">Tilbakestill verdier</button>`, "", "spacingTop");
 
@@ -193,13 +193,13 @@ function loadAboutMePage() {
             const resetTxt = "Tilbakestill verdier";
 
             const change =
-                gymInp !== userInfo.info.gym
+                gymInp !== userInfo.gym
                 ||
-                ageInp !== userInfo.info.age.toString()
+                ageInp !== userInfo.age.toString()
                 ||
-                heightInp !== userInfo.info.height.toString()
+                heightInp !== userInfo.height.toString()
                 ||
-                weightInp !== userInfo.info.weight.toString();
+                weightInp !== userInfo.weight.toString();
 
             if (change === false && updateAboutMeBtn.innerHTML !== resetTxt) {
                 updateAboutMeBtn.innerHTML = resetTxt;
@@ -216,6 +216,12 @@ function loadAboutMePage() {
 }
 
 function loadAppearancePage() {
+
+    let disabled = "";
+
+    if (!navigator.onLine) {
+        disabled = "disabled";
+    }
 
     settingsGrid.innerHTML = justTextTemplate("Her kan du endre utseende på appen!", "left");
 
@@ -241,7 +247,7 @@ function loadAppearancePage() {
     }
 
     const appearanceThemeHTML = `
-    <select id="appearanceThemeSelection">
+    <select ${disabled} id="appearanceThemeSelection">
        ${appearanceThemeOptionsHTML}
     </select>
     `;
@@ -262,7 +268,7 @@ function loadAppearancePage() {
     }
 
     const themeColorSelectionHTML = `
-    <select id="themeColorSelection">
+    <select ${disabled} id="themeColorSelection">
     ${themeColorOptionsHTML}
     </select>
     `;
@@ -283,6 +289,12 @@ function loadAppearancePage() {
 }
 
 function loadProgressionInfoPage() {
+
+    let disabled = "";
+
+    if (!navigator.onLine) {
+        disabled = "disabled";
+    }
 
     settingsGrid.innerHTML = justTextTemplate("Her kan du endre hvor mye informasjon du ønsker å se på startsiden!", "left");
 
@@ -307,7 +319,7 @@ function loadProgressionInfoPage() {
     }
 
     const badeSizeHTML = `
-    <select id="badgeSizeSelection">
+    <select ${disabled} id="badgeSizeSelection">
        ${badeSizeOptionsHTML}
     </select>
     `;
@@ -343,7 +355,7 @@ function loadProgressionInfoPage() {
     }
 
     const badgeDetailsHTML = `
-    <select ${disabledTxt} id="badgeDetailsSelection">
+    <select ${disabledTxt} ${disabled} id="badgeDetailsSelection">
        ${badgeDetailsOptionsHTML}
     </select>
     `;
@@ -462,38 +474,39 @@ async function loadAboutAppPage(setting) {
 }
 
 async function loadUsersListPage(setting) {
+    if (navigator.onLine) {
 
-    const infoHeader = {};
-    const url = `/users/list/all`;
+        const infoHeader = {};
+        const url = `/users/list/all`;
 
-    const resp = await callServerAPIPost(infoHeader, url);
+        const resp = await callServerAPIPost(infoHeader, url);
 
-    if (resp.hasOwnProperty("allUsers") && resp.hasOwnProperty("allAPIUsers") && sessionStorage.getItem("currentSetting") === ELoadSettings.users.name) {
+        if (resp.hasOwnProperty("allUsers") && resp.hasOwnProperty("allAPIUsers") && sessionStorage.getItem("currentSetting") === ELoadSettings.users.name) {
 
-        let totalUsers = 0;
-        const allAPIUsersArr = [];
+            let totalUsers = 0;
+            const allAPIUsersArr = [];
 
-        for (let i = 0; i < resp.allAPIUsers.length; i++) {
-            allAPIUsersArr.push(parseInt(resp.allAPIUsers[i].user_id));
-        }
+            for (let i = 0; i < resp.allAPIUsers.length; i++) {
+                allAPIUsersArr.push(parseInt(resp.allAPIUsers[i].user_id));
+            }
 
-        let totalAPIUsers = allAPIUsersArr.length;
-        if (resp.allUsers[0].hasOwnProperty("id")) {
-            totalUsers = resp.allUsers.length
-        }
+            let totalAPIUsers = allAPIUsersArr.length;
+            if (resp.allUsers[0].hasOwnProperty("id")) {
+                totalUsers = resp.allUsers.length
+            }
 
-        let usersText = `${application.name} har ${totalUsers} brukere<br>${totalAPIUsers} av brukerene har API tilgang<br>Admins kan besøke profilen uavhengig om den er privat eller ikke<br>Her er listen med brukere`;
-        if (totalUsers === 0) {
-            usersText = `Det er ingen brukere`;
-        }
+            let usersText = `${application.name} har ${totalUsers} brukere<br>${totalAPIUsers} av brukerene har API tilgang<br>Admins kan besøke profilen uavhengig om den er privat eller ikke<br>Her er listen med brukere`;
+            if (totalUsers === 0) {
+                usersText = `Det er ingen brukere`;
+            }
 
-        settingsGrid.innerHTML = justTextTemplate(usersText, "left");
+            settingsGrid.innerHTML = justTextTemplate(usersText, "left");
 
-        if (resp.allUsers[0].hasOwnProperty("id")) {
+            if (resp.allUsers[0].hasOwnProperty("id")) {
 
-            const usersKeys = Object.keys(resp.allUsers);
+                const usersKeys = Object.keys(resp.allUsers);
 
-            const defaultHTML = `
+                const defaultHTML = `
                 <p class="settingsPendingUserFullName">Visningsnavn</p>
                 <p class="settingsPendingUsername">Brukernavn</p>
                 <p class="settingsPendingUsername">ID</p>
@@ -501,123 +514,127 @@ async function loadUsersListPage(setting) {
                 <p class="settingsPendingUsername">API tilgang</p>
                 `;
 
-            settingsGrid.innerHTML += getCenteredTextTemplate(defaultHTML, "", "borderTop");
+                settingsGrid.innerHTML += getCenteredTextTemplate(defaultHTML, "", "borderTop");
 
-            for (let i = 0; i < usersKeys.length; i++) {
+                for (let i = 0; i < usersKeys.length; i++) {
 
-                const currentUser = resp.allUsers[usersKeys[i]];
-                let myAccountColor = "";
-                let profileStatus = `<p class="settingsPendingUsername" style="color:red;">Privat</p>`;
+                    const currentUser = resp.allUsers[usersKeys[i]];
+                    let myAccountColor = "";
+                    let profileStatus = `<p class="settingsPendingUsername" style="color:red;">Privat</p>`;
 
-                let hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsAcceptPendingUser pointer" onClick="giveAPIAccess('${currentUser.username}','${currentUser.id}');">Gi API tilgang</button>`;
+                    let hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsAcceptPendingUser pointer" onClick="giveAPIAccess('${currentUser.username}','${currentUser.id}');">Gi API tilgang</button>`;
 
-                if (allAPIUsersArr.includes(currentUser.id)) {
-                    hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsDeclinePendingUser pointer" onClick="removeAPIAccess('${currentUser.username}','${currentUser.id}');">Fjern API tilgang</button>`;
-                }
+                    if (allAPIUsersArr.includes(currentUser.id)) {
+                        hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsDeclinePendingUser pointer" onClick="removeAPIAccess('${currentUser.username}','${currentUser.id}');">Fjern API tilgang</button>`;
+                    }
 
-                if (currentUser.publicprofile === true) {
-                    profileStatus = `<p class="settingsPendingUsername" style="color:green;">Offentlig</p>`;
-                }
+                    if (currentUser.publicprofile === true) {
+                        profileStatus = `<p class="settingsPendingUsername" style="color:green;">Offentlig</p>`;
+                    }
 
-                if (currentUser.username === username) {
-                    myAccountColor = "settingsHightlightUser";
-                }
+                    if (currentUser.username === username) {
+                        myAccountColor = "settingsHightlightUser";
+                    }
 
-                let usersTemplateHTML = `
+                    let usersTemplateHTML = `
                    <p class="settingsPendingUserFullName ${myAccountColor}">${currentUser.displayname}</p>
                    <p class="settingsPendingUsername ${myAccountColor}">${currentUser.username}</p>
                    <p class="settingsPendingUsername">ID: ${currentUser.id}</p>
                    `;
 
-                if (currentUser.username !== username) {
-                    usersTemplateHTML += `
+                    if (currentUser.username !== username) {
+                        usersTemplateHTML += `
                     ${profileStatus}
                     <p class="settingsPendingUsername">${hasAPIAccessTxt}</p>
                    <br>
                    <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Se profil</button>
                     `;
-                } else {
-                    usersTemplateHTML += `
+                    } else {
+                        usersTemplateHTML += `
                    <br>
                    <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Din bruker</button>
                     `;
-                }
+                    }
 
-                settingsGrid.innerHTML += getCenteredTextTemplate(usersTemplateHTML, "", "spacingTop");
+                    settingsGrid.innerHTML += getCenteredTextTemplate(usersTemplateHTML, "", "spacingTop");
+                }
             }
         }
-    }
 
-    settingsGrid.innerHTML += getBottomSpacingTemplate();
-    scrollToSavedPos(setting);
-    saveNewScrollPos = true;
+        settingsGrid.innerHTML += getBottomSpacingTemplate();
+        scrollToSavedPos(setting);
+        saveNewScrollPos = true;
+    } else {
+        settingsGrid.innerHTML = justTextTemplate("Ingen internettforbindelse", "left");
+    }
 }
 
 async function loadPendingUsersPage(setting) {
+    if (navigator.onLine) {
 
-    titleDom.innerHTML = ELoadSettings.pendingUsers.name;
-    document.title = ELoadSettings.pendingUsers.name;
+        titleDom.innerHTML = ELoadSettings.pendingUsers.name;
+        document.title = ELoadSettings.pendingUsers.name;
 
-    const infoHeader = {};
-    const url = `/users/list/pending`;
+        const infoHeader = {};
+        const url = `/users/list/pending`;
 
-    const resp = await callServerAPIPost(infoHeader, url);
+        const resp = await callServerAPIPost(infoHeader, url);
 
-    let totalRequests = 0;
-    if (resp[0].hasOwnProperty("username")) {
-        totalRequests = resp.length
-    }
+        let totalRequests = 0;
+        if (resp[0].hasOwnProperty("username")) {
+            totalRequests = resp.length
+        }
 
-    let HTMLText = `Det er totalt ${totalRequests} forespørseler<br>Godta eller avslå brukerene`;
-    if (totalRequests === 1) {
-        HTMLText = `Det er totalt ${totalRequests} forespørsel<br>Godta eller avslå brukeren`;
-    } else if (totalRequests === 0) {
-        HTMLText = `Det er ingen forespørseler`;
-    }
+        let HTMLText = `Det er totalt ${totalRequests} forespørseler<br>Godta eller avslå brukerene`;
+        if (totalRequests === 1) {
+            HTMLText = `Det er totalt ${totalRequests} forespørsel<br>Godta eller avslå brukeren`;
+        } else if (totalRequests === 0) {
+            HTMLText = `Det er ingen forespørseler`;
+        }
 
-    settingsGrid.innerHTML = justTextTemplate(HTMLText, "left");
+        settingsGrid.innerHTML = justTextTemplate(HTMLText, "left");
 
-    if (resp[0].hasOwnProperty("username") && sessionStorage.getItem("currentSetting") === ELoadSettings.pendingUsers.name) {
+        if (resp[0].hasOwnProperty("username") && sessionStorage.getItem("currentSetting") === ELoadSettings.pendingUsers.name) {
 
-        const defaultHTML = `
+            const defaultHTML = `
        <p class="settingsPendingUserFullName">Visningsnavn</p>
        <p class="settingsPendingUsername">Brukernavn</p>
        <p class="settingsPendingUsername">Dager siden forespørselen ble sendt inn</p>
        `;
 
-        settingsGrid.innerHTML += getCenteredTextTemplate(defaultHTML, "", "borderTop");
+            settingsGrid.innerHTML += getCenteredTextTemplate(defaultHTML, "", "borderTop");
 
-        const pendingUserKeys = Object.keys(resp);
+            const pendingUserKeys = Object.keys(resp);
 
-        for (let i = 0; i < pendingUserKeys.length; i++) {
+            for (let i = 0; i < pendingUserKeys.length; i++) {
 
-            let msg = "Ikke registrert";
-            if (resp[i].request_date) {
+                let msg = "Ikke registrert";
+                if (resp[i].request_date) {
 
-                let requestDate = resp[i].request_date;
-                requestDate = requestDate.split("T");
-                requestDate = requestDate[0].split("-");
+                    let requestDate = resp[i].request_date;
+                    requestDate = requestDate.split("T");
+                    requestDate = requestDate[0].split("-");
 
-                if (requestDate[0].length === 4 && requestDate[1] > 0 && requestDate[1] <= 12 && requestDate[1].length <= 2 && requestDate[2] > 0 && requestDate[2] <= 31 && requestDate[2].length <= 2) {
+                    if (requestDate[0].length === 4 && requestDate[1] > 0 && requestDate[1] <= 12 && requestDate[1].length <= 2 && requestDate[2] > 0 && requestDate[2] <= 31 && requestDate[2].length <= 2) {
 
-                    const d = new Date();
-                    requestDate = new Date(requestDate[0], (requestDate[1] - 1), requestDate[2]);
+                        const d = new Date();
+                        requestDate = new Date(requestDate[0], (requestDate[1] - 1), requestDate[2]);
 
-                    const daysSinceTime = parseInt((d - requestDate) / (1000 * 3600 * 24));
+                        const daysSinceTime = parseInt((d - requestDate) / (1000 * 3600 * 24));
 
-                    if (d < requestDate) {
-                        //fremtiden
-                    } else if (daysSinceTime > 1) {
-                        msg = `${parseInt(daysSinceTime)} dager siden`;
-                    } else if (daysSinceTime === 1) {
-                        msg = `I går`;
-                    } else if (daysSinceTime === 0) {
-                        msg = `I dag`;
+                        if (d < requestDate) {
+                            //fremtiden
+                        } else if (daysSinceTime > 1) {
+                            msg = `${parseInt(daysSinceTime)} dager siden`;
+                        } else if (daysSinceTime === 1) {
+                            msg = `I går`;
+                        } else if (daysSinceTime === 0) {
+                            msg = `I dag`;
+                        }
                     }
                 }
-            }
 
-            const pendingTemplateHTML = `
+                const pendingTemplateHTML = `
        <p class="settingsPendingUserFullName">${resp[pendingUserKeys[i]].displayname}</p>
        <p class="settingsPendingUsername">${resp[pendingUserKeys[i]].username}</p>
        <p class="settingsPendingUsername">${msg}</p>
@@ -625,84 +642,91 @@ async function loadPendingUsersPage(setting) {
        <button class="settingsDeclinePendingUser pointer" onClick='acceptPendingUser("${resp[pendingUserKeys[i]].username}", false);'>Avslå</button>
        `;
 
-            settingsGrid.innerHTML += getCenteredTextTemplate(pendingTemplateHTML, "infoAboutApp1", "spacingTop");
+                settingsGrid.innerHTML += getCenteredTextTemplate(pendingTemplateHTML, "infoAboutApp1", "spacingTop");
 
-        }
-    }
-
-    settingsGrid.innerHTML += getBottomSpacingTemplate();
-    scrollToSavedPos(setting);
-    saveNewScrollPos = true;
-}
-
-async function loadAPIPage() {
-
-    if (userInfo.hasOwnProperty("apikey")) {
-
-        const config = {
-            method: "GET",
-            headers: {
-                "content-type": "application/json"
             }
         }
 
-        const response = await fetch("/api", config);
-        const data = await response.json();
+        settingsGrid.innerHTML += getBottomSpacingTemplate();
+        scrollToSavedPos(setting);
+        saveNewScrollPos = true;
+    } else {
+        settingsGrid.innerHTML = justTextTemplate("Ingen internettforbindelse", "left");
+    }
+}
 
-        if (sessionStorage.getItem("currentSetting") === ELoadSettings.api.name) {
+async function loadAPIPage() {
+    if (navigator.onLine) {
 
-            settingsGrid.innerHTML = justTextTemplate(`${application.name} har ${data.length} APIer.<br>Her kan du se din API key, BrukerID og ulike APIer.`, "left");
+        if (userInfo.hasOwnProperty("apikey")) {
 
-            settingsGrid.innerHTML += getTemplate("API Key", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.apikey}' readonly="readonly"></input>`, "borderTop");
-            settingsGrid.innerHTML += getTemplate("BrukerID", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.id}' readonly="readonly"></input>`);
+            const config = {
+                method: "GET",
+                headers: {
+                    "content-type": "application/json"
+                }
+            }
 
-            for (let i = 0; i < data.length; i++) {
-                const text = `
+            const response = await fetch("/api", config);
+            const data = await response.json();
+
+            if (sessionStorage.getItem("currentSetting") === ELoadSettings.api.name) {
+
+                settingsGrid.innerHTML = justTextTemplate(`${application.name} har ${data.length} APIer.<br>Her kan du se din API key, BrukerID og ulike APIer.`, "left");
+
+                settingsGrid.innerHTML += getTemplate("API Key", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.apikey}' readonly="readonly"></input>`, "borderTop");
+                settingsGrid.innerHTML += getTemplate("BrukerID", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.id}' readonly="readonly"></input>`);
+
+                for (let i = 0; i < data.length; i++) {
+                    const text = `
         URL: ${data[i].url}
         <br><br>
         Metode: ${data[i].method}
         `;
 
-                settingsGrid.innerHTML += getAPITextTemplate(text, "", "spacingTop");
-            }
+                    settingsGrid.innerHTML += getAPITextTemplate(text, "", "spacingTop");
+                }
 
-            settingsGrid.innerHTML += getCenteredTextTemplate("Eksempel:", "", "spacingTop");
+                settingsGrid.innerHTML += getCenteredTextTemplate("Eksempel:", "", "spacingTop");
 
-            const firstAPIExample = data[0].url.split("/");
-            let currentURL = window.location.href || "";
-            currentURL = currentURL.split("/");
-            currentURL = `${currentURL[0]}/${currentURL[2]}`;
-            const exampleAPIHTML = `/${firstAPIExample[1]}/${userID}/${userInfo.apikey}`;
-            const fullExampleAPIText = `${data[0].method} ${currentURL}${exampleAPIHTML}`;
+                const firstAPIExample = data[0].url.split("/");
+                let currentURL = window.location.href || "";
+                currentURL = currentURL.split("/");
+                currentURL = `${currentURL[0]}/${currentURL[2]}`;
+                const exampleAPIHTML = `/${firstAPIExample[1]}/${userID}/${userInfo.apikey}`;
+                const fullExampleAPIText = `${data[0].method} ${currentURL}${exampleAPIHTML}`;
 
-            settingsGrid.innerHTML += getAPITextTemplate(fullExampleAPIText);
+                settingsGrid.innerHTML += getAPITextTemplate(fullExampleAPIText);
 
-            settingsGrid.innerHTML += getCenteredTextTemplate("Response:", "", "spacingTop");
+                settingsGrid.innerHTML += getCenteredTextTemplate("Response:", "", "spacingTop");
 
-            let exampleAPIData = sessionStorage.getItem("cachedExAPIResp");
+                let exampleAPIData = sessionStorage.getItem("cachedExAPIResp");
 
-            if (!exampleAPIData) {
+                if (!exampleAPIData) {
 
-                const exampleAPIResponse = await fetch(exampleAPIHTML, config);
-                exampleAPIData = await exampleAPIResponse.json();
+                    const exampleAPIResponse = await fetch(exampleAPIHTML, config);
+                    exampleAPIData = await exampleAPIResponse.json();
 
-                if (!exampleAPIData.hasOwnProperty("error")) {
-                    exampleAPIData = JSON.stringify(exampleAPIData);
-                    sessionStorage.setItem("cachedExAPIResp", exampleAPIData);
-                } else {
-                    exampleAPIData = JSON.stringify(exampleAPIData);
+                    if (!exampleAPIData.hasOwnProperty("error")) {
+                        exampleAPIData = JSON.stringify(exampleAPIData);
+                        sessionStorage.setItem("cachedExAPIResp", exampleAPIData);
+                    } else {
+                        exampleAPIData = JSON.stringify(exampleAPIData);
+                    }
+                }
+
+                if (sessionStorage.getItem("currentSetting") === ELoadSettings.api.name) {
+
+                    settingsGrid.innerHTML += getAPITextTemplate(exampleAPIData);
+
+                    settingsGrid.innerHTML += getBottomSpacingTemplate();
                 }
             }
-
-            if (sessionStorage.getItem("currentSetting") === ELoadSettings.api.name) {
-
-                settingsGrid.innerHTML += getAPITextTemplate(exampleAPIData);
-
-                settingsGrid.innerHTML += getBottomSpacingTemplate();
-            }
+        } else {
+            loadSetting(ELoadSettings.settings.name);
         }
     } else {
-        loadSetting(ELoadSettings.settings.name);
+        settingsGrid.innerHTML = justTextTemplate("Ingen internettforbindelse", "left");
     }
 }
 

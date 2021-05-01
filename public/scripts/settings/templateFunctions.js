@@ -80,6 +80,11 @@ function getTemplateWithCheckbox(aSetting, aDivId, aChecked, aOnClickInfo, aSpac
    const onClickInfo = aOnClickInfo || "";
    const spacingTop = aSpacingTop || "";
    let borderT = "";
+   let disabled = "";
+
+   if (!navigator.onLine) {
+      disabled = "disabled";
+   }
 
    if (spacingTop) {
       borderT = "borderT";
@@ -97,7 +102,7 @@ function getTemplateWithCheckbox(aSetting, aDivId, aChecked, aOnClickInfo, aSpac
           </div>
           <div id="gsInfo">
              <label id="sInfo" class="settingsCheckbox">
-                <input class="inputCategory" onClick="updateCheckboxSetting('${onClickInfo}', true);" type="checkbox">
+                <input class="inputCategory" ${disabled} onClick="updateCheckboxSetting('${onClickInfo}', true);" type="checkbox">
                 <span class="slider round"></span>
              </label>
           </div>
@@ -119,7 +124,7 @@ function getTemplateWithCheckbox(aSetting, aDivId, aChecked, aOnClickInfo, aSpac
           </div>
           <div id="gsInfo">
              <label id="sInfo" class="settingsCheckbox">
-                <input class="inputCategory" onClick="updateCheckboxSetting('${onClickInfo}', false);" type="checkbox" checked>
+                <input class="inputCategory" ${disabled} onClick="updateCheckboxSetting('${onClickInfo}', false);" type="checkbox" checked>
                 <span class="slider round"></span>
              </label>
           </div>

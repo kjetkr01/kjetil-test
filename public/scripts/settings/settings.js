@@ -51,19 +51,33 @@ async function updateUserInfo() {
 
     const resp = await getAccountDetails(userID);
 
-    if (resp.hasOwnProperty("info")) {
+    if (resp) {
 
-        userInfo = resp.info;
-        //settings = resp.info.settings;
+        const rInfo = resp.info;
+        userInfo = {
+            id: rInfo.id,
+            displayname: rInfo.displayname,
+            username: rInfo.username,
+            isadmin: rInfo.isadmin,
+            apikey: rInfo.apikey,
+            gym: rInfo.info.gym,
+            age: rInfo.info.age,
+            height: rInfo.info.height,
+            weight: rInfo.info.weight,
+        };
+
         sessionStorage.setItem("userSettings", JSON.stringify(resp.info.settings));
 
-        const currentSetting = sessionStorage.getItem("currentSetting") || ELoadSettings.settings;
-
-        loadSetting(currentSetting);
-
     } else {
-        redirectToAccount();
+        const cachedDetails_owner = JSON.parse(localStorage.getItem("cachedDetails_owner"));
+        userInfo = cachedDetails_owner;
     }
+
+    //settings = resp.info.settings;
+
+    const currentSetting = sessionStorage.getItem("currentSetting") || ELoadSettings.settings;
+
+    loadSetting(currentSetting);
 }
 
 function scrollToSavedPos(setting) {
@@ -186,123 +200,131 @@ function checkIfEdited(aType) {
 }
 
 async function displayInformationAboutUser() {
+    if (navigator.onLine) {
 
-    const informationAboutUser = document.getElementById("informationAboutUser");
+        const informationAboutUser = document.getElementById("informationAboutUser");
 
-    // prevents spam loading of information
-    if (informationAboutUser.innerHTML.length < 150) {
+        // prevents spam loading of information
+        if (informationAboutUser.innerHTML.length < 150) {
 
-        informationAboutUser.innerHTML = `<br>Henter opplysninger...`;
+            informationAboutUser.innerHTML = `<br>Henter opplysninger...`;
 
-        const infoHeader = {};
-        const url = `/user/allinformation`;
+            const infoHeader = {};
+            const url = `/user/allinformation`;
 
-        const resp = await callServerAPIPost(infoHeader, url);
+            const resp = await callServerAPIPost(infoHeader, url);
 
-        informationAboutUser.innerHTML = "";
+            informationAboutUser.innerHTML = "";
 
-        if (resp) {
+            if (resp) {
 
-            const keys = Object.keys(resp);
+                const keys = Object.keys(resp);
 
-            try {
+                try {
 
-                for (let i = 0; i < keys.length; i++) {
+                    for (let i = 0; i < keys.length; i++) {
 
-                    const first = resp[keys[i]];
-                    const extraKeys = Object.keys(first);
+                        const first = resp[keys[i]];
+                        const extraKeys = Object.keys(first);
 
-                    informationAboutUser.innerHTML += `<br><h2>${capitalizeFirstLetter(keys[i])}</h2>`;
+                        informationAboutUser.innerHTML += `<br><h2>${capitalizeFirstLetter(keys[i])}</h2>`;
 
-                    for (let j = 0; j < extraKeys.length; j++) {
-                        const second = first[extraKeys[j]];
+                        for (let j = 0; j < extraKeys.length; j++) {
+                            const second = first[extraKeys[j]];
 
-                        if (keys[i] !== "løft" && keys[i] !== "mål") {
+                            if (keys[i] !== "løft" && keys[i] !== "mål") {
 
-                            informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys[j])}: ${second}<br>`;
+                                informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys[j])}: ${second}<br>`;
 
-                        } else {
+                            } else {
 
-                            if (second.length > 0) {
-                                const extraKeys2 = Object.keys(second);
-                                informationAboutUser.innerHTML += `<br><h3>${capitalizeFirstLetter(extraKeys[j])}</h3>`;
+                                if (second.length > 0) {
+                                    const extraKeys2 = Object.keys(second);
+                                    informationAboutUser.innerHTML += `<br><h3>${capitalizeFirstLetter(extraKeys[j])}</h3>`;
 
-                                for (let k = 0; k < extraKeys2.length; k++) {
-                                    const third = second[extraKeys2[k]];
-                                    const extraKeys3 = Object.keys(third);
-                                    informationAboutUser.innerHTML += `<br>`;
-                                    for (let x = 0; x < extraKeys3.length; x++) {
-                                        informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys3[x])}: ${third[extraKeys3[x]]}<br>`;
+                                    for (let k = 0; k < extraKeys2.length; k++) {
+                                        const third = second[extraKeys2[k]];
+                                        const extraKeys3 = Object.keys(third);
+                                        informationAboutUser.innerHTML += `<br>`;
+                                        for (let x = 0; x < extraKeys3.length; x++) {
+                                            informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys3[x])}: ${third[extraKeys3[x]]}<br>`;
+                                        }
                                     }
                                 }
                             }
                         }
                     }
+
+                } catch {
+
+                    informationAboutUser.innerHTML = `Data vises som JSON<br>`;
+
+                    for (let i = 0; i < keys.length; i++) {
+                        informationAboutUser.innerHTML += `<br><strong>${capitalizeFirstLetter(keys[i])}</strong>`;
+                        informationAboutUser.innerHTML += `<br>${JSON.stringify(resp[keys[i]])}<br>`;
+                    }
                 }
 
-            } catch {
+                document.getElementById("detailsAboutMyAccountBtn").innerHTML = "Mine opplysninger";
 
-                informationAboutUser.innerHTML = `Data vises som JSON<br>`;
-
-                for (let i = 0; i < keys.length; i++) {
-                    informationAboutUser.innerHTML += `<br><strong>${capitalizeFirstLetter(keys[i])}</strong>`;
-                    informationAboutUser.innerHTML += `<br>${JSON.stringify(resp[keys[i]])}<br>`;
-                }
+            } else {
+                informationAboutUser.innerHTML = `<br>Det her oppstått en feil, kunne ikke hente opplysningene dine. Vennligst prøv igjen.`;
             }
-
-            document.getElementById("detailsAboutMyAccountBtn").innerHTML = "Mine opplysninger";
-
-        } else {
-            informationAboutUser.innerHTML = `<br>Det her oppstått en feil, kunne ikke hente opplysningene dine. Vennligst prøv igjen.`;
         }
+    } else {
+        informationAboutUser.innerHTML = `<br>Kunne ikke hente opplysningene dine. Mangler internettforbindelse.`;
     }
 }
 
 async function deleteAccount() {
+    if (navigator.onLine) {
 
-    const usernameInpDeletion = document.getElementById("usernameInpDeletion").value;
-    const passwordInpDeletion = document.getElementById("passwordInpDeletion").value;
+        const usernameInpDeletion = document.getElementById("usernameInpDeletion").value;
+        const passwordInpDeletion = document.getElementById("passwordInpDeletion").value;
 
-    if (usernameInpDeletion && usernameInpDeletion.length >= 3 && passwordInpDeletion) {
+        if (usernameInpDeletion && usernameInpDeletion.length >= 3 && passwordInpDeletion) {
 
-        if (usernameInpDeletion === username) {
+            if (usernameInpDeletion === username) {
 
-            const confirmAccountDeletion = confirm(`Er du sikkert på at du ønsker å slette kontoen din? Dette kan ikke angres!`);
+                const confirmAccountDeletion = confirm(`Er du sikkert på at du ønsker å slette kontoen din? Dette kan ikke angres!`);
 
-            if (confirmAccountDeletion === true) {
+                if (confirmAccountDeletion === true) {
 
-                // delete account
+                    // delete account
 
-                const body = { "authToken": token, "userInfo": user, "authorization": "Basic " + window.btoa(`${usernameInpDeletion}:${passwordInpDeletion}`) };
-                const url = `/user/deleteMe`;
+                    const body = { "authToken": token, "userInfo": user, "authorization": "Basic " + window.btoa(`${usernameInpDeletion}:${passwordInpDeletion}`) };
+                    const url = `/user/deleteMe`;
 
-                const config = {
-                    method: "POST",
-                    headers: {
-                        "content-type": "application/json"
-                    },
-                    body: JSON.stringify(body)
+                    const config = {
+                        method: "POST",
+                        headers: {
+                            "content-type": "application/json"
+                        },
+                        body: JSON.stringify(body)
+                    }
+
+                    const response = await fetch(url, config);
+                    const data = await response.json();
+
+                    if (data.status === true) {
+                        sessionStorage.clear();
+                        localStorage.clear();
+                        alert(`${data.message} Takk for at du var medlem av ${application.name}`);
+                        location.reload();
+                    } else {
+                        alert(`Det har oppstått en feil: ${data.message}`);
+                    }
                 }
 
-                const response = await fetch(url, config);
-                const data = await response.json();
-
-                if (data.status === true) {
-                    sessionStorage.clear();
-                    localStorage.clear();
-                    alert(`${data.message} Takk for at du var medlem av ${application.name}`);
-                    location.reload();
-                } else {
-                    alert(`Det har oppstått en feil: ${data.message}`);
-                }
+            } else {
+                alert("Brukernavnet stemmer ikke med kontoen")
             }
 
         } else {
-            alert("Brukernavnet stemmer ikke med kontoen")
+            alert("Vennligst fyll ut feltene");
         }
-
     } else {
-        alert("Vennligst fyll ut feltene");
+        alert("Du må ha internettforbindelse for å kunne slette kontoen din!");
     }
 }
 

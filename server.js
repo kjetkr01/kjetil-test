@@ -442,6 +442,11 @@ server.post("/users/details/:user", auth, async (req, res) => {
                                         "automaticUpdates": resp.userDetails.settings.automaticupdates
                                    }
 
+                                   cacheDetails.id = resp.userDetails.id;
+                                   cacheDetails.username = resp.userDetails.username;
+                                   cacheDetails.isadmin = resp.userDetails.isadmin;
+                                   cacheDetails.apikey = resp.userDetails.apikey;
+
                                    res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo, "cacheDetails": cacheDetails }).end();
                               } else {
                                    res.status(200).json({ "info": resp.userDetails, "cacheDetails": cacheDetails }).end();
