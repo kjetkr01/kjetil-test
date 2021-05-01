@@ -137,6 +137,19 @@
 
 <script>
 
+   checkIfCache();
+   async function checkIfCache() {
+      const cachesKeys = await caches.keys();
+      if (cachesKeys.length > 0) {
+         document.getElementById("noAccBtn").innerHTML += `
+         <br><br>
+         Problemer med innlogging? Prøv:
+         <button class="noselect clearCacheButton pointer" onClick="deleteCachesAndUnregisterSW();">
+         Tøm cache
+         </button>`;
+      }
+   }
+
    const cachedUsername = sessionStorage.getItem("cachedUsername");
 
    if (cachedUsername && cachedUsername !== "null" && cachedUsername !== "undefined") {
@@ -164,7 +177,6 @@
       }
 
    });
-   let loginTries = 0;
    async function loginUser() {
 
       const rmbrMe = document.getElementById("rmbrMeBtn").checked;
@@ -179,12 +191,6 @@
          if (resp === "Login successful") {
             redirectToFeed();
          } else {
-            loginTries++;
-            if (loginTries === 2) {
-               document.getElementById("noAccBtn").innerHTML += `<br>
-            <br>
-            Problemer med innlogging? Prøv:<button onClick="deleteCachesAndUnregisterSW();">Tøm cache</button>`;
-            }
             const respmsg = document.getElementById("respMsg");
             respmsg.innerHTML = resp;
          }

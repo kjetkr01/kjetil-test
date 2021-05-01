@@ -9,11 +9,11 @@
             state: "alpha 84%",
             major: 4, // major++ = minor = 0 && revision = 0
             minor: 3, // minor++ = revision = 0
-            revision: 46,
+            revision: 48,
         },
         lastUpdated: {
-            day: "30",
-            month: "04",
+            day: "01",
+            month: "05",
             year: "2021"
         },
         updatesInfo: {
