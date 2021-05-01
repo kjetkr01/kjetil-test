@@ -211,10 +211,10 @@
                localStorage.setItem("updated_version_text", `${serverApplication.name} ble oppdatert til ${serverApplication.version.fullNumber}`);
             }
 
-            localStorage.setItem("settings_notification_update", true);
+            sessionStorage.setItem("settings_notification_update", true);
 
          } else {
-            localStorage.removeItem("settings_notification_update");
+            sessionStorage.removeItem("settings_notification_update");
          }
       }
    }
