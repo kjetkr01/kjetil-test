@@ -66,7 +66,7 @@
 <body>
 
    <script>
-
+      registerServiceWorker();
       if (!sessionStorage.getItem("user") && !localStorage.getItem("user")) {
          redirectToLogin();
       }
@@ -196,7 +196,6 @@
 
 <script>
    checkConnection("c6r2");
-   registerServiceWorker();
 
    //localStorage.setItem("updated_version_text", `Treningstatistikken ble oppdatert til versjon 4.3.78`);
 

@@ -63,7 +63,10 @@
 
 <body>
 
-   <script>changeColorTheme();</script>
+   <script>
+      registerServiceWorker();
+      changeColorTheme();
+   </script>
 
    <section id="page">
 
@@ -96,8 +99,6 @@
 </body>
 
 <script>
-
-   registerServiceWorker();
 
    lockBodyPosition();
 

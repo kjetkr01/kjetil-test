@@ -65,7 +65,10 @@
 
 <body>
 
-   <script>changeColorTheme();</script>
+   <script>
+      registerServiceWorker();
+      changeColorTheme();
+   </script>
 
    <div id="createNewLiftorGoalOverlay" style="display: none;" class="overlay"></div>
 
@@ -354,8 +357,6 @@
    if (sessionStorage.getItem("settings_notification_update") === "true") {
       document.getElementById("settings").innerHTML = `Innstillinger (1)`;
    }
-
-   registerServiceWorker();
 
    lockBodyPosition();
    getCreateNewLiftorGoalOverlay();
