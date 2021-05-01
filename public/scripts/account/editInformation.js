@@ -46,7 +46,12 @@ function enableOverlayCreate(aType) {
                         inp1.innerHTML += `<option value="${allowedExercises[i]}">${capitalizeFirstLetter(allowedExercises[i])}`;
                     }
                 }
-                Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('lift','create');">Lagre</button>`;
+
+                if (navigator.onLine) {
+                    Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('lift','create');">Lagre</button>`;
+                } else {
+                    Gsave.innerHTML = `<button id="saveC" disabled onclick="saveLiftOrGoal('lift','create');">Lagre</button>`;
+                }
             }
 
             createNewLiftorGoalOverlay.style.display = "block";
@@ -66,7 +71,11 @@ function enableOverlayCreate(aType) {
                         inp1.innerHTML += `<option value="${allowedExercises[i]}">${capitalizeFirstLetter(allowedExercises[i])}`;
                     }
                 }
-                Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('goal','create');">Lagre</button>`;
+                if (navigator.onLine) {
+                    Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('goal','create');">Lagre</button>`;
+                } else {
+                    Gsave.innerHTML = `<button id="saveC" disabled onclick="saveLiftOrGoal('goal','create');">Lagre</button>`;
+                }
             }
 
             createNewLiftorGoalOverlay.style.display = "block";
@@ -151,11 +160,17 @@ function enableOverlayEdit(aType, aExercise, aId) {
                 inp3.value = lift.date;
 
                 //document.getElementById("Ginp3E").innerHTML += "<br>" + getDaysSinceAndDate(lift.date).daysSinceMsg;
-
-                if (showDeleteBtn === true) {
-                    GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift', '${id}');">Slett løftet</button>`;
+                if (navigator.onLine) {
+                    if (showDeleteBtn === true) {
+                        GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift', '${id}');">Slett løftet</button>`;
+                    }
+                    Gsave.innerHTML = `<button id="saveE" class="pointer" onclick="saveLiftOrGoal('lift','edit', '${id}');">Lagre</button>`;
+                } else {
+                    if (showDeleteBtn === true) {
+                        GdeleteE.innerHTML = `<button id="deleteE" disabled onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift', '${id}');">Slett løftet</button>`;
+                    }
+                    Gsave.innerHTML = `<button id="saveE" disabled onclick="saveLiftOrGoal('lift','edit', '${id}');">Lagre</button>`;
                 }
-                Gsave.innerHTML = `<button id="saveE" class="pointer" onclick="saveLiftOrGoal('lift','edit', '${id}');">Lagre</button>`;
 
                 const color = lift.color;
 
@@ -203,10 +218,18 @@ function enableOverlayEdit(aType, aExercise, aId) {
                 inp1.value = goal.kg;
                 inp2.value = goal.reps;
                 inp3.value = goal.date;
-                if (showDeleteBtn === true) {
-                    GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'goal', '${id}');">Slett målet</button>`;
+
+                if (navigator.onLine) {
+                    if (showDeleteBtn === true) {
+                        GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'goal', '${id}');">Slett målet</button>`;
+                    }
+                    Gsave.innerHTML = `<button id="saveE" class="pointer" onclick="saveLiftOrGoal('goal','edit', '${id}');">Lagre</button>`;
+                } else {
+                    if (showDeleteBtn === true) {
+                        GdeleteE.innerHTML = `<button id="deleteE" disabled onclick="deleteLiftOrGoalConfirm('${exercise}', 'goal', '${id}');">Slett målet</button>`;
+                    }
+                    Gsave.innerHTML = `<button id="saveE" disabled onclick="saveLiftOrGoal('goal','edit', '${id}');">Lagre</button>`;
                 }
-                Gsave.innerHTML = `<button id="saveE" class="pointer" onclick="saveLiftOrGoal('goal','edit', '${id}');">Lagre</button>`;
 
                 const color = goal.color;
 
@@ -285,63 +308,66 @@ function Ttrainingsplit(aTrainingsplit) {
 let isSaving = false;
 async function saveLiftOrGoal(aType, editOrCreate, aId) {
 
-    if (isSaving === true) {
-        return;
-    }
+    if (navigator.onLine) {
 
-    if (aType === "lift" || aType === "goal" && editOrCreate === "edit" || editOrCreate === "create") {
-
-        let respMsg = null, inp1 = null, inp2 = null, inp3 = null, inp4, color = 0, id = null;
-
-        if (editOrCreate === "create") {
-            respMsg = document.getElementById("respC");
-
-            inp1 = document.getElementById("inp1C").value;
-            inp2 = document.getElementById("inp2C").value;
-            inp3 = document.getElementById("inp3C").value;
-            inp4 = document.getElementById("inp4C").value;
+        if (isSaving === true) {
+            return;
         }
 
-        if (editOrCreate === "edit") {
-            respMsg = document.getElementById("respE");
+        if (aType === "lift" || aType === "goal" && editOrCreate === "edit" || editOrCreate === "create") {
 
-            inp1 = document.getElementById("title1E").value;
-            inp2 = document.getElementById("inp1E").value;
-            inp3 = document.getElementById("inp2E").value;
-            inp4 = document.getElementById("inp3E").value;
-            color = document.getElementById("inp4E").value;
+            let respMsg = null, inp1 = null, inp2 = null, inp3 = null, inp4, color = 0, id = null;
 
-            id = aId;
-        }
+            if (editOrCreate === "create") {
+                respMsg = document.getElementById("respC");
 
-        const validateInfo = validateLiftOrGoal(inp1, inp2, inp3, inp4, aType, color, id);
-
-        if (validateInfo.isValid === true && validateInfo.info) {
-            isSaving = true;
-            respMsg.textContent = "Lagrer...";
-
-            const infoHeader = { "info": validateInfo.info };
-            const url = `/user/update/liftOrGoal/:${validateInfo.info}`;
-
-            const resp = await callServerAPIPost(infoHeader, url);
-
-            if (resp === true) {
-                respMsg.textContent = "Lagret!";
-                setTimeout(() => {
-                    disableOverlay();
-                }, 1500);
-                setTimeout(() => {
-                    location.reload();
-                }, 2000);
-            } else {
-                respMsg.textContent = "Det har oppstått en feil!";
+                inp1 = document.getElementById("inp1C").value;
+                inp2 = document.getElementById("inp2C").value;
+                inp3 = document.getElementById("inp3C").value;
+                inp4 = document.getElementById("inp4C").value;
             }
 
+            if (editOrCreate === "edit") {
+                respMsg = document.getElementById("respE");
+
+                inp1 = document.getElementById("title1E").value;
+                inp2 = document.getElementById("inp1E").value;
+                inp3 = document.getElementById("inp2E").value;
+                inp4 = document.getElementById("inp3E").value;
+                color = document.getElementById("inp4E").value;
+
+                id = aId;
+            }
+
+            const validateInfo = validateLiftOrGoal(inp1, inp2, inp3, inp4, aType, color, id);
+
+            if (validateInfo.isValid === true && validateInfo.info) {
+                isSaving = true;
+                respMsg.textContent = "Lagrer...";
+
+                const infoHeader = { "info": validateInfo.info };
+                const url = `/user/update/liftOrGoal/:${validateInfo.info}`;
+
+                const resp = await callServerAPIPost(infoHeader, url);
+
+                if (resp === true) {
+                    respMsg.textContent = "Lagret!";
+                    setTimeout(() => {
+                        disableOverlay();
+                    }, 1500);
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    respMsg.textContent = "Det har oppstått en feil!";
+                }
+
+            } else {
+                respMsg.textContent = validateInfo.msg;
+            }
         } else {
-            respMsg.textContent = validateInfo.msg;
+            alert("Det har oppstått en feil!");
         }
-    } else {
-        alert("Det har oppstått en feil!");
     }
 }
 
@@ -351,53 +377,59 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aInp4, aType, aColor, aId) {
     let msg = "Vennligst fyll ut alle feltene!";
     let info = {};
 
-    if (aInp1 && aInp2 && aInp3 && aType) {
+    if (navigator.onLine) {
 
-        const input1 = aInp1;
-        const input2 = aInp2;
-        const input3 = parseInt(aInp3);
-        const input4 = aInp4;
-        const type = aType;
-        const color = aColor;
-        const id = aId;
+        if (aInp1 && aInp2 && aInp3 && aType) {
 
-        const onlyNumbers = /^[0-9.]+$/;
+            const input1 = aInp1;
+            const input2 = aInp2;
+            const input3 = parseInt(aInp3);
+            const input4 = aInp4;
+            const type = aType;
+            const color = aColor;
+            const id = aId;
 
-        const checkKG = input2.split(".");
+            const onlyNumbers = /^[0-9.]+$/;
 
-        if (input2.match(onlyNumbers) && (checkKG.length > 2) === false) {
-        } else {
-            msg = "Antall KG er ugyldig! Eksempel: 120.25";
-            return { "isValid": isValid, "msg": msg };
+            const checkKG = input2.split(".");
+
+            if (input2.match(onlyNumbers) && (checkKG.length > 2) === false) {
+            } else {
+                msg = "Antall KG er ugyldig! Eksempel: 120.25";
+                return { "isValid": isValid, "msg": msg };
+            }
+
+            if (input3 > 0) {
+
+            } else {
+                msg = "Reps er ugyldig! Eksempel: 4";
+                return { "isValid": isValid, "msg": msg };
+            }
+
+            //Date format = YYYY-MM-DD
+            const checkDateFormat = input4.split("-");
+
+            const today = new Date().toISOString().substr(0, 10);
+
+            if (input4 > today) {
+                msg = "Dato kan ikke være i fremtiden!";
+                return { "isValid": isValid, "msg": msg };
+            }
+
+            if (checkDateFormat[0].length === 4 && checkDateFormat[1].length === 2 && checkDateFormat[2].length === 2) {
+            } else {
+                msg = "Dato er ugyldig!";
+                return { "isValid": isValid, "msg": msg };
+            }
+
+            info = { "exercise": input1, "kg": input2, "reps": input3, "date": input4, "type": type, "color": color, "id": id };
+
+            isValid = true;
+
         }
-
-        if (input3 > 0) {
-
-        } else {
-            msg = "Reps er ugyldig! Eksempel: 4";
-            return { "isValid": isValid, "msg": msg };
-        }
-
-        //Date format = YYYY-MM-DD
-        const checkDateFormat = input4.split("-");
-
-        const today = new Date().toISOString().substr(0, 10);
-
-        if (input4 > today) {
-            msg = "Dato kan ikke være i fremtiden!";
-            return { "isValid": isValid, "msg": msg };
-        }
-
-        if (checkDateFormat[0].length === 4 && checkDateFormat[1].length === 2 && checkDateFormat[2].length === 2) {
-        } else {
-            msg = "Dato er ugyldig!";
-            return { "isValid": isValid, "msg": msg };
-        }
-
-        info = { "exercise": input1, "kg": input2, "reps": input3, "date": input4, "type": type, "color": color, "id": id };
-
-        isValid = true;
-
+    } else {
+        msg = "Krever internettforbindelse!";
+        isValid = false;
     }
 
     return { "isValid": isValid, "msg": msg, "info": info };
@@ -405,76 +437,81 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aInp4, aType, aColor, aId) {
 
 function deleteLiftOrGoalConfirm(aExercise, aType, aId) {
 
-    if (aExercise && aType) {
+    if (navigator.onLine) {
 
-        const type = aType;
-        const exercise = aExercise;
-        const id = aId;
+        if (aExercise && aType) {
 
-        if (type === "lift") {
-            const confirmation = confirm(`Er du sikkert på at du vil slette løftet ditt: "${exercise}" ?`);
-            if (confirmation === true) {
-                deleteLiftOrGoal(exercise, type, id);
+            const type = aType;
+            const exercise = aExercise;
+            const id = aId;
+
+            if (type === "lift") {
+                const confirmation = confirm(`Er du sikkert på at du vil slette løftet ditt: "${exercise}" ?`);
+                if (confirmation === true) {
+                    deleteLiftOrGoal(exercise, type, id);
+                }
             }
-        }
 
-        if (type === "goal") {
-            const confirmation = confirm(`Er du sikkert på at du vil slette målet ditt: "${exercise}" ?`);
-            if (confirmation === true) {
-                deleteLiftOrGoal(exercise, type, id);
+            if (type === "goal") {
+                const confirmation = confirm(`Er du sikkert på at du vil slette målet ditt: "${exercise}" ?`);
+                if (confirmation === true) {
+                    deleteLiftOrGoal(exercise, type, id);
+                }
             }
+
+
+        } else {
+            alert("Det har oppstått en feil!");
         }
-
-
-    } else {
-        alert("Det har oppstått en feil!");
     }
 }
 
 async function deleteLiftOrGoal(aExercise, aType, aId) {
 
-    if (aExercise && aType) {
+    if (navigator.onLine) {
 
-        const respMsg = document.getElementById("respE");
+        if (aExercise && aType) {
 
-        const type = aType;
-        const exercise = aExercise;
-        const id = aId;
-        let typeMsg = "Løftet";
+            const respMsg = document.getElementById("respE");
 
-        if (aType === "goal") {
-            typeMsg = "Målet";
-        }
+            const type = aType;
+            const exercise = aExercise;
+            const id = aId;
+            let typeMsg = "Løftet";
 
-        respMsg.textContent = `Sletter ${exercise}...`;
+            if (aType === "goal") {
+                typeMsg = "Målet";
+            }
 
-        const info = { "exercise": exercise, "type": type, "id": id };
+            respMsg.textContent = `Sletter ${exercise}...`;
 
-        const infoHeader = { "info": info };
-        const url = `/user/delete/liftOrGoal/:${info}`;
+            const info = { "exercise": exercise, "type": type, "id": id };
 
-        const resp = await callServerAPIPost(infoHeader, url);
+            const infoHeader = { "info": info };
+            const url = `/user/delete/liftOrGoal/:${info}`;
 
-        if (resp === true) {
-            respMsg.textContent = `${typeMsg} ble slettet!`;
-            setTimeout(() => {
-                disableOverlay();
-            }, 1500);
-            setTimeout(() => {
-                location.reload();
-            }, 2000);
+            const resp = await callServerAPIPost(infoHeader, url);
+
+            if (resp === true) {
+                respMsg.textContent = `${typeMsg} ble slettet!`;
+                setTimeout(() => {
+                    disableOverlay();
+                }, 1500);
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            } else {
+                respMsg.textContent = "Kunne ikke slette " + exercise;
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            }
+
+
         } else {
-            respMsg.textContent = "Kunne ikke slette " + exercise;
-            setTimeout(() => {
-                location.reload();
-            }, 2000);
+            alert("Det har oppstått en feil!");
         }
-
-
-    } else {
-        alert("Det har oppstått en feil!");
     }
-
 }
 
 
@@ -569,12 +606,12 @@ function enableOverlayEditDays() {
             document.getElementById(allowedDays[i]).checked = false;
         }
     }
-
+ 
     if (traningsplitInfo) {
         const trainingsplitInformation = traningsplitInfo.info();
-
+ 
         const trainingsplitKeys = Object.keys(trainingsplitInformation);
-
+ 
         for (let i = 0; i < trainingsplitKeys.length; i++) {
             const current = trainingsplitKeys[i];
             if (allowedDays.includes(current)) {
