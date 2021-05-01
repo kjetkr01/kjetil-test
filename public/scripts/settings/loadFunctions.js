@@ -1,7 +1,7 @@
 function loadSetting(aSetting) {
 
-    if (sessionStorage.getItem("userSettings")) {
-        settings = JSON.parse(sessionStorage.getItem("userSettings"));
+    if (localStorage.getItem("userSettings")) {
+        settings = JSON.parse(localStorage.getItem("userSettings"));
     }
 
     let setting = aSetting || sessionStorage.getItem("currentSetting") || ELoadSettings.settings.name;

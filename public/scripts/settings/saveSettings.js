@@ -378,7 +378,7 @@ function updateLocalSettings(aSetting, aValue) {
 
             settings[setting] = value;
 
-            sessionStorage.setItem("userSettings", JSON.stringify(settings));
+            localStorage.setItem("userSettings", JSON.stringify(settings));
 
         } else {
             updateUserInfo();

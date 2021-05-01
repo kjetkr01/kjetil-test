@@ -49,26 +49,29 @@ const ELoadSettings = {
 
 async function updateUserInfo() {
 
-    const resp = await getAccountDetails(userID);
+    if (navigator.onLine) {
+        const resp = await getAccountDetails(userID);
+        if (resp) {
 
-    if (resp) {
+            const rInfo = resp.info;
+            userInfo = {
+                id: rInfo.id,
+                displayname: rInfo.displayname,
+                username: rInfo.username,
+                isadmin: rInfo.isadmin,
+                apikey: rInfo.apikey,
+                gym: rInfo.info.gym,
+                age: rInfo.info.age,
+                height: rInfo.info.height,
+                weight: rInfo.info.weight,
+            };
 
-        const rInfo = resp.info;
-        userInfo = {
-            id: rInfo.id,
-            displayname: rInfo.displayname,
-            username: rInfo.username,
-            isadmin: rInfo.isadmin,
-            apikey: rInfo.apikey,
-            gym: rInfo.info.gym,
-            age: rInfo.info.age,
-            height: rInfo.info.height,
-            weight: rInfo.info.weight,
-        };
+            localStorage.setItem("userSettings", JSON.stringify(resp.info.settings));
 
-        sessionStorage.setItem("userSettings", JSON.stringify(resp.info.settings));
+        }
+    }
 
-    } else {
+    if (!userInfo) {
         const cachedDetails_owner = JSON.parse(localStorage.getItem("cachedDetails_owner"));
         userInfo = cachedDetails_owner;
     }
