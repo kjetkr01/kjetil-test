@@ -187,6 +187,14 @@
    checkConnection("c6r2");
    registerServiceWorker();
 
+   if (sessionStorage.getItem("showUpdateAlert")) {
+      const updateAlert = sessionStorage.getItem("showUpdateAlert");
+      sessionStorage.removeItem("showUpdateAlert");
+      setTimeout(() => {
+         alert(updateAlert);
+      }, 500);
+   }
+
    checkForUpdate();
    async function checkForUpdate() {
       const serverApplication = await callServerAPIPost({}, `/application`);
@@ -194,9 +202,8 @@
          if (serverApplication.version.fullNumber !== application.version.fullNumber) {
 
             if (automaticUpdates === true) {
-               console.log("trying to automatic update");
                updateApplication(false);
-               alert(`${serverApplication.name} ble oppdatert til ${serverApplication.version.fullNumber}`);
+               sessionStorage.setItem("showUpdateAlert", `${serverApplication.name} ble oppdatert til ${serverApplication.version.fullNumber}`);
             }
 
             sessionStorage.setItem("settings_notification_update", true);

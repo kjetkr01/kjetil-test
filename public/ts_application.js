@@ -9,7 +9,7 @@
             state: "alpha 84%",
             major: 4, // major++ = minor = 0 && revision = 0
             minor: 3, // minor++ = revision = 0
-            revision: 72,
+            revision: 75,
         },
         lastUpdated: {
             day: "01",
