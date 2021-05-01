@@ -221,7 +221,7 @@
 
    setTimeout(() => {
       updatedNotification();
-   }, 100);
+   }, 250);
 
    function updatedNotification() {
       if (sessionStorage.getItem("updated_version_text")) {
@@ -233,7 +233,7 @@
 
          informationUV.innerHTML = updateAlert;
          const closingInUV = document.getElementById("closingInUV");
-         let secondsLeft = 3;
+         let secondsLeft = 4;
          closingInUV.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
          let countDown = setInterval(() => {
             secondsLeft--;
