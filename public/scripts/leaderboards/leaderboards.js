@@ -60,6 +60,8 @@ async function loadLeaderboards() {
              <button id="${currentLeaderboard}" class="leaderboardsList pointer" onclick="getListOfLeaderboard('${currentLeaderboard}');">${capitalizeFirstLetter(currentLeaderboard)} (${usersCount})</button>
           </td>`;
             }
+
+            firstLeaderboard = cached_leaderboardsArrOrder[0].leaderboard[0];
         }
 
     } catch {
