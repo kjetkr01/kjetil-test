@@ -220,6 +220,10 @@
    }
 
    setTimeout(() => {
+      updatedNotification();
+   }, 100);
+
+   function updatedNotification() {
       if (sessionStorage.getItem("updated_version_text")) {
          const updatedVersionOverlay = document.getElementById("updatedVersionOverlay");
          const updateAlert = sessionStorage.getItem("updated_version_text");
@@ -246,7 +250,7 @@
 
          sessionStorage.removeItem("updated_version_text");
       }
-   }, 100);
+   }
 
    lockBodyPosition();
    getCreateNewLiftorGoalOverlay();
