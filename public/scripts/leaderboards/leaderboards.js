@@ -22,19 +22,18 @@ async function loadLeaderboards() {
 
         let cached_leaderboardUserTxt = sessionStorage.getItem("cached_leaderboardUserTxt");
 
-        if (cached_leaderboardUserTxt) {
+        let repsText = "";
+        if (reps === "1") {
+            repsText = `ORM / 1 rep`;
+        } else {
+            repsText = `${reps} reps`;
+        }
 
-            let repsText = "";
-            if (reps === "1") {
-                repsText = `ORM / 1 rep`;
-            } else {
-                repsText = `${reps} reps`;
+        if (repsText) {
+            if (!navigator.onLine) {
+                cached_leaderboardUserTxt = "Ledertavler krever internettforbindelse";
             }
-
-            if (repsText) {
-                if (!navigator.onLine) {
-                    cached_leaderboardUserTxt = "Ledertavler krever internettforbindelse";
-                }
+            if (cached_leaderboardUserTxt) {
                 const usermsg1 = document.getElementById("peopleLeaderboardsTxt");
                 usermsg1.classList = "noselect";
                 usermsg1.innerHTML = `Filter: <select class="changeLeaderboardRepsSelect" disabled><option>${repsText}</option></select><br>${cached_leaderboardUserTxt}`;
