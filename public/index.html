@@ -187,6 +187,26 @@
    checkConnection("c6r2");
    registerServiceWorker();
 
+   checkForUpdate();
+   async function checkForUpdate() {
+      const serverApplication = await callServerAPIPost({}, `/application`);
+      if (serverApplication) {
+         if (serverApplication.version.fullNumber !== application.version.fullNumber) {
+
+            if (automaticUpdates === true) {
+               console.log("trying to automatic update");
+               updateApplication(false);
+               alert("updated to newest version!");
+            }
+
+            sessionStorage.setItem("settings_notification_update", true);
+
+         } else {
+            sessionStorage.removeItem("settings_notification_update");
+         }
+      }
+   }
+
    lockBodyPosition();
    getCreateNewLiftorGoalOverlay();
    getEditLiftorGoalOverlay();

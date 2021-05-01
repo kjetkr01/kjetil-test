@@ -353,20 +353,6 @@
 
    if (sessionStorage.getItem("settings_notification_update") === "true") {
       document.getElementById("settings").innerHTML = `Innstillinger (1)`;
-   } else {
-      checkForUpdate();
-      async function checkForUpdate() {
-         const serverApplication = await callServerAPIPost({}, `/application`);
-         if (serverApplication) {
-            if (serverApplication.version.fullNumber !== application.version.fullNumber) {
-               sessionStorage.setItem("settings_notification_update", true);
-               document.getElementById("settings").innerHTML = `Innstillinger (1)`;
-            } else {
-               sessionStorage.removeItem("settings_notification_update");
-               document.getElementById("settings").innerHTML = `Innstillinger`;
-            }
-         }
-      }
    }
 
    registerServiceWorker();

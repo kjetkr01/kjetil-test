@@ -394,6 +394,8 @@ async function loadAboutAppPage(setting) {
                 Nyeste versjon: ${serverApplication.version.fullNumber}<br>
                 <button class="settingsButton" onClick="updateApplication();">Oppdater</button>`;
                     sessionStorage.setItem("settings_notification_update", true);
+                } else {
+                    sessionStorage.removeItem("settings_notification_update");
                 }
             }
 
@@ -401,11 +403,20 @@ async function loadAboutAppPage(setting) {
             <strong>${application.name}</strong>
             <br>
             <p id="applicationVersionEtc" class="settingsApplicationFullVersion">${application.version.full || application.version.fullNumber || ""}
+            <br>
             ${newUpdateTxt}
             </p>
             `;
 
             settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
+
+            if (settings.automaticupdates === true) {
+                settingsGrid.innerHTML += getTemplateWithCheckbox("Automatisk oppdateringer", "", true, "automaticupdates", "spacingTop");
+            } else {
+                settingsGrid.innerHTML += getTemplateWithCheckbox("Automatisk oppdateringer", "", false, "automaticupdates", "spacingTop");
+            }
+
+
 
             settingsGrid.innerHTML += getLeftTextTemplate(aboutAppText, "", "spacingTop");
 

@@ -144,7 +144,7 @@
          document.getElementById("noAccBtn").innerHTML += `
          <br><br>
          Problemer med innlogging? Prøv:
-         <button class="noselect clearCacheButton pointer" onClick="deleteCachesAndUnregisterSW();">
+         <button class="noselect clearCacheButton pointer" onClick="sessionStorage.clear();localStorage.clear();deleteCachesAndUnregisterSW();">
          Tøm cache
          </button>`;
       }

@@ -438,7 +438,8 @@ server.post("/users/details/:user", auth, async (req, res) => {
                                         "username": resp.userDetails.username,
                                         "displayname": resp.userDetails.displayname,
                                         "preferredColorTheme": resp.userDetails.settings.preferredcolortheme,
-                                        "preferredTheme": resp.userDetails.settings.preferredtheme
+                                        "preferredTheme": resp.userDetails.settings.preferredtheme,
+                                        "automaticUpdates": resp.userDetails.settings.automaticupdates
                                    }
 
                                    res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo, "cacheDetails": cacheDetails }).end();
@@ -515,10 +516,18 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
           const setting = req.body.updateSetting;
           const value = req.body.value;
 
-          const allowedSettings = ["publicprofile", "displayleaderboards", "displayworkoutlist", "preferredtheme", "preferredcolortheme", "badgesize", "badgedetails"];
-          const allowedValues = [true, false, "0", "1", "2"];
+          const EAllowedSettings = {
+               "publicprofile": [true, false],
+               "displayleaderboards": [true, false],
+               "displayworkoutlist": [true, false],
+               "preferredtheme": ["0", "1", "2"],
+               "preferredcolortheme": ["0", "1"],
+               "badgesize": ["0", "1"],
+               "badgedetails": ["0", "1", "2"],
+               "automaticupdates": [true, false],
+          }
 
-          if (currentUser.username && allowedSettings.includes(setting) && allowedValues.includes(value)) {
+          if (currentUser.username && EAllowedSettings[setting].includes(value)) {
 
                const resp = await updateUserSetting(currentUser.username, setting, value);
 

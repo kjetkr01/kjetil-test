@@ -5,6 +5,7 @@ const user = localStorage.getItem("user") || sessionStorage.getItem("user");
 let userDisplayname, showGymCloseTime, username, userID;
 let isUpdatingUserObject = false;
 let preferredColorTheme = null;
+let automaticUpdates = null;
 let lockedBody = false;
 
 let lastUpdatedTime = new Date();
@@ -50,6 +51,8 @@ if (user) {
 
         username = userDisplayname.username;
         userID = userDisplayname.id;
+
+        automaticUpdates = userDisplayname.automaticUpdates;
 
         preferredColorTheme = allowedThemes[userDisplayname.preferredColorTheme].theme;
 
@@ -712,16 +715,23 @@ async function registerServiceWorker() {
     }
 }
 
-function updateApplication() {
+function updateApplication(aShowNotification) {
     if (window.navigator.onLine) {
-        const confirmUpdate = confirm("Ønsker du å oppdatere? (Krever internett tilkobling)");
+        let confirmUpdate = true;
+
+        if (aShowNotification !== false) {
+            confirmUpdate = confirm("Ønsker du å oppdatere? (Krever internett tilkobling)");
+        }
+
         if (confirmUpdate === true) {
             sessionStorage.removeItem("settings_notification_update");
             removeServiceWorker();
             deleteAllCaches();
         }
     } else {
-        alert("Kunne ikke oppdatere! Krever internett tilkobling");
+        if (aShowNotification !== false) {
+            alert("Kunne ikke oppdatere! Krever internett tilkobling");
+        }
     }
 }
 
