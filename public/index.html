@@ -199,53 +199,57 @@
    registerServiceWorker();
 
    //sessionStorage.setItem("updated_version_text", `Treningstatistikken ble oppdatert til 4.3.78`);
-   
+
    checkForUpdate();
    async function checkForUpdate() {
-      const serverApplication = await callServerAPIPost({}, `/application`);
-      if (serverApplication) {
-         if (serverApplication.version.fullNumber !== application.version.fullNumber) {
+      if (navigator.onLine) {
+         const serverApplication = await callServerAPIPost({}, `/application`);
+         if (serverApplication) {
+            if (serverApplication.version.fullNumber !== application.version.fullNumber) {
 
-            if (automaticUpdates === true) {
-               updateApplication(false);
-               localStorage.setItem("updated_version_text", `${serverApplication.name} ble oppdatert til ${serverApplication.version.fullNumber}`);
+               if (automaticUpdates === true) {
+                  updateApplication(false);
+                  localStorage.setItem("updated_version_text", `${serverApplication.name} ble oppdatert til ${serverApplication.version.fullNumber}`);
+               }
+
+               sessionStorage.setItem("settings_notification_update", true);
+
+            } else {
+               sessionStorage.removeItem("settings_notification_update");
             }
-
-            sessionStorage.setItem("settings_notification_update", true);
-
-         } else {
-            sessionStorage.removeItem("settings_notification_update");
          }
       }
    }
 
    updatedNotification();
    function updatedNotification() {
-      if (localStorage.getItem("updated_version_text")) {
-         const updatedVersionOverlay = document.getElementById("updatedVersionOverlay");
-         const updateAlert = localStorage.getItem("updated_version_text");
-         const informationUV = document.getElementById("informationUV");
+      if (navigator.onLine) {
+         if (localStorage.getItem("updated_version_text")) {
+            const updatedVersionOverlay = document.getElementById("updatedVersionOverlay");
+            const updateAlert = localStorage.getItem("updated_version_text");
+            const informationUV = document.getElementById("informationUV");
 
-         updatedVersionOverlay.style.display = "block";
+            updatedVersionOverlay.style.display = "block";
 
-         informationUV.innerHTML = updateAlert;
-         const closingInUV = document.getElementById("closingInUV");
-         let secondsLeft = 4;
-         closingInUV.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
-         let countDown = setInterval(() => {
-            secondsLeft--;
-            if (secondsLeft <= 0) {
-               clearInterval(countDown);
+            informationUV.innerHTML = updateAlert;
+            const closingInUV = document.getElementById("closingInUV");
+            let secondsLeft = 4;
+            closingInUV.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
+            let countDown = setInterval(() => {
+               secondsLeft--;
+               if (secondsLeft <= 0) {
+                  clearInterval(countDown);
 
-               informationUV.innerHTML = "";
-               closingInUV.innerHTML = "";
-               updatedVersionOverlay.style.display = "none";
-            } else {
-               closingInUV.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
-            }
-         }, 1000);
+                  informationUV.innerHTML = "";
+                  closingInUV.innerHTML = "";
+                  updatedVersionOverlay.style.display = "none";
+               } else {
+                  closingInUV.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
+               }
+            }, 1000);
 
-         localStorage.removeItem("updated_version_text");
+            localStorage.removeItem("updated_version_text");
+         }
       }
    }
 
