@@ -77,7 +77,7 @@
 
    <div id="editLiftorGoalOverlay" style="display: none;" class="overlay"></div>
 
-   <div id="updatedVersionOverlay" style="display: block;" class="overlay">
+   <div id="updatedVersionOverlay" style="display: none;" class="overlay">
       <div id="updatedVersion" class="updatedVersion">
          <div id="GinformationUV">
             <p id="informationUV"></p>
@@ -198,11 +198,14 @@
    checkConnection("c6r2");
    registerServiceWorker();
 
-   sessionStorage.setItem("updated_version_text", `Treningstatistikken ble oppdatert til 4.3.78`);
+   //sessionStorage.setItem("updated_version_text", `Treningstatistikken ble oppdatert til 4.3.78`);
 
    if (sessionStorage.getItem("updated_version_text")) {
+      const updatedVersionOverlay = document.getElementById("updatedVersionOverlay");
       const updateAlert = sessionStorage.getItem("updated_version_text");
       const informationUV = document.getElementById("informationUV");
+
+      updatedVersionOverlay.style.display = "block";
 
       informationUV.innerHTML = updateAlert;
       const closingInUV = document.getElementById("closingInUV");
@@ -215,16 +218,13 @@
 
             informationUV.innerHTML = "";
             closingInUV.innerHTML = "";
-            document.getElementById("updatedVersionOverlay").style.display = "none";
+            updatedVersionOverlay.style.display = "none";
          } else {
             closingInUV.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
          }
       }, 1000);
 
-      //sessionStorage.removeItem("showUpdateAlert");
-      /*setTimeout(() => {
-         alert(updateAlert);
-      }, 500);*/
+      sessionStorage.removeItem("updated_version_text");
    }
 
    checkForUpdate();
