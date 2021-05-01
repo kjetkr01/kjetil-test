@@ -990,6 +990,7 @@ grid-area: c6oWP;
 
 
 .overlay>.updatedVersion {
+word-break: keep-all;
 position: absolute;
 top: 50%;
 left: 50%;
