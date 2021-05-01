@@ -415,7 +415,6 @@ async function loadAboutAppPage(setting) {
             <strong>${application.name}</strong>
             <br>
             <p id="applicationVersionEtc" class="settingsApplicationFullVersion">${application.version.full || application.version.fullNumber || ""}
-            <br>
             ${newUpdateTxt}
             </p>
             `;
