@@ -422,27 +422,32 @@ async function loadAboutAppPage(setting) {
 
             settingsGrid.innerHTML += getCenteredTextTemplate(aboutAppBottomInfo, "", "spacingTop");
 
-            let state = "not active";
-            if (navigator.serviceWorker) {
-                if (navigator.serviceWorker.controller) {
-                    if (navigator.serviceWorker.controller.state) {
-                        state = navigator.serviceWorker.controller.state;
+            const allCaches = await caches.keys();
+            if (allCaches.length > 0) {
+                let state = "not active";
+                if (navigator.serviceWorker !== undefined) {
+                    if (navigator.serviceWorker.controller) {
+                        if (navigator.serviceWorker.controller.state) {
+                            state = navigator.serviceWorker.controller.state;
+                        }
                     }
                 }
+
+                const totalCacheSizeBytes = await cachesSize();
+                const totalCacheSizeMB = parseFloat(totalCacheSizeBytes / 1000000).toFixed(2);
+                settingsGrid.innerHTML += getCenteredTextTemplate(`
+                Service Worker: ${state}
+                <br>
+                ${allCaches} ~ ${totalCacheSizeMB || 0} MB
+                <br>
+                <button class="settingsButton" onClick="deleteCachesAndUnregisterSW();">Tøm cache</button>
+                `, "left", "spacingTop");
             }
 
-            const allCaches = await caches.keys();
-            const totalCacheSizeBytes = await cachesSize();
-            const totalCacheSizeMB = parseFloat(totalCacheSizeBytes / 1000000).toFixed(2);
-            settingsGrid.innerHTML += getCenteredTextTemplate(`
-            Service Worker: ${state}
-            <br>
-            ${allCaches} ~ ${totalCacheSizeMB || 0} MB
-            <br>
-            <button class="settingsButton" onClick="deleteCachesAndUnregisterSW();">Tøm cache</button>
-            `, "left", "spacingTop");
-
             settingsGrid.innerHTML += getBottomSpacingTemplate();
+
+            scrollToSavedPos(setting);
+            saveNewScrollPos = true;
 
             if (navigator.onLine) {
                 const infoHeader = {};
