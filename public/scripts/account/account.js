@@ -20,15 +20,15 @@ async function requestAccountDetails() {
 
         activetrainingsplit = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
 
-        if (cachedLiftsLeft) {
+        if (cachedLiftsLeft >= 0) {
             liftsLeft = new TliftsLeft(cachedLiftsLeft);
         }
 
-        if (cachedGoalsLeft) {
+        if (cachedGoalsLeft >= 0) {
             goalsLeft = new TgoalsLeft(cachedGoalsLeft);
         }
 
-        if (cachedTrainingsplitsLeft) {
+        if (cachedTrainingsplitsLeft >= 0) {
             trainingsplitsLeft = new TtrainingsplitsLeft(cachedTrainingsplitsLeft);
         }
 
@@ -169,8 +169,6 @@ function displayInformation(respInfo) {
     memberSince = info.member_since;
 
     let updateLifts = true, updateGoals = true, updateBadgeColors = true, updateActiveTrainingsplit = true;
-
-    traningsplitInfo = new Ttrainingsplit(info.trainingsplit);
 
     try {
 
@@ -588,6 +586,7 @@ function displayTrainingsplit() {
 
     try {
         document.getElementById("badgesTrainingsplitTableRow").innerHTML = "";
+        document.getElementById("trainingsplit").innerHTML = `Treningsplan (${activetrainingsplit.trainingsplit_name})`;
         if (activetrainingsplit) {
 
             const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
@@ -618,8 +617,6 @@ function displayTrainingsplit() {
                 }
 
                 if (arr.length > 0) {
-
-                    document.getElementById("trainingsplit").innerHTML = `Treningsplan (${activetrainingsplit.trainingsplit_name})`;
 
                     arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
 

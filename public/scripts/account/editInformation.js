@@ -1,4 +1,4 @@
-let liftsLeft = null, goalsLeft = null, trainingsplitsLeft = null, liftsInfo = null, goalsInfo = null, badgeColors = null, traningsplitInfo = null;
+let liftsLeft = null, goalsLeft = null, trainingsplitsLeft = null, liftsInfo = null, goalsInfo = null, badgeColors = null;
 
 function enableOverlayCreate(aType) {
 
@@ -304,14 +304,6 @@ function TbadgeColors(aBadgeColors) {
 
     this.info = function () {
         return badgeColors;
-    }
-}
-
-function Ttrainingsplit(aTrainingsplit) {
-    const trainingsplit = aTrainingsplit;
-
-    this.info = function () {
-        return trainingsplit;
     }
 }
 
@@ -622,25 +614,41 @@ function enableOverlayEditDays() {
 
         for (let i = 0; i < allTrainingsplits.length; i++) {
             const currentSplit = allTrainingsplits[i];
-
+            let selected = "";
             if (activetrainingsplit) {
                 if (activetrainingsplit.trainingsplit_id) {
                     if (activetrainingsplit.trainingsplit_id === currentSplit.trainingsplit_id) {
                         document.getElementById("textworkoutPlans").innerHTML = currentSplit.trainingsplit_name;
+                        selected = "selected";
                     }
                 }
             }
-            listworkoutPlansOptionsHTML += `<option value="${currentSplit.trainingsplit_id}">${currentSplit.trainingsplit_name}</option>`;
+            listworkoutPlansOptionsHTML += `<option ${selected} value="${currentSplit.trainingsplit_id}">${currentSplit.trainingsplit_name}</option>`;
         }
 
         document.getElementById("listworkoutPlans").innerHTML = listworkoutPlansOptionsHTML;
 
-        document.getElementById("GeditplanworkoutPlans").innerHTML = `<button id="editplanworkoutPlans">Rediger</button>`;
+        document.getElementById("GeditplanworkoutPlans").innerHTML = `<button class="pointer" id="editplanworkoutPlans">Rediger</button>`;
+
+        const GsaveworkoutPlans = document.getElementById("GsaveworkoutPlans");
+
+        if (navigator.onLine) {
+            GsaveworkoutPlans.innerHTML = `<button id="saveworkoutPlans" class="pointer" onclick="setActiveTrainingsplit();">Lagre</button>`;
+        } else {
+            GsaveworkoutPlans.innerHTML = `<button id="saveworkoutPlans" disabled>Lagre</button>`;
+        }
+
 
     }
 
     if (trainingsplitsLeftInfo > 0) {
-        document.getElementById("GeditplanworkoutPlans").innerHTML += `<button id="editplanworkoutPlans">Opprett ny</button>`;
+        if (trainingsplitsLeftInfo === 1) {
+            respMsg.textContent = `Du kan lage 1 treningsplan til`;
+        } else {
+            respMsg.textContent = `Du kan lage ${trainingsplitsLeftInfo} treningsplaner til`;
+        }
+
+        document.getElementById("GcreateplanworkoutPlans").innerHTML = `<button class="pointer" onClick="createNewTrainingsplit();" id="editplanworkoutPlans">Opprett ny</button>`;
     }
 
     document.getElementById("editworkoutPlanOverlay").style.display = "block";
@@ -650,37 +658,23 @@ function enableOverlayEditDays() {
 // end of enableOverlayEditDays
 
 
-// saveTrainingDays
+// createNewTrainingsplit
 
-async function saveTrainingDays() {
+async function createNewTrainingsplit() {
 
-    const respMsg = document.getElementById("respEditDays");
+    const respMsg = document.getElementById("respworkoutPlans");
     respMsg.textContent = "";
 
-    const trainingDays = [];
+    if (navigator.onLine) {
 
-    for (let i = 0; i < allowedDays.length; i++) {
-        if (document.getElementById(allowedDays[i])) {
-            if (document.getElementById(allowedDays[i]).checked === true) {
-                trainingDays.push(allowedDays[i]);
-            }
-        }
-    }
-
-    if (trainingDays.length === 0) {
-        trainingDays.push("none");
-    }
-
-    if (trainingDays.length <= allowedDays.length) {
-
-        respMsg.textContent = "Lagrer...";
-        const infoHeader = { "trainingDays": trainingDays };
-        const url = `/user/update/trainingDays/${trainingDays}`;
+        respMsg.textContent = "Opretter ny treningsplan...";
+        const infoHeader = {};
+        const url = `/user/create/trainingsplit`;
 
         const resp = await callServerAPIPost(infoHeader, url);
 
         if (resp === true) {
-            respMsg.textContent = "Lagret!";
+            respMsg.textContent = "Oprettet ny treningsplan!";
             setTimeout(() => {
                 disableOverlay();
             }, 1500);
@@ -692,11 +686,46 @@ async function saveTrainingDays() {
         }
 
     } else {
-        respMsg.textContent = "Velg minst 1 dag";
+        respMsg.textContent = "Du må ha internettforbindelse for å opprette ny treningsplan";
     }
 }
 
-// end of saveTrainingDays
+// end of createNewTrainingsplit
+
+// setActiveTrainingsplit
+
+async function setActiveTrainingsplit() {
+
+    const respMsg = document.getElementById("respworkoutPlans");
+    respMsg.textContent = "";
+
+    if (navigator.onLine) {
+
+        respMsg.textContent = "Setter treningsplanen som aktiv...";
+        const trainingsplit_id = document.getElementById("listworkoutPlans").value;
+        const infoHeader = { "trainingsplit_id": trainingsplit_id };
+        const url = `/user/setactive/trainingsplit`;
+
+        const resp = await callServerAPIPost(infoHeader, url);
+
+        if (resp === true) {
+            respMsg.textContent = "Treningsplanen er blitt satt som aktiv treningsplan!";
+            setTimeout(() => {
+                disableOverlay();
+            }, 1500);
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
+        } else {
+            respMsg.textContent = "Det har oppstått en feil!";
+        }
+
+    } else {
+        respMsg.textContent = "Du må ha internettforbindelse for å sette en treningsplan som aktiv";
+    }
+}
+
+// end of setActiveTrainingsplit
 
 
 function changeOverlayBorderColor() {

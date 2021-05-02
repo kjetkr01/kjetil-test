@@ -74,9 +74,18 @@ async function deleteLiftOrGoal(userid, info) {
     }
 }
 
-async function updateTrainingDays(trainingDays, username) {
+async function createTrainingsplit(userid) {
     try {
-        const resp = await database.updateTrainingDays(trainingDays, username);
+        const resp = await database.createTrainingsplit(userid);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function setActiveTrainingsplit(userid, trainingsplit_id) {
+    try {
+        const resp = await database.setActiveTrainingsplit(userid, trainingsplit_id);
         return resp;
     } catch (error) {
         console.error(error);
@@ -164,7 +173,8 @@ module.exports.acceptOrDenyUser = acceptOrDenyUser;
 module.exports.updateUserSetting = updateUserSetting;
 module.exports.saveLiftOrGoal = saveLiftOrGoal;
 module.exports.deleteLiftOrGoal = deleteLiftOrGoal;
-module.exports.updateTrainingDays = updateTrainingDays;
+module.exports.createTrainingsplit = createTrainingsplit;
+module.exports.setActiveTrainingsplit = setActiveTrainingsplit;
 module.exports.updateDisplayname = updateDisplayname;
 module.exports.updateUsername = updateUsername;
 module.exports.updatePassword = updatePassword;

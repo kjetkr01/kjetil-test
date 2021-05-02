@@ -1153,9 +1153,9 @@ class StorageHandler {
 
     //
 
-    //  -------------------------------  update trainingDays (user)  ------------------------------- //
+    //  -------------------------------  create Trainingsplit (user)  ------------------------------- //
 
-    async updateTrainingDays(trainingDays, username) {
+    async createTrainingsplit(userid) {
 
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -1163,25 +1163,51 @@ class StorageHandler {
         try {
             await client.connect();
 
-            const updatedTrainingDays = {};
+            const allTrainingsplits = await client.query(`
+                SELECT trainingsplit_id, trainingsplit_name
+                FROM user_trainingsplit
+                WHERE user_id = $1`,
+                [userid]);
 
-            if (trainingDays[0] !== "none") {
+            if (allTrainingsplits.rows.length < maxTrainingsplits.default) {
 
-                let checkTrainingDays = await client.query('SELECT trainingsplit FROM users WHERE username=$1', [username]);
-                checkTrainingDays = checkTrainingDays.rows[0].trainingsplit;
-                const trainingDaysKeys = Object.keys(checkTrainingDays);
+                const trainingsplitName = `Treningsplan ${allTrainingsplits.rows.length + 1}`;
 
-                for (let i = 0; i < trainingDays.length; i++) {
-                    if (trainingDaysKeys.includes(trainingDays[i])) {
-                        updatedTrainingDays[trainingDays[i]] = checkTrainingDays[trainingDays[i]];
-                    } else {
-                        updatedTrainingDays[trainingDays[i]] = "";
-                    }
+                await client.query(`
+                INSERT INTO user_trainingsplit(user_id, trainingsplit_name)
+                VALUES($1, $2)`, [userid, trainingsplitName]);
 
-                }
+                results = true;
+            } else {
+                results = false;
             }
 
-            await client.query('UPDATE "users" SET trainingsplit=$1 WHERE username=$2', [updatedTrainingDays, username]);
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return results;
+    }
+
+    //
+
+    //  -------------------------------  set active Trainingsplit (user)  ------------------------------- //
+
+    async setActiveTrainingsplit(userid, trainingsplit_id) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+
+        try {
+            await client.connect();
+
+            results = await client.query(`
+            UPDATE user_settings
+            SET activetrainingsplit = $2
+            WHERE user_id = $1`,
+                [userid, trainingsplit_id]);
 
             results = true;
 

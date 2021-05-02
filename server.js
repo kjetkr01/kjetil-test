@@ -45,7 +45,8 @@ const removeUserAPIAccess = require("./modules/user").removeUserAPIAccess;
 
 const saveLiftOrGoal = require("./modules/user").saveLiftOrGoal;
 const deleteLiftOrGoal = require("./modules/user").deleteLiftOrGoal;
-const updateTrainingDays = require("./modules/user").updateTrainingDays;
+const createTrainingsplit = require("./modules/user").createTrainingsplit;
+const setActiveTrainingsplit = require("./modules/user").setActiveTrainingsplit;
 
 /* */
 
@@ -848,37 +849,45 @@ server.post("/user/delete/liftOrGoal/:info", auth, async (req, res) => {
 
 //
 
-// update which days the user is training
+// create new trainingsplit
 
-server.post("/user/update/trainingDays/:info", auth, async (req, res) => {
+server.post("/user/create/trainingsplit", auth, async (req, res) => {
      try {
 
-          const trainingDays = req.body.trainingDays;
           const currentUser = JSON.parse(req.headers.userinfo);
 
-          let isNotValidCounter = 0;
+          const resp = await createTrainingsplit(currentUser.id);
 
-          if (trainingDays[0] !== "none") {
-
-               for (let i = 0; i < trainingDays.length; i++) {
-                    if (!allowedTrainingDays.includes(trainingDays[i])) {
-                         isNotValidCounter++;
-                    }
-               }
-          }
-
-          if (isNotValidCounter === 0) {
-               const resp = await updateTrainingDays(trainingDays, currentUser.username);
-
-               if (resp === true) {
-                    res.status(200).json(true).end();
-               } else {
-                    res.status(403).json("error, try again").end();
-               }
-
+          if (resp === true) {
+               res.status(200).json(true).end();
           } else {
-               res.status(403).json("invalid information").end();
+               res.status(403).json("error, try again").end();
           }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+
+//
+
+// set active trainingsplit
+
+server.post("/user/setactive/trainingsplit", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+
+          const resp = await setActiveTrainingsplit(currentUser.id, trainingsplit_id);
+
+          if (resp === true) {
+               res.status(200).json(true).end();
+          } else {
+               res.status(403).json("error, try again").end();
+          }
+
      } catch (err) {
           console.log(err);
           res.status(403).json("invalid information").end();

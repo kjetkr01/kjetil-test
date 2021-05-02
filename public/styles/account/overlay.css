@@ -755,15 +755,17 @@ grid-template-areas:
 "GlistworkoutPlans GlistworkoutPlans GlistworkoutPlans"
 "GeditplanworkoutPlans GeditplanworkoutPlans GeditplanworkoutPlans"
 "c3oWP c3oWP c3oWP"
+"GcreateplanworkoutPlans GcreateplanworkoutPlans GcreateplanworkoutPlans"
+"c4oWP c4oWP c4oWP"
 
 "Gtitle3workoutPlans Gtitle3workoutPlans Gtitle3workoutPlans"
 "Gline3workoutPlans Gline3workoutPlans Gline3workoutPlans"
 "GtextworkoutPlans GtextworkoutPlans GtextworkoutPlans"
-"c4oWP c4oWP c4oWP"
+"c5oWP c5oWP c5oWP"
 
 "GrespworkoutPlans GrespworkoutPlans GrespworkoutPlans"
-"GcancelworkoutPlans c5oWP GsaveworkoutPlans"
-"c6oWP c6oWP c6oWP"
+"GcancelworkoutPlans c6oWP GsaveworkoutPlans"
+"c7oWP c7oWP c7oWP"
 ;
 
 grid-template-rows: /* nedover */
@@ -786,7 +788,11 @@ auto /* GlistworkoutPlans */
 
 auto /* GeditplanworkoutPlans */
 
-4vh /* c3oWP */
+10px /* c3oWP */
+
+auto /* GcreateplanworkoutPlans */
+
+4vh /* c4oWP */
 
 
 
@@ -796,14 +802,14 @@ auto /* GeditplanworkoutPlans */
 
 auto /* GtextworkoutPlans */
 
-4vh /* c4oWP */
+4vh /* c5oWP */
 
 
 auto /* GrespworkoutPlans */
 
 30px /* GbuttonsworkoutPlans */
 
-2vh /* c6oWP */
+2vh /* c7oWP */
 
 ;
 
@@ -854,6 +860,10 @@ background-color: var(--main-backgroundColor2);
 
 }
 
+#GcreateplanworkoutPlans > #createplanworkoutPlans{
+
+}
+
 #GcancelworkoutPlans > #cancelworkoutPlans {
 }
 
@@ -867,7 +877,7 @@ margin: 20px;
 font-size: 16px;
 }
 
-#cancelworkoutPlans, #saveworkoutPlans, #editplanworkoutPlans {
+#cancelworkoutPlans, #saveworkoutPlans, #editplanworkoutPlans, #createplanworkoutPlans {
 font-size: 16px;
 font-weight: bold;
 height: 30px;
@@ -950,6 +960,14 @@ grid-area: GeditplanworkoutPlans;
 grid-area: c3oWP;
 }
 
+.workoutPlans > #GcreateplanworkoutPlans{
+    grid-area: GcreateplanworkoutPlans;
+}
+
+.workoutPlans > #c4oWP {
+    grid-area: c4oWP;
+    }
+
 .workoutPlans > #Gtitle3workoutPlans {
 grid-area: Gtitle3workoutPlans;
 }
@@ -962,8 +980,8 @@ grid-area: Gline3workoutPlans;
 grid-area: GtextworkoutPlans;
 }
 
-.workoutPlans > #c4oWP {
-grid-area: c4oWP;
+.workoutPlans > #c5oWP {
+grid-area: c5oWP;
 }
 
 .workoutPlans > #GrespworkoutPlans {
@@ -974,16 +992,16 @@ grid-area: GrespworkoutPlans;
 grid-area: GcancelworkoutPlans;
 }
 
-.workoutPlans > #c5oWP {
-grid-area: c5oWP;
+.workoutPlans > #c6oWP {
+grid-area: c6oWP;
 }
 
 .workoutPlans > #GsaveworkoutPlans {
 grid-area: GsaveworkoutPlans;
 }
 
-.workoutPlans > #c6oWP {
-grid-area: c6oWP;
+.workoutPlans > #c7oWP {
+grid-area: c7oWP;
 }
 
 /* end of spacing & other */
