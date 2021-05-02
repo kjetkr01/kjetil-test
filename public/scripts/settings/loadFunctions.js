@@ -396,6 +396,7 @@ async function loadAboutAppPage(setting) {
             <strong>${application.name}</strong>
             <br>
             <p id="applicationVersionEtc" class="settingsApplicationFullVersion">${application.version.full || application.version.fullNumber || ""}</p>
+            <p id="newUpdateAvailable" class="settingsApplicationFullVersion"></p>
             `;
 
             settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
@@ -405,8 +406,6 @@ async function loadAboutAppPage(setting) {
             } else {
                 settingsGrid.innerHTML += getTemplateWithCheckbox("Oppdater automatisk", "", false, "automaticupdates", "spacingTop");
             }
-
-
 
             settingsGrid.innerHTML += getLeftTextTemplate(aboutAppText, "", "spacingTop");
 
@@ -422,26 +421,30 @@ async function loadAboutAppPage(setting) {
 
             settingsGrid.innerHTML += getCenteredTextTemplate(aboutAppBottomInfo, "", "spacingTop");
 
-            const allCaches = await caches.keys();
-            if (allCaches.length > 0) {
-                let state = "not active";
-                if (navigator.serviceWorker !== undefined) {
-                    if (navigator.serviceWorker.controller) {
-                        if (navigator.serviceWorker.controller.state) {
-                            state = navigator.serviceWorker.controller.state;
+            try {
+                const allCaches = await caches.keys();
+                if (allCaches.length > 0) {
+                    let state = "not active";
+                    if (navigator.serviceWorker !== undefined) {
+                        if (navigator.serviceWorker.controller) {
+                            if (navigator.serviceWorker.controller.state) {
+                                state = navigator.serviceWorker.controller.state;
+                            }
                         }
                     }
-                }
 
-                const totalCacheSizeBytes = await cachesSize();
-                const totalCacheSizeMB = parseFloat(totalCacheSizeBytes / 1000000).toFixed(2);
-                settingsGrid.innerHTML += getCenteredTextTemplate(`
+                    const totalCacheSizeBytes = await cachesSize();
+                    const totalCacheSizeMB = parseFloat(totalCacheSizeBytes / 1000000).toFixed(2);
+                    settingsGrid.innerHTML += getCenteredTextTemplate(`
                 Service Worker: ${state}
                 <br>
                 ${allCaches} ~ ${totalCacheSizeMB || 0} MB
                 <br>
                 <button class="settingsButton" onClick="deleteCachesAndUnregisterSW();">Tøm cache</button>
                 `, "left", "spacingTop");
+                }
+            } catch (err) {
+                console.log(err);
             }
 
             settingsGrid.innerHTML += getBottomSpacingTemplate();
@@ -453,8 +456,7 @@ async function loadAboutAppPage(setting) {
                 const serverApplication = await callServerAPIPost(infoHeader, url);
                 if (serverApplication) {
                     if (serverApplication.version.fullNumber !== application.version.fullNumber) {
-                        document.getElementById("applicationVersionEtc").innerHTML += `
-                    <br>
+                        document.getElementById("newUpdateAvailable").innerHTML = `
                     Nyeste versjon: ${serverApplication.version.fullNumber}<br>
                     <button class="settingsButton" onClick="updateApplication();">Oppdater</button>`;
                         sessionStorage.setItem("settings_notification_update", true);

@@ -85,7 +85,11 @@ async function updateUserInfo() {
 
 function scrollToSavedPos(setting) {
 
-    const currentScroll = sessionStorage.getItem(`@scroll-${setting}`);
+    let currentScroll = sessionStorage.getItem(`@scroll-${setting}`);
+
+    if (setting === ELoadSettings.aboutApp.name && currentScroll < 10) {
+        currentScroll = 25;
+    }
 
     if (currentScroll) {
         settingsDom.scrollTo(0, currentScroll);
