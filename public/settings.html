@@ -113,9 +113,12 @@
 
    settingsDom.addEventListener("scroll", function () {
       if (saveNewScrollPos === true) {
-         const currentScroll = settingsDom.scrollTop;
+         let currentScroll = settingsDom.scrollTop;
          const currentSetting = sessionStorage.getItem("currentSetting");
          if (currentSetting) {
+            if (currentSetting === ELoadSettings.aboutApp.name && currentScroll < 10) {
+               currentScroll = 10;
+            }
             sessionStorage.setItem(`@scroll-${currentSetting}`, currentScroll);
          }
       }
