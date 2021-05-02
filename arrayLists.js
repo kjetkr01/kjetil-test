@@ -31,3 +31,8 @@ module.exports.maxLifts = {
 module.exports.maxGoals = {
     default: 25
 };
+
+//maximum allowed trainingsplits
+module.exports.maxTrainingsplits = {
+    default: 5
+};

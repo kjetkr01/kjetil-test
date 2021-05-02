@@ -268,6 +268,20 @@ async function getAccountDetails(aUserID) {
 
                     if (resp.hasOwnProperty("cacheDetails")) {
                         localStorage.setItem("cachedDetails_owner", JSON.stringify(resp.cacheDetails));
+                    } else {
+                        localStorage.removeItem("cachedDetails_owner");
+                    }
+
+                    if (resp.info.hasOwnProperty("activetrainingsplit")) {
+                        localStorage.setItem("cachedActiveTrainingsplit_owner", JSON.stringify(resp.info.activetrainingsplit));
+                    } else {
+                        localStorage.removeItem("cachedActiveTrainingsplit_owner");
+                    }
+
+                    if (resp.info.hasOwnProperty("alltrainingsplits")) {
+                        localStorage.setItem("cachedAllTrainingsplits_owner", JSON.stringify(resp.info.alltrainingsplits));
+                    } else {
+                        localStorage.removeItem("cachedAllTrainingsplits_owner");
                     }
 
                     const newColorTheme = allowedThemes[resp.updatedUserObject.preferredColorTheme].theme;

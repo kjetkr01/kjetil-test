@@ -32,11 +32,11 @@ const ongoingUpdatesArr = [
     "Kunne velge aktiv treningsplan (0%)",
     "Kunne redigere treningsplanen (0%)",
     "TITLE:Offline/caching support",
-    "Se treningsplan, løft, mål offline",
-    "Offline og bruk av caching",
+    "Se treningsplan, løft, mål offline (75%)",
+    "Offline og bruk av caching (90%)",
     "TITLE:Annet",
     "Optimalisering",
-    "Endring i hvordan animasjoner/lasting av data funker"
+    "Endring i hvordan animasjoner/lasting av data funker (70%)"
 ];
 
 //

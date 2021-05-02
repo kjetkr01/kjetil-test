@@ -1,4 +1,4 @@
-let liftsLeft = null, goalsLeft = null, liftsInfo = null, goalsInfo = null, badgeColors = null, traningsplitInfo = null;
+let liftsLeft = null, goalsLeft = null, trainingsplitsLeft = null, liftsInfo = null, goalsInfo = null, badgeColors = null, traningsplitInfo = null;
 
 function enableOverlayCreate(aType) {
 
@@ -288,6 +288,14 @@ function TgoalsLeft(aGoalsLeft) {
 
     this.info = function () {
         return goalsLeftInfo;
+    }
+}
+
+function TtrainingsplitsLeft(aTrainingsplitsLeft) {
+    const trainingsplitsLeftInfo = aTrainingsplitsLeft;
+
+    this.info = function () {
+        return trainingsplitsLeftInfo;
     }
 }
 
@@ -602,28 +610,38 @@ function enableOverlayEditDays() {
 
     const respMsg = document.getElementById("respworkoutPlans");
 
+    const trainingsplitsLeftInfo = trainingsplitsLeft.info();
+
     respMsg.textContent = "";
 
-    /*for (let i = 0; i < allowedDays.length; i++) {
-        if (document.getElementById(allowedDays[i])) {
-            document.getElementById(allowedDays[i]).checked = false;
-        }
-    }
- 
-    if (traningsplitInfo) {
-        const trainingsplitInformation = traningsplitInfo.info();
- 
-        const trainingsplitKeys = Object.keys(trainingsplitInformation);
- 
-        for (let i = 0; i < trainingsplitKeys.length; i++) {
-            const current = trainingsplitKeys[i];
-            if (allowedDays.includes(current)) {
-                if (document.getElementById(current)) {
-                    document.getElementById(current).checked = true;
+    const allTrainingsplits = JSON.parse(localStorage.getItem("cachedAllTrainingsplits_owner"));
+
+    if (allTrainingsplits) {
+
+        let listworkoutPlansOptionsHTML = "";
+
+        for (let i = 0; i < allTrainingsplits.length; i++) {
+            const currentSplit = allTrainingsplits[i];
+
+            if (activetrainingsplit) {
+                if (activetrainingsplit.trainingsplit_id) {
+                    if (activetrainingsplit.trainingsplit_id === currentSplit.trainingsplit_id) {
+                        document.getElementById("textworkoutPlans").innerHTML = currentSplit.trainingsplit_name;
+                    }
                 }
             }
+            listworkoutPlansOptionsHTML += `<option value="${currentSplit.trainingsplit_id}">${currentSplit.trainingsplit_name}</option>`;
         }
-    }*/
+
+        document.getElementById("listworkoutPlans").innerHTML = listworkoutPlansOptionsHTML;
+
+        document.getElementById("GeditplanworkoutPlans").innerHTML = `<button id="editplanworkoutPlans">Rediger</button>`;
+
+    }
+
+    if (trainingsplitsLeftInfo > 0) {
+        document.getElementById("GeditplanworkoutPlans").innerHTML += `<button id="editplanworkoutPlans">Opprett ny</button>`;
+    }
 
     document.getElementById("editworkoutPlanOverlay").style.display = "block";
 

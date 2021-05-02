@@ -62,7 +62,7 @@ async function checkWhoIsWorkingOutToday() {
 
             if (currentWorkout !== resp[i].todaysWorkout) {
                 peopleWorkoutList.innerHTML += `
-               <button disabled class="peopleWorkoutListWorkout fadeIn">${resp[i].todaysWorkout}</button>
+               <button class="peopleWorkoutListWorkout fadeIn">${resp[i].todaysWorkout}</button>
                <br>
                `;
 

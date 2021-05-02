@@ -5,6 +5,7 @@ const allowedGoals = require("../arrayLists").allowedGoals;
 const badgeColors = require("../arrayLists").badgeColors;
 const maxLifts = require("../arrayLists").maxLifts;
 const maxGoals = require("../arrayLists").maxGoals;
+const maxTrainingsplits = require("../arrayLists").maxTrainingsplits;
 
 class StorageHandler {
 
@@ -735,6 +736,44 @@ class StorageHandler {
                             userCacheObj.apikey = hasAccessToApi.rows[0].apikey;
                         }
 
+                        const t_id = await client.query(`
+                        SELECT activetrainingsplit
+                        FROM user_settings
+                        WHERE user_id = $1`,
+                            [userIDReq]);
+
+                        if (t_id.rows.length !== 0) {
+
+                            if (t_id.rows[0].hasOwnProperty("activetrainingsplit")) {
+
+                                const activetrainingsplit = await client.query(`
+                                SELECT *
+                                FROM user_trainingsplit
+                                WHERE user_id = $1
+                                AND trainingsplit_id = $2`,
+                                    [userIDReq, t_id.rows[0].activetrainingsplit]);
+
+                                if (activetrainingsplit.rows.length !== 0) {
+
+                                    delete activetrainingsplit.rows[0].user_id;
+                                    userCacheObj.activetrainingsplit = activetrainingsplit.rows[0];
+                                }
+                            }
+                        }
+
+                        const allTrainingsplits = await client.query(`
+                        SELECT trainingsplit_id, trainingsplit_name
+                        FROM user_trainingsplit
+                        WHERE user_id = $1`,
+                            [userIDReq]);
+
+                        if (allTrainingsplits.rows.length > 0) {
+                            userCacheObj.alltrainingsplits = allTrainingsplits.rows;
+                        }
+
+                        const trainingsplitsLeft = maxTrainingsplits.default - allTrainingsplits.rows.length;
+                        userCacheObj.trainingsplitsLeft = trainingsplitsLeft;
+
                     } else {
                         results = await client.query(`
                         SELECT users.username, users.displayname, users.member_since
@@ -773,6 +812,32 @@ class StorageHandler {
 
                         delete results.rows[0].user_id;
                         userCacheObj.goals = results.rows[0];
+
+                        const t_id = await client.query(`
+                        SELECT activetrainingsplit
+                        FROM user_settings
+                        WHERE user_id = $1`,
+                            [viewingUser]);
+
+                        if (t_id.rows.length !== 0) {
+
+                            if (t_id.rows[0].hasOwnProperty("activetrainingsplit")) {
+
+                                const activetrainingsplit = await client.query(`
+                                SELECT *
+                                FROM user_trainingsplit
+                                WHERE user_id = $1
+                                AND trainingsplit_id = $2`,
+                                    [viewingUser, t_id.rows[0].activetrainingsplit]);
+
+                                if (activetrainingsplit.rows.length !== 0) {
+
+                                    delete activetrainingsplit.rows[0].user_id;
+                                    userCacheObj.activetrainingsplit = activetrainingsplit.rows[0];
+                                }
+                            }
+                        }
+
                     }
                     userCacheObj.badgeColors = badgeColors;
                     userDetails = userCacheObj;
@@ -1414,8 +1479,10 @@ class StorageHandler {
                 [user]);
 
             if (userTrainingsplit.rows.length > 0) {
-                delete userTrainingsplit.rows[0].user_id;
-                userInformation.treningsplan = userTrainingsplit.rows[0];
+                for (let i = 0; i < userTrainingsplit.rows.length; i++) {
+                    delete userTrainingsplit.rows[i].user_id;
+                }
+                userInformation.treningsplan = userTrainingsplit.rows;
             }
 
             client.end();
