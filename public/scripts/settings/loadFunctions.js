@@ -446,9 +446,6 @@ async function loadAboutAppPage(setting) {
 
             settingsGrid.innerHTML += getBottomSpacingTemplate();
 
-            scrollToSavedPos(setting);
-            saveNewScrollPos = true;
-
             if (navigator.onLine) {
                 const infoHeader = {};
                 const url = `/application`;
@@ -466,6 +463,9 @@ async function loadAboutAppPage(setting) {
                     }
                 }
             }
+
+            scrollToSavedPos(setting);
+            saveNewScrollPos = true;
         }
     }
 }

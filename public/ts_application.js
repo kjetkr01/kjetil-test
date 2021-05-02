@@ -2,7 +2,7 @@
 
     // Oppdatere disse når ny commit
 
-    const updates = 803;
+    const updates = 804;
     const updateDay = "02.05.2021";
 
     // Slutt
