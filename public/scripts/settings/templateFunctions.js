@@ -45,7 +45,7 @@ function getTemplateWithBtn(aSetting, aDivId, aSpacingTop) {
 
    const html =
       `
-       <div id="${divId}" class="userSettingsDefault noselect ${spacingTop}">
+       <div id="${divId}" class="userSettingsDefault noselect ${spacingTop} pointer" onclick="loadSetting('${setting}');">
           <div id="cS1" class="${borderT}">
           </div>
           <div id="gsSetting">
@@ -54,7 +54,7 @@ function getTemplateWithBtn(aSetting, aDivId, aSpacingTop) {
              </p>
           </div>
           <div id="gsInfo">
-             <svg id="sInfo" class="settingsIcons pointer" draggable="false" onclick="loadSetting('${setting}');"
+             <svg id="sInfo" class="settingsIcons" draggable="false"
                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
                 <g id="Layer_2" data-name="Layer 2">
                    <g id="Layer_1-2" data-name="Layer 1">
@@ -168,7 +168,7 @@ function getPendingRequestsTemplate() {
 
    const html =
       `
-       <div id="pendingRequestsDiv" class="userSettingsDefault noselect">
+       <div id="pendingRequestsDiv" class="userSettingsDefault noselect pointer" onclick="loadSetting('${ELoadSettings.pendingUsers.name}');">
           <div id="cS1">
           </div>
           <div id="gsSetting">
@@ -177,7 +177,7 @@ function getPendingRequestsTemplate() {
              </p>
           </div>
           <div id="gsInfo">
-             <svg id="sInfo" class="settingsIcons pointer" draggable="false" onclick="loadSetting('${ELoadSettings.pendingUsers.name}');"
+             <svg id="sInfo" class="settingsIcons" draggable="false"
                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
                 <g id="Layer_2" data-name="Layer 2">
                    <g id="Layer_1-2" data-name="Layer 1">

@@ -392,39 +392,18 @@ async function loadAboutAppPage(setting) {
 
             //document.getElementById("logo").src = application.logoURL;
 
-            let newUpdateTxt = "";
-
-            const infoHeader = {};
-            const url = `/application`;
-
-            const serverApplication = await callServerAPIPost(infoHeader, url);
-            if (serverApplication) {
-
-                if (serverApplication.version.fullNumber !== application.version.fullNumber) {
-                    newUpdateTxt = `
-                <br>
-                Nyeste versjon: ${serverApplication.version.fullNumber}<br>
-                <button class="settingsButton" onClick="updateApplication();">Oppdater</button>`;
-                    sessionStorage.setItem("settings_notification_update", true);
-                } else {
-                    sessionStorage.removeItem("settings_notification_update");
-                }
-            }
-
             const appInfoHTML = `
             <strong>${application.name}</strong>
             <br>
-            <p id="applicationVersionEtc" class="settingsApplicationFullVersion">${application.version.full || application.version.fullNumber || ""}
-            ${newUpdateTxt}
-            </p>
+            <p id="applicationVersionEtc" class="settingsApplicationFullVersion">${application.version.full || application.version.fullNumber || ""}</p>
             `;
 
             settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
 
             if (settings.automaticupdates === true) {
-                settingsGrid.innerHTML += getTemplateWithCheckbox("Automatisk oppdateringer", "", true, "automaticupdates", "spacingTop");
+                settingsGrid.innerHTML += getTemplateWithCheckbox("Oppdater automatisk", "", true, "automaticupdates", "spacingTop");
             } else {
-                settingsGrid.innerHTML += getTemplateWithCheckbox("Automatisk oppdateringer", "", false, "automaticupdates", "spacingTop");
+                settingsGrid.innerHTML += getTemplateWithCheckbox("Oppdater automatisk", "", false, "automaticupdates", "spacingTop");
             }
 
 
@@ -465,9 +444,23 @@ async function loadAboutAppPage(setting) {
 
             settingsGrid.innerHTML += getBottomSpacingTemplate();
 
-            scrollToSavedPos(setting);
-            saveNewScrollPos = true;
+            if (navigator.onLine) {
+                const infoHeader = {};
+                const url = `/application`;
 
+                const serverApplication = await callServerAPIPost(infoHeader, url);
+                if (serverApplication) {
+                    if (serverApplication.version.fullNumber !== application.version.fullNumber) {
+                        document.getElementById("applicationVersionEtc").innerHTML += `
+                    <br>
+                    Nyeste versjon: ${serverApplication.version.fullNumber}<br>
+                    <button class="settingsButton" onClick="updateApplication();">Oppdater</button>`;
+                        sessionStorage.setItem("settings_notification_update", true);
+                    } else {
+                        sessionStorage.removeItem("settings_notification_update");
+                    }
+                }
+            }
         }
     }
 }
