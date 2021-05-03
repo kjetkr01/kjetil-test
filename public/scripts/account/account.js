@@ -6,52 +6,11 @@ let badgeColorsJSON = null;
 let size = 0;
 let memberSince = null;
 
-async function requestAccountDetails() {
+function displayUserDetailsCached() {
 
     try {
+
         const cacheDetails = JSON.parse(localStorage.getItem("cachedDetails_owner"));
-        lifts = JSON.parse(localStorage.getItem("cachedLifts_owner"));
-        goals = JSON.parse(localStorage.getItem("cachedGoals_owner"));
-        badgeColorsJSON = JSON.parse(localStorage.getItem("cachedBadgeColors"));
-
-        const cachedLiftsLeft = JSON.parse(localStorage.getItem("cachedLiftsLeft_owner"));
-        const cachedGoalsLeft = JSON.parse(localStorage.getItem("cachedGoalsLeft_owner"));
-        const cachedTrainingsplitsLeft = JSON.parse(localStorage.getItem("cachedTrainingsplitsLeft_owner"));
-
-        activetrainingsplit = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
-
-        if (cachedLiftsLeft >= 0) {
-            liftsLeft = new TliftsLeft(cachedLiftsLeft);
-        }
-
-        if (cachedGoalsLeft >= 0) {
-            goalsLeft = new TgoalsLeft(cachedGoalsLeft);
-        }
-
-        if (cachedTrainingsplitsLeft >= 0) {
-            trainingsplitsLeft = new TtrainingsplitsLeft(cachedTrainingsplitsLeft);
-        }
-
-        if (lifts) {
-            showLiftBadgeAnimations = false;
-            liftsInfo = new Tlifts(lifts);
-            displayLifts();
-        }
-
-        if (goals) {
-            showGoalBadgeAnimations = false;
-            goalsInfo = new Tgoals(goals);
-            displayGoals();
-        }
-
-        if (activetrainingsplit) {
-            showTrainingsplitBadgeAnimations = false;
-            displayTrainingsplit();
-        }
-
-        if (badgeColorsJSON) {
-            badgeColors = new TbadgeColors(badgeColorsJSON);
-        }
 
         if (cacheDetails.hasOwnProperty("displayname")) {
             const title = document.getElementById("title");
@@ -118,9 +77,60 @@ async function requestAccountDetails() {
             document.getElementById("memberSince").classList = "";
             document.getElementById("memberSince").innerHTML = `Medlem siden<br>${string}`;
         }
-
     } catch {
         localStorage.removeItem("cacheDetails_owner");
+    }
+}
+
+async function requestAccountDetails() {
+
+    try {
+        lifts = JSON.parse(localStorage.getItem("cachedLifts_owner"));
+        goals = JSON.parse(localStorage.getItem("cachedGoals_owner"));
+        badgeColorsJSON = JSON.parse(localStorage.getItem("cachedBadgeColors"));
+
+        const cachedLiftsLeft = JSON.parse(localStorage.getItem("cachedLiftsLeft_owner"));
+        const cachedGoalsLeft = JSON.parse(localStorage.getItem("cachedGoalsLeft_owner"));
+        const cachedTrainingsplitsLeft = JSON.parse(localStorage.getItem("cachedTrainingsplitsLeft_owner"));
+
+        activetrainingsplit = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
+
+        if (cachedLiftsLeft >= 0) {
+            liftsLeft = new TliftsLeft(cachedLiftsLeft);
+        }
+
+        if (cachedGoalsLeft >= 0) {
+            goalsLeft = new TgoalsLeft(cachedGoalsLeft);
+        }
+
+        if (cachedTrainingsplitsLeft >= 0) {
+            trainingsplitsLeft = new TtrainingsplitsLeft(cachedTrainingsplitsLeft);
+        }
+
+        if (lifts) {
+            showLiftBadgeAnimations = false;
+            liftsInfo = new Tlifts(lifts);
+            displayLifts();
+        }
+
+        if (goals) {
+            showGoalBadgeAnimations = false;
+            goalsInfo = new Tgoals(goals);
+            displayGoals();
+        }
+
+        if (activetrainingsplit) {
+            showTrainingsplitBadgeAnimations = false;
+            displayTrainingsplit();
+        }
+
+        if (badgeColorsJSON) {
+            badgeColors = new TbadgeColors(badgeColorsJSON);
+        }
+
+
+
+    } catch {
         localStorage.removeItem("cachedLifts_owner");
         localStorage.removeItem("cachedHasLiftsLeft_owner");
         localStorage.removeItem("cachedGoals_owner");
@@ -275,8 +285,11 @@ function displayInformation(respInfo) {
         displayGoals(info.goalsLeft > 0);
     }
 
-    if (updateActiveTrainingsplit === true) {
+    if (info.trainingsplitsLeft) {
         trainingsplitsLeft = new TtrainingsplitsLeft(info.trainingsplitsLeft);
+    }
+
+    if (updateActiveTrainingsplit === true) {
         displayTrainingsplit();
     }
 }
@@ -669,4 +682,71 @@ if (memberSince) {
 
     document.getElementById("memberSince").innerHTML = `Medlem siden<br>${string}`;
 
+}
+
+async function requestTrainingsplitDetails() {
+
+    try {
+
+        const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
+
+        if (trainingsplit.id) {
+
+            document.getElementById("smallTitle").innerHTML = ` <div>
+                <svg class="backBtnIcon iconsDefaultColor fadeInLeft animate delaySmall pointer" draggable="false"
+                   onclick="sessionStorage.removeItem('trainingsplit');location.reload();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
+                   <g id="Layer_2" data-name="Layer 2">
+                      <g id="Layer_1-2" data-name="Layer 1">
+                         <polyline class="cls-1" points="21.25 1.24 2.48 20.02 20.45 37.99" />
+                      </g>
+                   </g>
+                </svg>
+             </div>`;
+
+            const infoHeader = { "trainingsplit_id": trainingsplit.id };
+            const url = `/user/get/trainingsplit`;
+
+            const resp = await callServerAPIPost(infoHeader, url);
+
+            if (resp) {
+
+                if (resp.canEdit === true) {
+                    loadEditTrainingsplit(resp);
+                } else {
+                    loadViewTrainingsplit(resp);
+                }
+
+            } else {
+                smallTitle.innerHTML = `Kunne ikke hente planen!`;
+                setTimeout(() => {
+                    sessionStorage.removeItem("trainingsplit");
+                    location.reload();
+                }, 2000);
+            }
+        } else {
+            sessionStorage.removeItem("trainingsplit");
+            location.reload();
+        }
+
+
+    } catch {
+        sessionStorage.removeItem("trainingsplit");
+        location.reload();
+    }
+}
+
+function loadEditTrainingsplit(aResp) {
+
+    const resp = aResp;
+
+    const top = `Redigerer:<br><input value="${resp.trainingsplit_name}"></input> <button>Lagre navn</button> <button>Slett planen</button>`;
+    const toolbar = `<br><button>Lag ny rad</button>`;
+    document.getElementById("userGrid").innerHTML = `${top}<br>${toolbar}<br><br>Canedit: ${resp.canEdit}, Resp: ${JSON.stringify(resp)}`;
+
+}
+
+function loadViewTrainingsplit(aResp) {
+    const resp = aResp;
+
+    document.getElementById("userGrid").innerHTML = `Ser på:<br>${resp.trainingsplit_name}`;
 }

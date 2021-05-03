@@ -628,17 +628,16 @@ function enableOverlayEditDays() {
 
         document.getElementById("listworkoutPlans").innerHTML = listworkoutPlansOptionsHTML;
 
-        document.getElementById("GeditplanworkoutPlans").innerHTML = `<button class="pointer" id="editplanworkoutPlans">Rediger</button>`;
-
+        const GeditplanworkoutPlans = document.getElementById("GeditplanworkoutPlans");
         const GsaveworkoutPlans = document.getElementById("GsaveworkoutPlans");
 
         if (navigator.onLine) {
-            GsaveworkoutPlans.innerHTML = `<button id="saveworkoutPlans" class="pointer" onclick="setActiveTrainingsplit();">Lagre</button>`;
+            GeditplanworkoutPlans.innerHTML = `<button class="pointer" id="editplanworkoutPlans" onClick="editTrainingsplit();">Rediger</button>`;
+            GsaveworkoutPlans.innerHTML = `<button id="saveworkoutPlans" class="pointer" onClick="setActiveTrainingsplit();">Lagre</button>`;
         } else {
+            GeditplanworkoutPlans.innerHTML = `<button disabled id="editplanworkoutPlans">Rediger</button>`;
             GsaveworkoutPlans.innerHTML = `<button id="saveworkoutPlans" disabled>Lagre</button>`;
         }
-
-
     }
 
     if (trainingsplitsLeftInfo > 0) {
@@ -648,7 +647,13 @@ function enableOverlayEditDays() {
             respMsg.textContent = `Du kan lage ${trainingsplitsLeftInfo} treningsplaner til`;
         }
 
-        document.getElementById("GcreateplanworkoutPlans").innerHTML = `<button class="pointer" onClick="createNewTrainingsplit();" id="editplanworkoutPlans">Opprett ny</button>`;
+        const GcreateplanworkoutPlans = document.getElementById("GcreateplanworkoutPlans");
+
+        if (navigator.onLine) {
+            GcreateplanworkoutPlans.innerHTML = `<button class="pointer" onClick="createNewTrainingsplit();" id="editplanworkoutPlans">Opprett ny</button>`;
+        } else {
+            GcreateplanworkoutPlans.innerHTML = `<button disabled id="editplanworkoutPlans">Opprett ny</button>`;
+        }
     }
 
     document.getElementById("editworkoutPlanOverlay").style.display = "block";
@@ -673,9 +678,10 @@ async function createNewTrainingsplit() {
 
         const resp = await callServerAPIPost(infoHeader, url);
 
-        if (resp === true) {
+        if (resp) {
             respMsg.textContent = "Oprettet ny treningsplan!";
             setTimeout(() => {
+                sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": resp, "edit": true }));
                 disableOverlay();
             }, 1500);
             setTimeout(() => {
@@ -726,6 +732,31 @@ async function setActiveTrainingsplit() {
 }
 
 // end of setActiveTrainingsplit
+
+
+// editTrainingsplit
+
+async function editTrainingsplit() {
+
+    const respMsg = document.getElementById("respworkoutPlans");
+    respMsg.textContent = "";
+
+    if (navigator.onLine) {
+
+        const trainingsplit_id = document.getElementById("listworkoutPlans").value;
+        if (trainingsplit_id) {
+            sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": trainingsplit_id, "edit": true }));
+            location.reload();
+        } else {
+            respMsg.textContent = "Ugyldig trainingsplit_id!";
+        }
+
+    } else {
+        respMsg.textContent = "Du må ha internettforbindelse for å kunne redigere en treningsplan";
+    }
+}
+
+// end of editTrainingsplit
 
 
 function changeOverlayBorderColor() {

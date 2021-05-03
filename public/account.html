@@ -150,6 +150,11 @@
          </table>
       </div>
 
+      <div id="GsmallTitle">
+         <p id="smallTitle" class="noselect">
+         </p>
+      </div>
+
       <div id="Gsettings">
          <button id="settings" class="noselect settingsBtn pointer" onclick="redirectToSettings();">
             Innstillinger
@@ -281,7 +286,15 @@
    lockBodyPosition();
    getCreateNewLiftorGoalOverlay();
    getEditLiftorGoalOverlay();
-   requestAccountDetails();
+
+   displayUserDetailsCached();
+   if (sessionStorage.getItem("trainingsplit") && navigator.onLine) {
+      document.getElementById("userGrid").innerHTML = "";
+      requestTrainingsplitDetails();
+   } else {
+      requestAccountDetails();
+      sessionStorage.removeItem("trainingsplit");
+   }
 
    setInterval(() => {
       checkConnection("c6r2");

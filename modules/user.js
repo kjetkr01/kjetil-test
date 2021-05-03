@@ -92,6 +92,14 @@ async function setActiveTrainingsplit(userid, trainingsplit_id) {
     }
 }
 
+async function getTrainingsplit(userid, trainingsplit_id) {
+    try {
+        const resp = await database.getTrainingsplit(userid, trainingsplit_id);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 async function updateDisplayname(username, newDisplayname) {
     try {
@@ -174,6 +182,7 @@ module.exports.updateUserSetting = updateUserSetting;
 module.exports.saveLiftOrGoal = saveLiftOrGoal;
 module.exports.deleteLiftOrGoal = deleteLiftOrGoal;
 module.exports.createTrainingsplit = createTrainingsplit;
+module.exports.getTrainingsplit = getTrainingsplit;
 module.exports.setActiveTrainingsplit = setActiveTrainingsplit;
 module.exports.updateDisplayname = updateDisplayname;
 module.exports.updateUsername = updateUsername;

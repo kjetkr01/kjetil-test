@@ -1159,6 +1159,7 @@ class StorageHandler {
 
         const client = new pg.Client(this.credentials);
         let results = false;
+        let newtrainingsplit_id = null;
 
         try {
             await client.connect();
@@ -1173,11 +1174,15 @@ class StorageHandler {
 
                 const trainingsplitName = `Treningsplan ${allTrainingsplits.rows.length + 1}`;
 
-                await client.query(`
+                const newTrainingsplit = await client.query(`
                 INSERT INTO user_trainingsplit(user_id, trainingsplit_name)
-                VALUES($1, $2)`, [userid, trainingsplitName]);
+                VALUES($1, $2) RETURNING trainingsplit_id`, [userid, trainingsplitName]);
 
-                results = true;
+                if (newTrainingsplit.rows.length > 0) {
+                    newtrainingsplit_id = newTrainingsplit.rows[0].trainingsplit_id;
+                    results = true;
+                }
+
             } else {
                 results = false;
             }
@@ -1188,7 +1193,7 @@ class StorageHandler {
         }
 
         client.end();
-        return results;
+        return { "status": results, "newtrainingsplit_id": newtrainingsplit_id };
     }
 
     //
@@ -1218,6 +1223,46 @@ class StorageHandler {
 
         client.end();
         return results;
+    }
+
+    //
+
+
+    //  -------------------------------  set active Trainingsplit (user)  ------------------------------- //
+
+    async getTrainingsplit(userid, trainingsplit_id) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        let trainingsplit = {};
+
+        try {
+            await client.connect();
+
+            results = await client.query(`
+            SELECT *
+            FROM user_trainingsplit
+            WHERE trainingsplit_id = $1`,
+                [trainingsplit_id]);
+
+            if (results.rows.length > 0) {
+                let canEdit = false;
+                if (results.rows[0].user_id === userid) {
+                    canEdit = true;
+                }
+
+                trainingsplit = results.rows[0];
+                trainingsplit.canEdit = canEdit;
+                results = true;
+            }
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return { "status": results, "trainingsplit": trainingsplit };
     }
 
     //
