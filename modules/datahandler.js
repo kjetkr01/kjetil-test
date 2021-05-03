@@ -1228,7 +1228,7 @@ class StorageHandler {
     //
 
 
-    //  -------------------------------  set active Trainingsplit (user)  ------------------------------- //
+    //  -------------------------------  get Trainingsplit (user)  ------------------------------- //
 
     async getTrainingsplit(userid, trainingsplit_id) {
 
@@ -1263,6 +1263,36 @@ class StorageHandler {
 
         client.end();
         return { "status": results, "trainingsplit": trainingsplit };
+    }
+
+    //
+
+
+    //  -------------------------------  delete Trainingsplit (user)  ------------------------------- //
+
+    async deleteTrainingsplit(userid, trainingsplit_id) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+
+        try {
+            await client.connect();
+
+            await client.query(`
+            DELETE FROM user_trainingsplit
+            WHERE trainingsplit_id = $1
+            AND user_id = $2`,
+                [trainingsplit_id, userid]);
+
+            results = true;
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return results;
     }
 
     //

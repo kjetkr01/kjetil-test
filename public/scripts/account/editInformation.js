@@ -734,6 +734,36 @@ async function setActiveTrainingsplit() {
 // end of setActiveTrainingsplit
 
 
+// deleteTrainingsplit
+
+async function deleteTrainingsplit(aTrainingsplit_id) {
+
+    const confirmDelete = confirm("Er du sikker på at du ønsker å slette treningsplanen? Dette kan ikke angres!");
+
+    if (confirmDelete === true) {
+
+        const trainingsplit_id = aTrainingsplit_id;
+
+        const infoHeader = { "trainingsplit_id": trainingsplit_id };
+        const url = `/user/delete/trainingsplit`;
+
+        const resp = await callServerAPIPost(infoHeader, url);
+
+        if (resp === true) {
+            alert("Treningsplanen er nå slettet!");
+            setTimeout(() => {
+                sessionStorage.removeItem("trainingsplit");
+                location.reload();
+            }, 2000);
+        } else {
+            alert("Kunne ikke slette treningsplanen. Det har oppstått en feil!");
+        }
+    }
+}
+
+// end of deleteTrainingsplit
+
+
 // editTrainingsplit
 
 async function editTrainingsplit() {
@@ -757,7 +787,6 @@ async function editTrainingsplit() {
 }
 
 // end of editTrainingsplit
-
 
 function changeOverlayBorderColor() {
 

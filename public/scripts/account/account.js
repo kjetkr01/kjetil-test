@@ -739,9 +739,10 @@ function loadEditTrainingsplit(aResp) {
 
     const resp = aResp;
 
-    const top = `Redigerer:<br><input value="${resp.trainingsplit_name}"></input> <button>Lagre navn</button> <button>Slett planen</button>`;
-    const toolbar = `<br><button>Lag ny rad</button>`;
-    document.getElementById("userGrid").innerHTML = `${top}<br>${toolbar}<br><br>Canedit: ${resp.canEdit}, Resp: ${JSON.stringify(resp)}`;
+    const top = `Redigerer:<br><input value="${resp.trainingsplit_name}"></input> <button>Lagre navn</button> <button onClick="deleteTrainingsplit('${resp.trainingsplit_id}');">Slett planen</button>`;
+    const days = `<select><option>Mandag</option></select>`;
+    const newRow = `<br><button>Lag ny rad</button>`;
+    document.getElementById("userGrid").innerHTML = `${top}<br><br>${days}<br>${newRow}<br><br>Canedit: ${resp.canEdit}, Resp: ${JSON.stringify(resp)}`;
 
 }
 
@@ -749,4 +750,8 @@ function loadViewTrainingsplit(aResp) {
     const resp = aResp;
 
     document.getElementById("userGrid").innerHTML = `Ser på:<br>${resp.trainingsplit_name}`;
+
+    if (userID !== resp.user_id) {
+        document.getElementById("userGrid").innerHTML += `<br><br><button>Kopier plan</button> <button>Abboner på planen</button>`;
+    }
 }

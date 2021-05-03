@@ -734,7 +734,7 @@ transform: translate(-50%,-50%);
 -ms-transform: translate(-50%,-50%);
 width: 90%;
 max-width: 550px;
-height: 60%;
+height: 65%;
 overflow-y: scroll;
 
 background-color: var(--main-backgroundColor2);
@@ -857,11 +857,11 @@ background-color: var(--main-backgroundColor2);
 }
 
 #GeditplanworkoutPlans > #editplanworkoutPlans {
-
+    margin-top: 10px;
 }
 
 #GcreateplanworkoutPlans > #createplanworkoutPlans{
-
+    margin-top: 10px;
 }
 
 #GcancelworkoutPlans > #cancelworkoutPlans {

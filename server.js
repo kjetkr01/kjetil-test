@@ -48,6 +48,7 @@ const deleteLiftOrGoal = require("./modules/user").deleteLiftOrGoal;
 const createTrainingsplit = require("./modules/user").createTrainingsplit;
 const setActiveTrainingsplit = require("./modules/user").setActiveTrainingsplit;
 const getTrainingsplit = require("./modules/user").getTrainingsplit;
+const deleteTrainingsplit = require("./modules/user").deleteTrainingsplit;
 
 /* */
 
@@ -909,6 +910,30 @@ server.post("/user/get/trainingsplit", auth, async (req, res) => {
 
           if (resp.status === true) {
                res.status(200).json(resp.trainingsplit).end();
+          } else {
+               res.status(403).json("error, try again").end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+
+//
+
+// delete trainingsplit
+
+server.post("/user/delete/trainingsplit", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+
+          const resp = await deleteTrainingsplit(currentUser.id, trainingsplit_id);
+
+          if (resp === true) {
+               res.status(200).json(true).end();
           } else {
                res.status(403).json("error, try again").end();
           }
