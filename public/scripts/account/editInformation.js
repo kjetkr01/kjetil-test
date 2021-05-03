@@ -680,13 +680,10 @@ async function createNewTrainingsplit() {
 
         if (resp) {
             respMsg.textContent = "Oprettet ny treningsplan!";
-            setTimeout(() => {
-                sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": resp, "edit": true }));
-                disableOverlay();
-            }, 1500);
+            sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": resp, "edit": true }));
             setTimeout(() => {
                 location.reload();
-            }, 2000);
+            }, 1000);
         } else {
             respMsg.textContent = "Det har oppstått en feil!";
         }
@@ -750,11 +747,9 @@ async function deleteTrainingsplit(aTrainingsplit_id) {
         const resp = await callServerAPIPost(infoHeader, url);
 
         if (resp === true) {
+            sessionStorage.removeItem("trainingsplit");
             alert("Treningsplanen er nå slettet!");
-            setTimeout(() => {
-                sessionStorage.removeItem("trainingsplit");
-                location.reload();
-            }, 2000);
+            location.reload();
         } else {
             alert("Kunne ikke slette treningsplanen. Det har oppstått en feil!");
         }

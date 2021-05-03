@@ -599,8 +599,8 @@ function displayTrainingsplit() {
 
     try {
         document.getElementById("badgesTrainingsplitTableRow").innerHTML = "";
-        document.getElementById("trainingsplit").innerHTML = `Treningsplan (${activetrainingsplit.trainingsplit_name})`;
         if (activetrainingsplit) {
+            document.getElementById("trainingsplit").innerHTML = `Treningsplan (${activetrainingsplit.trainingsplit_name})`;
 
             const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
             const daysNorwegian = {
