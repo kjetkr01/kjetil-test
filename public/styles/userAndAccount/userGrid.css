@@ -220,3 +220,59 @@ border: none;
 outline: none;
 background-color: var(--main-backgroundColor2);
 }
+
+
+.trainingsplitButton {
+word-break: keep-all;
+white-space: nowrap;
+font-size: 14px;
+font-weight: bold;
+font-family: var(--main-font-Family-Verdana);
+margin-right: 10px;
+background-color: var(--main-backgroundColor1);
+color: var(--main-textColorDark);
+border-radius: 8px;
+border: 1px var(--main-backgroundColor1) solid;
+box-shadow: var(--main-boxShadow);
+
+height: 30px;
+width: fit-content;
+}
+
+.trainingsplitSelect {
+font-size: 18px;
+/*color: var(--main-accountOwnerColor);*/
+color: var(--main-textColorDark);
+/*font-weight: bold;*/
+appearance: none;
+-webkit-appearance: none;
+-moz-appearance: none;
+border: none;
+outline: none;
+background-color: var(--main-backgroundColor2);
+}
+
+.trainingsplitInput {
+font-size: 18px;
+/*color: var(--main-accountOwnerColor);*/
+color: var(--main-textColorDark);
+/*font-weight: bold;*/
+appearance: none;
+-webkit-appearance: none;
+-moz-appearance: none;
+border: none;
+outline: none;
+background-color: var(--main-backgroundColor2);
+}
+
+#trainingsplitDiv {
+margin-left: 20px;
+margin-right: 20px;
+font-size: 18px;
+}
+
+#trainingsplitTable{
+table-layout: auto;
+width: 100%;
+text-align: center;
+}

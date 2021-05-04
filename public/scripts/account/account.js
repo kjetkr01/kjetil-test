@@ -692,8 +692,8 @@ async function requestTrainingsplitDetails() {
 
         if (trainingsplit.id) {
 
-            document.getElementById("smallTitle").innerHTML = ` <div>
-                <svg class="backBtnIcon iconsDefaultColor fadeInLeft animate delaySmall pointer" draggable="false"
+            document.getElementById("smallTitle").innerHTML = `<div>
+                <svg class="backBtnIcon iconsDefaultColor pointer" draggable="false"
                    onclick="sessionStorage.removeItem('trainingsplit');location.reload();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
                    <g id="Layer_2" data-name="Layer 2">
                       <g id="Layer_1-2" data-name="Layer 1">
@@ -739,11 +739,49 @@ function loadEditTrainingsplit(aResp) {
 
     const resp = aResp;
 
-    const top = `Redigerer:<br><input value="${resp.trainingsplit_name}"></input> <button>Lagre navn</button> <button onClick="deleteTrainingsplit('${resp.trainingsplit_id}');">Slett planen</button>`;
-    const days = `<select><option>Mandag</option></select>`;
-    const newRow = `<br><button>Lag ny rad</button>`;
-    document.getElementById("userGrid").innerHTML = `${top}<br><br>${days}<br>${newRow}<br><br>Canedit: ${resp.canEdit}, Resp: ${JSON.stringify(resp)}`;
+    const top = `<br><h3>Redigerer:</h3><input class="trainingsplitInput" maxlength="20" value="${resp.trainingsplit_name}"></input>`;
 
+    const EDays = {
+        "monday": "Mandag",
+        "tuesday": "Tirsdag",
+        "wednesday": "Onsdag",
+        "thursday": "Torsdag",
+        "friday": "Fredag",
+        "saturday": "Lørdag",
+        "sunday": "Søndag"
+    }
+
+    let optionsHTML = "";
+
+    const EDaysKeys = Object.keys(EDays);
+    for (let i = 0; i < EDaysKeys.length; i++) {
+        optionsHTML += `<option value="${EDaysKeys[i]}">${EDays[EDaysKeys[i]]}</option>`;
+    }
+
+    const daysList = `Velg dag: <select class="trainingsplitSelect pointer">${optionsHTML}</select>`;
+
+    document.getElementById("smallTitle").innerHTML += top + daysList;
+
+    document.getElementById("userGrid").innerHTML = `
+    <div id="trainingsplitDiv">
+    <p id="trainingsplitToolBar"></p>
+    <table id="trainingsplitTable">
+    </table>
+    <p id="trainingsplitBottom"></p>
+    </div>`;
+
+    const backToTopBtn = `<button class="trainingsplitButton pointer" onClick="document.getElementById('GuserGrid').scrollTop = 0;">Tilbake til toppen</button>`;
+
+    const newRowBtn = `<br><button class="trainingsplitButton pointer">Lagre</button><button class="trainingsplitButton pointer">Ny rad</button><button class="trainingsplitButton pointer" style="color:red;" onClick="deleteTrainingsplit('${resp.trainingsplit_id}');">Slett</button>`;
+    document.getElementById("trainingsplitToolBar").innerHTML = `${newRowBtn}<br><br>Canedit: ${resp.canEdit}, Resp: ${JSON.stringify(resp)}`;
+
+    document.getElementById("trainingsplitBottom").innerHTML = `${backToTopBtn}`;
+
+    document.getElementById("trainingsplitTable").innerHTML = `<th>Nr</th><th>Øvelse</th><th>Sets Reps</th><th>Annet</th>`;
+
+    for (let i = 0; i < 25; i++) {
+        document.getElementById("trainingsplitTable").innerHTML += `<tr><td>${i + 1}.</td><td>Benkpress</td><td>3x5</td><td>50% av max</td></tr>`;
+    }
 }
 
 function loadViewTrainingsplit(aResp) {

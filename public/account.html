@@ -292,6 +292,18 @@
       document.getElementById("userGrid").innerHTML = "";
       requestTrainingsplitDetails();
    } else {
+
+      const GuserGrid = document.getElementById("GuserGrid");
+
+      if (sessionStorage.getItem("usergrid_scroll_y")) {
+         GuserGrid.scrollTop = sessionStorage.getItem("usergrid_scroll_y");
+      }
+
+      GuserGrid.addEventListener("scroll", function (evt) {
+         const scrollY = GuserGrid.scrollTop;
+         sessionStorage.setItem("usergrid_scroll_y", scrollY);
+      });
+
       requestAccountDetails();
       sessionStorage.removeItem("trainingsplit");
    }
