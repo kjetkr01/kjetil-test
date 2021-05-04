@@ -780,8 +780,8 @@ function loadEditTrainingsplit(aResp) {
     document.getElementById("trainingsplitTable").innerHTML = `<th>Øvelse</th><th>SxR</th><th>Kg</th>`;
 
     const ETrainingsplit = {
-        "Benkpress": [{ "sets": 3, "reps": 5, "kg": 85, "other": "RPE 5" }, { "sets": 2, "reps": 1, "kg": 105, "other": "50 % av max" }],
-        "Markløft": [{ "sets": 2, "reps": 8, "kg": 120, "other": "RPE 8" }, { "sets": 4, "reps": 2, "kg": 150, "other": "RPE 10" }]
+        "Benkpress": [{ "sets": 3, "reps": 5, "kg": 85 }, { "sets": 2, "reps": 1, "kg": 105 }, { "sets": 1, "reps": 1, "kg": 115 }],
+        "Markløft": [{ "sets": 2, "reps": 8, "kg": 120 }, { "sets": 4, "reps": 2, "kg": 150 }]
     }
 
     const ETrainingsplitKeys = Object.keys(ETrainingsplit);
@@ -789,7 +789,7 @@ function loadEditTrainingsplit(aResp) {
     for (let i = 0; i < ETrainingsplitKeys.length; i++) {
         const exerciseInfo = ETrainingsplit[ETrainingsplitKeys[i]];
         const trainingsplitTable = document.getElementById("trainingsplitTable");
-        trainingsplitTable.innerHTML += `<br><th>${ETrainingsplitKeys[i]}</th>`;
+        trainingsplitTable.innerHTML += `<br><th colspan="2" style="text-align:left;">${ETrainingsplitKeys[i]}</th>`;
 
         for (let j = 0; j < exerciseInfo.length; j++) {
             trainingsplitTable.innerHTML += `<tr><td>${j + 1}.</td><td>${exerciseInfo[j].sets}x${exerciseInfo[j].reps}</td><td>${exerciseInfo[j].kg} kg</td></tr>`;

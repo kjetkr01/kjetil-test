@@ -273,6 +273,6 @@ font-size: 18px;
 
 #trainingsplitTable{
 table-layout: auto;
-width: 100%;
+/*width: 100%;*/
 text-align: center;
 }
