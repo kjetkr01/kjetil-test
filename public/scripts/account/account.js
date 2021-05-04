@@ -777,7 +777,7 @@ function loadEditTrainingsplit(aResp) {
 
     document.getElementById("trainingsplitBottom").innerHTML = `${backToTopBtn}`;
 
-    document.getElementById("trainingsplitTable").innerHTML = `<th>Øvelse</th><th>Sets Reps</th><th>Kg</th><th>Annet</th>`;
+    document.getElementById("trainingsplitTable").innerHTML = `<th>Øvelse</th><th>SxR</th><th>Kg</th>`;
 
     const ETrainingsplit = {
         "Benkpress": [{ "sets": 3, "reps": 5, "kg": 85, "other": "RPE 5" }, { "sets": 2, "reps": 1, "kg": 105, "other": "50 % av max" }],
@@ -792,7 +792,7 @@ function loadEditTrainingsplit(aResp) {
         trainingsplitTable.innerHTML += `<br><th>${ETrainingsplitKeys[i]}</th>`;
 
         for (let j = 0; j < exerciseInfo.length; j++) {
-            trainingsplitTable.innerHTML += `<tr><td>${j + 1}.</td><td>${exerciseInfo[j].sets}x${exerciseInfo[j].reps}</td><td>${exerciseInfo[j].kg} kg</td><td>${exerciseInfo[j].other}</td></tr>`;
+            trainingsplitTable.innerHTML += `<tr><td>${j + 1}.</td><td>${exerciseInfo[j].sets}x${exerciseInfo[j].reps}</td><td>${exerciseInfo[j].kg} kg</td></tr>`;
         }
     }
 }
