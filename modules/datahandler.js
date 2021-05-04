@@ -1246,12 +1246,24 @@ class StorageHandler {
                 [trainingsplit_id]);
 
             if (results.rows.length > 0) {
-                let canEdit = false;
-                if (results.rows[0].user_id === userid) {
-                    canEdit = true;
-                }
 
                 trainingsplit = results.rows[0];
+
+                let canEdit = false;
+                if (trainingsplit.user_id === userid) {
+                    canEdit = true;
+                } else {
+                    let username = await client.query(`
+                        SELECT username
+                        FROM users
+                        WHERE id = $1`,
+                        [trainingsplit.user_id]);
+
+                    if (username.rows.length > 0) {
+                        trainingsplit.creator = username.rows[0].username;
+                    }
+                }
+
                 trainingsplit.canEdit = canEdit;
                 results = true;
             }

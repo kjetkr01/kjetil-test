@@ -680,7 +680,7 @@ async function createNewTrainingsplit() {
 
         if (resp) {
             respMsg.textContent = "Oprettet ny treningsplan!";
-            sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": resp, "edit": true }));
+            sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": resp, "edit": true, "day": "monday" }));
             setTimeout(() => {
                 location.reload();
             }, 1000);
@@ -770,7 +770,7 @@ async function editTrainingsplit() {
 
         const trainingsplit_id = document.getElementById("listworkoutPlans").value;
         if (trainingsplit_id) {
-            sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": trainingsplit_id, "edit": true }));
+            sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": trainingsplit_id, "edit": true, "day": "monday" }));
             location.reload();
         } else {
             respMsg.textContent = "Ugyldig trainingsplit_id!";

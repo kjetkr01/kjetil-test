@@ -624,7 +624,7 @@ function displayTrainingsplit() {
                         if (activeTrainingsplitKeys.short) {
                             const color = activeTrainingsplitKeys.color || "redBadgeG";
 
-                            arr.push({ "day": daysNorwegian[keys[i]], "trainingsplit": activeTrainingsplitKeys.short, "color": color });
+                            arr.push({ "day": daysNorwegian[keys[i]], "trainingsplit": activeTrainingsplitKeys.short, "color": color, "trainingsplit_id": activetrainingsplit.trainingsplit_id });
                         }
                     }
                 }
@@ -710,10 +710,10 @@ async function requestTrainingsplitDetails() {
 
             if (resp) {
 
-                if (resp.canEdit === true) {
-                    loadEditTrainingsplit(resp);
+                if (resp.canEdit === true && trainingsplit.edit === true) {
+                    loadEditTrainingsplit(resp, trainingsplit.day);
                 } else {
-                    loadViewTrainingsplit(resp);
+                    loadViewTrainingsplit(resp, trainingsplit.day);
                 }
 
             } else {
@@ -735,11 +735,14 @@ async function requestTrainingsplitDetails() {
     }
 }
 
-function loadEditTrainingsplit(aResp) {
+function loadEditTrainingsplit(aResp, aSelectedDay) {
 
     const resp = aResp;
+    const selectedDay = resp[aSelectedDay];
 
-    const top = `<br><h3>Redigerer:</h3><input class="trainingsplitInput" maxlength="20" value="${resp.trainingsplit_name}"></input>`;
+    console.log(selectedDay);
+
+    const top = `<br><h3>Redigerer:</h3><input class="trainingsplitNameInput" maxlength="20" value="${resp.trainingsplit_name}"></input>`;
 
     const EDays = {
         "monday": "Mandag",
@@ -755,54 +758,206 @@ function loadEditTrainingsplit(aResp) {
 
     const EDaysKeys = Object.keys(EDays);
     for (let i = 0; i < EDaysKeys.length; i++) {
-        optionsHTML += `<option value="${EDaysKeys[i]}">${EDays[EDaysKeys[i]]}</option>`;
+
+        if (EDaysKeys[i] === aSelectedDay) {
+            optionsHTML += `<option selected value="${EDaysKeys[i]}">${EDays[EDaysKeys[i]]}</option>`;
+        } else {
+            optionsHTML += `<option value="${EDaysKeys[i]}">${EDays[EDaysKeys[i]]}</option>`;
+        }
     }
 
-    const daysList = `Velg dag: <select class="trainingsplitSelect pointer">${optionsHTML}</select>`;
+    const daysList = `Velg dag: <select id="trainingsplitSelectDay" onChange="changeTrainingsplitDay();" class="trainingsplitSelect pointer">${optionsHTML}</select>`;
 
     document.getElementById("smallTitle").innerHTML += top + daysList;
 
-    document.getElementById("userGrid").innerHTML = `
-    <div id="trainingsplitDiv">
-    <p id="trainingsplitToolBar"></p>
-    <table id="trainingsplitTable">
-    </table>
-    <p id="trainingsplitBottom"></p>
-    </div>`;
+    const toolBarHTML = `
+    <button class="trainingsplitButton pointer">Lagre</button>
+    <button class="trainingsplitButton pointer">Ny øvelse</button>
+    <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteTrainingsplit('${resp.trainingsplit_id}');">Slett</button>`;
 
     const backToTopBtn = `<button class="trainingsplitButton pointer" onClick="document.getElementById('GuserGrid').scrollTop = 0;">Tilbake til toppen</button>`;
 
-    const newRowBtn = `<br><button class="trainingsplitButton pointer">Lagre</button><button class="trainingsplitButton pointer">Ny rad</button><button class="trainingsplitButton pointer" style="color:red;" onClick="deleteTrainingsplit('${resp.trainingsplit_id}');">Slett</button>`;
-    document.getElementById("trainingsplitToolBar").innerHTML = `${newRowBtn}<br><br>Canedit: ${resp.canEdit}, Resp: ${JSON.stringify(resp)}`;
+    document.getElementById("userGrid").innerHTML = `
+    <div id="trainingsplitDiv">
+    <p id="trainingsplitToolBar">${toolBarHTML}</p>
+    <br>
+    <p id="trainingsplitInfo"></p>
+    <p id="trainingsplitTable"></p>
+    <br><br>
+    <p id="trainingsplitBottom">${backToTopBtn}</p>
+    </div>`;
 
-    document.getElementById("trainingsplitBottom").innerHTML = `${backToTopBtn}`;
-
-    document.getElementById("trainingsplitTable").innerHTML = `<th>Øvelse</th><th>SxR</th><th>Kg</th>`;
-
-    const ETrainingsplit = {
-        "Benkpress": [{ "sets": 3, "reps": 5, "kg": 85 }, { "sets": 2, "reps": 1, "kg": 105 }, { "sets": 1, "reps": 1, "kg": 115 }],
-        "Markløft": [{ "sets": 2, "reps": 8, "kg": 120 }, { "sets": 4, "reps": 2, "kg": 150 }]
+    const monday = {
+        "short": "Bryst og Triceps",
+        "list": {
+            "Benkpress": [
+                { "sets": 3, "reps": 5, "number": 7, "value": 2 },
+                { "sets": 2, "reps": 1, "number": 85, "value": 1 },
+                { "sets": 1, "reps": 1, "number": 120, "value": 0 }
+            ],
+            "Markløft": [
+                { "sets": 1, "reps": 2, "number": 9, "value": 2 },
+                { "sets": 2, "reps": 1, "number": 85, "value": 1 },
+                { "sets": 1, "reps": 1, "number": 120, "value": 0 }
+            ]
+        }
     }
 
-    const ETrainingsplitKeys = Object.keys(ETrainingsplit);
+    let shortTxt = "";
 
-    for (let i = 0; i < ETrainingsplitKeys.length; i++) {
-        const exerciseInfo = ETrainingsplit[ETrainingsplitKeys[i]];
-        const trainingsplitTable = document.getElementById("trainingsplitTable");
-        trainingsplitTable.innerHTML += `<br><th colspan="2" style="text-align:left;">${ETrainingsplitKeys[i]}</th>`;
+    if (selectedDay.short) {
+        shortTxt = `Forkortelse på planen: ${selectedDay.short || ""}<br><br>`;
+    }
 
-        for (let j = 0; j < exerciseInfo.length; j++) {
-            trainingsplitTable.innerHTML += `<tr><td>${j + 1}.</td><td>${exerciseInfo[j].sets}x${exerciseInfo[j].reps}</td><td>${exerciseInfo[j].kg} kg</td></tr>`;
+    document.getElementById("trainingsplitInfo").innerHTML = `<p>${shortTxt}Format: 2 x 3 = 2 Sets, 3 Reps.<br>80 % = 80 % av 1 Rep/ORM i øvelsen (krever ORM i løftet)</p>`;
+
+    if (selectedDay.list) {
+
+        const selectedDayKeys = Object.keys(selectedDay.list);
+
+        for (let i = 0; i < selectedDayKeys.length; i++) {
+            const exerciseInfo = selectedDay["list"][selectedDayKeys[i]];
+            const trainingsplitTable = document.getElementById("trainingsplitTable");
+            trainingsplitTable.innerHTML += `<br><h3>${selectedDayKeys[i]}</h3><hr class="trainingsplitLine">`;
+
+            for (let j = 0; j < exerciseInfo.length; j++) {
+                const info = exerciseInfo[j];
+
+                const list = {
+                    0: "kg",
+                    1: "%",
+                    2: "RPE",
+                    3: "Ingen"
+                }
+
+                let optionsHTMLList = "";
+
+                const listKeys = Object.keys(list);
+
+                for (let x = 0; x < listKeys.length; x++) {
+
+                    const num = parseInt(listKeys[x]);
+
+                    if (num === info.value) {
+                        optionsHTMLList += `<option selected value="${num}">${list[listKeys[x]]}</option>`;
+                    } else {
+                        optionsHTMLList += `<option value="${num}">${list[listKeys[x]]}</option>`;
+                    }
+                }
+
+                trainingsplitTable.innerHTML += `
+            <p class="trainingsplitListRow">
+            ${j + 1}.
+            <input class="trainingsplitSetsInput" maxlength="2" value="${info.sets}"></input>
+            x
+            <input class="trainingsplitRepsInput" maxlength="2" value="${info.reps}"></input>
+
+            <input class="trainingsplitInput" maxlength="6" value="${info.number}"></input>
+
+            <select class="trainingsplitSelect pointer">
+            ${optionsHTMLList}
+            </select>
+
+            <button class="trainingsplitButton pointer" style="color:red;">Slett</button>
+            </p>
+            <hr class="trainingsplitSmallLine">`;
+            }
+
+            trainingsplitTable.innerHTML += `<p><button class="trainingsplitButton pointer">Ny rad</button></p>`;
         }
     }
 }
 
-function loadViewTrainingsplit(aResp) {
+function loadViewTrainingsplit(aResp, aSelectedDay) {
     const resp = aResp;
 
-    document.getElementById("userGrid").innerHTML = `Ser på:<br>${resp.trainingsplit_name}`;
+    const selectedDay = resp[aSelectedDay];
+
+    let creatorTxt = "";
+
+    console.log(selectedDay)
+
+    const EDays = {
+        "monday": "Mandag",
+        "tuesday": "Tirsdag",
+        "wednesday": "Onsdag",
+        "thursday": "Torsdag",
+        "friday": "Fredag",
+        "saturday": "Lørdag",
+        "sunday": "Søndag"
+    }
+
+    let optionsHTML = "";
+
+    const EDaysKeys = Object.keys(EDays);
+    for (let i = 0; i < EDaysKeys.length; i++) {
+
+        if (EDaysKeys[i] === aSelectedDay) {
+            optionsHTML += `<option selected value="${EDaysKeys[i]}">${EDays[EDaysKeys[i]]}</option>`;
+        } else {
+            optionsHTML += `<option value="${EDaysKeys[i]}">${EDays[EDaysKeys[i]]}</option>`;
+        }
+    }
+
+    const daysList = `Velg dag: <select id="trainingsplitSelectDay" onChange="changeTrainingsplitDay();" class="trainingsplitSelect pointer">${optionsHTML}</select>`;
+
+    const backToTopBtn = `<button class="trainingsplitButton pointer" onClick="document.getElementById('GuserGrid').scrollTop = 0;">Tilbake til toppen</button>`;
+
+    document.getElementById("userGrid").innerHTML = `
+    <div id="trainingsplitDiv">
+    <p id="trainingsplitToolBar"></p>
+    <br>
+    <p id="trainingsplitInfo"></p>
+    <p id="trainingsplitTable"></p>
+    <br><br>
+    <p id="trainingsplitBottom">${backToTopBtn}</p>
+    </div>`;
 
     if (userID !== resp.user_id) {
-        document.getElementById("userGrid").innerHTML += `<br><br><button>Kopier plan</button> <button>Abboner på planen</button>`;
+        creatorTxt = `Av: ${resp.creator}`;
+        document.getElementById("trainingsplitToolBar").innerHTML += `
+        <button class="trainingsplitButton pointer">Kopier plan</button>
+        <button class="trainingsplitButton pointer">Abonner på planen</button>`;
     }
+
+    document.getElementById("smallTitle").innerHTML += `<h3>${resp.trainingsplit_name}</h3>${daysList}`;
+}
+
+function viewTrainingsplit(aId, aDay) {
+
+    let day = "monday";
+
+    const EDays = {
+        "monday": "Mandag",
+        "tuesday": "Tirsdag",
+        "wednesday": "Onsdag",
+        "thursday": "Torsdag",
+        "friday": "Fredag",
+        "saturday": "Lørdag",
+        "sunday": "Søndag"
+    }
+
+    const EDaysKeys = Object.keys(EDays);
+    for (let i = 0; i < EDaysKeys.length; i++) {
+
+        if (EDays[EDaysKeys[i]] === aDay) {
+            day = EDaysKeys[i];
+        }
+    }
+
+    sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": aId, "edit": false, "day": day }));
+
+    location.reload();
+
+}
+
+function changeTrainingsplitDay() {
+    const trainingsplitSelectDay = document.getElementById("trainingsplitSelectDay");
+
+    const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
+    trainingsplit.day = trainingsplitSelectDay.value;
+
+    sessionStorage.setItem("trainingsplit", JSON.stringify(trainingsplit));
+
+    location.reload();
 }

@@ -436,7 +436,7 @@ function getBadgeTrainingsplit(aSize, aBadgeInfo) {
             trainingsplitBadgeAnimations = animationClasses;
         }
 
-        if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.day && aBadgeInfo.trainingsplit) {
+        if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.day && aBadgeInfo.trainingsplit && aBadgeInfo.trainingsplit) {
 
             const size = aSize;
             const badgeInfo = aBadgeInfo;
@@ -548,7 +548,7 @@ Nærmer deg!
 
         const badgeTemplate = `
 <td>
-<div class="smallBadgesTrainingsplit ${trainingsplitBadgeAnimations} ${aBadgeInfo.color} pointer">
+<div class="smallBadgesTrainingsplit ${trainingsplitBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="viewTrainingsplit('${aBadgeInfo.trainingsplit_id}','${aBadgeInfo.day}')">
 
 <div id="Gday">
 <p id="day">

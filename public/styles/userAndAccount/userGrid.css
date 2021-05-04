@@ -230,7 +230,7 @@ font-weight: bold;
 font-family: var(--main-font-Family-Verdana);
 margin-right: 10px;
 background-color: var(--main-backgroundColor1);
-color: var(--main-textColorDark);
+color: white;
 border-radius: 8px;
 border: 1px var(--main-backgroundColor1) solid;
 box-shadow: var(--main-boxShadow);
@@ -252,11 +252,9 @@ outline: none;
 background-color: var(--main-backgroundColor2);
 }
 
-.trainingsplitInput {
+.trainingsplitNameInput, .trainingsplitSetsInput, .trainingsplitRepsInput, .trainingsplitInput {
 font-size: 18px;
-/*color: var(--main-accountOwnerColor);*/
 color: var(--main-textColorDark);
-/*font-weight: bold;*/
 appearance: none;
 -webkit-appearance: none;
 -moz-appearance: none;
@@ -265,14 +263,44 @@ outline: none;
 background-color: var(--main-backgroundColor2);
 }
 
+.trainingsplitSetsInput, .trainingsplitRepsInput {
+width: 36px;
+}
+
+.trainingsplitSetsInput{
+text-align: right;
+}
+
+.trainingsplitRepsInput{
+text-align: left;
+}
+
+.trainingsplitInput{
+width: 42px;
+text-align: right;
+}
+
 #trainingsplitDiv {
 margin-left: 20px;
 margin-right: 20px;
+margin-bottom: 20px;
 font-size: 18px;
 }
 
-#trainingsplitTable{
-table-layout: auto;
-/*width: 100%;*/
-text-align: center;
+.trainingsplitLine {
+margin-top: 2.5px;
+margin-bottom: 5px;
+}
+
+.trainingsplitSmallLine {
+margin-top: 2.5px;
+margin-bottom: 5px;
+opacity: 50%;
+margin-left: 2.5px;
+margin-right: 2.5px;
+}
+
+.trainingsplitListRow {
+margin-left: 10px;
+margin-right: 10px;
 }
