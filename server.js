@@ -107,33 +107,6 @@ const APIErrorJSON = {
      lift: { error: "Brukeren har ikke alle nødvendige løft for å regne ut totalen. Må ha 1 rep av Benkpress, Knebøy og Markløft" },
 }
 
-const day = new Date().getDay();
-let dayTxt = "";
-
-switch (day) {
-     case 0:
-          dayTxt = "Søndag";
-          break;
-     case 1:
-          dayTxt = "Mandag";
-          break;
-     case 2:
-          dayTxt = "Tirsdag";
-          break;
-     case 3:
-          dayTxt = "Onsdag";
-          break;
-     case 4:
-          dayTxt = "Torsdag";
-          break;
-     case 5:
-          dayTxt = "Fredag";
-          break;
-     case 6:
-          dayTxt = "Lørdag";
-          break;
-}
-
 //
 
 // -------------------------------  get application details ---------------------- //
@@ -951,7 +924,7 @@ server.post("/user/delete/trainingsplit", auth, async (req, res) => {
 server.post("/whoIsWorkingOutToday", auth, async (req, res) => {
      try {
 
-          const resp = await getListOfAllUsersWorkoutToday(dayTxt);
+          const resp = await getListOfAllUsersWorkoutToday();
 
           if (resp.status === true) {
                res.status(200).json(resp.info).end();
@@ -1163,8 +1136,13 @@ server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
                          }
                     }
 
+                    const days = ["søndag", "mandag", "tirsdag", "onsdag", "torsdag", "fredag", "lørdag"];
+                    const dayNum = new Date().getDay();
+
+                    const day = days[dayNum];
+
                     const resp = {
-                         "currentDay": dayTxt.toLocaleLowerCase(),
+                         "currentDay": day,
                          "todaysWorkout": workoutTxt
                     }
 

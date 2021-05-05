@@ -6,6 +6,8 @@ async function requestTrainingsplitDetails() {
 
         if (trainingsplit.id) {
 
+            document.title = `Treningsplan`;
+
             document.getElementById("smallTitle").innerHTML = `<div>
                 <svg class="backBtnIcon iconsDefaultColor pointer" draggable="false"
                    onclick="sessionStorage.removeItem('trainingsplit');location.reload();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
@@ -23,6 +25,8 @@ async function requestTrainingsplitDetails() {
             const resp = await callServerAPIPost(infoHeader, url);
 
             if (resp) {
+
+                document.title = `Treningsplan (${resp.trainingsplit_name})`;
 
                 if (resp.canEdit === true && trainingsplit.edit === true) {
                     loadEditTrainingsplit(resp, trainingsplit.day);

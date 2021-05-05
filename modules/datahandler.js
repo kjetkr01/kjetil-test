@@ -936,7 +936,7 @@ class StorageHandler {
 
     //  -------------------------------  get list of all public users that are working out today  ------------------------------- //
 
-    async getListOfAllUsersWorkoutToday(dayTxt) {
+    async getListOfAllUsersWorkoutToday() {
 
         const client = new pg.Client(this.credentials);
         let results = false;

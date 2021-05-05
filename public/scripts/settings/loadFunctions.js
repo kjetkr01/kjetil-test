@@ -699,23 +699,12 @@ async function loadAPIPage() {
 
                 settingsGrid.innerHTML += getCenteredTextTemplate("Response:", "", "spacingTop");
 
-                let exampleAPIData = sessionStorage.getItem("cachedExAPIResp");
-
-                if (!exampleAPIData) {
-
-                    const exampleAPIResponse = await fetch(exampleAPIHTML, config);
-                    exampleAPIData = await exampleAPIResponse.json();
-
-                    if (!exampleAPIData.hasOwnProperty("error")) {
-                        exampleAPIData = JSON.stringify(exampleAPIData);
-                        sessionStorage.setItem("cachedExAPIResp", exampleAPIData);
-                    } else {
-                        exampleAPIData = JSON.stringify(exampleAPIData);
-                    }
-                }
+                const exampleAPIResponse = await fetch(exampleAPIHTML, config);
+                const exampleAPIData = await exampleAPIResponse.json();
+                const exampleAPIResult = JSON.stringify(exampleAPIData);
 
                 if (sessionStorage.getItem("currentSetting") === ELoadSettings.api.name) {
-                    settingsGrid.innerHTML += getAPITextTemplate(exampleAPIData);
+                    settingsGrid.innerHTML += getAPITextTemplate(exampleAPIResult);
 
                     settingsGrid.innerHTML += getBottomSpacingTemplate();
                 }

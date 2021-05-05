@@ -76,7 +76,7 @@ function displayUserDetailsCached() {
                 document.getElementById("memberSince").innerHTML = `Medlem siden<br>${string}`;
             }
         }
-        
+
     } catch {
         localStorage.removeItem("cacheDetails_owner");
     }
