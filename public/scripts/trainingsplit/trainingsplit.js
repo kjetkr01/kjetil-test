@@ -43,7 +43,8 @@ async function requestTrainingsplitDetails() {
         }
 
 
-    } catch {
+    } catch (err) {
+        console.log(err);
         sessionStorage.removeItem("trainingsplit");
         location.reload();
     }

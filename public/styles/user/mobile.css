@@ -8,6 +8,7 @@
 body>#page {
 overflow-y: auto;
 display: grid;
+color: var(--main-textColorDark);
 width: 100vw;
 height: 100vh;
 grid-template-areas:
@@ -18,7 +19,7 @@ grid-template-areas:
 "Ggym Ggym Ggym Ggym Ggym Ggym Ggym"
 "Ginfo Ginfo Ginfo Ginfo Ginfo Ginfo Ginfo"
 "c2r1 c2r1 c2r1 c2r1 c2r1 c2r1 c2r1"
-"c3r1 c3r1 c3r1 c3r1 c3r1 c3r1 c3r1"
+"GsmallTitle GsmallTitle GsmallTitle GsmallTitle GsmallTitle GsmallTitle GsmallTitle"
 
 "c3r1 c3r1 c3r1 c3r1 c3r1 c3r1 c3r1"
 "GuserGrid GuserGrid GuserGrid GuserGrid GuserGrid GuserGrid GuserGrid"
@@ -36,9 +37,9 @@ auto /* Ggym */
 
 auto /* info */
 
-10px /* c2r1 */
+15px /* c2r1 */
 
-50px /* c3r1 */
+auto /* GsmallTitle */
 
 10px /* c3r1 */
 
@@ -78,6 +79,11 @@ margin-top: 10px;
 
 #GuserGrid > #userGrid{
 
+}
+
+#GsmallTitle > #smallTitle{
+font-size: 18px;
+margin-top: 18px;
 }
 
 #title {
@@ -125,8 +131,8 @@ grid-area: Ginfo;
 grid-area: c2r1;
 }
 
-#page > #c3r1 {
-grid-area: c3r1;
+#page > #GsmallTitle{
+grid-area: GsmallTitle;
 }
 
 #page > #c3r1 {
@@ -140,7 +146,7 @@ overflow-x: hidden;
 }
 
 
-#c3r1, #c3r1, #GuserGrid {
+#c2r1, #c3r1, #GuserGrid, #GsmallTitle {
 background-color: var(--main-backgroundColor2);
 }
 

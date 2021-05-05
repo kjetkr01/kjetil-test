@@ -311,6 +311,12 @@ async function getAccountDetails(aUserID) {
 
                         changeColorTheme();
                     }
+                } else {
+                    if (resp.hasOwnProperty("cacheDetails")) {
+                        sessionStorage.setItem(`cachedDetails_visitor_${viewingUser}`, JSON.stringify(resp.cacheDetails));
+                    } else {
+                        sessionStorage.removeItem(`cachedDetails_visitor_${viewingUser}`);
+                    }
                 }
 
                 return resp;

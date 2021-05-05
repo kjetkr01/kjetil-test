@@ -11,7 +11,7 @@ font-family: var(--main-font-Family-Verdana);
 opacity: 85%;
 }
 
-#c3r1 {
+#c2r1 {
 margin-top: 10px;
 }
 
@@ -21,7 +21,7 @@ width: 100%;
 margin: 0 auto;
 }
 
-#c1r2, #c3r1 {
+#c1r2, #c2r1 {
 border-top: 1px #75757585 solid;
 }
 

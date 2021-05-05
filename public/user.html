@@ -74,7 +74,6 @@
       <div id="c1r1"></div>
       <div id="c2r1"></div>
       <div id="c3r1"></div>
-      <div id="c4r1"></div>
 
       <div id="GbackBtn">
          <!--<img id="backBtn" onclick="returnToPrevious();" draggable="false" class="icons fadeInLeft animate delaySmall"
@@ -107,6 +106,11 @@
             <tr id="infoList">
             </tr>
          </table>
+      </div>
+
+      <div id="GsmallTitle">
+         <p id="smallTitle" class="noselect">
+         </p>
       </div>
 
       <div id="GuserGrid" class="userGrid noselect">
@@ -152,17 +156,17 @@
             </div>
 
 
-            <div id="Gtrainingsplit">
+            <div id="Gtrainingsplit" class="hidden">
                <p id="trainingsplit">
                   Treningsplan
                </p>
             </div>
 
-            <div id="GlineTrainingsplit">
+            <div id="GlineTrainingsplit" class="hidden">
                <hr id="lineTrainingsplit">
             </div>
 
-            <div id="GbadgesTrainingsplit">
+            <div id="GbadgesTrainingsplit" class="hidden">
                <table id="badgesTrainingsplit">
                   <tr id="badgesTrainingsplitTableRow">
                   </tr>
@@ -201,7 +205,16 @@
 
    lockBodyPosition();
    getViewLiftorGoalOverlay();
-   requestAccountDetails();
+
+   displayUserDetailsCached();
+   if (sessionStorage.getItem("trainingsplit") && navigator.onLine) {
+      document.getElementById("GbackBtn").innerHTML = "";
+      document.getElementById("userGrid").innerHTML = "";
+      requestTrainingsplitDetails();
+   } else {
+      requestAccountDetails();
+      sessionStorage.removeItem("trainingsplit");
+   }
 
    setInterval(() => {
       checkConnection("c6r2");

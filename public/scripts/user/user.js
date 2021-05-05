@@ -1,5 +1,88 @@
 let lifts = null, goals = null, activetrainingsplit = null, memberSince = null, size = 0;
 
+function displayUserDetailsCached() {
+
+    try {
+
+        const ViewingUser = sessionStorage.getItem("ViewingUser");
+
+        if (ViewingUser) {
+
+            const cacheDetails = JSON.parse(sessionStorage.getItem(`cachedDetails_visitor_${ViewingUser}`));
+
+            if (cacheDetails.hasOwnProperty("displayname")) {
+                const title = document.getElementById("title");
+                title.classList = "noselect";
+                title.textContent = cacheDetails.displayname;
+            }
+            if (cacheDetails.hasOwnProperty("gym")) {
+                const gym = document.getElementById("gym");
+                gym.classList = "noselect";
+                gym.textContent = cacheDetails.gym;
+            }
+
+            let infoString = "";
+
+            const age = cacheDetails.age;
+            const height = cacheDetails.height;
+            const weight = cacheDetails.weight;
+
+            if (age) {
+                if (age >= 15) {
+                    infoString += `<td>${age} år</td>`;
+                }
+            }
+            if (height) {
+                if (height >= 140) {
+                    infoString += `<td>${height} cm</td>`;
+                }
+            }
+            if (weight) {
+                if (weight >= 40) {
+                    infoString += `<td>${weight} kg</td>`;
+                }
+            }
+            const infoList = document.getElementById("infoList");
+            document.getElementById("info").classList = "noselect infoTable";
+
+            if (infoString) {
+                infoList.innerHTML = infoString;
+            } else {
+                infoList.textContent = "";
+            }
+
+            if (cacheDetails.hasOwnProperty("member_since")) {
+
+                const splitDate = cacheDetails.member_since.split("-");
+
+                const day = splitDate[2];
+                const month = splitDate[1];
+                const year = splitDate[0];
+                let string = "";
+
+                if (day && month && year) {
+                    if (day.length === 1 || day.length === 2 && month.length === 1 || month.length === 2 && year.length === 4) {
+
+                        string = new Date(`${year}-${month}-${day}`);
+                        if (isNaN(string)) {
+                            string = `${day}.${month}.${year}`;
+                        } else {
+                            string = new Date(`${year}-${month}-${day}`).toLocaleDateString();
+                        }
+                    }
+                }
+
+                document.getElementById("memberSince").classList = "";
+                document.getElementById("memberSince").innerHTML = `Medlem siden<br>${string}`;
+            }
+        }
+        
+    } catch {
+        localStorage.removeItem("cacheDetails_owner");
+    }
+}
+
+
 // requestAccountDetails
 
 async function requestAccountDetails() {
@@ -526,6 +609,14 @@ function displayTrainingsplit() {
                 }
 
                 if (arr.length > 0) {
+
+                    const showDomArr = ["Gtrainingsplit", "GlineTrainingsplit", "GbadgesTrainingsplit"];
+                    for (let i = 0; i < showDomArr.length; i++) {
+                        const dom = document.getElementById(showDomArr[i]);
+                        if (dom) {
+                            dom.removeAttribute("class");
+                        }
+                    }
 
                     arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
 
