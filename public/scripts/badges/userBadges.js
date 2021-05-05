@@ -417,7 +417,7 @@ Nærmer deg!
 
         const badgeTemplate = `
 <td>
-<div class="smallBadgesTrainingsplit fadeInLeft animate ${aBadgeInfo.color} pointer">
+<div class="smallBadgesTrainingsplit fadeInLeft animate ${aBadgeInfo.color} pointer" onClick="viewTrainingsplit('${aBadgeInfo.trainingsplit_id}','${aBadgeInfo.day}')">
 
 <div id="Gday">
 <p id="day">

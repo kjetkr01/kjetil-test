@@ -1,4 +1,4 @@
-let lifts = null, goals = null, memberSince = null, size = 0;
+let lifts = null, goals = null, activetrainingsplit = null, memberSince = null, size = 0;
 
 // requestAccountDetails
 
@@ -120,13 +120,11 @@ function displayInformation(respInfo) {
     const weight = info.info.weight;
     memberSince = info.member_since;
 
-    traningsplitInfo = new Ttrainingsplit(info.trainingsplit);
-
     badgeColors = new TbadgeColors(info.badgeColors);
 
     lifts = info.lifts;
     goals = info.goals;
-    const program = info.trainingsplit;
+    activetrainingsplit = info.activetrainingsplit;
 
     if (displayname) {
         document.getElementById("title").textContent = displayname;
@@ -164,7 +162,7 @@ function displayInformation(respInfo) {
         document.getElementById("infoList").textContent = "";
     }
 
-    if (!Object.entries(lifts).length > 0 && !Object.entries(goals).length > 0 && !Object.entries(program).length > 0) {
+    if (!Object.entries(lifts).length > 0 && !Object.entries(goals).length > 0 && !Object.entries(activetrainingsplit).length > 0) {
 
         userGrid.innerHTML = `
 <div id="Glifts">
@@ -197,16 +195,14 @@ ${firstName[0]} har ingen løft, mål eller treningsplan
             displayGoals();
         }
 
-        if (program) {
-            //displayTrainingsplit();
+        if (activetrainingsplit) {
+            displayTrainingsplit();
         }
 
         if (memberSince) {
             displayMemberSince();
         }
-
     }
-
 }
 
 // end of displayInformation
@@ -497,61 +493,64 @@ function displayGoals() {
 
 function displayTrainingsplit() {
 
-    userGrid.innerHTML += `
-<div id="Gtrainingsplit">
-<p id="trainingsplit" class="fadeIn animate delaySmall">
-Treningsplan
-</p>
-</div>
+    try {
+        document.getElementById("badgesTrainingsplitTableRow").innerHTML = "";
+        if (activetrainingsplit) {
+            document.getElementById("trainingsplit").innerHTML = `Treningsplan (${activetrainingsplit.trainingsplit_name})`;
 
-<div id="GlineTrainingsplit">
-<hr id="lineTrainingsplit" class="fadeIn animate delaySmall">
-</div>
-
-<div id="GbadgesTrainingsplit">
-<table id="badgesTrainingsplit">
-<tr id="badgesTrainingsplitTableRow">
-</tr>
-</table>
-</div>
-`;
-
-    if (Object.entries(program).length > 0) {
-
-        const keys = Object.keys(program);
-        const arr = [];
-
-        if (keys.length > 0) {
-            for (let i = 0; i < keys.length; i++) {
-
-                let programKeys = program[keys[i]];
-                const color = programKeys.color || "redBadgeG";
-
-                /*
-                if (programKeys === "0" || programKeys === 0 || programKeys === "") {
-                    programKeys = "Fri";
-                }
-*/
-
-                arr.push({ "day": keys[i], "trainingsplit": programKeys, "color": color });
-
+            const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+            const daysNorwegian = {
+                "sunday": "Søndag",
+                "monday": "Mandag",
+                "tuesday": "Tirsdag",
+                "wednesday": "Onsdag",
+                "thursday": "Torsdag",
+                "friday": "Fredag",
+                "saturday": "Lørdag",
             }
 
-            if (arr.length > 0) {
+            const keys = Object.keys(activetrainingsplit);
+            const arr = [];
 
-                arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
+            if (keys.length > 0) {
+                for (let i = 0; i < keys.length; i++) {
 
-                for (let i = 0; i < arr.length; i++) {
+                    if (days.includes(keys[i]) && daysNorwegian[keys[i]]) {
+                        let activeTrainingsplitKeys = activetrainingsplit[keys[i]];
+                        if (activeTrainingsplitKeys.short) {
+                            const color = activeTrainingsplitKeys.color || "redBadgeG";
 
-                    const badge = getBadgeTrainingsplit(size, arr[i]);
+                            arr.push({ "day": daysNorwegian[keys[i]], "trainingsplit": activeTrainingsplitKeys.short, "color": color, "trainingsplit_id": activetrainingsplit.trainingsplit_id });
+                        }
+                    }
+                }
 
-                    if (badge) {
-                        document.getElementById("badgesTrainingsplitTableRow").innerHTML += badge;
+                if (arr.length > 0) {
+
+                    arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
+
+                    for (let i = 0; i < arr.length; i++) {
+
+                        //const badge = getBadgeTrainingsplit(size, arr[i]);
+                        const badge = getBadgeTrainingsplit(0, arr[i]);
+
+                        if (badge) {
+                            document.getElementById("badgesTrainingsplitTableRow").innerHTML += badge;
+                        }
                     }
                 }
             }
         }
+    } catch (err) {
+        console.log(err)
     }
+
+    const badge = getBadgeTrainingsplit();
+
+    if (badge) {
+        document.getElementById("badgesTrainingsplitTableRow").innerHTML += badge;
+    }
+
 }
 
 /// ------------ end of displayTrainingsplit --------------- ///

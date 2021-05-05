@@ -304,3 +304,7 @@ margin-right: 2.5px;
 margin-left: 10px;
 margin-right: 10px;
 }
+
+.trainingsplitInline {
+display: inline;
+}

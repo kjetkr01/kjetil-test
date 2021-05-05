@@ -1,4 +1,4 @@
-const cacheName = 'js13kPWA-v13';
+const cacheName = 'js13kPWA-v14';
 
 const contentToCache = [
     '/account.html',
@@ -22,6 +22,7 @@ const contentToCache = [
     '/scripts/settings/templateFunctions.js',
     '/scripts/user/editInformation.js',
     '/scripts/user/user.js',
+    '/scripts/trainingsplit/trainingsplit.js',
     '/settings.html',
     '/styles/account/common.css',
     '/styles/account/desktop.css',

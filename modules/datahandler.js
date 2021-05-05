@@ -837,7 +837,6 @@ class StorageHandler {
                                 }
                             }
                         }
-
                     }
                     userCacheObj.badgeColors = badgeColors;
                     userDetails = userCacheObj;
