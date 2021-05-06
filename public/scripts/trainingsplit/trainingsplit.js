@@ -143,10 +143,10 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
                 const info = exerciseInfo[j];
 
                 const list = {
-                    0: "kg",
-                    1: "%",
-                    2: "RPE",
-                    3: "Ingen"
+                    0: "Ingen",
+                    1: "kg",
+                    2: "%",
+                    3: "RPE"
                 }
 
                 let optionsHTMLList = "";
@@ -190,27 +190,9 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
 function loadViewTrainingsplit(aResp, aSelectedDay) {
     const resp = aResp;
 
-    //const selectedDay = resp[aSelectedDay];
+    const selectedDay = resp[aSelectedDay];
 
-    const monday = {
-        "short": "Bryst og Triceps",
-        "list": {
-            "Benkpress": [
-                { "sets": 3, "reps": 5, "number": 7, "value": 2 },
-                { "sets": 2, "reps": 1, "number": 85, "value": 1 },
-                { "sets": 1, "reps": 1, "number": 120, "value": 0 }
-            ],
-            "Markløft": [
-                { "sets": 1, "reps": 2, "number": 9, "value": 2 },
-                { "sets": 2, "reps": 1, "number": 85, "value": 1 },
-                { "sets": 1, "reps": 1, "number": 120, "value": 3 }
-            ]
-        }
-    }
-
-    selectedDay = monday;
-
-    console.log(selectedDay)
+    const ORMLifts = [];
 
     const EDays = {
         "monday": "Mandag",
@@ -261,69 +243,75 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
 
     if (selectedDay.list) {
 
+        const trainingsplitInfo = document.getElementById("trainingsplitInfo");
         const selectedDayKeys = Object.keys(selectedDay.list);
+        if (selectedDayKeys.length > 0) {
 
-        for (let i = 0; i < selectedDayKeys.length; i++) {
-            const exerciseInfo = selectedDay["list"][selectedDayKeys[i]];
-            const trainingsplitTable = document.getElementById("trainingsplitTable");
-            trainingsplitTable.innerHTML += `<br><h3>${selectedDayKeys[i]}</h3><hr class="trainingsplitLine">`;
+            for (let i = 0; i < selectedDayKeys.length; i++) {
+                trainingsplitInfo.innerHTML = `${selectedDay.short}`;
+                const exerciseInfo = selectedDay["list"][selectedDayKeys[i]];
+                const trainingsplitTable = document.getElementById("trainingsplitTable");
+                trainingsplitTable.innerHTML += `<br><h3>${selectedDayKeys[i]}</h3><hr class="trainingsplitLine">`;
 
-            for (let j = 0; j < exerciseInfo.length; j++) {
-                const info = exerciseInfo[j];
+                for (let j = 0; j < exerciseInfo.length; j++) {
+                    const info = exerciseInfo[j];
 
-                const list = {
-                    0: "kg",
-                    1: "%",
-                    2: "RPE",
-                    3: "Ingen"
-                }
-
-                const listKeys = Object.keys(list);
-
-                let type = "";
-
-                for (let x = 0; x < listKeys.length; x++) {
-
-                    const num = parseInt(listKeys[x]);
-
-                    if (num === info.value) {
-                        type = list[listKeys[x]];
+                    const list = {
+                        0: "Ingen",
+                        1: "kg",
+                        2: "%",
+                        3: "RPE"
                     }
-                }
 
-                let extraHTML = `
+                    const listKeys = Object.keys(list);
+
+                    let type = "";
+
+                    for (let x = 0; x < listKeys.length; x++) {
+
+                        const num = parseInt(listKeys[x]);
+
+                        if (num === info.value) {
+                            type = list[listKeys[x]];
+                        }
+                    }
+
+                    let extraHTML = `
                 <p class="trainingsplitInput trainingsplitInline" style="margin-left:30px;">${info.number}</p>
 
                 <p class="trainingsplitInline">${type}</p>
                 `;
 
-                if (type === list[3]) {
-                    extraHTML = "";
-                }
+                    if (type === list[0]) {
+                        extraHTML = "";
+                    }
 
-                if (type === list[1]) {
-                    //calc % out of 1RM if exists.
+                    if (type === list[2]) {
+                        let highestKG = 0;
+                        //calc % out of 1RM if exists.
 
-                    const exercise = selectedDayKeys[i].toLowerCase();
-                    const cachedLiftsList = JSON.parse(localStorage.getItem("cachedLifts_owner"));
+                        const exercise = selectedDayKeys[i].toLowerCase();
+                        const cachedLiftsList = JSON.parse(localStorage.getItem("cachedLifts_owner"));
 
-                    if (cachedLiftsList) {
-                        const exerciseList = cachedLiftsList[exercise];
-                        if (exerciseList) {
-                            if (exerciseList.length > 0) {
-                                let highestKG = 0;
-                                for (let z = 0; z < exerciseList.length; z++) {
-                                    const current = exerciseList[z];
+                        if (cachedLiftsList) {
+                            const cachedLiftsListKeys = Object.keys(cachedLiftsList);
+                            if (cachedLiftsListKeys.includes(exercise)) {
+                                const exerciseList = cachedLiftsList[exercise];
+                                if (exerciseList) {
+                                    if (exerciseList.length > 0) {
+                                        for (let z = 0; z < exerciseList.length; z++) {
+                                            const current = exerciseList[z];
 
-                                    if (current.reps === "1") {
-                                        if (parseFloat(current.kg) > highestKG) {
-                                            highestKG = parseFloat(current.kg);
+                                            if (current.reps === "1") {
+                                                if (parseFloat(current.kg) > highestKG) {
+                                                    highestKG = parseFloat(current.kg);
+                                                }
+                                            }
                                         }
                                     }
                                 }
 
                                 if (highestKG > 0) {
-
                                     const indecimal = info.number / 100;
                                     let weightBasedOnPercent = parseFloat(highestKG * indecimal);
                                     const split = weightBasedOnPercent.toString().split(".");
@@ -333,16 +321,23 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
                                     }
 
                                     extraHTML = `
-                                    <p class="trainingsplitInline" style="margin-left:30px;">${weightBasedOnPercent}</p>
-                                    <p class="trainingsplitInline">kg (${info.number}%)</p>
-                                    `;
+                                <p class="trainingsplitInline" style="margin-left:30px;">${weightBasedOnPercent}</p>
+                                <p class="trainingsplitInline">kg (${info.number}%)</p>
+                                `;
+                                } else {
+                                    if (!ORMLifts.includes(exercise)) {
+                                        ORMLifts.push(exercise);
+                                    }
                                 }
                             }
                         }
                     }
-                }
 
-                trainingsplitTable.innerHTML += `
+                    if (ORMLifts.length > 0) {
+                        trainingsplitInfo.innerHTML = `${selectedDay.short}<br>Denne planen fungrerer best hvis du har 1 Rep / ORM i følgende løft: ${ORMLifts}`;
+                    }
+
+                    trainingsplitTable.innerHTML += `
             <p class="trainingsplitListRow trainingsplitInline">
             ${j + 1}.
             <p class="trainingsplitInline" style="margin-left:30px;">${info.sets}</p>
@@ -351,7 +346,10 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
             ${extraHTML}
             </p>
             <hr class="trainingsplitSmallLine">`;
+                }
             }
+        } else {
+            trainingsplitInfo.innerHTML = `I dag er det fri fra trening :)`;
         }
     }
 }
