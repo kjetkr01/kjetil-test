@@ -6,6 +6,8 @@ const badgeColors = require("../arrayLists").badgeColors;
 const maxLifts = require("../arrayLists").maxLifts;
 const maxGoals = require("../arrayLists").maxGoals;
 const maxTrainingsplits = require("../arrayLists").maxTrainingsplits;
+const maxTrainingsplitsExercisesPerDay = require("../arrayLists").maxTrainingsplitsExercisesPerDay;
+const maxTrainingsplitsExerciseRows = require("../arrayLists").maxTrainingsplitsExerciseRows;
 
 class StorageHandler {
 
@@ -1300,6 +1302,248 @@ class StorageHandler {
 
         client.end();
         return results;
+    }
+
+    //
+
+    //  -------------------------------  add exercise Trainingsplit (user)  ------------------------------- //
+
+    async addExerciseTrainingsplit(userid, trainingsplit_id, exercise, day) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        let msg = "";
+
+        try {
+            await client.connect();
+
+            const trainingsplit = await client.query(`
+            SELECT ${day}
+            FROM user_trainingsplit
+            WHERE trainingsplit_id = $1
+            AND user_id = $2`,
+                [trainingsplit_id, userid]);
+
+            if (trainingsplit.rows.length > 0) {
+
+                let editedTrainingsplit = trainingsplit.rows[0][day];
+
+                if (editedTrainingsplit) {
+
+                    if (maxTrainingsplitsExercisesPerDay.default > editedTrainingsplit.list.length) {
+
+                        let create = true;
+                        for (let i = 0; i < editedTrainingsplit.list.length; i++) {
+                            if (editedTrainingsplit.list[i][exercise]) {
+                                create = false;
+                                break;
+                            }
+                        }
+
+                        if (create === true) {
+                            editedTrainingsplit.list.push({ [exercise]: [] });
+
+                            await client.query(`
+                        UPDATE user_trainingsplit
+                        SET ${day} = $3
+                        WHERE trainingsplit_id = $1
+                        AND user_id = $2`,
+                                [trainingsplit_id, userid, editedTrainingsplit]);
+
+                            results = true;
+                        } else {
+                            msg = "Øvelsen er allerede lagt til i planen!";
+                        }
+                    } else {
+                        msg = `Du kan ikke ha flere enn ${maxTrainingsplitsExercisesPerDay.default} øvelser på en dag!`;
+                    }
+                }
+            }
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return { "status": results, "msg": msg };
+    }
+
+    //
+
+
+    //  -------------------------------  delete exercise Trainingsplit (user)  ------------------------------- //
+
+    async deleteExerciseTrainingsplit(userid, trainingsplit_id, exercise, day) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        let msg = "";
+
+        try {
+            await client.connect();
+
+            const trainingsplit = await client.query(`
+            SELECT ${day}
+            FROM user_trainingsplit
+            WHERE trainingsplit_id = $1
+            AND user_id = $2`,
+                [trainingsplit_id, userid]);
+
+            if (trainingsplit.rows.length > 0) {
+
+                let editedTrainingsplit = trainingsplit.rows[0][day];
+
+                if (editedTrainingsplit) {
+
+                    for (let i = 0; i < editedTrainingsplit.list.length; i++) {
+                        if (editedTrainingsplit.list[i][exercise]) {
+                            editedTrainingsplit.list.splice(i, 1);
+                            break;
+                        }
+                    }
+
+                    await client.query(`
+                            UPDATE user_trainingsplit
+                            SET ${day} = $3
+                            WHERE trainingsplit_id = $1
+                            AND user_id = $2`,
+                        [trainingsplit_id, userid, editedTrainingsplit]);
+
+                    results = true;
+
+                }
+            }
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return { "status": results, "msg": msg };
+    }
+
+    //
+
+
+    //  -------------------------------  add exercise row Trainingsplit (user)  ------------------------------- //
+
+    async addExerciseRowTrainingsplit(userid, trainingsplit_id, exercise, day) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        let msg = "";
+
+        try {
+            await client.connect();
+
+            const trainingsplit = await client.query(`
+            SELECT ${day}
+            FROM user_trainingsplit
+            WHERE trainingsplit_id = $1
+            AND user_id = $2`,
+                [trainingsplit_id, userid]);
+
+            if (trainingsplit.rows.length > 0) {
+
+                let editedTrainingsplit = trainingsplit.rows[0][day];
+
+                if (editedTrainingsplit) {
+
+                    let update = false;
+
+                    for (let i = 0; i < editedTrainingsplit.list.length; i++) {
+                        if (editedTrainingsplit.list[i][exercise]) {
+                            if (maxTrainingsplitsExerciseRows.default > editedTrainingsplit.list[i][exercise].length) {
+                                update = true;
+                                editedTrainingsplit.list[i][exercise].push({ "sets": 0, "reps": 0, "number": 0, "value": 0 });
+                            } else {
+                                msg = `Du kan ikke ha flere rader enn ${maxTrainingsplitsExerciseRows.default} på en øvelse!`;
+                            }
+                            break;
+                        }
+                    }
+
+                    if (update === true) {
+
+                        await client.query(`
+                        UPDATE user_trainingsplit
+                        SET ${day} = $3
+                        WHERE trainingsplit_id = $1
+                        AND user_id = $2`,
+                            [trainingsplit_id, userid, editedTrainingsplit]);
+
+                        results = true;
+
+                    }
+                }
+            }
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return { "status": results, "msg": msg };
+    }
+
+    //
+
+
+    //  -------------------------------  delete exercise row Trainingsplit (user)  ------------------------------- //
+
+    async deleteExerciseRowTrainingsplit(userid, trainingsplit_id, exercise, index, day) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        let msg = "";
+
+        try {
+            await client.connect();
+
+            const trainingsplit = await client.query(`
+            SELECT ${day}
+            FROM user_trainingsplit
+            WHERE trainingsplit_id = $1
+            AND user_id = $2`,
+                [trainingsplit_id, userid]);
+
+            if (trainingsplit.rows.length > 0) {
+
+                let editedTrainingsplit = trainingsplit.rows[0][day];
+
+                if (editedTrainingsplit) {
+
+                    for (let i = 0; i < editedTrainingsplit.list.length; i++) {
+                        if (editedTrainingsplit.list[i][exercise]) {
+                            if (editedTrainingsplit.list[i][exercise][index]) {
+                                editedTrainingsplit.list[i][exercise].splice(index, 1);
+                            }
+                            break;
+                        }
+                    }
+
+                    await client.query(`
+                        UPDATE user_trainingsplit
+                        SET ${day} = $3
+                        WHERE trainingsplit_id = $1
+                        AND user_id = $2`,
+                        [trainingsplit_id, userid, editedTrainingsplit]);
+
+                    results = true;
+
+                }
+            }
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return { "status": results, "msg": msg };
     }
 
     //

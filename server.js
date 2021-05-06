@@ -49,6 +49,10 @@ const createTrainingsplit = require("./modules/user").createTrainingsplit;
 const setActiveTrainingsplit = require("./modules/user").setActiveTrainingsplit;
 const getTrainingsplit = require("./modules/user").getTrainingsplit;
 const deleteTrainingsplit = require("./modules/user").deleteTrainingsplit;
+const addExerciseTrainingsplit = require("./modules/user").addExerciseTrainingsplit;
+const deleteExerciseTrainingsplit = require("./modules/user").deleteExerciseTrainingsplit;
+const addExerciseRowTrainingsplit = require("./modules/user").addExerciseRowTrainingsplit;
+const deleteExerciseRowTrainingsplit = require("./modules/user").deleteExerciseRowTrainingsplit;
 
 /* */
 
@@ -909,6 +913,113 @@ server.post("/user/delete/trainingsplit", auth, async (req, res) => {
                res.status(200).json(true).end();
           } else {
                res.status(403).json("error, try again").end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+
+//
+
+// add exercise to trainingsplit
+
+server.post("/user/add/trainingsplit/exercise", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+          const exercise = req.body.exercise;
+          const day = req.body.day;
+
+          const resp = await addExerciseTrainingsplit(currentUser.id, trainingsplit_id, exercise, day);
+
+          if (resp.status === true) {
+               res.status(200).json(resp.status).end();
+          } else {
+               res.status(403).json(resp).end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+
+//
+
+
+// add row to exercise trainingsplit
+
+server.post("/user/add/trainingsplit/exercise/row", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+          const exercise = req.body.exercise;
+          const day = req.body.day;
+
+          const resp = await addExerciseRowTrainingsplit(currentUser.id, trainingsplit_id, exercise, day);
+
+          if (resp.status === true) {
+               res.status(200).json(resp.status).end();
+          } else {
+               res.status(403).json(resp).end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+
+//
+
+
+// delete row to exercise trainingsplit
+
+server.post("/user/delete/trainingsplit/exercise/row", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+          const exercise = req.body.exercise;
+          const index = req.body.index;
+          const day = req.body.day;
+
+          const resp = await deleteExerciseRowTrainingsplit(currentUser.id, trainingsplit_id, exercise, index, day);
+
+          if (resp.status === true) {
+               res.status(200).json(resp.status).end();
+          } else {
+               res.status(403).json(resp).end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+
+//
+
+// delete exercise from trainingsplit
+
+server.post("/user/delete/trainingsplit/exercise", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+          const exercise = req.body.exercise;
+          const day = req.body.day;
+
+          const resp = await deleteExerciseTrainingsplit(currentUser.id, trainingsplit_id, exercise, day);
+
+          if (resp.status === true) {
+               res.status(200).json(resp.status).end();
+          } else {
+               res.status(403).json(resp).end();
           }
 
      } catch (err) {

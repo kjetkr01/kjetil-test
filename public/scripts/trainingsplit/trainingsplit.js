@@ -62,8 +62,8 @@ async function requestTrainingsplitDetails() {
 
     } catch (err) {
         console.log(err);
-        sessionStorage.removeItem("trainingsplit");
-        location.reload();
+        //sessionStorage.removeItem("trainingsplit");
+        //location.reload();
     }
 }
 
@@ -98,12 +98,30 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
 
     const daysList = `Velg dag: <select id="trainingsplitSelectDay" onChange="changeTrainingsplitDay();" class="trainingsplitSelect pointer">${optionsHTML}</select>`;
 
+    const exercisesList = ["Benkpress", "Knebøy", "Markløft"];
+
+    let exerciseListOptionsHTML = "";
+
+    for (let v = 0; v < exercisesList.length; v++) {
+        exerciseListOptionsHTML += `<option value="${exercisesList[v]}">${exercisesList[v]}</option>`;
+    }
+
     document.getElementById("smallTitle").innerHTML += top + daysList;
 
     const toolBarHTML = `
     <button class="trainingsplitButton pointer">Lagre</button>
-    <button class="trainingsplitButton pointer" onClick="addExercise();">Ny øvelse</button>
-    <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteTrainingsplit('${resp.trainingsplit_id}');">Slett</button>`;
+    <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteTrainingsplit('${resp.trainingsplit_id}');">Slett</button>
+    <br>
+    <br>
+    <select id="selectNewExercise" class="trainingsplitSelect pointer">
+    <option value=null>Velg øvelse her</option>
+    ${exerciseListOptionsHTML}
+    </select>
+    eller fyll inn
+    <input id="inputNewExercise" class="trainingsplitNameInput" maxlength="20" placeholder="Øvelse"></input>
+
+    <button class="trainingsplitButton pointer" onClick="addExercise();">Legg til øvelse</button>
+    `;
 
     const backToTopBtn = `<button class="trainingsplitButton pointer" onClick="document.getElementById('GuserGrid').scrollTop = 0;">Tilbake til toppen</button>`;
 
@@ -117,41 +135,32 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
     <p id="trainingsplitBottom">${backToTopBtn}</p>
     </div>`;
 
-    const monday = {
-        "short": "Bryst og Triceps",
-        "list": {
-            "Benkpress": [
-                { "sets": 3, "reps": 5, "number": 7, "value": 2 },
-                { "sets": 2, "reps": 1, "number": 85, "value": 1 },
-                { "sets": 1, "reps": 1, "number": 120, "value": 0 }
-            ],
-            "Markløft": [
-                { "sets": 1, "reps": 2, "number": 9, "value": 2 },
-                { "sets": 2, "reps": 1, "number": 85, "value": 1 },
-                { "sets": 1, "reps": 1, "number": 120, "value": 0 }
-            ]
-        }
-    }
-
     let shortTxt = "";
 
     if (selectedDay.short) {
         shortTxt = `Forkortelse på planen: ${selectedDay.short || ""}<br><br>`;
     }
 
-    document.getElementById("trainingsplitInfo").innerHTML = `<p>${shortTxt}Format: 2 x 3 = 2 Sets, 3 Reps.<br>80 % = 80 % av 1 Rep/ORM i øvelsen (krever ORM i løftet)</p>`;
+    document.getElementById("trainingsplitInfo").innerHTML = `<p>${shortTxt}Format: 2 x 3 = 2 Sets, 3 Reps.<br>80 % = 80 % av 1 Rep/ORM i øvelsen (krever ORM i løftet for automatisk utregning)</p>`;
 
     if (selectedDay.list) {
 
-        const selectedDayKeys = Object.keys(selectedDay.list);
+        const arr = selectedDay.list;
 
-        for (let i = 0; i < selectedDayKeys.length; i++) {
-            const exerciseInfo = selectedDay["list"][selectedDayKeys[i]];
+        for (let i = 0; i < arr.length; i++) {
+
+            const exerciseInfo = arr[i];
+            const exerciseName = Object.keys(arr[i])[0];
+            const exerciseList = exerciseInfo[exerciseName];
+
             const trainingsplitTable = document.getElementById("trainingsplitTable");
-            trainingsplitTable.innerHTML += `<br><h3>${selectedDayKeys[i]}</h3><hr class="trainingsplitLine">`;
+            trainingsplitTable.innerHTML += `
+            <br><h3>${exerciseName}
+            <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteExercise('${exerciseName}');">Slett</button></h3>
+            <hr class="trainingsplitLine">`;
 
-            for (let j = 0; j < exerciseInfo.length; j++) {
-                const info = exerciseInfo[j];
+            for (let j = 0; j < exerciseList.length; j++) {
+                const info = exerciseList[j];
 
                 const list = {
                     0: "Ingen",
@@ -188,12 +197,12 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
             ${optionsHTMLList}
             </select>
 
-            <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteRowExercise('${selectedDayKeys[i].toLocaleLowerCase()}', ${j});">Slett</button>
+            <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteRowExercise('${exerciseName}', ${j});">Slett raden</button>
             </p>
             <hr class="trainingsplitSmallLine">`;
             }
 
-            trainingsplitTable.innerHTML += `<p><button class="trainingsplitButton pointer" onClick="addRowExercise('${selectedDayKeys[i].toLocaleLowerCase()}');">Ny rad</button></p>`;
+            trainingsplitTable.innerHTML += `<p><button class="trainingsplitButton pointer" onClick="addRowExercise('${exerciseName}');">Ny rad</button></p>`;
         }
     }
 }
@@ -238,7 +247,7 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
     <p id="trainingsplitInfo"></p>
     <p id="trainingsplitTable"></p>
     <br><br>
-    <p id="trainingsplitBottom">${backToTopBtn}</p>
+    <p id="trainingsplitBottom"></p>
     </div>`;
 
     let creatorTxt = "";
@@ -252,19 +261,27 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
 
     document.getElementById("smallTitle").innerHTML += `<br><h3>${resp.trainingsplit_name}</h3>${creatorTxt}${daysList}<br>${selectedDay.short}`;
 
-    if (selectedDay.list) {
+    if (selectedDay.list.length > 0) {
+
+        document.getElementById("trainingsplitBottom").innerHTML = backToTopBtn;
 
         const trainingsplitInfo = document.getElementById("trainingsplitInfo");
-        const selectedDayKeys = Object.keys(selectedDay.list);
-        if (selectedDayKeys.length > 0) {
+        const arr = selectedDay.list;
 
-            for (let i = 0; i < selectedDayKeys.length; i++) {
-                const exerciseInfo = selectedDay["list"][selectedDayKeys[i]];
-                const trainingsplitTable = document.getElementById("trainingsplitTable");
-                trainingsplitTable.innerHTML += `<br><h3>${selectedDayKeys[i]}</h3><hr class="trainingsplitLine">`;
+        for (let i = 0; i < arr.length; i++) {
 
-                for (let j = 0; j < exerciseInfo.length; j++) {
-                    const info = exerciseInfo[j];
+            const exerciseInfo = arr[i];
+            const exerciseName = Object.keys(arr[i])[0];
+            const exerciseList = exerciseInfo[exerciseName];
+
+            const trainingsplitTable = document.getElementById("trainingsplitTable");
+
+            if (exerciseList.length > 0) {
+
+                trainingsplitTable.innerHTML += `<br><h3>${exerciseName}</h3><hr class="trainingsplitLine">`;
+
+                for (let j = 0; j < exerciseList.length; j++) {
+                    const info = exerciseList[j];
 
                     const list = {
                         0: "Ingen",
@@ -300,7 +317,7 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
                         let highestKG = 0;
                         //calc % out of 1RM if exists.
 
-                        const exercise = selectedDayKeys[i].toLowerCase();
+                        const exercise = exerciseName.toLowerCase();
                         const cachedLiftsList = JSON.parse(localStorage.getItem("cachedLifts_owner"));
 
                         if (cachedLiftsList) {
@@ -358,9 +375,9 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
             <hr class="trainingsplitSmallLine">`;
                 }
             }
-        } else {
-            trainingsplitInfo.innerHTML = `I dag er det fri fra trening :)`;
         }
+    } else {
+        trainingsplitInfo.innerHTML = `I dag er det fri fra trening :)`;
     }
 }
 
@@ -389,7 +406,6 @@ function viewTrainingsplit(aId, aDay) {
     sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": aId, "edit": false, "day": day }));
 
     location.reload();
-
 }
 
 function changeTrainingsplitDay() {
@@ -403,26 +419,165 @@ function changeTrainingsplitDay() {
     location.reload();
 }
 
-function addExercise() {
+async function addExercise() {
 
-    console.log("add exercise");
+    const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
+
+    if (trainingsplit) {
+
+        const selectNewExercise = document.getElementById("selectNewExercise").value;
+        const inputNewExercise = document.getElementById("inputNewExercise").value;
+
+        let exercise = null;
+
+        if (selectNewExercise) {
+            exercise = selectNewExercise;
+        }
+
+        if (inputNewExercise) {
+            exercise = inputNewExercise;
+        }
+
+        if (exercise && exercise !== "null" && exercise !== "undefined") {
+
+            const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit.id, "exercise": exercise, "day": trainingsplit.day };
+            const url = `/user/add/trainingsplit/exercise`;
+
+            const config = {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    "authtoken": token,
+                    "userinfo": user,
+                },
+                body: JSON.stringify(body)
+            }
+
+            const resp = await fetch(url, config);
+            const data = await resp.json();
+
+            if (data === true) {
+                location.reload();
+            } else {
+                alert(data.msg);
+            }
+        }
+    }
+}
+
+async function deleteExercise(aExercise) {
+
+    const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
+
+    if (trainingsplit) {
+
+        const exercise = aExercise;
+
+        if (exercise) {
+
+            const confirmDelete = confirm(`Er du sikker på at du vil slette ${exercise}?`);
+
+            if (confirmDelete === true) {
+
+                const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit.id, "exercise": exercise, "day": trainingsplit.day };
+                const url = `/user/delete/trainingsplit/exercise`;
+
+                const config = {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json",
+                        "authtoken": token,
+                        "userinfo": user,
+                    },
+                    body: JSON.stringify(body)
+                }
+
+                const resp = await fetch(url, config);
+                const data = await resp.json();
+
+                if (data === true) {
+                    location.reload();
+                } else {
+                    alert(data.msg);
+                }
+            }
+        }
+    }
+}
+
+async function deleteRowExercise(aExercise, aIndex) {
+
+    const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
+
+    if (trainingsplit) {
+
+        const exercise = aExercise;
+        const index = aIndex;
+
+        if (exercise) {
+
+            const confirmDelete = confirm(`Er du sikker på at du vil slette rad nr ${index + 1} fra ${exercise}?`);
+
+            if (confirmDelete === true) {
+
+                const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit.id, "exercise": exercise, "index": index, "day": trainingsplit.day };
+                const url = `/user/delete/trainingsplit/exercise/row`;
+
+                const config = {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json",
+                        "authtoken": token,
+                        "userinfo": user,
+                    },
+                    body: JSON.stringify(body)
+                }
+
+                const resp = await fetch(url, config);
+                const data = await resp.json();
+
+                if (data === true) {
+                    location.reload();
+                } else {
+                    alert(data.msg);
+                }
+            }
+        }
+    }
 
 }
 
-function deleteRowExercise(aExercise, aIndex) {
+async function addRowExercise(aExercise) {
 
-    const exercise = aExercise;
-    const index = aIndex;
+    const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
 
-    console.log(exercise);
-    console.log(index);
+    if (trainingsplit) {
 
-}
+        const exercise = aExercise;
 
-function addRowExercise(aExercise) {
+        if (exercise) {
 
-    const exercise = aExercise;
+            const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit.id, "exercise": exercise, "day": trainingsplit.day };
+            const url = `/user/add/trainingsplit/exercise/row`;
 
-    console.log(exercise);
+            const config = {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    "authtoken": token,
+                    "userinfo": user,
+                },
+                body: JSON.stringify(body)
+            }
 
+            const resp = await fetch(url, config);
+            const data = await resp.json();
+
+            if (data === true) {
+                location.reload();
+            } else {
+                alert(data.msg);
+            }
+        }
+    }
 }

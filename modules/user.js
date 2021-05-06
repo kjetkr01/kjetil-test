@@ -110,6 +110,42 @@ async function deleteTrainingsplit(userid, trainingsplit_id) {
     }
 }
 
+async function addExerciseTrainingsplit(userid, trainingsplit_id, exercise, day) {
+    try {
+        const resp = await database.addExerciseTrainingsplit(userid, trainingsplit_id, exercise, day);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function deleteExerciseTrainingsplit(userid, trainingsplit_id, exercise, day) {
+    try {
+        const resp = await database.deleteExerciseTrainingsplit(userid, trainingsplit_id, exercise, day);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function addExerciseRowTrainingsplit(userid, trainingsplit_id, exercise, day) {
+    try {
+        const resp = await database.addExerciseRowTrainingsplit(userid, trainingsplit_id, exercise, day);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function deleteExerciseRowTrainingsplit(userid, trainingsplit_id, exercise, index, day) {
+    try {
+        const resp = await database.deleteExerciseRowTrainingsplit(userid, trainingsplit_id, exercise, index, day);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function updateDisplayname(username, newDisplayname) {
     try {
         const resp = await database.updateDisplayname(username, newDisplayname);
@@ -194,6 +230,10 @@ module.exports.createTrainingsplit = createTrainingsplit;
 module.exports.setActiveTrainingsplit = setActiveTrainingsplit;
 module.exports.getTrainingsplit = getTrainingsplit;
 module.exports.deleteTrainingsplit = deleteTrainingsplit;
+module.exports.addExerciseTrainingsplit = addExerciseTrainingsplit;
+module.exports.deleteExerciseTrainingsplit = deleteExerciseTrainingsplit;
+module.exports.addExerciseRowTrainingsplit = addExerciseRowTrainingsplit;
+module.exports.deleteExerciseRowTrainingsplit = deleteExerciseRowTrainingsplit;
 module.exports.updateDisplayname = updateDisplayname;
 module.exports.updateUsername = updateUsername;
 module.exports.updatePassword = updatePassword;

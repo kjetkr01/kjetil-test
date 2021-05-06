@@ -36,3 +36,13 @@ module.exports.maxGoals = {
 module.exports.maxTrainingsplits = {
     default: 5
 };
+
+//maximum allowed trainingsplits exercises in one day
+module.exports.maxTrainingsplitsExercisesPerDay = {
+    default: 20
+};
+
+//maximum allowed trainingsplits rows in one exercise
+module.exports.maxTrainingsplitsExerciseRows = {
+    default: 10
+};
