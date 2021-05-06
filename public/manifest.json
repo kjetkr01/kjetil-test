@@ -9,9 +9,11 @@
   "orientation": "portrait",
   "background_color": "#85ABE2",
   "categories": [
+    "training",
     "workout",
     "lift",
-    "goals"
+    "goal",
+    "progression"
   ],
   "icons": [
     {
