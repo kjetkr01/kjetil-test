@@ -239,7 +239,7 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
         <button class="trainingsplitButton pointer">Abonner</button>`;
     }
 
-    document.getElementById("smallTitle").innerHTML += `<br><h3>${resp.trainingsplit_name}</h3>${creatorTxt}${daysList}`;
+    document.getElementById("smallTitle").innerHTML += `<br><h3>${resp.trainingsplit_name}</h3>${creatorTxt}${daysList}<br>${selectedDay.short}`;
 
     if (selectedDay.list) {
 
@@ -248,7 +248,6 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
         if (selectedDayKeys.length > 0) {
 
             for (let i = 0; i < selectedDayKeys.length; i++) {
-                trainingsplitInfo.innerHTML = `${selectedDay.short}`;
                 const exerciseInfo = selectedDay["list"][selectedDayKeys[i]];
                 const trainingsplitTable = document.getElementById("trainingsplitTable");
                 trainingsplitTable.innerHTML += `<br><h3>${selectedDayKeys[i]}</h3><hr class="trainingsplitLine">`;
@@ -334,7 +333,7 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
                     }
 
                     if (ORMLifts.length > 0) {
-                        trainingsplitInfo.innerHTML = `${selectedDay.short}<br>Denne planen fungrerer best hvis du har 1 Rep / ORM i følgende løft: ${ORMLifts}`;
+                        trainingsplitInfo.innerHTML = `Denne planen fungrerer best hvis du har 1 Rep / ORM i følgende løft: ${ORMLifts}`;
                     }
 
                     trainingsplitTable.innerHTML += `
