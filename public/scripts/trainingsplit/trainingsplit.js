@@ -20,11 +20,12 @@ async function requestTrainingsplitDetails() {
              </div>`;
 
             let resp = null;
-
-            const cachedActiveTrainingsplit_owner = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
-            if (cachedActiveTrainingsplit_owner) {
-                if (cachedActiveTrainingsplit_owner.trainingsplit_id === parseInt(trainingsplit.id)) {
-                    resp = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
+            if (trainingsplit.edit !== true) {
+                const cachedActiveTrainingsplit_owner = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
+                if (cachedActiveTrainingsplit_owner) {
+                    if (cachedActiveTrainingsplit_owner.trainingsplit_id === parseInt(trainingsplit.id)) {
+                        resp = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
+                    }
                 }
             }
 
@@ -71,8 +72,6 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
     const resp = aResp;
     const selectedDay = resp[aSelectedDay];
 
-    console.log(selectedDay);
-
     const top = `<br><h3>Redigerer:</h3><input class="trainingsplitNameInput" maxlength="20" value="${resp.trainingsplit_name}"></input>`;
 
     const EDays = {
@@ -103,7 +102,7 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
 
     const toolBarHTML = `
     <button class="trainingsplitButton pointer">Lagre</button>
-    <button class="trainingsplitButton pointer">Ny øvelse</button>
+    <button class="trainingsplitButton pointer" onClick="addExercise();">Ny øvelse</button>
     <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteTrainingsplit('${resp.trainingsplit_id}');">Slett</button>`;
 
     const backToTopBtn = `<button class="trainingsplitButton pointer" onClick="document.getElementById('GuserGrid').scrollTop = 0;">Tilbake til toppen</button>`;
@@ -189,12 +188,12 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
             ${optionsHTMLList}
             </select>
 
-            <button class="trainingsplitButton pointer" style="color:red;">Slett</button>
+            <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteRowExercise('${selectedDayKeys[i].toLocaleLowerCase()}', ${j});">Slett</button>
             </p>
             <hr class="trainingsplitSmallLine">`;
             }
 
-            trainingsplitTable.innerHTML += `<p><button class="trainingsplitButton pointer">Ny rad</button></p>`;
+            trainingsplitTable.innerHTML += `<p><button class="trainingsplitButton pointer" onClick="addRowExercise('${selectedDayKeys[i].toLocaleLowerCase()}');">Ny rad</button></p>`;
         }
     }
 }
@@ -402,4 +401,28 @@ function changeTrainingsplitDay() {
     sessionStorage.setItem("trainingsplit", JSON.stringify(trainingsplit));
 
     location.reload();
+}
+
+function addExercise() {
+
+    console.log("add exercise");
+
+}
+
+function deleteRowExercise(aExercise, aIndex) {
+
+    const exercise = aExercise;
+    const index = aIndex;
+
+    console.log(exercise);
+    console.log(index);
+
+}
+
+function addRowExercise(aExercise) {
+
+    const exercise = aExercise;
+
+    console.log(exercise);
+
 }
