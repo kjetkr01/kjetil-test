@@ -13,6 +13,8 @@ opacity: 85%;
 
 #settings {
 margin-top: 10px;
+word-break: keep-all;
+white-space: nowrap;
 }
 
 .infoTable {
