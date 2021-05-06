@@ -17,6 +17,11 @@ const allowedThemes = {
     1: { "id": 1, "name": "Blå", "theme": "blue" }
 }
 
+const themeColors = {
+    "default": { "lightHex": "357F9B", "darkHex": "24586b" },
+    "blue": { "lightHex": "3e50b4", "darkHex": "2c3a8a" }
+}
+
 const badgeColorBorders = {
     "redBadgeG": `972F2F`,
     "yellowBadgeG": `C96E4C`,
@@ -93,17 +98,24 @@ function changeColorTheme() {
 
     const theme = localStorage.getItem("theme") || sessionStorage.getItem("theme") || "0";
 
+    const themeColorDOM = document.getElementById("themeColor");
+    const themeColor = themeColors[colorTheme];
+
     if (theme === "1") {
+        themeColorDOM.content = `#${themeColor.lightHex}`;
         document.body.classList = `${colorTheme}ColorTheme-light lightMode`;
     } else if (theme === "2") {
+        themeColorDOM.content = `#${themeColor.darkHex}`;
         document.body.classList = `${colorTheme}ColorTheme-dark darkMode`;
     } else {
 
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             // dark mode
+            themeColorDOM.content = `#${themeColor.darkHex}`;
             document.body.classList = `${colorTheme}ColorTheme-dark darkMode`;
         } else {
             // light mode
+            themeColorDOM.content = `#${themeColor.lightHex}`;
             document.body.classList = `${colorTheme}ColorTheme-light lightMode`;
         }
     }
