@@ -478,7 +478,7 @@ function getDaysSinceAndDate(aDate) {
 
 async function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service-worker.js')
+        navigator.serviceWorker.register('/sw.js')
             .then(function (registration) {
                 console.log(`[Service Worker] Registration successful, scope is: ${registration.scope}`);
             })
