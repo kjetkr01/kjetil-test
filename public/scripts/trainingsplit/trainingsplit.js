@@ -19,10 +19,17 @@ async function requestTrainingsplitDetails() {
                 </svg>
              </div>`;
 
-            const infoHeader = { "trainingsplit_id": trainingsplit.id };
-            const url = `/user/get/trainingsplit`;
+            let resp = null;
 
-            const resp = await callServerAPIPost(infoHeader, url);
+            if (navigator.onLine) {
+
+                const infoHeader = { "trainingsplit_id": trainingsplit.id };
+                const url = `/user/get/trainingsplit`;
+
+                resp = await callServerAPIPost(infoHeader, url);
+            } else {
+                resp = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
+            }
 
             if (resp) {
 

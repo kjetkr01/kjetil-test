@@ -754,8 +754,6 @@ class StorageHandler {
                                     [userIDReq, t_id.rows[0].activetrainingsplit]);
 
                                 if (activetrainingsplit.rows.length !== 0) {
-
-                                    delete activetrainingsplit.rows[0].user_id;
                                     userCacheObj.activetrainingsplit = activetrainingsplit.rows[0];
                                 }
                             }
@@ -831,8 +829,6 @@ class StorageHandler {
                                     [viewingUser, t_id.rows[0].activetrainingsplit]);
 
                                 if (activetrainingsplit.rows.length !== 0) {
-
-                                    delete activetrainingsplit.rows[0].user_id;
                                     userCacheObj.activetrainingsplit = activetrainingsplit.rows[0];
                                 }
                             }

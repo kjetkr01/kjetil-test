@@ -323,7 +323,7 @@
    getEditLiftorGoalOverlay();
 
    displayUserDetailsCached();
-   if (sessionStorage.getItem("trainingsplit") && navigator.onLine) {
+   if (sessionStorage.getItem("trainingsplit")) {
       document.getElementById("userGrid").innerHTML = "";
       requestTrainingsplitDetails();
    } else {
