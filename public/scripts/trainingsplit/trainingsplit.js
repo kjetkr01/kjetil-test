@@ -21,14 +21,19 @@ async function requestTrainingsplitDetails() {
 
             let resp = null;
 
-            if (navigator.onLine) {
+            const cachedActiveTrainingsplit_owner = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
+            if (cachedActiveTrainingsplit_owner) {
+                if (cachedActiveTrainingsplit_owner.trainingsplit_id === parseInt(trainingsplit.id)) {
+                    resp = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
+                }
+            }
+
+            if (navigator.onLine && resp === null) {
 
                 const infoHeader = { "trainingsplit_id": trainingsplit.id };
                 const url = `/user/get/trainingsplit`;
 
                 resp = await callServerAPIPost(infoHeader, url);
-            } else {
-                resp = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
             }
 
             if (resp) {
