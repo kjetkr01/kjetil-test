@@ -146,6 +146,24 @@ async function deleteExerciseRowTrainingsplit(userid, trainingsplit_id, exercise
     }
 }
 
+async function copyTrainingsplit(userid, trainingsplit_id, owner_id) {
+    try {
+        const resp = await database.copyTrainingsplit(userid, trainingsplit_id, owner_id);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function subUnsubTrainingsplit(userid, trainingsplit_id, owner_id) {
+    try {
+        const resp = await database.subUnsubTrainingsplit(userid, trainingsplit_id, owner_id);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function updateDisplayname(username, newDisplayname) {
     try {
         const resp = await database.updateDisplayname(username, newDisplayname);
@@ -234,6 +252,8 @@ module.exports.addExerciseTrainingsplit = addExerciseTrainingsplit;
 module.exports.deleteExerciseTrainingsplit = deleteExerciseTrainingsplit;
 module.exports.addExerciseRowTrainingsplit = addExerciseRowTrainingsplit;
 module.exports.deleteExerciseRowTrainingsplit = deleteExerciseRowTrainingsplit;
+module.exports.copyTrainingsplit = copyTrainingsplit;
+module.exports.subUnsubTrainingsplit = subUnsubTrainingsplit;
 module.exports.updateDisplayname = updateDisplayname;
 module.exports.updateUsername = updateUsername;
 module.exports.updatePassword = updatePassword;

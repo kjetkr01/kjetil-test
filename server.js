@@ -53,6 +53,8 @@ const addExerciseTrainingsplit = require("./modules/user").addExerciseTrainingsp
 const deleteExerciseTrainingsplit = require("./modules/user").deleteExerciseTrainingsplit;
 const addExerciseRowTrainingsplit = require("./modules/user").addExerciseRowTrainingsplit;
 const deleteExerciseRowTrainingsplit = require("./modules/user").deleteExerciseRowTrainingsplit;
+const copyTrainingsplit = require("./modules/user").copyTrainingsplit;
+const subUnsubTrainingsplit = require("./modules/user").subUnsubTrainingsplit;
 
 /* */
 
@@ -1024,6 +1026,57 @@ server.post("/user/delete/trainingsplit/exercise", auth, async (req, res) => {
 
           if (resp.status === true) {
                res.status(200).json(resp.status).end();
+          } else {
+               res.status(403).json(resp).end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+
+//
+
+
+// copy trainingsplit
+
+server.post("/user/copy/trainingsplit", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+          const owner_id = req.body.owner_id;
+
+          const resp = await copyTrainingsplit(currentUser.id, trainingsplit_id, owner_id);
+
+          if (resp.status === true) {
+               res.status(200).json(resp).end();
+          } else {
+               res.status(403).json(resp).end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+
+//
+
+// sub unsub trainingsplit
+
+server.post("/user/subunsub/trainingsplit", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+          const owner_id = req.body.owner_id;
+
+          const resp = await subUnsubTrainingsplit(currentUser.id, trainingsplit_id, owner_id);
+
+          if (resp.status === true) {
+               res.status(200).json(resp).end();
           } else {
                res.status(403).json(resp).end();
           }

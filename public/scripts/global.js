@@ -296,6 +296,12 @@ async function getAccountDetails(aUserID) {
                         localStorage.removeItem("cachedAllTrainingsplits_owner");
                     }
 
+                    if (resp.info.hasOwnProperty("settings")) {
+                        if (resp.info.settings.hasOwnProperty("subscribedtrainingsplits")) {
+                            sessionStorage.setItem("cachedSubscribedTrainingsplits_owner", JSON.stringify(resp.info.settings.subscribedtrainingsplits));
+                        }
+                    }
+
                     const newColorTheme = allowedThemes[resp.updatedUserObject.preferredColorTheme].theme;
 
                     if (preferredColorTheme !== newColorTheme && checkAllowedThemes.includes(newColorTheme) === true) {

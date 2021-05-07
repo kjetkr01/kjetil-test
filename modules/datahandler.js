@@ -1555,6 +1555,153 @@ class StorageHandler {
     //
 
 
+
+    //  -------------------------------  copy Trainingsplit (user)  ------------------------------- //
+
+    async copyTrainingsplit(userid, trainingsplit_id, owner_id) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        let newtrainingsplit_id = null;
+        let msg = "";
+
+        try {
+            await client.connect();
+
+            const allTrainingsplits = await client.query(`
+                SELECT trainingsplit_id, trainingsplit_name
+                FROM user_trainingsplit
+                WHERE user_id = $1`,
+                [userid]);
+
+            if (allTrainingsplits.rows.length < maxTrainingsplits.default) {
+
+                let copyTrainingsplit = await client.query(`
+                SELECT *
+                FROM user_trainingsplit
+                WHERE user_id = $1
+                AND trainingsplit_id = $2`,
+                    [owner_id, trainingsplit_id]);
+
+                if (copyTrainingsplit.rows.length > 0) {
+
+                    copyTrainingsplit = copyTrainingsplit.rows[0];
+
+                    delete copyTrainingsplit.user_id;
+                    delete copyTrainingsplit.trainingsplit_id;
+
+                    const name = copyTrainingsplit.trainingsplit_name;
+                    const monday = copyTrainingsplit.monday;
+                    const tuesday = copyTrainingsplit.tuesday;
+                    const wednesday = copyTrainingsplit.wednesday;
+                    const thursday = copyTrainingsplit.thursday;
+                    const friday = copyTrainingsplit.friday;
+                    const saturday = copyTrainingsplit.saturday;
+                    const sunday = copyTrainingsplit.sunday;
+
+                    const newTrainingsplit = await client.query(`
+                    INSERT INTO user_trainingsplit(user_id, trainingsplit_name, monday, tuesday, wednesday, thursday, friday, saturday, sunday)
+                    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING trainingsplit_id`, [userid, name, monday, tuesday, wednesday, thursday, friday, saturday, sunday]);
+
+                    if (newTrainingsplit.rows.length > 0) {
+                        newtrainingsplit_id = newTrainingsplit.rows[0].trainingsplit_id;
+                        results = true;
+                    }
+
+                } else {
+                    msg = `Treningsplanen finnes ikke!`;
+                    results = false;
+                }
+
+            } else {
+                msg = `Du kan ikke ha flere enn ${maxTrainingsplits.default} treningsplaner!`;
+                results = false;
+            }
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return { "status": results, "newtrainingsplit_id": newtrainingsplit_id, "msg": msg };
+    }
+
+    //
+
+
+    //  -------------------------------  sub or unsub to Trainingsplit (user)  ------------------------------- //
+
+    async subUnsubTrainingsplit(userid, trainingsplit_id, owner_id) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        let msg = "";
+
+        try {
+            await client.connect();
+
+
+            const trainingsplit = await client.query(`
+            SELECT *
+            FROM user_trainingsplit
+            WHERE user_id = $1
+            AND trainingsplit_id = $2`,
+                [owner_id, trainingsplit_id]);
+
+            if (trainingsplit.rows.length > 0) {
+
+                let subscribedTrainingsplits = await client.query(`
+                SELECT subscribedtrainingsplits
+                FROM user_settings
+                WHERE user_id = $1`,
+                    [userid]);
+
+                const tIDString = trainingsplit_id.toString();
+
+                subscribedTrainingsplits = subscribedTrainingsplits.rows[0].subscribedtrainingsplits;
+
+                if (subscribedTrainingsplits.includes(tIDString)) {
+                    //unsubscribe
+
+                    for (let i = 0; i < subscribedTrainingsplits.length; i++) {
+                        if (subscribedTrainingsplits[i] === tIDString) {
+                            subscribedTrainingsplits.splice(i, 1);
+                            msg = `Du abonnerer ikke lenger på denne planen`;
+                        }
+                    }
+
+                } else {
+                    //subscribe
+                    subscribedTrainingsplits.push(tIDString);
+                    msg = `Du abonnerer nå på denne planen`;
+                }
+
+                await client.query(`
+                        UPDATE user_settings
+                        SET subscribedtrainingsplits = $2
+                        WHERE user_id = $1`,
+                    [userid, JSON.stringify(subscribedTrainingsplits)]);
+
+                results = true;
+
+            } else {
+                msg = `Treningsplanen finnes ikke!`;
+                results = false;
+            }
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return { "status": results, "msg": msg };
+    }
+
+    //
+
+
     //  -------------------------------  update Displayname (user)  ------------------------------- //
 
     async updateDisplayname(username, newDisplayname) {

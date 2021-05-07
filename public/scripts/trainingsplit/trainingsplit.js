@@ -271,10 +271,27 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
     let creatorTxt = "";
 
     if (userID !== resp.user_id) {
+
+        const cachedSubscribedTrainingsplits_owner = JSON.parse(sessionStorage.getItem("cachedSubscribedTrainingsplits_owner"));
+
+        let isSubscribed = false;
+
+        if (cachedSubscribedTrainingsplits_owner) {
+            if (cachedSubscribedTrainingsplits_owner.includes(resp.trainingsplit_id.toString())) {
+                isSubscribed = true;
+            }
+        }
+
+        let subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id});">Abonner</button>`;
+
+        if (isSubscribed === true) {
+            subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id});">Abonnerer</button>`;
+        }
+
         creatorTxt = `Av: ${resp.creator}<br>`;
         document.getElementById("trainingsplitToolBar").innerHTML += `
-        <button class="trainingsplitButton pointer">Kopier</button>
-        <button class="trainingsplitButton pointer">Abonner</button>`;
+        <button class="trainingsplitButton pointer" onClick="copyTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id});">Kopier</button>
+        ${subscribeHTML}`;
     }
 
     document.getElementById("smallTitle").innerHTML += `<br><h3>${resp.trainingsplit_name}</h3>${creatorTxt}${daysList}<br>${selectedDay.short}`;
@@ -600,4 +617,98 @@ async function addRowExercise(aExercise) {
             }
         }
     }
+}
+
+async function copyTrainingsplit(aTrainingsplit_id, aOwner_id) {
+
+    const trainingsplit_id = aTrainingsplit_id;
+
+    if (trainingsplit_id) {
+
+        const owner_id = aOwner_id;
+
+        if (owner_id) {
+
+            const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit_id, "owner_id": owner_id };
+            const url = `/user/copy/trainingsplit`;
+
+            const config = {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    "authtoken": token,
+                    "userinfo": user,
+                },
+                body: JSON.stringify(body)
+            }
+
+            const resp = await fetch(url, config);
+            const data = await resp.json();
+
+            if (data.status === true) {
+                const loadNewTrainingsplit = confirm("Planen er nå kopiert. Ønsker du å laste den inn i redigeringsmodus?");
+                if (loadNewTrainingsplit === true) {
+                    sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": data.newtrainingsplit_id, "edit": true, "day": "monday" }));
+                    setTimeout(() => {
+                        redirectToAccount();
+                    }, 1000);
+                }
+            } else {
+                alert(data.msg);
+            }
+        }
+    }
+}
+
+
+async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id) {
+
+    const trainingsplit_id = aTrainingsplit_id;
+
+    if (trainingsplit_id) {
+
+        const owner_id = aOwner_id;
+
+        if (owner_id) {
+
+            const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit_id, "owner_id": owner_id };
+            const url = `/user/subunsub/trainingsplit`;
+
+            const config = {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    "authtoken": token,
+                    "userinfo": user,
+                },
+                body: JSON.stringify(body)
+            }
+
+            const resp = await fetch(url, config);
+            const data = await resp.json();
+
+            if (data.status === true) {
+                const cachedSubscribedTrainingsplits_owner = JSON.parse(sessionStorage.getItem("cachedSubscribedTrainingsplits_owner"));
+                if (cachedSubscribedTrainingsplits_owner) {
+                    const tIDString = trainingsplit_id.toString();
+                    if (!cachedSubscribedTrainingsplits_owner.includes(tIDString) && !data.msg.includes("ikke lenger")) {
+                        cachedSubscribedTrainingsplits_owner.push(tIDString);
+
+                    } else {
+                        for (let i = 0; i < cachedSubscribedTrainingsplits_owner.length; i++) {
+                            if (cachedSubscribedTrainingsplits_owner[i] === tIDString) {
+                                cachedSubscribedTrainingsplits_owner.splice(i, 1);
+                            }
+                        }
+                    }
+
+                    sessionStorage.setItem("cachedSubscribedTrainingsplits_owner", JSON.stringify(cachedSubscribedTrainingsplits_owner));
+                }
+                location.reload();
+            } else {
+                alert(data.msg);
+            }
+        }
+    }
+
 }
