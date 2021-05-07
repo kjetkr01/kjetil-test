@@ -234,18 +234,20 @@ async function displayInformationAboutUser() {
                         const first = resp[keys[i]];
                         const extraKeys = Object.keys(first);
 
-                        informationAboutUser.innerHTML += `<br><h2>${capitalizeFirstLetter(keys[i])}</h2>`;
-
                         for (let j = 0; j < extraKeys.length; j++) {
+
+
+
                             const second = first[extraKeys[j]];
 
-                            if (keys[i] !== "løft" && keys[i] !== "mål") {
-
-                                informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys[j])}: ${second}<br>`;
-
-                            } else {
+                            if (keys[i] === "løft" || keys[i] === "mål") {
 
                                 if (second.length > 0) {
+
+                                    if (j === 0) {
+                                        informationAboutUser.innerHTML += `<br><h2>${capitalizeFirstLetter(keys[i])}</h2>`;
+                                    }
+
                                     const extraKeys2 = Object.keys(second);
                                     informationAboutUser.innerHTML += `<br><h3>${capitalizeFirstLetter(extraKeys[j])}</h3>`;
 
@@ -258,6 +260,58 @@ async function displayInformationAboutUser() {
                                         }
                                     }
                                 }
+
+                            } else if (keys[i] === "treningsplan") {
+
+                                if (j === 0) {
+                                    informationAboutUser.innerHTML += `<br><h2>${capitalizeFirstLetter(keys[i])}</h2><br>`;
+                                }
+
+                                const extraKeys2 = Object.keys(second);
+
+                                for (let k = 0; k < extraKeys2.length; k++) {
+                                    const third = second[extraKeys2[k]];
+                                    if (third.short !== undefined && third.list !== undefined) {
+                                        const extraKeys3 = Object.keys(third);
+                                        informationAboutUser.innerHTML += `<br><h3>${capitalizeFirstLetter(extraKeys2[k])}</h3>`;
+                                        for (let x = 0; x < extraKeys3.length; x++) {
+                                            if (extraKeys3[x] === "list" && third.list.length > 0) {
+                                                informationAboutUser.innerHTML += `<br><h3>${capitalizeFirstLetter(extraKeys3[x])}</h3>`;
+                                                const extraKeys4 = Object.keys(third.list[0]);
+                                                for (let b = 0; b < extraKeys4.length; b++) {
+                                                    const fourth = third.list[0][extraKeys4[b]];
+                                                    informationAboutUser.innerHTML += `<h4>${capitalizeFirstLetter(extraKeys4[b])}:</h4>`;
+                                                    for (let l = 0; l < fourth.length; l++) {
+                                                        const extraKeys5 = Object.keys(fourth[l]);
+                                                        for (let n = 0; n < extraKeys5.length; n++) {
+                                                            informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys5[n])}: ${fourth[l][extraKeys5[n]]}<br>`;
+                                                        }
+                                                        if (l !== fourth.length - 1) {
+                                                            informationAboutUser.innerHTML += `<br>`;
+                                                        }
+                                                    }
+                                                }
+                                            } else {
+                                                informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys3[x])}: ${third[extraKeys3[x]]}<br>`;
+                                            }
+                                        }
+                                    } else {
+                                        if (k === extraKeys2.length - 1) {
+                                            informationAboutUser.innerHTML += `<br>`;
+                                        }
+                                        informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys2[k])}: ${third}<br>`;
+                                    }
+                                }
+
+                            } else {
+
+                                if (j === 0) {
+                                    informationAboutUser.innerHTML += `<br><h2>${capitalizeFirstLetter(keys[i])}</h2>`;
+                                }
+
+                                informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys[j])}: ${second}<br>`;
+
+
                             }
                         }
                     }

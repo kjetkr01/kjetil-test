@@ -1284,12 +1284,12 @@ class StorageHandler {
 
         try {
             await client.connect();
-            
+
             results = await client.query(`
              UPDATE user_settings
              SET activetrainingsplit = default
              WHERE user_id = $1`,
-                 [userid]);
+                [userid]);
 
             results = true;
 
