@@ -344,6 +344,11 @@
          const scrollX = GbadgesGoals.scrollLeft;
          sessionStorage.setItem("badgesgoals_scroll_x", scrollX);
       });
+
+      GbadgesTrainingsplit.addEventListener("scroll", function (evt) {
+         const scrollX = GbadgesTrainingsplit.scrollLeft;
+         sessionStorage.setItem("badgestrainingsplit_scroll_x", scrollX);
+      });
    }
 
    GuserGrid.addEventListener("scroll", function (evt) {

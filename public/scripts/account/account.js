@@ -290,6 +290,7 @@ function displayInformation(respInfo) {
     }
 
     if (updateActiveTrainingsplit === true) {
+        document.getElementById("trainingsplit").innerHTML = "Treningsplan";
         displayTrainingsplit();
     }
 }
@@ -669,6 +670,12 @@ function displayTrainingsplit() {
 
     if (badge) {
         document.getElementById("badgesTrainingsplitTableRow").innerHTML += badge;
+    }
+
+    if (sessionStorage.getItem("badgestrainingsplit_scroll_x")) {
+        GbadgesTrainingsplit.scrollLeft = sessionStorage.getItem("badgestrainingsplit_scroll_x");
+    } else {
+        GbadgesTrainingsplit.scrollLeft = 0;
     }
 
 }
