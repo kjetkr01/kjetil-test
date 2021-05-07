@@ -751,9 +751,8 @@ class StorageHandler {
                                 const activetrainingsplit = await client.query(`
                                 SELECT *
                                 FROM user_trainingsplit
-                                WHERE user_id = $1
-                                AND trainingsplit_id = $2`,
-                                    [userIDReq, t_id.rows[0].activetrainingsplit]);
+                                WHERE trainingsplit_id = $1`,
+                                    [t_id.rows[0].activetrainingsplit]);
 
                                 if (activetrainingsplit.rows.length !== 0) {
                                     userCacheObj.activetrainingsplit = activetrainingsplit.rows[0];
@@ -826,9 +825,8 @@ class StorageHandler {
                                 const activetrainingsplit = await client.query(`
                                 SELECT *
                                 FROM user_trainingsplit
-                                WHERE user_id = $1
-                                AND trainingsplit_id = $2`,
-                                    [viewingUser, t_id.rows[0].activetrainingsplit]);
+                                WHERE trainingsplit_id = $1`,
+                                    [t_id.rows[0].activetrainingsplit]);
 
                                 if (activetrainingsplit.rows.length !== 0) {
                                     userCacheObj.activetrainingsplit = activetrainingsplit.rows[0];
@@ -953,7 +951,6 @@ class StorageHandler {
                         SELECT users.id, users.displayname, ${day}
                         FROM users, user_settings, user_trainingsplit
                         WHERE users.id = user_settings.user_id
-                        AND users.id = user_trainingsplit.user_id
                         AND user_settings.displayworkoutlist = true
                         AND user_settings.activetrainingsplit = user_trainingsplit.trainingsplit_id`);
 
@@ -2252,9 +2249,8 @@ class StorageHandler {
                                 results = await client.query(`
                                 SELECT ${day}
                                 FROM user_trainingsplit
-                                WHERE user_id = $1
-                                AND trainingsplit_id = $2`,
-                                    [user, activetrainingsplit]);
+                                WHERE trainingsplit_id = $1`,
+                                    [activetrainingsplit]);
 
                                 if (results.rows.length !== 0) {
 
