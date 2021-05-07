@@ -8,6 +8,7 @@ const maxGoals = require("../arrayLists").maxGoals;
 const maxTrainingsplits = require("../arrayLists").maxTrainingsplits;
 const maxTrainingsplitsExercisesPerDay = require("../arrayLists").maxTrainingsplitsExercisesPerDay;
 const maxTrainingsplitsExerciseRows = require("../arrayLists").maxTrainingsplitsExerciseRows;
+const maxSubscribedTrainingsplits = require("../arrayLists").maxSubscribedTrainingsplits;
 
 class StorageHandler {
 
@@ -659,31 +660,62 @@ class StorageHandler {
                         delete results.rows[0].user_id;
                         userCacheObj.settings = results.rows[0];
 
+                        const subscribedtsplits = userCacheObj.settings.subscribedtrainingsplits;
+                        const subscribedtsplitswname = {};
+                        const updatedSubscriptionList = [];
+
+                        if (subscribedtsplits.length > 0) {
+                            for (let i = 0; i < subscribedtsplits.length; i++) {
+                                const name = await client.query(`
+                                SELECT trainingsplit_name
+                                FROM user_trainingsplit
+                                WHERE trainingsplit_id = $1`,
+                                    [subscribedtsplits[i]]);
+
+                                if (name.rows.length > 0) {
+                                    if (!updatedSubscriptionList.includes(subscribedtsplits[i])) {
+                                        updatedSubscriptionList.push(subscribedtsplits[i]);
+                                        subscribedtsplitswname[subscribedtsplits[i]] = name.rows[0].trainingsplit_name;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (updatedSubscriptionList.length !== subscribedtsplits.length) {
+                            await client.query(`
+                            UPDATE user_settings
+                            SET subscribedtrainingsplits = $2
+                            WHERE user_id = $1`,
+                                [userID, JSON.stringify(updatedSubscriptionList)]);
+                        }
+
+                        userCacheObj.settings.subscribedtrainingsplits = subscribedtsplitswname;
+
                         results = await client.query(`
-                        SELECT user_details.*
-                        FROM users, user_details
-                        WHERE users.id = $1
-                        AND users.id = user_details.user_id`,
+                                SELECT user_details.*
+                                    FROM users, user_details
+                                WHERE users.id = $1
+                                AND users.id = user_details.user_id`,
                             [userID]);
 
                         delete results.rows[0].user_id;
                         userCacheObj.info = results.rows[0];
 
                         results = await client.query(`
-                        SELECT user_lifts.*
-                        FROM users, user_lifts
-                        WHERE users.id = $1
-                        AND users.id = user_lifts.user_id`,
+                                SELECT user_lifts.*
+                                    FROM users, user_lifts
+                                WHERE users.id = $1
+                                AND users.id = user_lifts.user_id`,
                             [userID]);
 
                         delete results.rows[0].user_id;
                         userCacheObj.lifts = results.rows[0];
 
                         results = await client.query(`
-                        SELECT user_goals.*
-                        FROM users, user_goals
-                        WHERE users.id = $1
-                        AND users.id = user_goals.user_id`,
+                                SELECT user_goals.*
+                                    FROM users, user_goals
+                                WHERE users.id = $1
+                                AND users.id = user_goals.user_id`,
                             [userID]);
 
                         delete results.rows[0].user_id;
@@ -692,11 +724,11 @@ class StorageHandler {
                         const userIDReq = userCacheObj.id;
 
                         const hasAccessToApi = await client.query(`
-                            SELECT apikey
-                            FROM users, user_api
-                            WHERE users.id = $1
-                            AND users.id = user_api.user_id
-                            AND apikey IS NOT null`,
+                                SELECT apikey
+                                FROM users, user_api
+                                WHERE users.id = $1
+                                AND users.id = user_api.user_id
+                                AND apikey IS NOT null`,
                             [userIDReq]);
 
                         const liftKeys = Object.keys(userCacheObj.lifts);
@@ -739,9 +771,9 @@ class StorageHandler {
                         }
 
                         const t_id = await client.query(`
-                        SELECT activetrainingsplit
-                        FROM user_settings
-                        WHERE user_id = $1`,
+                                SELECT activetrainingsplit
+                                FROM user_settings
+                                WHERE user_id = $1`,
                             [userIDReq]);
 
                         if (t_id.rows.length !== 0) {
@@ -750,20 +782,31 @@ class StorageHandler {
 
                                 const activetrainingsplit = await client.query(`
                                 SELECT *
-                                FROM user_trainingsplit
+                                    FROM user_trainingsplit
                                 WHERE trainingsplit_id = $1`,
                                     [t_id.rows[0].activetrainingsplit]);
 
                                 if (activetrainingsplit.rows.length !== 0) {
+
                                     userCacheObj.activetrainingsplit = activetrainingsplit.rows[0];
+
+                                    let username = await client.query(`
+                                SELECT username
+                                FROM users
+                                WHERE id = $1`,
+                                        [activetrainingsplit.rows[0].user_id]);
+
+                                    if (username.rows.length > 0) {
+                                        userCacheObj.activetrainingsplit.owner = username.rows[0].username;
+                                    }
                                 }
                             }
                         }
 
                         const allTrainingsplits = await client.query(`
-                        SELECT trainingsplit_id, trainingsplit_name
-                        FROM user_trainingsplit
-                        WHERE user_id = $1`,
+                                SELECT trainingsplit_id, trainingsplit_name
+                                FROM user_trainingsplit
+                                WHERE user_id = $1`,
                             [userIDReq]);
 
                         if (allTrainingsplits.rows.length > 0) {
@@ -775,47 +818,47 @@ class StorageHandler {
 
                     } else {
                         results = await client.query(`
-                        SELECT users.username, users.displayname, users.member_since
-                        FROM users
-                        WHERE users.id=$1`,
+                                SELECT users.username, users.displayname, users.member_since
+                                FROM users
+                                WHERE users.id = $1`,
                             [viewingUser]);
 
                         userCacheObj = results.rows[0];
 
                         results = await client.query(`
-                        SELECT user_details.*
-                        FROM users, user_details
-                        WHERE users.id = $1
-                        AND users.id = user_details.user_id`,
+                                SELECT user_details.*
+                                    FROM users, user_details
+                                WHERE users.id = $1
+                                AND users.id = user_details.user_id`,
                             [viewingUser]);
 
                         delete results.rows[0].user_id;
                         userCacheObj.info = results.rows[0];
 
                         results = await client.query(`
-                        SELECT user_lifts.*
-                        FROM users, user_lifts
-                        WHERE users.id = $1
-                        AND users.id = user_lifts.user_id`,
+                                SELECT user_lifts.*
+                                    FROM users, user_lifts
+                                WHERE users.id = $1
+                                AND users.id = user_lifts.user_id`,
                             [viewingUser]);
 
                         delete results.rows[0].user_id;
                         userCacheObj.lifts = results.rows[0];
 
                         results = await client.query(`
-                        SELECT user_goals.*
-                        FROM users, user_goals
-                        WHERE users.id = $1
-                        AND users.id = user_goals.user_id`,
+                                SELECT user_goals.*
+                                    FROM users, user_goals
+                                WHERE users.id = $1
+                                AND users.id = user_goals.user_id`,
                             [viewingUser]);
 
                         delete results.rows[0].user_id;
                         userCacheObj.goals = results.rows[0];
 
                         const t_id = await client.query(`
-                        SELECT activetrainingsplit
-                        FROM user_settings
-                        WHERE user_id = $1`,
+                                SELECT activetrainingsplit
+                                FROM user_settings
+                                WHERE user_id = $1`,
                             [viewingUser]);
 
                         if (t_id.rows.length !== 0) {
@@ -824,12 +867,22 @@ class StorageHandler {
 
                                 const activetrainingsplit = await client.query(`
                                 SELECT *
-                                FROM user_trainingsplit
+                                    FROM user_trainingsplit
                                 WHERE trainingsplit_id = $1`,
                                     [t_id.rows[0].activetrainingsplit]);
 
                                 if (activetrainingsplit.rows.length !== 0) {
                                     userCacheObj.activetrainingsplit = activetrainingsplit.rows[0];
+
+                                    let username = await client.query(`
+                                SELECT username
+                                FROM users
+                                WHERE id = $1`,
+                                        [activetrainingsplit.rows[0].user_id]);
+
+                                    if (username.rows.length > 0) {
+                                        userCacheObj.activetrainingsplit.owner = username.rows[0].username;
+                                    }
                                 }
                             }
                         }
@@ -869,10 +922,10 @@ class StorageHandler {
             await client.connect();
 
             results = await client.query(`
-            SELECT users.id, users.username, users.displayname, user_settings.*
-            FROM users, user_settings
-            WHERE users.username = $1
-            AND users.id = user_settings.user_id`,
+                                SELECT users.id, users.username, users.displayname, user_settings.*
+                                    FROM users, user_settings
+                                WHERE users.username = $1
+                                AND users.id = user_settings.user_id`,
                 [username]);
 
             userDetails = results.rows[0];
@@ -903,15 +956,15 @@ class StorageHandler {
             await client.connect();
 
             const user_id = await client.query(`
-            SELECT id
-            FROM users
-            WHERE username = $1`,
+                                SELECT id
+                                FROM users
+                                WHERE username = $1`,
                 [username]);
 
             await client.query(`
-            UPDATE user_settings
-            SET ${setting} = ${value}
-            WHERE user_id = $1`,
+                                UPDATE user_settings
+                                SET ${setting} = ${value}
+                                WHERE user_id = $1`,
                 [user_id.rows[0].id]);
 
             results = true;
@@ -948,11 +1001,11 @@ class StorageHandler {
             const day = days[dayNum];
 
             const workoutUsers = await client.query(`
-                        SELECT users.id, users.displayname, ${day}
-                        FROM users, user_settings, user_trainingsplit
-                        WHERE users.id = user_settings.user_id
-                        AND user_settings.displayworkoutlist = true
-                        AND user_settings.activetrainingsplit = user_trainingsplit.trainingsplit_id`);
+                                SELECT users.id, users.displayname, ${day}
+                                FROM users, user_settings, user_trainingsplit
+                                WHERE users.id = user_settings.user_id
+                                AND user_settings.displayworkoutlist = true
+                                AND user_settings.activetrainingsplit = user_trainingsplit.trainingsplit_id`);
 
             for (let i = 0; i < workoutUsers.rows.length; i++) {
                 const todaysWorkout = workoutUsers.rows[i][day].short;
@@ -1004,9 +1057,9 @@ class StorageHandler {
             }
 
             results = await client.query(`
-                SELECT ${exercise}
-                FROM ${table}
-                WHERE user_id = $1`,
+                                SELECT ${exercise}
+                                FROM ${table}
+                                WHERE user_id = $1`,
                 [userid]);
 
             if (results.rows.length === 1) {
@@ -1053,9 +1106,9 @@ class StorageHandler {
                 }
 
                 await client.query(`
-                    UPDATE ${table}
-                    SET ${exercise} = $1
-                    WHERE user_id = $2`,
+                                UPDATE ${table}
+                                SET ${exercise} = $1
+                                WHERE user_id = $2`,
                     [JSON.stringify(liftsOrGoals), userid]);
 
                 results = true;
@@ -1098,9 +1151,9 @@ class StorageHandler {
             }
 
             results = await client.query(`
-                SELECT ${exercise}
-                FROM ${table}
-                WHERE user_id = $1`,
+                                SELECT ${exercise}
+                                FROM ${table}
+                                WHERE user_id = $1`,
                 [userid]);
 
             if (results.rows.length === 1) {
@@ -1122,9 +1175,9 @@ class StorageHandler {
                     liftsOrGoals.splice(index, 1);
 
                     await client.query(`
-                    UPDATE ${table}
-                    SET ${exercise} = $1
-                    WHERE user_id = $2`,
+                                UPDATE ${table}
+                                SET ${exercise} = $1
+                                WHERE user_id = $2`,
                         [JSON.stringify(liftsOrGoals), userid]);
 
                     results = true;
@@ -1159,18 +1212,18 @@ class StorageHandler {
             await client.connect();
 
             const allTrainingsplits = await client.query(`
-                SELECT trainingsplit_id, trainingsplit_name
-                FROM user_trainingsplit
-                WHERE user_id = $1`,
+                                SELECT trainingsplit_id, trainingsplit_name
+                                FROM user_trainingsplit
+                                WHERE user_id = $1`,
                 [userid]);
 
             if (allTrainingsplits.rows.length < maxTrainingsplits.default) {
 
-                const trainingsplitName = `Treningsplan ${allTrainingsplits.rows.length + 1}`;
+                const trainingsplitName = `Treningsplan ${allTrainingsplits.rows.length + 1} `;
 
                 const newTrainingsplit = await client.query(`
-                INSERT INTO user_trainingsplit(user_id, trainingsplit_name)
-                VALUES($1, $2) RETURNING trainingsplit_id`, [userid, trainingsplitName]);
+                                INSERT INTO user_trainingsplit(user_id, trainingsplit_name)
+                                VALUES($1, $2) RETURNING trainingsplit_id`, [userid, trainingsplitName]);
 
                 if (newTrainingsplit.rows.length > 0) {
                     newtrainingsplit_id = newTrainingsplit.rows[0].trainingsplit_id;
@@ -1203,9 +1256,9 @@ class StorageHandler {
             await client.connect();
 
             results = await client.query(`
-            UPDATE user_settings
-            SET activetrainingsplit = $2
-            WHERE user_id = $1`,
+                                UPDATE user_settings
+                                SET activetrainingsplit = $2
+                                WHERE user_id = $1`,
                 [userid, trainingsplit_id]);
 
             results = true;
@@ -1234,9 +1287,9 @@ class StorageHandler {
             await client.connect();
 
             results = await client.query(`
-            SELECT *
-            FROM user_trainingsplit
-            WHERE trainingsplit_id = $1`,
+                                SELECT *
+                                    FROM user_trainingsplit
+                                WHERE trainingsplit_id = $1`,
                 [trainingsplit_id]);
 
             if (results.rows.length > 0) {
@@ -1248,13 +1301,13 @@ class StorageHandler {
                     canEdit = true;
                 } else {
                     let username = await client.query(`
-                        SELECT username
-                        FROM users
-                        WHERE id = $1`,
+                                SELECT username
+                                FROM users
+                                WHERE id = $1`,
                         [trainingsplit.user_id]);
 
                     if (username.rows.length > 0) {
-                        trainingsplit.creator = username.rows[0].username;
+                        trainingsplit.owner = username.rows[0].username;
                     }
                 }
 
@@ -1285,9 +1338,9 @@ class StorageHandler {
             await client.connect();
 
             await client.query(`
-            DELETE FROM user_trainingsplit
-            WHERE trainingsplit_id = $1
-            AND user_id = $2`,
+                                DELETE FROM user_trainingsplit
+                                WHERE trainingsplit_id = $1
+                                AND user_id = $2`,
                 [trainingsplit_id, userid]);
 
             results = true;
@@ -1315,10 +1368,10 @@ class StorageHandler {
             await client.connect();
 
             const trainingsplit = await client.query(`
-            SELECT ${day}
-            FROM user_trainingsplit
-            WHERE trainingsplit_id = $1
-            AND user_id = $2`,
+                                SELECT ${day}
+                                FROM user_trainingsplit
+                                WHERE trainingsplit_id = $1
+                                AND user_id = $2`,
                 [trainingsplit_id, userid]);
 
             if (trainingsplit.rows.length > 0) {
@@ -1347,10 +1400,10 @@ class StorageHandler {
                             editedTrainingsplit.list.push({ [exercise]: [] });
 
                             await client.query(`
-                        UPDATE user_trainingsplit
-                        SET ${day} = $3
-                        WHERE trainingsplit_id = $1
-                        AND user_id = $2`,
+                                UPDATE user_trainingsplit
+                                SET ${day} = $3
+                                WHERE trainingsplit_id = $1
+                                AND user_id = $2`,
                                 [trainingsplit_id, userid, editedTrainingsplit]);
 
                             results = true;
@@ -1387,10 +1440,10 @@ class StorageHandler {
             await client.connect();
 
             const trainingsplit = await client.query(`
-            SELECT ${day}
-            FROM user_trainingsplit
-            WHERE trainingsplit_id = $1
-            AND user_id = $2`,
+                                SELECT ${day}
+                                FROM user_trainingsplit
+                                WHERE trainingsplit_id = $1
+                                AND user_id = $2`,
                 [trainingsplit_id, userid]);
 
             if (trainingsplit.rows.length > 0) {
@@ -1407,10 +1460,10 @@ class StorageHandler {
                     }
 
                     await client.query(`
-                            UPDATE user_trainingsplit
-                            SET ${day} = $3
-                            WHERE trainingsplit_id = $1
-                            AND user_id = $2`,
+                                UPDATE user_trainingsplit
+                                SET ${day} = $3
+                                WHERE trainingsplit_id = $1
+                                AND user_id = $2`,
                         [trainingsplit_id, userid, editedTrainingsplit]);
 
                     results = true;
@@ -1442,10 +1495,10 @@ class StorageHandler {
             await client.connect();
 
             const trainingsplit = await client.query(`
-            SELECT ${day}
-            FROM user_trainingsplit
-            WHERE trainingsplit_id = $1
-            AND user_id = $2`,
+                                SELECT ${day}
+                                FROM user_trainingsplit
+                                WHERE trainingsplit_id = $1
+                                AND user_id = $2`,
                 [trainingsplit_id, userid]);
 
             if (trainingsplit.rows.length > 0) {
@@ -1471,10 +1524,10 @@ class StorageHandler {
                     if (update === true) {
 
                         await client.query(`
-                        UPDATE user_trainingsplit
-                        SET ${day} = $3
-                        WHERE trainingsplit_id = $1
-                        AND user_id = $2`,
+                                UPDATE user_trainingsplit
+                                SET ${day} = $3
+                                WHERE trainingsplit_id = $1
+                                AND user_id = $2`,
                             [trainingsplit_id, userid, editedTrainingsplit]);
 
                         results = true;
@@ -1507,10 +1560,10 @@ class StorageHandler {
             await client.connect();
 
             const trainingsplit = await client.query(`
-            SELECT ${day}
-            FROM user_trainingsplit
-            WHERE trainingsplit_id = $1
-            AND user_id = $2`,
+                                SELECT ${day}
+                                FROM user_trainingsplit
+                                WHERE trainingsplit_id = $1
+                                AND user_id = $2`,
                 [trainingsplit_id, userid]);
 
             if (trainingsplit.rows.length > 0) {
@@ -1529,10 +1582,10 @@ class StorageHandler {
                     }
 
                     await client.query(`
-                        UPDATE user_trainingsplit
-                        SET ${day} = $3
-                        WHERE trainingsplit_id = $1
-                        AND user_id = $2`,
+                                UPDATE user_trainingsplit
+                                SET ${day} = $3
+                                WHERE trainingsplit_id = $1
+                                AND user_id = $2`,
                         [trainingsplit_id, userid, editedTrainingsplit]);
 
                     results = true;
@@ -1566,18 +1619,18 @@ class StorageHandler {
             await client.connect();
 
             const allTrainingsplits = await client.query(`
-                SELECT trainingsplit_id, trainingsplit_name
-                FROM user_trainingsplit
-                WHERE user_id = $1`,
+                                SELECT trainingsplit_id, trainingsplit_name
+                                FROM user_trainingsplit
+                                WHERE user_id = $1`,
                 [userid]);
 
             if (allTrainingsplits.rows.length < maxTrainingsplits.default) {
 
                 let copyTrainingsplit = await client.query(`
-                SELECT *
-                FROM user_trainingsplit
-                WHERE user_id = $1
-                AND trainingsplit_id = $2`,
+                                SELECT *
+                                    FROM user_trainingsplit
+                                WHERE user_id = $1
+                                AND trainingsplit_id = $2`,
                     [owner_id, trainingsplit_id]);
 
                 if (copyTrainingsplit.rows.length > 0) {
@@ -1597,8 +1650,8 @@ class StorageHandler {
                     const sunday = copyTrainingsplit.sunday;
 
                     const newTrainingsplit = await client.query(`
-                    INSERT INTO user_trainingsplit(user_id, trainingsplit_name, monday, tuesday, wednesday, thursday, friday, saturday, sunday)
-                    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING trainingsplit_id`, [userid, name, monday, tuesday, wednesday, thursday, friday, saturday, sunday]);
+                                INSERT INTO user_trainingsplit(user_id, trainingsplit_name, monday, tuesday, wednesday, thursday, friday, saturday, sunday)
+                                VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING trainingsplit_id`, [userid, name, monday, tuesday, wednesday, thursday, friday, saturday, sunday]);
 
                     if (newTrainingsplit.rows.length > 0) {
                         newtrainingsplit_id = newTrainingsplit.rows[0].trainingsplit_id;
@@ -1633,6 +1686,7 @@ class StorageHandler {
 
         const client = new pg.Client(this.credentials);
         let results = false;
+        let update = false;
         let msg = "";
 
         try {
@@ -1640,18 +1694,18 @@ class StorageHandler {
 
 
             const trainingsplit = await client.query(`
-            SELECT *
-            FROM user_trainingsplit
-            WHERE user_id = $1
-            AND trainingsplit_id = $2`,
+                                SELECT *
+                                    FROM user_trainingsplit
+                                WHERE user_id = $1
+                                AND trainingsplit_id = $2`,
                 [owner_id, trainingsplit_id]);
 
             if (trainingsplit.rows.length > 0) {
 
                 let subscribedTrainingsplits = await client.query(`
-                SELECT subscribedtrainingsplits
-                FROM user_settings
-                WHERE user_id = $1`,
+                                SELECT subscribedtrainingsplits
+                                FROM user_settings
+                                WHERE user_id = $1`,
                     [userid]);
 
                 const tIDString = trainingsplit_id.toString();
@@ -1665,22 +1719,33 @@ class StorageHandler {
                         if (subscribedTrainingsplits[i] === tIDString) {
                             subscribedTrainingsplits.splice(i, 1);
                             msg = `Du abonnerer ikke lenger på denne planen`;
+                            update = true;
                         }
                     }
 
                 } else {
-                    //subscribe
-                    subscribedTrainingsplits.push(tIDString);
-                    msg = `Du abonnerer nå på denne planen`;
+
+                    if (subscribedTrainingsplits.length < maxSubscribedTrainingsplits.default) {
+                        //subscribe
+                        subscribedTrainingsplits.push(tIDString);
+                        msg = `Du abonnerer nå på denne planen`;
+                        update = true;
+                    } else {
+                        msg = `Du kan ikke abonnere på flere enn ${maxSubscribedTrainingsplits.default} treningsplaner!`;
+                        update = false;
+                    }
                 }
 
-                await client.query(`
-                        UPDATE user_settings
-                        SET subscribedtrainingsplits = $2
-                        WHERE user_id = $1`,
-                    [userid, JSON.stringify(subscribedTrainingsplits)]);
+                if (update === true) {
 
-                results = true;
+                    await client.query(`
+                                UPDATE user_settings
+                                SET subscribedtrainingsplits = $2
+                                WHERE user_id = $1`,
+                        [userid, JSON.stringify(subscribedTrainingsplits)]);
+
+                    results = true;
+                }
 
             } else {
                 msg = `Treningsplanen finnes ikke!`;
@@ -1710,9 +1775,9 @@ class StorageHandler {
             await client.connect();
 
             await client.query(`
-            UPDATE users
-            SET displayname = $1
-            WHERE username = $2`,
+                                UPDATE users
+                                SET displayname = $1
+                                WHERE username = $2`,
                 [newDisplayname, username]);
 
             results = true;
@@ -1742,26 +1807,26 @@ class StorageHandler {
 
             // checks if username is already taken in pending_users table
             results = await client.query(`
-            SELECT username
-            FROM pending_users
-            WHERE username = $1`,
+                                SELECT username
+                                FROM pending_users
+                                WHERE username = $1`,
                 [newUsername]);
 
             if (results.rows.length === 0) {
 
                 // checks if username is already taken in users table
                 results = await client.query(`
-                SELECT username
-                FROM users
-                WHERE username = $1`,
+                                SELECT username
+                                FROM users
+                                WHERE username = $1`,
                     [newUsername]);
 
                 if (results.rows.length === 0) {
 
                     await client.query(`
-                    UPDATE users
-                    SET username = $1
-                    WHERE username = $2`,
+                                UPDATE users
+                                SET username = $1
+                                WHERE username = $2`,
                         [newUsername, username]);
                     results = true;
                     client.end();
@@ -1800,19 +1865,19 @@ class StorageHandler {
             await client.connect();
 
             results = await client.query(`
-            SELECT password
-            FROM users
-            WHERE id = $1
-            AND password = $2`,
+                                SELECT password
+                                FROM users
+                                WHERE id = $1
+                                AND password = $2`,
                 [user, exsistingPsw]);
 
             if (results.rows.length !== 0) {
 
                 if (results.rows[0].password !== newPsw) {
                     await client.query(`
-                    UPDATE users
-                    SET password = $1
-                    WHERE id = $2`,
+                                UPDATE users
+                                SET password = $1
+                                WHERE id = $2`,
                         [newPsw, user]);
                     results = true;
                 } else {
@@ -1850,9 +1915,9 @@ class StorageHandler {
             //await client.query('UPDATE "users" SET info=$1 WHERE username=$2', [settings, username]);
 
             const user_id = await client.query(`
-            SELECT id
-            FROM users
-            WHERE username = $1`,
+                                SELECT id
+                                FROM users
+                                WHERE username = $1`,
                 [username]);
 
             if (user_id.rows[0].id) {
@@ -1881,9 +1946,9 @@ class StorageHandler {
                         const weightValue = aboutme.weight;
 
                         await client.query(`
-                            UPDATE user_details
-                            SET gym = $2, age = $3, height = $4, weight = $5
-                            WHERE user_id = $1`,
+                                UPDATE user_details
+                                SET gym = $2, age = $3, height = $4, weight = $5
+                                WHERE user_id = $1`,
                             [user_id.rows[0].id, gymValue, ageValue, heightValue, weightValue]);
 
                     }
@@ -1917,9 +1982,9 @@ class StorageHandler {
             await client.connect();
 
             const userInfo = await client.query(`
-            SELECT *
-            FROM users
-            WHERE id = $1`,
+                                SELECT *
+                                    FROM users
+                                WHERE id = $1`,
                 [user]);
 
             if (userInfo.rows.length > 0) {
@@ -1931,9 +1996,9 @@ class StorageHandler {
             }
 
             const userDetails = await client.query(`
-            SELECT *
-            FROM user_details
-            WHERE user_id = $1`,
+                                SELECT *
+                                    FROM user_details
+                                WHERE user_id = $1`,
                 [user]);
 
             if (userDetails.rows.length > 0) {
@@ -1942,9 +2007,9 @@ class StorageHandler {
             }
 
             const userSettings = await client.query(`
-            SELECT *
-            FROM user_settings
-            WHERE user_id = $1`,
+                                SELECT *
+                                    FROM user_settings
+                                WHERE user_id = $1`,
                 [user]);
 
             if (userSettings.rows.length > 0) {
@@ -1953,9 +2018,9 @@ class StorageHandler {
             }
 
             const userLifts = await client.query(`
-            SELECT *
-            FROM user_lifts
-            WHERE user_id = $1`,
+                                SELECT *
+                                    FROM user_lifts
+                                WHERE user_id = $1`,
                 [user]);
 
             if (userLifts.rows.length > 0) {
@@ -1964,9 +2029,9 @@ class StorageHandler {
             }
 
             const userGoals = await client.query(`
-            SELECT *
-            FROM user_goals
-            WHERE user_id = $1`,
+                                SELECT *
+                                    FROM user_goals
+                                WHERE user_id = $1`,
                 [user]);
 
             if (userGoals.rows.length > 0) {
@@ -1975,9 +2040,9 @@ class StorageHandler {
             }
 
             const userTrainingsplit = await client.query(`
-            SELECT *
-            FROM user_trainingsplit
-            WHERE user_id = $1`,
+                                SELECT *
+                                    FROM user_trainingsplit
+                                WHERE user_id = $1`,
                 [user]);
 
             if (userTrainingsplit.rows.length > 0) {
@@ -2013,10 +2078,10 @@ class StorageHandler {
             await client.connect();
 
             let userInfo = await client.query(`
-            SELECT id
-            FROM users
-            WHERE username = $1
-            AND password = $2`,
+                                SELECT id
+                                FROM users
+                                WHERE username = $1
+                                AND password = $2`,
                 [username, password]);
 
             if (userInfo.rows.length !== 0) {
@@ -2024,38 +2089,38 @@ class StorageHandler {
                 const deleteID = userInfo.rows[0].id;
 
                 await client.query(`
-                DELETE FROM user_trainingsplit
-                WHERE user_id=$1`,
+                                DELETE FROM user_trainingsplit
+                                WHERE user_id = $1`,
                     [deleteID]);
 
                 await client.query(`
-                DELETE FROM user_settings
-                WHERE user_id=$1`,
+                                DELETE FROM user_settings
+                                WHERE user_id = $1`,
                     [deleteID]);
 
                 await client.query(`
-                DELETE FROM user_lifts
-                WHERE user_id=$1`,
+                                DELETE FROM user_lifts
+                                WHERE user_id = $1`,
                     [deleteID]);
 
                 await client.query(`
-                DELETE FROM user_goals
-                WHERE user_id=$1`,
+                                DELETE FROM user_goals
+                                WHERE user_id = $1`,
                     [deleteID]);
 
                 await client.query(`
-                DELETE FROM user_details
-                WHERE user_id=$1`,
+                                DELETE FROM user_details
+                                WHERE user_id = $1`,
                     [deleteID]);
 
                 await client.query(`
-                DELETE FROM user_api
-                WHERE user_id=$1`,
+                                DELETE FROM user_api
+                                WHERE user_id = $1`,
                     [deleteID]);
 
                 await client.query(`
-                DELETE FROM users
-                WHERE id=$1`,
+                                DELETE FROM users
+                                WHERE id = $1`,
                     [deleteID]);
 
                 results = true;
@@ -2084,20 +2149,20 @@ class StorageHandler {
             await client.connect();
 
             const checkIfAdmin = await client.query(`
-            SELECT username
-            FROM users
-            WHERE username = $1
-            AND isadmin=true`,
+                                SELECT username
+                                FROM users
+                                WHERE username = $1
+                                AND isadmin = true`,
                 [username]);
 
             if (checkIfAdmin.rows.length !== 0) {
 
                 results = await client.query(`
-                SELECT user_api.apikey
-                FROM users, user_api
-                WHERE users.id=$1
-                AND users.id = user_api.user_id
-                AND user_api.apikey IS NOT null`,
+                                SELECT user_api.apikey
+                                FROM users, user_api
+                                WHERE users.id = $1
+                                AND users.id = user_api.user_id
+                                AND user_api.apikey IS NOT null`,
                     [giveAPIUserAccess]);
 
                 if (results.rows.length === 0) {
@@ -2106,9 +2171,9 @@ class StorageHandler {
                     generatedAPIKey = parseInt(generatedAPIKey);
                     //await client.query('INSERT INTO "api_keys" VALUES($1, $2)', [giveAPIUserAccess, generatedAPIKey]);
                     await client.query(`
-                    UPDATE user_api
-                    SET apikey = $2
-                    WHERE user_api.user_id = $1`,
+                                UPDATE user_api
+                                SET apikey = $2
+                                WHERE user_api.user_id = $1`,
                         [giveAPIUserAccess, generatedAPIKey]);
 
                     results = true;
@@ -2140,29 +2205,29 @@ class StorageHandler {
             await client.connect();
 
             const checkIfAdmin = await client.query(`
-            SELECT username
-            FROM users
-            WHERE username = $1
-            AND isadmin=true`,
+                                SELECT username
+                                FROM users
+                                WHERE username = $1
+                                AND isadmin = true`,
                 [username]);
 
             if (checkIfAdmin.rows.length !== 0) {
 
                 results = await client.query(`
-                SELECT user_api.apikey
-                FROM users, user_api
-                WHERE users.id=$1
-                AND users.id = user_api.user_id
-                AND user_api.apikey IS NOT null`,
+                                SELECT user_api.apikey
+                                FROM users, user_api
+                                WHERE users.id = $1
+                                AND users.id = user_api.user_id
+                                AND user_api.apikey IS NOT null`,
                     [removeAPIUserAccess]);
 
                 if (results.rows.length !== 0) {
 
                     //await client.query('DELETE FROM "api_keys" WHERE user_id=$1', [removeAPIUserAccess]);
                     await client.query(`
-                    UPDATE user_api
-                    SET apikey = default
-                    WHERE user_api.user_id = $1`,
+                                UPDATE user_api
+                                SET apikey = default
+    WHERE user_api.user_id = $1`,
                         [removeAPIUserAccess]);
 
                     results = true;
@@ -2200,10 +2265,10 @@ class StorageHandler {
             await client.connect();
 
             results = await client.query(`
-            SELECT user_id
-            FROM user_api
-            WHERE apikey = $1
-            AND apikey IS NOT null`,
+    SELECT user_id
+    FROM user_api
+    WHERE apikey = $1
+    AND apikey IS NOT null`,
                 [key]);
 
             if (results.rows.length === 0) {
@@ -2217,9 +2282,9 @@ class StorageHandler {
                 }
 
                 results = await client.query(`
-                SELECT publicprofile
-                FROM user_settings
-                WHERE user_id = $1`,
+SELECT publicprofile
+FROM user_settings
+WHERE user_id = $1`,
                     [user]);
 
                 if (results.rows.length === 0) {
@@ -2228,12 +2293,12 @@ class StorageHandler {
                     const userHasPublicProfile = results.rows[0].publicprofile;
 
                     if (userHasPublicProfile === true || isOwner === true) {
-                        //results = await client.query(`SELECT "trainingsplit","displayname" FROM "users" WHERE id=$1`, [user]);
+                        //results = await client.query(`SELECT "trainingsplit", "displayname" FROM "users" WHERE id = $1`, [user]);
 
                         results = await client.query(`
-                        SELECT activetrainingsplit
-                        FROM user_settings
-                        WHERE user_id = $1`,
+SELECT activetrainingsplit
+FROM user_settings
+WHERE user_id = $1`,
                             [user]);
 
                         if (results.rows.length !== 0) {
@@ -2247,9 +2312,9 @@ class StorageHandler {
                                 const day = days[dayNum];
 
                                 results = await client.query(`
-                                SELECT ${day}
-                                FROM user_trainingsplit
-                                WHERE trainingsplit_id = $1`,
+SELECT ${day}
+FROM user_trainingsplit
+WHERE trainingsplit_id = $1`,
                                     [activetrainingsplit]);
 
                                 if (results.rows.length !== 0) {
@@ -2257,9 +2322,9 @@ class StorageHandler {
                                     info.workout = results.rows[0][day].short;
 
                                     results = await client.query(`
-                                    SELECT displayname
-                                    FROM users
-                                    WHERE id = $1`,
+SELECT displayname
+FROM users
+WHERE id = $1`,
                                         [user]);
 
                                     if (results.rows.length !== 0) {
@@ -2317,10 +2382,10 @@ class StorageHandler {
             await client.connect();
 
             results = await client.query(`
-            SELECT user_id
-            FROM user_api
-            WHERE apikey = $1
-            AND apikey IS NOT null`,
+SELECT user_id
+FROM user_api
+WHERE apikey = $1
+AND apikey IS NOT null`,
                 [key]);
 
             if (results.rows.length === 0) {
@@ -2334,9 +2399,9 @@ class StorageHandler {
                 }
 
                 results = await client.query(`
-                SELECT publicprofile
-                FROM user_settings
-                WHERE user_id = $1`,
+SELECT publicprofile
+FROM user_settings
+WHERE user_id = $1`,
                     [user]);
 
                 if (results.rows.length === 0) {
@@ -2347,10 +2412,10 @@ class StorageHandler {
                     if (userHasPublicProfile === true || isOwner === true) {
 
                         results = await client.query(`
-                        SELECT users.id, users.username, user_lifts.benkpress, user_lifts.knebøy, user_lifts.markløft
-                        FROM users, user_lifts
-                        WHERE users.id = $1
-                        AND users.id = user_lifts.user_id`, [user]);
+SELECT users.id, users.username, user_lifts.benkpress, user_lifts.knebøy, user_lifts.markløft
+FROM users, user_lifts
+WHERE users.id = $1
+AND users.id = user_lifts.user_id`, [user]);
 
                         if (results.rows.length !== 0) {
 

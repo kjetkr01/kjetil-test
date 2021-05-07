@@ -277,18 +277,18 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
         let isSubscribed = false;
 
         if (cachedSubscribedTrainingsplits_owner) {
-            if (cachedSubscribedTrainingsplits_owner.includes(resp.trainingsplit_id.toString())) {
+            if (Object.keys(cachedSubscribedTrainingsplits_owner).includes(resp.trainingsplit_id.toString())) {
                 isSubscribed = true;
             }
         }
 
-        let subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id});">Abonner</button>`;
+        let subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id}, '${resp.trainingsplit_name}');">Abonner</button>`;
 
         if (isSubscribed === true) {
-            subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id});">Abonnerer</button>`;
+            subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id}, '${resp.trainingsplit_name}');">Abonnerer</button>`;
         }
 
-        creatorTxt = `Av: ${resp.creator}<br>`;
+        creatorTxt = `Av: ${resp.owner}<br>`;
         document.getElementById("trainingsplitToolBar").innerHTML += `
         <button class="trainingsplitButton pointer" onClick="copyTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id});">Kopier</button>
         ${subscribeHTML}`;
@@ -418,29 +418,52 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
     }
 }
 
+function viewTrainingsplitOwnerList() {
+
+    const trainingsplit_id = document.getElementById("listworkoutPlans");
+
+    if (trainingsplit_id) {
+        viewTrainingsplit(trainingsplit_id.value);
+    }
+}
+
+function viewTrainingsplitSubList() {
+
+    const trainingsplit_id = document.getElementById("listsubworkoutPlans");
+
+    if (trainingsplit_id) {
+        viewTrainingsplit(trainingsplit_id.value);
+    }
+}
+
 function viewTrainingsplit(aId, aDay) {
 
-    let day = "monday";
+    if (aId && aId !== "null") {
 
-    const EDays = {
-        "monday": "Mandag",
-        "tuesday": "Tirsdag",
-        "wednesday": "Onsdag",
-        "thursday": "Torsdag",
-        "friday": "Fredag",
-        "saturday": "Lørdag",
-        "sunday": "Søndag"
-    }
+        // eller today??
+        let day = "monday";
 
-    const EDaysKeys = Object.keys(EDays);
-    for (let i = 0; i < EDaysKeys.length; i++) {
-
-        if (EDays[EDaysKeys[i]] === aDay) {
-            day = EDaysKeys[i];
+        const EDays = {
+            "monday": "Mandag",
+            "tuesday": "Tirsdag",
+            "wednesday": "Onsdag",
+            "thursday": "Torsdag",
+            "friday": "Fredag",
+            "saturday": "Lørdag",
+            "sunday": "Søndag"
         }
-    }
 
-    sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": aId, "edit": false, "day": day }));
+        const EDaysKeys = Object.keys(EDays);
+        for (let i = 0; i < EDaysKeys.length; i++) {
+
+            if (EDays[EDaysKeys[i]] === aDay) {
+                day = EDaysKeys[i];
+            }
+        }
+
+        sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": aId, "edit": false, "day": day }));
+
+    }
 
     location.reload();
 }
@@ -661,7 +684,7 @@ async function copyTrainingsplit(aTrainingsplit_id, aOwner_id) {
 }
 
 
-async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id) {
+async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTrainingsplit_name) {
 
     const trainingsplit_id = aTrainingsplit_id;
 
@@ -690,18 +713,17 @@ async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id) {
             if (data.status === true) {
                 const cachedSubscribedTrainingsplits_owner = JSON.parse(sessionStorage.getItem("cachedSubscribedTrainingsplits_owner"));
                 if (cachedSubscribedTrainingsplits_owner) {
+                    const cachedSubscribedTrainingsplits_ownerKeys = Object.keys(cachedSubscribedTrainingsplits_owner);
                     const tIDString = trainingsplit_id.toString();
-                    if (!cachedSubscribedTrainingsplits_owner.includes(tIDString) && !data.msg.includes("ikke lenger")) {
-                        cachedSubscribedTrainingsplits_owner.push(tIDString);
-
+                    if (!cachedSubscribedTrainingsplits_ownerKeys.includes(tIDString) && !data.msg.includes("ikke lenger")) {
+                        cachedSubscribedTrainingsplits_owner[tIDString] = aTrainingsplit_name;
                     } else {
-                        for (let i = 0; i < cachedSubscribedTrainingsplits_owner.length; i++) {
-                            if (cachedSubscribedTrainingsplits_owner[i] === tIDString) {
-                                cachedSubscribedTrainingsplits_owner.splice(i, 1);
+                        for (let i = 0; i < cachedSubscribedTrainingsplits_ownerKeys.length; i++) {
+                            if (cachedSubscribedTrainingsplits_ownerKeys[i] === tIDString) {
+                                delete cachedSubscribedTrainingsplits_owner[cachedSubscribedTrainingsplits_ownerKeys[i]];
                             }
                         }
                     }
-
                     sessionStorage.setItem("cachedSubscribedTrainingsplits_owner", JSON.stringify(cachedSubscribedTrainingsplits_owner));
                 }
                 location.reload();

@@ -607,16 +607,25 @@ function enableOverlayEditDays() {
     respMsg.textContent = "";
 
     const allTrainingsplits = JSON.parse(localStorage.getItem("cachedAllTrainingsplits_owner"));
+    const subscribedTrainingsplits = JSON.parse(sessionStorage.getItem("cachedSubscribedTrainingsplits_owner"));
 
     if (!activetrainingsplit) {
         const hiddeDOMs = ["Gtitle3workoutPlans", "Gline3workoutPlans", "GtextworkoutPlans"];
         for (let i = 0; i < hiddeDOMs.length; i++) {
             document.getElementById(hiddeDOMs[i]).classList = "hidden";
         }
+    } else {
+        const textworkoutPlans = document.getElementById("textworkoutPlans");
+
+        if (activetrainingsplit.user_id !== userID) {
+            textworkoutPlans.innerHTML = `${activetrainingsplit.trainingsplit_name} (av ${activetrainingsplit.owner})`;
+        } else {
+            textworkoutPlans.innerHTML = activetrainingsplit.trainingsplit_name;
+        }
     }
 
     if (allTrainingsplits) {
-        let listworkoutPlansOptionsHTML = "";
+        let listworkoutPlansOptionsHTML = "<option value='null'>Velg fra listen</option>";
 
         for (let i = 0; i < allTrainingsplits.length; i++) {
             const currentSplit = allTrainingsplits[i];
@@ -624,7 +633,6 @@ function enableOverlayEditDays() {
             if (activetrainingsplit) {
                 if (activetrainingsplit.trainingsplit_id) {
                     if (activetrainingsplit.trainingsplit_id === currentSplit.trainingsplit_id) {
-                        document.getElementById("textworkoutPlans").innerHTML = currentSplit.trainingsplit_name;
                         selected = "selected";
                     }
                 }
@@ -634,18 +642,54 @@ function enableOverlayEditDays() {
 
         document.getElementById("listworkoutPlans").innerHTML = listworkoutPlansOptionsHTML;
 
+        const GviewplanworkoutPlans = document.getElementById("GviewplanworkoutPlans");
         const GeditplanworkoutPlans = document.getElementById("GeditplanworkoutPlans");
         const GsaveworkoutPlans = document.getElementById("GsaveworkoutPlans");
 
         if (navigator.onLine) {
+            GviewplanworkoutPlans.innerHTML = `<button class="pointer" id="viewplanworkoutPlans" onClick="viewTrainingsplitOwnerList();">Se planen</button>`;
             GeditplanworkoutPlans.innerHTML = `<button class="pointer" id="editplanworkoutPlans" onClick="editTrainingsplit();">Rediger</button>`;
             GsaveworkoutPlans.innerHTML = `<button id="saveworkoutPlans" class="pointer" onClick="setActiveTrainingsplit();">Lagre</button>`;
         } else {
+            GviewplanworkoutPlans.innerHTML = `<button disabled id="viewplanworkoutPlans">Se planen</button>`;
             GeditplanworkoutPlans.innerHTML = `<button disabled id="editplanworkoutPlans">Rediger</button>`;
             GsaveworkoutPlans.innerHTML = `<button id="saveworkoutPlans" disabled>Lagre</button>`;
         }
     } else {
         const hiddeDOMs = ["Gtitle2workoutPlans", "Gline2workoutPlans", "GlistworkoutPlans"];
+        for (let i = 0; i < hiddeDOMs.length; i++) {
+            document.getElementById(hiddeDOMs[i]).classList = "hidden";
+        }
+    }
+
+    if (Object.keys(subscribedTrainingsplits).length > 0) {
+        const subscribedTrainingsplitsKeys = Object.keys(subscribedTrainingsplits);
+        let listworkoutSubscribedPlansOptionsHTML = "<option value='null'>Velg fra listen</option>";
+        for (let w = 0; w < subscribedTrainingsplitsKeys.length; w++) {
+            const name = subscribedTrainingsplits[subscribedTrainingsplitsKeys[w]];
+            let selected = "";
+            if (activetrainingsplit) {
+                if (activetrainingsplit.trainingsplit_id) {
+                    if (activetrainingsplit.trainingsplit_id === parseInt(subscribedTrainingsplitsKeys[w])) {
+                        selected = "selected";
+                    }
+                }
+            }
+            listworkoutSubscribedPlansOptionsHTML += `<option ${selected} value="${subscribedTrainingsplitsKeys[w]}">${name}</option>`;
+        }
+
+        document.getElementById("listsubworkoutPlans").innerHTML = listworkoutSubscribedPlansOptionsHTML;
+
+        const GviewsubplanworkoutPlans = document.getElementById("GviewsubplanworkoutPlans");
+
+        if (navigator.onLine) {
+            GviewsubplanworkoutPlans.innerHTML = `<button class="pointer" id="viewsubplanworkoutPlans" onClick="viewTrainingsplitSubList();">Se planen</button>`;
+        } else {
+            GviewsubplanworkoutPlans.innerHTML = `<button disabled id="viewsubplanworkoutPlans">Se</button>`;
+        }
+
+    } else {
+        const hiddeDOMs = ["Gtitle3workoutPlans", "Gline3workoutPlans", "GlistsubworkoutPlans"];
         for (let i = 0; i < hiddeDOMs.length; i++) {
             document.getElementById(hiddeDOMs[i]).classList = "hidden";
         }
@@ -716,7 +760,23 @@ async function setActiveTrainingsplit() {
     if (navigator.onLine) {
 
         respMsg.textContent = "Setter treningsplanen som aktiv...";
-        const trainingsplit_id = document.getElementById("listworkoutPlans").value;
+        let trainingsplit_id = null;
+        const trainingsplit_idOwnerList = document.getElementById("listworkoutPlans");
+
+        if (trainingsplit_idOwnerList && trainingsplit_idOwnerList.value !== "null") {
+            if (activetrainingsplit.trainingsplit_id !== parseInt(trainingsplit_idOwnerList.value)) {
+                trainingsplit_id = trainingsplit_idOwnerList.value;
+            }
+        }
+
+        const trainingsplit_idSubList = document.getElementById("listsubworkoutPlans");
+
+        if (trainingsplit_idSubList && trainingsplit_idSubList.value !== "null") {
+            if (activetrainingsplit.trainingsplit_id !== parseInt(trainingsplit_idSubList.value)) {
+                trainingsplit_id = trainingsplit_idSubList.value;
+            }
+        }
+
         const infoHeader = { "trainingsplit_id": trainingsplit_id };
         const url = `/user/setactive/trainingsplit`;
 
@@ -731,7 +791,7 @@ async function setActiveTrainingsplit() {
                 location.reload();
             }, 2000);
         } else {
-            respMsg.textContent = "Det har oppstått en feil!";
+            respMsg.textContent = "Kunne ikke sette treningsplanen som aktiv!";
         }
 
     } else {

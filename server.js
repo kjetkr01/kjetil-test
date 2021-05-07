@@ -861,10 +861,15 @@ server.post("/user/setactive/trainingsplit", auth, async (req, res) => {
           const currentUser = JSON.parse(req.headers.userinfo);
           const trainingsplit_id = parseInt(req.body.trainingsplit_id);
 
-          const resp = await setActiveTrainingsplit(currentUser.id, trainingsplit_id);
+          if (!isNaN(trainingsplit_id)) {
 
-          if (resp === true) {
-               res.status(200).json(true).end();
+               const resp = await setActiveTrainingsplit(currentUser.id, trainingsplit_id);
+
+               if (resp === true) {
+                    res.status(200).json(true).end();
+               } else {
+                    res.status(403).json("error, try again").end();
+               }
           } else {
                res.status(403).json("error, try again").end();
           }
