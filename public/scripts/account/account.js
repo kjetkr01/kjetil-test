@@ -411,6 +411,7 @@ function displayLifts(hasLiftsLeft) {
                     badgesLiftsTableRow.innerHTML += badge;
                 }
             }
+
         } else {
             document.getElementById("lifts").innerHTML = `Du har ingen løft enda!`;
         }
@@ -424,6 +425,13 @@ function displayLifts(hasLiftsLeft) {
                 badgesLiftsTableRow.innerHTML += badge;
             }
         }
+
+        if (sessionStorage.getItem("badgeslifts_scroll_x")) {
+            GbadgesLifts.scrollLeft = sessionStorage.getItem("badgeslifts_scroll_x");
+        } else {
+            GbadgesLifts.scrollLeft = 0;
+        }
+
     } catch (err) {
         console.log(err);
     }
@@ -570,6 +578,7 @@ function displayGoals(hasGoalsLeft) {
                     badgesGoalsTableRow.innerHTML += badge;
                 }
             }
+
         } else {
             document.getElementById("goals").innerHTML = `Du har ingen mål enda!`;
         }
@@ -584,6 +593,13 @@ function displayGoals(hasGoalsLeft) {
                 badgesGoalsTableRow.innerHTML += badge;
             }
         }
+
+        if (sessionStorage.getItem("badgesgoals_scroll_x")) {
+            GbadgesGoals.scrollLeft = sessionStorage.getItem("badgesgoals_scroll_x");
+        } else {
+            GbadgesGoals.scrollLeft = 0;
+        }
+
     } catch (err) {
         console.log(err);
     }

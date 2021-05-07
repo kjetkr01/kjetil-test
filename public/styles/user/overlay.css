@@ -27,6 +27,7 @@ transform: translate(-50%,-50%);
 width: 90%;
 max-width: 550px;
 height: 70%;
+max-height: 470px;
 overflow-y: scroll;
 
 background-color: var(--main-backgroundColor2);
@@ -68,13 +69,13 @@ grid-template-areas:
 
 grid-template-rows: /* nedover */
 
-2vh /* c1oE */
+20px /* c1oE */
 
 30px /* Gtitle1E */
 
 10px /* Gline1E */
 
-1fr /* c2oE */
+30px /* c2oE */
 
 
 
@@ -84,7 +85,7 @@ grid-template-rows: /* nedover */
 
 auto /* Ginp1E */
 
-4vh /* c3oE */
+20px /* c3oE */
 
 
 
@@ -94,7 +95,7 @@ auto /* Ginp1E */
 
 auto /* Ginp2E */
 
-4vh /* c4oE */
+20px /* c4oE */
 
 
 
@@ -104,7 +105,7 @@ auto /* Ginp2E */
 
 auto /* Ginp3E */
 
-4vh /* c5oE */
+20px /* c5oE */
 
 
 25px /* Gtitle5E */
@@ -113,12 +114,12 @@ auto /* Ginp3E */
 
 auto /* Ginp4E */
 
-1fr /* c6oE */
+20px /* c6oE */
 
 
 40px /* GbuttonsE */
 
-2vh /* c7oE */
+10px /* c7oE */
 
 ;
 

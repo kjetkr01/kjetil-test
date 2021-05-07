@@ -98,7 +98,17 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
 
     const daysList = `Velg dag: <select id="trainingsplitSelectDay" onChange="changeTrainingsplitDay();" class="trainingsplitSelect pointer">${optionsHTML}</select>`;
 
-    const exercisesList = ["Benkpress", "Knebøy", "Markløft"];
+    const cachedLifts_owner = JSON.parse(localStorage.getItem("cachedLifts_owner"));
+
+
+    const exercisesList = [];
+
+    if (cachedLifts_owner) {
+        const cachedLifts_ownerKeys = Object.keys(cachedLifts_owner);
+        for (let i = 0; i < cachedLifts_ownerKeys.length; i++) {
+            exercisesList.push(capitalizeFirstLetter(cachedLifts_ownerKeys[i]));
+        }
+    }
 
     let exerciseListOptionsHTML = "";
 
@@ -107,10 +117,10 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
     }
 
     document.getElementById("smallTitle").innerHTML += top + daysList;
-
+    //<button class="trainingsplitButton pointer" style="color:red;" onClick="deleteTrainingsplit('${resp.trainingsplit_id}');">Slett</button>
     const toolBarHTML = `
     <button class="trainingsplitButton pointer">Lagre</button>
-    <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteTrainingsplit('${resp.trainingsplit_id}');">Slett</button>
+    <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteTrainingsplit('${resp.trainingsplit_id}');"><img src="images/trash.svg"></img></button>
     <br>
     <br>
     <select id="selectNewExercise" class="trainingsplitSelect pointer">
@@ -154,10 +164,11 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
             const exerciseList = exerciseInfo[exerciseName];
 
             const trainingsplitTable = document.getElementById("trainingsplitTable");
+            //<button class="trainingsplitButton pointer" style="color:red;" onClick="deleteExercise('${exerciseName}');">Slett</button></h3>
             trainingsplitTable.innerHTML += `
-            <br><h3>${exerciseName}
-            <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteExercise('${exerciseName}');">Slett</button></h3>
-            <hr class="trainingsplitLine">`;
+            <br><h3 class="fadeInUp animate">${exerciseName}
+            <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteExercise('${exerciseName}');"><img src="images/trash.svg"></button></h3>
+            <hr class="trainingsplitLine fadeInUp animate">`;
 
             for (let j = 0; j < exerciseList.length; j++) {
                 const info = exerciseList[j];
@@ -184,8 +195,9 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
                     }
                 }
 
+                // <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteRowExercise('${exerciseName}', ${j});">Slett raden</button>
                 trainingsplitTable.innerHTML += `
-            <p class="trainingsplitListRow">
+            <p class="trainingsplitListRow fadeInUp animate delaySmall">
             ${j + 1}.
             <input class="trainingsplitSetsInput" maxlength="2" value="${info.sets}"></input>
             x
@@ -196,14 +208,20 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
             <select class="trainingsplitSelect pointer">
             ${optionsHTMLList}
             </select>
-
-            <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteRowExercise('${exerciseName}', ${j});">Slett raden</button>
+    
+            <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteRowExercise('${exerciseName}', ${j});"><img src="images/trash.svg"></button>
             </p>
-            <hr class="trainingsplitSmallLine">`;
+            <hr class="trainingsplitSmallLine fadeInUp animate delayMedium">`;
             }
 
             trainingsplitTable.innerHTML += `<p><button class="trainingsplitButton pointer" onClick="addRowExercise('${exerciseName}');">Ny rad</button></p>`;
         }
+    }
+
+    const GuserGrid = document.getElementById("GuserGrid");
+
+    if (sessionStorage.getItem("usergrid_scroll_y")) {
+        GuserGrid.scrollTop = sessionStorage.getItem("usergrid_scroll_y");
     }
 }
 
@@ -278,7 +296,7 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
 
             if (exerciseList.length > 0) {
 
-                trainingsplitTable.innerHTML += `<br><h3>${exerciseName}</h3><hr class="trainingsplitLine">`;
+                trainingsplitTable.innerHTML += `<br><h3 class="fadeInUp animate">${exerciseName}</h3><hr class="trainingsplitLine fadeInUp animate">`;
 
                 for (let j = 0; j < exerciseList.length; j++) {
                     const info = exerciseList[j];
@@ -365,6 +383,7 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
                     }
 
                     trainingsplitTable.innerHTML += `
+            <div class="fadeInUp animate delaySmall">
             <p class="trainingsplitListRow trainingsplitInline">
             ${j + 1}.
             <p class="trainingsplitInline" style="margin-left:30px;">${info.sets}</p>
@@ -372,7 +391,8 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
             <p class="trainingsplitInline">${info.reps}</p>
             ${extraHTML}
             </p>
-            <hr class="trainingsplitSmallLine">`;
+            </div>
+            <hr class="trainingsplitSmallLine fadeInUp animate delayMedium">`;
                 }
             }
         }

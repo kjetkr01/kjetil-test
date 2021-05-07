@@ -327,21 +327,29 @@
       document.getElementById("userGrid").innerHTML = "";
       requestTrainingsplitDetails();
    } else {
-
+      requestAccountDetails();
+      sessionStorage.removeItem("trainingsplit");
       const GuserGrid = document.getElementById("GuserGrid");
 
       if (sessionStorage.getItem("usergrid_scroll_y")) {
          GuserGrid.scrollTop = sessionStorage.getItem("usergrid_scroll_y");
       }
 
-      GuserGrid.addEventListener("scroll", function (evt) {
-         const scrollY = GuserGrid.scrollTop;
-         sessionStorage.setItem("usergrid_scroll_y", scrollY);
+      GbadgesLifts.addEventListener("scroll", function (evt) {
+         const scrollX = GbadgesLifts.scrollLeft;
+         sessionStorage.setItem("badgeslifts_scroll_x", scrollX);
       });
 
-      requestAccountDetails();
-      sessionStorage.removeItem("trainingsplit");
+      GbadgesGoals.addEventListener("scroll", function (evt) {
+         const scrollX = GbadgesGoals.scrollLeft;
+         sessionStorage.setItem("badgesgoals_scroll_x", scrollX);
+      });
    }
+
+   GuserGrid.addEventListener("scroll", function (evt) {
+      const scrollY = GuserGrid.scrollTop;
+      sessionStorage.setItem("usergrid_scroll_y", scrollY);
+   });
 
    setInterval(() => {
       checkConnection("c6r2");

@@ -33,6 +33,7 @@ transform: translate(-50%,-50%);
 width: 90%;
 max-width: 550px;
 height: 70%;
+max-height: 530px;
 overflow-y: scroll;
 
 background-color: var(--main-backgroundColor2);
@@ -75,13 +76,13 @@ grid-template-areas:
 
 grid-template-rows: /* nedover */
 
-2vh /* c1oC */
+20px /* c1oC */
 
 30px /* Gtitle1C */
 
 10px /* Gline1C */
 
-1fr /* c2oC */
+30px /* c2oC */
 
 
 
@@ -91,7 +92,7 @@ grid-template-rows: /* nedover */
 
 auto /* Ginp1C */
 
-4vh /* c3oC */
+20px /* c3oC */
 
 
 
@@ -101,7 +102,7 @@ auto /* Ginp1C */
 
 auto /* Ginp2C */
 
-4vh /* c4oC */
+20px /* c4oC */
 
 
 
@@ -111,7 +112,7 @@ auto /* Ginp2C */
 
 auto /* Ginp3C */
 
-4vh /* c5oC */
+20px /* c5oC */
 
 
 25px /* Gtitle5C */
@@ -120,14 +121,14 @@ auto /* Ginp3C */
 
 auto /* Ginp4C */
 
-1fr /* c6oC */
+20px /* c6oC */
 
 
 auto /* GrespC */
 
 40px /* GbuttonsC */
 
-2vh /* c8oC */
+10px /* c8oC */
 
 ;
 
@@ -378,6 +379,7 @@ transform: translate(-50%,-50%);
 width: 90%;
 max-width: 550px;
 height: 70%;
+max-height: 530px;
 overflow-y: scroll;
 
 background-color: var(--main-backgroundColor2);
@@ -421,13 +423,13 @@ grid-template-areas:
 
 grid-template-rows: /* nedover */
 
-2vh /* c1oE */
+20px /* c1oE */
 
 30px /* Gtitle1E */
 
 10px /* Gline1E */
 
-1fr /* c2oE */
+30px /* c2oE */
 
 
 
@@ -437,7 +439,7 @@ grid-template-rows: /* nedover */
 
 auto /* Ginp1E */
 
-4vh /* c3oE */
+20px /* c3oE */
 
 
 
@@ -447,7 +449,7 @@ auto /* Ginp1E */
 
 auto /* Ginp2E */
 
-4vh /* c4oE */
+20px /* c4oE */
 
 
 
@@ -457,7 +459,7 @@ auto /* Ginp2E */
 
 auto /* Ginp3E */
 
-4vh /* c5oE */
+20px /* c5oE */
 
 
 25px /* Gtitle5E */
@@ -475,7 +477,7 @@ auto /* GrespE */
 
 40px /* GbuttonsE */
 
-2vh /* c7oE */
+10px /* c7oE */
 
 ;
 
@@ -735,6 +737,7 @@ transform: translate(-50%,-50%);
 width: 90%;
 max-width: 550px;
 height: 65%;
+max-height: 530px;
 overflow-y: scroll;
 
 background-color: var(--main-backgroundColor2);
@@ -770,13 +773,13 @@ grid-template-areas:
 
 grid-template-rows: /* nedover */
 
-2vh /* c1oWP */
+30px /* c1oWP */
 
 30px /* Gtitle1workoutPlans */
 
 10px /* Gline1workoutPlans */
 
-6vh /* c2oWP */
+30px /* c2oWP */
 
 
 
@@ -792,7 +795,7 @@ auto /* GeditplanworkoutPlans */
 
 auto /* GcreateplanworkoutPlans */
 
-4vh /* c4oWP */
+30px /* c4oWP */
 
 
 

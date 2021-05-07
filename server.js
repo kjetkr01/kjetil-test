@@ -933,12 +933,18 @@ server.post("/user/add/trainingsplit/exercise", auth, async (req, res) => {
           const exercise = req.body.exercise;
           const day = req.body.day;
 
-          const resp = await addExerciseTrainingsplit(currentUser.id, trainingsplit_id, exercise, day);
+          const maxExerciseLength = 20;
 
-          if (resp.status === true) {
-               res.status(200).json(resp.status).end();
+          if (exercise.length < maxExerciseLength || allowedLifts.includes(exercise.toLowerCase())) {
+               const resp = await addExerciseTrainingsplit(currentUser.id, trainingsplit_id, exercise, day);
+
+               if (resp.status === true) {
+                    res.status(200).json(resp.status).end();
+               } else {
+                    res.status(403).json(resp).end();
+               }
           } else {
-               res.status(403).json(resp).end();
+               res.status(403).json({ "status": false, "msg": `Navnet på øvelsen kan ikke være lengre enn ${maxCharLength} bokstaver!` }).end();
           }
 
      } catch (err) {

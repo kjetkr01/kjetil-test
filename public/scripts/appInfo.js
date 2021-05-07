@@ -31,7 +31,7 @@ const ongoingUpdatesArr = [
     "Elementer: nr, øvelse, reps, sets, % utfra ORM, rpe, ingen (100%)",
     "Kunne kopiere andre brukere sine planer (0%)",
     "Kunne abonnere på andre brukere sine planer (0%)",
-    "Kunne redigere treningsplanen (80%)",
+    "Kunne redigere treningsplanen (90%)",
     "TITLE:Offline/caching support",
     "Se treningsplan, løft, mål offline (90%)",
     "Offline og bruk av caching (90%)",
@@ -39,7 +39,7 @@ const ongoingUpdatesArr = [
     "Fikse slik at splash screen funker på landscape mode (iPad) (50%)",
     "TITLE:Annet",
     "Optimalisering",
-    "Endring i hvordan animasjoner/lasting av data funker (70%)"
+    "Endring i hvordan animasjoner/lasting av data funker (80%)"
 ];
 
 //
@@ -59,7 +59,7 @@ const plannedUpdatesArr = [
 
     "TITLE:Badges",
     "Lage flere badge farger",
-    "Lage større versjon av badge (mål-badge)",
+    "Lage større versjon av badge (mål-badge, på startsiden)",
 
     "TITLE:Desktop design",
     "Optimalisere desktop design",

@@ -1334,7 +1334,13 @@ class StorageHandler {
 
                         let create = true;
                         for (let i = 0; i < editedTrainingsplit.list.length; i++) {
-                            if (editedTrainingsplit.list[i][exercise]) {
+
+                            if (Object.keys(editedTrainingsplit.list[i])[0].toLowerCase() !== exercise.toLowerCase()) {
+                                if (editedTrainingsplit.list[i][exercise]) {
+                                    create = false;
+                                    break;
+                                }
+                            } else {
                                 create = false;
                                 break;
                             }

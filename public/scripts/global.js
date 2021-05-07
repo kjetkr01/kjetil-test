@@ -18,8 +18,8 @@ const allowedThemes = {
 }
 
 const themeColors = {
-    "default": { "lightHex": "357F9B", "darkHex": "24586b" },
-    "blue": { "lightHex": "3e50b4", "darkHex": "2c3a8a" }
+    "default": { "lightHex": "327a94", "darkHex": "1c4553" },
+    "blue": { "lightHex": "3247bb", "darkHex": "202b6b" }
 }
 
 const badgeColorBorders = {
@@ -399,6 +399,7 @@ function sortByLiftsOrGoalOwner(aDom, aType) {
 
         if (type === "lift") {
             showLiftBadgeAnimations = true;
+            sessionStorage.removeItem("badgeslifts_scroll_x");
             if (allowedExercises.includes(dom.value)) {
                 localStorage.setItem('display_lifts_owner', dom.value);
             } else {
@@ -410,6 +411,7 @@ function sortByLiftsOrGoalOwner(aDom, aType) {
 
         if (type === "goal") {
             showGoalBadgeAnimations = true;
+            sessionStorage.removeItem("badgesgoals_scroll_x");
             if (allowedExercises.includes(dom.value)) {
                 localStorage.setItem('display_goals_owner', dom.value);
             } else {
