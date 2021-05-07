@@ -14,6 +14,7 @@ module.exports.badgeColors = {
     "redBadge": `Rød`,
     "yellowBadge": `Gul`,
     "blueBadge": `Blå`,
+    "themeBadge": `Følg tema`,
 };
 //styles/badges/badgeColors.css for reference
 

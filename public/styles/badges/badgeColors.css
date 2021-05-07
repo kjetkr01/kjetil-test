@@ -39,6 +39,11 @@ background-color: #626BE3;
 box-shadow: var(--bsSize) rgba(98,107,227, 0.4);
 }
 
+.themeBadge {
+    background-color: var(--main-bodyBackgroundColor);
+    box-shadow: var(--bsSize) var(--main-backgroundColorRGBLowOpacity);
+    }
+
 /* end of Plain Color Badges */
 
 
