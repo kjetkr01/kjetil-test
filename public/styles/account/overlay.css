@@ -736,7 +736,7 @@ transform: translate(-50%,-50%);
 -ms-transform: translate(-50%,-50%);
 width: 90%;
 max-width: 550px;
-height: 80%;
+height: fit-content;
 max-height: 600px;
 overflow-y: scroll;
 
