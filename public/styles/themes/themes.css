@@ -1,23 +1,23 @@
 /* LIGHT THEME VALUES */
 
 .defaultColorTheme-light {
---main-headerBackground:  #357F9B;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-headerBackground:  #327a94;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
---main-backgroundColor1: #357F9B;
---main-backgroundColorRGBLowOpacity: rgba(53,127,155, 0.4);
+--main-backgroundColor1: #3c93b3;
+--main-backgroundColorRGBLowOpacity: rgba(60,147,179, 0.4);
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
---main-accountOwnerColor: var(--main-headerBackground);
+--main-accountOwnerColor: var(--main-backgroundColor1);
 }
 
 .blueColorTheme-light {
---main-headerBackground:  #3e50b4;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-headerBackground:  #3247bb;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
---main-backgroundColor1: #3e50b4;
---main-backgroundColorRGBLowOpacity: rgba(62,80,180, 0.4);
+--main-backgroundColor1: #3a53e2;
+--main-backgroundColorRGBLowOpacity: rgba(58,83,226, 0.4);
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
---main-accountOwnerColor: var(--main-headerBackground);
+--main-accountOwnerColor: var(--main-backgroundColor1);
 }
 
 /* END OF LIGHT THEME VALUES */
@@ -25,20 +25,20 @@
 
 /* DARK THEME VALUES */
 .defaultColorTheme-dark {
---main-headerBackground:  #24586b;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-headerBackground:  #1c4553;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
---main-backgroundColor1: #24586b;
---main-backgroundColorRGBLowOpacity: rgba(36,88,107, 0.4);
+--main-backgroundColor1: #265f72;
+--main-backgroundColorRGBLowOpacity: rgba(38,95,114, 0.4);
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
---main-accountOwnerColor: #357F9B;
+--main-accountOwnerColor: #30738b;
 }
 
 .blueColorTheme-dark {
---main-headerBackground:  #2c3a8a;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-headerBackground:  #202b6b;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
---main-backgroundColor1: #2c3a8a;
---main-backgroundColorRGBLowOpacity: rgba(44,58,138, 0.4);
+--main-backgroundColor1: #293797;
+--main-backgroundColorRGBLowOpacity: rgba(41,55,151, 0.4);
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
 --main-accountOwnerColor: #4154c0;
