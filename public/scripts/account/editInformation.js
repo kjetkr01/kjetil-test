@@ -623,6 +623,15 @@ function enableOverlayEditDays() {
         } else {
             textworkoutPlans.innerHTML = activetrainingsplit.trainingsplit_name;
         }
+
+        const GsetNoneActivePlanworkoutPlans = document.getElementById("GsetNoneActivePlanworkoutPlans");
+
+        if (navigator.onLine) {
+            GsetNoneActivePlanworkoutPlans.innerHTML = `<button class="pointer" id="setNoneActivePlanworkoutPlans" onClick="setNoneActiveTrainingsplit();">Fjern som aktiv</button>`;
+        } else {
+            GsetNoneActivePlanworkoutPlans.innerHTML = `<button disabled id="setNoneActivePlanworkoutPlans">Fjern som aktiv</button>`;
+        }
+
     }
 
     if (allTrainingsplits) {
@@ -819,6 +828,41 @@ async function setActiveTrainingsplit() {
 
 // end of setActiveTrainingsplit
 
+
+// setNoneActiveTrainingsplit
+
+async function setNoneActiveTrainingsplit() {
+
+    const respMsg = document.getElementById("respworkoutPlans");
+    respMsg.textContent = "";
+
+    if (navigator.onLine) {
+
+        respMsg.textContent = "Fjerner treningsplanen som aktiv...";
+
+        const infoHeader = {};
+        const url = `/user/setnotactive/trainingsplit`;
+
+        const resp = await callServerAPIPost(infoHeader, url);
+
+        if (resp === true) {
+            respMsg.textContent = "Treningsplanen er ikke lenger aktiv!";
+            setTimeout(() => {
+                disableOverlay();
+            }, 1500);
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
+        } else {
+            respMsg.textContent = "Kunne ikke fjerne en treningsplan som er aktiv!";
+        }
+
+    } else {
+        respMsg.textContent = "Du må ha internettforbindelse for å fjerne en treningsplan som er aktiv";
+    }
+}
+
+// end of setNoneActiveTrainingsplit
 
 // deleteTrainingsplit
 

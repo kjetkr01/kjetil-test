@@ -1275,6 +1275,36 @@ class StorageHandler {
     //
 
 
+    //  -------------------------------  set active Trainingsplit (user)  ------------------------------- //
+
+    async setNotActiveTrainingsplit(userid) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+
+        try {
+            await client.connect();
+            
+            results = await client.query(`
+             UPDATE user_settings
+             SET activetrainingsplit = default
+             WHERE user_id = $1`,
+                 [userid]);
+
+            results = true;
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return results;
+    }
+
+    //
+
+
     //  -------------------------------  get Trainingsplit (user)  ------------------------------- //
 
     async getTrainingsplit(userid, trainingsplit_id) {

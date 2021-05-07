@@ -772,6 +772,7 @@ grid-template-areas:
 "Gtitle4workoutPlans Gtitle4workoutPlans Gtitle4workoutPlans"
 "Gline4workoutPlans Gline4workoutPlans Gline4workoutPlans"
 "GtextworkoutPlans GtextworkoutPlans GtextworkoutPlans"
+"GsetNoneActivePlanworkoutPlans GsetNoneActivePlanworkoutPlans GsetNoneActivePlanworkoutPlans"
 "c7oWP c7oWP c7oWP"
 
 "GrespworkoutPlans GrespworkoutPlans GrespworkoutPlans"
@@ -829,6 +830,8 @@ auto /* GviewsubplanworkoutPlans */
 
 auto /* GtextworkoutPlans */
 
+auto /* GsetNoneActivePlanworkoutPlans */
+
 30px /* c7oWP */
 
 
@@ -868,6 +871,10 @@ width: 250px;
 #GtextworkoutPlans > #textworkoutPlans {
 font-size: 16px;
 color: var(--main-accountOwnerColor);
+}
+
+#GsetNoneActivePlanworkoutPlans > #setNoneActivePlanworkoutPlans {
+
 }
 
 #line2workoutPlans, #line3workoutPlans, #line4workoutPlans{
@@ -927,7 +934,7 @@ margin: 20px;
 font-size: 16px;
 }
 
-#cancelworkoutPlans, #saveworkoutPlans, #viewplanworkoutPlans ,#editplanworkoutPlans, #createplanworkoutPlans, #viewsubplanworkoutPlans {
+#cancelworkoutPlans, #saveworkoutPlans, #viewplanworkoutPlans ,#editplanworkoutPlans, #createplanworkoutPlans, #viewsubplanworkoutPlans, #setNoneActivePlanworkoutPlans {
 font-size: 16px;
 font-weight: bold;
 height: 30px;
@@ -1059,6 +1066,10 @@ grid-area: Gline4workoutPlans;
 
 .workoutPlans > #GtextworkoutPlans {
 grid-area: GtextworkoutPlans;
+}
+
+.workoutPlans > #GsetNoneActivePlanworkoutPlans {
+    grid-area: GsetNoneActivePlanworkoutPlans;
 }
 
 .workoutPlans > #c7oWP {

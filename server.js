@@ -55,6 +55,7 @@ const addExerciseRowTrainingsplit = require("./modules/user").addExerciseRowTrai
 const deleteExerciseRowTrainingsplit = require("./modules/user").deleteExerciseRowTrainingsplit;
 const copyTrainingsplit = require("./modules/user").copyTrainingsplit;
 const subUnsubTrainingsplit = require("./modules/user").subUnsubTrainingsplit;
+const setNotActiveTrainingsplit = require("./modules/user").setNotActiveTrainingsplit;
 
 /* */
 
@@ -1124,6 +1125,28 @@ server.post("/user/subunsub/trainingsplit", auth, async (req, res) => {
                }
           } else {
                res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+
+//
+
+// sub unsub trainingsplit
+
+server.post("/user/setnotactive/trainingsplit", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const resp = await setNotActiveTrainingsplit(currentUser.id);
+
+          if (resp === true) {
+               res.status(200).json(true).end();
+          } else {
+               res.status(403).json(false).end();
           }
 
      } catch (err) {
