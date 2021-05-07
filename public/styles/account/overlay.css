@@ -468,7 +468,7 @@ auto /* Ginp3E */
 
 auto /* Ginp4E */
 
-1fr /* c6oE */
+20px /* c6oE */
 
 
 30px /* GdeleteE */
@@ -805,14 +805,14 @@ auto /* GcreateplanworkoutPlans */
 
 auto /* GtextworkoutPlans */
 
-4vh /* c5oWP */
+30px /* c5oWP */
 
 
 auto /* GrespworkoutPlans */
 
 30px /* GbuttonsworkoutPlans */
 
-2vh /* c7oWP */
+10px /* c7oWP */
 
 ;
 
@@ -860,11 +860,11 @@ background-color: var(--main-backgroundColor2);
 }
 
 #GeditplanworkoutPlans > #editplanworkoutPlans {
-    margin-top: 10px;
+margin-top: 10px;
 }
 
 #GcreateplanworkoutPlans > #createplanworkoutPlans{
-    margin-top: 10px;
+margin-top: 10px;
 }
 
 #GcancelworkoutPlans > #cancelworkoutPlans {
@@ -964,12 +964,12 @@ grid-area: c3oWP;
 }
 
 .workoutPlans > #GcreateplanworkoutPlans{
-    grid-area: GcreateplanworkoutPlans;
+grid-area: GcreateplanworkoutPlans;
 }
 
 .workoutPlans > #c4oWP {
-    grid-area: c4oWP;
-    }
+grid-area: c4oWP;
+}
 
 .workoutPlans > #Gtitle3workoutPlans {
 grid-area: Gtitle3workoutPlans;

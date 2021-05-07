@@ -584,7 +584,7 @@ ${aBadgeInfo.trainingsplit}
         
         <div id="Gday">
         <p id="day">
-       Rediger
+        Velg
         </p>
         </div>
         

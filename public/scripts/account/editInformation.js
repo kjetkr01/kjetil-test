@@ -608,8 +608,14 @@ function enableOverlayEditDays() {
 
     const allTrainingsplits = JSON.parse(localStorage.getItem("cachedAllTrainingsplits_owner"));
 
-    if (allTrainingsplits) {
+    if (!activetrainingsplit) {
+        const hiddeDOMs = ["Gtitle3workoutPlans", "Gline3workoutPlans", "GtextworkoutPlans"];
+        for (let i = 0; i < hiddeDOMs.length; i++) {
+            document.getElementById(hiddeDOMs[i]).classList = "hidden";
+        }
+    }
 
+    if (allTrainingsplits) {
         let listworkoutPlansOptionsHTML = "";
 
         for (let i = 0; i < allTrainingsplits.length; i++) {
@@ -637,6 +643,11 @@ function enableOverlayEditDays() {
         } else {
             GeditplanworkoutPlans.innerHTML = `<button disabled id="editplanworkoutPlans">Rediger</button>`;
             GsaveworkoutPlans.innerHTML = `<button id="saveworkoutPlans" disabled>Lagre</button>`;
+        }
+    } else {
+        const hiddeDOMs = ["Gtitle2workoutPlans", "Gline2workoutPlans", "GlistworkoutPlans"];
+        for (let i = 0; i < hiddeDOMs.length; i++) {
+            document.getElementById(hiddeDOMs[i]).classList = "hidden";
         }
     }
 
