@@ -7,7 +7,7 @@
 
     // Slutt
 
-    const expectedUpdates = 925;
+    const expectedUpdates = 930;
     const upd = updateDay.split(".");
 
     const app = {
