@@ -600,7 +600,7 @@ function displayTrainingsplit() {
 
                     if (days.includes(keys[i]) && daysNorwegian[keys[i]]) {
                         let activeTrainingsplitKeys = activetrainingsplit[keys[i]];
-                        if (activeTrainingsplitKeys.short) {
+                        if (activeTrainingsplitKeys.short && activeTrainingsplitKeys.short !== "" && activeTrainingsplitKeys.short !== "Fri") {
                             const color = activeTrainingsplitKeys.color || "redBadgeG";
 
                             arr.push({ "day": daysNorwegian[keys[i]], "trainingsplit": activeTrainingsplitKeys.short, "color": color, "trainingsplit_id": activetrainingsplit.trainingsplit_id });
