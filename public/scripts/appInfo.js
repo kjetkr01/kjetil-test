@@ -28,11 +28,11 @@ const ongoingUpdatesArr = [
     "TITLE:Innstillinger",
     "Personvern (75%)",
     "TITLE:Treningsplan",
-    "Kunne flytte øvelse opp eller ned",
-    "Kunne endre navn på øvelse som allerede er laget",
+    "Kunne flytte øvelser opp eller ned",
+    "Kunne endre navn på øvelser som allerede er laget",
     "TITLE:Offline/caching support",
-    "Se treningsplan, løft, mål offline (90%)",
-    "Offline og bruk av caching (90%)",
+    "Se treningsplan, løft, mål offline (100%)",
+    "Offline og bruk av caching (100%)",
     "TITLE:Splash Screen (iOS)",
     "Fikse slik at splash screen funker på landscape mode (iPad) (50%)",
     "TITLE:Språk",
@@ -40,7 +40,7 @@ const ongoingUpdatesArr = [
     "God formulering og ordbruk (-1%)",
     "TITLE:Annet",
     "Optimalisering",
-    "Endring i hvordan animasjoner/lasting av data funker (80%)"
+    "Endring i hvordan animasjoner/lasting av data funker (85%)"
 ];
 
 //

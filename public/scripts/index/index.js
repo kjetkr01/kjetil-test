@@ -372,6 +372,10 @@ function displayGoals() {
                             msg = `${goalReps} reps igjen`;
                             untilGoal = goalReps * repsSM;
                         }
+                    } else {
+                        kgUntilGoal = goalKg - highestLiftKg.kg;
+                        msg = `${kgUntilGoal} kg igjen`;
+                        untilGoal = kgUntilGoal;
                     }
 
                     arr.push({ "exercise": capitalizeFirstLetter(current), "kg": goalKg, "untilGoal": untilGoal, "msg": msg, "color": color, "id": id });

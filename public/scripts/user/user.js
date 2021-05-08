@@ -532,6 +532,10 @@ function displayGoals() {
                         msg = `${goalReps} reps igjen`;
                         untilGoal = goalReps * repsSM;
                     }
+                } else {
+                    kgUntilGoal = goalKg - highestLiftKg.kg;
+                    msg = `${kgUntilGoal} kg igjen`;
+                    untilGoal = kgUntilGoal;
                 }
 
 
