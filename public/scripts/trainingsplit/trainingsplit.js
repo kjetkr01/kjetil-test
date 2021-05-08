@@ -250,11 +250,12 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
 
     const EDaysKeys = Object.keys(EDays);
     for (let i = 0; i < EDaysKeys.length; i++) {
-
-        if (EDaysKeys[i] === aSelectedDay) {
-            optionsHTML += `<option selected value="${EDaysKeys[i]}">${EDays[EDaysKeys[i]]}</option>`;
-        } else {
-            optionsHTML += `<option value="${EDaysKeys[i]}">${EDays[EDaysKeys[i]]}</option>`;
+        if (resp[EDaysKeys[i]].short.length > 0) {
+            if (EDaysKeys[i] === aSelectedDay) {
+                optionsHTML += `<option selected value="${EDaysKeys[i]}">${EDays[EDaysKeys[i]]}</option>`;
+            } else {
+                optionsHTML += `<option value="${EDaysKeys[i]}">${EDays[EDaysKeys[i]]}</option>`;
+            }
         }
     }
 
@@ -298,7 +299,7 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
         ${subscribeHTML}`;
     }
 
-    document.getElementById("smallTitle").innerHTML += `<br><h3>${resp.trainingsplit_name}</h3>${creatorTxt}${daysList}<br>${selectedDay.short}`;
+    document.getElementById("smallTitle").innerHTML += `<br><h3>${resp.trainingsplit_name}</h3>${creatorTxt}${daysList}<br>${selectedDay.short || 'I dag er det fri fra trening :)'}`;
 
     if (selectedDay.list.length > 0) {
 
@@ -322,103 +323,104 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
                 for (let j = 0; j < exerciseList.length; j++) {
                     const info = exerciseList[j];
 
-                    const list = {
-                        0: "Ingen",
-                        1: "kg",
-                        2: "%",
-                        3: "RPE"
-                    }
+                    if (info.sets > 0 && info.reps > 0) {
 
-                    const listKeys = Object.keys(list);
-
-                    let type = "";
-
-                    for (let x = 0; x < listKeys.length; x++) {
-
-                        const num = parseInt(listKeys[x]);
-
-                        if (num === info.value) {
-                            type = list[listKeys[x]];
+                        const list = {
+                            0: "Ingen",
+                            1: "kg",
+                            2: "%",
+                            3: "RPE"
                         }
-                    }
 
-                    let extraHTML = `
-                <p class="trainingsplitInput trainingsplitInline" style="margin-left:30px;">${info.number}</p>
+                        const listKeys = Object.keys(list);
 
-                <p class="trainingsplitInline">${type}</p>
-                `;
+                        let type = "";
 
-                    if (type === list[0]) {
-                        extraHTML = "";
-                    }
+                        for (let x = 0; x < listKeys.length; x++) {
 
-                    if (type === list[2]) {
-                        let highestKG = 0;
-                        //calc % out of 1RM if exists.
+                            const num = parseInt(listKeys[x]);
 
-                        const exercise = exerciseName.toLowerCase();
-                        const cachedLiftsList = JSON.parse(localStorage.getItem("cachedLifts_owner"));
+                            if (num === info.value) {
+                                type = list[listKeys[x]];
+                            }
+                        }
 
-                        if (cachedLiftsList) {
-                            const cachedLiftsListKeys = Object.keys(cachedLiftsList);
-                            if (cachedLiftsListKeys.includes(exercise)) {
-                                const exerciseList = cachedLiftsList[exercise];
-                                if (exerciseList) {
-                                    if (exerciseList.length > 0) {
-                                        for (let z = 0; z < exerciseList.length; z++) {
-                                            const current = exerciseList[z];
+                        let extraHTML = `
+                        <p class="trainingsplitInput trainingsplitInline" style="margin-left:30px;">${info.number}</p>
 
-                                            if (current.reps === "1") {
-                                                if (parseFloat(current.kg) > highestKG) {
-                                                    highestKG = parseFloat(current.kg);
+                        <p class="trainingsplitInline">${type}</p>
+                        `;
+
+                        if (type === list[0]) {
+                            extraHTML = "";
+                        }
+
+                        if (type === list[2]) {
+                            let highestKG = 0;
+                            //calc % out of 1RM if exists.
+
+                            const exercise = exerciseName.toLowerCase();
+                            const cachedLiftsList = JSON.parse(localStorage.getItem("cachedLifts_owner"));
+
+                            if (cachedLiftsList) {
+                                const cachedLiftsListKeys = Object.keys(cachedLiftsList);
+                                if (cachedLiftsListKeys.includes(exercise)) {
+                                    const exerciseList = cachedLiftsList[exercise];
+                                    if (exerciseList) {
+                                        if (exerciseList.length > 0) {
+                                            for (let z = 0; z < exerciseList.length; z++) {
+                                                const current = exerciseList[z];
+
+                                                if (current.reps === "1") {
+                                                    if (parseFloat(current.kg) > highestKG) {
+                                                        highestKG = parseFloat(current.kg);
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-                                }
 
-                                if (highestKG > 0) {
-                                    const indecimal = info.number / 100;
-                                    let weightBasedOnPercent = parseFloat(highestKG * indecimal);
-                                    const split = weightBasedOnPercent.toString().split(".");
+                                    if (highestKG > 0) {
+                                        const indecimal = info.number / 100;
+                                        let weightBasedOnPercent = parseFloat(highestKG * indecimal);
+                                        const split = weightBasedOnPercent.toString().split(".");
 
-                                    if (split.length > 1) {
-                                        weightBasedOnPercent = weightBasedOnPercent.toFixed(2);
-                                    }
+                                        if (split.length > 1) {
+                                            weightBasedOnPercent = weightBasedOnPercent.toFixed(2);
+                                        }
 
-                                    extraHTML = `
+                                        extraHTML = `
                                 <p class="trainingsplitInline" style="margin-left:30px;">${weightBasedOnPercent}</p>
                                 <p class="trainingsplitInline">kg (${info.number}%)</p>
                                 `;
-                                } else {
-                                    if (!ORMLifts.includes(exercise)) {
-                                        ORMLifts.push(exercise);
+                                    } else {
+                                        if (!ORMLifts.includes(exercise)) {
+                                            ORMLifts.push(exercise);
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
 
-                    if (ORMLifts.length > 0) {
-                        trainingsplitInfo.innerHTML = `Denne planen fungrerer best hvis du har 1 Rep / ORM i følgende løft: ${ORMLifts}`;
-                    }
+                        if (ORMLifts.length > 0) {
+                            trainingsplitInfo.innerHTML = `Denne planen fungrerer best hvis du har 1 Rep / ORM i følgende løft: ${ORMLifts}`;
+                        }
 
-                    trainingsplitTable.innerHTML += `
-            <div class="fadeInUp animate delaySmall">
-            <p class="trainingsplitListRow trainingsplitInline">
-            ${j + 1}.
-            <p class="trainingsplitInline" style="margin-left:30px;">${info.sets}</p>
-            x
-            <p class="trainingsplitInline">${info.reps}</p>
-            ${extraHTML}
-            </p>
-            </div>
-            <hr class="trainingsplitSmallLine fadeInUp animate delayMedium">`;
+                        trainingsplitTable.innerHTML += `
+                        <div class="fadeInUp animate delaySmall">
+                        <p class="trainingsplitListRow trainingsplitInline">
+                        ${j + 1}.
+                        <p class="trainingsplitInline" style="margin-left:30px;">${info.sets}</p>
+                        x
+                        <p class="trainingsplitInline">${info.reps}</p>
+                        ${extraHTML}
+                        </p>
+                        </div>
+                        <hr class="trainingsplitSmallLine fadeInUp animate delayMedium">`;
+                    }
                 }
             }
         }
-    } else {
-        trainingsplitInfo.innerHTML = `I dag er det fri fra trening :)`;
     }
 }
 

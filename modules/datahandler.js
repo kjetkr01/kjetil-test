@@ -1010,7 +1010,7 @@ class StorageHandler {
             for (let i = 0; i < workoutUsers.rows.length; i++) {
                 const todaysWorkout = workoutUsers.rows[i][day].short;
                 if (todaysWorkout) {
-                    if (todaysWorkout.length > 0 && todaysWorkout !== "Fri") {
+                    if (todaysWorkout.length > 0) {
                         infoList.push({ "id": workoutUsers.rows[i].id, "userFullName": workoutUsers.rows[i].displayname, "todaysWorkout": todaysWorkout });
                     }
                 }
@@ -1378,7 +1378,7 @@ class StorageHandler {
             if (results.rows.length > 0) {
 
                 trainingsplit = results.rows[0][day];
-                
+
                 trainingsplit.list = list;
                 trainingsplit.short = trainingsplit_short;
 
@@ -2380,9 +2380,9 @@ WHERE user_id = $1`,
                         //results = await client.query(`SELECT "trainingsplit", "displayname" FROM "users" WHERE id = $1`, [user]);
 
                         results = await client.query(`
-SELECT activetrainingsplit
-FROM user_settings
-WHERE user_id = $1`,
+                        SELECT activetrainingsplit
+                        FROM user_settings
+                        WHERE user_id = $1`,
                             [user]);
 
                         if (results.rows.length !== 0) {
@@ -2396,9 +2396,9 @@ WHERE user_id = $1`,
                                 const day = days[dayNum];
 
                                 results = await client.query(`
-SELECT ${day}
-FROM user_trainingsplit
-WHERE trainingsplit_id = $1`,
+                                SELECT ${day}
+                                FROM user_trainingsplit
+                                WHERE trainingsplit_id = $1`,
                                     [activetrainingsplit]);
 
                                 if (results.rows.length !== 0) {
@@ -2406,9 +2406,9 @@ WHERE trainingsplit_id = $1`,
                                     info.workout = results.rows[0][day].short;
 
                                     results = await client.query(`
-SELECT displayname
-FROM users
-WHERE id = $1`,
+                                    SELECT displayname
+                                    FROM users
+                                    WHERE id = $1`,
                                         [user]);
 
                                     if (results.rows.length !== 0) {
