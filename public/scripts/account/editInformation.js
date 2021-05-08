@@ -1046,8 +1046,12 @@ function changeOverlayBorderColor() {
 
     if (inpVal) {
 
+        const editLiftorGoal = document.getElementById("editLiftorGoal");
+
         if (badgeColorBorders.hasOwnProperty(inpVal.value)) {
-            document.getElementById("editLiftorGoal").style.border = `1px solid #${badgeColorBorders[inpVal.value]}`;
+            editLiftorGoal.style.border = `1px solid #${badgeColorBorders[inpVal.value]}`;
+        } else {
+            editLiftorGoal.style.border = "";
         }
     }
 }
