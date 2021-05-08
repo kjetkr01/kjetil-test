@@ -134,8 +134,6 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
     <button class="trainingsplitButton pointer" onClick="addExercise();">Legg til øvelse</button>
     `;
 
-    const backToTopBtn = `<button class="trainingsplitButton pointer" onClick="document.getElementById('GuserGrid').scrollTop = 0;">Tilbake til toppen</button>`;
-
     document.getElementById("userGrid").innerHTML = `
     <div id="trainingsplitDiv">
     <p id="trainingsplitToolBar">${toolBarHTML}</p>
@@ -143,14 +141,10 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
     <p id="trainingsplitInfo"></p>
     <p id="trainingsplitTable"></p>
     <br><br>
-    <p id="trainingsplitBottom">${backToTopBtn}</p>
+    <p id="trainingsplitBottom"></p>
     </div>`;
 
     let shortTxt = "";
-
-    /*if (selectedDay.short) {
-        shortTxt = `Forkortelse på planen: ${selectedDay.short || ""}<br><br>`;
-    }*/
 
     document.getElementById("trainingsplitInfo").innerHTML = `<p>${shortTxt}Format: 2 x 3 = 2 Sets, 3 Reps.<br>80 % = 80 % av 1 Rep/ORM i øvelsen (krever ORM i løftet for automatisk utregning)</p>`;
 
@@ -198,7 +192,6 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
                     }
                 }
 
-                // <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteRowExercise('${exerciseName}', ${j});">Slett raden</button>
                 trainingsplitTable.innerHTML += `
             <p class="trainingsplitListRow fadeInUp animate delaySmall">
             ${j + 1}.
@@ -222,6 +215,11 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
     }
 
     const GuserGrid = document.getElementById("GuserGrid");
+
+    if (GuserGrid.scrollHeight > (GuserGrid.clientHeight + 600)) {
+        const backToTopBtn = `<button class="trainingsplitButton pointer" onClick="document.getElementById('GuserGrid').scrollTop = 0;">Tilbake til toppen</button>`;
+        document.getElementById("trainingsplitBottom").innerHTML = backToTopBtn;
+    }
 
     if (sessionStorage.getItem("usergrid_scroll_y_edit")) {
         GuserGrid.scrollTop = sessionStorage.getItem("usergrid_scroll_y_edit");
@@ -279,8 +277,6 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
 
     const daysList = `Velg dag: <select id="trainingsplitSelectDay" onChange="changeTrainingsplitDay();" class="trainingsplitSelect pointer">${optionsHTML}</select>`;
 
-    const backToTopBtn = `<button class="trainingsplitButton pointer" onClick="document.getElementById('GuserGrid').scrollTop = 0;">Tilbake til toppen</button>`;
-
     document.getElementById("userGrid").innerHTML = `
     <div id="trainingsplitDiv">
     <p id="trainingsplitToolBar"></p>
@@ -320,8 +316,6 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
     document.getElementById("smallTitle").innerHTML += `<br><h3>${resp.trainingsplit_name}</h3>${creatorTxt}${daysList}<br>${selectedDay.short || 'I dag er det fri fra trening :)'}`;
 
     if (selectedDay.list.length > 0) {
-
-        document.getElementById("trainingsplitBottom").innerHTML = backToTopBtn;
 
         const trainingsplitInfo = document.getElementById("trainingsplitInfo");
         const arr = selectedDay.list;
@@ -441,6 +435,11 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
     }
 
     const GuserGrid = document.getElementById("GuserGrid");
+
+    if (GuserGrid.scrollHeight > (GuserGrid.clientHeight + 600)) {
+        const backToTopBtn = `<button class="trainingsplitButton pointer" onClick="document.getElementById('GuserGrid').scrollTop = 0;">Tilbake til toppen</button>`;
+        document.getElementById("trainingsplitBottom").innerHTML = backToTopBtn;
+    }
 
     if (sessionStorage.getItem("usergrid_scroll_y_view")) {
         GuserGrid.scrollTop = sessionStorage.getItem("usergrid_scroll_y_view");
