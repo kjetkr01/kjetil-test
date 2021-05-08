@@ -223,16 +223,21 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
 
     const GuserGrid = document.getElementById("GuserGrid");
 
-    if (sessionStorage.getItem("usergrid_scroll_y")) {
-        GuserGrid.scrollTop = sessionStorage.getItem("usergrid_scroll_y");
+    if (sessionStorage.getItem("usergrid_scroll_y_edit")) {
+        GuserGrid.scrollTop = sessionStorage.getItem("usergrid_scroll_y_edit");
     }
+
+    GuserGrid.addEventListener("scroll", function () {
+        const scrollY = GuserGrid.scrollTop;
+        sessionStorage.setItem("usergrid_scroll_y_edit", scrollY);
+    });
 }
 
 function loadViewTrainingsplit(aResp, aSelectedDay) {
 
     const resp = aResp;
 
-    const selectedDay = resp[aSelectedDay];
+    let selectedDay = resp[aSelectedDay];
 
     const ORMLifts = [];
 
@@ -247,14 +252,27 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
     }
 
     let optionsHTML = "";
-
+    let availableDay = "";
     const EDaysKeys = Object.keys(EDays);
     for (let i = 0; i < EDaysKeys.length; i++) {
         if (resp[EDaysKeys[i]].short.length > 0) {
+
+            if (availableDay.length === 0) {
+                availableDay = EDaysKeys[i];
+            }
+
             if (EDaysKeys[i] === aSelectedDay) {
+                selectedDay = resp[aSelectedDay];
                 optionsHTML += `<option selected value="${EDaysKeys[i]}">${EDays[EDaysKeys[i]]}</option>`;
             } else {
                 optionsHTML += `<option value="${EDaysKeys[i]}">${EDays[EDaysKeys[i]]}</option>`;
+            }
+        } else {
+            if (EDaysKeys[i] === aSelectedDay) {
+                const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
+                trainingsplit.day = availableDay;
+                sessionStorage.setItem("trainingsplit", JSON.stringify(trainingsplit));
+                location.reload();
             }
         }
     }
@@ -318,12 +336,14 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
 
             if (exerciseList.length > 0) {
 
-                trainingsplitTable.innerHTML += `<br><h3 class="fadeInUp animate">${exerciseName}</h3><hr class="trainingsplitLine fadeInUp animate">`;
-
                 for (let j = 0; j < exerciseList.length; j++) {
                     const info = exerciseList[j];
 
                     if (info.sets > 0 && info.reps > 0) {
+
+                        if (j === 0) {
+                            trainingsplitTable.innerHTML += `<br><h3 class="fadeInUp animate">${exerciseName}</h3><hr class="trainingsplitLine fadeInUp animate">`;
+                        }
 
                         const list = {
                             0: "Ingen",
@@ -422,6 +442,17 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
             }
         }
     }
+
+    const GuserGrid = document.getElementById("GuserGrid");
+
+    if (sessionStorage.getItem("usergrid_scroll_y_view")) {
+        GuserGrid.scrollTop = sessionStorage.getItem("usergrid_scroll_y_view");
+    }
+
+    GuserGrid.addEventListener("scroll", function () {
+        const scrollY = GuserGrid.scrollTop;
+        sessionStorage.setItem("usergrid_scroll_y_view", scrollY);
+    });
 }
 
 function viewTrainingsplitOwnerList() {
