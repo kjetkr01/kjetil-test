@@ -56,6 +56,7 @@ const deleteExerciseRowTrainingsplit = require("./modules/user").deleteExerciseR
 const copyTrainingsplit = require("./modules/user").copyTrainingsplit;
 const subUnsubTrainingsplit = require("./modules/user").subUnsubTrainingsplit;
 const setNotActiveTrainingsplit = require("./modules/user").setNotActiveTrainingsplit;
+const saveTrainingsplit = require("./modules/user").saveTrainingsplit;
 
 /* */
 
@@ -1135,7 +1136,7 @@ server.post("/user/subunsub/trainingsplit", auth, async (req, res) => {
 
 //
 
-// sub unsub trainingsplit
+// setnotactive trainingsplit
 
 server.post("/user/setnotactive/trainingsplit", auth, async (req, res) => {
      try {
@@ -1147,6 +1148,82 @@ server.post("/user/setnotactive/trainingsplit", auth, async (req, res) => {
                res.status(200).json(true).end();
           } else {
                res.status(403).json(false).end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+
+//
+
+// save trainingsplit
+
+server.post("/user/save/trainingsplit", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+          const day = req.body.day;
+          const list = req.body.list;
+          const trainingsplit_name = req.body.trainingsplit_name;
+          const mostCountExercises = req.body.mostCountExercises;
+
+          let shortTxt = "Annet";
+          if (mostCountExercises.length > 0) {
+
+               const txt = mostCountExercises.toString().toLowerCase();
+
+               const shortList = {
+                    "Bryst": ["benkpress"],
+                    "Bein": ["knebøy"],
+                    "Rygg": ["markløft"],
+                    "Skuldre": ["skulderpress"],
+                    "Mage": ["situps"],
+               }
+
+               const shortListKeys = Object.keys(shortList);
+               const names = [];
+
+               for (let i = 0; i < shortListKeys.length; i++) {
+
+                    const current = shortListKeys[i];
+                    const keywords = shortList[current];
+
+                    for (let j = 0; j < keywords.length; j++) {
+                         const keyword = keywords[j];
+                         if (txt.includes(keyword)) {
+                              names.push(current);
+                              break;
+                         }
+                    }
+               }
+
+               if (names.length >= 2) {
+                    shortTxt = `${names[0]} og ${names[1]}`;
+               } else if (names.length >= 1) {
+                    shortTxt = names[0];
+               }
+
+          } else {
+               shortTxt = "";
+          }
+
+          const trainingsplit_short = shortTxt;
+
+          if (!isNaN(trainingsplit_id)) {
+
+               const resp = await saveTrainingsplit(currentUser.id, trainingsplit_id, day, list, trainingsplit_name, trainingsplit_short);
+
+               if (resp === true) {
+                    res.status(200).json("saved").end();
+               } else {
+                    res.status(403).json("error").end();
+               }
+
+          } else {
+               res.status(403).json("error").end();
           }
 
      } catch (err) {

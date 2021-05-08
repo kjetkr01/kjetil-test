@@ -1317,9 +1317,9 @@ class StorageHandler {
             await client.connect();
 
             results = await client.query(`
-                                SELECT *
-                                    FROM user_trainingsplit
-                                WHERE trainingsplit_id = $1`,
+            SELECT *
+            FROM user_trainingsplit
+            WHERE trainingsplit_id = $1`,
                 [trainingsplit_id]);
 
             if (results.rows.length > 0) {
@@ -1331,9 +1331,9 @@ class StorageHandler {
                     canEdit = true;
                 } else {
                     let username = await client.query(`
-                                SELECT username
-                                FROM users
-                                WHERE id = $1`,
+                        SELECT username
+                        FROM users
+                        WHERE id = $1`,
                         [trainingsplit.user_id]);
 
                     if (username.rows.length > 0) {
@@ -1352,6 +1352,60 @@ class StorageHandler {
 
         client.end();
         return { "status": results, "trainingsplit": trainingsplit };
+    }
+
+    //
+
+
+    //  -------------------------------  save Trainingsplit (user)  ------------------------------- //
+
+    async saveTrainingsplit(userid, trainingsplit_id, day, list, trainingsplit_name, trainingsplit_short) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        let trainingsplit = {};
+
+        try {
+            await client.connect();
+
+            results = await client.query(`
+            SELECT ${day}
+            FROM user_trainingsplit
+            WHERE trainingsplit_id = $1
+            AND user_id = $2`,
+                [trainingsplit_id, userid]);
+
+            if (results.rows.length > 0) {
+
+                trainingsplit = results.rows[0][day];
+                
+                trainingsplit.list = list;
+                trainingsplit.short = trainingsplit_short;
+
+                await client.query(`
+                UPDATE user_trainingsplit
+                SET trainingsplit_name = $1
+                WHERE trainingsplit_id = $2
+                AND user_id = $3`,
+                    [trainingsplit_name, trainingsplit_id, userid]);
+
+                await client.query(`
+                UPDATE user_trainingsplit
+                SET ${day} = $1
+                WHERE trainingsplit_id = $2
+                AND user_id = $3`,
+                    [JSON.stringify(trainingsplit), trainingsplit_id, userid]);
+
+                results = true;
+            }
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return results;
     }
 
     //

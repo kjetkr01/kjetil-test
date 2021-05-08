@@ -31,7 +31,7 @@ const ongoingUpdatesArr = [
     "Elementer: nr, øvelse, reps, sets, % utfra ORM, rpe, ingen (100%)",
     "Kunne kopiere andre brukere sine planer (100%)",
     "Kunne abonnere på andre brukere sine planer (100%)",
-    "Kunne redigere treningsplanen (90%)",
+    "Kunne redigere treningsplanen (100%)",
     "TITLE:Offline/caching support",
     "Se treningsplan, løft, mål offline (90%)",
     "Offline og bruk av caching (90%)",

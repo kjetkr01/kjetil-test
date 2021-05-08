@@ -66,13 +66,14 @@ async function requestTrainingsplitDetails() {
         location.reload();
     }
 }
-
+const exerciseListCount = {};
 function loadEditTrainingsplit(aResp, aSelectedDay) {
 
     const resp = aResp;
+
     const selectedDay = resp[aSelectedDay];
 
-    const top = `<br><h3>Redigerer:</h3><input class="trainingsplitNameInput" maxlength="20" value="${resp.trainingsplit_name}"></input>`;
+    const top = `<br><h3>Redigerer:</h3><input id="trainingsplitNameInp" class="trainingsplitNameInput" maxlength="20" value="${resp.trainingsplit_name}"></input>`;
 
     const EDays = {
         "monday": "Mandag",
@@ -119,7 +120,7 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
     document.getElementById("smallTitle").innerHTML += top + daysList;
     //<button class="trainingsplitButton pointer" style="color:red;" onClick="deleteTrainingsplit('${resp.trainingsplit_id}');">Slett</button>
     const toolBarHTML = `
-    <button class="trainingsplitButton pointer">Lagre</button>
+    <button id="saveTrainingsplitBtn" class="trainingsplitButton pointer" onClick="saveTrainingsplit();">Lagre</button>
     <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteTrainingsplit('${resp.trainingsplit_id}');"><img src="images/trash.svg"></img></button>
     <br>
     <br>
@@ -147,9 +148,9 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
 
     let shortTxt = "";
 
-    if (selectedDay.short) {
+    /*if (selectedDay.short) {
         shortTxt = `Forkortelse på planen: ${selectedDay.short || ""}<br><br>`;
-    }
+    }*/
 
     document.getElementById("trainingsplitInfo").innerHTML = `<p>${shortTxt}Format: 2 x 3 = 2 Sets, 3 Reps.<br>80 % = 80 % av 1 Rep/ORM i øvelsen (krever ORM i løftet for automatisk utregning)</p>`;
 
@@ -169,6 +170,8 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
             <br><h3 class="fadeInUp animate">${exerciseName}
             <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteExercise('${exerciseName}');"><img src="images/trash.svg"></button></h3>
             <hr class="trainingsplitLine fadeInUp animate">`;
+
+            exerciseListCount[exerciseName] = exerciseList.length;
 
             for (let j = 0; j < exerciseList.length; j++) {
                 const info = exerciseList[j];
@@ -199,13 +202,13 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
                 trainingsplitTable.innerHTML += `
             <p class="trainingsplitListRow fadeInUp animate delaySmall">
             ${j + 1}.
-            <input class="trainingsplitSetsInput" maxlength="2" value="${info.sets}"></input>
+            <input id="${exerciseName}-${j}-sets" class="trainingsplitSetsInput" maxlength="2" value="${info.sets}"></input>
             x
-            <input class="trainingsplitRepsInput" maxlength="2" value="${info.reps}"></input>
+            <input id="${exerciseName}-${j}-reps" class="trainingsplitRepsInput" maxlength="2" value="${info.reps}"></input>
 
-            <input class="trainingsplitInput" maxlength="6" value="${info.number}"></input>
+            <input id="${exerciseName}-${j}-number" class="trainingsplitInput" maxlength="6" value="${info.number}"></input>
 
-            <select class="trainingsplitSelect pointer">
+            <select id="${exerciseName}-${j}-value" class="trainingsplitSelect pointer">
             ${optionsHTMLList}
             </select>
     
@@ -226,6 +229,7 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
 }
 
 function loadViewTrainingsplit(aResp, aSelectedDay) {
+
     const resp = aResp;
 
     const selectedDay = resp[aSelectedDay];
@@ -440,8 +444,9 @@ function viewTrainingsplit(aId, aDay) {
 
     if (aId && aId !== "null") {
 
-        // eller today??
-        let day = "monday";
+        const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+        const dayNum = new Date().getDay();
+        let day = days[dayNum];
 
         const EDays = {
             "monday": "Mandag",
@@ -463,20 +468,23 @@ function viewTrainingsplit(aId, aDay) {
 
         sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": aId, "edit": false, "day": day }));
 
+        location.reload();
     }
-
-    location.reload();
 }
 
 function changeTrainingsplitDay() {
+
     const trainingsplitSelectDay = document.getElementById("trainingsplitSelectDay");
 
-    const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
-    trainingsplit.day = trainingsplitSelectDay.value;
+    if (trainingsplitSelectDay) {
 
-    sessionStorage.setItem("trainingsplit", JSON.stringify(trainingsplit));
+        const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
+        trainingsplit.day = trainingsplitSelectDay.value;
 
-    location.reload();
+        sessionStorage.setItem("trainingsplit", JSON.stringify(trainingsplit));
+
+        location.reload();
+    }
 }
 
 async function addExercise() {
@@ -499,6 +507,8 @@ async function addExercise() {
         }
 
         if (exercise && exercise !== "null" && exercise !== "undefined") {
+
+            await saveTrainingsplit();
 
             const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit.id, "exercise": exercise, "day": trainingsplit.day };
             const url = `/user/add/trainingsplit/exercise`;
@@ -538,6 +548,8 @@ async function deleteExercise(aExercise) {
             const confirmDelete = confirm(`Er du sikker på at du vil slette ${exercise}?`);
 
             if (confirmDelete === true) {
+
+                await saveTrainingsplit();
 
                 const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit.id, "exercise": exercise, "day": trainingsplit.day };
                 const url = `/user/delete/trainingsplit/exercise`;
@@ -580,6 +592,8 @@ async function deleteRowExercise(aExercise, aIndex) {
 
             if (confirmDelete === true) {
 
+                await saveTrainingsplit();
+
                 const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit.id, "exercise": exercise, "index": index, "day": trainingsplit.day };
                 const url = `/user/delete/trainingsplit/exercise/row`;
 
@@ -616,6 +630,8 @@ async function addRowExercise(aExercise) {
         const exercise = aExercise;
 
         if (exercise) {
+
+            await saveTrainingsplit();
 
             const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit.id, "exercise": exercise, "day": trainingsplit.day };
             const url = `/user/add/trainingsplit/exercise/row`;
@@ -671,7 +687,10 @@ async function copyTrainingsplit(aTrainingsplit_id, aOwner_id) {
             if (data.status === true) {
                 const loadNewTrainingsplit = confirm("Planen er nå kopiert. Ønsker du å laste den inn i redigeringsmodus?");
                 if (loadNewTrainingsplit === true) {
-                    sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": data.newtrainingsplit_id, "edit": true, "day": "monday" }));
+                    const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+                    const dayNum = new Date().getDay();
+                    const day = days[dayNum];
+                    sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": data.newtrainingsplit_id, "edit": true, "day": day }));
                     setTimeout(() => {
                         redirectToAccount();
                     }, 1000);

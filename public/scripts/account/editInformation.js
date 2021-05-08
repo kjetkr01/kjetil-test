@@ -897,14 +897,18 @@ async function deleteTrainingsplit(aTrainingsplit_id) {
 async function editTrainingsplit() {
 
     const respMsg = document.getElementById("respworkoutPlans");
-    respMsg.textContent = "";
 
     if (navigator.onLine) {
 
         const trainingsplit_id = document.getElementById("listworkoutPlans").value;
         if (trainingsplit_id) {
-            sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": trainingsplit_id, "edit": true, "day": "monday" }));
-            location.reload();
+            if (trainingsplit_id !== "" && trainingsplit_id !== "null") {
+                const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+                const dayNum = new Date().getDay();
+                const day = days[dayNum];
+                sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": trainingsplit_id, "edit": true, "day": day }));
+                location.reload();
+            }
         } else {
             respMsg.textContent = "Ugyldig trainingsplit_id!";
         }
@@ -915,6 +919,103 @@ async function editTrainingsplit() {
 }
 
 // end of editTrainingsplit
+
+// saveTrainingsplit
+
+let isSavingTrainingsplit = false;
+async function saveTrainingsplit() {
+
+    if (isSavingTrainingsplit === false) {
+
+        if (navigator.onLine) {
+
+            const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
+
+            if (trainingsplit) {
+
+                isSavingTrainingsplit = true;
+
+                const saveTrainingsplitBtn = document.getElementById("saveTrainingsplitBtn");
+                saveTrainingsplitBtn.innerHTML = "Lagrer...";
+
+                const list = [];
+                const trainingsplit_name = document.getElementById("trainingsplitNameInp").value;
+
+                const keys = Object.keys(exerciseListCount);
+
+                const eList = [];
+
+                if (keys.length > 0) {
+
+                    for (let i = 0; i < keys.length; i++) {
+
+                        const count = exerciseListCount[keys[i]];
+
+                        const cacheList = [];
+
+                        if (count > 0) {
+
+                            eList.push({ "count": count, "exercise": keys[i] });
+
+                            for (let j = 0; j < count; j++) {
+                                const d = ["sets", "reps", "number", "value"];
+                                const enu = { "sets": 0, "reps": 0, "number": 0, "value": 0 };
+
+                                for (let k = 0; k < d.length; k++) {
+                                    const dom = document.getElementById(`${keys[i]}-${j}-${d[k]}`);
+                                    if (dom) {
+                                        const n = parseInt(dom.value);
+                                        if (!isNaN(n)) {
+                                            enu[d[k]] = n;
+                                        }
+                                    }
+                                }
+                                cacheList.push(enu);
+                            }
+                        }
+                        list.push({ [keys[i]]: cacheList });
+                    }
+                }
+
+                eList.sort(function (a, b) {
+                    return b.count - a.count;
+                });
+
+                const mostCountExercises = [];
+
+                if (eList.length >= 2) {
+                    mostCountExercises.push(eList[0].exercise);
+                    mostCountExercises.push(eList[1].exercise);
+                } else if (eList.length >= 1) {
+                    mostCountExercises.push(eList[0].exercise);
+                }
+
+                const infoHeader = { "trainingsplit_id": trainingsplit.id, "day": trainingsplit.day, "list": list, "trainingsplit_name": trainingsplit_name, "mostCountExercises": mostCountExercises };
+                const url = `/user/save/trainingsplit`;
+
+                const resp = await callServerAPIPost(infoHeader, url);
+
+                if (resp === "saved") {
+                    saveTrainingsplitBtn.innerHTML = "Lagret!";
+                    setTimeout(() => {
+                        //location.reload();
+                        saveTrainingsplitBtn.innerHTML = "Lagre";
+                        isSavingTrainingsplit = false;
+                    }, 1000);
+                } else {
+                    alert("Kunne ikke lagre treningsplanen!");
+                }
+            } else {
+                alert("Kunne ikke lagre treningsplanen!");
+            }
+
+        } else {
+            alert("Du må ha internettforbindelse for å kunne lagre treningsplanen!");
+        }
+    }
+}
+
+// end of saveTrainingsplit
 
 function changeOverlayBorderColor() {
 

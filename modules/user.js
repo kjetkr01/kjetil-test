@@ -173,6 +173,15 @@ async function setNotActiveTrainingsplit(userid) {
     }
 }
 
+async function saveTrainingsplit(userid, trainingsplit_id, day, list, trainingsplit_name, trainingsplit_short) {
+    try {
+        const resp = await database.saveTrainingsplit(userid, trainingsplit_id, day, list, trainingsplit_name, trainingsplit_short);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function updateDisplayname(username, newDisplayname) {
     try {
         const resp = await database.updateDisplayname(username, newDisplayname);
@@ -264,6 +273,7 @@ module.exports.deleteExerciseRowTrainingsplit = deleteExerciseRowTrainingsplit;
 module.exports.copyTrainingsplit = copyTrainingsplit;
 module.exports.subUnsubTrainingsplit = subUnsubTrainingsplit;
 module.exports.setNotActiveTrainingsplit = setNotActiveTrainingsplit;
+module.exports.saveTrainingsplit = saveTrainingsplit;
 module.exports.updateDisplayname = updateDisplayname;
 module.exports.updateUsername = updateUsername;
 module.exports.updatePassword = updatePassword;
