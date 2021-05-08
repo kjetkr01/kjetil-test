@@ -455,7 +455,7 @@ function displayGoals() {
 
     function displayPerExercise(aExerciseGoal, aCurrent) {
 
-        let kgUntilGoal = 0, repsUntilGoal = 0, msg = "";
+        let kgUntilGoal = 0, repsUntilGoal = 0, msg = "", untilGoal = 0;
 
         const exerciseGoal = aExerciseGoal;
         const current = aCurrent;
@@ -472,39 +472,70 @@ function displayGoals() {
                 const goalReps = parseInt(goalKeys.reps);
                 const goalKg = parseFloat(goalKeys.kg);
 
-                let currentLiftPR = 0;
-
                 const liftKeys = Object.keys(lifts[current]);
+
+                let highestLiftKg = { "kg": 0, "reps": 0 };
+
+                const liftsList = {};
 
                 for (let f = 0; f < liftKeys.length; f++) {
                     const lift = lifts[current][f];
                     const liftReps = parseInt(lift.reps);
                     const liftKg = parseFloat(lift.kg);
 
-                    if (liftKg === goalKg) {
-                        repsUntilGoal = goalReps - liftReps;
+                    liftsList[liftKg] = liftReps;
+
+                    if (highestLiftKg.kg < liftKg) {
+                        highestLiftKg.kg = liftKg;
+                        highestLiftKg.reps = liftReps;
+                    }
+
+                    if (highestLiftKg.kg === goalKg) {
+                        repsUntilGoal = goalReps - highestLiftKg.reps;
 
                         if (repsUntilGoal <= 0) {
                             msg = "Målet er nådd!";
+                            untilGoal = 0;
                         } else if (repsUntilGoal === 1) {
                             msg = `1 rep igjen`;
+                            untilGoal = repsSM;
                         } else {
                             msg = `${repsUntilGoal} reps igjen`;
+                            untilGoal = repsUntilGoal * repsSM;
                         }
-
                     } else {
-                        currentLiftPR = liftKg;
-                        kgUntilGoal = goalKg - currentLiftPR;
+                        kgUntilGoal = goalKg - highestLiftKg.kg;
                         if (kgUntilGoal <= 0) {
                             msg = "Målet er nådd!";
+                            untilGoal = 0;
                         } else {
                             msg = `${kgUntilGoal} kg igjen`;
+                            untilGoal = kgUntilGoal;
                         }
                     }
                 }
 
+                if (highestLiftKg.kg > goalKg) {
+                    if (liftsList[goalKg]) {
+                        repsUntilGoal = goalReps - liftsList[goalKg];
+                        if (repsUntilGoal <= 0) {
+                            msg = "Målet er nådd!";
+                            untilGoal = 0;
+                        } else if (repsUntilGoal === 1) {
+                            msg = `1 rep igjen`;
+                            untilGoal = repsSM;
+                        } else {
+                            msg = `${repsUntilGoal} reps igjen`;
+                            untilGoal = repsUntilGoal * repsSM;
+                        }
+                    } else {
+                        msg = `${goalReps} reps igjen`;
+                        untilGoal = goalReps * repsSM;
+                    }
+                }
 
-                arr.push({ "exercise": capitalizeFirstLetter(current), "kg": goalKg, "kgLeft": kgUntilGoal, "msg": msg, "color": color, "id": id });
+
+                arr.push({ "exercise": capitalizeFirstLetter(current), "kg": goalKg, "untilGoal": untilGoal, "msg": msg, "color": color, "id": id });
 
             }
         }
@@ -553,7 +584,7 @@ function displayGoals() {
 
         document.getElementById("totalGoals").innerHTML = `Alle (${totalCount})`;
 
-        arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
+        arr.sort(function (a, b) { return a.untilGoal - b.untilGoal });
 
         for (let i = 0; i < arr.length; i++) {
 
@@ -601,7 +632,7 @@ function displayTrainingsplit() {
                     if (days.includes(keys[i]) && daysNorwegian[keys[i]]) {
                         let activeTrainingsplitKeys = activetrainingsplit[keys[i]];
                         if (activeTrainingsplitKeys.short.length) {
-                            const color = activeTrainingsplitKeys.color || "redBadgeG";
+                            const color = "redBadgeG";
 
                             arr.push({ "day": daysNorwegian[keys[i]], "trainingsplit": activeTrainingsplitKeys.short, "color": color, "trainingsplit_id": activetrainingsplit.trainingsplit_id });
                         }
@@ -617,8 +648,6 @@ function displayTrainingsplit() {
                             dom.removeAttribute("class");
                         }
                     }
-
-                    arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
 
                     for (let i = 0; i < arr.length; i++) {
 

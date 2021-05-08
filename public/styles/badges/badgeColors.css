@@ -19,6 +19,11 @@ background: linear-gradient(to right bottom, #626BE3, #2B2379);
 box-shadow: var(--bsSize) rgba(43,35,121, 0.4);
 }
 
+.themeBadgeG {
+background: linear-gradient(to right bottom, var(--main-backgroundColor1), var(--main-bodyBackgroundColor));
+box-shadow: var(--bsSize) var(--main-backgroundColorRGBLowOpacity);
+}
+
 /* end of Gradent Color Badges */
 
 

@@ -10,6 +10,7 @@ module.exports.badgeColors = {
     "redBadgeG": `Rød ${gradientTxt}`,
     "yellowBadgeG": `Gul ${gradientTxt}`,
     "blueBadgeG": `Blå ${gradientTxt}`,
+    "themeBadgeG": `Følg tema ${gradientTxt}`,
 
     "redBadge": `Rød`,
     "yellowBadge": `Gul`,
