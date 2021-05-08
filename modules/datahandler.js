@@ -1380,7 +1380,11 @@ class StorageHandler {
                 trainingsplit = results.rows[0][day];
 
                 trainingsplit.list = list;
-                trainingsplit.short = trainingsplit_short;
+                if (trainingsplit.list.length > 0) {
+                    trainingsplit.short = trainingsplit_short;
+                } else {
+                    trainingsplit.short = "";
+                }
 
                 await client.query(`
                 UPDATE user_trainingsplit

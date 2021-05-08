@@ -954,9 +954,9 @@ server.post("/user/add/trainingsplit/exercise", auth, async (req, res) => {
 
           if (!isNaN(trainingsplit_id)) {
 
-               const maxExerciseLength = 20;
+               const maxExerciseLength = 30;
 
-               if (exercise.length < maxExerciseLength || allowedLifts.includes(exercise.toLowerCase())) {
+               if (exercise.length <= maxExerciseLength || allowedLifts.includes(exercise.toLowerCase())) {
                     const resp = await addExerciseTrainingsplit(currentUser.id, trainingsplit_id, exercise, day);
 
                     if (resp.status === true) {
@@ -1171,41 +1171,49 @@ server.post("/user/save/trainingsplit", auth, async (req, res) => {
           const mostCountExercises = req.body.mostCountExercises;
 
           let shortTxt = "Annet";
-          if (mostCountExercises.length > 0) {
+          if (list.length > 0) {
+               if (mostCountExercises.length > 0) {
 
-               const txt = mostCountExercises.toString().toLowerCase();
+                    const txt = mostCountExercises.toString().toLowerCase();
 
-               const shortList = {
-                    "Bryst": ["benkpress"],
-                    "Bein": ["knebøy"],
-                    "Rygg": ["markløft"],
-                    "Skuldre": ["skulderpress"],
-                    "Mage": ["situps"],
-               }
+                    const shortList = {
+                         "Bryst": ["benkpress", "skråbenk", "benk", "flies", "pushup"],
+                         "Skuldre": ["skulderpress", "skulder", "skuldre", "overhead", "raise"],
+                         "Rygg": ["markløft", "pullup", "roing", "row"],
+                         "Biceps": ["bicep", "curl", "hammer"],
+                         "Triceps": ["tricep", "pushdown", "dip", "crusher"],
+                         "Mage": ["situp", "plank", "crunch", "abs", "roll"],
+                         "Bein": ["knebøy", "leg", "hamstring", "lunge", "utfall"],
+                    }
 
-               const shortListKeys = Object.keys(shortList);
-               const names = [];
+                    // shortList and keywords (saveTrainingsplit in account/editInformation.js ~ line 960) should be equal
 
-               for (let i = 0; i < shortListKeys.length; i++) {
+                    const shortListKeys = Object.keys(shortList);
+                    const names = [];
 
-                    const current = shortListKeys[i];
-                    const keywords = shortList[current];
+                    for (let i = 0; i < shortListKeys.length; i++) {
 
-                    for (let j = 0; j < keywords.length; j++) {
-                         const keyword = keywords[j];
-                         if (txt.includes(keyword)) {
-                              names.push(current);
-                              break;
+                         const current = shortListKeys[i];
+                         const keywords = shortList[current];
+
+                         for (let j = 0; j < keywords.length; j++) {
+                              const keyword = keywords[j];
+                              if (txt.includes(keyword)) {
+                                   if (!names.includes(current)) {
+                                        names.push(current);
+                                        break;
+                                   }
+                              }
                          }
                     }
-               }
 
-               if (names.length >= 2) {
-                    shortTxt = `${names[0]} og ${names[1]}`;
-               } else if (names.length >= 1) {
-                    shortTxt = names[0];
-               }
+                    if (names.length >= 2) {
+                         shortTxt = `${names[0]} og ${names[1]}`;
+                    } else if (names.length >= 1) {
+                         shortTxt = names[0];
+                    }
 
+               }
           } else {
                shortTxt = "";
           }

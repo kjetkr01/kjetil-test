@@ -955,7 +955,28 @@ async function saveTrainingsplit() {
 
                         if (count > 0) {
 
-                            eList.push({ "count": count, "exercise": keys[i] });
+                            const exercise = keys[i].toLowerCase();
+
+                            const keywords = [
+                                "skulderpress", "skulder", "skuldre", "overhead", "raise",
+                                "benkpress", "skråbenk", "benk", "flies", "pushup",
+                                "markløft", "pullup", "roing", "row",
+                                "bicep", "curl", "hammer",
+                                "tricep", "pushdown", "dip", "crusher",
+                                "situp", "plank", "crunch", "abs", "roll",
+                                "knebøy", "leg", "hamstring", "lunge", "utfall"
+                            ];
+
+                            const exerciseArr = exercise.split(" ");
+                            const txt = exerciseArr.toString().toLowerCase();
+
+                            for (let z = 0; z < keywords.length; z++) {
+                                const keyword = keywords[z];
+                                if (txt.includes(keyword)) {
+                                    eList.push({ "count": count, "exercise": exercise });
+                                    break;
+                                }
+                            }
 
                             for (let j = 0; j < count; j++) {
                                 const d = ["sets", "reps", "number", "value"];
