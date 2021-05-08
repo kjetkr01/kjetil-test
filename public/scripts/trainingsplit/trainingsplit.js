@@ -250,27 +250,15 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
     }
 
     let optionsHTML = "";
-    let availableDay = "";
+
     const EDaysKeys = Object.keys(EDays);
     for (let i = 0; i < EDaysKeys.length; i++) {
-        if (resp[EDaysKeys[i]].short.length > 0) {
-
-            if (availableDay.length === 0) {
-                availableDay = EDaysKeys[i];
-            }
-
+        if (resp[EDaysKeys[i]].short.length > 0 || EDaysKeys[i] === aSelectedDay) {
             if (EDaysKeys[i] === aSelectedDay) {
                 selectedDay = resp[aSelectedDay];
                 optionsHTML += `<option selected value="${EDaysKeys[i]}">${EDays[EDaysKeys[i]]}</option>`;
             } else {
                 optionsHTML += `<option value="${EDaysKeys[i]}">${EDays[EDaysKeys[i]]}</option>`;
-            }
-        } else {
-            if (EDaysKeys[i] === aSelectedDay) {
-                const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
-                trainingsplit.day = availableDay;
-                sessionStorage.setItem("trainingsplit", JSON.stringify(trainingsplit));
-                location.reload();
             }
         }
     }
@@ -507,9 +495,12 @@ async function changeTrainingsplitDay() {
 
     if (trainingsplitSelectDay) {
 
-        await saveTrainingsplit();
-
         const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
+
+        if (trainingsplit.edit === true) {
+            await saveTrainingsplit();
+        }
+
         trainingsplit.day = trainingsplitSelectDay.value;
 
         sessionStorage.setItem("trainingsplit", JSON.stringify(trainingsplit));

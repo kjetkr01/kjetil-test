@@ -967,6 +967,8 @@ async function saveTrainingsplit() {
                                 "knebøy", "leg", "hamstring", "lunge", "utfall"
                             ];
 
+                            // shortList and keywords (/user/save/trainingsplit in server.js ~ line 1163) should be equal
+
                             const exerciseArr = exercise.split(" ");
                             const txt = exerciseArr.toString().toLowerCase();
 
