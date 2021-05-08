@@ -1,3 +1,4 @@
+let showTrainingsplitAnimations = true;
 async function requestTrainingsplitDetails() {
 
     try {
@@ -24,6 +25,7 @@ async function requestTrainingsplitDetails() {
                 const cachedActiveTrainingsplit_owner = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
                 if (cachedActiveTrainingsplit_owner) {
                     if (cachedActiveTrainingsplit_owner.trainingsplit_id === parseInt(trainingsplit.id)) {
+                        showTrainingsplitAnimations = false;
                         resp = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
                     }
                 }
@@ -160,6 +162,7 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
 
             const trainingsplitTable = document.getElementById("trainingsplitTable");
             //<button class="trainingsplitButton pointer" style="color:red;" onClick="deleteExercise('${exerciseName}');">Slett</button></h3>
+
             trainingsplitTable.innerHTML += `
             <br><h3 class="fadeInUp animate">${exerciseName}
             <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteExercise('${exerciseName}');"><img src="images/trash.svg"></button></h3>
@@ -291,17 +294,33 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
 
         let subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id}, '${resp.trainingsplit_name}');">Abonner</button>`;
 
+        if (!navigator.onLine) {
+            subscribeHTML = `<button disabled class="trainingsplitButton">Abonner</button>`;
+        }
+
         if (isSubscribed === true) {
             subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id}, '${resp.trainingsplit_name}');">Abonnerer</button>`;
+            if (!navigator.onLine) {
+                subscribeHTML = `<button disabled class="trainingsplitButton">Abonnerer</button>`;
+            }
+        }
+
+        let copyHTML = `<button class="trainingsplitButton pointer" onClick="copyTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id});">Kopier</button>`;
+        if (!navigator.onLine) {
+            copyHTML = `<button disabled class="trainingsplitButton">Kopier</button>`;
         }
 
         creatorTxt = `Av: ${resp.owner}<br>`;
-        document.getElementById("trainingsplitToolBar").innerHTML += `
-        <button class="trainingsplitButton pointer" onClick="copyTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id});">Kopier</button>
-        ${subscribeHTML}`;
+        const trainingsplitToolBar = document.getElementById("trainingsplitToolBar");
+        trainingsplitToolBar.innerHTML += `${copyHTML}${subscribeHTML}`;
     }
 
     document.getElementById("smallTitle").innerHTML += `<br><h3>${resp.trainingsplit_name}</h3>${creatorTxt}${daysList}<br>${selectedDay.short || 'I dag er det fri fra trening :)'}`;
+
+    let animation = "fadeInUp animate";
+    if (showTrainingsplitAnimations === false) {
+        animation = "";
+    }
 
     if (selectedDay.list.length > 0) {
 
@@ -322,7 +341,7 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
                     const info = exerciseList[j];
 
                     if (j === 0) {
-                        trainingsplitTable.innerHTML += `<br><h3 class="fadeInUp animate">${exerciseName}</h3><hr class="trainingsplitLine fadeInUp animate">`;
+                        trainingsplitTable.innerHTML += `<br><h3 class="${animation}">${exerciseName}</h3><hr class="trainingsplitLine ${animation}">`;
                     }
 
                     const list = {
@@ -407,7 +426,7 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
                     }
 
                     trainingsplitTable.innerHTML += `
-                        <div class="fadeInUp animate delaySmall">
+                        <div class="${animation} delaySmall">
                         <p class="trainingsplitListRow trainingsplitInline">
                         ${j + 1}.
                         <p class="trainingsplitInline" style="margin-left:30px;">${info.sets}</p>
@@ -416,7 +435,7 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
                         ${extraHTML}
                         </p>
                         </div>
-                        <hr class="trainingsplitSmallLine fadeInUp animate delayMedium">`;
+                        <hr class="trainingsplitSmallLine ${animation} delayMedium">`;
                 }
             }
         }
