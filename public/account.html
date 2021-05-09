@@ -340,12 +340,19 @@
    getEditLiftorGoalOverlay();
 
    displayUserDetailsCached();
-   if (sessionStorage.getItem("trainingsplit")) {
+
+   if (checkIfValidParams() === true) {
       document.getElementById("userGrid").innerHTML = "";
       requestTrainingsplitDetails();
    } else {
+
+      if (window.location.search.length > 0) {
+         window.location.search = "";
+      }
+
       requestAccountDetails();
-      sessionStorage.removeItem("trainingsplit");
+
+      //sessionStorage.removeItem("trainingsplit");
       const GuserGrid = document.getElementById("GuserGrid");
 
       if (sessionStorage.getItem("usergrid_scroll_y_main")) {

@@ -82,6 +82,7 @@ margin-top: 10px;
 }
 
 #GsmallTitle > #smallTitle{
+word-break: keep-all;
 font-size: 18px;
 margin-top: 18px;
 }

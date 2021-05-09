@@ -93,6 +93,7 @@ margin-right: 20px;
 }
 
 #Gtrainingsplit > #trainingsplit {
+word-break: keep-all;
 }
 
 #GlineTrainingsplit > #lineTrainingsplit {
@@ -281,6 +282,7 @@ text-align: right;
 }
 
 #trainingsplitDiv {
+word-break: keep-all;
 margin-left: 20px;
 margin-right: 20px;
 margin-bottom: 20px;
@@ -310,10 +312,10 @@ display: inline;
 }
 
 .infoTable {
-    text-align: left;
-    border-collapse: separate;
-    }
-    
-    .cTd {
-    padding-left: 20px;
-    }
+text-align: left;
+border-collapse: separate;
+}
+
+.cTd {
+padding-left: 20px;
+}

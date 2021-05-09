@@ -596,9 +596,10 @@ function redirectToUser(viewUser) {
         if (userID === parseInt(viewingUser)) {
             redirectToAccount();
         } else {
+            sessionStorage.setItem("visit_user_referrer", document.URL);
             //sessionStorage.removeItem('display_goals_visitor');
             //sessionStorage.removeItem('display_lifts_visitor');
-            location.href = `user.html?id=${viewingUser}`;
+            location.href = `user.html?user_id=${viewingUser}`;
         }
     } else {
         redirectToFeed();

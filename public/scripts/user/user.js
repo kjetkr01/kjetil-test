@@ -7,7 +7,7 @@ function displayUserDetailsCached() {
 
     try {
 
-        const ViewingUser = urlParams.get("id");
+        const ViewingUser = urlParams.get("user_id");
 
         if (ViewingUser) {
 
@@ -91,7 +91,7 @@ function displayUserDetailsCached() {
 
 async function requestAccountDetails() {
 
-    const viewingUser = urlParams.get("id");
+    const viewingUser = urlParams.get("user_id");
 
     /*try {
         const cachedDetails = JSON.parse(sessionStorage.getItem(`cachedDetails_visitor_${viewingUser}`));

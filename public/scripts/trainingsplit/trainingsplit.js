@@ -1,9 +1,45 @@
 let showTrainingsplitAnimations = true;
+let trainingsplit = null;
+
+const queryStringT = window.location.search;
+const urlParamsT = new URLSearchParams(queryStringT);
+
+function checkIfValidParams() {
+
+    let validParams = false;
+
+    try {
+
+        const id = parseInt(urlParamsT.get("trainingsplit_id"));
+        const edit = urlParamsT.get("edit");
+        const day = urlParamsT.get("day");
+
+        const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+
+        if (!isNaN(id)) {
+            if (edit === "true" || edit === "false") {
+                if (days.includes(day)) {
+                    validParams = true;
+                    trainingsplit = { "id": id, "edit": edit, "day": day };
+                }
+            }
+        }
+
+    } catch (err) {
+        console.log(err);
+        validParams = false;
+    }
+
+    return validParams;
+}
+
+
+
 async function requestTrainingsplitDetails() {
 
     try {
 
-        const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
+        //const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
 
         if (trainingsplit.id) {
 
@@ -11,7 +47,7 @@ async function requestTrainingsplitDetails() {
 
             document.getElementById("smallTitle").innerHTML = `<div>
                 <svg class="backBtnIcon iconsDefaultColor pointer" draggable="false"
-                   onclick="sessionStorage.removeItem('trainingsplit');location.reload();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
+                   onclick="exitTrainingsplit();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
                    <g id="Layer_2" data-name="Layer 2">
                       <g id="Layer_1-2" data-name="Layer 1">
                          <polyline class="cls-1" points="21.25 1.24 2.48 20.02 20.45 37.99" />
@@ -43,7 +79,7 @@ async function requestTrainingsplitDetails() {
 
                 document.title = `Treningsplan (${resp.trainingsplit_name})`;
 
-                if (resp.canEdit === true && trainingsplit.edit === true) {
+                if (resp.canEdit === true && trainingsplit.edit === "true") {
                     loadEditTrainingsplit(resp, trainingsplit.day);
                 } else {
                     loadViewTrainingsplit(resp, trainingsplit.day);
@@ -70,6 +106,8 @@ async function requestTrainingsplitDetails() {
 }
 const exerciseListCount = {};
 function loadEditTrainingsplit(aResp, aSelectedDay) {
+
+    document.getElementById("account").setAttribute("onclick", "exitTrainingsplit();");
 
     const resp = aResp;
 
@@ -102,7 +140,6 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
     const daysList = `Velg dag: <select id="trainingsplitSelectDay" onChange="changeTrainingsplitDay();" class="trainingsplitSelect pointer">${optionsHTML}</select>`;
 
     const cachedLifts_owner = JSON.parse(localStorage.getItem("cachedLifts_owner"));
-
 
     const exercisesList = [];
 
@@ -266,7 +303,7 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
         }
     }
 
-    const daysList = `Velg dag: <select id="trainingsplitSelectDay" onChange="changeTrainingsplitDay();" class="trainingsplitSelect pointer">${optionsHTML}</select>`;
+    const daysList = `<br>Velg dag: <select id="trainingsplitSelectDay" onChange="changeTrainingsplitDay();" class="trainingsplitSelect pointer">${optionsHTML}</select>`;
 
     document.getElementById("userGrid").innerHTML = `
     <div id="trainingsplitDiv">
@@ -502,9 +539,18 @@ function viewTrainingsplit(aId, aDay) {
             }
         }
 
-        sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": aId, "edit": false, "day": day }));
+        //sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": aId, "edit": false, "day": day }));
 
-        location.reload();
+        const viewinguser_id = urlParamsT.get("user_id");
+        let vuser_id = "";
+
+        if (viewinguser_id) {
+            vuser_id = `user_id=${viewinguser_id}&`;
+        }
+
+        window.location.search = `?${vuser_id}trainingsplit_id=${aId}&edit=false&day=${day}`;
+
+        //location.reload();
     }
 }
 
@@ -514,23 +560,26 @@ async function changeTrainingsplitDay() {
 
     if (trainingsplitSelectDay) {
 
-        const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
+        //const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
 
-        if (trainingsplit.edit === true) {
+        if (trainingsplit.edit === "true") {
             await saveTrainingsplit();
         }
 
         trainingsplit.day = trainingsplitSelectDay.value;
+        urlParamsT.set("day", trainingsplitSelectDay.value);
 
-        sessionStorage.setItem("trainingsplit", JSON.stringify(trainingsplit));
+        window.location.search = urlParamsT.toString();
 
-        location.reload();
+        //sessionStorage.setItem("trainingsplit", JSON.stringify(trainingsplit));
+
+        //location.reload();
     }
 }
 
 async function addExercise() {
 
-    const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
+    //const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
 
     if (trainingsplit) {
 
@@ -578,7 +627,7 @@ async function addExercise() {
 
 async function deleteExercise(aExercise) {
 
-    const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
+    //const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
 
     if (trainingsplit) {
 
@@ -620,7 +669,7 @@ async function deleteExercise(aExercise) {
 
 async function deleteRowExercise(aExercise, aIndex) {
 
-    const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
+    //const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
 
     if (trainingsplit) {
 
@@ -664,7 +713,7 @@ async function deleteRowExercise(aExercise, aIndex) {
 
 async function addRowExercise(aExercise) {
 
-    const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
+    //const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
 
     if (trainingsplit) {
 
@@ -731,10 +780,8 @@ async function copyTrainingsplit(aTrainingsplit_id, aOwner_id) {
                     const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
                     const dayNum = new Date().getDay();
                     const day = days[dayNum];
-                    sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": data.newtrainingsplit_id, "edit": true, "day": day }));
-                    setTimeout(() => {
-                        redirectToAccount();
-                    }, 1000);
+                    //sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": data.newtrainingsplit_id, "edit": true, "day": day }));
+                    window.location.href = `account.html?trainingsplit_id=${data.newtrainingsplit_id}&edit=false&day=${day}`;
                 }
             } else {
                 alert(data.msg);
@@ -793,4 +840,20 @@ async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTraining
         }
     }
 
+}
+
+
+async function exitTrainingsplit() {
+
+    if (trainingsplit.edit === "true") {
+        await saveTrainingsplit();
+    }
+
+    const viewinguser_id = urlParamsT.get("user_id");
+
+    if (viewinguser_id) {
+        window.location.search = `?user_id=${viewinguser_id}`;
+    } else {
+        window.location.search = "";
+    }
 }

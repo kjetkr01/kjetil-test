@@ -223,15 +223,12 @@
 
    const referrer = sessionStorage.getItem("visit_user_referrer");
 
-   if (referrer !== document.referrer && document.referrer !== document.URL) {
-      sessionStorage.setItem("visit_user_referrer", document.referrer);
-   }
-
    function returnToPrevious() {
 
       const redirect = sessionStorage.getItem("visit_user_referrer");
 
       if (redirect) {
+         sessionStorage.removeItem("visit_user_referrer");
          location.href = redirect;
       } else {
          redirectToFeed();
@@ -242,7 +239,7 @@
    getViewLiftorGoalOverlay();
 
    displayUserDetailsCached();
-   if (sessionStorage.getItem("trainingsplit") && navigator.onLine) {
+   if (checkIfValidParams() === true && navigator.onLine) {
       document.getElementById("GbackBtn").innerHTML = "";
       document.getElementById("userGrid").innerHTML = "";
       requestTrainingsplitDetails();

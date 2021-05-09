@@ -318,7 +318,7 @@ async function saveLiftOrGoal(aType, editOrCreate, aId) {
 
         if (aType === "lift" || aType === "goal" && editOrCreate === "edit" || editOrCreate === "create") {
 
-            let respMsg = null, inp1 = null, inp2 = null, inp3 = null, inp4, color = 0, id = null;
+            let respMsg = null, inp1 = null, inp2 = null, inp3 = null, inp4, color = 0, id = null, saveBtn = null;
 
             if (editOrCreate === "create") {
                 respMsg = document.getElementById("respC");
@@ -327,6 +327,7 @@ async function saveLiftOrGoal(aType, editOrCreate, aId) {
                 inp2 = document.getElementById("inp2C").value;
                 inp3 = document.getElementById("inp3C").value;
                 inp4 = document.getElementById("inp4C").value;
+                saveBtn = document.getElementById("saveC");
             }
 
             if (editOrCreate === "edit") {
@@ -337,6 +338,7 @@ async function saveLiftOrGoal(aType, editOrCreate, aId) {
                 inp3 = document.getElementById("inp2E").value;
                 inp4 = document.getElementById("inp3E").value;
                 color = document.getElementById("inp4E").value;
+                saveBtn = document.getElementById("saveE");
 
                 id = aId;
             }
@@ -345,7 +347,8 @@ async function saveLiftOrGoal(aType, editOrCreate, aId) {
 
             if (validateInfo.isValid === true && validateInfo.info) {
                 isSaving = true;
-                respMsg.textContent = "Lagrer...";
+                saveBtn.innerHTML = "Lagrer...";
+                //respMsg.textContent = "Lagrer...";
 
                 const infoHeader = { "info": validateInfo.info };
                 const url = `/user/update/liftOrGoal/:${validateInfo.info}`;
@@ -353,14 +356,16 @@ async function saveLiftOrGoal(aType, editOrCreate, aId) {
                 const resp = await callServerAPIPost(infoHeader, url);
 
                 if (resp === true) {
-                    respMsg.textContent = "Lagret!";
+                    //respMsg.textContent = "Lagret!";
+                    saveBtn.innerHTML = "Lagret!";
                     setTimeout(() => {
                         disableOverlay();
-                    }, 1500);
+                    }, 500);
                     setTimeout(() => {
                         location.reload();
-                    }, 2000);
+                    }, 500);
                 } else {
+                    saveBtn.innerHTML = "Lagre";
                     respMsg.textContent = "Det har oppstått en feil!";
                 }
 
@@ -481,12 +486,14 @@ async function deleteLiftOrGoal(aExercise, aType, aId) {
             const exercise = aExercise;
             const id = aId;
             let typeMsg = "Løftet";
+            const deleteBtn = document.getElementById("deleteE");
 
             if (aType === "goal") {
                 typeMsg = "Målet";
             }
 
-            respMsg.textContent = `Sletter ${exercise}...`;
+            deleteBtn.innerHTML = `Sletter...`;
+            //respMsg.textContent = `Sletter ${exercise}...`;
 
             const info = { "exercise": exercise, "type": type, "id": id };
 
@@ -496,14 +503,16 @@ async function deleteLiftOrGoal(aExercise, aType, aId) {
             const resp = await callServerAPIPost(infoHeader, url);
 
             if (resp === true) {
-                respMsg.textContent = `${typeMsg} ble slettet!`;
+                deleteBtn.innerHTML = `Slettet!`;
+                //respMsg.textContent = `${typeMsg} ble slettet!`;
                 setTimeout(() => {
                     disableOverlay();
-                }, 1500);
+                }, 500);
                 setTimeout(() => {
                     location.reload();
-                }, 2000);
+                }, 500);
             } else {
+                deleteBtn.innerHTML = `Slett ${typeMsg.toLowerCase()}`;
                 respMsg.textContent = "Kunne ikke slette " + exercise;
                 setTimeout(() => {
                     location.reload();
@@ -757,10 +766,11 @@ async function createNewTrainingsplit() {
 
         if (resp) {
             respMsg.textContent = "Oprettet ny treningsplan!";
-            sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": resp, "edit": true, "day": "monday" }));
+            //sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": resp, "edit": true, "day": "monday" }));
             setTimeout(() => {
-                location.reload();
-            }, 1000);
+                //location.reload();
+                window.location.search = `?trainingsplit_id=${resp}&edit=true&day=monday`;
+            }, 500);
         } else {
             respMsg.textContent = "Det har oppstått en feil!";
         }
@@ -777,11 +787,12 @@ async function createNewTrainingsplit() {
 async function setActiveTrainingsplit() {
 
     const respMsg = document.getElementById("respworkoutPlans");
-    respMsg.textContent = "";
+    const saveworkoutPlansBtn = document.getElementById("saveworkoutPlans");
+    //respMsg.textContent = "";
 
     if (navigator.onLine) {
 
-        respMsg.textContent = "Setter treningsplanen som aktiv...";
+        //respMsg.textContent = "Setter treningsplanen som aktiv...";
         let trainingsplit_id = null;
         const trainingsplit_idOwnerList = document.getElementById("listworkoutPlans");
 
@@ -801,20 +812,24 @@ async function setActiveTrainingsplit() {
 
         if (trainingsplit_id) {
 
+            saveworkoutPlansBtn.innerHTML = "Lagrer...";
+
             const infoHeader = { "trainingsplit_id": trainingsplit_id };
             const url = `/user/setactive/trainingsplit`;
 
             const resp = await callServerAPIPost(infoHeader, url);
 
             if (resp === true) {
-                respMsg.textContent = "Treningsplanen er blitt satt som aktiv treningsplan!";
+                //respMsg.textContent = "Treningsplanen har blitt satt som aktiv treningsplan!";
+                saveworkoutPlansBtn.innerHTML = "Lagret!";
                 setTimeout(() => {
                     disableOverlay();
-                }, 1500);
+                }, 500);
                 setTimeout(() => {
                     location.reload();
-                }, 2000);
+                }, 500);
             } else {
+                saveworkoutPlansBtn.innerHTML = "Lagre";
                 respMsg.textContent = "Kunne ikke sette treningsplanen som aktiv!";
             }
         } else {
@@ -849,10 +864,10 @@ async function setNoneActiveTrainingsplit() {
             respMsg.textContent = "Treningsplanen er ikke lenger aktiv!";
             setTimeout(() => {
                 disableOverlay();
-            }, 1500);
+            }, 500);
             setTimeout(() => {
                 location.reload();
-            }, 2000);
+            }, 500);
         } else {
             respMsg.textContent = "Kunne ikke fjerne en treningsplan som er aktiv!";
         }
@@ -882,7 +897,8 @@ async function deleteTrainingsplit(aTrainingsplit_id) {
         if (resp === true) {
             sessionStorage.removeItem("trainingsplit");
             alert("Treningsplanen er nå slettet!");
-            location.reload();
+            window.location.search = "";
+            //location.reload();
         } else {
             alert("Kunne ikke slette treningsplanen. Det har oppstått en feil!");
         }
@@ -906,8 +922,17 @@ async function editTrainingsplit() {
                 const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
                 const dayNum = new Date().getDay();
                 const day = days[dayNum];
-                sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": trainingsplit_id, "edit": true, "day": day }));
-                location.reload();
+
+                const viewinguser_id = urlParamsT.get("user_id");
+                let vuser_id = "";
+
+                if (viewinguser_id) {
+                    vuser_id = `user_id=${viewinguser_id}&`;
+                }
+
+                window.location.search = `?${vuser_id}trainingsplit_id=${trainingsplit_id}&edit=true&day=${day}`;
+                //sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": trainingsplit_id, "edit": true, "day": day }));
+                //location.reload();
             }
         } else {
             respMsg.textContent = "Ugyldig trainingsplit_id!";
@@ -928,8 +953,6 @@ async function saveTrainingsplit() {
     if (isSavingTrainingsplit === false) {
 
         if (navigator.onLine) {
-
-            const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
 
             if (trainingsplit) {
 
