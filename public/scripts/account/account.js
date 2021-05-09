@@ -31,19 +31,20 @@ function displayUserDetailsCached() {
 
         if (age) {
             if (age >= 15) {
-                infoString += `<td>${age} år</td>`;
+                infoString += `<td class="cTd">${age} år</td>`;
             }
         }
         if (height) {
             if (height >= 140) {
-                infoString += `<td>${height} cm</td>`;
+                infoString += `<td class="cTd">${height} cm</td>`;
             }
         }
         if (weight) {
             if (weight >= 40) {
-                infoString += `<td>${weight} kg</td>`;
+                infoString += `<td class="cTd">${weight} kg</td>`;
             }
         }
+        
         const infoList = document.getElementById("infoList");
         document.getElementById("info").classList = "noselect infoTable";
 
@@ -253,17 +254,17 @@ function displayInformation(respInfo) {
 
     if (age) {
         if (age >= 15) {
-            infoString += `<td>${age} år</td>`;
+            infoString += `<td class="cTd">${age} år</td>`;
         }
     }
     if (height) {
         if (height >= 140) {
-            infoString += `<td>${height} cm</td>`;
+            infoString += `<td class="cTd">${height} cm</td>`;
         }
     }
     if (weight) {
         if (weight >= 40) {
-            infoString += `<td>${weight} kg</td>`;
+            infoString += `<td class="cTd">${weight} kg</td>`;
         }
     }
 

@@ -17,12 +17,6 @@ word-break: keep-all;
 white-space: nowrap;
 }
 
-.infoTable {
-text-align: center;
-width: 100%;
-margin: 0 auto;
-}
-
 .settingsBtn {
 float:right;
 margin-right: 20px;
