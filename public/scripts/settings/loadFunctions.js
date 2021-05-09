@@ -172,13 +172,18 @@ function loadPasswordPage() {
 
 function loadAboutMePage() {
 
+    const gym = userInfo.gym || "";
+    const age = userInfo.age || "";
+    const height = userInfo.height || "";
+    const weight = userInfo.weight || "";
+
     settingsGrid.innerHTML = justTextTemplate("Her kan du velge høyde, vekt og alder. Om profilen din er offentlig, vises dette til andre brukere", "left");
 
-    settingsGrid.innerHTML += getTemplate("Treningssenter", "", `<input id="gymInp" style="text-align:right;" class='settingsInput' value='${userInfo.gym}' maxlength="30"></input>`, "borderTop");
-    settingsGrid.innerHTML += getTemplate("Alder", "", `<input id="ageInp" style="text-align:right;" class='settingsInput' value='${userInfo.age}' type="number">år</input>`);
+    settingsGrid.innerHTML += getTemplate("Treningssenter", "", `<input id="gymInp" style="text-align:right;" class='settingsInput' value='${gym}' maxlength="30"></input>`, "borderTop");
+    settingsGrid.innerHTML += getTemplate("Alder", "", `<input id="ageInp" style="text-align:right;" class='settingsInput' value='${age}' type="number" maxlength="3">år</input>`);
 
-    settingsGrid.innerHTML += getTemplate("Høyde", "", `<input id="heightInp" style="text-align:right;" class='settingsInput' value='${userInfo.height}' type="number">cm</input>`, "spacingTop");
-    settingsGrid.innerHTML += getTemplate("Vekt", "", `<input id="weightInp" style="text-align:right;" class='settingsInput' value='${userInfo.weight}' type="number">kg</input>`);
+    settingsGrid.innerHTML += getTemplate("Høyde", "", `<input id="heightInp" style="text-align:right;" class='settingsInput' value='${height}' type="number" maxlength="7">cm</input>`, "spacingTop");
+    settingsGrid.innerHTML += getTemplate("Vekt", "", `<input id="weightInp" style="text-align:right;" class='settingsInput' value='${weight}' type="number" maxlength="7">kg</input>`);
 
     settingsGrid.innerHTML += getCenteredTextTemplate(`<button id="updateAboutMeBtn" class='settingsButton' onClick="aboutMeResetValues();">Tilbakestill verdier</button>`, "", "spacingTop");
 
@@ -198,13 +203,13 @@ function loadAboutMePage() {
             const resetTxt = "Tilbakestill verdier";
 
             const change =
-                gymInp !== userInfo.gym
+                gymInp !== gym
                 ||
-                ageInp !== userInfo.age.toString()
+                ageInp !== age.toString()
                 ||
-                heightInp !== userInfo.height.toString()
+                heightInp !== height.toString()
                 ||
-                weightInp !== userInfo.weight.toString();
+                weightInp !== weight.toString();
 
             if (change === false && updateAboutMeBtn.innerHTML !== resetTxt) {
                 updateAboutMeBtn.innerHTML = resetTxt;

@@ -139,11 +139,7 @@ function aboutMeResetValues() {
     const domList = ["gymInp", "ageInp", "heightInp", "weightInp"];
 
     for (let i = 0; i < domList.length; i++) {
-        if (domList[i] === "gymInp") {
-            document.getElementById(domList[i]).value = "";
-        } else {
-            document.getElementById(domList[i]).value = 0;
-        }
+        document.getElementById(domList[i]).value = "";
     }
 }
 
@@ -236,8 +232,6 @@ async function displayInformationAboutUser() {
 
                         for (let j = 0; j < extraKeys.length; j++) {
 
-
-
                             const second = first[extraKeys[j]];
 
                             if (keys[i] === "løft" || keys[i] === "mål") {
@@ -280,7 +274,7 @@ async function displayInformationAboutUser() {
                                                 const extraKeys4 = Object.keys(third.list[0]);
                                                 for (let b = 0; b < extraKeys4.length; b++) {
                                                     const fourth = third.list[0][extraKeys4[b]];
-                                                    informationAboutUser.innerHTML += `<h4>${capitalizeFirstLetter(extraKeys4[b])}:</h4>`;
+                                                    informationAboutUser.innerHTML += `<br><h4>${capitalizeFirstLetter(extraKeys4[b])}:</h4>`;
                                                     for (let l = 0; l < fourth.length; l++) {
                                                         const extraKeys5 = Object.keys(fourth[l]);
                                                         for (let n = 0; n < extraKeys5.length; n++) {
