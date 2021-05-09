@@ -4,68 +4,71 @@ function loadSetting(aSetting) {
         settings = JSON.parse(localStorage.getItem("userSettings"));
     }
 
-    let setting = aSetting || sessionStorage.getItem("currentSetting") || ELoadSettings.settings.name;
-    if (setting === `${ELoadSettings.aboutApp.name} (1)`) {
-        setting = ELoadSettings.aboutApp.name;
-    }
-    saveNewScrollPos = false;
-    titleDom.innerHTML = setting;
-    document.title = setting;
-    settingsGrid.innerHTML = "";
+    if (settings) {
 
-    if (setting === ELoadSettings.password.name) {
-        cacheCurrentSetting(setting);
-        loadPasswordPage();
-    }
+        let setting = aSetting || sessionStorage.getItem("currentSetting") || ELoadSettings.settings.name;
+        if (setting === `${ELoadSettings.aboutApp.name} (1)`) {
+            setting = ELoadSettings.aboutApp.name;
+        }
+        saveNewScrollPos = false;
+        titleDom.innerHTML = setting;
+        document.title = setting;
+        settingsGrid.innerHTML = "";
 
-    else if (setting === ELoadSettings.aboutMe.name) {
-        cacheCurrentSetting(setting);
-        loadAboutMePage();
-    }
+        if (setting === ELoadSettings.password.name) {
+            cacheCurrentSetting(setting);
+            loadPasswordPage();
+        }
 
-    else if (setting === ELoadSettings.apperance.name) {
-        cacheCurrentSetting(setting);
-        loadAppearancePage();
-    }
+        else if (setting === ELoadSettings.aboutMe.name) {
+            cacheCurrentSetting(setting);
+            loadAboutMePage();
+        }
 
-    else if (setting === ELoadSettings.progressionInfo.name) {
-        cacheCurrentSetting(setting);
-        loadProgressionInfoPage();
-    }
+        else if (setting === ELoadSettings.apperance.name) {
+            cacheCurrentSetting(setting);
+            loadAppearancePage();
+        }
 
-    else if (setting === ELoadSettings.aboutApp.name) {
-        cacheCurrentSetting(setting);
-        loadAboutAppPage(setting);
-    }
+        else if (setting === ELoadSettings.progressionInfo.name) {
+            cacheCurrentSetting(setting);
+            loadProgressionInfoPage();
+        }
 
-    else if (setting === ELoadSettings.pendingUsers.name) {
-        cacheCurrentSetting(setting);
-        loadPendingUsersPage(setting);
-    }
+        else if (setting === ELoadSettings.aboutApp.name) {
+            cacheCurrentSetting(setting);
+            loadAboutAppPage(setting);
+        }
 
-    else if (setting === ELoadSettings.users.name) {
-        cacheCurrentSetting(setting);
-        loadUsersListPage(setting);
-    }
+        else if (setting === ELoadSettings.pendingUsers.name) {
+            cacheCurrentSetting(setting);
+            loadPendingUsersPage(setting);
+        }
 
-    else if (setting === ELoadSettings.api.name) {
-        cacheCurrentSetting(setting);
-        loadAPIPage();
-    }
+        else if (setting === ELoadSettings.users.name) {
+            cacheCurrentSetting(setting);
+            loadUsersListPage(setting);
+        }
 
-    else if (setting === ELoadSettings.privacy.name) {
-        cacheCurrentSetting(setting);
-        loadPrivacyPage();
-    }
+        else if (setting === ELoadSettings.api.name) {
+            cacheCurrentSetting(setting);
+            loadAPIPage();
+        }
 
-    else if (setting === ELoadSettings.deleteMe.name) {
-        loadDeleteMePage();
-    }
+        else if (setting === ELoadSettings.privacy.name) {
+            cacheCurrentSetting(setting);
+            loadPrivacyPage();
+        }
 
-    else {
-        document.title = ELoadSettings.settings.name;
-        cacheCurrentSetting(ELoadSettings.settings.name);
-        loadDefaultPage(ELoadSettings.settings.name);
+        else if (setting === ELoadSettings.deleteMe.name) {
+            loadDeleteMePage();
+        }
+
+        else {
+            document.title = ELoadSettings.settings.name;
+            cacheCurrentSetting(ELoadSettings.settings.name);
+            loadDefaultPage(ELoadSettings.settings.name);
+        }
     }
 }
 
@@ -118,7 +121,9 @@ async function loadDefaultPage(setting) {
     }
 
     if (userInfo.hasOwnProperty("apikey")) {
-        settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.api.name, "apiDiv");
+        if (userInfo.apikey) {
+            settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.api.name, "apiDiv");
+        }
     }
 
     settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.privacy.name);

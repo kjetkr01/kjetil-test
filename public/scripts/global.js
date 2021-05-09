@@ -596,8 +596,8 @@ function redirectToUser(viewUser) {
         if (userID === parseInt(viewingUser)) {
             redirectToAccount();
         } else {
-            sessionStorage.removeItem('display_goals_visitor');
-            sessionStorage.removeItem('display_lifts_visitor');
+            //sessionStorage.removeItem('display_goals_visitor');
+            //sessionStorage.removeItem('display_lifts_visitor');
             location.href = `user.html?id=${viewingUser}`;
         }
     } else {
