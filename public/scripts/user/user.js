@@ -1,10 +1,13 @@
 let lifts = null, goals = null, activetrainingsplit = null, memberSince = null, size = 0;
 
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+
 function displayUserDetailsCached() {
 
     try {
 
-        const ViewingUser = sessionStorage.getItem("ViewingUser");
+        const ViewingUser = urlParams.get("id");
 
         if (ViewingUser) {
 
@@ -87,7 +90,7 @@ function displayUserDetailsCached() {
 
 async function requestAccountDetails() {
 
-    const viewingUser = sessionStorage.getItem("ViewingUser");
+    const viewingUser = urlParams.get("id");
 
     /*try {
         const cachedDetails = JSON.parse(sessionStorage.getItem(`cachedDetails_visitor_${viewingUser}`));

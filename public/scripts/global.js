@@ -174,8 +174,7 @@ function lockBodyPosition() {
 function viewUser(viewUser) {
 
     if (viewUser) {
-        sessionStorage.setItem("ViewingUser", viewUser);
-        redirectToUser();
+        redirectToUser(viewUser);
     }
 }
 
@@ -589,9 +588,9 @@ function redirectToUsers() {
 
 }
 
-function redirectToUser() {
+function redirectToUser(viewUser) {
 
-    const viewingUser = sessionStorage.getItem("ViewingUser");
+    const viewingUser = viewUser;
 
     if (viewingUser) {
         if (userID === parseInt(viewingUser)) {
@@ -599,10 +598,10 @@ function redirectToUser() {
         } else {
             sessionStorage.removeItem('display_goals_visitor');
             sessionStorage.removeItem('display_lifts_visitor');
-            location.href = "user.html";
+            location.href = `user.html?id=${viewingUser}`;
         }
     } else {
-        location.href = "user.html";
+        redirectToFeed();
     }
 }
 
