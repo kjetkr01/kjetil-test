@@ -788,6 +788,10 @@ class StorageHandler {
 
                                 if (activetrainingsplit.rows.length !== 0) {
 
+                                    if (activetrainingsplit.rows[0].user_id === userIDReq) {
+                                        activetrainingsplit.rows[0].canEdit = true;
+                                    }
+
                                     userCacheObj.activetrainingsplit = activetrainingsplit.rows[0];
 
                                     let username = await client.query(`

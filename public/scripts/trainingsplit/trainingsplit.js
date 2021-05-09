@@ -781,7 +781,7 @@ async function copyTrainingsplit(aTrainingsplit_id, aOwner_id) {
                     const dayNum = new Date().getDay();
                     const day = days[dayNum];
                     //sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": data.newtrainingsplit_id, "edit": true, "day": day }));
-                    window.location.href = `account.html?trainingsplit_id=${data.newtrainingsplit_id}&edit=false&day=${day}`;
+                    window.location.href = `account.html?trainingsplit_id=${data.newtrainingsplit_id}&edit=true&day=${day}`;
                 }
             } else {
                 alert(data.msg);
