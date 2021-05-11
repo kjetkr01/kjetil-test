@@ -347,13 +347,15 @@ async function deleteAccount() {
 
                     // delete account
 
-                    const body = { "authToken": token, "userInfo": user, "authorization": "Basic " + window.btoa(`${usernameInpDeletion}:${passwordInpDeletion}`) };
+                    const body = { "authorization": "Basic " + window.btoa(`${usernameInpDeletion}:${passwordInpDeletion}`) };
                     const url = `/user/deleteMe`;
 
                     const config = {
                         method: "POST",
                         headers: {
-                            "content-type": "application/json"
+                            "content-type": "application/json",
+                            "authtoken": token,
+                            "userinfo": user
                         },
                         body: JSON.stringify(body)
                     }
