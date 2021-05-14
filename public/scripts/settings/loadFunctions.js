@@ -340,7 +340,7 @@ function loadProgressionInfoPage() {
 
     const badgeDetailsObj = {
         0: { name: "Alt", value: 0 },
-        1: { name: "KG igjen", value: 1 },
+        1: { name: "KG/Reps igjen", value: 1 },
         2: { name: "% fremgang", value: 2 }
     }
 

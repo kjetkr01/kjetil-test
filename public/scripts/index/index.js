@@ -152,7 +152,21 @@ async function requestAccountDetails() {
         goals = JSON.parse(localStorage.getItem("cachedGoals_owner"));
         badgeColorsJSON = JSON.parse(localStorage.getItem("cachedBadgeColors"));
 
+        const userSettings = JSON.parse(localStorage.getItem("userSettings"));
+
         const cachedGoalsLeft = JSON.parse(localStorage.getItem("cachedGoalsLeft_owner"));
+
+        if (userSettings) {
+            if (userSettings.hasOwnProperty("badgesize")) {
+                size = userSettings.badgesize;
+                if (size === 1) {
+                    document.getElementById("Gbadges").style.minHeight = "200px";
+                }
+            }
+            if (userSettings.hasOwnProperty("badgedetails")) {
+                badgedetails = userSettings.badgedetails;
+            }
+        }
 
         if (cachedGoalsLeft) {
             goalsLeft = new TgoalsLeft(cachedGoalsLeft);
@@ -203,7 +217,11 @@ async function displayBadges(aInfo) {
     }
 
     const info = aInfo;
-    size = 0//info.settings.badgesize || 0;
+
+    if (size === null) {
+
+        size = info.settings.badgesize || 0;
+    }
 
     if (size === 1) {
         document.getElementById("Gbadges").style.minHeight = "200px";

@@ -7,6 +7,8 @@ let liftBadgeAnimations = "";
 let goalBadgeAnimations = "";
 let trainingsplitBadgeAnimations = "";
 
+let badgedetails = 0;
+
 function getBadgeGoals(aSize, aBadgeInfo, aId) {
     try {
 
@@ -45,6 +47,41 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
 
     function bigBadge(userBadgeInfo, aId) {
 
+        console.log(userBadgeInfo);
+
+        let untilGoal = userBadgeInfo.msg;
+        let progressionCircleHTML = `
+        <div class="circular">
+        <div class="inner" style="background-color: #E36262;">
+        </div>
+        <div class="outer">
+        </div>
+        <div id="percentNum" class="numb">
+        0%</div>
+        <div class="circle">
+        <div class="dot">
+        <span></span>
+        </div>
+        <div class="bar left">
+        <div class="progress">
+        </div>
+        </div>
+        <div class="bar right">
+        <div class="progress">
+        </div>
+        </div>
+        </div>
+        </div>
+        `;
+
+        if (badgedetails === 1) {
+            progressionCircleHTML = "";
+        } else if (badgedetails === 2) {
+            untilGoal = "";
+        }
+
+        const progressionTxt = "Nærmer deg!";
+
         const badgeTemplate = `
 <td>
 <div class="bigBadges ${goalBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('goal', '${userBadgeInfo.exercise}', '${aId}');">
@@ -63,35 +100,13 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
 
 <div id="Gprogression">
 
-
-<div class="circular">
-<div class="inner" style="background-color: #E36262;">
-</div>
-<div class="outer">
-</div>
-<div id="percentNum" class="numb">
-0%</div>
-<div class="circle">
-<div class="dot">
-<span></span>
-</div>
-<div class="bar left">
-<div class="progress">
-</div>
-</div>
-<div class="bar right">
-<div class="progress">
-</div>
-</div>
-</div>
-</div>
-
+${progressionCircleHTML}
 
 </div>
 
 <div id="GkgLeft">
 <p id="kgLeft">
-${userBadgeInfo.msg}
+${untilGoal}
 </p>
 </div>
 
@@ -109,7 +124,7 @@ ${userBadgeInfo.kg} kg
 
 <div id="Gmsg">
 <p id="msg">
-Nærmer deg!
+${progressionTxt}
 </p>
 </div>
 
