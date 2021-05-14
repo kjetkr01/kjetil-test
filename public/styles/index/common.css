@@ -82,5 +82,75 @@ background-color: transparent;
 border: transparent;
 }
 
+.medals {
+height: 40px;
+width: 40px;
+margin-left: 10px;
+margin-top: 6px;
+
+outline-style: none; 
+-webkit-touch-callout: none;
+-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.medalIconGold {
+fill: #FFD700;
+}
+
+/* progress bar */
+
+.track {
+stroke-width: 5;
+stroke: lightgray;
+opacity: 50%;
+fill: none;
+}
+
+.progress {
+stroke-width: 5;
+stroke: rgb(0, 253, 55);
+stroke-linecap: round;
+fill: none;
+transform: rotate(270deg);
+transform-origin: center;
+}
+
+.pstart {
+stroke: red;
+}
+
+.p20 {
+stroke: rgb(247, 42, 42);
+}
+
+.p30 {
+stroke: rgb(228, 228, 113);
+}
+
+.p40 {
+stroke: rgb(236, 236, 80);
+}
+
+.p50 {
+stroke: yellow;
+}
+
+.p60 {
+stroke: rgb(109, 223, 109);
+}
+
+.p70 {
+stroke: rgb(94, 228, 94);
+}
+
+.p80 {
+stroke: rgb(48, 226, 48);
+}
+
+.p90 {
+stroke: rgb(1, 233, 1);
+}
+
+/* end of progress bar */
 
 /* end of mobile & desktop */

@@ -325,6 +325,8 @@ function displayGoals() {
 
                 if (goalKeys) {
 
+                    let progressionPercent = 0;
+
                     const id = goalKeys.id;
                     const color = goalKeys.color || "redBadgeG";
                     const goalReps = parseInt(goalKeys.reps);
@@ -357,9 +359,11 @@ function displayGoals() {
                             } else if (repsUntilGoal === 1) {
                                 msg = `1 rep igjen`;
                                 untilGoal = repsSM;
+                                progressionPercent = Math.ceil((highestLiftKg.reps / goalReps) * 100);
                             } else {
                                 msg = `${repsUntilGoal} reps igjen`;
                                 untilGoal = repsUntilGoal * repsSM;
+                                progressionPercent = Math.ceil((highestLiftKg.reps / goalReps) * 100);
                             }
                         } else {
                             kgUntilGoal = goalKg - highestLiftKg.kg;
@@ -369,6 +373,7 @@ function displayGoals() {
                             } else {
                                 msg = `${kgUntilGoal} kg igjen`;
                                 untilGoal = kgUntilGoal;
+                                progressionPercent = Math.ceil((highestLiftKg.kg / goalKg) * 100);
                             }
                         }
                     }
@@ -382,21 +387,36 @@ function displayGoals() {
                             } else if (repsUntilGoal === 1) {
                                 msg = `1 rep igjen`;
                                 untilGoal = repsSM;
+                                progressionPercent = Math.ceil((highestLiftKg.reps / goalReps) * 100);
                             } else {
                                 msg = `${repsUntilGoal} reps igjen`;
                                 untilGoal = repsUntilGoal * repsSM;
+                                progressionPercent = Math.ceil((highestLiftKg.reps / goalReps) * 100);
                             }
                         } else {
                             msg = `${goalReps} reps igjen`;
                             untilGoal = goalReps * repsSM;
+                            progressionPercent = Math.ceil((highestLiftKg.reps / goalReps) * 100);
                         }
                     } else {
                         kgUntilGoal = goalKg - highestLiftKg.kg;
                         msg = `${kgUntilGoal} kg igjen`;
                         untilGoal = kgUntilGoal;
+                        progressionPercent = Math.ceil((highestLiftKg.kg / goalKg) * 100);
                     }
 
-                    arr.push({ "exercise": capitalizeFirstLetter(current), "kg": goalKg, "untilGoal": untilGoal, "msg": msg, "color": color, "id": id });
+                    if (untilGoal === 0) {
+                        progressionPercent = 100;
+                    }
+
+                    if (progressionPercent < 0) {
+                        progressionPercent = 0;
+                    }
+                    if (progressionPercent > 100) {
+                        progressionPercent = 100;
+                    }
+
+                    arr.push({ "exercise": capitalizeFirstLetter(current), "kg": goalKg, "untilGoal": untilGoal, "msg": msg, "color": color, "id": id, "progressionPercent": progressionPercent });
 
                 }
             }
@@ -416,6 +436,73 @@ function displayGoals() {
 
                 if (badge && badgesGoalsTableRow) {
                     badgesGoalsTableRow.innerHTML += badge;
+
+                    if (size === 1) {
+
+                        const progressCircle = document.getElementById(`${arr[i].exercise}-${arr[i].id}-progress`);
+
+                        if (progressCircle) {
+
+                            //console.log(progressCircle)
+
+                            if (arr[i].progressionPercent >= 100) {
+
+                                const selectedBadge = document.getElementsByClassName(`${arr[i].exercise}-${arr[i].id}-class`);
+
+                                if (selectedBadge.length > 0) {
+
+                                    selectedBadge[0].innerHTML = `
+                                <svg id="placement" class="medals medalIconGold" draggable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+                        <defs>
+                            </defs>
+                            <g id="Layer_2" data-name="Layer 2">
+                            <g id="Layer_1-2" data-name="Layer 1">
+                            <path class="medalIconGold"
+                            d="M28.33,17.38v-14H11.67V17.38a1.66,1.66,0,0,0,.81,1.44l7,4.18L17.8,26.9l-5.68.48,4.31,3.74-1.31,5.55,4.88-3,4.88,3-1.3-5.55,4.32-3.74-5.68-.48L20.57,23l7-4.18A1.66,1.66,0,0,0,28.33,17.38Zm-6.66,3-1.67,1-1.67-1V5h3.34Z" />
+                        </g>
+                    </g>
+                </svg>
+                                `;
+                                }
+                            } else {
+
+                                const radius = progressCircle.r.baseVal.value;
+                                //circumference of a circle = 2πr;
+                                const circumference = radius * 2 * Math.PI;
+                                progressCircle.style.strokeDasharray = circumference;
+
+                                //0 to 100
+                                setProgress(arr[i].progressionPercent);
+
+                                function setProgress(percent) {
+
+                                    progressCircle.style.strokeDashoffset = circumference - (percent / 100) * circumference;
+
+                                    if (percent >= 90) {
+                                        progressCircle.classList += " p90";
+                                    } else if (percent >= 80) {
+                                        progressCircle.classList += " p80";
+                                    } else if (percent >= 70) {
+                                        progressCircle.classList += " p70";
+                                    } else if (percent >= 60) {
+                                        progressCircle.classList += " p60";
+                                    } else if (percent >= 50) {
+                                        progressCircle.classList += " p50";
+                                    } else if (percent >= 40) {
+                                        progressCircle.classList += " p40";
+                                    } else if (percent >= 30) {
+                                        progressCircle.classList += " p30";
+                                    } else if (percent >= 20) {
+                                        progressCircle.classList += " p20";
+                                    } else {
+                                        progressCircle.classList += " pstart";
+                                    }
+
+
+                                }
+                            }
+                        }
+                    }
                 }
             }
         } else {

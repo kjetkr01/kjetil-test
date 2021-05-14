@@ -18,7 +18,7 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
             goalBadgeAnimations = animationClasses;
         }
 
-        if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.exercise && aBadgeInfo.kg && aBadgeInfo.untilGoal && aBadgeInfo.msg && aId) {
+        if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.exercise && aBadgeInfo.kg && aBadgeInfo.untilGoal >= 0 && aBadgeInfo.msg && aId) {
 
             const size = aSize;
             const badgeInfo = aBadgeInfo;
@@ -47,40 +47,27 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
 
     function bigBadge(userBadgeInfo, aId) {
 
-        console.log(userBadgeInfo);
+        //console.log(userBadgeInfo);
 
         let untilGoal = userBadgeInfo.msg;
-        let progressionCircleHTML = `
-        <div class="circular">
-        <div class="inner" style="background-color: #E36262;">
-        </div>
-        <div class="outer">
-        </div>
-        <div id="percentNum" class="numb">
-        0%</div>
-        <div class="circle">
-        <div class="dot">
-        <span></span>
-        </div>
-        <div class="bar left">
-        <div class="progress">
-        </div>
-        </div>
-        <div class="bar right">
-        <div class="progress">
-        </div>
-        </div>
-        </div>
-        </div>
-        `;
+        let currentProgressionPercent = `${userBadgeInfo.progressionPercent}%`;
 
         if (badgedetails === 1) {
-            progressionCircleHTML = "";
+            currentProgressionPercent = "";
         } else if (badgedetails === 2) {
             untilGoal = "";
         }
 
-        const progressionTxt = "Nærmer deg!";
+        const progressionListTxt = ["En start", "Fremgang", "Kvartveis"];
+
+        let progressionTxt = progressionListTxt[Math.floor(Math.random() * progressionListTxt.length)];
+
+        if (userBadgeInfo.progressionPercent >= 100) {
+            untilGoal = "";
+            progressionTxt = "Målet er nådd!"
+        }
+
+
 
         const badgeTemplate = `
 <td>
@@ -98,9 +85,13 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
 -->
 
 
-<div id="Gprogression">
+<div id="Gprogression" class="${userBadgeInfo.exercise}-${aId}-class">
 
-${progressionCircleHTML}
+<svg id="id="${userBadgeInfo.exercise}-${aId}" style="width: 50px; height: 50px; margin-left: 10px;">
+        <circle r="20" cx="25" cy="25" id="${userBadgeInfo.exercise}-${aId}-track" class="track"></circle>
+        <circle r="20" cx="25" cy="25" id="${userBadgeInfo.exercise}-${aId}-progress" class="progress"></circle>
+        </svg>
+        ${currentProgressionPercent}
 
 </div>
 
