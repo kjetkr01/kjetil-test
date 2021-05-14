@@ -44,7 +44,7 @@ function displayUserDetailsCached() {
                 infoString += `<td class="cTd">${weight} kg</td>`;
             }
         }
-        
+
         const infoList = document.getElementById("infoList");
         document.getElementById("info").classList = "noselect infoTable";
 
@@ -543,7 +543,7 @@ function displayGoals(hasGoalsLeft) {
                         }
                     }
 
-                    if (highestLiftKg.kg > goalKg) {
+                    if (highestLiftKg.kg >= goalKg) {
                         if (liftsList[goalKg]) {
                             repsUntilGoal = goalReps - liftsList[goalKg];
                             if (repsUntilGoal <= 0) {

@@ -355,7 +355,7 @@ function displayGoals() {
                         }
                     }
 
-                    if (highestLiftKg.kg > goalKg) {
+                    if (highestLiftKg.kg >= goalKg) {
                         if (liftsList[goalKg]) {
                             repsUntilGoal = goalReps - liftsList[goalKg];
                             if (repsUntilGoal <= 0) {

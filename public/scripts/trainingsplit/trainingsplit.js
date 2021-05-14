@@ -57,7 +57,8 @@ async function requestTrainingsplitDetails() {
              </div>`;
 
             let resp = null;
-            if (trainingsplit.edit !== true) {
+
+            if (trainingsplit.edit !== "true") {
                 const cachedActiveTrainingsplit_owner = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
                 if (cachedActiveTrainingsplit_owner) {
                     if (cachedActiveTrainingsplit_owner.trainingsplit_id === parseInt(trainingsplit.id)) {
