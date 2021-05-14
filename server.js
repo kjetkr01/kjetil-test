@@ -1199,8 +1199,8 @@ server.post("/user/save/trainingsplit", auth, async (req, res) => {
                          "Rygg": ["markløft", "pullup", "roing", "row"],
                          "Biceps": ["bicep", "curl", "hammer"],
                          "Triceps": ["tricep", "pushdown", "dip", "crusher"],
-                         "Mage": ["situp", "plank", "crunch", "abs", "roll"],
                          "Bein": ["knebøy", "leg", "hamstring", "lunge", "utfall"],
+                         "Mage": ["situp", "plank", "crunch", "abs", "roll"],
                     }
 
                     // shortList and keywords (saveTrainingsplit in account/editInformation.js ~ line 960) should be equal
