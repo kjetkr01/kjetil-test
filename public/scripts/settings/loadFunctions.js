@@ -513,6 +513,8 @@ async function loadUsersListPage(setting) {
 
             if (resp.allUsers[0].hasOwnProperty("id")) {
 
+                resp.allUsers.sort(function (a, b) { return a.id - b.id });
+
                 const usersKeys = Object.keys(resp.allUsers);
 
                 const defaultHTML = `
@@ -613,6 +615,8 @@ async function loadPendingUsersPage(setting) {
 
             settingsGrid.innerHTML += getCenteredTextTemplate(defaultHTML, "", "borderTop");
 
+            console.log(resp)
+            resp.sort(function (a, b) { return b.id - a.id });
             const pendingUserKeys = Object.keys(resp);
 
             for (let i = 0; i < pendingUserKeys.length; i++) {
