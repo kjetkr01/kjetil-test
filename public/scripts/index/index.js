@@ -492,22 +492,10 @@ function displayGoals() {
 
                                     progressCircle.style.strokeDashoffset = circumference - (percent / 100) * circumference;
 
-                                    if (percent >= 90) {
-                                        progressCircle.classList += " p90";
-                                    } else if (percent >= 80) {
-                                        progressCircle.classList += " p80";
-                                    } else if (percent >= 70) {
-                                        progressCircle.classList += " p70";
-                                    } else if (percent >= 60) {
-                                        progressCircle.classList += " p60";
-                                    } else if (percent >= 50) {
-                                        progressCircle.classList += " p50";
-                                    } else if (percent >= 40) {
-                                        progressCircle.classList += " p40";
-                                    } else if (percent >= 30) {
-                                        progressCircle.classList += " p30";
-                                    } else if (percent >= 20) {
-                                        progressCircle.classList += " p20";
+                                    if (percent >= 66) {
+                                        progressCircle.classList += " p66";
+                                    } else if (percent >= 33) {
+                                        progressCircle.classList += " p33";
                                     } else {
                                         progressCircle.classList += " pstart";
                                     }

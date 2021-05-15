@@ -400,7 +400,7 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aInp4, aType, aColor, aId) {
 
             const checkKG = input2.split(".");
 
-            if (input2.match(onlyNumbers) && (checkKG.length > 2) === false) {
+            if (input2.match(onlyNumbers) && (checkKG.length > 2) === false && parseInt(input2) > 0) {
             } else {
                 msg = "Antall KG er ugyldig! Eksempel: 120.25";
                 return { "isValid": isValid, "msg": msg };
@@ -430,7 +430,7 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aInp4, aType, aColor, aId) {
                 return { "isValid": isValid, "msg": msg };
             }
 
-            info = { "exercise": input1, "kg": input2, "reps": input3, "date": input4, "type": type, "color": color, "id": id };
+            info = { "exercise": input1, "kg": parseFloat(input2), "reps": input3, "date": input4, "type": type, "color": color, "id": id };
 
             isValid = true;
 

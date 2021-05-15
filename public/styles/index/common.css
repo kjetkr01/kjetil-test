@@ -108,7 +108,6 @@ fill: none;
 
 .progress {
 stroke-width: 5;
-stroke: rgb(0, 253, 55);
 stroke-linecap: round;
 fill: none;
 transform: rotate(270deg);
@@ -116,39 +115,15 @@ transform-origin: center;
 }
 
 .pstart {
-stroke: red;
+stroke: rgb(240, 46, 46);
 }
 
-.p20 {
-stroke: rgb(247, 42, 42);
+.p33 {
+stroke: rgb(199, 221, 98);
 }
 
-.p30 {
-stroke: rgb(228, 228, 113);
-}
-
-.p40 {
-stroke: rgb(236, 236, 80);
-}
-
-.p50 {
-stroke: yellow;
-}
-
-.p60 {
+.p66 {
 stroke: rgb(109, 223, 109);
-}
-
-.p70 {
-stroke: rgb(94, 228, 94);
-}
-
-.p80 {
-stroke: rgb(48, 226, 48);
-}
-
-.p90 {
-stroke: rgb(1, 233, 1);
 }
 
 /* end of progress bar */
