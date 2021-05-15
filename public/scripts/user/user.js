@@ -482,69 +482,125 @@ function displayGoals() {
 
                 const liftsList = {};
 
-                for (let f = 0; f < liftKeys.length; f++) {
-                    const lift = lifts[current][f];
-                    const liftReps = parseInt(lift.reps);
-                    const liftKg = parseFloat(lift.kg);
+                for (let j = 0; j < exerciseGoalKeys.length; j++) {
 
-                    liftsList[liftKg] = liftReps;
+                    const goalKeys = exerciseGoal[exerciseGoalKeys[j]];
 
-                    if (highestLiftKg.kg < liftKg) {
-                        highestLiftKg.kg = liftKg;
-                        highestLiftKg.reps = liftReps;
-                    }
+                    if (goalKeys) {
 
-                    if (highestLiftKg.kg === goalKg) {
-                        repsUntilGoal = goalReps - highestLiftKg.reps;
+                        const id = goalKeys.id;
+                        const color = goalKeys.color || "redBadgeG";
+                        const goalReps = parseInt(goalKeys.reps);
+                        const goalKg = parseFloat(goalKeys.kg);
 
-                        if (repsUntilGoal <= 0) {
-                            msg = "Målet er nådd!";
-                            untilGoal = 0;
-                        } else if (repsUntilGoal === 1) {
-                            msg = `1 rep igjen`;
-                            untilGoal = repsSM;
-                        } else {
-                            msg = `${repsUntilGoal} reps igjen`;
-                            untilGoal = repsUntilGoal * repsSM;
+                        const liftKeys = Object.keys(lifts[current]);
+
+                        let highestLiftKg = { "kg": 0, "reps": 0 };
+
+                        const liftsList = {};
+
+                        for (let f = 0; f < liftKeys.length; f++) {
+                            const lift = lifts[current][f];
+                            const liftReps = parseInt(lift.reps);
+                            const liftKg = parseFloat(lift.kg);
+
+                            liftsList[liftKg] = liftReps;
+
+                            if (highestLiftKg.kg < liftKg) {
+                                highestLiftKg.kg = liftKg;
+                                highestLiftKg.reps = liftReps;
+                            }
+
+                            if (highestLiftKg.kg === goalKg) {
+                                repsUntilGoal = goalReps - highestLiftKg.reps;
+
+                                if (repsUntilGoal <= 0) {
+                                    msg = "Målet er nådd!";
+                                    untilGoal = 0;
+                                } else if (repsUntilGoal === 1) {
+                                    msg = `1 rep igjen`;
+                                    untilGoal = repsSM;
+                                    calcPercent(highestLiftKg.reps, goalReps);
+                                } else {
+                                    msg = `${repsUntilGoal} reps igjen`;
+                                    untilGoal = repsUntilGoal * repsSM;
+                                    calcPercent(highestLiftKg.reps, goalReps);
+                                }
+                            } else {
+                                kgUntilGoal = goalKg - highestLiftKg.kg;
+                                if (kgUntilGoal <= 0) {
+                                    msg = "Målet er nådd!";
+                                    untilGoal = 0;
+                                } else {
+                                    msg = `${checkIfDecimal(kgUntilGoal)} kg igjen`;
+                                    untilGoal = kgUntilGoal;
+                                    calcPercent(highestLiftKg.kg, goalKg);
+                                }
+                            }
                         }
-                    } else {
-                        kgUntilGoal = goalKg - highestLiftKg.kg;
-                        if (kgUntilGoal <= 0) {
-                            msg = "Målet er nådd!";
-                            untilGoal = 0;
+
+                        if (highestLiftKg.kg >= goalKg) {
+                            if (liftsList[goalKg]) {
+                                repsUntilGoal = goalReps - liftsList[goalKg];
+                                if (repsUntilGoal <= 0) {
+                                    msg = "Målet er nådd!";
+                                    untilGoal = 0;
+                                } else if (repsUntilGoal === 1) {
+                                    msg = `1 rep igjen`;
+                                    untilGoal = repsSM;
+                                    calcPercent(liftsList[goalKg], goalReps);
+                                } else {
+                                    msg = `${repsUntilGoal} reps igjen`;
+                                    untilGoal = repsUntilGoal * repsSM;
+                                    calcPercent(liftsList[goalKg], goalReps);
+                                }
+                            } else {
+                                msg = `${goalReps} reps igjen`;
+                                untilGoal = goalReps * repsSM;
+                                calcPercent(liftsList[goalKg], goalReps);
+                            }
                         } else {
-                            msg = `${kgUntilGoal} kg igjen`;
+                            kgUntilGoal = goalKg - highestLiftKg.kg;
+                            msg = `${checkIfDecimal(kgUntilGoal)} kg igjen`;
                             untilGoal = kgUntilGoal;
+                            calcPercent(highestLiftKg.kg, goalKg);
                         }
+
+                        function calcPercent(aNum1, aNum2) {
+                            const num1 = aNum1 || 0;
+                            const num2 = aNum2 || 0;
+
+                            progressionPercent = Math.floor((num1 / num2) * 100);
+                        }
+
+                        function checkIfDecimal(aNum) {
+                            let num = aNum;
+                            const checkIfDecimal = num.toString().split(".");
+                            if (checkIfDecimal.length > 1) {
+                                if (checkIfDecimal[1].length === 1) {
+                                    num = parseFloat(num).toFixed(1);
+                                } else {
+                                    num = parseFloat(num).toFixed(2);
+                                }
+                            }
+                            return num;
+                        }
+
+                        if (untilGoal === 0) {
+                            progressionPercent = 100;
+                        }
+
+                        if (progressionPercent < 0) {
+                            progressionPercent = 0;
+                        }
+                        if (progressionPercent > 100) {
+                            progressionPercent = 100;
+                        }
+
+                        arr.push({ "exercise": capitalizeFirstLetter(current), "kg": goalKg, "untilGoal": untilGoal, "msg": msg, "color": color, "id": id, "progressionPercent": progressionPercent });
+
                     }
                 }
-
-                if (highestLiftKg.kg > goalKg) {
-                    if (liftsList[goalKg]) {
-                        repsUntilGoal = goalReps - liftsList[goalKg];
-                        if (repsUntilGoal <= 0) {
-                            msg = "Målet er nådd!";
-                            untilGoal = 0;
-                        } else if (repsUntilGoal === 1) {
-                            msg = `1 rep igjen`;
-                            untilGoal = repsSM;
-                        } else {
-                            msg = `${repsUntilGoal} reps igjen`;
-                            untilGoal = repsUntilGoal * repsSM;
-                        }
-                    } else {
-                        msg = `${goalReps} reps igjen`;
-                        untilGoal = goalReps * repsSM;
-                    }
-                } else {
-                    kgUntilGoal = goalKg - highestLiftKg.kg;
-                    msg = `${kgUntilGoal} kg igjen`;
-                    untilGoal = kgUntilGoal;
-                }
-
-
-                arr.push({ "exercise": capitalizeFirstLetter(current), "kg": goalKg, "untilGoal": untilGoal, "msg": msg, "color": color, "id": id });
-
             }
         }
     }
@@ -592,7 +648,8 @@ function displayGoals() {
 
         document.getElementById("totalGoals").innerHTML = `Alle (${totalCount})`;
 
-        arr.sort(function (a, b) { return a.untilGoal - b.untilGoal });
+        //arr.sort(function (a, b) { return a.untilGoal - b.untilGoal });
+        arr.sort(function (a, b) { return b.progressionPercent - a.progressionPercent });
 
         for (let i = 0; i < arr.length; i++) {
 

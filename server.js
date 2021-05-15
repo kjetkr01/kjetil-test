@@ -423,7 +423,9 @@ server.post("/users/details/:user", auth, async (req, res) => {
                                         "displayname": resp.userDetails.displayname,
                                         "preferredColorTheme": resp.userDetails.settings.preferredcolortheme,
                                         "preferredTheme": resp.userDetails.settings.preferredtheme,
-                                        "automaticUpdates": resp.userDetails.settings.automaticupdates
+                                        "automaticUpdates": resp.userDetails.settings.automaticupdates,
+                                        "badgesize": resp.userDetails.settings.badgesize,
+                                        "badgedetails": resp.userDetails.settings.badgedetails
                                    }
 
                                    cacheDetails.id = resp.userDetails.id;

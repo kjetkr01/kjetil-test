@@ -933,6 +933,8 @@ async function editTrainingsplit() {
                 window.location.search = `?${vuser_id}trainingsplit_id=${trainingsplit_id}&edit=true&day=${day}`;
                 //sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": trainingsplit_id, "edit": true, "day": day }));
                 //location.reload();
+            } else {
+                respMsg.textContent = `Vennligst velg en treningsplan fra "Dine planer" listen!`;
             }
         } else {
             respMsg.textContent = "Ugyldig trainingsplit_id!";

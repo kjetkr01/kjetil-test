@@ -499,9 +499,12 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
 function viewTrainingsplitOwnerList() {
 
     const trainingsplit_id = document.getElementById("listworkoutPlans");
-
     if (trainingsplit_id) {
-        viewTrainingsplit(trainingsplit_id.value);
+        if (trainingsplit_id.value !== "" && trainingsplit_id.value !== "null") {
+            viewTrainingsplit(trainingsplit_id.value);
+        } else {
+            document.getElementById("respworkoutPlans").textContent = `Vennligst velg en treningsplan fra "Dine planer" listen!`;
+        }
     }
 }
 
@@ -510,7 +513,11 @@ function viewTrainingsplitSubList() {
     const trainingsplit_id = document.getElementById("listsubworkoutPlans");
 
     if (trainingsplit_id) {
-        viewTrainingsplit(trainingsplit_id.value);
+        if (trainingsplit_id.value !== "" && trainingsplit_id.value !== "null") {
+            viewTrainingsplit(trainingsplit_id.value);
+        } else {
+            document.getElementById("respworkoutPlans").textContent = `Vennligst velg en treningsplan fra "Abonnerte planer" listen!`;
+        }
     }
 }
 

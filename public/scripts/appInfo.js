@@ -18,7 +18,7 @@ ${createBtn("Christoffer Simonsen", "3")},
 ${createBtn("Christian Jenssen")},
 ${createBtn("Mandius Abelsen")},
 ${createBtn("Szilard Andri Reynisson", "4")},
-${createBtn("Sondre Olsen")}.
+${createBtn("Sondre Olsen", "10")}.
 `;
 
 //
@@ -27,6 +27,8 @@ const ongoingUpdatesText = "Pågående oppdateringer";
 const ongoingUpdatesArr = [
     "TITLE:Innstillinger",
     "Personvern (75%)",
+    "TITLE:Badges",
+    "Lage større versjon av badge (mål-badge, på startsiden) (90%)",
     "TITLE:Treningsplan",
     "Kunne flytte øvelser opp eller ned (0%)",
     "Kunne endre navn på øvelser som allerede er laget (0%)",
@@ -57,7 +59,6 @@ const plannedUpdatesArr = [
 
     "TITLE:Badges",
     "Lage flere badge farger",
-    "Lage større versjon av badge (mål-badge, på startsiden)",
 
     "TITLE:Desktop design",
     "Optimalisere desktop design",

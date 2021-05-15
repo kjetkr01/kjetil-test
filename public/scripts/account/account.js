@@ -352,20 +352,18 @@ function displayLifts(hasLiftsLeft) {
                 const liftKeys = exerciseLift[exerciseLiftKeys[j]];
 
                 if (liftKeys) {
-                    if (liftKeys.kg !== "0" && liftKeys.kg !== 0 && liftKeys.kg !== "") {
 
-                        const id = liftKeys.id;
-                        const color = liftKeys.color || "redBadgeG";
+                    const id = liftKeys.id;
+                    const color = liftKeys.color || "redBadgeG";
 
-                        if (liftKeys.reps === "1") {
-                            msg = `ORM / 1 rep`;
-                        } else {
-                            msg = `${liftKeys.reps} reps`;
-                        }
-
-                        arr.push({ "exercise": capitalizeFirstLetter(current), "kg": liftKeys.kg, "msg": msg, "color": color, "id": id });
-
+                    if (liftKeys.reps === "1") {
+                        msg = `ORM / 1 rep`;
+                    } else {
+                        msg = `${liftKeys.reps} reps`;
                     }
+
+                    arr.push({ "exercise": capitalizeFirstLetter(current), "kg": liftKeys.kg, "msg": msg, "color": color, "id": id });
+
                 }
             }
         }
@@ -527,9 +525,11 @@ function displayGoals(hasGoalsLeft) {
                             } else if (repsUntilGoal === 1) {
                                 msg = `1 rep igjen`;
                                 untilGoal = repsSM;
+                                calcPercent(highestLiftKg.reps, goalReps);
                             } else {
                                 msg = `${repsUntilGoal} reps igjen`;
                                 untilGoal = repsUntilGoal * repsSM;
+                                calcPercent(highestLiftKg.reps, goalReps);
                             }
                         } else {
                             kgUntilGoal = goalKg - highestLiftKg.kg;
@@ -537,8 +537,9 @@ function displayGoals(hasGoalsLeft) {
                                 msg = "Målet er nådd!";
                                 untilGoal = 0;
                             } else {
-                                msg = `${kgUntilGoal} kg igjen`;
+                                msg = `${checkIfDecimal(kgUntilGoal)} kg igjen`;
                                 untilGoal = kgUntilGoal;
+                                calcPercent(highestLiftKg.kg, goalKg);
                             }
                         }
                     }
@@ -552,21 +553,56 @@ function displayGoals(hasGoalsLeft) {
                             } else if (repsUntilGoal === 1) {
                                 msg = `1 rep igjen`;
                                 untilGoal = repsSM;
+                                calcPercent(liftsList[goalKg], goalReps);
                             } else {
                                 msg = `${repsUntilGoal} reps igjen`;
                                 untilGoal = repsUntilGoal * repsSM;
+                                calcPercent(liftsList[goalKg], goalReps);
                             }
                         } else {
                             msg = `${goalReps} reps igjen`;
                             untilGoal = goalReps * repsSM;
+                            calcPercent(liftsList[goalKg], goalReps);
                         }
                     } else {
                         kgUntilGoal = goalKg - highestLiftKg.kg;
-                        msg = `${kgUntilGoal} kg igjen`;
+                        msg = `${checkIfDecimal(kgUntilGoal)} kg igjen`;
                         untilGoal = kgUntilGoal;
+                        calcPercent(highestLiftKg.kg, goalKg);
                     }
 
-                    arr.push({ "exercise": capitalizeFirstLetter(current), "kg": goalKg, "untilGoal": untilGoal, "msg": msg, "color": color, "id": id });
+                    function calcPercent(aNum1, aNum2) {
+                        const num1 = aNum1 || 0;
+                        const num2 = aNum2 || 0;
+
+                        progressionPercent = Math.floor((num1 / num2) * 100);
+                    }
+
+                    function checkIfDecimal(aNum) {
+                        let num = aNum;
+                        const checkIfDecimal = num.toString().split(".");
+                        if (checkIfDecimal.length > 1) {
+                            if (checkIfDecimal[1].length === 1) {
+                                num = parseFloat(num).toFixed(1);
+                            } else {
+                                num = parseFloat(num).toFixed(2);
+                            }
+                        }
+                        return num;
+                    }
+
+                    if (untilGoal === 0) {
+                        progressionPercent = 100;
+                    }
+
+                    if (progressionPercent < 0) {
+                        progressionPercent = 0;
+                    }
+                    if (progressionPercent > 100) {
+                        progressionPercent = 100;
+                    }
+
+                    arr.push({ "exercise": capitalizeFirstLetter(current), "kg": goalKg, "untilGoal": untilGoal, "msg": msg, "color": color, "id": id, "progressionPercent": progressionPercent });
 
                 }
             }
@@ -603,7 +639,8 @@ function displayGoals(hasGoalsLeft) {
 
             document.getElementById("totalGoals").innerHTML = `Alle (${totalCount})`;
 
-            arr.sort(function (a, b) { return a.untilGoal - b.untilGoal });
+            //arr.sort(function (a, b) { return a.untilGoal - b.untilGoal });
+            arr.sort(function (a, b) { return b.progressionPercent - a.progressionPercent });
 
             for (let i = 0; i < arr.length; i++) {
 

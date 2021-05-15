@@ -6,6 +6,8 @@ let userDisplayname, showGymCloseTime, username, userID;
 let isUpdatingUserObject = false;
 let preferredColorTheme = null;
 let automaticUpdates = null;
+let badgesize = null;
+let badgedetails = null;
 let lockedBody = false;
 
 const repsSM = 10; // 1 rep * 10 (repsSM) = 10 points. 1 kg = 1 point
@@ -55,6 +57,8 @@ if (user) {
         userID = userDisplayname.id;
 
         automaticUpdates = userDisplayname.automaticUpdates;
+        badgesize = userDisplayname.badgesize;
+        badgedetails = userDisplayname.badgedetails;
 
         preferredColorTheme = allowedThemes[userDisplayname.preferredColorTheme].theme;
 

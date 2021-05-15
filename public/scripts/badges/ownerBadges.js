@@ -7,8 +7,6 @@ let liftBadgeAnimations = "";
 let goalBadgeAnimations = "";
 let trainingsplitBadgeAnimations = "";
 
-let badgedetails = 0;
-
 function getBadgeGoals(aSize, aBadgeInfo, aId) {
     try {
 
@@ -58,13 +56,27 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
             untilGoal = "";
         }
 
-        const progressionListTxt = ["En start", "Fremgang", "Kvartveis"];
 
-        let progressionTxt = progressionListTxt[Math.floor(Math.random() * progressionListTxt.length)];
+
+        let progressionTxt = "";
 
         if (userBadgeInfo.progressionPercent >= 100) {
             untilGoal = "";
             progressionTxt = "Målet er nådd!"
+        } else if (userBadgeInfo.progressionPercent >= 75) {
+            progressionTxt = "Nærmer deg!";
+        } else if (userBadgeInfo.progressionPercent >= 60) {
+            progressionTxt = "Godt igang!";
+        } else if (userBadgeInfo.progressionPercent > 50) {
+            progressionTxt = "Kommer seg!";
+        } else if (userBadgeInfo.progressionPercent === 50) {
+            progressionTxt = "Halvveis!";
+        } else if (userBadgeInfo.progressionPercent >= 40) {
+            progressionTxt = "Snart halvveis!";
+        } else if (userBadgeInfo.progressionPercent === 25) {
+            progressionTxt = "1/4";
+        } else {
+            progressionTxt = "En begynnelse";
         }
 
 
@@ -90,9 +102,8 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
 <svg id="id="${userBadgeInfo.exercise}-${aId}" style="width: 50px; height: 50px; margin-left: 10px;">
         <circle r="20" cx="25" cy="25" id="${userBadgeInfo.exercise}-${aId}-track" class="track"></circle>
         <circle r="20" cx="25" cy="25" id="${userBadgeInfo.exercise}-${aId}-progress" class="progress"></circle>
+        <text x="50%" y="50%" text-anchor="middle" fill="#FFFFFF" font-size="13px" font-weight="bold" dy=".3em">${currentProgressionPercent}</text>
         </svg>
-        ${currentProgressionPercent}
-
 </div>
 
 <div id="GkgLeft">
