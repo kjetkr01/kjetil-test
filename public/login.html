@@ -174,14 +174,19 @@
 
    checkIfCache();
    async function checkIfCache() {
-      const cachesKeys = await caches.keys();
-      if (cachesKeys.length > 0) {
-         document.getElementById("noAccBtn").innerHTML += `
-         <br><br>
-         Problemer med innlogging? Prøv:
-         <button class="noselect clearCacheButton pointer" onClick="sessionStorage.clear();localStorage.clear();deleteCachesAndUnregisterSW();">
-         Tøm cache
-         </button>`;
+      if (navigator.onLine) {
+         const cachesKeys = await caches.keys();
+         if (cachesKeys.length > 0) {
+            /*document.getElementById("noAccBtn").innerHTML += `
+            <br><br>
+            Problemer med innlogging? Prøv:
+            <button class="noselect clearCacheButton pointer" onClick="sessionStorage.clear();localStorage.clear();deleteCachesAndUnregisterSW();">
+            Tøm cache
+            </button>`;*/
+            localStorage.clear();
+            removeServiceWorker();
+            deleteAllCaches();
+         }
       }
    }
 
