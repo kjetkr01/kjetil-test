@@ -615,7 +615,6 @@ async function loadPendingUsersPage(setting) {
 
             settingsGrid.innerHTML += getCenteredTextTemplate(defaultHTML, "", "borderTop");
 
-            console.log(resp)
             resp.sort(function (a, b) { return b.id - a.id });
             const pendingUserKeys = Object.keys(resp);
 
