@@ -212,7 +212,8 @@
             Innstillinger
          </button>-->
          <button style="height: 33px;" id="settings" class="noselect settingsBtn pointer"
-            onclick="redirectToSettings();"><img src="images/settings.svg"></img></button>
+            onclick="redirectToSettings();"><img style="vertical-align: text-top;"
+               src="images/settings.svg"></img></button>
       </div>
 
       <div id="GuserGrid" class="userGrid noselect">
@@ -332,9 +333,8 @@
 
 <script>
    checkConnection("c6r2");
-
    if (sessionStorage.getItem("settings_notification_update") === "true") {
-      document.getElementById("settings").innerHTML = `Innstillinger (1)`;
+      document.getElementById("settings").innerHTML += `1`;
    }
 
    lockBodyPosition();

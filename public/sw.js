@@ -1,4 +1,4 @@
-const cacheName = 'js13kPWA-v21';
+const cacheName = 'js13kPWA-v22';
 
 const contentToCache = [
     '/account.html',
