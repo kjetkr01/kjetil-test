@@ -950,13 +950,19 @@ async function editTrainingsplit() {
 // saveTrainingsplit
 
 let isSavingTrainingsplit = false;
-async function saveTrainingsplit() {
+async function saveTrainingsplit(aReload) {
 
     if (isSavingTrainingsplit === false) {
 
         if (navigator.onLine) {
 
             if (trainingsplit) {
+
+                let reload = true;
+
+                if (aReload === false) {
+                    reload = false;
+                }
 
                 isSavingTrainingsplit = true;
 
@@ -974,13 +980,19 @@ async function saveTrainingsplit() {
 
                     for (let i = 0; i < keys.length; i++) {
 
-                        const count = exerciseListCount[keys[i]];
+                        //const count = exerciseListCount[keys[i]];
+                        const key = Object.keys(exerciseListCount[i]);
+                        const count = exerciseListCount[i][key];
 
                         const cacheList = [];
 
+                        let exerciseName = key[0];
+                        exerciseName = exerciseName.trimLeft().trimRight();
+
                         if (count > 0) {
 
-                            const exercise = keys[i].toLowerCase();
+                            //const exercise = keys[i].toLowerCase();
+                            const exercise = key[0].toLowerCase();
 
                             const keywords = [
                                 "skulderpress", "skulder", "skuldre", "overhead", "raise",
@@ -1010,7 +1022,8 @@ async function saveTrainingsplit() {
                                 const enu = { "sets": 0, "reps": 0, "number": 0, "value": 0 };
 
                                 for (let k = 0; k < d.length; k++) {
-                                    const dom = document.getElementById(`${keys[i]}-${j}-${d[k]}`);
+                                    //const dom = document.getElementById(`${keys[i]}-${j}-${d[k]}`);
+                                    const dom = document.getElementById(`${key[0]}-${j}-${d[k]}`);
                                     if (dom) {
                                         const n = parseInt(dom.value);
                                         if (!isNaN(n)) {
@@ -1018,10 +1031,40 @@ async function saveTrainingsplit() {
                                         }
                                     }
                                 }
+
                                 cacheList.push(enu);
                             }
                         }
-                        list.push({ [keys[i]]: cacheList });
+
+                        const newExerciseName = document.getElementById(`${key[0]}-trainingsplit_name`);
+
+                        if (newExerciseName) {
+                            if (newExerciseName.value !== exerciseName) {
+                                exerciseName = newExerciseName.value.trimLeft().trimRight();
+                            }
+                        }
+
+                        const listKeys = Object.keys(list);
+                        if (exerciseName.length > 0 && exerciseName.length <= 30) {
+                            for (let c = 0; c < listKeys.length; c++) {
+
+                                const name = Object.keys(list[listKeys[c]])[0];
+
+                                if (name.toLowerCase().trimLeft().trimRight() === exerciseName.toLowerCase()) {
+                                    const checkSplit = exerciseName.split("#");
+                                    if (checkSplit.length > 1) {
+                                        exerciseName = `${checkSplit[0].trimLeft().trimRight()} #${c + 1}`;
+                                    } else {
+                                        exerciseName = `${exerciseName.trimLeft().trimRight()} #${c + 1}`;
+                                    }
+                                }
+                            }
+
+                        } else {
+                            exerciseName = `Øvelse nr ${i + 1}`;
+                        }
+
+                        list.push({ [exerciseName]: cacheList });
                     }
                 }
 
@@ -1046,7 +1089,9 @@ async function saveTrainingsplit() {
                 if (resp === "saved") {
                     saveTrainingsplitBtn.innerHTML = "Lagret!";
                     setTimeout(() => {
-                        //location.reload();
+                        if (reload !== false) {
+                            location.reload();
+                        }
                         saveTrainingsplitBtn.innerHTML = "Lagre";
                         isSavingTrainingsplit = false;
                     }, 1000);

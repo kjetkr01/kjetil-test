@@ -1640,6 +1640,73 @@ class StorageHandler {
     //
 
 
+    //  -------------------------------  add exercise Trainingsplit (user)  ------------------------------- //
+
+    async changeExerciseOrderTrainingsplit(userid, trainingsplit_id, day, index, moveUp) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        let msg = "";
+
+        try {
+
+            await client.connect();
+
+            const trainingsplit = await client.query(`
+                SELECT ${day}
+                FROM user_trainingsplit
+                WHERE trainingsplit_id = $1
+                AND user_id = $2`,
+                [trainingsplit_id, userid]);
+
+            if (trainingsplit.rows.length > 0) {
+
+                let editedTrainingsplit = trainingsplit.rows[0][day];
+
+                if (editedTrainingsplit) {
+
+                    if (maxTrainingsplitsExercisesPerDay.default > editedTrainingsplit.list.length) {
+
+                        let delta = 1;
+
+                        if (moveUp === true) {
+                            delta = -1;
+                        }
+
+                        const arr = editedTrainingsplit.list;
+
+                        const newIndex = index + delta;
+                        if (newIndex < 0 || newIndex == arr.length) return; //Already at the top or bottom.
+                        const indexes = [index, newIndex].sort((a, b) => a - b); //Sort the indixes (fixed)
+                        arr.splice(indexes[0], 2, arr[indexes[1]], arr[indexes[0]]); //Replace from lowest index, two elements, reverting the order
+
+                        await client.query(`
+                            UPDATE user_trainingsplit
+                            SET ${day} = $3
+                            WHERE trainingsplit_id = $1
+                            AND user_id = $2`,
+                            [trainingsplit_id, userid, editedTrainingsplit]);
+
+                        results = true;
+
+                    } else {
+                        msg = `Du kan ikke ha flere enn ${maxTrainingsplitsExercisesPerDay.default} øvelser på en dag!`;
+                    }
+                }
+            }
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return { "status": results, "msg": msg };
+    }
+
+    //
+
+
     //  -------------------------------  delete exercise row Trainingsplit (user)  ------------------------------- //
 
     async deleteExerciseRowTrainingsplit(userid, trainingsplit_id, exercise, index, day) {

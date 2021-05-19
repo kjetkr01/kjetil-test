@@ -105,7 +105,8 @@ async function requestTrainingsplitDetails() {
         location.reload();
     }
 }
-const exerciseListCount = {};
+//const exerciseListCount = {};
+const exerciseListCount = [];
 function loadEditTrainingsplit(aResp, aSelectedDay) {
 
     document.getElementById("account").setAttribute("onclick", "exitTrainingsplit();");
@@ -160,8 +161,8 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
     document.getElementById("smallTitle").innerHTML += top + daysList;
     //<button class="trainingsplitButton pointer" style="color:red;" onClick="deleteTrainingsplit('${resp.trainingsplit_id}');">Slett</button>
     const toolBarHTML = `
-    <button id="saveTrainingsplitBtn" class="trainingsplitButton pointer" onClick="saveTrainingsplit();">Lagre</button>
-    <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteTrainingsplit('${resp.trainingsplit_id}');"><img src="images/trash.svg"></img></button>
+    <button id="saveTrainingsplitBtn" class="trainingsplitButton pointer fadeIn animate" onClick="saveTrainingsplit();">Lagre</button>
+    <button class="trainingsplitButton pointer fadeIn animate" onClick="deleteTrainingsplit('${resp.trainingsplit_id}');"><img src="images/trash.svg"></img></button>
     <br>
     <br>
     <select id="selectNewExercise" class="trainingsplitSelect pointer">
@@ -201,12 +202,28 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
             const trainingsplitTable = document.getElementById("trainingsplitTable");
             //<button class="trainingsplitButton pointer" style="color:red;" onClick="deleteExercise('${exerciseName}');">Slett</button></h3>
 
+            let upBtnHTML = `<button class="trainingsplitButton pointer fadeIn animate" onClick="moveExerciseOrder(${i}, true);"><img src="images/arrow-up-square.svg"></img></button>`;
+            let downBtnHTML = `<button class="trainingsplitButton pointer fadeIn animate" onClick="moveExerciseOrder(${i}, false);"><img src="images/arrow-down-square.svg"></img></button>`;
+
+            if (i === 0) {
+                upBtnHTML = "";
+            }
+
+            if (i === (arr.length - 1)) {
+                downBtnHTML = "";
+            }
+
             trainingsplitTable.innerHTML += `
-            <br><h3 class="fadeInUp animate">${exerciseName}
-            <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteExercise('${exerciseName}');"><img src="images/trash.svg"></button></h3>
+            <br><input id="${exerciseName}-trainingsplit_name" style="font-size:18.75px;font-weight:bolder;" class="trainingsplitNameInput fadeInUp animate" value="${exerciseName}" maxlength="30" placeholder="Øvelse">
+            ${upBtnHTML}
+            ${downBtnHTML}
+            <button class="trainingsplitButton pointer fadeIn animate" onClick="deleteExercise('${exerciseName}');"><img src="images/trash.svg"></button>
+            </input>
             <hr class="trainingsplitLine fadeInUp animate">`;
 
-            exerciseListCount[exerciseName] = exerciseList.length;
+            //exerciseListCount[exerciseName] = exerciseList.length;
+
+            exerciseListCount.push({ [exerciseName]: exerciseList.length });
 
             for (let j = 0; j < exerciseList.length; j++) {
                 const info = exerciseList[j];
@@ -246,7 +263,7 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
             ${optionsHTMLList}
             </select>
     
-            <button class="trainingsplitButton pointer" style="color:red;" onClick="deleteRowExercise('${exerciseName}', ${j});"><img src="images/trash.svg"></button>
+            <button class="trainingsplitButton pointer" onClick="deleteRowExercise('${exerciseName}', ${j});"><img src="images/trash.svg"></button>
             </p>
             <hr class="trainingsplitSmallLine fadeInUp animate delayMedium">`;
             }
@@ -571,7 +588,7 @@ async function changeTrainingsplitDay() {
         //const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
 
         if (trainingsplit.edit === "true") {
-            await saveTrainingsplit();
+            await saveTrainingsplit(false);
         }
 
         trainingsplit.day = trainingsplitSelectDay.value;
@@ -606,7 +623,7 @@ async function addExercise() {
 
         if (exercise && exercise !== "null" && exercise !== "undefined") {
 
-            await saveTrainingsplit();
+            await saveTrainingsplit(false);
 
             const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit.id, "exercise": exercise, "day": trainingsplit.day };
             const url = `/user/add/trainingsplit/exercise`;
@@ -643,11 +660,19 @@ async function deleteExercise(aExercise) {
 
         if (exercise) {
 
-            const confirmDelete = confirm(`Er du sikker på at du vil slette ${exercise}?`);
+            let exerciseName = `${exercise}`;
+
+            const domName = document.getElementById(`${exercise}-trainingsplit_name`);
+
+            if (domName) {
+                exerciseName = domName.value;
+            }
+
+            const confirmDelete = confirm(`Er du sikker på at du vil slette ${exerciseName}?`);
 
             if (confirmDelete === true) {
 
-                await saveTrainingsplit();
+                await saveTrainingsplit(false);
 
                 const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit.id, "exercise": exercise, "day": trainingsplit.day };
                 const url = `/user/delete/trainingsplit/exercise`;
@@ -690,7 +715,7 @@ async function deleteRowExercise(aExercise, aIndex) {
 
             if (confirmDelete === true) {
 
-                await saveTrainingsplit();
+                await saveTrainingsplit(false);
 
                 const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit.id, "exercise": exercise, "index": index, "day": trainingsplit.day };
                 const url = `/user/delete/trainingsplit/exercise/row`;
@@ -729,10 +754,46 @@ async function addRowExercise(aExercise) {
 
         if (exercise) {
 
-            await saveTrainingsplit();
+            await saveTrainingsplit(false);
 
             const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit.id, "exercise": exercise, "day": trainingsplit.day };
             const url = `/user/add/trainingsplit/exercise/row`;
+
+            const config = {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    "authtoken": token,
+                    "userinfo": user,
+                },
+                body: JSON.stringify(body)
+            }
+
+            const resp = await fetch(url, config);
+            const data = await resp.json();
+
+            if (data === true) {
+                location.reload();
+            } else {
+                alert(data.msg);
+            }
+        }
+    }
+}
+
+async function moveExerciseOrder(aIndex, aMoveUp) {
+
+    if (trainingsplit) {
+
+        const index = aIndex;
+        const moveUp = aMoveUp;
+
+        if (index >= 0) {
+
+            await saveTrainingsplit(false);
+
+            const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit.id, "day": trainingsplit.day, "index": index, "moveUp": moveUp };
+            const url = `/user/update/trainingsplit/exercise/move`;
 
             const config = {
                 method: "POST",
@@ -847,14 +908,13 @@ async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTraining
             }
         }
     }
-
 }
 
 
 async function exitTrainingsplit() {
 
     if (trainingsplit.edit === "true") {
-        await saveTrainingsplit();
+        await saveTrainingsplit(false);
     }
 
     const viewinguser_id = urlParamsT.get("user_id");

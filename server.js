@@ -53,6 +53,7 @@ const addExerciseTrainingsplit = require("./modules/user").addExerciseTrainingsp
 const deleteExerciseTrainingsplit = require("./modules/user").deleteExerciseTrainingsplit;
 const addExerciseRowTrainingsplit = require("./modules/user").addExerciseRowTrainingsplit;
 const deleteExerciseRowTrainingsplit = require("./modules/user").deleteExerciseRowTrainingsplit;
+const changeExerciseOrderTrainingsplit = require("./modules/user").changeExerciseOrderTrainingsplit;
 const copyTrainingsplit = require("./modules/user").copyTrainingsplit;
 const subUnsubTrainingsplit = require("./modules/user").subUnsubTrainingsplit;
 const setNotActiveTrainingsplit = require("./modules/user").setNotActiveTrainingsplit;
@@ -1045,6 +1046,38 @@ server.post("/user/delete/trainingsplit/exercise/row", auth, async (req, res) =>
           if (!isNaN(trainingsplit_id)) {
 
                const resp = await deleteExerciseRowTrainingsplit(currentUser.id, trainingsplit_id, exercise, index, day);
+
+               if (resp.status === true) {
+                    res.status(200).json(resp.status).end();
+               } else {
+                    res.status(403).json(resp).end();
+               }
+          } else {
+               res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+
+//
+
+// move exercise trainingsplit
+
+server.post("/user/update/trainingsplit/exercise/move", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+          const day = req.body.day;
+          const index = req.body.index;
+          const moveUp = req.body.moveUp;
+
+          if (!isNaN(trainingsplit_id)) {
+
+               const resp = await changeExerciseOrderTrainingsplit(currentUser.id, trainingsplit_id, day, index, moveUp);
 
                if (resp.status === true) {
                     res.status(200).json(resp.status).end();

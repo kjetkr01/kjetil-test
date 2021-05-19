@@ -128,6 +128,15 @@ async function deleteExerciseTrainingsplit(userid, trainingsplit_id, exercise, d
     }
 }
 
+async function changeExerciseOrderTrainingsplit(userid, trainingsplit_id, day, index, moveUp) {
+    try {
+        const resp = await database.changeExerciseOrderTrainingsplit(userid, trainingsplit_id, day, index, moveUp);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function addExerciseRowTrainingsplit(userid, trainingsplit_id, exercise, day) {
     try {
         const resp = await database.addExerciseRowTrainingsplit(userid, trainingsplit_id, exercise, day);
@@ -267,6 +276,7 @@ module.exports.setActiveTrainingsplit = setActiveTrainingsplit;
 module.exports.getTrainingsplit = getTrainingsplit;
 module.exports.deleteTrainingsplit = deleteTrainingsplit;
 module.exports.addExerciseTrainingsplit = addExerciseTrainingsplit;
+module.exports.changeExerciseOrderTrainingsplit = changeExerciseOrderTrainingsplit;
 module.exports.deleteExerciseTrainingsplit = deleteExerciseTrainingsplit;
 module.exports.addExerciseRowTrainingsplit = addExerciseRowTrainingsplit;
 module.exports.deleteExerciseRowTrainingsplit = deleteExerciseRowTrainingsplit;
