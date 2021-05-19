@@ -468,7 +468,7 @@ async function loadAboutAppPage(setting) {
                     if (serverApplication.version.fullNumber !== application.version.fullNumber) {
                         document.getElementById("newUpdateAvailable").innerHTML = `
                     Nyeste versjon: ${serverApplication.version.fullNumber}<br>
-                    <button class="settingsButton" onClick="updateApplication();">Oppdater</button>`;
+                    <button class="settingsButton pointer" onClick="updateApplication();">Oppdater</button>`;
                         sessionStorage.setItem("settings_notification_update", true);
                     } else {
                         sessionStorage.removeItem("settings_notification_update");
