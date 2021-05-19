@@ -65,9 +65,27 @@ async function saveLiftOrGoal(userid, info, color) {
     }
 }
 
+async function setGoalAsComplete(userid, exercise, id) {
+    try {
+        const resp = await database.setGoalAsComplete(userid, exercise, id);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function deleteLiftOrGoal(userid, info) {
     try {
         const resp = await database.deleteLiftOrGoal(userid, info);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function decreaseMedalCount(userid) {
+    try {
+        const resp = await database.decreaseMedalCount(userid);
         return resp;
     } catch (error) {
         console.error(error);
@@ -270,7 +288,9 @@ module.exports.validateUser = validateUser;
 module.exports.acceptOrDenyUser = acceptOrDenyUser;
 module.exports.updateUserSetting = updateUserSetting;
 module.exports.saveLiftOrGoal = saveLiftOrGoal;
+module.exports.setGoalAsComplete = setGoalAsComplete;
 module.exports.deleteLiftOrGoal = deleteLiftOrGoal;
+module.exports.decreaseMedalCount = decreaseMedalCount;
 module.exports.createTrainingsplit = createTrainingsplit;
 module.exports.setActiveTrainingsplit = setActiveTrainingsplit;
 module.exports.getTrainingsplit = getTrainingsplit;

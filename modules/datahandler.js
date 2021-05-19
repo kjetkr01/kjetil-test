@@ -1072,6 +1072,10 @@ class StorageHandler {
 
                 const liftOrGoal = { "id": id, "reps": reps, "kg": kg, "date": date, "color": color };
 
+                if (type === "goal") {
+                    liftOrGoal.completed = false;
+                }
+
                 if (id === null) {
                     generateRandomID();
                 }
@@ -1117,6 +1121,127 @@ class StorageHandler {
 
                 results = true;
 
+            }
+
+            client.end();
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+
+        return results;
+    }
+
+    //
+
+    //  -------------------------------  set goal as complete  ------------------------------- //
+
+    async setGoalAsComplete(userid, exercise, id) {
+        const client = new pg.Client(this.credentials);
+        let results = false;
+
+        try {
+            await client.connect();
+
+            results = await client.query(`
+                SELECT ${exercise}
+                FROM user_goals
+                WHERE user_id = $1`,
+                [userid]);
+
+            if (results.rows.length === 1) {
+
+                const goals = results.rows[0][exercise];
+
+                let modify = false;
+
+                for (let i = 0; i < goals.length; i++) {
+                    const current = goals[i].id;
+                    const completed = goals[i].completed;
+                    if (id === current) {
+                        if (completed !== true) {
+                            modify = true;
+                            goals[i].completed = true;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+
+                if (modify === true) {
+
+                    await client.query(`
+                        UPDATE user_goals
+                        SET ${exercise} = $1
+                        WHERE user_id = $2`,
+                        [JSON.stringify(goals), userid]);
+
+                    let medalscount = await client.query(`
+                        SELECT medalscount
+                        FROM user_details
+                        WHERE user_id = $1`,
+                        [userid]);
+
+                    if (medalscount.rows.length > 0) {
+                        medalscount = medalscount.rows[0].medalscount;
+                        medalscount++;
+                        await client.query(`
+                        UPDATE user_details
+                        SET medalscount = $1
+                        WHERE user_id = $2`,
+                            [medalscount, userid]);
+
+                        results = true;
+                    }
+                }
+            }
+
+            client.end();
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+
+        return results;
+    }
+
+    //
+
+
+    //  -------------------------------  decrease medalscount  ------------------------------- //
+
+    async decreaseMedalCount(userid) {
+        const client = new pg.Client(this.credentials);
+        let results = false;
+
+        try {
+            await client.connect();
+
+            let medalscount = await client.query(`
+                SELECT medalscount
+                FROM user_details
+                WHERE user_id = $1`,
+                [userid]);
+
+            if (medalscount.rows.length > 0) {
+                medalscount = medalscount.rows[0].medalscount;
+
+                if (medalscount > 0) {
+                    medalscount--;
+                    await client.query(`
+                    UPDATE user_details
+                    SET medalscount = $1
+                    WHERE user_id = $2`,
+                        [medalscount, userid]);
+
+                    results = true;
+                }
             }
 
             client.end();

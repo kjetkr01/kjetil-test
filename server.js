@@ -44,7 +44,9 @@ const giveUserAPIAccess = require("./modules/user").giveUserAPIAccess;
 const removeUserAPIAccess = require("./modules/user").removeUserAPIAccess;
 
 const saveLiftOrGoal = require("./modules/user").saveLiftOrGoal;
+const setGoalAsComplete = require("./modules/user").setGoalAsComplete;
 const deleteLiftOrGoal = require("./modules/user").deleteLiftOrGoal;
+const decreaseMedalCount = require("./modules/user").decreaseMedalCount;
 const createTrainingsplit = require("./modules/user").createTrainingsplit;
 const setActiveTrainingsplit = require("./modules/user").setActiveTrainingsplit;
 const getTrainingsplit = require("./modules/user").getTrainingsplit;
@@ -413,7 +415,8 @@ server.post("/users/details/:user", auth, async (req, res) => {
                                    "age": resp.userDetails.info.age,
                                    "height": resp.userDetails.info.height,
                                    "weight": resp.userDetails.info.weight,
-                                   "member_since": resp.userDetails.member_since
+                                   "member_since": resp.userDetails.member_since,
+                                   "medalscount": resp.userDetails.info.medalscount
                               }
 
                               if (viewingUser === userID) {
@@ -794,6 +797,54 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
                } else {
                     res.status(403).json("invalid information").end();
                }
+
+          } else {
+               res.status(403).json("invalid information").end();
+          }
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+
+//
+
+// set goal as completed and increment medals count
+
+server.post("/user/update/goal/completed", auth, async (req, res) => {
+     try {
+
+          const exercise = req.body.exercise;
+          const id = req.body.id;
+          const currentUser = JSON.parse(req.headers.userinfo);
+
+          if (currentUser.id && exercise && id) {
+
+               const setGoalAsCompleteResp = await setGoalAsComplete(currentUser.id, exercise, id);
+               res.status(200).json(setGoalAsCompleteResp).end();
+
+          } else {
+               res.status(403).json("invalid information").end();
+          }
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+
+//
+
+// decrease medals count
+
+server.post("/user/details/decrease/medalscount", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+
+          if (currentUser.id) {
+
+               const decreaseMedalCountResp = await decreaseMedalCount(currentUser.id);
+               res.status(200).json(decreaseMedalCountResp).end();
 
           } else {
                res.status(403).json("invalid information").end();

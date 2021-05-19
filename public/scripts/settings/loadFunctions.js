@@ -35,6 +35,11 @@ function loadSetting(aSetting) {
             loadProgressionInfoPage();
         }
 
+        else if (setting === ELoadSettings.medalsCounter.name) {
+            cacheCurrentSetting(setting);
+            loadMedalsCounterPage();
+        }
+
         else if (setting === ELoadSettings.aboutApp.name) {
             cacheCurrentSetting(setting);
             loadAboutAppPage(setting);
@@ -102,8 +107,9 @@ async function loadDefaultPage(setting) {
         settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", "workoutTodayListDiv", false, "displayworkoutlist");
     }
 
-    settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.apperance.name, "appearanceDiv", "spacingTop");
-    settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.progressionInfo.name, "appearanceDiv");
+    settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.apperance.name, "", "spacingTop");
+    settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.progressionInfo.name);
+    settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.medalsCounter.name);
 
     let aboutAppTxt = `${ELoadSettings.aboutApp.name}`;
 
@@ -383,6 +389,24 @@ function loadProgressionInfoPage() {
     document.getElementById("badgeDetailsSelection").addEventListener("change", function (evt) {
         updateBadgeDetails();
     });
+}
+
+function loadMedalsCounterPage() {
+
+    settingsGrid.innerHTML = justTextTemplate("Her kan du se hvor mange medaljer du har! Du får 1 medalje for hver fullførte mål! Andre brukere kan se dette på profilen din. Du kan også se deres antall medaljer oppnådd.", "left");
+
+    settingsGrid.innerHTML += getTemplate("Medaljer oppnådd", "", `${userInfo.medalscount}`, "spacingTop");
+
+    if (userInfo.medalscount > 0) {
+
+        settingsGrid.innerHTML += justTextTemplate("Har det oppstått en feil og du for mange medaljer? Du kan fjerne 1 om gangen her", "left");
+
+        settingsGrid.innerHTML += getCenteredTextTemplate(`<button id="removeOneMedalBtn" class='settingsButton' onClick="removeOneMedal(${userInfo.medalscount});">Fjern 1 medalje</button>`, "", "spacingTop");
+
+    }
+
+    settingsGrid.innerHTML += getBottomSpacingTemplate();
+
 }
 
 async function loadAboutAppPage(setting) {

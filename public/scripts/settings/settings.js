@@ -19,29 +19,33 @@ const ELoadSettings = {
         name: `Fremgangs info`,
         value: 5
     },
+    medalsCounter: {
+        name: `Medaljer`,
+        value: 6
+    },
     aboutApp: {
         name: `Om appen`,
-        value: 6
+        value: 7
     },
     pendingUsers: {
         name: `Forespørsler`,
-        value: 7
+        value: 8
     },
     users: {
         name: `Brukere`,
-        value: 8
+        value: 9
     },
     api: {
         name: `API`,
-        value: 9
+        value: 10
     },
     privacy: {
         name: `Personvern`,
-        value: 10
+        value: 11
     },
     deleteMe: {
         name: `Slett meg`,
-        value: 11
+        value: 12
     }
 };
 
@@ -62,6 +66,7 @@ async function updateUserInfo() {
                 age: rInfo.info.age,
                 height: rInfo.info.height,
                 weight: rInfo.info.weight,
+                medalscount: rInfo.info.medalscount,
             };
 
             localStorage.setItem("userSettings", JSON.stringify(resp.info.settings));
@@ -437,6 +442,39 @@ async function removeAPIAccess(aUsername, aID) {
 
         }
 
+    }
+}
+
+async function removeOneMedal(aMedalsCount) {
+
+    if (navigator.onLine) {
+
+        if (aMedalsCount > 0) {
+
+            const remainingMedals = aMedalsCount - 1;
+            let remainingTxt = ` Du kommer til å ha ${remainingMedals} igjen!`;
+
+            if (remainingMedals <= 0) {
+                remainingTxt = ` Du kommer ikke til å ha noen medaljer igjen!`;
+            }
+
+            const confirmRemove = confirm(`Er du sikker ønsker å fjerne 1 medalje?${remainingTxt}`);
+
+            if (confirmRemove === true) {
+                const infoHeader = {};
+                const url = `/user/details/decrease/medalscount`;
+
+                const resp = await callServerAPIPost(infoHeader, url);
+
+                if(resp === true){
+                    updateUserInfo();
+                    loadSetting();
+                }
+                
+            }
+        }
+    } else {
+        alert("Det kreves internettforbindelse for å fjerne 1 medalje!");
     }
 }
 

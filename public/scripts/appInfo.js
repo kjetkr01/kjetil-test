@@ -35,7 +35,7 @@ const ongoingUpdatesArr = [
     "TITLE:Splash Screen (iOS)",
     "Fikse slik at splash screen funker på landscape mode (iPad) (50%)",
     "TITLE:Medaljer",
-    "Vise antall medaljer brukeren har fått (1 mål fullført = 1 medalje)",
+    "Vise antall medaljer brukeren har fått (1 mål fullført = 1 medalje) (80%)",
     "TITLE:Språk",
     "Fikse slik at språket er i god norsk (-1%)",
     "God formulering og ordbruk (-1%)",
