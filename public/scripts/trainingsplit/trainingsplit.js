@@ -202,8 +202,8 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
             const trainingsplitTable = document.getElementById("trainingsplitTable");
             //<button class="trainingsplitButton pointer" style="color:red;" onClick="deleteExercise('${exerciseName}');">Slett</button></h3>
 
-            let upBtnHTML = `<button class="trainingsplitButton pointer fadeIn animate" onClick="moveExerciseOrder(${i}, true);"><img src="images/arrow-up-square.svg"></img></button>`;
-            let downBtnHTML = `<button class="trainingsplitButton pointer fadeIn animate" onClick="moveExerciseOrder(${i}, false);"><img src="images/arrow-down-square.svg"></img></button>`;
+            let upBtnHTML = `<button class="trainingsplitButton pointer fadeIn animate" onClick="moveExerciseOrder(${i}, true);"><img src="images/arrow-up-trainingsplit.svg"></img></button>`;
+            let downBtnHTML = `<button class="trainingsplitButton pointer fadeIn animate" onClick="moveExerciseOrder(${i}, false);"><img src="images/arrow-down-trainingsplit.svg"></img></button>`;
 
             if (i === 0) {
                 upBtnHTML = "";
@@ -347,22 +347,28 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
             }
         }
 
-        let subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id}, '${resp.trainingsplit_name}');">Abonner</button>`;
+        //let subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id}, '${resp.trainingsplit_name}');">Abonner</button>`;
+        let subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id}, '${resp.trainingsplit_name}');"><img src="images/subscribe-trainingsplit.svg"></img></button>`;
 
         if (!navigator.onLine) {
-            subscribeHTML = `<button disabled class="trainingsplitButton">Abonner</button>`;
+            //subscribeHTML = `<button disabled class="trainingsplitButton">Abonner</button>`;
+            subscribeHTML = `<button disabled class="trainingsplitButton"><img src="images/subscribe-trainingsplit.svg"></img></button>`;
         }
 
         if (isSubscribed === true) {
-            subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id}, '${resp.trainingsplit_name}');">Abonnerer</button>`;
+            //subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id}, '${resp.trainingsplit_name}');">Abonnerer</button>`;
+            subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id}, '${resp.trainingsplit_name}');"><img src="images/subscribed-trainingsplit.svg"></img></button>`;
             if (!navigator.onLine) {
-                subscribeHTML = `<button disabled class="trainingsplitButton">Abonnerer</button>`;
+                //subscribeHTML = `<button disabled class="trainingsplitButton">Abonnerer</button>`;
+                subscribeHTML = `<button disabled class="trainingsplitButton"><img src="images/subscribed-trainingsplit.svg"></img></button>`;
             }
         }
 
-        let copyHTML = `<button class="trainingsplitButton pointer" onClick="copyTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id});">Kopier</button>`;
+        //let copyHTML = `<button class="trainingsplitButton pointer" onClick="copyTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id});">Kopier</button>`;
+        let copyHTML = `<button class="trainingsplitButton pointer" onClick="copyTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id});"><img src="images/copy-trainingsplit.svg"></img></button>`;
         if (!navigator.onLine) {
-            copyHTML = `<button disabled class="trainingsplitButton">Kopier</button>`;
+            //copyHTML = `<button disabled class="trainingsplitButton">Kopier</button>`;
+            copyHTML = `<button disabled class="trainingsplitButton"><img src="images/copy-trainingsplit.svg"></img></button>`;
         }
 
         creatorTxt = `Av: ${resp.owner}<br>`;

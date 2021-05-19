@@ -45,8 +45,6 @@ const ELoadSettings = {
     }
 };
 
-// Lage rettigheter eller lignende i innstillinger helt i bunnen? Feks sånn der man kan hente alt av info om brukeren, hva det brukes til ogsånt? Erklæringsting, Personvern ting
-
 async function updateUserInfo() {
 
     if (navigator.onLine) {

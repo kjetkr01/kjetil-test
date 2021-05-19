@@ -501,6 +501,15 @@ function getDaysSinceAndDate(aDate) {
 
 //
 
+async function downloadSettings() {
+    if (navigator.onLine) {
+        const resp = await getAccountDetails(userID);
+        if (resp) {
+            localStorage.setItem("userSettings", JSON.stringify(resp.info.settings));
+        }
+    }
+}
+
 async function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js')

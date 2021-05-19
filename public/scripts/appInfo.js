@@ -34,12 +34,15 @@ const ongoingUpdatesArr = [
     "Kunne endre navn på øvelser som allerede er laget (90%)",
     "TITLE:Splash Screen (iOS)",
     "Fikse slik at splash screen funker på landscape mode (iPad) (50%)",
+    "TITLE:Medaljer",
+    "Vise antall medaljer brukeren har fått (1 mål fullført = 1 medalje)",
     "TITLE:Språk",
     "Fikse slik at språket er i god norsk (-1%)",
     "God formulering og ordbruk (-1%)",
     "TITLE:Annet",
     "Optimalisering",
-    "Endring i hvordan animasjoner/lasting av data funker (85%)"
+    "Endring i hvordan animasjoner/lasting av data funker (85%)",
+    "Lagre løft, mål og reps filter i database"
 ];
 
 //
@@ -54,7 +57,6 @@ const plannedUpdatesArr = [
     "Lage flere farge-temaer",
 
     "TITLE:Løft/Mål",
-    "Slå av sletting av løft og mål i Innstillinger.",
     "Legge til flere løft og mål. Foreløpi bare: Benkpress, Knebøy, Markløft, Skulderpress",
 
     "TITLE:Badges",

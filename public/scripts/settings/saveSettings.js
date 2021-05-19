@@ -132,8 +132,11 @@ async function updateCheckboxSetting(aSetting, aValue) {
             if (resp === true) {
                 //updateUserInfo();
                 updateLocalSettings(setting, value);
-                loadSetting();
-                isUpdatingCheckboxSetting = false;
+                setTimeout(() => {
+                    loadSetting();
+                    isUpdatingCheckboxSetting = false;
+                }, 200);
+
             }
         }
     }

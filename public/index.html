@@ -321,6 +321,10 @@
    requestAccountDetails();
    //displayBadges();
 
+   if (!localStorage.getItem("userSettings")) {
+      downloadSettings();
+   }
+
 </script>
 
 </script>

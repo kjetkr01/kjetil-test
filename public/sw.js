@@ -1,9 +1,15 @@
-const cacheName = 'js13kPWA-v16';
+const cacheName = 'js13kPWA-v21';
 
 const contentToCache = [
     '/account.html',
     '/images/appIcon.png',
     '/images/trash.svg',
+    '/images/arrow-down-trainingsplit.svg',
+    '/images/arrow-up-trainingsplit.svg',
+    '/images/subscribe-trainingsplit.svg',
+    '/images/subscribed-trainingsplit.svg',
+    '/images/copy-trainingsplit.svg',
+    '/images/settings.svg',
     '/index.html',
     '/leaderboards.html',
     '/manifest.json',

@@ -208,9 +208,11 @@
       </div>
 
       <div id="Gsettings">
-         <button id="settings" class="noselect settingsBtn pointer" onclick="redirectToSettings();">
+         <!--<button id="settings" class="noselect settingsBtn pointer" onclick="redirectToSettings();">
             Innstillinger
-         </button>
+         </button>-->
+         <button style="height: 33px;" id="settings" class="noselect settingsBtn pointer"
+            onclick="redirectToSettings();"><img src="images/settings.svg"></img></button>
       </div>
 
       <div id="GuserGrid" class="userGrid noselect">
@@ -383,6 +385,10 @@
    setInterval(() => {
       checkConnection("c6r2");
    }, 1000);
+
+   if (!localStorage.getItem("userSettings")) {
+      downloadSettings();
+   }
 
 </script>
 

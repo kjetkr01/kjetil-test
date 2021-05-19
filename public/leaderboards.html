@@ -95,7 +95,7 @@
    <script>
       registerServiceWorker();
       changeColorTheme();
-      </script>
+   </script>
 
    <section id="page">
 
@@ -205,6 +205,10 @@
       const scrollX = GlistOfLeaderboards.scrollLeft;
       sessionStorage.setItem("leaderboards_scrollX", scrollX);
    });
+
+   if (!localStorage.getItem("userSettings")) {
+      downloadSettings();
+   }
 
 </script>
 
