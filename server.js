@@ -1231,7 +1231,7 @@ server.post("/user/save/trainingsplit", auth, async (req, res) => {
                     const shortList = {
                          "Bryst": ["benkpress", "skråbenk", "benk", "flies", "pushup"],
                          "Skuldre": ["skulderpress", "skulder", "skuldre", "overhead", "raise"],
-                         "Rygg": ["markløft", "pullup", "roing", "row"],
+                         "Rygg": ["markløft", "pullup", "roing", "row", "hyperextension"],
                          "Biceps": ["bicep", "curl", "hammer"],
                          "Triceps": ["tricep", "pushdown", "dip", "crusher"],
                          "Bein": ["knebøy", "leg", "hamstring", "lunge", "utfall"],

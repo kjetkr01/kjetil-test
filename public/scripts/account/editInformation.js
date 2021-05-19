@@ -997,7 +997,7 @@ async function saveTrainingsplit(aReload) {
                             const keywords = [
                                 "skulderpress", "skulder", "skuldre", "overhead", "raise",
                                 "benkpress", "skråbenk", "benk", "flies", "pushup",
-                                "markløft", "pullup", "roing", "row",
+                                "markløft", "pullup", "roing", "row", "hyperextension",
                                 "bicep", "curl", "hammer",
                                 "tricep", "pushdown", "dip", "crusher",
                                 "situp", "plank", "crunch", "abs", "roll",
