@@ -321,9 +321,8 @@ padding-left: 20px;
 }
 
 .medals {
-height: 28px;
-width: 28px;
-position: absolute;
+height: 26px;
+width: 26px;
 
 outline-style: none; 
 -webkit-touch-callout: none;
@@ -332,4 +331,11 @@ outline-style: none;
 
 .medalIconGold {
 fill: #FFD700;
+}
+
+.medalsCount {
+font-family: var(--main-font-Family-Verdana);
+fill: var(--main-textColorDark);
+font-size: 20px;
+font-weight:bold;
 }

@@ -260,14 +260,18 @@ async function displayBadges(aInfo) {
     if (updateGoals === true) {
         goalsLeft = new TgoalsLeft(info.goalsLeft);
         goalsInfo = new Tgoals(info.goals);
-        displayGoals();
+        displayGoals(true);
     }
 
 }
 
-function displayGoals() {
+function displayGoals(checkIfCompleted) {
 
     try {
+
+        if (checkIfCompleted !== true) {
+            checkIfCompleted = false;
+        }
 
         hasGoalsLeft = localStorage.getItem("cachedGoalsLeft_owner") > 0 || false;
 
@@ -422,12 +426,14 @@ function displayGoals() {
 
                         if (untilGoal === 0) {
                             progressionPercent = 100;
-                            if (goalKeys.completed !== true) {
-                                setGoalAsComplete();
-                                async function setGoalAsComplete() {
-                                    const infoHeader = { "exercise": current, "id": id };
-                                    const url = `/user/update/goal/completed`;
-                                    await callServerAPIPost(infoHeader, url);
+                            if (checkIfCompleted === true) {
+                                if (goalKeys.completed !== true) {
+                                    setGoalAsComplete();
+                                    async function setGoalAsComplete() {
+                                        const infoHeader = { "exercise": current, "id": id };
+                                        const url = `/user/update/goal/completed`;
+                                        await callServerAPIPost(infoHeader, url);
+                                    }
                                 }
                             }
                         }

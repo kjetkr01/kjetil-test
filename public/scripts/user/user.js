@@ -29,6 +29,7 @@ function displayUserDetailsCached() {
             const age = cacheDetails.age;
             const height = cacheDetails.height;
             const weight = cacheDetails.weight;
+            const medalscount = cacheDetails.medalscount;
 
             if (age) {
                 if (age >= 15) {
@@ -43,6 +44,24 @@ function displayUserDetailsCached() {
             if (weight) {
                 if (weight >= 40) {
                     infoString += `<td class="cTd">${weight} kg</td>`;
+                }
+            }
+            if (medalscount) {
+                if (medalscount > 0) {
+                    const medal = `<svg style="overflow: visible; opacity: 85%;" class="medals medalIconGold" draggable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+                    <defs>
+                        </defs>
+                        <g id="Layer_2" data-name="Layer 2">
+                        <g id="Layer_1-2" data-name="Layer 1">
+                        <path class="medalIconGold"
+                        d="M28.33,17.38v-14H11.67V17.38a1.66,1.66,0,0,0,.81,1.44l7,4.18L17.8,26.9l-5.68.48,4.31,3.74-1.31,5.55,4.88-3,4.88,3-1.3-5.55,4.32-3.74-5.68-.48L20.57,23l7-4.18A1.66,1.66,0,0,0,28.33,17.38Zm-6.66,3-1.67,1-1.67-1V5h3.34Z" />
+                    </g>
+                </g>
+                <text class="medalsCount" x="12.5%" y="67.5%" text-anchor="end">${medalscount} x</text>
+            </svg>`;
+                    const medalsInfo = document.getElementById("medalsInfo");
+                    medalsInfo.classList = "noselect";
+                    medalsInfo.innerHTML = medal;
                 }
             }
 
@@ -205,6 +224,7 @@ function displayInformation(respInfo) {
     const age = info.info.age;
     const height = info.info.height;
     const weight = info.info.weight;
+    const medalscount = info.info.medalscount;
     memberSince = info.member_since;
 
     badgeColors = new TbadgeColors(info.badgeColors);
@@ -240,6 +260,22 @@ function displayInformation(respInfo) {
     if (weight) {
         if (weight >= 40) {
             infoString += `<td class="cTd">${weight} kg</td>`;
+        }
+    }
+    if (medalscount) {
+        if (medalscount > 0) {
+            const medal = `<svg style="overflow: visible; opacity: 85%;" class="medals medalIconGold" draggable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+            <defs>
+                </defs>
+                <g id="Layer_2" data-name="Layer 2">
+                <g id="Layer_1-2" data-name="Layer 1">
+                <path class="medalIconGold"
+                d="M28.33,17.38v-14H11.67V17.38a1.66,1.66,0,0,0,.81,1.44l7,4.18L17.8,26.9l-5.68.48,4.31,3.74-1.31,5.55,4.88-3,4.88,3-1.3-5.55,4.32-3.74-5.68-.48L20.57,23l7-4.18A1.66,1.66,0,0,0,28.33,17.38Zm-6.66,3-1.67,1-1.67-1V5h3.34Z" />
+            </g>
+        </g>
+        <text class="medalsCount" x="12.5%" y="67.5%" text-anchor="end">${medalscount} x</text>
+    </svg>`;
+            document.getElementById("medalsInfo").innerHTML = medal;
         }
     }
 

@@ -47,17 +47,20 @@ function displayUserDetailsCached() {
         }
         if (medalscount) {
             if (medalscount > 0) {
-                const medal = `<svg id="placement" class="medals medalIconGold" draggable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
-            <defs>
-                </defs>
-                <g id="Layer_2" data-name="Layer 2">
-                <g id="Layer_1-2" data-name="Layer 1">
-                <path class="medalIconGold"
-                d="M28.33,17.38v-14H11.67V17.38a1.66,1.66,0,0,0,.81,1.44l7,4.18L17.8,26.9l-5.68.48,4.31,3.74-1.31,5.55,4.88-3,4.88,3-1.3-5.55,4.32-3.74-5.68-.48L20.57,23l7-4.18A1.66,1.66,0,0,0,28.33,17.38Zm-6.66,3-1.67,1-1.67-1V5h3.34Z" />
+                const medal = `<svg style="overflow: visible; opacity: 85%;" class="medals medalIconGold" draggable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+                <defs>
+                    </defs>
+                    <g id="Layer_2" data-name="Layer 2">
+                    <g id="Layer_1-2" data-name="Layer 1">
+                    <path class="medalIconGold"
+                    d="M28.33,17.38v-14H11.67V17.38a1.66,1.66,0,0,0,.81,1.44l7,4.18L17.8,26.9l-5.68.48,4.31,3.74-1.31,5.55,4.88-3,4.88,3-1.3-5.55,4.32-3.74-5.68-.48L20.57,23l7-4.18A1.66,1.66,0,0,0,28.33,17.38Zm-6.66,3-1.67,1-1.67-1V5h3.34Z" />
+                </g>
             </g>
-        </g>
-    </svg>`;
-                infoString += `<td class="cTd">${medalscount}${medal}</td>`;
+            <text id="medalsCountTxt" class="medalsCount" x="12.5%" y="67.5%" text-anchor="end">${medalscount} x</text>
+        </svg>`;
+                const medalsInfo = document.getElementById("medalsInfo");
+                medalsInfo.classList = "noselect";
+                medalsInfo.innerHTML = medal;
             }
         }
 
@@ -286,7 +289,7 @@ function displayInformation(respInfo) {
     }
     if (medalscount) {
         if (medalscount > 0) {
-            const medal = `<svg id="placement" class="medals medalIconGold" draggable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+            const medal = `<svg style="overflow: visible; opacity: 85%;" class="medals medalIconGold" draggable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
             <defs>
                 </defs>
                 <g id="Layer_2" data-name="Layer 2">
@@ -295,8 +298,9 @@ function displayInformation(respInfo) {
                 d="M28.33,17.38v-14H11.67V17.38a1.66,1.66,0,0,0,.81,1.44l7,4.18L17.8,26.9l-5.68.48,4.31,3.74-1.31,5.55,4.88-3,4.88,3-1.3-5.55,4.32-3.74-5.68-.48L20.57,23l7-4.18A1.66,1.66,0,0,0,28.33,17.38Zm-6.66,3-1.67,1-1.67-1V5h3.34Z" />
             </g>
         </g>
+        <text id="medalsCountTxt" class="medalsCount" x="12.5%" y="67.5%" text-anchor="end">${medalscount} x</text>
     </svg>`;
-            infoString += `<td class="cTd">${medalscount}${medal}</td>`;
+            document.getElementById("medalsInfo").innerHTML = medal;
         }
     }
 
@@ -315,7 +319,7 @@ function displayInformation(respInfo) {
     if (goals && updateGoals === true || lifts && updateLifts === true) {
         goalsLeft = new TgoalsLeft(info.goalsLeft);
         goalsInfo = new Tgoals(info.goals);
-        displayGoals(info.goalsLeft > 0);
+        displayGoals(info.goalsLeft > 0, true);
     }
 
     if (info.trainingsplitsLeft) {
@@ -474,9 +478,13 @@ function displayLifts(hasLiftsLeft) {
 
 /// ------------ start of displayGoals --------------- ///
 
-function displayGoals(hasGoalsLeft) {
+function displayGoals(hasGoalsLeft, checkIfCompleted) {
 
     try {
+
+        if (checkIfCompleted !== true) {
+            checkIfCompleted = false;
+        }
 
         hasGoalsLeft = localStorage.getItem("cachedGoalsLeft_owner") > 0 || false;
 
@@ -627,12 +635,23 @@ function displayGoals(hasGoalsLeft) {
 
                         if (untilGoal === 0) {
                             progressionPercent = 100;
-                            if (goalKeys.completed !== true) {
-                                setGoalAsComplete();
-                                async function setGoalAsComplete() {
-                                    const infoHeader = { "exercise": current, "id": id };
-                                    const url = `/user/update/goal/completed`;
-                                    await callServerAPIPost(infoHeader, url);
+                            if (checkIfCompleted === true) {
+                                if (goalKeys.completed !== true) {
+                                    setGoalAsComplete();
+                                    async function setGoalAsComplete() {
+                                        const infoHeader = { "exercise": current, "id": id };
+                                        const url = `/user/update/goal/completed`;
+                                        const resp = await callServerAPIPost(infoHeader, url);
+                                        console.log(`ID: ${id}, resp: ${resp}`)
+
+                                        if (resp === true) {
+                                            const medalsCountTxt = document.getElementById("medalsCountTxt");
+                                            const medalsCountInt = parseInt(medalsCountTxt.textContent);
+                                            if (!isNaN(medalsCountInt)) {
+                                                medalsCountTxt.innerHTML = `${medalsCountInt + 1} x`;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }

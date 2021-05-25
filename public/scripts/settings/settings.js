@@ -466,11 +466,11 @@ async function removeOneMedal(aMedalsCount) {
 
                 const resp = await callServerAPIPost(infoHeader, url);
 
-                if(resp === true){
+                if (resp === true) {
                     updateUserInfo();
                     loadSetting();
                 }
-                
+
             }
         }
     } else {

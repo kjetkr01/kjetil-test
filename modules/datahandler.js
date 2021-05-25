@@ -1155,6 +1155,7 @@ class StorageHandler {
             if (results.rows.length === 1) {
 
                 const goals = results.rows[0][exercise];
+            
 
                 let modify = false;
 
