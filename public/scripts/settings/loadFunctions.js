@@ -399,10 +399,18 @@ function loadMedalsCounterPage() {
 
     if (userInfo.medalscount > 0) {
 
-        settingsGrid.innerHTML += justTextTemplate("Har det oppstått en feil og du for mange medaljer? Du kan fjerne 1 om gangen her", "left");
+        settingsGrid.innerHTML += justTextTemplate("Har det oppstått en feil og du for mange medaljer? Under kan du fjerne medaljer", "left");
 
-        settingsGrid.innerHTML += getCenteredTextTemplate(`<button id="removeOneMedalBtn" class='settingsButton' onClick="removeOneMedal(${userInfo.medalscount});">Fjern 1 medalje</button>`, "", "spacingTop");
+        settingsGrid.innerHTML += getCenteredTextTemplate(`<button id="removeOneMedalBtn" class='settingsButton' onClick="removeMedal(${userInfo.medalscount}, '1');">Fjern 1 medalje</button>`, "", "spacingTop");
 
+        const numbers = ["10", "25", "50"];
+
+        for (let i = 0; i < numbers.length; i++) {
+            const num = parseInt(numbers[i]);
+            if (userInfo.medalscount >= num) {
+                settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="removeMedal(${userInfo.medalscount}, '${num}');">Fjern ${num} medaljer</button>`, "", "spacingTop");
+            }
+        }
     }
 
     settingsGrid.innerHTML += getBottomSpacingTemplate();

@@ -840,10 +840,14 @@ server.post("/user/details/decrease/medalscount", auth, async (req, res) => {
      try {
 
           const currentUser = JSON.parse(req.headers.userinfo);
+          let count = parseInt(req.body.count);
+          if (isNaN(count)) {
+               count = 1;
+          }
 
           if (currentUser.id) {
 
-               const decreaseMedalCountResp = await decreaseMedalCount(currentUser.id);
+               const decreaseMedalCountResp = await decreaseMedalCount(currentUser.id, count);
                res.status(200).json(decreaseMedalCountResp).end();
 
           } else {

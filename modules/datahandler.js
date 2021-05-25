@@ -1155,7 +1155,7 @@ class StorageHandler {
             if (results.rows.length === 1) {
 
                 const goals = results.rows[0][exercise];
-            
+
 
                 let modify = false;
 
@@ -1217,7 +1217,7 @@ class StorageHandler {
 
     //  -------------------------------  decrease medalscount  ------------------------------- //
 
-    async decreaseMedalCount(userid) {
+    async decreaseMedalCount(userid, count) {
         const client = new pg.Client(this.credentials);
         let results = false;
 
@@ -1234,7 +1234,11 @@ class StorageHandler {
                 medalscount = medalscount.rows[0].medalscount;
 
                 if (medalscount > 0) {
-                    medalscount--;
+                    medalscount = medalscount - count;
+                    if (medalscount < 0) {
+                        medalscount = 0;
+                    }
+                  
                     await client.query(`
                     UPDATE user_details
                     SET medalscount = $1

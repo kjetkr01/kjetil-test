@@ -445,23 +445,35 @@ async function removeAPIAccess(aUsername, aID) {
     }
 }
 
-async function removeOneMedal(aMedalsCount) {
+async function removeMedal(aMedalsCount, aCount) {
 
     if (navigator.onLine) {
 
         if (aMedalsCount > 0) {
 
-            const remainingMedals = aMedalsCount - 1;
+            aCount = parseInt(aCount);
+            if (isNaN(aCount)) {
+                aCount = 1;
+            }
+
+            const count = aCount;
+
+            const remainingMedals = aMedalsCount - count;
             let remainingTxt = ` Du kommer til å ha ${remainingMedals} igjen!`;
 
             if (remainingMedals <= 0) {
                 remainingTxt = ` Du kommer ikke til å ha noen medaljer igjen!`;
             }
 
-            const confirmRemove = confirm(`Er du sikker ønsker å fjerne 1 medalje?${remainingTxt}`);
+            let medalsTxt = "medalje";
+            if (count > 1) {
+                medalsTxt += "r";
+            }
+
+            const confirmRemove = confirm(`Er du sikker ønsker å fjerne ${count} ${medalsTxt}?${remainingTxt}`);
 
             if (confirmRemove === true) {
-                const infoHeader = {};
+                const infoHeader = { "count": count };
                 const url = `/user/details/decrease/medalscount`;
 
                 const resp = await callServerAPIPost(infoHeader, url);

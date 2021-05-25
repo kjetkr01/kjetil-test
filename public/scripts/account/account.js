@@ -650,9 +650,11 @@ function displayGoals(hasGoalsLeft, checkIfCompleted) {
 
                                             if (resp === true) {
                                                 const medalsCountTxt = document.getElementById("medalsCountTxt");
-                                                const medalsCountInt = parseInt(medalsCountTxt.textContent);
-                                                if (!isNaN(medalsCountInt)) {
-                                                    medalsCountTxt.innerHTML = `${medalsCountInt + 1} x`;
+                                                if (medalsCountTxt) {
+                                                    const medalsCountInt = parseInt(medalsCountTxt.textContent);
+                                                    if (!isNaN(medalsCountInt)) {
+                                                        medalsCountTxt.innerHTML = `${medalsCountInt + 1} x`;
+                                                    }
                                                 }
                                             }
                                         }

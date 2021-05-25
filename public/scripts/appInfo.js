@@ -42,7 +42,8 @@ const ongoingUpdatesArr = [
     "TITLE:Annet",
     "Optimalisering",
     "Endring i hvordan animasjoner/lasting av data funker (85%)",
-    "Lagre løft, mål og reps filter i database"
+    "Lagre løft, mål og reps filter i database",
+    "Offline queries (0%)"
 ];
 
 //

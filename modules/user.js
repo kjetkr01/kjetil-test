@@ -83,9 +83,9 @@ async function deleteLiftOrGoal(userid, info) {
     }
 }
 
-async function decreaseMedalCount(userid) {
+async function decreaseMedalCount(userid, count) {
     try {
-        const resp = await database.decreaseMedalCount(userid);
+        const resp = await database.decreaseMedalCount(userid, count);
         return resp;
     } catch (error) {
         console.error(error);
