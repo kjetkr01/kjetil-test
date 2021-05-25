@@ -482,6 +482,9 @@ function displayGoals(hasGoalsLeft, checkIfCompleted) {
 
     try {
 
+        const maxGoalsCompletedAtOnce = 2;
+        let goalSetAsCompleted = 0;
+
         if (checkIfCompleted !== true) {
             checkIfCompleted = false;
         }
@@ -636,19 +639,21 @@ function displayGoals(hasGoalsLeft, checkIfCompleted) {
                         if (untilGoal === 0) {
                             progressionPercent = 100;
                             if (checkIfCompleted === true) {
-                                if (goalKeys.completed !== true) {
-                                    setGoalAsComplete();
-                                    async function setGoalAsComplete() {
-                                        const infoHeader = { "exercise": current, "id": id };
-                                        const url = `/user/update/goal/completed`;
-                                        const resp = await callServerAPIPost(infoHeader, url);
-                                        console.log(`ID: ${id}, resp: ${resp}`)
+                                if (maxGoalsCompletedAtOnce > goalSetAsCompleted) {
+                                    if (goalKeys.completed !== true) {
+                                        setGoalAsComplete();
+                                        async function setGoalAsComplete() {
+                                            goalSetAsCompleted++;
+                                            const infoHeader = { "exercise": current, "id": id };
+                                            const url = `/user/update/goal/completed`;
+                                            const resp = await callServerAPIPost(infoHeader, url);
 
-                                        if (resp === true) {
-                                            const medalsCountTxt = document.getElementById("medalsCountTxt");
-                                            const medalsCountInt = parseInt(medalsCountTxt.textContent);
-                                            if (!isNaN(medalsCountInt)) {
-                                                medalsCountTxt.innerHTML = `${medalsCountInt + 1} x`;
+                                            if (resp === true) {
+                                                const medalsCountTxt = document.getElementById("medalsCountTxt");
+                                                const medalsCountInt = parseInt(medalsCountTxt.textContent);
+                                                if (!isNaN(medalsCountInt)) {
+                                                    medalsCountTxt.innerHTML = `${medalsCountInt + 1} x`;
+                                                }
                                             }
                                         }
                                     }

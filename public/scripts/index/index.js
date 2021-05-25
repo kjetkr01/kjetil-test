@@ -269,6 +269,9 @@ function displayGoals(checkIfCompleted) {
 
     try {
 
+        const maxGoalsCompletedAtOnce = 2;
+        let goalSetAsCompleted = 0;
+
         if (checkIfCompleted !== true) {
             checkIfCompleted = false;
         }
@@ -427,12 +430,15 @@ function displayGoals(checkIfCompleted) {
                         if (untilGoal === 0) {
                             progressionPercent = 100;
                             if (checkIfCompleted === true) {
-                                if (goalKeys.completed !== true) {
-                                    setGoalAsComplete();
-                                    async function setGoalAsComplete() {
-                                        const infoHeader = { "exercise": current, "id": id };
-                                        const url = `/user/update/goal/completed`;
-                                        await callServerAPIPost(infoHeader, url);
+                                if (maxGoalsCompletedAtOnce > goalSetAsCompleted) {
+                                    if (goalKeys.completed !== true) {
+                                        setGoalAsComplete();
+                                        async function setGoalAsComplete() {
+                                            goalSetAsCompleted++;
+                                            const infoHeader = { "exercise": current, "id": id };
+                                            const url = `/user/update/goal/completed`;
+                                            await callServerAPIPost(infoHeader, url);
+                                        }
                                     }
                                 }
                             }

@@ -335,7 +335,7 @@ fill: #FFD700;
 
 .medalsCount {
 font-family: var(--main-font-Family-Verdana);
-fill: var(--main-textColorDark);
+fill: var(--main-headerTextColor);
 font-size: 20px;
 font-weight:bold;
 }
