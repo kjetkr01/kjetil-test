@@ -401,14 +401,14 @@ function loadMedalsCounterPage() {
 
         settingsGrid.innerHTML += justTextTemplate("Har det oppstått en feil og du for mange medaljer? Under kan du fjerne medaljer", "left");
 
-        settingsGrid.innerHTML += getCenteredTextTemplate(`<button id="removeOneMedalBtn" class='settingsButton' onClick="removeMedal(${userInfo.medalscount}, '1');">Fjern 1 medalje</button>`, "", "spacingTop");
+        settingsGrid.innerHTML += getCenteredTextTemplate(`<button id="removeOneMedalBtn" class='settingsButton pointer' onClick="removeMedal(${userInfo.medalscount}, '1');">Fjern 1 medalje</button>`, "", "spacingTop");
 
-        const numbers = ["10", "25", "50"];
+        const numbers = ["10", "25"];
 
         for (let i = 0; i < numbers.length; i++) {
             const num = parseInt(numbers[i]);
             if (userInfo.medalscount >= num) {
-                settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="removeMedal(${userInfo.medalscount}, '${num}');">Fjern ${num} medaljer</button>`, "", "spacingTop");
+                settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton pointer' onClick="removeMedal(${userInfo.medalscount}, '${num}');">Fjern ${num} medaljer</button>`, "", "spacingTop");
             }
         }
     }
@@ -491,6 +491,8 @@ async function loadAboutAppPage(setting) {
 
             settingsGrid.innerHTML += getBottomSpacingTemplate();
 
+            let extraScroll = 0;
+
             if (navigator.onLine) {
                 const infoHeader = {};
                 const url = `/application`;
@@ -502,13 +504,14 @@ async function loadAboutAppPage(setting) {
                     Nyeste versjon: ${serverApplication.version.fullNumber}<br>
                     <button class="settingsButton pointer" onClick="updateApplication();">Oppdater</button>`;
                         sessionStorage.setItem("settings_notification_update", true);
+                        extraScroll = 10;
                     } else {
                         sessionStorage.removeItem("settings_notification_update");
                     }
                 }
             }
 
-            scrollToSavedPos(setting);
+            scrollToSavedPos(setting, extraScroll);
             saveNewScrollPos = true;
         }
     }
