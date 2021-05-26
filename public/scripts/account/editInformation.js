@@ -1029,11 +1029,54 @@ async function saveTrainingsplit(aReload) {
                                     //const dom = document.getElementById(`${keys[i]}-${j}-${d[k]}`);
                                     const dom = document.getElementById(`${key[0]}-${j}-${d[k]}`);
                                     if (dom) {
-                                        const n = parseInt(dom.value);
+                                        let n = parseFloat(dom.value);
                                         if (!isNaN(n)) {
+                                            if (d[k] === "sets" || d[k] === "reps") {
+                                                const lowest = 0;
+                                                const higest = 99;
+                                                if (n < lowest || n > higest) {
+                                                    if (n < lowest) {
+                                                        n = lowest;
+                                                    } else if (n > higest) {
+                                                        n = higest;
+                                                    }
+                                                }
+                                            }
                                             enu[d[k]] = n;
                                         }
                                     }
+                                }
+
+                                // keys = enu.value
+                                // make number not able to go below [0] or higher than [1]
+                                // index 0 = lowest, index 1 = highest
+                                const validNumbers = {
+                                    0: [0, 0], // nothing
+                                    1: [0, 500], // kg
+                                    2: [0, 100], // percent
+                                    3: [0, 10], // RPE
+                                }
+
+                                const validNumbersKeys = Object.keys(validNumbers);
+                                for (let x = 0; x < validNumbersKeys.length; x++) {
+
+                                    const current = validNumbers[validNumbersKeys[x]];
+                                    const lowest = current[0];
+                                    const highest = current[1];
+                                    const value = parseInt([validNumbersKeys[x]]);
+
+                                    if (enu.value === value) {
+                                        const num = enu.number;
+                                        if (num < lowest || num > highest) {
+                                            if (num < lowest) {
+                                                enu.number = lowest;
+                                            } else if (num > highest) {
+                                                enu.number = highest;
+                                            }
+                                        }
+                                        break;
+                                    }
+
                                 }
 
                                 cacheList.push(enu);

@@ -140,9 +140,13 @@ async function requestAccountDetails() {
         }
 
         if (activetrainingsplit) {
+            sessionStorage.removeItem("hasActiveTrainingsplit");
             showTrainingsplitBadgeAnimations = false;
-            displayTrainingsplit();
+        } else {
+            sessionStorage.setItem("hasActiveTrainingsplit", false);
         }
+
+        displayTrainingsplit();
 
         if (badgeColorsJSON) {
             badgeColors = new TbadgeColors(badgeColorsJSON);
@@ -763,6 +767,11 @@ function displayGoals(hasGoalsLeft, checkIfCompleted) {
 function displayTrainingsplit() {
 
     try {
+
+        if (sessionStorage.getItem("hasActiveTrainingsplit") === "false" && !activetrainingsplit) {
+            showTrainingsplitBadgeAnimations = false;
+        }
+
         document.getElementById("badgesTrainingsplitTableRow").innerHTML = "";
         if (activetrainingsplit) {
             document.getElementById("trainingsplit").innerHTML = `Treningsplan (${activetrainingsplit.trainingsplit_name})`;
@@ -807,15 +816,22 @@ function displayTrainingsplit() {
                     }
                 }
             }
+
+            const badge = getBadgeTrainingsplit();
+
+            if (badge) {
+                document.getElementById("badgesTrainingsplitTableRow").innerHTML += badge;
+            }
+
+        } else {
+            const badge = getBadgeTrainingsplit();
+
+            if (badge) {
+                document.getElementById("badgesTrainingsplitTableRow").innerHTML = badge;
+            }
         }
     } catch (err) {
         console.log(err)
-    }
-
-    const badge = getBadgeTrainingsplit();
-
-    if (badge) {
-        document.getElementById("badgesTrainingsplitTableRow").innerHTML += badge;
     }
 
     if (sessionStorage.getItem("badgestrainingsplit_scroll_x")) {

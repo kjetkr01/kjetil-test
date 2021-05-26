@@ -41,12 +41,12 @@ module.exports.maxTrainingsplits = {
 
 //maximum allowed trainingsplits exercises in one day
 module.exports.maxTrainingsplitsExercisesPerDay = {
-    default: 20
+    default: 12
 };
 
 //maximum allowed trainingsplits rows in one exercise
 module.exports.maxTrainingsplitsExerciseRows = {
-    default: 10
+    default: 8
 };
 
 //maximum allowed subscribed trainingsplits

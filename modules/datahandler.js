@@ -1546,6 +1546,8 @@ class StorageHandler {
                 let canEdit = false;
                 if (trainingsplit.user_id === userid) {
                     canEdit = true;
+                    trainingsplit.maxTrainingsplitsExerciseRows = maxTrainingsplitsExerciseRows.default;
+                    trainingsplit.maxTrainingsplitsExercisesPerDay = maxTrainingsplitsExercisesPerDay.default;
                 } else {
                     let username = await client.query(`
                         SELECT username

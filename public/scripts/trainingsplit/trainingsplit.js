@@ -89,20 +89,20 @@ async function requestTrainingsplitDetails() {
             } else {
                 smallTitle.innerHTML = `Kunne ikke hente planen!`;
                 setTimeout(() => {
-                    sessionStorage.removeItem("trainingsplit");
-                    location.reload();
+                    //sessionStorage.removeItem("trainingsplit");
+                    window.location.search = "";
                 }, 2000);
             }
         } else {
-            sessionStorage.removeItem("trainingsplit");
-            location.reload();
+            //sessionStorage.removeItem("trainingsplit");
+            window.location.search = "";
         }
 
 
     } catch (err) {
         console.log(err);
-        sessionStorage.removeItem("trainingsplit");
-        location.reload();
+        //sessionStorage.removeItem("trainingsplit");
+        window.location.search = "";
     }
 }
 //const exerciseListCount = {};
@@ -114,6 +114,8 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
     const resp = aResp;
 
     const selectedDay = resp[aSelectedDay];
+    const maxTrainingsplitsExerciseRows = resp.maxTrainingsplitsExerciseRows;
+    const maxTrainingsplitsExercisesPerDay = resp.maxTrainingsplitsExercisesPerDay;
 
     const top = `<br><h3>Redigerer:</h3><input id="trainingsplitNameInp" class="trainingsplitNameInput" maxlength="20" value="${resp.trainingsplit_name}"></input>`;
 
@@ -165,6 +167,7 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
     <button class="trainingsplitButton pointer fadeIn animate" onClick="deleteTrainingsplit('${resp.trainingsplit_id}');"><img src="images/trash.svg"></img></button>
     <br>
     <br>
+    <div id="addNewExerciseDiv">
     <select id="selectNewExercise" class="trainingsplitSelect pointer">
     <option value=null>Velg øvelse her</option>
     ${exerciseListOptionsHTML}
@@ -173,6 +176,7 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
     <input id="inputNewExercise" class="trainingsplitNameInput" maxlength="30" placeholder="Øvelse"></input>
 
     <button class="trainingsplitButton pointer" onClick="addExercise();">Legg til øvelse</button>
+    </div>
     `;
 
     document.getElementById("userGrid").innerHTML = `
@@ -187,11 +191,23 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
 
     let shortTxt = "";
 
-    document.getElementById("trainingsplitInfo").innerHTML = `<p>${shortTxt}Format: 2 x 3 = 2 Sets, 3 Reps.<br>80 % = 80 % av 1 Rep/ORM i øvelsen (krever ORM i løftet for automatisk utregning)</p>`;
+    document.getElementById("trainingsplitInfo").innerHTML = `
+    <p><h4>Info:</h4>
+    ${shortTxt}Format: 2 x 3 = 2 Sets, 3 Reps.
+    <br>80 % = 80 % av 1 Rep/ORM i øvelsen (krever ORM i løftet for automatisk utregning)
+    <br>Du kan ha ${maxTrainingsplitsExercisesPerDay} øvelser per dag.
+    <br>Du kan ha ${maxTrainingsplitsExerciseRows} rader per øvelse.
+    </p>`;
 
     if (selectedDay.list) {
 
         const arr = selectedDay.list;
+
+        if (arr.length >= maxTrainingsplitsExercisesPerDay) {
+            //const addNewExerciseDiv = document.getElementById("addNewExerciseDiv");
+            //addNewExerciseDiv.innerHTML = `Du bruker ${arr.length}/${maxTrainingsplitsExercisesPerDay} øvelser på denne dagen.`;
+            document.getElementById("addNewExerciseDiv").innerHTML = "";
+        }
 
         for (let i = 0; i < arr.length; i++) {
 
@@ -268,7 +284,9 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
             <hr class="trainingsplitSmallLine fadeInUp animate delayMedium">`;
             }
 
-            trainingsplitTable.innerHTML += `<p><button class="trainingsplitButton pointer" onClick="addRowExercise('${exerciseName}');">Ny rad</button></p>`;
+            if (exerciseList.length < maxTrainingsplitsExerciseRows) {
+                trainingsplitTable.innerHTML += `<p><button class="trainingsplitButton pointer" onClick="addRowExercise('${exerciseName}');">Ny rad</button></p>`;
+            }
         }
     }
 
@@ -376,7 +394,7 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
         trainingsplitToolBar.innerHTML += `${copyHTML}${subscribeHTML}`;
     }
 
-    document.getElementById("smallTitle").innerHTML += `<br><h3>${resp.trainingsplit_name}</h3>${creatorTxt}${daysList}<br>${selectedDay.short || 'I dag er det fri fra trening :)'}`;
+    document.getElementById("smallTitle").innerHTML += `<br><h3 id="trainingsplit_name">${resp.trainingsplit_name}</h3>${creatorTxt}${daysList}<br>${selectedDay.short || 'I dag er det fri fra trening :)'}`;
 
     let animation = "fadeInUp animate";
     if (showTrainingsplitAnimations === false) {
@@ -833,6 +851,12 @@ async function copyTrainingsplit(aTrainingsplit_id, aOwner_id) {
 
         if (owner_id) {
 
+            const trainingsplit_name = document.getElementById("trainingsplit_name");
+            const confirmCopy = confirm(`Vil du ta en kopi av ${trainingsplit_name.textContent || "planen"}?`);
+            if (confirmCopy === false) {
+                return;
+            }
+
             const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit_id, "owner_id": owner_id };
             const url = `/user/copy/trainingsplit`;
 
@@ -876,6 +900,20 @@ async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTraining
 
         if (owner_id) {
 
+            const cachedSubscribedTrainingsplits_owner = JSON.parse(sessionStorage.getItem("cachedSubscribedTrainingsplits_owner"));
+            if (cachedSubscribedTrainingsplits_owner) {
+                const cachedSubscribedTrainingsplits_ownerKeys = Object.keys(cachedSubscribedTrainingsplits_owner);
+
+                const tIDString = trainingsplit_id.toString();
+                if (cachedSubscribedTrainingsplits_ownerKeys.includes(tIDString)) {
+                    const trainingsplit_name = document.getElementById("trainingsplit_name");
+                    const confirmUnsub = confirm(`Vil du si opp abonnementet på ${trainingsplit_name.textContent || cachedSubscribedTrainingsplits_owner[trainingsplit_id] || "planen"}?`);
+                    if (confirmUnsub === false) {
+                        return;
+                    }
+                }
+            }
+
             const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit_id, "owner_id": owner_id };
             const url = `/user/subunsub/trainingsplit`;
 
@@ -893,7 +931,7 @@ async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTraining
             const data = await resp.json();
 
             if (data.status === true) {
-                const cachedSubscribedTrainingsplits_owner = JSON.parse(sessionStorage.getItem("cachedSubscribedTrainingsplits_owner"));
+                //const cachedSubscribedTrainingsplits_owner = JSON.parse(sessionStorage.getItem("cachedSubscribedTrainingsplits_owner"));
                 if (cachedSubscribedTrainingsplits_owner) {
                     const cachedSubscribedTrainingsplits_ownerKeys = Object.keys(cachedSubscribedTrainingsplits_owner);
                     const tIDString = trainingsplit_id.toString();
