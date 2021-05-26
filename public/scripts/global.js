@@ -18,12 +18,14 @@ const errorLoadingText = "Kunne ikke laste inn innholdet.";
 
 const allowedThemes = {
     0: { "id": 0, "name": "Standard", "theme": "default" },
-    1: { "id": 1, "name": "Blå", "theme": "blue" }
+    1: { "id": 1, "name": "Blå", "theme": "blue" },
+    2: { "id": 2, "name": "Test", "theme": "test" }
 }
 
 const themeColors = {
     "default": { "lightHex": "327a94", "darkHex": "1c4553" },
-    "blue": { "lightHex": "3247bb", "darkHex": "202b6b" }
+    "blue": { "lightHex": "3247bb", "darkHex": "202b6b" },
+    "test": { "lightHex": "01a2ff", "darkHex": "202b6b" }
 }
 
 const badgeColorBorders = {

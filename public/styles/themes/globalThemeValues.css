@@ -5,7 +5,7 @@
 
 @media (prefers-color-scheme: light) {
 :root {
---main-lineBorder: 1px #757575 solid;
+/*--main-lineBorder: 1px #757575 solid;
 
 --main-backgroundColor2: #F0F0F0;
 --main-backgroundColor3: #ffffff;
@@ -16,12 +16,12 @@
 --main-textColorBadges: white;
 
 --main-iconsActiveColor: #231f20;
---main-iconsDefaultColor: #8D8D8D;
+--main-iconsDefaultColor: #8D8D8D;*/
 }
 }
 
 .lightMode {
---main-lineBorder: 1px #757575 solid;
+/*--main-lineBorder: 1px #757575 solid;
 
 --main-backgroundColor2: #F0F0F0;
 --main-backgroundColor3: #ffffff;
@@ -32,7 +32,7 @@
 --main-textColorBadges: white;
 
 --main-iconsActiveColor: #231f20;
---main-iconsDefaultColor: #8D8D8D;
+--main-iconsDefaultColor: #8D8D8D;*/
 }
 
 @media (prefers-color-scheme: dark) {

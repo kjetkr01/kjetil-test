@@ -20,6 +20,31 @@
 --main-accountOwnerColor: var(--main-backgroundColor1);
 }
 
+.testColorTheme-light {
+    --main-headerBackground:  #01a2ff;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+    --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
+    --main-backgroundColor1: #1d8ac9;
+    --main-backgroundColorRGBLowOpacity: rgba(29,138,201, 0.4);
+    --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
+    
+    --main-accountOwnerColor: var(--main-backgroundColor1);
+
+
+    
+    --main-lineBorder: 1px #ffffff solid;
+
+--main-backgroundColor2: #77a7c5;
+--main-backgroundColor3: #78b8e0;
+
+--main-headerTextColor: white;
+--main-textColorLight: white;
+--main-textColorDark: rgb(58, 58, 58);
+--main-textColorBadges: white;
+
+--main-iconsActiveColor: #222222;
+--main-iconsDefaultColor: #868686;
+    }
+
 /* END OF LIGHT THEME VALUES */
 
 
