@@ -1,4 +1,4 @@
-const cacheName = 'js13kPWA-v23';
+const cacheName = 'js13kPWA-v24';
 
 const contentToCache = [
     '/account.html',
@@ -75,7 +75,7 @@ self.addEventListener('install', (e) => {
 
 self.addEventListener('fetch', (e) => {
     e.respondWith((async () => {
-        const r = await caches.match(e.request);
+        const r = await caches.match(e.request, { ignoreSearch: true });
         //console.log(`[Service Worker] Fetching resource: ${e.request.url}`);
         if (r) { return r; }
         const response = await fetch(e.request);
