@@ -1139,14 +1139,91 @@ class StorageHandler {
 
     //  -------------------------------  set goal as complete  ------------------------------- //
 
-    async setGoalAsComplete(userid, exercise, id) {
+    async setGoalAsComplete(userid, completedGoalsList) {
         const client = new pg.Client(this.credentials);
         let results = false;
+        let totalMedals = 0;
 
         try {
             await client.connect();
 
-            results = await client.query(`
+            const completedGoalsListKeys = Object.keys(completedGoalsList);
+
+            for (let i = 0; i < completedGoalsListKeys.length; i++) {
+                const current = completedGoalsListKeys[i];
+
+                if (allowedLifts.includes(current) === true) {
+
+                    results = await client.query(`
+                        SELECT ${current}
+                        FROM user_goals
+                        WHERE user_id = $1`,
+                        [userid]);
+
+                    if (results.rows.length === 1) {
+
+                        const currentList = completedGoalsList[current];
+                        const currentListKeys = Object.keys(currentList);
+
+                        const goals = results.rows[0][current];
+
+                        let modify = false;
+                        let modifyCount = 0;
+
+                        for (let j = 0; j < currentListKeys.length; j++) {
+
+                            const currentGoal = currentList[currentListKeys[j]];
+
+                            for (let i = 0; i < goals.length; i++) {
+                                const goal = goals[i];
+                                const completed = goal.completed;
+                                if (currentGoal === goal.id) {
+                                    if (completed !== true) {
+                                        modify = true;
+                                        modifyCount++;
+                                        goals[i].completed = true;
+                                    } else {
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (modify === true) {
+
+                            if (modifyCount < maxGoals.default) {
+                                await client.query(`
+                                UPDATE user_goals
+                                SET ${current} = $1
+                                WHERE user_id = $2`,
+                                    [JSON.stringify(goals), userid]);
+
+                                let medalscount = await client.query(`
+                                SELECT medalscount
+                                FROM user_details
+                                WHERE user_id = $1`,
+                                    [userid]);
+
+                                if (medalscount.rows.length > 0) {
+
+                                    medalscount = medalscount.rows[0].medalscount;
+                                    medalscount = medalscount + modifyCount;
+                                    totalMedals = medalscount;
+                                    await client.query(`
+                                UPDATE user_details
+                                SET medalscount = $1
+                                WHERE user_id = $2`,
+                                        [medalscount, userid]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            results = true;
+
+            /*results = await client.query(`
                 SELECT ${exercise}
                 FROM user_goals
                 WHERE user_id = $1`,
@@ -1155,7 +1232,6 @@ class StorageHandler {
             if (results.rows.length === 1) {
 
                 const goals = results.rows[0][exercise];
-
 
                 let modify = false;
 
@@ -1198,7 +1274,7 @@ class StorageHandler {
                         results = true;
                     }
                 }
-            }
+            }*/
 
             client.end();
 
@@ -1209,7 +1285,7 @@ class StorageHandler {
 
         client.end();
 
-        return results;
+        return { "status": results, "totalMedals": totalMedals };
     }
 
     //
@@ -1238,7 +1314,7 @@ class StorageHandler {
                     if (medalscount < 0) {
                         medalscount = 0;
                     }
-                  
+
                     await client.query(`
                     UPDATE user_details
                     SET medalscount = $1

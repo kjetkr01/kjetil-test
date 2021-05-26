@@ -269,8 +269,7 @@ function displayGoals(checkIfCompleted) {
 
     try {
 
-        const maxGoalsCompletedAtOnce = 2;
-        let goalSetAsCompleted = 0;
+        const completedGoalsList = {};
 
         if (checkIfCompleted !== true) {
             checkIfCompleted = false;
@@ -430,16 +429,11 @@ function displayGoals(checkIfCompleted) {
                         if (untilGoal === 0) {
                             progressionPercent = 100;
                             if (checkIfCompleted === true) {
-                                if (maxGoalsCompletedAtOnce > goalSetAsCompleted) {
-                                    if (goalKeys.completed !== true) {
-                                        setGoalAsComplete();
-                                        async function setGoalAsComplete() {
-                                            goalSetAsCompleted++;
-                                            const infoHeader = { "exercise": current, "id": id };
-                                            const url = `/user/update/goal/completed`;
-                                            await callServerAPIPost(infoHeader, url);
-                                        }
+                                if (goalKeys.completed !== true) {
+                                    if (!completedGoalsList[current]) {
+                                        completedGoalsList[current] = [];
                                     }
+                                    completedGoalsList[current].push(id);
                                 }
                             }
                         }
@@ -532,6 +526,20 @@ function displayGoals(checkIfCompleted) {
                     }
                 }
             }
+
+
+            if (navigator.onLine) {
+                const completedGoalsListKeys = Object.keys(completedGoalsList);
+                if (completedGoalsListKeys.length > 0) {
+                    setGoalAsComplete();
+                    async function setGoalAsComplete() {
+                        const infoHeader = { "completedGoalsList": completedGoalsList };
+                        const url = `/user/update/goals/completed`;
+                        await callServerAPIPost(infoHeader, url);
+                    }
+                }
+            }
+
         } else {
             smallTitle.textContent = "Du har ingen mål enda!";
         }

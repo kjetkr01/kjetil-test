@@ -65,9 +65,9 @@ async function saveLiftOrGoal(userid, info, color) {
     }
 }
 
-async function setGoalAsComplete(userid, exercise, id) {
+async function setGoalAsComplete(userid, completedGoalsList) {
     try {
-        const resp = await database.setGoalAsComplete(userid, exercise, id);
+        const resp = await database.setGoalAsComplete(userid, completedGoalsList);
         return resp;
     } catch (error) {
         console.error(error);

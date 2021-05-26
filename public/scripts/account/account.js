@@ -482,8 +482,7 @@ function displayGoals(hasGoalsLeft, checkIfCompleted) {
 
     try {
 
-        const maxGoalsCompletedAtOnce = 2;
-        let goalSetAsCompleted = 0;
+        const completedGoalsList = {};
 
         if (checkIfCompleted !== true) {
             checkIfCompleted = false;
@@ -639,26 +638,11 @@ function displayGoals(hasGoalsLeft, checkIfCompleted) {
                         if (untilGoal === 0) {
                             progressionPercent = 100;
                             if (checkIfCompleted === true) {
-                                if (maxGoalsCompletedAtOnce > goalSetAsCompleted) {
-                                    if (goalKeys.completed !== true) {
-                                        setGoalAsComplete();
-                                        async function setGoalAsComplete() {
-                                            goalSetAsCompleted++;
-                                            const infoHeader = { "exercise": current, "id": id };
-                                            const url = `/user/update/goal/completed`;
-                                            const resp = await callServerAPIPost(infoHeader, url);
-
-                                            if (resp === true) {
-                                                const medalsCountTxt = document.getElementById("medalsCountTxt");
-                                                if (medalsCountTxt) {
-                                                    const medalsCountInt = parseInt(medalsCountTxt.textContent);
-                                                    if (!isNaN(medalsCountInt)) {
-                                                        medalsCountTxt.innerHTML = `${medalsCountInt + 1} x`;
-                                                    }
-                                                }
-                                            }
-                                        }
+                                if (goalKeys.completed !== true) {
+                                    if (!completedGoalsList[current]) {
+                                        completedGoalsList[current] = [];
                                     }
+                                    completedGoalsList[current].push(id);
                                 }
                             }
                         }
@@ -722,6 +706,25 @@ function displayGoals(hasGoalsLeft, checkIfCompleted) {
 
                 if (badge && badgesGoalsTableRow) {
                     badgesGoalsTableRow.innerHTML += badge;
+                }
+            }
+
+            if (navigator.onLine) {
+                const completedGoalsListKeys = Object.keys(completedGoalsList);
+                if (completedGoalsListKeys.length > 0) {
+                    setGoalAsComplete();
+                    async function setGoalAsComplete() {
+                        const infoHeader = { "completedGoalsList": completedGoalsList };
+                        const url = `/user/update/goals/completed`;
+                        const resp = await callServerAPIPost(infoHeader, url);
+
+                        if (resp.status === true) {
+                            const medalsCountTxt = document.getElementById("medalsCountTxt");
+                            if (medalsCountTxt) {
+                                medalsCountTxt.innerHTML = `${resp.totalMedals} x`;
+                            }
+                        }
+                    }
                 }
             }
 

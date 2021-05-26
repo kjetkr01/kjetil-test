@@ -811,17 +811,21 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
 
 // set goal as completed and increment medals count
 
-server.post("/user/update/goal/completed", auth, async (req, res) => {
+server.post("/user/update/goals/completed", auth, async (req, res) => {
      try {
 
-          const exercise = req.body.exercise;
-          const id = req.body.id;
+          const completedGoalsList = req.body.completedGoalsList;
           const currentUser = JSON.parse(req.headers.userinfo);
 
-          if (currentUser.id && exercise && id) {
+          if (currentUser.id) {
 
-               const setGoalAsCompleteResp = await setGoalAsComplete(currentUser.id, exercise, id);
-               res.status(200).json(setGoalAsCompleteResp).end();
+               const resp = await setGoalAsComplete(currentUser.id, completedGoalsList);
+               
+               if (resp.status === true) {
+                    res.status(200).json(resp).end();
+               } else {
+                    res.status(403).json({ "status": false }).end();
+               }
 
           } else {
                res.status(403).json("invalid information").end();
