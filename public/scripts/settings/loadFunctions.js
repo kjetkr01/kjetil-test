@@ -598,7 +598,7 @@ async function loadUsersListPage(setting) {
                     ${profileStatus}
                     <p class="settingsPendingUsername">${hasAPIAccessTxt}</p>
                    <br>
-                   <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Se profil</button>
+                   <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Besøk</button>
                     `;
                         } else {
                             usersTemplateHTML += `
@@ -642,7 +642,7 @@ async function loadUsersListPage(setting) {
 
                     if (currentUser.username !== username) {
                         usersTemplateHTML += `
-               <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Se profil</button>
+               <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Besøk</button>
                 `;
                     } else {
                         usersTemplateHTML += `
