@@ -502,7 +502,7 @@ async function loadAboutAppPage(setting) {
                     Nyeste versjon: ${serverApplication.version.fullNumber}<br>
                     <button class="settingsButton pointer" onClick="updateApplication();">Oppdater</button>`;
                         sessionStorage.setItem("settings_notification_update", true);
-                        scrollToSavedPos(setting, 10);
+                        scrollToSavedPos(setting, 25);
                     } else {
                         sessionStorage.removeItem("settings_notification_update");
                     }

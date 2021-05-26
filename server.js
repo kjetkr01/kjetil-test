@@ -820,7 +820,7 @@ server.post("/user/update/goals/completed", auth, async (req, res) => {
           if (currentUser.id) {
 
                const resp = await setGoalAsComplete(currentUser.id, completedGoalsList);
-               
+
                if (resp.status === true) {
                     res.status(200).json(resp).end();
                } else {
