@@ -95,8 +95,6 @@ function scrollToSavedPos(setting, extraScroll) {
             currentScroll = extraScroll;
         }
 
-        console.log(currentScroll)
-
         if (currentScroll) {
             settingsDom.scrollTo(0, currentScroll);
         }

@@ -491,8 +491,6 @@ async function loadAboutAppPage(setting) {
 
             settingsGrid.innerHTML += getBottomSpacingTemplate();
 
-            let extraScroll = 0;
-
             if (navigator.onLine) {
                 const infoHeader = {};
                 const url = `/application`;
@@ -504,14 +502,14 @@ async function loadAboutAppPage(setting) {
                     Nyeste versjon: ${serverApplication.version.fullNumber}<br>
                     <button class="settingsButton pointer" onClick="updateApplication();">Oppdater</button>`;
                         sessionStorage.setItem("settings_notification_update", true);
-                        extraScroll = 10;
+                        scrollToSavedPos(setting, 10);
                     } else {
                         sessionStorage.removeItem("settings_notification_update");
                     }
                 }
             }
 
-            scrollToSavedPos(setting, extraScroll);
+            scrollToSavedPos(setting);
             saveNewScrollPos = true;
         }
     }
