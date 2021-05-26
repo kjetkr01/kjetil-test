@@ -240,21 +240,19 @@ async function displayBadges(aInfo) {
     badgesize = info.settings.badgesize || 0;
     badgedetails = info.settings.badgedetails || 0;
 
-    if (badgesize === 1) {
-        document.getElementById("Gbadges").style.minHeight = "200px";
-    } else {
-        document.getElementById("Gbadges").style.minHeight = "110px";
-    }
-
     if (updateBadgeColors === true) {
         badgeColors = new TbadgeColors(info.badgeColors);
     }
 
     if (updateGoals === true) {
-
         lifts = info.lifts;
         goals = info.goals;
         showGoalBadgeAnimations = true;
+        if (badgesize === 1) {
+            document.getElementById("Gbadges").style.minHeight = "200px";
+        } else {
+            document.getElementById("Gbadges").style.minHeight = "110px";
+        }
     }
 
     if (updateGoals === true) {
@@ -487,16 +485,16 @@ function displayGoals(checkIfCompleted) {
                                 if (selectedBadge.length > 0) {
 
                                     selectedBadge[0].innerHTML = `
-                                <svg id="placement" class="medals medalIconGold" draggable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
-                        <defs>
-                            </defs>
-                            <g id="Layer_2" data-name="Layer 2">
-                            <g id="Layer_1-2" data-name="Layer 1">
-                            <path class="medalIconGold"
-                            d="M28.33,17.38v-14H11.67V17.38a1.66,1.66,0,0,0,.81,1.44l7,4.18L17.8,26.9l-5.68.48,4.31,3.74-1.31,5.55,4.88-3,4.88,3-1.3-5.55,4.32-3.74-5.68-.48L20.57,23l7-4.18A1.66,1.66,0,0,0,28.33,17.38Zm-6.66,3-1.67,1-1.67-1V5h3.34Z" />
-                        </g>
-                    </g>
-                </svg>
+                                    <svg id="placement" class="medals medalIconGold" draggable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+                                    <defs>
+                                    </defs>
+                                    <g id="Layer_2" data-name="Layer 2">
+                                        <g id="Layer_1-2" data-name="Layer 1">
+                                            <path class="medalIconGold"
+                                                d="M28.33,17.38v-14H11.67V17.38a1.66,1.66,0,0,0,.81,1.44l7,4.18L17.8,26.9l-5.68.48,4.31,3.74-1.31,5.55,4.88-3,4.88,3-1.3-5.55,4.32-3.74-5.68-.48L20.57,23l7-4.18A1.66,1.66,0,0,0,28.33,17.38Zm-6.66,3-1.67,1-1.67-1V5h3.34Z" />
+                                        </g>
+                                    </g>
+                                </svg>
                                 `;
                                 }
                             } else {
@@ -511,7 +509,10 @@ function displayGoals(checkIfCompleted) {
 
                                 function setProgress(percent) {
 
-                                    progressCircle.style.strokeDashoffset = circumference - (percent / 100) * circumference;
+                                    const additionalSpace = (percent / 36);
+                                    console.log(additionalSpace);
+
+                                    progressCircle.style.strokeDashoffset = (circumference - (percent / 100) * circumference) + additionalSpace;
 
                                     if (percent >= 66) {
                                         progressCircle.classList += " p66";
@@ -541,6 +542,7 @@ function displayGoals(checkIfCompleted) {
             }
 
         } else {
+            document.getElementById("Gbadges").style.minHeight = "110px";
             smallTitle.textContent = "Du har ingen mål enda!";
         }
 

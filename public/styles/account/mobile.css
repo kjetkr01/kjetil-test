@@ -71,16 +71,14 @@ min-height: 50px;
 }
 
 #Ggym > #gym {
-min-height: 36px;
+margin-bottom: 8px;
 }
 
 #Ginfo > #info {
-min-height: 30px;
 margin-top: 10px;
 }
 
 #GmedalsInfo > #medalsInfo {
-min-height: 30px;
 margin-top: 12.5px;
 margin-right: 20px;
 float: right;

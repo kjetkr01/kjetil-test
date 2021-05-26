@@ -650,7 +650,11 @@ async function loadUsersListPage(setting) {
                 `;
                     }
 
-                    settingsGrid.innerHTML += getCenteredTextTemplate(usersTemplateHTML, "", "spacingTop");
+                    if (i === 0) {
+                        settingsGrid.innerHTML += getCenteredTextTemplate(usersTemplateHTML, "", "borderTop");
+                    } else {
+                        settingsGrid.innerHTML += getCenteredTextTemplate(usersTemplateHTML, "", "spacingTop");
+                    }
                 }
 
             }

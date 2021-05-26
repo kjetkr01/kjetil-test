@@ -144,9 +144,84 @@ function getEditLiftorGoalOverlay() {
 
 
    }
-
 }
 
+
+// editworkoutPlanOverlay
+function geteditworkoutPlanOverlay() {
+
+   if (document.getElementById("workoutPlans") === null) {
+
+
+      const html = `
+        
+      <div id="workoutPlans" class="workoutPlans">
+      <div id="Gtitle1workoutPlans">
+         <p id="title1workoutPlans">Treningsplan</p>
+      </div>
+      <div id="Gline1workoutPlans">
+         <hr id="line1workoutPlans">
+      </div>
+      <div id="Gtitle2workoutPlans">
+         <p id="title2workoutPlans">Dine planer</p>
+      </div>
+      <div id="Gline2workoutPlans">
+         <hr id="line2workoutPlans">
+      </div>
+      <div id="GlistworkoutPlans">
+         <select id="listworkoutPlans">
+         </select>
+      </div>
+      <div id="GviewplanworkoutPlans">
+      </div>
+      <div id="GeditplanworkoutPlans">
+      </div>
+      <div id="GcreateplanworkoutPlans">
+      </div>
+
+      <div id="Gtitle3workoutPlans">
+         <p id="title3workoutPlans">Abonnerte planer</p>
+      </div>
+      <div id="Gline3workoutPlans">
+         <hr id="line3workoutPlans">
+      </div>
+      <div id="GlistsubworkoutPlans">
+         <select id="listsubworkoutPlans">
+         </select>
+      </div>
+      <div id="GviewsubplanworkoutPlans">
+      </div>
+
+
+      <div id="Gtitle4workoutPlans">
+         <p id="title4workoutPlans">Aktiv plan</p>
+      </div>
+      <div id="Gline4workoutPlans">
+         <hr id="line4workoutPlans">
+      </div>
+      <div id="GtextworkoutPlans">
+         <p id="textworkoutPlans">
+         </p>
+      </div>
+      <div id="GsetNoneActivePlanworkoutPlans">
+      </div>
+      <div id="GrespworkoutPlans">
+         <p id="respworkoutPlans"></p>
+      </div>
+      <div id="GcancelworkoutPlans">
+         <button id="cancelworkoutPlans" class="pointer" onclick="disableOverlay('editDays');">Avbryt</button>
+      </div>
+      <div id="GsaveworkoutPlans">
+      </div>
+   </div>
+
+        `;
+
+      document.getElementById("editworkoutPlanOverlay").innerHTML = html;
+
+
+   }
+}
 
 // viewLiftorGoalOverlay
 function getViewLiftorGoalOverlay() {

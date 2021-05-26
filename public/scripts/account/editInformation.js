@@ -770,9 +770,7 @@ async function createNewTrainingsplit() {
 
         if (resp) {
             respMsg.textContent = "Oprettet ny treningsplan!";
-            //sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": resp, "edit": true, "day": "monday" }));
             setTimeout(() => {
-                //location.reload();
                 window.location.search = `?trainingsplit_id=${resp}&edit=true&day=monday`;
             }, 500);
         } else {
@@ -792,11 +790,9 @@ async function setActiveTrainingsplit() {
 
     const respMsg = document.getElementById("respworkoutPlans");
     const saveworkoutPlansBtn = document.getElementById("saveworkoutPlans");
-    //respMsg.textContent = "";
 
     if (navigator.onLine) {
 
-        //respMsg.textContent = "Setter treningsplanen som aktiv...";
         let trainingsplit_id = null;
         const trainingsplit_idOwnerList = document.getElementById("listworkoutPlans");
 
@@ -824,7 +820,6 @@ async function setActiveTrainingsplit() {
             const resp = await callServerAPIPost(infoHeader, url);
 
             if (resp === true) {
-                //respMsg.textContent = "Treningsplanen har blitt satt som aktiv treningsplan!";
                 saveworkoutPlansBtn.innerHTML = "Lagret!";
                 setTimeout(() => {
                     disableOverlay();
@@ -902,7 +897,6 @@ async function deleteTrainingsplit(aTrainingsplit_id) {
             sessionStorage.removeItem("trainingsplit");
             alert("Treningsplanen er nå slettet!");
             window.location.search = "";
-            //location.reload();
         } else {
             alert("Kunne ikke slette treningsplanen. Det har oppstått en feil!");
         }
@@ -935,8 +929,6 @@ async function editTrainingsplit() {
                 }
 
                 window.location.search = `?${vuser_id}trainingsplit_id=${trainingsplit_id}&edit=true&day=${day}`;
-                //sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": trainingsplit_id, "edit": true, "day": day }));
-                //location.reload();
             } else {
                 respMsg.textContent = `Vennligst velg en treningsplan fra "Dine planer" listen!`;
             }
@@ -984,7 +976,6 @@ async function saveTrainingsplit(aReload) {
 
                     for (let i = 0; i < keys.length; i++) {
 
-                        //const count = exerciseListCount[keys[i]];
                         const key = Object.keys(exerciseListCount[i]);
                         const count = exerciseListCount[i][key];
 
@@ -995,7 +986,6 @@ async function saveTrainingsplit(aReload) {
 
                         if (count > 0) {
 
-                            //const exercise = keys[i].toLowerCase();
                             const exercise = key[0].toLowerCase();
 
                             const keywords = [
@@ -1026,7 +1016,6 @@ async function saveTrainingsplit(aReload) {
                                 const enu = { "sets": 0, "reps": 0, "number": 0, "value": 0 };
 
                                 for (let k = 0; k < d.length; k++) {
-                                    //const dom = document.getElementById(`${keys[i]}-${j}-${d[k]}`);
                                     const dom = document.getElementById(`${key[0]}-${j}-${d[k]}`);
                                     if (dom) {
                                         let n = parseFloat(dom.value);

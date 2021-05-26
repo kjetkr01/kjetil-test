@@ -39,8 +39,6 @@ async function requestTrainingsplitDetails() {
 
     try {
 
-        //const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
-
         if (trainingsplit.id) {
 
             document.title = `Treningsplan`;
@@ -89,23 +87,20 @@ async function requestTrainingsplitDetails() {
             } else {
                 smallTitle.innerHTML = `Kunne ikke hente planen!`;
                 setTimeout(() => {
-                    //sessionStorage.removeItem("trainingsplit");
                     window.location.search = "";
                 }, 2000);
             }
         } else {
-            //sessionStorage.removeItem("trainingsplit");
             window.location.search = "";
         }
 
 
     } catch (err) {
         console.log(err);
-        //sessionStorage.removeItem("trainingsplit");
         window.location.search = "";
     }
 }
-//const exerciseListCount = {};
+
 const exerciseListCount = [];
 function loadEditTrainingsplit(aResp, aSelectedDay) {
 
@@ -161,7 +156,6 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
     }
 
     document.getElementById("smallTitle").innerHTML += top + daysList;
-    //<button class="trainingsplitButton pointer" style="color:red;" onClick="deleteTrainingsplit('${resp.trainingsplit_id}');">Slett</button>
     const toolBarHTML = `
     <button id="saveTrainingsplitBtn" class="trainingsplitButton pointer fadeIn animate" onClick="saveTrainingsplit();">Lagre</button>
     <button class="trainingsplitButton pointer fadeIn animate" onClick="deleteTrainingsplit('${resp.trainingsplit_id}');"><img src="images/trash.svg"></img></button>
@@ -204,8 +198,6 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
         const arr = selectedDay.list;
 
         if (arr.length >= maxTrainingsplitsExercisesPerDay) {
-            //const addNewExerciseDiv = document.getElementById("addNewExerciseDiv");
-            //addNewExerciseDiv.innerHTML = `Du bruker ${arr.length}/${maxTrainingsplitsExercisesPerDay} øvelser på denne dagen.`;
             document.getElementById("addNewExerciseDiv").innerHTML = "";
         }
 
@@ -216,10 +208,21 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
             const exerciseList = exerciseInfo[exerciseName];
 
             const trainingsplitTable = document.getElementById("trainingsplitTable");
-            //<button class="trainingsplitButton pointer" style="color:red;" onClick="deleteExercise('${exerciseName}');">Slett</button></h3>
 
-            let upBtnHTML = `<button class="trainingsplitButton pointer fadeIn animate" onClick="moveExerciseOrder(${i}, true);"><img src="images/arrow-up-trainingsplit.svg"></img></button>`;
-            let downBtnHTML = `<button class="trainingsplitButton pointer fadeIn animate" onClick="moveExerciseOrder(${i}, false);"><img src="images/arrow-down-trainingsplit.svg"></img></button>`;
+            const arrow_up_trainingsplit = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-arrow-up-square" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm8.5 9.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z" />
+            </svg>
+            `;
+
+            const arrow_down_trainingsplit = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-arrow-down-square" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm8.5 2.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z" />
+            </svg>
+            `;
+
+            let upBtnHTML = `<button class="trainingsplitButton pointer fadeIn animate" onClick="moveExerciseOrder(${i}, true);">${arrow_up_trainingsplit}</button>`;
+            let downBtnHTML = `<button class="trainingsplitButton pointer fadeIn animate" onClick="moveExerciseOrder(${i}, false);">${arrow_down_trainingsplit}</button>`;
 
             if (i === 0) {
                 upBtnHTML = "";
@@ -236,8 +239,6 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
             <button class="trainingsplitButton pointer fadeIn animate" onClick="deleteExercise('${exerciseName}');"><img src="images/trash.svg"></button>
             </input>
             <hr class="trainingsplitLine fadeInUp animate">`;
-
-            //exerciseListCount[exerciseName] = exerciseList.length;
 
             exerciseListCount.push({ [exerciseName]: exerciseList.length });
 
@@ -365,28 +366,42 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
             }
         }
 
-        //let subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id}, '${resp.trainingsplit_name}');">Abonner</button>`;
-        let subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id}, '${resp.trainingsplit_name}');"><img src="images/subscribe-trainingsplit.svg"></img></button>`;
+        const subscribe_trainingsplit = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-bookmark" viewBox="0 0 16 16">
+            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
+        </svg>
+        `;
+
+        const subscribed_trainingsplit = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
+            <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z" />
+        </svg>
+        `;
+
+        let subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id}, '${resp.trainingsplit_name}');">${subscribe_trainingsplit}</button>`;
 
         if (!navigator.onLine) {
-            //subscribeHTML = `<button disabled class="trainingsplitButton">Abonner</button>`;
-            subscribeHTML = `<button disabled class="trainingsplitButton"><img src="images/subscribe-trainingsplit.svg"></img></button>`;
+            subscribeHTML = `<button disabled class="trainingsplitButton">${subscribe_trainingsplit}</button>`;
         }
 
         if (isSubscribed === true) {
-            //subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id}, '${resp.trainingsplit_name}');">Abonnerer</button>`;
-            subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id}, '${resp.trainingsplit_name}');"><img src="images/subscribed-trainingsplit.svg"></img></button>`;
+            subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id}, '${resp.trainingsplit_name}');">${subscribed_trainingsplit}</button>`;
             if (!navigator.onLine) {
-                //subscribeHTML = `<button disabled class="trainingsplitButton">Abonnerer</button>`;
-                subscribeHTML = `<button disabled class="trainingsplitButton"><img src="images/subscribed-trainingsplit.svg"></img></button>`;
+                subscribeHTML = `<button disabled class="trainingsplitButton">${subscribed_trainingsplit}</button>`;
             }
         }
 
-        //let copyHTML = `<button class="trainingsplitButton pointer" onClick="copyTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id});">Kopier</button>`;
-        let copyHTML = `<button class="trainingsplitButton pointer" onClick="copyTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id});"><img src="images/copy-trainingsplit.svg"></img></button>`;
+        const copy_trainingsplit = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-clipboard-plus" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z" />
+            <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+            <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+        </svg>
+        `;
+
+        let copyHTML = `<button class="trainingsplitButton pointer" onClick="copyTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id});">${copy_trainingsplit}</button>`;
         if (!navigator.onLine) {
-            //copyHTML = `<button disabled class="trainingsplitButton">Kopier</button>`;
-            copyHTML = `<button disabled class="trainingsplitButton"><img src="images/copy-trainingsplit.svg"></img></button>`;
+            copyHTML = `<button disabled class="trainingsplitButton">${copy_trainingsplit}</button>`;
         }
 
         creatorTxt = `Av: ${resp.owner}<br>`;
@@ -588,8 +603,6 @@ function viewTrainingsplit(aId, aDay) {
             }
         }
 
-        //sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": aId, "edit": false, "day": day }));
-
         const viewinguser_id = urlParamsT.get("user_id");
         let vuser_id = "";
 
@@ -598,8 +611,6 @@ function viewTrainingsplit(aId, aDay) {
         }
 
         window.location.search = `?${vuser_id}trainingsplit_id=${aId}&edit=false&day=${day}`;
-
-        //location.reload();
     }
 }
 
@@ -609,8 +620,6 @@ async function changeTrainingsplitDay() {
 
     if (trainingsplitSelectDay) {
 
-        //const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
-
         if (trainingsplit.edit === "true") {
             await saveTrainingsplit(false);
         }
@@ -619,16 +628,10 @@ async function changeTrainingsplitDay() {
         urlParamsT.set("day", trainingsplitSelectDay.value);
 
         window.location.search = urlParamsT.toString();
-
-        //sessionStorage.setItem("trainingsplit", JSON.stringify(trainingsplit));
-
-        //location.reload();
     }
 }
 
 async function addExercise() {
-
-    //const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
 
     if (trainingsplit) {
 
@@ -675,8 +678,6 @@ async function addExercise() {
 }
 
 async function deleteExercise(aExercise) {
-
-    //const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
 
     if (trainingsplit) {
 
@@ -726,8 +727,6 @@ async function deleteExercise(aExercise) {
 
 async function deleteRowExercise(aExercise, aIndex) {
 
-    //const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
-
     if (trainingsplit) {
 
         const exercise = aExercise;
@@ -769,8 +768,6 @@ async function deleteRowExercise(aExercise, aIndex) {
 }
 
 async function addRowExercise(aExercise) {
-
-    //const trainingsplit = JSON.parse(sessionStorage.getItem("trainingsplit"));
 
     if (trainingsplit) {
 
@@ -879,7 +876,6 @@ async function copyTrainingsplit(aTrainingsplit_id, aOwner_id) {
                     const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
                     const dayNum = new Date().getDay();
                     const day = days[dayNum];
-                    //sessionStorage.setItem("trainingsplit", JSON.stringify({ "id": data.newtrainingsplit_id, "edit": true, "day": day }));
                     window.location.href = `account.html?trainingsplit_id=${data.newtrainingsplit_id}&edit=true&day=${day}`;
                 }
             } else {
@@ -931,7 +927,6 @@ async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTraining
             const data = await resp.json();
 
             if (data.status === true) {
-                //const cachedSubscribedTrainingsplits_owner = JSON.parse(sessionStorage.getItem("cachedSubscribedTrainingsplits_owner"));
                 if (cachedSubscribedTrainingsplits_owner) {
                     const cachedSubscribedTrainingsplits_ownerKeys = Object.keys(cachedSubscribedTrainingsplits_owner);
                     const tIDString = trainingsplit_id.toString();

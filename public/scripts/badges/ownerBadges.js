@@ -48,6 +48,7 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
         //console.log(userBadgeInfo);
 
         let untilGoal = userBadgeInfo.msg;
+
         let currentProgressionPercent = `${userBadgeInfo.progressionPercent}%`;
 
         if (badgedetails === 1) {
@@ -56,30 +57,64 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
             untilGoal = "";
         }
 
-
-
         let progressionTxt = "";
 
-        if (userBadgeInfo.progressionPercent >= 100) {
-            untilGoal = "";
-            progressionTxt = "Målet er nådd!"
-        } else if (userBadgeInfo.progressionPercent >= 75) {
-            progressionTxt = "Nærmer deg!";
-        } else if (userBadgeInfo.progressionPercent >= 60) {
-            progressionTxt = "Godt igang!";
-        } else if (userBadgeInfo.progressionPercent > 50) {
-            progressionTxt = "Kommer seg!";
-        } else if (userBadgeInfo.progressionPercent === 50) {
-            progressionTxt = "Halvveis!";
-        } else if (userBadgeInfo.progressionPercent >= 40) {
-            progressionTxt = "Snart halvveis!";
-        } else if (userBadgeInfo.progressionPercent === 25) {
-            progressionTxt = "1/4";
-        } else {
-            progressionTxt = "En begynnelse";
+        const progress = userBadgeInfo.progressionPercent;
+
+        const progressTxtList = {
+            100: "Målet er nådd!",
+            99: "1% igjen!",
+            96: "Så nærme!",
+            90: "Snart i mål!",
+            80: "Veldig bra!",
+            76: "Nærmer deg mål!",
+            75: "3/4",
+            69: "Nice!",
+            65: "Snart 3/4!",
+            51: "God progresjon!",
+            50: "Halvveis!",
+            40: "Snart halvveis!",
+            30: "Bra fremgang!",
+            25: "1/4",
+            15: "Snart 1/4",
+            12: "Kommer seg",
+            7: "God start",
+            1: "99% igjen!",
+            0: "En begynnelse",
         }
 
+        const exact = [1, 25, 69, 75, 99]; // for special numbers :)
 
+        const progressionTxtKeys = Object.keys(progressTxtList);
+
+        if (progress >= 100) {
+            untilGoal = "";
+        }
+
+        for (let i = 0; i < progressionTxtKeys.length; i++) {
+            const current = parseFloat(progressionTxtKeys[i]);
+            const currentTxt = progressTxtList[current];
+            let checkExact = false;
+
+            for (let j = 0; j < exact.length; j++) {
+                const currExact = exact[j];
+                if (currExact === current) {
+                    checkExact = true;
+                    break;
+                }
+            }
+
+            if (checkExact === true) {
+                if (progress === current) {
+                    progressionTxt = currentTxt;
+                }
+            } else {
+                if (progress >= current) {
+                    progressionTxt = currentTxt;
+                }
+            }
+
+        }
 
         const badgeTemplate = `
 <td>

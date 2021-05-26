@@ -726,6 +726,8 @@ function displayGoals(hasGoalsLeft, checkIfCompleted) {
                             const medalsCountTxt = document.getElementById("medalsCountTxt");
                             if (medalsCountTxt) {
                                 medalsCountTxt.innerHTML = `${resp.totalMedals} x`;
+                            } else {
+                                location.reload();
                             }
                         }
                     }
