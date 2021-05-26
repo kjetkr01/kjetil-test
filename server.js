@@ -212,9 +212,14 @@ server.post("/users/list/all", auth, async (req, res) => {
 
                if (listOfUsers.status === true) {
 
-                    const respWithUsers = {
-                         "allUsers": listOfUsers.allUsers,
-                         "allAPIUsers": listOfUsers.allAPIUsers
+                    const respWithUsers = {}
+
+                    if(listOfUsers.allUsers !== null){
+                         respWithUsers.allUsers = listOfUsers.allUsers;
+                    }
+
+                    if(listOfUsers.allAPIUsers !== null){
+                         respWithUsers.allAPIUsers = listOfUsers.allAPIUsers;
                     }
 
                     res.status(200).json(respWithUsers).end();

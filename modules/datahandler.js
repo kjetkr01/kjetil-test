@@ -144,7 +144,14 @@ class StorageHandler {
                 allUsers = allUsers.rows;
                 results = true;
             } else {
-                results = false;
+                allUsers = await client.query(`
+                SELECT users.id, users.username, users.displayname
+                FROM users, user_settings
+                WHERE users.id = user_settings.user_id
+                AND user_settings.publicprofile = true`);
+
+                allUsers = allUsers.rows;
+                results = true;
             }
 
             client.end();

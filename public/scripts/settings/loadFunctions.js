@@ -122,9 +122,10 @@ async function loadDefaultPage(setting) {
     if (userInfo.hasOwnProperty("isadmin")) {
         if (userInfo.isadmin === true) {
             settingsGrid.innerHTML += getPendingRequestsTemplate();
-            settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.users.name, "usersDiv");
         }
     }
+
+    settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.users.name, "usersDiv");
 
     if (userInfo.hasOwnProperty("apikey")) {
         if (userInfo.apikey) {
@@ -506,7 +507,11 @@ async function loadAboutAppPage(setting) {
                     } else {
                         sessionStorage.removeItem("settings_notification_update");
                     }
+                } else {
+                    sessionStorage.removeItem("settings_notification_update");
                 }
+            } else {
+                sessionStorage.removeItem("settings_notification_update");
             }
 
             scrollToSavedPos(setting);
@@ -523,34 +528,36 @@ async function loadUsersListPage(setting) {
 
         const resp = await callServerAPIPost(infoHeader, url);
 
-        if (resp.hasOwnProperty("allUsers") && resp.hasOwnProperty("allAPIUsers") && sessionStorage.getItem("currentSetting") === ELoadSettings.users.name) {
+        if (resp.hasOwnProperty("allUsers")) {
 
-            let totalUsers = 0;
-            const allAPIUsersArr = [];
+            if (resp.hasOwnProperty("allUsers") && resp.hasOwnProperty("allAPIUsers") && sessionStorage.getItem("currentSetting") === ELoadSettings.users.name) {
 
-            for (let i = 0; i < resp.allAPIUsers.length; i++) {
-                allAPIUsersArr.push(parseInt(resp.allAPIUsers[i].user_id));
-            }
+                let totalUsers = 0;
+                const allAPIUsersArr = [];
 
-            let totalAPIUsers = allAPIUsersArr.length;
-            if (resp.allUsers[0].hasOwnProperty("id")) {
-                totalUsers = resp.allUsers.length
-            }
+                for (let i = 0; i < resp.allAPIUsers.length; i++) {
+                    allAPIUsersArr.push(parseInt(resp.allAPIUsers[i].user_id));
+                }
 
-            let usersText = `${application.name} har ${totalUsers} brukere<br>${totalAPIUsers} av brukerene har API tilgang<br>Admins kan besøke profilen uavhengig om den er privat eller ikke<br>Her er listen med brukere`;
-            if (totalUsers === 0) {
-                usersText = `Det er ingen brukere`;
-            }
+                let totalAPIUsers = allAPIUsersArr.length;
+                if (resp.allUsers[0].hasOwnProperty("id")) {
+                    totalUsers = resp.allUsers.length
+                }
 
-            settingsGrid.innerHTML = justTextTemplate(usersText, "left");
+                let usersText = `${application.name} har ${totalUsers} brukere<br>${totalAPIUsers} av brukerene har API tilgang<br>Admins kan besøke profilen uavhengig om den er privat eller ikke<br>Her er listen med brukere`;
+                if (totalUsers === 0) {
+                    usersText = `Det er ingen brukere`;
+                }
 
-            if (resp.allUsers[0].hasOwnProperty("id")) {
+                settingsGrid.innerHTML = justTextTemplate(usersText, "left");
 
-                resp.allUsers.sort(function (a, b) { return a.id - b.id });
+                if (resp.allUsers[0].hasOwnProperty("id")) {
 
-                const usersKeys = Object.keys(resp.allUsers);
+                    resp.allUsers.sort(function (a, b) { return a.id - b.id });
 
-                const defaultHTML = `
+                    const usersKeys = Object.keys(resp.allUsers);
+
+                    const defaultHTML = `
                 <p class="settingsPendingUserFullName">Visningsnavn</p>
                 <p class="settingsPendingUsername">Brukernavn</p>
                 <p class="settingsPendingUsername">ID</p>
@@ -558,50 +565,94 @@ async function loadUsersListPage(setting) {
                 <p class="settingsPendingUsername">API tilgang</p>
                 `;
 
-                settingsGrid.innerHTML += getCenteredTextTemplate(defaultHTML, "", "borderTop");
+                    settingsGrid.innerHTML += getCenteredTextTemplate(defaultHTML, "", "borderTop");
 
-                for (let i = 0; i < usersKeys.length; i++) {
+                    for (let i = 0; i < usersKeys.length; i++) {
 
-                    const currentUser = resp.allUsers[usersKeys[i]];
-                    let myAccountColor = "";
-                    let profileStatus = `<p class="settingsPendingUsername" style="color:red;">Privat</p>`;
+                        const currentUser = resp.allUsers[usersKeys[i]];
+                        let myAccountColor = "";
+                        let profileStatus = `<p class="settingsPendingUsername" style="color:red;">Privat</p>`;
 
-                    let hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsAcceptPendingUser pointer" onClick="giveAPIAccess('${currentUser.username}','${currentUser.id}');">Gi API tilgang</button>`;
+                        let hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsAcceptPendingUser pointer" onClick="giveAPIAccess('${currentUser.username}','${currentUser.id}');">Gi API tilgang</button>`;
 
-                    if (allAPIUsersArr.includes(currentUser.id)) {
-                        hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsDeclinePendingUser pointer" onClick="removeAPIAccess('${currentUser.username}','${currentUser.id}');">Fjern API tilgang</button>`;
-                    }
+                        if (allAPIUsersArr.includes(currentUser.id)) {
+                            hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsDeclinePendingUser pointer" onClick="removeAPIAccess('${currentUser.username}','${currentUser.id}');">Fjern API tilgang</button>`;
+                        }
 
-                    if (currentUser.publicprofile === true) {
-                        profileStatus = `<p class="settingsPendingUsername" style="color:green;">Offentlig</p>`;
-                    }
+                        if (currentUser.publicprofile === true) {
+                            profileStatus = `<p class="settingsPendingUsername" style="color:green;">Offentlig</p>`;
+                        }
 
-                    if (currentUser.username === username) {
-                        myAccountColor = "settingsHightlightUser";
-                    }
+                        if (currentUser.username === username) {
+                            myAccountColor = "settingsHightlightUser";
+                        }
 
-                    let usersTemplateHTML = `
+                        let usersTemplateHTML = `
                    <p class="settingsPendingUserFullName ${myAccountColor}">${currentUser.displayname}</p>
                    <p class="settingsPendingUsername ${myAccountColor}">${currentUser.username}</p>
                    <p class="settingsPendingUsername">ID: ${currentUser.id}</p>
                    `;
 
-                    if (currentUser.username !== username) {
-                        usersTemplateHTML += `
+                        if (currentUser.username !== username) {
+                            usersTemplateHTML += `
                     ${profileStatus}
                     <p class="settingsPendingUsername">${hasAPIAccessTxt}</p>
                    <br>
                    <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Se profil</button>
                     `;
-                    } else {
-                        usersTemplateHTML += `
+                        } else {
+                            usersTemplateHTML += `
                    <br>
                    <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Din bruker</button>
                     `;
+                        }
+
+                        settingsGrid.innerHTML += getCenteredTextTemplate(usersTemplateHTML, "", "spacingTop");
+                    }
+                }
+            } else {
+
+                resp.allUsers.sort(function (a, b) { return a.id - b.id });
+
+                const usersKeys = Object.keys(resp.allUsers);
+
+                let totalUsers = usersKeys.length;
+
+                let usersText = `${application.name} har ${totalUsers} offentlige brukere<br>Her er listen med brukere`;
+                if (totalUsers === 0) {
+                    usersText = `Det er ingen brukere`;
+                }
+
+                settingsGrid.innerHTML = justTextTemplate(usersText, "left");
+
+                for (let i = 0; i < usersKeys.length; i++) {
+
+                    const currentUser = resp.allUsers[usersKeys[i]];
+
+                    let myAccountColor = "";
+                    if (currentUser.username === username) {
+                        myAccountColor = "settingsHightlightUser";
+                    }
+
+                    let usersTemplateHTML = `
+               <p class="settingsPendingUserFullName ${myAccountColor}">${currentUser.displayname}</p>
+               <p class="settingsPendingUsername ${myAccountColor}">${currentUser.username}</p>
+               <br>
+               `;
+
+                    if (currentUser.username !== username) {
+                        usersTemplateHTML += `
+               <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Se profil</button>
+                `;
+                    } else {
+                        usersTemplateHTML += `
+               <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Din bruker</button>
+                `;
                     }
 
                     settingsGrid.innerHTML += getCenteredTextTemplate(usersTemplateHTML, "", "spacingTop");
                 }
+
             }
         }
 

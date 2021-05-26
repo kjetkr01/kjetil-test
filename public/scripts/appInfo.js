@@ -38,7 +38,7 @@ const ongoingUpdatesArr = [
     "Optimalisering",
     "Endring i hvordan animasjoner/lasting av data funker (85%)",
     "Lagre løft, mål og reps filter i database",
-    "Offline queries (100%?)"
+    "Service Worker ignorerer search queries (100%)"
 ];
 
 //
