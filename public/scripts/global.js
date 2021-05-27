@@ -10,8 +10,6 @@ let badgesize = null;
 let badgedetails = null;
 let lockedBody = false;
 
-const repsSM = 10; // 1 rep * 10 (repsSM) = 10 points. 1 kg = 1 point
-
 const errorText = "Det har oppstått en feil!";
 const loadingText = "Laster...";
 const errorLoadingText = "Kunne ikke laste inn innholdet.";
@@ -304,8 +302,16 @@ async function getAccountDetails(aUserID) {
                     }
 
                     if (resp.info.hasOwnProperty("settings")) {
-                        if (resp.info.settings.hasOwnProperty("subscribedtrainingsplits")) {
-                            sessionStorage.setItem("cachedSubscribedTrainingsplits_owner", JSON.stringify(resp.info.settings.subscribedtrainingsplits));
+                        const s = resp.info.settings;
+                        if (s.hasOwnProperty("subscribedtrainingsplits")) {
+                            sessionStorage.setItem("cachedSubscribedTrainingsplits_owner", JSON.stringify(s.subscribedtrainingsplits));
+                        }
+                        if (s.hasOwnProperty("leaderboards_filter_reps")) {
+                            if (s.leaderboards_filter_reps) {
+                                localStorage.setItem("leaderboards_filter_reps", s.leaderboards_filter_reps);
+                            } else {
+                                localStorage.removeItem("leaderboards_filter_reps");
+                            }
                         }
                     }
 

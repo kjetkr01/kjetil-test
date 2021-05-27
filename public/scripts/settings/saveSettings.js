@@ -10,13 +10,15 @@ async function updatePassword() {
 
             if (newPsw === repeatNewPsw) {
 
-                const body = { "authToken": token, "userInfo": user, "authorization": "Basic " + window.btoa(`${exsistingPsw}:${newPsw}`) };
+                const body = { "authorization": "Basic " + window.btoa(`${exsistingPsw}:${newPsw}`) };
                 const url = `/user/update/password`;
 
                 const config = {
                     method: "POST",
                     headers: {
-                        "content-type": "application/json"
+                        "content-type": "application/json",
+                        "authtoken": token,
+                        "userinfo": user
                     },
                     body: JSON.stringify(body)
                 }

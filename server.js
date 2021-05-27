@@ -214,11 +214,11 @@ server.post("/users/list/all", auth, async (req, res) => {
 
                     const respWithUsers = {}
 
-                    if(listOfUsers.allUsers !== null){
+                    if (listOfUsers.allUsers !== null) {
                          respWithUsers.allUsers = listOfUsers.allUsers;
                     }
 
-                    if(listOfUsers.allAPIUsers !== null){
+                    if (listOfUsers.allAPIUsers !== null) {
                          respWithUsers.allAPIUsers = listOfUsers.allAPIUsers;
                     }
 
@@ -525,9 +525,10 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
                "badgesize": ["0", "1"],
                "badgedetails": ["0", "1", "2"],
                "automaticupdates": [true, false],
+               "leaderboards_filter_reps": ["bypass"],
           }
 
-          if (currentUser.username && EAllowedSettings[setting].includes(value)) {
+          if (EAllowedSettings[setting] && currentUser.username && EAllowedSettings[setting].includes(value) || EAllowedSettings[setting][0] === "bypass") {
 
                const resp = await updateUserSetting(currentUser.username, setting, value);
 

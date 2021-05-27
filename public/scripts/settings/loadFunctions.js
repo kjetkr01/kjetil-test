@@ -172,7 +172,7 @@ function loadPasswordPage() {
     settingsGrid.innerHTML += getCenteredTextTemplate("Gjenta ditt nye ønskede passord", "usernameDiv", "spacingTop");
     settingsGrid.innerHTML += getCenteredTextTemplate("<input class='settingsInput' id='repeatNewPsw' type='password' placeholder='Fyll inn'></input>");
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="updatePassword();">Oppdater passord</button>`, "", "spacingTop");
+    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton pointer' onClick="updatePassword();">Oppdater passord</button>`, "", "spacingTop");
 
     settingsGrid.innerHTML += getBottomSpacingTemplate();
 }
@@ -192,7 +192,7 @@ function loadAboutMePage() {
     settingsGrid.innerHTML += getTemplate("Høyde", "", `<input id="heightInp" style="text-align:right;" class='settingsInput' value='${height}' type="number" maxlength="7">cm</input>`, "spacingTop");
     settingsGrid.innerHTML += getTemplate("Vekt", "", `<input id="weightInp" style="text-align:right;" class='settingsInput' value='${weight}' type="number" maxlength="7">kg</input>`);
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(`<button id="updateAboutMeBtn" class='settingsButton' onClick="aboutMeResetValues();">Tilbakestill verdier</button>`, "", "spacingTop");
+    settingsGrid.innerHTML += getCenteredTextTemplate(`<button id="updateAboutMeBtn" class='settingsButton pointer' onClick="aboutMeResetValues();">Tilbakestill verdier</button>`, "", "spacingTop");
 
     const checkIfEdited = setInterval(() => {
 
@@ -264,7 +264,7 @@ function loadAppearancePage() {
     }
 
     const appearanceThemeHTML = `
-    <select ${disabled} id="appearanceThemeSelection">
+    <select ${disabled} id="appearanceThemeSelection" class="pointer">
        ${appearanceThemeOptionsHTML}
     </select>
     `;
@@ -285,7 +285,7 @@ function loadAppearancePage() {
     }
 
     const themeColorSelectionHTML = `
-    <select ${disabled} id="themeColorSelection">
+    <select ${disabled} id="themeColorSelection" class="pointer">
     ${themeColorOptionsHTML}
     </select>
     `;
@@ -336,7 +336,7 @@ function loadProgressionInfoPage() {
     }
 
     const badeSizeHTML = `
-    <select ${disabled} id="badgeSizeSelection">
+    <select ${disabled} id="badgeSizeSelection" class="pointer">
        ${badeSizeOptionsHTML}
     </select>
     `;
@@ -372,7 +372,7 @@ function loadProgressionInfoPage() {
     }
 
     const badgeDetailsHTML = `
-    <select ${disabledTxt} ${disabled} id="badgeDetailsSelection">
+    <select ${disabledTxt} ${disabled} id="badgeDetailsSelection" class="pointer">
        ${badgeDetailsOptionsHTML}
     </select>
     `;
@@ -843,7 +843,7 @@ async function loadDeleteMePage() {
     settingsGrid.innerHTML += getCenteredTextTemplate("Skriv inn ditt passordet ditt", "usernameDiv", "spacingTop");
     settingsGrid.innerHTML += getCenteredTextTemplate("<input class='settingsInput' id='passwordInpDeletion' type='password' placeholder='Fyll inn'></input>");
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' style='color:red;' onClick="deleteAccount()">Slett kontoen min</button>`, "", "spacingTop");
+    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton pointer' style='color:red;' onClick="deleteAccount()">Slett kontoen min</button>`, "", "spacingTop");
 
     settingsGrid.innerHTML += getBottomSpacingTemplate();
 

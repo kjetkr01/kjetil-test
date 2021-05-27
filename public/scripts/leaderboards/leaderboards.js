@@ -147,6 +147,7 @@ async function loadLeaderboards() {
                 getListOfLeaderboard();
             } else {
                 localStorage.removeItem("leaderboards_filter_reps");
+                await updateLeaderboardsFilterReps();
                 if (retryLoadOnce === true) {
                     loadLeaderboards();
                     retryLoadOnce = false;
@@ -336,7 +337,7 @@ function peopleLeaderboardsTxtHTML(aInput) {
 }
 
 
-function changeLeaderboardReps() {
+async function changeLeaderboardReps() {
 
     const reps = document.getElementById("leaderboardReps").value;
 
@@ -344,6 +345,23 @@ function changeLeaderboardReps() {
     sessionStorage.removeItem("cached_viewingLeaderboard");
     sessionStorage.removeItem("leaderboards_scrollX");
 
+    if (navigator.onLine) {
+        await updateLeaderboardsFilterReps(reps);
+    }
+
     location.reload();
 
+}
+
+async function updateLeaderboardsFilterReps(aValue) {
+    if (!aValue) {
+        aValue = null;
+    }
+    const value = aValue;
+    const setting = "leaderboards_filter_reps";
+
+    const infoHeader = { "updateSetting": setting, "value": value };
+    const url = `/user/update/settings/${setting}`;
+
+    await callServerAPIPost(infoHeader, url);
 }
