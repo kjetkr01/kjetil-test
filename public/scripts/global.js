@@ -10,6 +10,8 @@ let badgesize = null;
 let badgedetails = null;
 let lockedBody = false;
 
+const repsSM = 10; // 1 rep * 10 (repsSM) = 10 points. 1 kg = 1 point
+
 const errorText = "Det har oppstått en feil!";
 const loadingText = "Laster...";
 const errorLoadingText = "Kunne ikke laste inn innholdet.";
