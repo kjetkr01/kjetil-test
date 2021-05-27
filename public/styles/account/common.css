@@ -49,7 +49,8 @@ text-align: center;
 }
 
 #c1r2, #Gsettings, #GsmallTitle {
-border-top: 1px #75757585 solid;
+/*border-top: 1px #75757585 solid;*/
+border-top: var(--main-border);
 }
 
 

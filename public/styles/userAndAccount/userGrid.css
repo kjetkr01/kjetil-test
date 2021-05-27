@@ -105,6 +105,7 @@ margin-right: 20px;
 }
 
 #lineLifts, #lineGoals, #lineTrainingsplit {
+border: var(--main-lineBorder);
 opacity: 40%;
 margin-top: 10px;
 margin-bottom: 10px;

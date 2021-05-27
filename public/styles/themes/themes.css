@@ -6,6 +6,8 @@
 /* DEFAULT LIGHT VALUES */
 
 --default-light-lineBorder: 1px #757575 solid;
+--default-light-border: 1px #75757585 solid;
+--default-light-border2: 0.75px #92929285 solid;
 
 --default-light-backgroundColor2: #F0F0F0;
 --default-light-backgroundColor3: #ffffff;
@@ -24,6 +26,8 @@
 /* DEFAULT DARK VALUES */
 
 --default-dark-lineBorder: 1px #ffffff solid;
+--default-dark-border: 1px #75757585 solid;
+--default-dark-border2: 0.75px #92929285 solid;
 
 --default-dark-backgroundColor2: #2b2b2b;
 --default-dark-backgroundColor3: #252525; /* gammel farge: 353535 */
@@ -48,7 +52,7 @@
 --main-headerBackground:  #327a94;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
 --main-backgroundColor1: #3c93b3;
---main-backgroundColorRGBLowOpacity: rgba(60,147,179, 0.4);
+--main-backgroundColorRGBLowOpacity: #3c93b340;
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
 --main-accountOwnerColor: var(--main-backgroundColor1);
@@ -56,6 +60,8 @@
 
 
 --main-lineBorder: var(--default-light-lineBorder);
+--main-border: var(--default-light-border);
+--main-border2: var(--default-light-border2);
 
 --main-backgroundColor2: var(--default-light-backgroundColor2);
 --main-backgroundColor3: var(--default-light-backgroundColor3);
@@ -73,7 +79,7 @@
 --main-headerBackground:  #3247bb;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
 --main-backgroundColor1: #3a53e2;
---main-backgroundColorRGBLowOpacity: rgba(58,83,226, 0.4);
+--main-backgroundColorRGBLowOpacity: #3a53e240;
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
 --main-accountOwnerColor: var(--main-backgroundColor1);
@@ -81,6 +87,8 @@
 
 
 --main-lineBorder: var(--default-light-lineBorder);
+--main-border: var(--default-light-border);
+--main-border2: var(--default-light-border2);
 
 --main-backgroundColor2: var(--default-light-backgroundColor2);
 --main-backgroundColor3: var(--default-light-backgroundColor3);
@@ -95,10 +103,10 @@
 }
 
 .test_fullColorTheme-light {
---main-headerBackground:  #01a2ff;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-headerBackground:  #1b8ad4;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
---main-backgroundColor1: #1d8ac9;
---main-backgroundColorRGBLowOpacity: rgba(29,138,201, 0.4);
+--main-backgroundColor1: #01a2ff;
+--main-backgroundColorRGBLowOpacity: #01a2ff40;
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
 --main-accountOwnerColor: var(--main-backgroundColor1);
@@ -106,17 +114,19 @@
 
 
 --main-lineBorder: 1px #ffffff solid;
+--main-border: 1px #e6e6e685 solid;
+--main-border2: 0.75px #dfdfdf85 solid;
 
---main-backgroundColor2: #77a7c5;
---main-backgroundColor3: #78b8e0;
+--main-backgroundColor2: #72add1;
+--main-backgroundColor3: #86bfe2;
 
 --main-headerTextColor: white;
 --main-textColorLight: white;
---main-textColorDark: rgb(58, 58, 58);
+--main-textColorDark: black;
 --main-textColorBadges: white;
 
---main-iconsActiveColor: #222222;
---main-iconsDefaultColor: #868686;
+--main-iconsActiveColor: #000000;
+--main-iconsDefaultColor: #446c86;
 }
 
 /* END OF LIGHT THEME VALUES */
@@ -127,7 +137,7 @@
 --main-headerBackground:  #1c4553;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
 --main-backgroundColor1: #265f72;
---main-backgroundColorRGBLowOpacity: rgba(38,95,114, 0.4);
+--main-backgroundColorRGBLowOpacity: #265f7240;
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
 --main-accountOwnerColor: #30738b;
@@ -135,6 +145,8 @@
 
 
 --main-lineBorder: var(--default-dark-lineBorder);
+--main-border: var(--default-dark-border);
+--main-border2: var(--default-dark-border2);
 
 --main-backgroundColor2: var(--default-dark-backgroundColor2);
 --main-backgroundColor3: var(--default-dark-backgroundColor3);
@@ -152,7 +164,7 @@
 --main-headerBackground:  #202b6b;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
 --main-backgroundColor1: #293797;
---main-backgroundColorRGBLowOpacity: rgba(41,55,151, 0.4);
+--main-backgroundColorRGBLowOpacity: #29379740;
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
 --main-accountOwnerColor: #4154c0;
@@ -160,6 +172,8 @@
 
 
 --main-lineBorder: var(--default-dark-lineBorder);
+--main-border: var(--default-dark-border);
+--main-border2: var(--default-dark-border2);
 
 --main-backgroundColor2: var(--default-dark-backgroundColor2);
 --main-backgroundColor3: var(--default-dark-backgroundColor3);
@@ -171,5 +185,35 @@
 
 --main-iconsActiveColor: var(--default-dark-iconsActiveColor);
 --main-iconsDefaultColor: var(--default-dark-iconsDefaultColor);
+}
+
+
+
+
+.test_fullColorTheme-dark {
+--main-headerBackground:  #09314b;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
+--main-backgroundColor1: #0c3f61;
+--main-backgroundColorRGBLowOpacity: #0c3f6140;
+--main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
+
+--main-accountOwnerColor: var(--main-backgroundColor1);
+
+
+
+--main-lineBorder: 1px #ffffff solid;
+--main-border: 1px #e6e6e685 solid;
+--main-border2: 0.75px #dfdfdf85 solid;
+
+--main-backgroundColor2: #1e2830;
+--main-backgroundColor3: #161e24;
+
+--main-headerTextColor: white;
+--main-textColorLight: white;
+--main-textColorDark: white;
+--main-textColorBadges: white;
+
+--main-iconsActiveColor: #ffffff;
+--main-iconsDefaultColor: #747474;
 }
 /* END OF DARK THEME VALUES */

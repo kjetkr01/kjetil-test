@@ -40,7 +40,8 @@ text-align: center;
 }
 
 #c1r2, #c4r1 {
-border-top: 1px #75757585 solid;
+/*border-top: 1px #75757585 solid;*/
+border-top: var(--main-border);
 }
 
 .peopleWorkoutListWorkout {

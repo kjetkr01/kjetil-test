@@ -71,11 +71,13 @@ grid-area: cS4;
 }
 
 .borderT {
-border-top: 1px #75757585 solid;
+/*border-top: 1px #75757585 solid;*/
+border-top: var(--main-border);
 }
 
 .borderB {
-border-bottom: 1px #75757585 solid;
+/*border-bottom: 1px #75757585 solid;*/
+border-bottom: var(--main-border);
 }
 
 .spacingTop {

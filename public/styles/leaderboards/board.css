@@ -57,7 +57,9 @@ margin: auto;
 
 #Gweight>#weight{
 font-size: 14.5px;
-color: #939393;
+/*color: #939393;*/
+color: var(--main-textColorDark);
+opacity: 40%;
 }
 
 #username, #weight {
@@ -100,8 +102,8 @@ border: transparent;
 }
 
 .boardLine {
+border: var(--main-border2);
+opacity: 40%;
 margin-top: 14px;
 margin-bottom: 12px;
-
-opacity: 40%;
 }

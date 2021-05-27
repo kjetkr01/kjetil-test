@@ -25,7 +25,7 @@ const allowedThemes = {
 const themeColors = {
     "default": { "lightHex": "327a94", "darkHex": "1c4553" },
     "blue": { "lightHex": "3247bb", "darkHex": "202b6b" },
-    "test_full": { "lightHex": "01a2ff", "darkHex": "202b6b" }
+    "test_full": { "lightHex": "1b8ad4", "darkHex": "09314b" }
 }
 
 const badgeColorBorders = {
