@@ -360,6 +360,7 @@ async function displayLifts(hasLiftsLeft) {
                 if (showLifts.length === 0) {
                     sortBy = null;
                     localStorage.removeItem("display_lifts_owner");
+                    
                     if (navigator.onLine) {
                         const value = null;
                         const setting = "display_lifts_owner";
@@ -632,6 +633,9 @@ async function displayGoals(hasGoalsLeft, checkIfCompleted) {
                                     untilGoal = repsUntilGoal * repsSM;
                                     calcPercent(liftsList[goalKg], goalReps);
                                 }
+                            } else if (highestLiftKg.reps >= goalReps && highestLiftKg.kg >= goalKg) {
+                                msg = "Målet er nådd!";
+                                untilGoal = 0;
                             } else {
                                 msg = `${goalReps} reps igjen`;
                                 untilGoal = goalReps * repsSM;

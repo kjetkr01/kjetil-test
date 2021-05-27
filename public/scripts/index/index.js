@@ -401,6 +401,9 @@ async function displayGoals(checkIfCompleted) {
                                     untilGoal = repsUntilGoal * repsSM;
                                     calcPercent(liftsList[goalKg], goalReps);
                                 }
+                            } else if (highestLiftKg.reps >= goalReps && highestLiftKg.kg >= goalKg) {
+                                msg = "Målet er nådd!";
+                                untilGoal = 0;
                             } else {
                                 msg = `${goalReps} reps igjen`;
                                 untilGoal = goalReps * repsSM;

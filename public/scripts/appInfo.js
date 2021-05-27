@@ -35,7 +35,7 @@ const ongoingUpdatesArr = [
     "God formulering og ordbruk (33%)",
     "TITLE:Annet",
     "Optimalisering",
-    "Lagre løft, mål og reps filter i database",
+    "Synkronisere løft, mål og reps filter mellom flere enheter (90%)",
 ];
 
 //

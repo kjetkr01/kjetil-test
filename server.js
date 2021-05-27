@@ -514,7 +514,7 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
 
           const currentUser = JSON.parse(req.headers.userinfo);
           const setting = req.body.updateSetting;
-          const value = req.body.value;
+          let value = req.body.value;
 
           const EAllowedSettings = {
                "publicprofile": [true, false],
@@ -526,11 +526,22 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
                "badgedetails": ["0", "1", "2"],
                "automaticupdates": [true, false],
                "leaderboards_filter_reps": ["bypass"],
-               "display_lifts_owner": ["bypass"],
-               "display_goals_owner": ["bypass"],
+               "display_lifts_owner": ["bypass", "check-lifts"],
+               "display_goals_owner": ["bypass", "check-goals"],
           }
 
           if (EAllowedSettings[setting] && currentUser.username && EAllowedSettings[setting].includes(value) || EAllowedSettings[setting][0] === "bypass") {
+
+               if (EAllowedSettings[setting][1] === "check-lifts") {
+                    if (!allowedLifts.includes(value)) {
+                         value = null;
+                    }
+               }
+               else if (EAllowedSettings[setting][1] === "check-goals") {
+                    if (!allowedGoals.includes(value)) {
+                         value = null;
+                    }
+               }
 
                const resp = await updateUserSetting(currentUser.username, setting, value);
 

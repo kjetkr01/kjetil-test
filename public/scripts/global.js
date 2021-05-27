@@ -462,7 +462,7 @@ async function sortByLiftsOrGoalOwner(aDom, aType) {
                     await callServerAPIPost(infoHeader, url);
                 }
             }
-
+            
             displayLifts();
         }
 
