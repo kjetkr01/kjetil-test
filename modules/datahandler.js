@@ -966,17 +966,21 @@ class StorageHandler {
         try {
             await client.connect();
 
+            if (!value || value === "null") {
+                value = null;
+            }
+
             const user_id = await client.query(`
-                                SELECT id
-                                FROM users
-                                WHERE username = $1`,
+                SELECT id
+                FROM users
+                WHERE username = $1`,
                 [username]);
 
             await client.query(`
-                                UPDATE user_settings
-                                SET ${setting} = ${value}
-                                WHERE user_id = $1`,
-                [user_id.rows[0].id]);
+                UPDATE user_settings
+                SET ${setting} = $1
+                WHERE user_id = $2`,
+                [value, user_id.rows[0].id]);
 
             results = true;
 

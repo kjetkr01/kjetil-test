@@ -341,7 +341,7 @@ function displayInformation(respInfo) {
 
 /// ------------ start of displayLifts --------------- ///
 
-function displayLifts(hasLiftsLeft) {
+async function displayLifts(hasLiftsLeft) {
 
     try {
 
@@ -360,6 +360,15 @@ function displayLifts(hasLiftsLeft) {
                 if (showLifts.length === 0) {
                     sortBy = null;
                     localStorage.removeItem("display_lifts_owner");
+                    if (navigator.onLine) {
+                        const value = null;
+                        const setting = "display_lifts_owner";
+
+                        const infoHeader = { "updateSetting": setting, "value": value };
+                        const url = `/user/update/settings/${setting}`;
+
+                        await callServerAPIPost(infoHeader, url);
+                    }
                 }
 
             }
@@ -452,6 +461,13 @@ function displayLifts(hasLiftsLeft) {
                 }
             }
 
+            setTimeout(() => {
+                if (localStorage.getItem("display_lifts_owner") !== sortBy) {
+                    showLiftBadgeAnimations = true;
+                    displayLifts();
+                }
+            }, 1000);
+
         } else {
             document.getElementById("lifts").innerHTML = `Du har ingen løft enda!`;
         }
@@ -482,7 +498,7 @@ function displayLifts(hasLiftsLeft) {
 
 /// ------------ start of displayGoals --------------- ///
 
-function displayGoals(hasGoalsLeft, checkIfCompleted) {
+async function displayGoals(hasGoalsLeft, checkIfCompleted) {
 
     try {
 
@@ -507,6 +523,15 @@ function displayGoals(hasGoalsLeft, checkIfCompleted) {
                 if (showGoals.length === 0) {
                     sortBy = null;
                     localStorage.removeItem("display_goals_owner");
+                    if (navigator.onLine) {
+                        const value = null;
+                        const setting = "display_goals_owner";
+
+                        const infoHeader = { "updateSetting": setting, "value": value };
+                        const url = `/user/update/settings/${setting}`;
+
+                        await callServerAPIPost(infoHeader, url);
+                    }
                 }
             }
         }
@@ -733,6 +758,13 @@ function displayGoals(hasGoalsLeft, checkIfCompleted) {
                     }
                 }
             }
+
+            setTimeout(() => {
+                if (localStorage.getItem("display_goals_owner") !== sortBy) {
+                    showGoalBadgeAnimations = true;
+                    displayGoals();
+                }
+            }, 1000);
 
         } else {
             document.getElementById("goals").innerHTML = `Du har ingen mål enda!`;

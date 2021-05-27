@@ -263,7 +263,7 @@ async function displayBadges(aInfo) {
 
 }
 
-function displayGoals(checkIfCompleted) {
+async function displayGoals(checkIfCompleted) {
 
     try {
 
@@ -290,6 +290,15 @@ function displayGoals(checkIfCompleted) {
                 if (showGoals.length === 0) {
                     sortBy = null;
                     localStorage.removeItem("display_goals_owner");
+                    if (navigator.onLine) {
+                        const value = null;
+                        const setting = "display_goals_owner";
+
+                        const infoHeader = { "updateSetting": setting, "value": value };
+                        const url = `/user/update/settings/${setting}`;
+
+                        await callServerAPIPost(infoHeader, url);
+                    }
                 }
             }
         }
@@ -510,8 +519,6 @@ function displayGoals(checkIfCompleted) {
                                 function setProgress(percent) {
 
                                     const additionalSpace = (percent / 36);
-                                    console.log(additionalSpace);
-
                                     progressCircle.style.strokeDashoffset = (circumference - (percent / 100) * circumference) + additionalSpace;
 
                                     if (percent >= 66) {
@@ -540,6 +547,13 @@ function displayGoals(checkIfCompleted) {
                     }
                 }
             }
+
+            setTimeout(() => {
+                if (localStorage.getItem("display_goals_owner") !== sortBy) {
+                    showGoalBadgeAnimations = true;
+                    displayGoals();
+                }
+            }, 1000);
 
         } else {
             document.getElementById("Gbadges").style.minHeight = "110px";

@@ -315,6 +315,24 @@ async function getAccountDetails(aUserID) {
                                 localStorage.removeItem("leaderboards_filter_reps");
                             }
                         }
+                        if (s.hasOwnProperty("display_lifts_owner")) {
+                            if (s.display_lifts_owner) {
+                                if (localStorage.getItem("display_lifts_owner") !== s.display_lifts_owner) {
+                                    localStorage.setItem("display_lifts_owner", s.display_lifts_owner);
+                                }
+                            } else {
+                                localStorage.removeItem("display_lifts_owner");
+                            }
+                        }
+                        if (s.hasOwnProperty("display_goals_owner")) {
+                            if (s.display_goals_owner) {
+                                if (localStorage.getItem("display_goals_owner") !== s.display_goals_owner) {
+                                    localStorage.setItem("display_goals_owner", s.display_goals_owner);
+                                }
+                            } else {
+                                localStorage.removeItem("display_goals_owner");
+                            }
+                        }
                     }
 
                     const newColorTheme = allowedThemes[resp.updatedUserObject.preferredColorTheme].theme;
@@ -411,7 +429,7 @@ function capitalizeFirstLetter(string) {
 
 //
 
-function sortByLiftsOrGoalOwner(aDom, aType) {
+async function sortByLiftsOrGoalOwner(aDom, aType) {
 
     const dom = document.getElementById(aDom);
     const type = aType;
@@ -423,8 +441,26 @@ function sortByLiftsOrGoalOwner(aDom, aType) {
             sessionStorage.removeItem("badgeslifts_scroll_x");
             if (allowedExercises.includes(dom.value)) {
                 localStorage.setItem('display_lifts_owner', dom.value);
+                if (navigator.onLine) {
+                    const value = dom.value;
+                    const setting = "display_lifts_owner";
+
+                    const infoHeader = { "updateSetting": setting, "value": value };
+                    const url = `/user/update/settings/${setting}`;
+
+                    await callServerAPIPost(infoHeader, url);
+                }
             } else {
                 localStorage.removeItem('display_lifts_owner');
+                if (navigator.onLine) {
+                    const value = null;
+                    const setting = "display_lifts_owner";
+
+                    const infoHeader = { "updateSetting": setting, "value": value };
+                    const url = `/user/update/settings/${setting}`;
+
+                    await callServerAPIPost(infoHeader, url);
+                }
             }
 
             displayLifts();
@@ -435,8 +471,26 @@ function sortByLiftsOrGoalOwner(aDom, aType) {
             sessionStorage.removeItem("badgesgoals_scroll_x");
             if (allowedExercises.includes(dom.value)) {
                 localStorage.setItem('display_goals_owner', dom.value);
+                if (navigator.onLine) {
+                    const value = dom.value;
+                    const setting = "display_goals_owner";
+
+                    const infoHeader = { "updateSetting": setting, "value": value };
+                    const url = `/user/update/settings/${setting}`;
+
+                    await callServerAPIPost(infoHeader, url);
+                }
             } else {
                 localStorage.removeItem('display_goals_owner');
+                if (navigator.onLine) {
+                    const value = null;
+                    const setting = "display_goals_owner";
+
+                    const infoHeader = { "updateSetting": setting, "value": value };
+                    const url = `/user/update/settings/${setting}`;
+
+                    await callServerAPIPost(infoHeader, url);
+                }
             }
 
             displayGoals();
