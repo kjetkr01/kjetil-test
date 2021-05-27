@@ -45,7 +45,6 @@ const contentToCache = [
     '/styles/settings/desktop.css',
     '/styles/settings/mobile.css',
     '/styles/settings/settingsGrid.css',
-    '/styles/themes/globalThemeValues.css',
     '/styles/themes/themes.css',
     '/styles/user/common.css',
     '/styles/user/desktop.css',

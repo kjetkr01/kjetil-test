@@ -1,3 +1,47 @@
+:root {
+--main-font-Family-Verdana: Verdana, Geneva, Tahoma, sans-serif;
+--main-font-Family-Arial: Arial, Helvetica, sans-serif;
+
+
+/* DEFAULT LIGHT VALUES */
+
+--default-light-lineBorder: 1px #757575 solid;
+
+--default-light-backgroundColor2: #F0F0F0;
+--default-light-backgroundColor3: #ffffff;
+
+--default-light-headerTextColor: white;
+--default-light-textColorLight: white;
+--default-light-textColorDark: black;
+--default-light-textColorBadges: white;
+
+--default-light-iconsActiveColor: #231f20;
+--default-light-iconsDefaultColor: #8D8D8D;
+
+/* END OF DEFAULT LIGHT VALUES */
+
+
+/* DEFAULT DARK VALUES */
+
+--default-dark-lineBorder: 1px #ffffff solid;
+
+--default-dark-backgroundColor2: #2b2b2b;
+--default-dark-backgroundColor3: #252525; /* gammel farge: 353535 */
+
+--default-dark-headerTextColor: white;
+--default-dark-textColorLight: white;
+--default-dark-textColorDark: white;
+--default-dark-textColorBadges: white;
+
+--default-dark-iconsActiveColor: #e0e0e0;
+--default-dark-iconsDefaultColor: #808080;
+
+/* END OF DEFAULT DARK VALUES */
+}
+
+
+
+
 /* LIGHT THEME VALUES */
 
 .defaultColorTheme-light {
@@ -8,6 +52,21 @@
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
 --main-accountOwnerColor: var(--main-backgroundColor1);
+
+
+
+--main-lineBorder: var(--default-light-lineBorder);
+
+--main-backgroundColor2: var(--default-light-backgroundColor2);
+--main-backgroundColor3: var(--default-light-backgroundColor3);
+
+--main-headerTextColor: var(--default-light-headerTextColor);
+--main-textColorLight: var(--default-light-textColorLight);
+--main-textColorDark: var(--default-light-textColorDark);
+--main-textColorBadges: var(--default-light-textColorBadges);
+
+--main-iconsActiveColor: var(--default-light-iconsActiveColor);
+--main-iconsDefaultColor: var(--default-light-iconsDefaultColor);
 }
 
 .blueColorTheme-light {
@@ -18,20 +77,35 @@
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
 --main-accountOwnerColor: var(--main-backgroundColor1);
+
+
+
+--main-lineBorder: var(--default-light-lineBorder);
+
+--main-backgroundColor2: var(--default-light-backgroundColor2);
+--main-backgroundColor3: var(--default-light-backgroundColor3);
+
+--main-headerTextColor: var(--default-light-headerTextColor);
+--main-textColorLight: var(--default-light-textColorLight);
+--main-textColorDark: var(--default-light-textColorDark);
+--main-textColorBadges: var(--default-light-textColorBadges);
+
+--main-iconsActiveColor: var(--default-light-iconsActiveColor);
+--main-iconsDefaultColor: var(--default-light-iconsDefaultColor);
 }
 
-.testColorTheme-light {
-    --main-headerBackground:  #01a2ff;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
-    --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
-    --main-backgroundColor1: #1d8ac9;
-    --main-backgroundColorRGBLowOpacity: rgba(29,138,201, 0.4);
-    --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
-    
-    --main-accountOwnerColor: var(--main-backgroundColor1);
+.test_fullColorTheme-light {
+--main-headerBackground:  #01a2ff;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
+--main-backgroundColor1: #1d8ac9;
+--main-backgroundColorRGBLowOpacity: rgba(29,138,201, 0.4);
+--main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
+
+--main-accountOwnerColor: var(--main-backgroundColor1);
 
 
-    
-    --main-lineBorder: 1px #ffffff solid;
+
+--main-lineBorder: 1px #ffffff solid;
 
 --main-backgroundColor2: #77a7c5;
 --main-backgroundColor3: #78b8e0;
@@ -43,7 +117,7 @@
 
 --main-iconsActiveColor: #222222;
 --main-iconsDefaultColor: #868686;
-    }
+}
 
 /* END OF LIGHT THEME VALUES */
 
@@ -57,6 +131,21 @@
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
 --main-accountOwnerColor: #30738b;
+
+
+
+--main-lineBorder: var(--default-dark-lineBorder);
+
+--main-backgroundColor2: var(--default-dark-backgroundColor2);
+--main-backgroundColor3: var(--default-dark-backgroundColor3);
+
+--main-headerTextColor: var(--default-dark-headerTextColor);
+--main-textColorLight: var(--default-dark-textColorLight);
+--main-textColorDark: var(--default-dark-textColorDark);
+--main-textColorBadges: var(--default-dark-textColorBadges);
+
+--main-iconsActiveColor: var(--default-dark-iconsActiveColor);
+--main-iconsDefaultColor: var(--default-dark-iconsDefaultColor);
 }
 
 .blueColorTheme-dark {
@@ -67,5 +156,20 @@
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
 --main-accountOwnerColor: #4154c0;
+
+
+
+--main-lineBorder: var(--default-dark-lineBorder);
+
+--main-backgroundColor2: var(--default-dark-backgroundColor2);
+--main-backgroundColor3: var(--default-dark-backgroundColor3);
+
+--main-headerTextColor: var(--default-dark-headerTextColor);
+--main-textColorLight: var(--default-dark-textColorLight);
+--main-textColorDark: var(--default-dark-textColorDark);
+--main-textColorBadges: var(--default-dark-textColorBadges);
+
+--main-iconsActiveColor: var(--default-dark-iconsActiveColor);
+--main-iconsDefaultColor: var(--default-dark-iconsDefaultColor);
 }
 /* END OF DARK THEME VALUES */
