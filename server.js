@@ -771,8 +771,10 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
 
           const info = req.body.info;
           const currentUser = JSON.parse(req.headers.userinfo);
+          const maxKG = 300;
+          const maxReps = 100;
 
-          if (currentUser.id && info.exercise && info.kg && info.date && info.type === "lift" || info.type === "goal") {
+          if (currentUser.id && info.exercise && info.date && info.type === "lift" || info.type === "goal") {
 
                let isValid = false;
 
@@ -800,6 +802,18 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
                               isValid = true;
                          }
                     }
+               }
+
+               if (info.kg < 1) {
+                    info.kg = 1;
+               } else if (info.kg > maxKG) {
+                    info.kg = maxKG;
+               }
+
+               if (info.reps < 1) {
+                    info.reps = 1;
+               } else if (info.reps > maxReps) {
+                    info.reps = maxReps;
                }
 
                if (isValid === true) {

@@ -1,7 +1,5 @@
 function loadSetting(aSetting) {
 
-    
-
     if (settings) {
 
         let setting = aSetting || sessionStorage.getItem("currentSetting") || ELoadSettings.settings.name;
@@ -400,7 +398,7 @@ function loadMedalsCounterPage() {
 
         settingsGrid.innerHTML += justTextTemplate("Har det oppstått en feil og du for mange medaljer? Under kan du fjerne medaljer", "left");
 
-        settingsGrid.innerHTML += getCenteredTextTemplate(`<button id="removeOneMedalBtn" class='settingsButton pointer' onClick="removeMedal(${userInfo.medalscount}, '1');">Fjern 1 medalje</button>`, "", "spacingTop");
+        settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton pointer' onClick="removeMedal(${userInfo.medalscount}, '1');">Fjern 1 medalje</button>`, "", "spacingTop");
 
         const numbers = ["10", "25"];
 

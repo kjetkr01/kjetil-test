@@ -30,8 +30,8 @@ function getCreateNewLiftorGoalOverlay() {
             <hr id="line3C">
          </div>
          <div id="Ginp2C">
-            <input id="inp2C" class="inputLiftOrGoal" type="text"
-               onkeypress="return onlyAllowedKeys(event,'create','kg')" placeholder="Eks: 35.25"></input>
+            <input id="inp2C" class="inputLiftOrGoal" type="text" maxlength="6"
+               onkeypress="return onlyAllowedKeys(event,'kg')" placeholder="Eks: 51.25"></input>
          </div>
          <div id="Gtitle4C">
             <p id="title4C">Reps</p>
@@ -40,8 +40,8 @@ function getCreateNewLiftorGoalOverlay() {
             <hr id="line4C">
          </div>
          <div id="Ginp3C">
-            <input id="inp3C" class="inputLiftOrGoal" type="text"
-               onkeypress="return onlyAllowedKeys(event,'create','reps')" placeholder="Eks: 4"></input>
+            <input id="inp3C" class="inputLiftOrGoal" type="text" maxlength="3"
+               onkeypress="return onlyAllowedKeys(event,'reps')" placeholder="Eks: 3"></input>
          </div>
          <div id="Gtitle5C">
             <p id="title5C">Dato</p>
@@ -95,8 +95,8 @@ function getEditLiftorGoalOverlay() {
             <hr id="line2E">
          </div>
          <div id="Ginp1E">
-            <input id="inp1E" class="inputLiftOrGoal" type="text"
-               onkeypress="return onlyAllowedKeys(event,'edit', 'kg')" placeholder="Eks: 35.25"></input>
+            <input id="inp1E" class="inputLiftOrGoal" type="text" maxlength="6"
+               onkeypress="return onlyAllowedKeys(event, 'kg')" placeholder="Eks: 51.25"></input>
          </div>
          <div id="Gtitle3E">
             <p id="title3E">Reps</p>
@@ -105,8 +105,8 @@ function getEditLiftorGoalOverlay() {
             <hr id="line3E">
          </div>
          <div id="Ginp2E">
-            <input id="inp2E" class="inputLiftOrGoal" type="text"
-               onkeypress="return onlyAllowedKeys(event,'edit', 'reps')" placeholder="Eks: 4"></input>
+            <input id="inp2E" class="inputLiftOrGoal" type="text" maxlength="3"
+               onkeypress="return onlyAllowedKeys(event, 'reps')" placeholder="Eks: 3"></input>
          </div>
          <div id="Gtitle4E">
             <p id="title4E">Dato</p>

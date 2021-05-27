@@ -693,7 +693,7 @@ async function deleteExercise(aExercise) {
                 exerciseName = domName.value;
             }
 
-            const confirmDelete = confirm(`Er du sikker på at du vil slette ${exerciseName}?`);
+            const confirmDelete = confirm(`Er du sikker på at du vil slette øvelsen ${exerciseName}? Dette kan ikke angres!`);
 
             if (confirmDelete === true) {
 
@@ -734,7 +734,7 @@ async function deleteRowExercise(aExercise, aIndex) {
 
         if (exercise) {
 
-            const confirmDelete = confirm(`Er du sikker på at du vil slette rad nr ${index + 1} fra ${exercise}?`);
+            const confirmDelete = confirm(`Er du sikker på at du vil slette rad nr ${index + 1} fra øvelsen ${exercise}? Dette kan ikke angres!`);
 
             if (confirmDelete === true) {
 

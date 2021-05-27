@@ -56,7 +56,7 @@ margin: auto;
 }
 
 #Gweight>#weight{
-font-size: 14.5px;
+font-size: 14px;
 /*color: #939393;*/
 color: var(--main-textColorDark);
 opacity: 40%;
@@ -94,7 +94,7 @@ color: var(--main-accountOwnerColor);
 }
 
 .peopleLeaderboardsListName, .accountOwner {
-font-size: 15.5px;
+font-size: 15px;
 font-weight: bold;
 font-family: var(--main-font-Family-Verdana);
 background-color: transparent;

@@ -498,11 +498,10 @@ async function removeMedal(aMedalsCount, aCount) {
                     updateUserInfo();
                     loadSetting();
                 }
-
             }
         }
     } else {
-        alert("Det kreves internettforbindelse for å fjerne 1 medalje!");
+        alert("Det kreves internettforbindelse for å fjerne medaljer!");
     }
 }
 

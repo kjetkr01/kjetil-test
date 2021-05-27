@@ -87,6 +87,70 @@ function enableOverlayCreate(aType) {
     }
 }
 
+function checkIfEdited(aDetails) {
+
+    if (aDetails) {
+
+        let inp1Edited = false, inp2Edited = false, inp3Edited = false, inp4Edited = false;
+
+        const inp1 = document.getElementById("inp1E");
+        const inp2 = document.getElementById("inp2E");
+        const inp3 = document.getElementById("inp3E");
+        const inp4 = document.getElementById("inp4E");
+
+        inp1.addEventListener("input", function () {
+            if (inp1.value !== aDetails.kg.toString()) {
+                inp1Edited = true;
+            } else {
+                inp1Edited = false;
+            }
+            changeSaveBtn();
+        });
+
+        inp2.addEventListener("input", function () {
+            if (inp2.value !== aDetails.reps.toString()) {
+                inp2Edited = true;
+            } else {
+                inp2Edited = false;
+            }
+            changeSaveBtn();
+        });
+
+        inp3.addEventListener("change", function () {
+            if (inp3.value !== aDetails.date) {
+                inp3Edited = true;
+            } else {
+                inp3Edited = false;
+            }
+            changeSaveBtn();
+        });
+
+        inp4.addEventListener("change", function () {
+            if (inp4.value !== aDetails.color) {
+                inp4Edited = true;
+            } else {
+                inp4Edited = false;
+            }
+            changeSaveBtn();
+        });
+
+        function changeSaveBtn() {
+            const saveE = document.getElementById("saveE");
+
+            if (inp1Edited === true || inp2Edited === true || inp3Edited === true || inp4Edited === true) {
+                saveE.removeAttribute("disabled");
+                saveE.classList = "pointer";
+            } else {
+                saveE.setAttribute("disabled", "disabled");
+                saveE.classList = "";
+            }
+        }
+
+        console.log(aDetails);
+    }
+
+}
+
 
 function enableOverlayEdit(aType, aExercise, aId) {
 
@@ -157,6 +221,7 @@ function enableOverlayEdit(aType, aExercise, aId) {
             }
 
             if (lift) {
+                checkIfEdited(lift);
                 inp1.value = lift.kg;
                 inp2.value = lift.reps;
                 inp3.value = lift.date;
@@ -168,7 +233,7 @@ function enableOverlayEdit(aType, aExercise, aId) {
                         GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift', '${id}');"><img 
                         src="images/trash.svg"></img></button>`;
                     }
-                    Gsave.innerHTML = `<button id="saveE" class="pointer" onclick="saveLiftOrGoal('lift','edit', '${id}');">Lagre</button>`;
+                    Gsave.innerHTML = `<button id="saveE" disabled onclick="saveLiftOrGoal('lift','edit', '${id}');">Lagre</button>`;
                 } else {
                     if (showDeleteBtn === true) {
                         GdeleteE.innerHTML = `<button id="deleteE" disabled onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift', '${id}');">Slett løftet</button>`;
@@ -219,6 +284,7 @@ function enableOverlayEdit(aType, aExercise, aId) {
             }
 
             if (goal) {
+                checkIfEdited(goal);
                 inp1.value = goal.kg;
                 inp2.value = goal.reps;
                 inp3.value = goal.date;
@@ -229,7 +295,7 @@ function enableOverlayEdit(aType, aExercise, aId) {
                         GdeleteE.innerHTML = `<button id="deleteE" class="pointer" onclick="deleteLiftOrGoalConfirm('${exercise}', 'goal', '${id}');"><img 
                         src="images/trash.svg"></img></button>`;
                     }
-                    Gsave.innerHTML = `<button id="saveE" class="pointer" onclick="saveLiftOrGoal('goal','edit', '${id}');">Lagre</button>`;
+                    Gsave.innerHTML = `<button id="saveE" disabled onclick="saveLiftOrGoal('goal','edit', '${id}');">Lagre</button>`;
                 } else {
                     if (showDeleteBtn === true) {
                         GdeleteE.innerHTML = `<button id="deleteE" disabled onclick="deleteLiftOrGoalConfirm('${exercise}', 'goal', '${id}');">Slett målet</button>`;
@@ -393,27 +459,26 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aInp4, aType, aColor, aId) {
         if (aInp1 && aInp2 && aInp3 && aType) {
 
             const input1 = aInp1;
-            const input2 = aInp2;
+            const input2 = parseFloat(aInp2.replace(/,/, '.'));
             const input3 = parseInt(aInp3);
             const input4 = aInp4;
             const type = aType;
             const color = aColor;
             const id = aId;
 
-            const onlyNumbers = /^[0-9.]+$/;
-
-            const checkKG = input2.split(".");
-
-            if (input2.match(onlyNumbers) && (checkKG.length > 2) === false && parseInt(input2) > 0) {
-            } else {
+            if (isNaN(input2)) {
                 msg = "Antall KG er ugyldig! Eksempel: 120.25";
+                return { "isValid": isValid, "msg": msg };
+            } else if (input2 <= 0) {
+                msg = "Antall KG må være større enn 1!";
                 return { "isValid": isValid, "msg": msg };
             }
 
-            if (input3 > 0) {
-
-            } else {
+            if (isNaN(input3)) {
                 msg = "Reps er ugyldig! Eksempel: 4";
+                return { "isValid": isValid, "msg": msg };
+            } else if (input3 <= 0) {
+                msg = "Reps må være større enn 1!";
                 return { "isValid": isValid, "msg": msg };
             }
 
@@ -458,14 +523,14 @@ function deleteLiftOrGoalConfirm(aExercise, aType, aId) {
             const id = aId;
 
             if (type === "lift") {
-                const confirmation = confirm(`Er du sikkert på at du vil slette løftet ditt: "${exercise}" ?`);
+                const confirmation = confirm(`Er du sikkert på at du vil slette løftet ${capitalizeFirstLetter(exercise)}? Dette kan ikke angres!`);
                 if (confirmation === true) {
                     deleteLiftOrGoal(exercise, type, id);
                 }
             }
 
             if (type === "goal") {
-                const confirmation = confirm(`Er du sikkert på at du vil slette målet ditt: "${exercise}" ?`);
+                const confirmation = confirm(`Er du sikkert på at du vil slette målet ${capitalizeFirstLetter(exercise)}? Dette kan ikke angres!`);
                 if (confirmation === true) {
                     deleteLiftOrGoal(exercise, type, id);
                 }
@@ -531,58 +596,26 @@ async function deleteLiftOrGoal(aExercise, aType, aId) {
 }
 
 
-function onlyAllowedKeys(evt, editOrCreate, aType) {
+function onlyAllowedKeys(evt, aType) {
     const code = (evt.which) ? evt.which : evt.keyCode;
 
-    if (editOrCreate === "create" || editOrCreate === "edit") {
+    const type = aType;
 
-        const type = aType;
+    if (type === "kg") {
 
-        if (type === "kg") {
-
-            let inp2 = document.getElementById("inp2C").value;
-
-            if (editOrCreate === "edit") {
-                inp2 = document.getElementById("inp1E").value;
-            }
-
-            if (inp2.length <= 5) {
-
-                let length = 0;
-
-                if (inp2.match(/\./g)) {
-                    length = inp2.match(/\./g).length;
-                }
-
-                if (code >= 48 && code <= 57 || code === 46 && length === 0) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-
-        } else if (type === "reps") {
-
-            let inp3 = document.getElementById("inp3C").value;
-
-            if (editOrCreate === "edit") {
-                inp3 = document.getElementById("inp2E").value;
-            }
-
-            if (inp3 > 100) {
-
-                return false;
-
-            } else {
-                return true;
-            }
-
+        if (code >= 48 && code <= 57 || code === 46 || code === 44) {
+            return true;
+        } else {
+            return false;
         }
 
     } else {
-        return false;
+
+        if (code >= 48 && code <= 57) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
