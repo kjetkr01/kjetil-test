@@ -1,8 +1,6 @@
 function loadSetting(aSetting) {
 
-    if (localStorage.getItem("userSettings")) {
-        settings = JSON.parse(localStorage.getItem("userSettings"));
-    }
+    
 
     if (settings) {
 

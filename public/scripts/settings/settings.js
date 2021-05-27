@@ -49,9 +49,9 @@ const ELoadSettings = {
     }
 };
 
-async function updateUserInfo() {
+async function updateUserInfo(aSkipReqData) {
 
-    if (navigator.onLine) {
+    if (navigator.onLine && aSkipReqData !== true) {
         const resp = await getAccountDetails(userID);
         if (resp) {
 
@@ -69,6 +69,8 @@ async function updateUserInfo() {
                 medalscount: rInfo.info.medalscount,
             };
 
+            settings = resp.info.settings;
+
             localStorage.setItem("userSettings", JSON.stringify(resp.info.settings));
 
         }
@@ -79,7 +81,9 @@ async function updateUserInfo() {
         userInfo = cachedDetails_owner;
     }
 
-    //settings = resp.info.settings;
+    if (!settings && localStorage.getItem("userSettings")) {
+        settings = JSON.parse(localStorage.getItem("userSettings"));
+    }
 
     const currentSetting = sessionStorage.getItem("currentSetting") || ELoadSettings.settings;
 
