@@ -333,6 +333,9 @@ async function getAccountDetails(aUserID) {
                                 localStorage.removeItem("display_goals_owner");
                             }
                         }
+
+                        localStorage.setItem("userSettings", JSON.stringify(s));
+
                     }
 
                     const newColorTheme = allowedThemes[resp.updatedUserObject.preferredColorTheme].theme;
@@ -564,15 +567,6 @@ function getDaysSinceAndDate(aDate) {
 }
 
 //
-
-async function downloadSettings() {
-    if (navigator.onLine) {
-        const resp = await getAccountDetails(userID);
-        if (resp) {
-            localStorage.setItem("userSettings", JSON.stringify(resp.info.settings));
-        }
-    }
-}
 
 async function registerServiceWorker() {
     if ('serviceWorker' in navigator) {

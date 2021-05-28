@@ -38,7 +38,7 @@ grid-template-rows: /* nedover */
 
 auto /* title */
 
-auto /* Gname */
+10vh /* Gname */
 
 auto /* smallTitle */
 
@@ -87,7 +87,7 @@ min-height: 45px;
 }
 
 #Gname > #name {
-min-height: 85px;
+min-height: 75px;
 }
 
 #title, #name {
@@ -96,7 +96,7 @@ font-size: 34px;
 
 #GsmallTitle > #smallTitle {
 font-size: 22px;
-min-height: 45px;
+min-height: 37.5px;
 }
 
 #title, #name, #smallTitle, #badges, #today, #peopleWorkoutTxt {
@@ -183,7 +183,7 @@ grid-area: c5r1;
 #page > #GpeopleWorkoutList {
 grid-area: GpeopleWorkoutList;
 overflow-y: auto;
-min-height: 120px;
+min-height: 60px;
 }
 
 #page > #c6r1 {

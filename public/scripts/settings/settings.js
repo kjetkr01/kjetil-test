@@ -71,8 +71,6 @@ async function updateUserInfo(aSkipReqData) {
 
             settings = resp.info.settings;
 
-            localStorage.setItem("userSettings", JSON.stringify(resp.info.settings));
-
         }
     }
 
