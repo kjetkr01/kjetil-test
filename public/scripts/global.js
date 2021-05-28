@@ -196,7 +196,7 @@ async function validateToken() {
 
     const currentPage = window.location.pathname;
 
-    const blackListedPages = ["/access.html", "/login.html"];
+    const blackListedPages = ["/access.html", "/login.html", "/userlifts.html"];
 
     //blacklists login pages
     if (blackListedPages.includes(currentPage)) {
@@ -462,7 +462,7 @@ async function sortByLiftsOrGoalOwner(aDom, aType) {
                     await callServerAPIPost(infoHeader, url);
                 }
             }
-            
+
             displayLifts();
         }
 

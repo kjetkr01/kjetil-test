@@ -18,5 +18,15 @@ async function getTotalPBAPI(user, key) {
     }
 }
 
+async function getLiftsAPI(user, key) {
+    try {
+        const resp = await database.getLiftsAPI(user, key);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 module.exports.getWorkoutPlanAPI = getWorkoutPlanAPI;
 module.exports.getTotalPBAPI = getTotalPBAPI;
+module.exports.getLiftsAPI = getLiftsAPI;

@@ -85,6 +85,7 @@ const getAllUserInformation = require("./modules/get").getAllUserInformation;
 
 const getWorkoutPlanAPI = require("./modules/API").getWorkoutPlanAPI;
 const getTotalPBAPI = require("./modules/API").getTotalPBAPI;
+const getLiftsAPI = require("./modules/API").getLiftsAPI;
 
 /* */
 
@@ -1657,6 +1658,46 @@ server.get("/getTotalPB/:user/:key", async function (req, res) {
 
                } else {
                     res.status(403).json(APIErrorJSON.lift).end();
+               }
+
+          } else {
+               res.status(403).json(APIErrorJSON.access).end();
+          }
+     } catch (err) {
+          console.log(err);
+          res.status(403).json(APIErrorJSON.catch).end();
+     }
+})
+
+
+//
+
+
+
+// api
+
+server.get("/getLifts/user", async function (req, res) {
+     try {
+
+          const user = parseInt(req.headers.user);
+          const key = req.headers.key;
+
+          if (!isNaN(user) && key) {
+
+               const getLifts = await getLiftsAPI(user, key);
+
+               if (getLifts.status === true) {
+
+                    const resp = {
+                         "userDetails": getLifts.userDetails,
+                         "userLifts": getLifts.userLifts,
+                         "badgeColors": badgeColors
+                    }
+
+                    res.status(200).json(resp).end();
+
+               } else {
+                    res.status(403).json(getLifts.msg).end();
                }
 
           } else {

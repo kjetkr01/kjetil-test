@@ -2884,6 +2884,93 @@ AND users.id = user_lifts.user_id`, [user]);
 
     //
 
+
+    //  -------------------------------  getLiftsAPI  ------------------------------- //
+
+    async getLiftsAPI(user, key) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        let msg = "";
+        let userDetails = {};
+        let userLifts = {};
+
+        try {
+            await client.connect();
+
+            results = await client.query(`
+SELECT user_id
+FROM user_api
+WHERE apikey = $1
+AND apikey IS NOT null`,
+                [key]);
+
+            if (results.rows.length === 0) {
+
+                results = false;
+                msg = "API Key er feil!";
+
+            } else {
+
+                results = await client.query(`
+SELECT publicprofile
+FROM user_settings
+WHERE user_id = $1`,
+                    [user]);
+
+                if (results.rows.length === 0) {
+                    results = false;
+                    msg = "Brukeren finnes ikke!";
+                } else {
+                    const userHasPublicProfile = results.rows[0].publicprofile;
+
+                    if (userHasPublicProfile === true) {
+
+                        results = await client.query(`
+SELECT username, displayname
+FROM users
+WHERE id = $1`, [user]);
+
+                        if (results.rows.length !== 0) {
+
+                            userDetails = results.rows[0];
+
+                            results = await client.query(`
+SELECT *
+FROM user_lifts
+WHERE user_id = $1`, [user]);
+
+                            if (results.rows.length !== 0) {
+
+                                delete results.rows[0].user_id;
+                                userLifts = results.rows[0];
+
+                                results = true;
+
+                            }
+                        }
+                    } else {
+                        results = false;
+                        msg = "Brukeren har privat profil!";
+                    }
+                }
+            }
+
+            client.end();
+
+        } catch (err) {
+            results = false;
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+
+        return { "status": results, "msg": { "error": msg }, "userDetails": userDetails, "userLifts": userLifts };
+    }
+
+    //
+
     //
 }
 
