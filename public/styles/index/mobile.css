@@ -38,7 +38,7 @@ grid-template-rows: /* nedover */
 
 auto /* title */
 
-10vh /* Gname */
+12vh /* Gname */
 
 auto /* smallTitle */
 
@@ -46,7 +46,7 @@ auto /* smallTitle */
 
 auto /* Gbadges */
 
-2vh /* c3r1 */
+10px /* c3r1 */
 
 3vh /* c4r1 */
 
