@@ -20,10 +20,6 @@ module.exports.badgeColors = {
 //styles/badges/badgeColors.css for reference
 
 
-//allowedTrainingDays
-module.exports.allowedTrainingDays = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"];
-
-
 //maximum allowed lifts
 module.exports.maxLifts = {
     default: 25

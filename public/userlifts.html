@@ -153,11 +153,11 @@
       document.body.classList = `defaultColorTheme-light lightMode`;
    }
 
-   const user_id = localStorage.getItem("uid");
-   const apikey = localStorage.getItem("key");
+   const uid = localStorage.getItem("uid");
+   const key = localStorage.getItem("key");
 
 
-   if (!user_id || !apikey) {
+   if (!uid || !key) {
       loadInpPage();
    } else {
 
@@ -170,8 +170,8 @@
             method: "GET",
             headers: {
                "content-type": "application/json",
-               "user": user_id,
-               "key": apikey,
+               "uid": uid,
+               "key": key,
             }
          }
 

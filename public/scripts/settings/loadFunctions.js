@@ -774,10 +774,20 @@ async function loadAPIPage() {
                 settingsGrid.innerHTML += getTemplate("BrukerID", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.id}' readonly="readonly"></input>`);
 
                 for (let i = 0; i < data.length; i++) {
+                    let noteTxt = "";
+                    if (data[i].note) {
+                        if (data[i].note.length > 0) {
+                            noteTxt = `<br><br>Notis: ${data[i].note}`;
+                        }
+                    }
+
                     const text = `
                     URL: ${data[i].url}
                     <br><br>
                     Metode: ${data[i].method}
+                    <br><br>
+                    Headers: ${data[i].headers}
+                    ${noteTxt}
                     `;
 
                     settingsGrid.innerHTML += getAPITextTemplate(text, "", "spacingTop");
@@ -785,18 +795,31 @@ async function loadAPIPage() {
 
                 settingsGrid.innerHTML += getCenteredTextTemplate("Eksempel:", "", "spacingTop");
 
+                const exampleConfig = {
+                    method: "GET",
+                    headers: {
+                        "content-type": "application/json",
+                        "uid": userID,
+                        "key": userInfo.apikey
+                    }
+                }
+
                 const firstAPIExample = data[0].url.split("/");
                 let currentURL = window.location.href || "";
                 currentURL = currentURL.split("/");
                 currentURL = `${currentURL[0]}/${currentURL[2]}`;
-                const exampleAPIHTML = `/${firstAPIExample[1]}/${userID}/${userInfo.apikey}`;
-                const fullExampleAPIText = `${data[0].method} ${currentURL}${exampleAPIHTML}`;
+                const exampleAPIHTML = `${firstAPIExample[1]}`;
+                const fullExampleAPIText = `
+                ${data[0].method} ${currentURL}/${exampleAPIHTML}
+                <br><br>
+                Headers: ${JSON.stringify(exampleConfig.headers)}
+                `;
 
                 settingsGrid.innerHTML += getAPITextTemplate(fullExampleAPIText);
 
                 settingsGrid.innerHTML += getCenteredTextTemplate("Response:", "", "spacingTop");
 
-                const exampleAPIResponse = await fetch(exampleAPIHTML, config);
+                const exampleAPIResponse = await fetch(exampleAPIHTML, exampleConfig);
                 const exampleAPIData = await exampleAPIResponse.json();
                 const exampleAPIResult = JSON.stringify(exampleAPIData);
 

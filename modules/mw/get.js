@@ -1,4 +1,4 @@
-const database = require("./datahandler");
+const database = require("../datahandler");
 
 async function getListOfUsers(username) {
     try {
@@ -30,15 +30,6 @@ async function getListOfUsersLeaderboard(leaderboard, reps) {
 async function getListOfPendingUsers(username, onlyNumbers) {
     try {
         const resp = await database.getListOfPendingUsers(username, onlyNumbers);
-        return resp;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-async function getWorkoutSplit(username) {
-    try {
-        const resp = await database.getWorkoutSplit(username);
         return resp;
     } catch (error) {
         console.error(error);
@@ -87,7 +78,6 @@ module.exports.getListOfUsers = getListOfUsers;
 module.exports.getListOfLeaderboards = getListOfLeaderboards;
 module.exports.getListOfUsersLeaderboard = getListOfUsersLeaderboard;
 module.exports.getListOfPendingUsers = getListOfPendingUsers;
-module.exports.getWorkoutSplit = getWorkoutSplit;
 module.exports.getUserDetails = getUserDetails;
 module.exports.getUserSettingsAndInfo = getUserSettingsAndInfo;
 module.exports.getListOfAllUsersWorkoutToday = getListOfAllUsersWorkoutToday;

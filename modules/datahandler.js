@@ -1163,7 +1163,7 @@ class StorageHandler {
             for (let i = 0; i < completedGoalsListKeys.length; i++) {
                 const current = completedGoalsListKeys[i];
 
-                if (allowedLifts.includes(current) === true) {
+                if (allowedGoals.includes(current) === true) {
 
                     results = await client.query(`
                         SELECT ${current}

@@ -11,84 +11,85 @@ server.use(bodyParser.json({ limit: "5mb" }));
 
 // ----------------------------- Module Requirements ----------------------- //
 
-
-
-/* auth */
+/* auth.js */
 
 const auth = require("./modules/auth");
 
 /* */
 
 
-
-/* token */
+/* token.js */
 
 const createToken = require("./modules/token").createToken;
 
 /* */
 
+/* user.js */
 
+const user = require("./modules/mw/user");
+const validateUser = require("./modules/mw/user").validateUser;
+const acceptOrDenyUser = require("./modules/mw/user").acceptOrDenyUser;
+const deleteAccount = require("./modules/mw/user").deleteAccount;
+const giveUserAPIAccess = require("./modules/mw/user").giveUserAPIAccess;
+const removeUserAPIAccess = require("./modules/mw/user").removeUserAPIAccess;
+const decreaseMedalCount = require("./modules/mw/user").decreaseMedalCount;
 
-/* user */
+const updateUserSetting = require("./modules/mw/user").updateUserSetting;
+const updateDisplayname = require("./modules/mw/user").updateDisplayname;
+const updateUsername = require("./modules/mw/user").updateUsername;
+const updatePassword = require("./modules/mw/user").updatePassword;
+const updateAboutMe = require("./modules/mw/user").updateAboutMe;
 
-const user = require("./modules/user");
-const validateUser = require("./modules/user").validateUser;
-const acceptOrDenyUser = require("./modules/user").acceptOrDenyUser;
-const updateUserSetting = require("./modules/user").updateUserSetting;
-const updateDisplayname = require("./modules/user").updateDisplayname;
-const updateUsername = require("./modules/user").updateUsername;
-const updatePassword = require("./modules/user").updatePassword;
-const updateAboutMe = require("./modules/user").updateAboutMe;
-const deleteAccount = require("./modules/user").deleteAccount;
-const giveUserAPIAccess = require("./modules/user").giveUserAPIAccess;
-const removeUserAPIAccess = require("./modules/user").removeUserAPIAccess;
+/* */
 
-const saveLiftOrGoal = require("./modules/user").saveLiftOrGoal;
-const setGoalAsComplete = require("./modules/user").setGoalAsComplete;
-const deleteLiftOrGoal = require("./modules/user").deleteLiftOrGoal;
-const decreaseMedalCount = require("./modules/user").decreaseMedalCount;
-const createTrainingsplit = require("./modules/user").createTrainingsplit;
-const setActiveTrainingsplit = require("./modules/user").setActiveTrainingsplit;
-const getTrainingsplit = require("./modules/user").getTrainingsplit;
-const deleteTrainingsplit = require("./modules/user").deleteTrainingsplit;
-const addExerciseTrainingsplit = require("./modules/user").addExerciseTrainingsplit;
-const deleteExerciseTrainingsplit = require("./modules/user").deleteExerciseTrainingsplit;
-const addExerciseRowTrainingsplit = require("./modules/user").addExerciseRowTrainingsplit;
-const deleteExerciseRowTrainingsplit = require("./modules/user").deleteExerciseRowTrainingsplit;
-const changeExerciseOrderTrainingsplit = require("./modules/user").changeExerciseOrderTrainingsplit;
-const copyTrainingsplit = require("./modules/user").copyTrainingsplit;
-const subUnsubTrainingsplit = require("./modules/user").subUnsubTrainingsplit;
-const setNotActiveTrainingsplit = require("./modules/user").setNotActiveTrainingsplit;
-const saveTrainingsplit = require("./modules/user").saveTrainingsplit;
+/* trainingsplit.js */
+
+const createTrainingsplit = require("./modules/mw/trainingsplit").createTrainingsplit;
+const setActiveTrainingsplit = require("./modules/mw/trainingsplit").setActiveTrainingsplit;
+const getTrainingsplit = require("./modules/mw/trainingsplit").getTrainingsplit;
+const deleteTrainingsplit = require("./modules/mw/trainingsplit").deleteTrainingsplit;
+const addExerciseTrainingsplit = require("./modules/mw/trainingsplit").addExerciseTrainingsplit;
+const deleteExerciseTrainingsplit = require("./modules/mw/trainingsplit").deleteExerciseTrainingsplit;
+const addExerciseRowTrainingsplit = require("./modules/mw/trainingsplit").addExerciseRowTrainingsplit;
+const deleteExerciseRowTrainingsplit = require("./modules/mw/trainingsplit").deleteExerciseRowTrainingsplit;
+const changeExerciseOrderTrainingsplit = require("./modules/mw/trainingsplit").changeExerciseOrderTrainingsplit;
+const copyTrainingsplit = require("./modules/mw/trainingsplit").copyTrainingsplit;
+const subUnsubTrainingsplit = require("./modules/mw/trainingsplit").subUnsubTrainingsplit;
+const setNotActiveTrainingsplit = require("./modules/mw/trainingsplit").setNotActiveTrainingsplit;
+const saveTrainingsplit = require("./modules/mw/trainingsplit").saveTrainingsplit;
 
 /* */
 
 
+/* liftOrGoal.js */
+
+const saveLiftOrGoal = require("./modules/mw/liftOrGoal").saveLiftOrGoal;
+const setGoalAsComplete = require("./modules/mw/liftOrGoal").setGoalAsComplete;
+const deleteLiftOrGoal = require("./modules/mw/liftOrGoal").deleteLiftOrGoal;
+
+/* */
 
 /* get.js */
 
-const getListOfUsers = require("./modules/get").getListOfUsers;
-const getListOfLeaderboards = require("./modules/get").getListOfLeaderboards;
-const getListOfUsersLeaderboard = require("./modules/get").getListOfUsersLeaderboard;
-const getListOfPendingUsers = require("./modules/get").getListOfPendingUsers;
-const getWorkoutSplit = require("./modules/get").getWorkoutSplit;
-const getUserDetails = require("./modules/get").getUserDetails;
-const getUserSettingsAndInfo = require("./modules/get").getUserSettingsAndInfo;
-const getListOfAllUsersWorkoutToday = require("./modules/get").getListOfAllUsersWorkoutToday;
-const getAllUserInformation = require("./modules/get").getAllUserInformation;
+const getListOfUsers = require("./modules/mw/get").getListOfUsers;
+const getListOfLeaderboards = require("./modules/mw/get").getListOfLeaderboards;
+const getListOfUsersLeaderboard = require("./modules/mw/get").getListOfUsersLeaderboard;
+const getListOfPendingUsers = require("./modules/mw/get").getListOfPendingUsers;
+const getUserDetails = require("./modules/mw/get").getUserDetails;
+const getUserSettingsAndInfo = require("./modules/mw/get").getUserSettingsAndInfo;
+const getListOfAllUsersWorkoutToday = require("./modules/mw/get").getListOfAllUsersWorkoutToday;
+const getAllUserInformation = require("./modules/mw/get").getAllUserInformation;
 
 /* */
 
 
+/* API.js */
 
-/* API */
-
-const getWorkoutPlanAPI = require("./modules/API").getWorkoutPlanAPI;
-const getTotalPBAPI = require("./modules/API").getTotalPBAPI;
-const getLiftsAPI = require("./modules/API").getLiftsAPI;
+const getWorkoutPlanAPI = require("./modules/mw/API").getWorkoutPlanAPI;
+const getTotalPBAPI = require("./modules/mw/API").getTotalPBAPI;
+const getLiftsAPI = require("./modules/mw/API").getLiftsAPI;
 
 /* */
-
 
 
 /* arrayList */
@@ -96,8 +97,6 @@ const getLiftsAPI = require("./modules/API").getLiftsAPI;
 const allowedLifts = require("./arrayLists").allowedLifts;
 const allowedGoals = require("./arrayLists").allowedGoals;
 const badgeColors = require("./arrayLists").badgeColors;
-
-const allowedTrainingDays = require("./arrayLists").allowedTrainingDays;
 
 /* */
 
@@ -115,7 +114,7 @@ const minCharLength = 3;
 const APIErrorJSON = {
      catch: { error: "Det har oppstått et problem!" },
      access: { error: "Ingen tilgang" },
-     workoutplan: { error: "Brukeren har ingen treningsplan" },
+     workoutplan: { error: "Brukeren har ingen aktiv treningsplan" },
      lift: { error: "Brukeren har ikke alle nødvendige løft for å regne ut totalen. Må ha 1 rep av Benkpress, Knebøy og Markløft" },
 }
 
@@ -1456,27 +1455,6 @@ server.post("/validate", auth, async (req, res) => {
 
 //
 
-// get list of different api
-
-server.get("/api", function (req, res) {
-
-     const userIDText = "brukerID";
-     const keyText = "key";
-
-     const resp = [
-          { "url": `/getWorkoutInfo/{${userIDText}}/{${keyText}}`, "method": "GET" }, // denne brukes som eksempel i API innstillingen
-          { "url": `/getTotalPB/{${userIDText}}/{${keyText}}`, "method": "GET" },
-     ];
-
-     // Ideer:
-     // hent benk, knebøy, markløft + totalen / og / eller lifts (maks 3? / kan velge)
-     // hent mål i ulike løft (maks 3? / kan velge)
-
-     res.status(200).json(resp).end();
-});
-
-//
-
 // -------------------------------  give user api access ---------------------- //
 
 server.post("/user/giveAPIAccess", auth, async (req, res) => {
@@ -1535,19 +1513,41 @@ server.post("/user/removeAPIAccess", auth, async (req, res) => {
 
 //
 
-// api
 
-server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
+
+
+// -------------------------------  API Routes ---------------------- //
+
+
+// -------------------------------  get list of different api ---------------------- //
+
+server.get("/api", function (req, res) {
+
+     const defaultHeaders = "content-type, uid, key";
+
+     const resp = [
+          { "url": `/getWorkoutInfo`, "method": "GET", "headers": defaultHeaders, "note": "" }, // denne brukes som eksempel i API innstillingen
+          { "url": `/getTotalPB`, "method": "GET", "headers": defaultHeaders, "note": "" },
+          { "url": `/getLifts/user`, "method": "GET", "headers": defaultHeaders, "note": "Brukes hovedsaklig til userlifts.html, men kan brukes i annen sammenheng." },
+     ];
+
+     res.status(200).json(resp).end();
+});
+
+//
+
+
+// -------------------------------  getWorkoutInfo ---------------------- //
+
+server.get("/getWorkoutInfo", async function (req, res) {
      try {
 
-          const url = req.url;
-          const urlInfo = url.split("/");
+          const uid = req.headers.uid;
+          const key = req.headers.key;
 
-          if (urlInfo[1] === "getWorkoutInfo" && urlInfo[2].length < maxCharLength && urlInfo[3].length < maxCharLength) {
-               const user = urlInfo[2];
-               const key = urlInfo[3];
+          if (uid && key) {
 
-               const getWorkoutPlanInfo = await getWorkoutPlanAPI(user, key);
+               const getWorkoutPlanInfo = await getWorkoutPlanAPI(uid, key);
 
                if (getWorkoutPlanInfo.status === true) {
 
@@ -1603,24 +1603,22 @@ server.get("/getWorkoutInfo/:user/:key", async function (req, res) {
 
 //
 
-// api
+// -------------------------------  getTotalPB ---------------------- //
 
-server.get("/getTotalPB/:user/:key", async function (req, res) {
+server.get("/getTotalPB", async function (req, res) {
      try {
 
-          const url = req.url;
-          const urlInfo = url.split("/");
+          const uid = req.headers.uid;
+          const key = req.headers.key;
 
-          if (urlInfo[1] === "getTotalPB" && urlInfo[2].length < maxCharLength && urlInfo[3].length < maxCharLength) {
-               const user = urlInfo[2];
-               const key = urlInfo[3];
+          if (uid && key) {
 
-               const getTotalPB = await getTotalPBAPI(user, key);
+               const getTotalPB = await getTotalPBAPI(uid, key);
 
                if (getTotalPB.status === true) {
 
                     const resp = {
-                         "user": user,
+                         "user": uid,
                          "totalPBKG": getTotalPB.info.kg,
                          "totalPBLBS": getTotalPB.info.lbs,
                     }
@@ -1645,17 +1643,17 @@ server.get("/getTotalPB/:user/:key", async function (req, res) {
 
 
 
-// api
+// -------------------------------  getLifts ---------------------- //
 
 server.get("/getLifts/user", async function (req, res) {
      try {
 
-          const user = parseInt(req.headers.user);
+          const uid = req.headers.uid;
           const key = req.headers.key;
 
-          if (!isNaN(user) && key) {
+          if (uid && key) {
 
-               const getLifts = await getLiftsAPI(user, key);
+               const getLifts = await getLiftsAPI(uid, key);
 
                if (getLifts.status === true) {
 
@@ -1683,6 +1681,7 @@ server.get("/getLifts/user", async function (req, res) {
 
 //
 
+// ------------------------------- END OF API Routes ---------------------- //
 
 
 // ------------------------------- allows the server to run on localhost  ------------------------------- //

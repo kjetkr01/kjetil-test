@@ -1,4 +1,4 @@
-const database = require("./datahandler")
+const database = require("../datahandler");
 
 async function getWorkoutPlanAPI(user, key) {
     try {
