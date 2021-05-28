@@ -367,35 +367,6 @@ server.post("/users/pending/:user/:acceptOrDeny", auth, async (req, res) => {
 
 //
 
-// -------------------------------  whatToTrainToday (user) ---------------------- //
-
-server.post("/user/whatToTrainToday", auth, async (req, res) => {
-     try {
-
-          let username = req.headers.userinfo;
-          username = JSON.parse(username);
-          username = username.username;
-
-          if (username) {
-
-               const resp = await getWorkoutSplit(username);
-
-               if (resp.status === true) {
-                    res.status(200).json(resp.program).end();
-               } else {
-                    res.status(403).json(`Feil, prøv igjen`).end();
-               }
-          } else {
-               res.status(403).json(`Feil, prøv igjen`).end();
-          }
-     } catch (err) {
-          console.log(err);
-          res.status(403).json(`Feil, prøv igjen`).end();
-     }
-});
-
-//
-
 // -------------------------------  get user details (view userPage) ---------------------- //
 
 server.post("/users/details/:user", auth, async (req, res) => {

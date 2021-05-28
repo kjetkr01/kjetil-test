@@ -1,4 +1,4 @@
-const cacheName = 'js13kPWA-v28';
+const cacheName = 'js13kPWA-v29';
 
 const contentToCache = [
     '/account.html',
@@ -9,11 +9,10 @@ const contentToCache = [
     '/manifest.json',
     '/scripts/account/account.js',
     '/scripts/account/editInformation.js',
-    '/scripts/appInfo.js',
+    '/scripts/global/appInfo.js',
     '/scripts/shared/badges.js',
-    '/scripts/global.js',
+    '/scripts/global/global.js',
     '/scripts/index/index.js',
-    '/scripts/index/script.js',
     '/scripts/leaderboards/leaderboards.js',
     '/scripts/shared/overlay.js',
     '/scripts/settings/loadFunctions.js',

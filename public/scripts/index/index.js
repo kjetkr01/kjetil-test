@@ -1,4 +1,70 @@
-let lifts = null, goals = null, badgeColorsJSON = null;;
+let lifts = null, goals = null, badgeColorsJSON = null;
+
+// usage : partOfDayMessage("Kjetil Kristiansen")
+
+function partOfDayMessage(displayName) {
+
+    let message = "";
+    let messageWithName = true;
+    let partOfDay = "";
+    let firstName = "";
+
+    if (!displayName || displayName.length < 3) {
+        messageWithName = false;
+    } else {
+        firstName = displayName.split(" ");
+        firstName = firstName[0];
+    }
+
+    const today = new Date();
+
+    const hours = today.getHours();
+
+    if (hours >= 0 && hours <= 4) {
+        partOfDay = "natt";
+    }
+    else if (hours > 4 && hours <= 10) {
+        partOfDay = "morgen";
+    }
+    else if (hours > 10 && hours <= 18) {
+        partOfDay = "ettermiddag";
+    }
+    else if (hours > 18 && hours <= 24) {
+        partOfDay = "kveld";
+    }
+
+    if (messageWithName) {
+        message = `God ${partOfDay},`;
+    } else {
+        message = `God ${partOfDay}.`;
+    }
+
+    return { "message": message, "firstName": firstName };
+}
+
+
+async function whoIsWorkingOutToday() {
+
+    let info = {};
+
+    if (token && user) {
+
+        const infoHeader = {};
+        const url = `/whoIsWorkingOutToday`;
+
+        const resp = await callServerAPIPost(infoHeader, url);
+
+        if (resp) {
+            info = resp;
+        }
+
+    } else {
+        console.log("Invalid token, username skipped whoIsWorkingOutToday")
+    }
+
+    return info;
+
+}
 
 function displayPartOfDayMsg() {
 
@@ -14,7 +80,6 @@ function displayPartOfDayMsg() {
             titleDom.textContent = partOfDayMsg.message;
         }
     }
-
 }
 
 
