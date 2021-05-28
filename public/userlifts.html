@@ -350,15 +350,12 @@
 
       /// ------------ end of displayLifts --------------- ///
 
-      let savedWidth = null;
-
+      let savedWidth = window.innerWidth;
       setInterval(() => {
-
          if (savedWidth !== window.innerWidth) {
             savedWidth = window.innerWidth;
             displayLifts();
          }
-
       }, 500);
    }
 
