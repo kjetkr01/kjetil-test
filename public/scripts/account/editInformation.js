@@ -220,9 +220,9 @@ function enableOverlayView(aType, aExercise, aId) {
                 }
 
                 if (navigator.onLine) {
-                    GeditW.innerHTML = `<button id="editW" class="pointer" onClick="disableOverlay('viewLiftOrGoal');enableOverlayEdit('lift', '${exercise}', '${id}');">Rediger</button>`;
+                    GeditW.innerHTML = `<button id="editW" class="pointer" onClick="disableOverlay('viewLiftOrGoal');enableOverlayEdit('lift', '${exercise}', '${id}');">Endre</button>`;
                 } else {
-                    GeditW.innerHTML = `<button id="editW" disabled>Rediger</button>`;
+                    GeditW.innerHTML = `<button id="editW" disabled>Endre</button>`;
                 }
 
                 viewLiftorGoalOverlay.style.display = "block";
@@ -266,9 +266,9 @@ function enableOverlayView(aType, aExercise, aId) {
                 }
 
                 if (navigator.onLine) {
-                    GeditW.innerHTML = `<button id="editW" class="pointer" onClick="disableOverlay('viewLiftOrGoal');enableOverlayEdit('goal', '${exercise}', '${id}');">Rediger</button>`;
+                    GeditW.innerHTML = `<button id="editW" class="pointer" onClick="disableOverlay('viewLiftOrGoal');enableOverlayEdit('goal', '${exercise}', '${id}');">Endre</button>`;
                 } else {
-                    GeditW.innerHTML = `<button id="editW" disabled>Rediger</button>`;
+                    GeditW.innerHTML = `<button id="editW" disabled>Endre</button>`;
                 }
 
                 viewLiftorGoalOverlay.style.display = "block";

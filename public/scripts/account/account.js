@@ -360,7 +360,7 @@ async function displayLifts(hasLiftsLeft) {
                 if (showLifts.length === 0) {
                     sortBy = null;
                     localStorage.removeItem("display_lifts_owner");
-                    
+
                     if (navigator.onLine) {
                         const value = null;
                         const setting = "display_lifts_owner";

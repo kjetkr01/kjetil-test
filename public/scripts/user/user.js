@@ -742,13 +742,6 @@ function displayTrainingsplit() {
     } catch (err) {
         console.log(err)
     }
-
-    const badge = getBadgeTrainingsplit();
-
-    if (badge) {
-        document.getElementById("badgesTrainingsplitTableRow").innerHTML += badge;
-    }
-
 }
 
 /// ------------ end of displayTrainingsplit --------------- ///
