@@ -265,15 +265,6 @@ function getViewLiftorGoalOverlay() {
         <div id="Ginp3E">
            <p id="inp3E" class="inputLiftOrGoal"></p>
         </div>
-        <div id="Gtitle5E">
-           <p id="title5E">Farge</p>
-        </div>
-        <div id="Gline5E">
-           <hr id="line5E">
-        </div>
-        <div id="Ginp4E">
-           <p id="inp4E" class="selectLiftOrGoal"></p>
-        </div>
         <div id="GcancelE">
            <button id="cancelE" class="pointer" onclick="disableOverlay('viewLiftOrGoal');">Lukk</button>
         </div>

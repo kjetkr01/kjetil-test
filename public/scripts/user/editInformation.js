@@ -29,7 +29,6 @@ function enableOverlayView(aType, aExercise, aId) {
         inp1.value = "";
         inp2.value = "";
         inp3.value = "";
-        inp4.innerHTML = "";
 
         const today = new Date().toISOString().substr(0, 10) || null;
 
@@ -40,8 +39,6 @@ function enableOverlayView(aType, aExercise, aId) {
         if (type === "lift" && liftsInfo) {
 
             const lifts = liftsInfo.info();
-            const badgeColorsInfo = badgeColors.info();
-            const badgeColorsValues = Object.entries(badgeColorsInfo);
 
             let lift = lifts[exercise];
 
@@ -70,12 +67,6 @@ function enableOverlayView(aType, aExercise, aId) {
 
                 const color = lift.color;
 
-                for (let i = 0; i < badgeColorsValues.length; i++) {
-                    if (badgeColorsValues[i][0] === color) {
-                        inp4.innerHTML = `${badgeColorsValues[i][1]}`;
-                    }
-                }
-
                 if (badgeColorBorders.hasOwnProperty(color)) {
                     document.getElementById("viewLiftorGoal").style.border = `1px solid #${badgeColorBorders[color]}`;
                 }
@@ -88,8 +79,6 @@ function enableOverlayView(aType, aExercise, aId) {
 
         } else if (type === "goal" && goalsInfo) {
             const goals = goalsInfo.info();
-            const badgeColorsInfo = badgeColors.info();
-            const badgeColorsValues = Object.entries(badgeColorsInfo);
 
             let goal = goals[exercise];
 
@@ -117,12 +106,6 @@ function enableOverlayView(aType, aExercise, aId) {
                 inp3.innerHTML = `${daysSinceAndDate.fixedDate}<br>${daysSinceAndDate.daysSinceMsg}`;
 
                 const color = goal.color;
-
-                for (let i = 0; i < badgeColorsValues.length; i++) {
-                    if (badgeColorsValues[i][0] === color) {
-                        inp4.innerHTML = `${badgeColorsValues[i][1]}`;
-                    }
-                }
 
                 if (badgeColorBorders.hasOwnProperty(color)) {
                     document.getElementById("viewLiftorGoal").style.border = `1px solid #${badgeColorBorders[color]}`;

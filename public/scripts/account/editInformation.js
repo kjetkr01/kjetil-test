@@ -32,7 +32,7 @@ function enableOverlayCreate(aType) {
         }
 
         if (type === "lift" && liftsLeft) {
-            title1.textContent = "Legg til nytt løft";
+            title1.textContent = "Opprett nytt løft";
             const liftsLeftInfo = liftsLeft.info();
 
             respMsg.innerHTML = `Du kan lage ${liftsLeftInfo} løft til`;
@@ -58,7 +58,7 @@ function enableOverlayCreate(aType) {
             createNewLiftorGoalOverlay.style.display = "block";
 
         } else if (type === "goal" && goalsLeft) {
-            title1.textContent = "Legg til nytt mål";
+            title1.textContent = "Opprett nytt mål";
             const goalsLeftInfo = goalsLeft.info();
 
             respMsg.innerHTML = `Du kan lage ${goalsLeftInfo} mål til`;

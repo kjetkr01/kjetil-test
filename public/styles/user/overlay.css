@@ -17,17 +17,16 @@ width: 100%;
 text-align: center;
 }
 
-
 .overlay>.viewLiftorGoal {
 position: absolute;
 top: 50%;
 left: 50%;
 transform: translate(-50%,-50%);
 -ms-transform: translate(-50%,-50%);
-width: 90%;
+width: 90vw;
 max-width: 550px;
-height: 70%;
-max-height: 470px;
+height: 90vh;
+max-height: 410px;
 overflow-y: scroll;
 
 background-color: var(--main-backgroundColor2);
@@ -57,11 +56,6 @@ grid-template-areas:
 "Gline4E Gline4E Gline4E"
 "Ginp3E Ginp3E Ginp3E"
 "c5oE c5oE c5oE"
-
-"Gtitle5E Gtitle5E Gtitle5E"
-"Gline5E Gline5E Gline5E"
-"Ginp4E Ginp4E Ginp4E"
-"c6oE c6oE c6oE"
 
 "GcancelE c7oE c7oE"
 "c8oE c8oE c8oE"
@@ -108,13 +102,7 @@ auto /* Ginp3E */
 20px /* c5oE */
 
 
-25px /* Gtitle5E */
 
-10px /* Gline5E */
-
-auto /* Ginp4E */
-
-20px /* c6oE */
 
 
 40px /* GbuttonsE */

@@ -30,9 +30,9 @@ top: 50%;
 left: 50%;
 transform: translate(-50%,-50%);
 -ms-transform: translate(-50%,-50%);
-width: 90%;
+width: 90vw;
 max-width: 550px;
-height: 70%;
+height: 90vh;
 max-height: 530px;
 overflow-y: scroll;
 
@@ -149,7 +149,7 @@ font-size: 22px;
 }
 
 #Gline1C > #line1C {
-width: 250px;
+width: 225px;
 }
 
 #Gline2C > #line2C {
@@ -376,10 +376,10 @@ top: 50%;
 left: 50%;
 transform: translate(-50%,-50%);
 -ms-transform: translate(-50%,-50%);
-width: 90%;
+width: 90vw;
 max-width: 550px;
-height: 70%;
-max-height: 530px;
+height: 90vh;
+max-height: 560px;
 overflow-y: scroll;
 
 background-color: var(--main-backgroundColor2);
@@ -736,7 +736,7 @@ transform: translate(-50%,-50%);
 -ms-transform: translate(-50%,-50%);
 width: 90%;
 max-width: 550px;
-height: fit-content;
+height: 90vh;
 max-height: 620px;
 overflow-y: scroll;
 
@@ -804,11 +804,11 @@ auto /* GviewplanworkoutPlans */
 
 auto /* GeditplanworkoutPlans */
 
-10px /* c4oWP */
+5px /* c4oWP */
 
 auto /* GcreateplanworkoutPlans */
 
-30px /* c5oWP */
+20px /* c5oWP */
 
 
 
@@ -820,7 +820,7 @@ auto /* GlistsubworkoutPlans */
 
 auto /* GviewsubplanworkoutPlans */
 
-30px /* c6oWP */
+20px /* c6oWP */
 
 
 
@@ -832,7 +832,7 @@ auto /* GtextworkoutPlans */
 
 auto /* GsetNoneActivePlanworkoutPlans */
 
-30px /* c7oWP */
+0px /* c7oWP */
 
 
 auto /* GrespworkoutPlans */
