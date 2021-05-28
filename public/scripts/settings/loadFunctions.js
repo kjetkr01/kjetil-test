@@ -752,12 +752,21 @@ async function loadPendingUsersPage(setting) {
 }
 
 async function loadAPIPage() {
-    if (navigator.onLine) {
 
-        if (userInfo.hasOwnProperty("apikey")) {
+    let response = null;
+    const allCaches = await caches.keys();
+    if (allCaches.length > 0) {
+        const cache = await caches.open(allCaches[0]);
+        if (cache) {
+            response = await cache.match("/api");
+        }
+    }
 
-            if (sessionStorage.getItem("currentSetting") === ELoadSettings.api.name) {
+    if (userInfo.hasOwnProperty("apikey")) {
 
+        if (sessionStorage.getItem("currentSetting") === ELoadSettings.api.name) {
+
+            if (!response && navigator.onLine) {
                 const config = {
                     method: "GET",
                     headers: {
@@ -765,7 +774,11 @@ async function loadAPIPage() {
                     }
                 }
 
-                const response = await fetch("/api", config);
+                response = await fetch("/api", config);
+            }
+
+            if (response && response.status === 200) {
+
                 const data = await response.json();
 
                 settingsGrid.innerHTML = justTextTemplate(`${application.name} har ${data.length} APIer.<br>Her kan du se din API key, BrukerID og ulike APIer.`, "left");
@@ -793,7 +806,7 @@ async function loadAPIPage() {
                     settingsGrid.innerHTML += getAPITextTemplate(text, "", "spacingTop");
                 }
 
-                settingsGrid.innerHTML += getCenteredTextTemplate("Eksempel:", "", "spacingTop");
+                settingsGrid.innerHTML += getCenteredTextTemplate("Eksempel Request:", "", "spacingTop");
 
                 const exampleConfig = {
                     method: "GET",
@@ -817,23 +830,51 @@ async function loadAPIPage() {
 
                 settingsGrid.innerHTML += getAPITextTemplate(fullExampleAPIText);
 
-                settingsGrid.innerHTML += getCenteredTextTemplate("Response:", "", "spacingTop");
+                settingsGrid.innerHTML += getCenteredTextTemplate("Eksempel Response:", "", "spacingTop");
 
-                const exampleAPIResponse = await fetch(exampleAPIHTML, exampleConfig);
-                const exampleAPIData = await exampleAPIResponse.json();
-                const exampleAPIResult = JSON.stringify(exampleAPIData);
 
-                if (sessionStorage.getItem("currentSetting") === ELoadSettings.api.name) {
-                    settingsGrid.innerHTML += getAPITextTemplate(exampleAPIResult);
 
-                    settingsGrid.innerHTML += getBottomSpacingTemplate();
+                const days = ["søndag", "mandag", "tirsdag", "onsdag", "torsdag", "fredag", "lørdag"];
+                const dayNum = new Date().getDay();
+                const day = days[dayNum];
+                const rList = ["Bryst", "Skuldre", "Rygg", "Biceps", "Triceps", "Bein", "Mage"];
+
+                const rNum = Math.floor(Math.random() * 2);
+
+                const rExample = [];
+
+                randomFromList();
+
+                function randomFromList() {
+                    const r = rList[Math.floor(Math.random() * rList.length)];
+                    //prevents duplicates ;)
+                    if (!rExample.includes(r) && rExample.length < 2) {
+                        rExample.push(r);
+                    } else {
+                        randomFromList();
+                    }
+                }
+
+                if (rNum === 1) {
+                    randomFromList();
+                }
+
+                const exampleAPIResult = `{"currentDay":"${day}","todaysWorkout":"Skal du trene ${rExample.join(" og ")}"}`;
+
+                settingsGrid.innerHTML += getAPITextTemplate(exampleAPIResult);
+
+                settingsGrid.innerHTML += getBottomSpacingTemplate();
+
+            } else {
+                if (!navigator.onLine) {
+                    settingsGrid.innerHTML = justTextTemplate("Kunne ikke laste inn listen med APIer. Vennligst prøv igjen når du har internettforbindelse.", "left");
+                } else {
+                    settingsGrid.innerHTML = justTextTemplate("Det her oppstått en feil, kunne ikke laste inn listen med APIer.", "left");
                 }
             }
-        } else {
-            loadSetting(ELoadSettings.settings.name);
         }
     } else {
-        settingsGrid.innerHTML = justTextTemplate("Kunne ikke laste inn listen med APIer. Ingen internettforbindelse", "left");
+        loadSetting(ELoadSettings.settings.name);
     }
 }
 

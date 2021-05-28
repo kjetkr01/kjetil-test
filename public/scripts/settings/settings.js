@@ -236,7 +236,6 @@ async function displayInformationAboutUser() {
         }
 
         if (!resp && navigator.onLine) {
-            console.log("req")
             const config = {
                 method: "GET",
                 headers: {
@@ -346,11 +345,15 @@ async function displayInformationAboutUser() {
                     }
 
                     if (fromCache === true) {
+                        let extraTxt = "";
+                        if (navigator.onLine) {
+                            extraTxt = `
+                            <button class="settingsButton pointer" onClick="deleteInfoCache('${cacheName}', '${url}')">Hent nyeste data</button>`;
+                        }
                         informationAboutUser.innerHTML += `
                         <br>Informasjonen ble hentet fra ${cacheName} cachen.
                         Data kan være litt utdatert.
-                        Hvis du ønsker å oppdatere dette nå.
-                        <button class="settingsButton pointer" onClick="deleteInfoCache('${cacheName}', '${url}')">Trykk her</button>`;
+                        ${extraTxt}`;
                     }
 
                 } catch {
