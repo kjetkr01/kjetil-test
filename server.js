@@ -1379,7 +1379,7 @@ server.post("/whoIsWorkingOutToday", auth, async (req, res) => {
 
 // get all information about user
 
-server.post("/user/allinformation", auth, async (req, res) => {
+server.get("/user/allinformation", auth, async (req, res) => {
      try {
 
           const currentUser = JSON.parse(req.headers.userinfo);

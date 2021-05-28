@@ -966,8 +966,10 @@ class StorageHandler {
         try {
             await client.connect();
 
-            if (!value || value === "null") {
-                value = null;
+            if (value !== false) {
+                if (!value || value === "null") {
+                    value = null;
+                }
             }
 
             const user_id = await client.query(`

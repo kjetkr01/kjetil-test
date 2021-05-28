@@ -209,141 +209,193 @@ function checkIfEdited(aType) {
     }
 }
 
-let loadingInformationAboutUser = false;
 async function displayInformationAboutUser() {
-    if (loadingInformationAboutUser === false) {
-        if (navigator.onLine) {
 
-            const informationAboutUser = document.getElementById("informationAboutUser");
+    const informationAboutUser = document.getElementById("informationAboutUser");
 
-            // prevents spam loading of information
-            if (informationAboutUser.innerHTML.length < 150) {
+    if (informationAboutUser.innerHTML.length < 150) {
 
-                loadingInformationAboutUser = true;
+        informationAboutUser.innerHTML = `<br>Henter opplysninger...`;
 
-                informationAboutUser.innerHTML = `<br>Henter opplysninger...`;
+        const url = `/user/allinformation`;
 
-                const infoHeader = {};
-                const url = `/user/allinformation`;
+        let resp = null;
+        let fromCache = false;
+        let cacheName = "";
 
-                const resp = await callServerAPIPost(infoHeader, url);
-
-                informationAboutUser.innerHTML = "";
-
+        const allCaches = await caches.keys();
+        if (allCaches.length > 0) {
+            const cache = await caches.open(allCaches[0]);
+            if (cache) {
+                resp = await cache.match(url);
                 if (resp) {
+                    fromCache = true;
+                    cacheName = allCaches[0];
+                }
+            }
+        }
 
-                    const keys = Object.keys(resp);
+        if (!resp && navigator.onLine) {
+            console.log("req")
+            const config = {
+                method: "GET",
+                headers: {
+                    "content-type": "application/json",
+                    "authtoken": token,
+                    "userinfo": user,
+                }
+            }
 
-                    try {
+            resp = await fetch(url, config);
+        }
 
-                        for (let i = 0; i < keys.length; i++) {
+        if (resp && resp.status === 200) {
 
-                            const first = resp[keys[i]];
-                            const extraKeys = Object.keys(first);
+            const data = await resp.json();
 
-                            for (let j = 0; j < extraKeys.length; j++) {
+            informationAboutUser.innerHTML = "";
 
-                                const second = first[extraKeys[j]];
+            if (data) {
 
-                                if (keys[i] === "løft" || keys[i] === "mål") {
+                const keys = Object.keys(data);
 
-                                    if (second.length > 0) {
+                try {
 
-                                        if (j === 0) {
-                                            informationAboutUser.innerHTML += `<br><h2>${capitalizeFirstLetter(keys[i])}</h2>`;
-                                        }
+                    for (let i = 0; i < keys.length; i++) {
 
-                                        const extraKeys2 = Object.keys(second);
-                                        informationAboutUser.innerHTML += `<br><h3>${capitalizeFirstLetter(extraKeys[j])}</h3>`;
+                        const first = data[keys[i]];
+                        const extraKeys = Object.keys(first);
 
-                                        for (let k = 0; k < extraKeys2.length; k++) {
-                                            const third = second[extraKeys2[k]];
-                                            const extraKeys3 = Object.keys(third);
-                                            informationAboutUser.innerHTML += `<br>`;
-                                            for (let x = 0; x < extraKeys3.length; x++) {
-                                                informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys3[x])}: ${third[extraKeys3[x]]}<br>`;
-                                            }
-                                        }
-                                    }
+                        for (let j = 0; j < extraKeys.length; j++) {
 
-                                } else if (keys[i] === "treningsplan") {
+                            const second = first[extraKeys[j]];
 
-                                    if (j === 0) {
-                                        informationAboutUser.innerHTML += `<br><h2>${capitalizeFirstLetter(keys[i])}</h2><br>`;
-                                    }
+                            if (keys[i] === "løft" || keys[i] === "mål") {
 
-                                    const extraKeys2 = Object.keys(second);
-
-                                    for (let k = 0; k < extraKeys2.length; k++) {
-                                        const third = second[extraKeys2[k]];
-                                        if (third.short !== undefined && third.list !== undefined) {
-                                            const extraKeys3 = Object.keys(third);
-                                            informationAboutUser.innerHTML += `<br><h3>${capitalizeFirstLetter(extraKeys2[k])}</h3>`;
-                                            for (let x = 0; x < extraKeys3.length; x++) {
-                                                if (extraKeys3[x] === "list" && third.list.length > 0) {
-                                                    informationAboutUser.innerHTML += `<br><h3>${capitalizeFirstLetter(extraKeys3[x])}</h3>`;
-                                                    const extraKeys4 = Object.keys(third.list[0]);
-                                                    for (let b = 0; b < extraKeys4.length; b++) {
-                                                        const fourth = third.list[0][extraKeys4[b]];
-                                                        informationAboutUser.innerHTML += `<br><h4>${capitalizeFirstLetter(extraKeys4[b])}:</h4>`;
-                                                        for (let l = 0; l < fourth.length; l++) {
-                                                            const extraKeys5 = Object.keys(fourth[l]);
-                                                            for (let n = 0; n < extraKeys5.length; n++) {
-                                                                informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys5[n])}: ${fourth[l][extraKeys5[n]]}<br>`;
-                                                            }
-                                                            if (l !== fourth.length - 1) {
-                                                                informationAboutUser.innerHTML += `<br>`;
-                                                            }
-                                                        }
-                                                    }
-                                                } else {
-                                                    informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys3[x])}: ${third[extraKeys3[x]]}<br>`;
-                                                }
-                                            }
-                                        } else {
-                                            if (k === extraKeys2.length - 1) {
-                                                informationAboutUser.innerHTML += `<br>`;
-                                            }
-                                            informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys2[k])}: ${third}<br>`;
-                                        }
-                                    }
-
-                                } else {
+                                if (second.length > 0) {
 
                                     if (j === 0) {
                                         informationAboutUser.innerHTML += `<br><h2>${capitalizeFirstLetter(keys[i])}</h2>`;
                                     }
 
-                                    informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys[j])}: ${second}<br>`;
+                                    const extraKeys2 = Object.keys(second);
+                                    informationAboutUser.innerHTML += `<br><h3>${capitalizeFirstLetter(extraKeys[j])}</h3>`;
 
+                                    for (let k = 0; k < extraKeys2.length; k++) {
+                                        const third = second[extraKeys2[k]];
+                                        const extraKeys3 = Object.keys(third);
+                                        informationAboutUser.innerHTML += `<br>`;
+                                        for (let x = 0; x < extraKeys3.length; x++) {
+                                            informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys3[x])}: ${third[extraKeys3[x]]}<br>`;
+                                        }
+                                    }
                                 }
+
+                            } else if (keys[i] === "treningsplan") {
+
+                                if (j === 0) {
+                                    informationAboutUser.innerHTML += `<br><h2>${capitalizeFirstLetter(keys[i])}</h2><br>`;
+                                }
+
+                                const extraKeys2 = Object.keys(second);
+
+                                for (let k = 0; k < extraKeys2.length; k++) {
+                                    const third = second[extraKeys2[k]];
+                                    if (third.short !== undefined && third.list !== undefined) {
+                                        const extraKeys3 = Object.keys(third);
+                                        informationAboutUser.innerHTML += `<br><h3>${capitalizeFirstLetter(extraKeys2[k])}</h3>`;
+                                        for (let x = 0; x < extraKeys3.length; x++) {
+                                            if (extraKeys3[x] === "list" && third.list.length > 0) {
+                                                informationAboutUser.innerHTML += `<br><h3>${capitalizeFirstLetter(extraKeys3[x])}</h3>`;
+                                                const extraKeys4 = Object.keys(third.list[0]);
+                                                for (let b = 0; b < extraKeys4.length; b++) {
+                                                    const fourth = third.list[0][extraKeys4[b]];
+                                                    informationAboutUser.innerHTML += `<br><h4>${capitalizeFirstLetter(extraKeys4[b])}:</h4>`;
+                                                    for (let l = 0; l < fourth.length; l++) {
+                                                        const extraKeys5 = Object.keys(fourth[l]);
+                                                        for (let n = 0; n < extraKeys5.length; n++) {
+                                                            informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys5[n])}: ${fourth[l][extraKeys5[n]]}<br>`;
+                                                        }
+                                                        if (l !== fourth.length - 1) {
+                                                            informationAboutUser.innerHTML += `<br>`;
+                                                        }
+                                                    }
+                                                }
+                                            } else {
+                                                informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys3[x])}: ${third[extraKeys3[x]]}<br>`;
+                                            }
+                                        }
+                                    } else {
+                                        if (k === extraKeys2.length - 1) {
+                                            informationAboutUser.innerHTML += `<br>`;
+                                        }
+                                        informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys2[k])}: ${third}<br>`;
+                                    }
+                                }
+
+                            } else {
+
+                                if (j === 0) {
+                                    informationAboutUser.innerHTML += `<br><h2>${capitalizeFirstLetter(keys[i])}</h2>`;
+                                }
+
+                                informationAboutUser.innerHTML += `${capitalizeFirstLetter(extraKeys[j])}: ${second}<br>`;
+
                             }
-                        }
-
-                    } catch {
-
-                        informationAboutUser.innerHTML = `Data vises som JSON<br>`;
-
-                        for (let i = 0; i < keys.length; i++) {
-                            informationAboutUser.innerHTML += `<br><strong>${capitalizeFirstLetter(keys[i])}</strong>`;
-                            informationAboutUser.innerHTML += `<br>${JSON.stringify(resp[keys[i]])}<br>`;
                         }
                     }
 
-                    document.getElementById("detailsAboutMyAccountBtn").innerHTML = "Mine opplysninger";
-                    setTimeout(() => {
-                        loadingInformationAboutUser = false;
-                    }, 1000);
+                    if (fromCache === true) {
+                        informationAboutUser.innerHTML += `
+                        <br>Informasjonen ble hentet fra ${cacheName} cachen.
+                        Data kan være litt utdatert.
+                        Hvis du ønsker å oppdatere dette nå.
+                        <button class="settingsButton pointer" onClick="deleteInfoCache('${cacheName}', '${url}')">Trykk her</button>`;
+                    }
 
-                } else {
-                    informationAboutUser.innerHTML = `<br>Det her oppstått en feil, kunne ikke hente opplysningene dine. Vennligst prøv igjen.`;
+                } catch {
+
+                    informationAboutUser.innerHTML = `Data vises som JSON<br>`;
+
+                    for (let i = 0; i < keys.length; i++) {
+                        informationAboutUser.innerHTML += `<br><strong>${capitalizeFirstLetter(keys[i])}</strong>`;
+                        informationAboutUser.innerHTML += `<br>${JSON.stringify(resp[keys[i]])}<br>`;
+                    }
                 }
+
+                document.getElementById("detailsAboutMyAccountBtn").innerHTML = "Mine opplysninger";
+                setTimeout(() => {
+                    loadingInformationAboutUser = false;
+                }, 1000);
+
             } else {
-                document.getElementById("detailsAboutMyAccountBtn").innerHTML = "Hent mine opplysninger";
-                informationAboutUser.innerHTML = "";
+                informationAboutUser.innerHTML = `<br>Det her oppstått en feil, kunne ikke hente opplysningene dine. Vennligst prøv igjen.`;
             }
+
         } else {
-            informationAboutUser.innerHTML = `<br>Kunne ikke hente opplysningene dine. Mangler internettforbindelse.`;
+            if (!navigator.onLine) {
+                informationAboutUser.innerHTML = `<br>Kunne ikke hente opplysningene dine. Krever internettforbindelse for å laste ned nytt innhold.`;
+            } else {
+                informationAboutUser.innerHTML = `<br>Det her oppstått en feil, kunne ikke hente opplysningene dine. Vennligst prøv igjen.`;
+            }
+        }
+
+    } else {
+        document.getElementById("detailsAboutMyAccountBtn").innerHTML = "Hent mine opplysninger";
+        informationAboutUser.innerHTML = "";
+    }
+}
+
+async function deleteInfoCache(aCacheName, aURL) {
+    if (aCacheName && aURL) {
+        const cacheName = aCacheName;
+        const url = aURL;
+
+        const cache = await caches.open(cacheName);
+        if (cache) {
+            await cache.delete(url);
+            document.getElementById("informationAboutUser").innerHTML = "";
+            displayInformationAboutUser();
         }
     }
 }
