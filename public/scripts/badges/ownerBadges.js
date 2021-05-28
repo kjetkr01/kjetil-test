@@ -118,7 +118,7 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
 
         const badgeTemplate = `
 <td>
-<div class="bigBadges ${goalBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('goal', '${userBadgeInfo.exercise}', '${aId}');">
+<div class="bigBadges ${goalBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayView('goal', '${userBadgeInfo.exercise}', '${aId}');">
 
 
 
@@ -181,7 +181,7 @@ ${progressionTxt}
 
         const badgeTemplate = `
 <td>
-<div class="smallBadges ${goalBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('goal', '${userBadgeInfo.exercise}', '${aId}');">
+<div class="smallBadges ${goalBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayView('goal', '${userBadgeInfo.exercise}', '${aId}');">
 
 <div id="Gexercise">
 <p id="exercise">
@@ -307,7 +307,7 @@ function getBadgeLift(aSize, aBadgeInfo, aId) {
 
         const badgeTemplate = `
 <td>
-<div class="bigBadges ${liftBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}', '${aId}');">
+<div class="bigBadges ${liftBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayView('lift', '${userBadgeInfo.exercise}', '${aId}');">
 
 
 
@@ -389,7 +389,7 @@ Nærmer deg!
 
         const badgeTemplate = `
 <td>
-<div class="smallBadges ${liftBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayEdit('lift', '${userBadgeInfo.exercise}', '${aId}');">
+<div class="smallBadges ${liftBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayView('lift', '${userBadgeInfo.exercise}', '${aId}');">
 
 <!--
 <div id="c1b"></div>

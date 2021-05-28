@@ -145,10 +145,142 @@ function checkIfEdited(aDetails) {
                 saveE.classList = "";
             }
         }
-
-        console.log(aDetails);
     }
+}
 
+function enableOverlayView(aType, aExercise, aId) {
+
+    if (aType && aExercise) {
+
+        const type = aType;
+        const exercise = aExercise.toLowerCase();
+        const exerciseCapitalizedFirst = capitalizeFirstLetter(exercise);
+        const id = aId;
+        const viewLiftorGoal = document.getElementById("viewLiftorGoal");
+        const title1 = document.getElementById("title1W");
+        const inp1 = document.getElementById("inp1W");
+        const inp2 = document.getElementById("inp2W");
+        const inp3 = document.getElementById("inp3W");
+        const GeditW = document.getElementById("GeditW");
+
+        const viewLiftorGoalOverlay = document.getElementById("viewLiftorGoalOverlay");
+        viewLiftorGoal.style.border = "";
+
+        if (type === "goal") {
+            title1.textContent = exerciseCapitalizedFirst + " (mål)";
+        } else {
+            title1.textContent = exerciseCapitalizedFirst + " (løft)";
+        }
+
+        title1.value = exercise;
+
+        inp1.value = "";
+        inp2.value = "";
+        inp3.value = "";
+
+        const today = new Date().toISOString().substr(0, 10) || null;
+
+        if (today) {
+            inp3.setAttribute('max', today);
+        }
+
+        if (type === "lift" && liftsInfo) {
+
+            const lifts = liftsInfo.info();
+
+            let lift = lifts[exercise];
+
+            function findWithAttr(value) {
+                for (var i = 0; i < lift.length; i += 1) {
+                    if (lift[i].id === value) {
+                        return i;
+                    }
+                }
+                return -1;
+            }
+
+            const index = findWithAttr(id);
+
+            if (index >= 0) {
+                lift = lifts[exercise][index];
+            }
+
+            if (lift) {
+                inp1.innerHTML = lift.kg;
+                inp2.innerHTML = lift.reps;
+
+                const daysSinceAndDate = getDaysSinceAndDate(lift.date);
+
+                inp3.innerHTML = `${daysSinceAndDate.fixedDate}<br>${daysSinceAndDate.daysSinceMsg}`;
+
+                const color = lift.color;
+
+                if (badgeColorBorders.hasOwnProperty(color)) {
+                    document.getElementById("viewLiftorGoal").style.border = `1px solid #${badgeColorBorders[color]}`;
+                }
+
+                if (navigator.onLine) {
+                    GeditW.innerHTML = `<button id="editW" class="pointer" onClick="disableOverlay('viewLiftOrGoal');enableOverlayEdit('lift', '${exercise}', '${id}');">Rediger</button>`;
+                } else {
+                    GeditW.innerHTML = `<button id="editW" disabled>Rediger</button>`;
+                }
+
+                viewLiftorGoalOverlay.style.display = "block";
+
+            } else {
+                alert("Det har oppstått et problem!");
+            }
+
+        } else if (type === "goal" && goalsInfo) {
+            const goals = goalsInfo.info();
+
+            let goal = goals[exercise];
+
+            function findWithAttr(value) {
+                for (var i = 0; i < goal.length; i += 1) {
+                    if (goal[i].id === value) {
+                        return i;
+                    }
+                }
+                return -1;
+            }
+
+            const index = findWithAttr(id);
+
+            if (index >= 0) {
+                goal = goals[exercise][index];
+            }
+
+            if (goal) {
+                inp1.innerHTML = goal.kg;
+                inp2.innerHTML = goal.reps;
+
+                const daysSinceAndDate = getDaysSinceAndDate(goal.date);
+
+                inp3.innerHTML = `${daysSinceAndDate.fixedDate}<br>${daysSinceAndDate.daysSinceMsg}`;
+
+                const color = goal.color;
+
+                if (badgeColorBorders.hasOwnProperty(color)) {
+                    document.getElementById("viewLiftorGoal").style.border = `1px solid #${badgeColorBorders[color]}`;
+                }
+
+                if (navigator.onLine) {
+                    GeditW.innerHTML = `<button id="editW" class="pointer" onClick="disableOverlay('viewLiftOrGoal');enableOverlayEdit('goal', '${exercise}', '${id}');">Rediger</button>`;
+                } else {
+                    GeditW.innerHTML = `<button id="editW" disabled>Rediger</button>`;
+                }
+
+                viewLiftorGoalOverlay.style.display = "block";
+
+            } else {
+                alert("Det har oppstått et problem!");
+            }
+
+        } else {
+            alert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
+        }
+    }
 }
 
 
@@ -166,6 +298,7 @@ function enableOverlayEdit(aType, aExercise, aId) {
         const inp2 = document.getElementById("inp2E");
         const inp3 = document.getElementById("inp3E");
         const inp4 = document.getElementById("inp4E");
+        const GcancelE = document.getElementById("GcancelE");
         const GdeleteE = document.getElementById("GdeleteE");
         const Gsave = document.getElementById("GsaveE");
         const respMsg = document.getElementById("respE");
@@ -255,6 +388,8 @@ function enableOverlayEdit(aType, aExercise, aId) {
                     document.getElementById("editLiftorGoal").style.border = `1px solid #${badgeColorBorders[color]}`;
                 }
 
+                GcancelE.innerHTML = `<button id="cancelE" class="pointer" onclick="disableOverlay('editLiftOrGoal');enableOverlayView('lift', '${exercise}', '${id}');"">Avbryt</button>`;
+
                 editLiftorGoalOverlay.style.display = "block";
 
             } else {
@@ -316,6 +451,8 @@ function enableOverlayEdit(aType, aExercise, aId) {
                 if (badgeColorBorders.hasOwnProperty(color)) {
                     document.getElementById("editLiftorGoal").style.border = `1px solid #${badgeColorBorders[color]}`;
                 }
+
+                GcancelE.innerHTML = `<button id="cancelE" class="pointer" onclick="disableOverlay('editLiftOrGoal');enableOverlayView('goal', '${exercise}', '${id}');"">Avbryt</button>`;
 
                 editLiftorGoalOverlay.style.display = "block";
 
@@ -623,11 +760,16 @@ function onlyAllowedKeys(evt, aType) {
 function disableOverlay() {
 
     const createNewLiftorGoalOverlay = document.getElementById("createNewLiftorGoalOverlay");
+    const viewLiftorGoalOverlay = document.getElementById("viewLiftorGoalOverlay");
     const editLiftorGoalOverlay = document.getElementById("editLiftorGoalOverlay");
     const editDaysOverlay = document.getElementById("editworkoutPlanOverlay");
 
     if (createNewLiftorGoalOverlay) {
         createNewLiftorGoalOverlay.style.display = "none";
+    }
+
+    if (viewLiftorGoalOverlay) {
+        viewLiftorGoalOverlay.style.display = "none";
     }
 
     if (editLiftorGoalOverlay) {

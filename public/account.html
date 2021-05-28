@@ -100,6 +100,7 @@
 
    <div id="createNewLiftorGoalOverlay" style="display: none;" class="overlay noselect"></div>
 
+   <div id="viewLiftorGoalOverlay" style="display: none;" class="overlay noselect"></div>
    <div id="editLiftorGoalOverlay" style="display: none;" class="overlay noselect"></div>
 
    <div id="editworkoutPlanOverlay" style="display: none;" class="overlay noselect"></div>
@@ -281,9 +282,10 @@
 
    lockBodyPosition();
    getCreateNewLiftorGoalOverlay();
+   getViewLiftorGoalOverlay();
    getEditLiftorGoalOverlay();
    geteditworkoutPlanOverlay();
-
+   
    displayUserDetailsCached();
 
    if (checkIfValidParams() === true) {

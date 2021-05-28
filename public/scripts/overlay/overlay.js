@@ -132,7 +132,7 @@ function getEditLiftorGoalOverlay() {
             <p id="respE"></p>
          </div>
          <div id="GcancelE">
-            <button id="cancelE" class="pointer" onclick="disableOverlay('editLiftOrGoal');">Avbryt</button>
+            <button id="cancelE" class="pointer" onclick="disableOverlay('editLiftOrGoal');">Lukk</button>
          </div>
          <div id="GsaveE">
          </div>
@@ -232,41 +232,43 @@ function getViewLiftorGoalOverlay() {
       const html = `
        
        <div id="viewLiftorGoal" class="viewLiftorGoal">
-        <div id="Gtitle1E">
-           <p id="title1E"></p>
+        <div id="Gtitle1W">
+           <p id="title1W"></p>
         </div>
-        <div id="Gline1E">
-           <hr id="line1E">
+        <div id="Gline1W">
+           <hr id="line1W">
         </div>
-        <div id="Gtitle2E">
-           <p id="title2E">Antall KG</p>
+        <div id="Gtitle2W">
+           <p id="title2W">Antall KG</p>
         </div>
-        <div id="Gline2E">
-           <hr id="line2E">
+        <div id="Gline2W">
+           <hr id="line2W">
         </div>
-        <div id="Ginp1E">
-           <p id="inp1E" class="inputLiftOrGoal"></p>
+        <div id="Ginp1W">
+           <p id="inp1W" class="inputLiftOrGoal"></p>
         </div>
-        <div id="Gtitle3E">
-           <p id="title3E">Reps</p>
+        <div id="Gtitle3W">
+           <p id="title3W">Reps</p>
         </div>
-        <div id="Gline3E">
-           <hr id="line3E">
+        <div id="Gline3W">
+           <hr id="line3W">
         </div>
-        <div id="Ginp2E">
-           <p id="inp2E" class="inputLiftOrGoal"></p>
+        <div id="Ginp2W">
+           <p id="inp2W" class="inputLiftOrGoal"></p>
         </div>
-        <div id="Gtitle4E">
-           <p id="title4E">Dato</p>
+        <div id="Gtitle4W">
+           <p id="title4W">Dato</p>
         </div>
-        <div id="Gline4E">
-           <hr id="line4E">
+        <div id="Gline4W">
+           <hr id="line4W">
         </div>
-        <div id="Ginp3E">
-           <p id="inp3E" class="inputLiftOrGoal"></p>
+        <div id="Ginp3W">
+           <p id="inp3W" class="inputLiftOrGoal"></p>
         </div>
-        <div id="GcancelE">
-           <button id="cancelE" class="pointer" onclick="disableOverlay('viewLiftOrGoal');">Lukk</button>
+        <div id="GcancelW">
+           <button id="cancelW" class="pointer" onclick="disableOverlay('viewLiftOrGoal');">Lukk</button>
+        </div>
+        <div id="GeditW">
         </div>
      </div>
 

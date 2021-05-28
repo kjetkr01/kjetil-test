@@ -9,11 +9,10 @@ function enableOverlayView(aType, aExercise, aId) {
         const exerciseCapitalizedFirst = capitalizeFirstLetter(exercise);
         const id = aId;
         const viewLiftorGoal = document.getElementById("viewLiftorGoal");
-        const title1 = document.getElementById("title1E");
-        const inp1 = document.getElementById("inp1E");
-        const inp2 = document.getElementById("inp2E");
-        const inp3 = document.getElementById("inp3E");
-        const inp4 = document.getElementById("inp4E");
+        const title1 = document.getElementById("title1W");
+        const inp1 = document.getElementById("inp1W");
+        const inp2 = document.getElementById("inp2W");
+        const inp3 = document.getElementById("inp3W");
 
         const viewLiftorGoalOverlay = document.getElementById("viewLiftorGoalOverlay");
         viewLiftorGoal.style.border = "";

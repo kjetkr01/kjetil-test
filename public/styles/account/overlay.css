@@ -367,7 +367,287 @@ grid-area: c8oC;
 /* end of spacing & other */
 
 
-
+.overlay>.viewLiftorGoal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    width: 90vw;
+    max-width: 550px;
+    height: 90vh;
+    max-height: 410px;
+    overflow-y: scroll;
+    
+    background-color: var(--main-backgroundColor2);
+    
+    border: 1px solid var(--main-backgroundColor1);
+    border-radius: 16px;
+    
+    display: grid;
+    grid-template-areas:
+    
+    "c1oW c1oW c1oW"
+    "Gtitle1W Gtitle1W Gtitle1W"
+    "Gline1W Gline1W Gline1W"
+    "c2oW c2oW c2oW"
+    
+    "Gtitle2W Gtitle2W Gtitle2W"
+    "Gline2W Gline2W Gline2W"
+    "Ginp1W Ginp1W Ginp1W"
+    "c3oW c3oW c3oW"
+    
+    "Gtitle3W Gtitle3W Gtitle3W"
+    "Gline3W Gline3W Gline3W"
+    "Ginp2W Ginp2W Ginp2W"
+    "c4oW c4oW c4oW"
+    
+    "Gtitle4W Gtitle4W Gtitle4W"
+    "Gline4W Gline4W Gline4W"
+    "Ginp3W Ginp3W Ginp3W"
+    "c5oW c5oW c5oW"
+    
+    "GcancelW c7oW GeditW"
+    "c8oW c8oW c8oW"
+    ;
+    
+    grid-template-rows: /* nedover */
+    
+    20px /* c1oW */
+    
+    30px /* Gtitle1W */
+    
+    10px /* Gline1W */
+    
+    30px /* c2oW */
+    
+    
+    
+    25px /* Gtitle2W */
+    
+    10px /* Gline2W */
+    
+    auto /* Ginp1W */
+    
+    20px /* c3oW */
+    
+    
+    
+    25px /* Gtitle3W */
+    
+    10px /* Gline3W */
+    
+    auto /* Ginp2W */
+    
+    20px /* c4oW */
+    
+    
+    
+    25px /* Gtitle4W */
+    
+    10px /* Gline4W */
+    
+    auto /* Ginp3W */
+    
+    20px /* c5oW */
+    
+    
+    
+    40px /* GbuttonsW */
+    
+    10px /* c7oW */
+    
+    ;
+    
+    grid-template-columns: /* bortover */
+    1fr 1fr 1fr;
+    }
+    
+    
+    
+    /* end of grid */
+    
+    
+    
+    /* elements */
+    
+    
+    
+    
+    
+    #Gtitle1W > #title1W {
+    font-size: 22px;
+    }
+    
+    #Gline1W > #line1W {
+    width: 250px;
+    }
+    
+    #Gline2W > #line2W {
+    }
+    
+    #Gline3W > #line3W {
+    }
+    
+    #Gline4W > #line4W {
+    }
+    
+    #Ginp1W > #inp1W {
+    }
+    
+    #Ginp2W > #inp2W {
+    }
+    
+    #Ginp3W > #inp3W {
+    }
+    
+    #GcancelW > #cancelW {
+    }
+    
+    #GeditW > #editW {
+    }
+    
+    #cancelW, #editW {
+    font-size: 16px;
+    font-weight: bold;
+    height: 30px;
+    
+    background-color: rgb(212, 212, 212);
+    border-radius: 4px;
+    border: transparent;
+    }
+    
+    #inp1W, #inp2W, #inp3W {
+    color: var(--main-textColorDark);
+    font-family: var(--main-font-Family-Verdana);
+    font-size: 16px;
+    }
+    
+    #line2W, #line3W, #line4W {
+    width: 125px;
+    }
+    
+    #Gtitle2W > #title2W {
+    }
+    
+    #Gtitle3W > #title3W {
+    }
+    
+    #Gtitle4W > #title4W {
+    }
+    
+    #title2W, #title3W, #title4W  {
+    font-size: 18px;
+    }
+    
+    #title1W, #title2W, #title3W, #title4W {
+    color: var(--main-textColorDark);
+    font-family: var(--main-font-Family-Verdana);
+    font-weight: bold;
+    }
+    
+    
+    #line1W, #line2W, #line3W, #line4W {
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    
+    opacity: 40%;
+    border: var(--main-lineBorder);
+    }
+    
+    
+    
+    /* end of elements */
+    
+    
+    
+    /* spacing & other */
+    
+    .viewLiftorGoal > #c1oW {
+    grid-area: c1oW;
+    }
+    
+    .viewLiftorGoal > #Gtitle1W {
+    grid-area: Gtitle1W;
+    }
+    
+    .viewLiftorGoal > #Gline1W {
+    grid-area: Gline1W;
+    }
+    
+    .viewLiftorGoal > #c2oW {
+    grid-area: c2oW;
+    }
+    
+    .viewLiftorGoal > #Gtitle2W {
+    grid-area: Gtitle2W;
+    }
+    
+    .viewLiftorGoal > #Gline2W {
+    grid-area: Gline2W;
+    }
+    
+    .viewLiftorGoal > #Ginp1W {
+    grid-area: Ginp1W;
+    }
+    
+    .viewLiftorGoal > #c3oW {
+    grid-area: c3oW;
+    }
+    
+    .viewLiftorGoal > #Gtitle3W {
+    grid-area: Gtitle3W;
+    }
+    
+    .viewLiftorGoal > #Gline3W {
+    grid-area: Gline3W;
+    }
+    
+    .viewLiftorGoal > #Ginp2W {
+    grid-area: Ginp2W;
+    }
+    
+    .viewLiftorGoal > #c4oW {
+    grid-area: c4oW;
+    }
+    
+    .viewLiftorGoal > #Gtitle4W {
+    grid-area: Gtitle4W;
+    }
+    
+    .viewLiftorGoal > #Gline4W {
+    grid-area: Gline4W;
+    }
+    
+    .viewLiftorGoal > #Ginp3W {
+    grid-area: Ginp3W;
+    }
+    
+    .viewLiftorGoal > #c5oW {
+    grid-area: c5oW;
+    }
+    
+    .viewLiftorGoal > #c6oW {
+    grid-area: c6oW;
+    }
+    
+    .viewLiftorGoal > #GcancelW {
+    grid-area: GcancelW;
+    }
+    
+    .viewLiftorGoal > #c7oW {
+    grid-area: c7oW;
+    }
+    
+    .viewLiftorGoal > #GeditW {
+        grid-area: GeditW;
+        }
+    
+    .viewLiftorGoal > #c8oW {
+    grid-area: c8oW;
+    }
 
 
 .overlay>.editLiftorGoal {
