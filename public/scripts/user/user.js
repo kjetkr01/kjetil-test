@@ -1,4 +1,4 @@
-let lifts = null, goals = null, activetrainingsplit = null, memberSince = null, size = 0;
+let lifts = null, goals = null, activetrainingsplit = null, memberSince = null, size = 0, badgeColorsJSON = null;
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -112,6 +112,12 @@ async function requestAccountDetails() {
 
     const viewingUser = urlParams.get("user_id");
 
+    try {
+        badgeColorsJSON = JSON.parse(localStorage.getItem("cachedBadgeColors"));
+    } catch {
+
+    }
+
     /*try {
         const cachedDetails = JSON.parse(sessionStorage.getItem(`cachedDetails_visitor_${viewingUser}`));
         if (cachedDetails.hasOwnProperty("displayname")) {
@@ -168,7 +174,7 @@ async function requestAccountDetails() {
 
     if (viewingUser) {
 
-        if (testUser && testUser.getId() === parseInt(viewingUser)) {
+        if (user && user.getId() === parseInt(viewingUser)) {
             redirectToAccount();
         } else {
 

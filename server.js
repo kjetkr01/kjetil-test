@@ -177,8 +177,7 @@ server.post("/authenticate", async function (req, res) {
                     const userInfo = {
                          "id": requestUser.userInfo.id,
                          "username": requestUser.userInfo.username,
-                         "displayname": requestUser.userInfo.displayname,
-                         "preferredColorTheme": requestUser.userInfo.preferredcolortheme,
+                         "displayname": requestUser.userInfo.displayname
                     }
                     const sessionToken = createToken(requestUser.userInfo);
                     res.status(200).json({ "authToken": sessionToken, "user": userInfo }).end();
@@ -400,12 +399,7 @@ server.post("/users/details/:user", auth, async (req, res) => {
                                    const updatedUserInfo = {
                                         "id": resp.userDetails.id,
                                         "username": resp.userDetails.username,
-                                        "displayname": resp.userDetails.displayname,
-                                        "preferredColorTheme": resp.userDetails.settings.preferredcolortheme,
-                                        "preferredTheme": resp.userDetails.settings.preferredtheme,
-                                        "automaticUpdates": resp.userDetails.settings.automaticupdates,
-                                        "badgesize": resp.userDetails.settings.badgesize,
-                                        "badgedetails": resp.userDetails.settings.badgedetails
+                                        "displayname": resp.userDetails.displayname
                                    }
 
                                    cacheDetails.id = resp.userDetails.id;

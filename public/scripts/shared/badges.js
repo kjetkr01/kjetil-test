@@ -55,9 +55,9 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
 
         let currentProgressionPercent = `${userBadgeInfo.progressionPercent}%`;
 
-        if (testUser.getSetting("badgedetails") === 1) {
+        if (user.getSetting("badgedetails") === 1) {
             currentProgressionPercent = "";
-        } else if (testUser.getSetting("badgedetails") === 2) {
+        } else if (user.getSetting("badgedetails") === 2) {
             untilGoal = "";
         }
 

@@ -66,8 +66,8 @@ function enableOverlayView(aType, aExercise, aId) {
 
                 const color = lift.color;
 
-                if (badgeColorBorders.hasOwnProperty(color)) {
-                    document.getElementById("viewLiftorGoal").style.border = `1px solid #${badgeColorBorders[color]}`;
+                if (badgeColorsJSON[color]) {
+                    document.getElementById("viewLiftorGoal").style.border = `1px solid #${badgeColorsJSON[color].border}`;
                 }
 
                 viewLiftorGoalOverlay.style.display = "block";
@@ -106,8 +106,8 @@ function enableOverlayView(aType, aExercise, aId) {
 
                 const color = goal.color;
 
-                if (badgeColorBorders.hasOwnProperty(color)) {
-                    document.getElementById("viewLiftorGoal").style.border = `1px solid #${badgeColorBorders[color]}`;
+                if (badgeColorsJSON[color]) {
+                    document.getElementById("viewLiftorGoal").style.border = `1px solid #${badgeColorsJSON[color].border}`;
                 }
 
                 viewLiftorGoalOverlay.style.display = "block";

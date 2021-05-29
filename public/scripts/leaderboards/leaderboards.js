@@ -17,7 +17,7 @@ async function loadLeaderboards() {
     let cached_leaderboardsArrOrder = null;
     let cached_viewingLeaderboard = null;
 
-    //ikke last inn på nytt hvis arr er likt?
+
     try {
 
         let cached_leaderboardUserTxt = sessionStorage.getItem("cached_leaderboardUserTxt");
@@ -30,15 +30,19 @@ async function loadLeaderboards() {
         }
 
         if (repsText) {
+
+            let leaderboardsUserTxt = "";
+
             if (!navigator.onLine) {
-                cached_leaderboardUserTxt = "Ledertavler krever internettforbindelse";
+                leaderboardsUserTxt = "<br>Ledertavler krever internettforbindelse";
+            } else if (cached_leaderboardUserTxt) {
+                leaderboardsUserTxt = `<br>${cached_leaderboardUserTxt}`;
             }
-            if (cached_leaderboardUserTxt) {
-                const usermsg1 = document.getElementById("peopleLeaderboardsTxt");
-                usermsg1.classList = "noselect";
-                usermsg1.innerHTML = `Filter: <select class="changeLeaderboardRepsSelect" disabled><option>${repsText}</option></select><br>${cached_leaderboardUserTxt}`;
-                showPeopleLeaderboardsTxtAnimation = false;
-            }
+
+            const usermsg1 = document.getElementById("peopleLeaderboardsTxt");
+            usermsg1.classList = "noselect";
+            usermsg1.innerHTML = `Filter: <select class="changeLeaderboardRepsSelect" disabled><option>${repsText}</option></select>${leaderboardsUserTxt}`;
+            showPeopleLeaderboardsTxtAnimation = false;
         }
 
         cached_leaderboardsArrOrder = JSON.parse(localStorage.getItem("cached_leaderboardsArrOrder"));
@@ -112,7 +116,6 @@ async function loadLeaderboards() {
 
                     if (checkExistingLeaderboardsArrOrder === checkUpdatedLeaderboardsArrOrder) {
                         updateLeaderboardList = false;
-                        console.log("skipped update leaderboardsArr");
                     }
 
                 } catch {
@@ -173,7 +176,7 @@ async function getListOfLeaderboard(aLeaderboard) {
             return;
         }
 
-        if (testUser && aLeaderboard) {
+        if (user && aLeaderboard) {
 
             const reps = localStorage.getItem("leaderboards_filter_reps") || "1";
             viewingLeaderboard = aLeaderboard;
@@ -248,7 +251,7 @@ async function getListOfLeaderboard(aLeaderboard) {
                     let placementHTML = `${i + 1}.`;
                     let usernameHTML = `<button class="peopleLeaderboardsListName pointer" onClick="viewUser('${resp[i].id}')">${resp[i].username}</button>`;
 
-                    if (resp[i].id === testUser.getId()) {
+                    if (resp[i].id === user.getId()) {
                         usernameHTML = `<button class="accountOwner pointer" onClick="viewUser('${resp[i].id}')">${resp[i].username}</button>`;
                     }
 

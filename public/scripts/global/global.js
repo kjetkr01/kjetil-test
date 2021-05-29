@@ -4,7 +4,7 @@ let isUpdatingUserObject = false;
 
 let lockedBody = false;
 
-let testUser = null;
+let user = null;
 
 const repsSM = 10; // 1 rep * 10 (repsSM) = 10 points. 1 kg = 1 point
 
@@ -22,16 +22,6 @@ const themeColors = {
     "default": { "lightHex": "327a94", "darkHex": "1c4553" },
     "blue": { "lightHex": "3247bb", "darkHex": "202b6b" },
     "test_full": { "lightHex": "1b8ad4", "darkHex": "09314b" }
-}
-
-const badgeColorBorders = {
-    "redBadgeG": `972F2F`,
-    "yellowBadgeG": `C96E4C`,
-    "blueBadgeG": `2B2379`,
-
-    "redBadge": `E36262`,
-    "yellowBadge": `DBB331`,
-    "blueBadge": `626BE3`,
 }
 
 const allowedExercises = ["benkpress", "markløft", "knebøy", "skulderpress"];
@@ -56,11 +46,11 @@ function createUserClass() {
 
             // userSettings not always loading first
             if (token && userObj) {
-                testUser = new TUser(token, JSON.parse(userObj), {});
+                user = new TUser(token, JSON.parse(userObj), {});
             }
 
-            if (testUser && testSettings) {
-                testUser.setSettings(JSON.parse(testSettings));
+            if (user && testSettings) {
+                user.setSettings(JSON.parse(testSettings));
             }
 
             //auto redirect to login if token is invalid
@@ -84,7 +74,7 @@ function createUserClass() {
 
                 } else {
 
-                    if (testUser) {
+                    if (user) {
 
                         const infoHeader = {};
                         const url = `/validate`;
@@ -96,7 +86,7 @@ function createUserClass() {
                         } else {
                             localStorage.clear();
                             sessionStorage.clear();
-                            sessionStorage.setItem("cachedUsername", testUser.getUsername());
+                            sessionStorage.setItem("cachedUsername", user.getUsername());
                             redirectToLogin();
                         }
 
@@ -177,8 +167,11 @@ function TUser(aToken, aUser, aSettings) {
         return settings[aSetting.toLowerCase()];
     }
 
-    this.setSetting = function (aSetting, aValue) {
-        settings[aSetting.toLowerCase()] = aValue;
+    this.changeSetting = function (aSetting, aValue) {
+        if (settings[aSetting.toLowerCase()]) {
+            settings[aSetting.toLowerCase()] = aValue;
+            localStorage.setItem("userSettings", JSON.stringify(settings));
+        }
     }
 
     this.setSettings = function (aNewSettings) {
@@ -303,9 +296,9 @@ async function callServerAPIPost(aInfoBody, aUrl) {
 
     let userInfoObj = null;
     let token = null;
-    if (testUser) {
-        userInfoObj = JSON.stringify(testUser.getUser());
-        token = testUser.getToken();
+    if (user) {
+        userInfoObj = JSON.stringify(user.getUser());
+        token = user.getToken();
     }
 
     const config = {
@@ -333,7 +326,7 @@ async function callServerAPIPost(aInfoBody, aUrl) {
 async function getAccountDetails(aUserID) {
     if (navigator.onLine) {
 
-        if (testUser) {
+        if (user) {
 
             isUpdatingUserObject = true;
 
@@ -375,9 +368,6 @@ async function getAccountDetails(aUserID) {
 
                     if (resp.info.hasOwnProperty("settings")) {
                         const s = resp.info.settings;
-                        if (s.hasOwnProperty("subscribedtrainingsplits")) {
-                            sessionStorage.setItem("cachedSubscribedTrainingsplits_owner", JSON.stringify(s.subscribedtrainingsplits));
-                        }
                         if (s.hasOwnProperty("leaderboards_filter_reps")) {
                             if (s.leaderboards_filter_reps) {
                                 localStorage.setItem("leaderboards_filter_reps", s.leaderboards_filter_reps);
@@ -408,10 +398,10 @@ async function getAccountDetails(aUserID) {
 
                     }
 
-                    const newColorTheme = allowedThemes[resp.updatedUserObject.preferredColorTheme].theme;
+                    const newColorTheme = allowedThemes[resp.info.settings.preferredcolortheme].theme;
 
-                    if (testUser && testUser.getSetting("preferredcolortheme") !== newColorTheme && checkAllowedThemes.includes(newColorTheme) === true) {
-                        testUser.setSetting("preferredcolortheme", newColorTheme);
+                    if (user && user.getSetting("preferredcolortheme") !== newColorTheme && checkAllowedThemes.includes(newColorTheme) === true) {
+                        user.changeSetting("preferredcolortheme", newColorTheme);
 
                         if (localStorage.getItem("user")) {
                             localStorage.setItem("colorTheme", newColorTheme);
@@ -422,10 +412,9 @@ async function getAccountDetails(aUserID) {
                         changeColorTheme();
                     }
 
-                    const newTheme = resp.updatedUserObject.preferredTheme;
+                    const newTheme = resp.info.settings.preferredtheme;
 
                     if (newTheme === 0 || newTheme === 1 || newTheme === 2) {
-                        //localStorage.setItem("theme", newTheme);
 
                         if (localStorage.getItem("user")) {
                             localStorage.setItem("theme", newTheme);
@@ -734,7 +723,7 @@ function redirectToUser(viewUser) {
     const viewingUser = viewUser;
 
     if (viewingUser) {
-        if (testUser && testUser.getId() === parseInt(viewingUser)) {
+        if (user && user.getId() === parseInt(viewingUser)) {
             redirectToAccount();
         } else {
             sessionStorage.setItem("visit_user_referrer", document.URL);

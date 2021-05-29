@@ -47,7 +47,7 @@ async function whoIsWorkingOutToday() {
 
     let info = {};
 
-    if (testUser) {
+    if (user) {
 
         const infoHeader = {};
         const url = `/whoIsWorkingOutToday`;
@@ -66,8 +66,8 @@ async function whoIsWorkingOutToday() {
 
 function displayPartOfDayMsg() {
 
-    if (testUser) {
-        const partOfDayMsg = partOfDayMessage(testUser.getDisplayname());
+    if (user) {
+        const partOfDayMsg = partOfDayMessage(user.getDisplayname());
         const titleDom = document.getElementById("title");
         const nameDom = document.getElementById("name");
 
@@ -89,7 +89,7 @@ async function checkWhoIsWorkingOutToday() {
     peopleWorkoutList.innerHTML = "";
     peopleWorkoutTxt.innerHTML = "";
 
-    const cached_peopleWorkoutTxt = localStorage.getItem("cached_peopleWorkoutTxt");
+    const cached_peopleWorkoutTxt = sessionStorage.getItem("cached_peopleWorkoutTxt");
     if (cached_peopleWorkoutTxt) {
         peopleWorkoutTxt.classList = "noselect";
         peopleWorkoutTxt.innerHTML = cached_peopleWorkoutTxt;
@@ -137,7 +137,7 @@ async function checkWhoIsWorkingOutToday() {
                 shortenedFullName += `${splitFullName[j][0]}.`;
             }
 
-            if (testUser && testUser.getId() === resp[i].id) {
+            if (user && user.getId() === resp[i].id) {
 
                 peopleWorkoutList.innerHTML += `
                 <button class="accountOwner fadeInUp animate pointer" onClick="viewUser('${resp[i].id}')">${shortenedFullName}</button>
@@ -159,7 +159,7 @@ async function checkWhoIsWorkingOutToday() {
         peopleWorkoutTxt.innerHTML = `I dag er det ingen som trener`;
     }
 
-    localStorage.setItem("cached_peopleWorkoutTxt", peopleWorkoutTxt.innerHTML);
+    sessionStorage.setItem("cached_peopleWorkoutTxt", peopleWorkoutTxt.innerHTML);
 
 }
 
@@ -217,7 +217,7 @@ async function requestAccountDetails() {
 
         const cachedGoalsLeft = JSON.parse(localStorage.getItem("cachedGoalsLeft_owner"));
 
-        if (testUser.getSetting("badgesize") === 1) {
+        if (user.getSetting("badgesize") === 1) {
             document.getElementById("Gbadges").style.minHeight = "200px";
         } else {
             document.getElementById("Gbadges").style.minHeight = "110px";
@@ -246,7 +246,7 @@ async function requestAccountDetails() {
         localStorage.removeItem("cachedHasGoalsLeft_owner");
     }
 
-    const resp = await getAccountDetails(testUser.getId());
+    const resp = await getAccountDetails(user.getId());
 
     if (resp) {
         if (resp.hasOwnProperty("info")) {
@@ -286,22 +286,20 @@ async function displayBadges(aInfo) {
         const checkExistingBadgeColors = JSON.stringify(badgeColorsJSON);
         const checkUpdatedBadgeColors = JSON.stringify(info.badgeColors);
 
-        if (checkExistingLifts === checkUpdatedLifts && checkExistingGoals === checkUpdatedGoals && testUser.getSetting("badgesize") === info.settings.badgesize && testUser.getSetting("badgedetails") === info.settings.badgedetails) {
+        if (checkExistingLifts === checkUpdatedLifts && checkExistingGoals === checkUpdatedGoals && user.getSetting("badgesize") === info.settings.badgesize && user.getSetting("badgedetails") === info.settings.badgedetails) {
             updateGoals = false;
-            console.log("skipped update lifts/goals");
         }
 
         if (checkExistingBadgeColors === checkUpdatedBadgeColors) {
             updateBadgeColors = false;
-            console.log("skipped update badgeColors");
         }
 
     } catch {
 
     }
 
-    testUser.setSetting("badgesize", info.settings.badgesize);
-    testUser.setSetting("badgedetails", info.settings.badgedetails);
+    user.changeSetting("badgesize", info.settings.badgesize);
+    user.changeSetting("badgedetails", info.settings.badgedetails);
 
     if (updateBadgeColors === true) {
         badgeColors = new TbadgeColors(info.badgeColors);
@@ -311,7 +309,7 @@ async function displayBadges(aInfo) {
         lifts = info.lifts;
         goals = info.goals;
         showGoalBadgeAnimations = true;
-        if (testUser.getSetting("badgesize") === 1) {
+        if (user.getSetting("badgesize") === 1) {
             document.getElementById("Gbadges").style.minHeight = "200px";
         } else {
             document.getElementById("Gbadges").style.minHeight = "110px";
@@ -538,14 +536,14 @@ async function displayGoals(checkIfCompleted) {
 
             for (let i = 0; i < arr.length; i++) {
 
-                const badge = getBadgeGoals(testUser.getSetting("badgesize"), arr[i], arr[i].id);
+                const badge = getBadgeGoals(user.getSetting("badgesize"), arr[i], arr[i].id);
 
                 const badgesGoalsTableRow = document.getElementById("badgesTableRow");
 
                 if (badge && badgesGoalsTableRow) {
                     badgesGoalsTableRow.innerHTML += badge;
 
-                    if (testUser.getSetting("badgesize") === 1) {
+                    if (user.getSetting("badgesize") === 1) {
 
                         const progressCircle = document.getElementById(`${arr[i].exercise}-${arr[i].id}-progress`);
 

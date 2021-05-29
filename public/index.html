@@ -226,7 +226,7 @@
 
 <script>
 
-   if (testUser) {
+   if (user) {
 
       checkConnection("c6r2");
 
@@ -237,7 +237,7 @@
             if (serverApplication) {
                if (serverApplication.version.fullNumber !== application.version.fullNumber) {
 
-                  if (testUser && testUser.getSetting("automaticupdates") === true) {
+                  if (user && user.getSetting("automaticupdates") === true) {
                      updateApplication(false);
                      localStorage.setItem("updated_version_text", `${serverApplication.name} ble oppdatert til versjon ${serverApplication.version.fullNumber}`);
                   }

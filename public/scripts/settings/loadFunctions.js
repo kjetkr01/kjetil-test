@@ -579,7 +579,7 @@ async function loadUsersListPage(setting) {
                             profileStatus = `<p class="settingsPendingUsername" style="color:green;">Offentlig</p>`;
                         }
 
-                        if (testUser && currentUser.username === testUser.getUsername()) {
+                        if (user && currentUser.username === user.getUsername()) {
                             myAccountColor = "settingsHightlightUser";
                         }
 
@@ -589,7 +589,7 @@ async function loadUsersListPage(setting) {
                    <p class="settingsPendingUsername">ID: ${currentUser.id}</p>
                    `;
 
-                        if (testUser && currentUser.username !== testUser.getUsername()) {
+                        if (user && currentUser.username !== user.getUsername()) {
                             usersTemplateHTML += `
                     ${profileStatus}
                     <p class="settingsPendingUsername">${hasAPIAccessTxt}</p>
@@ -626,7 +626,7 @@ async function loadUsersListPage(setting) {
                     const currentUser = resp.allUsers[usersKeys[i]];
 
                     let myAccountColor = "";
-                    if (testUser && currentUser.username === testUser.getUsername()) {
+                    if (user && currentUser.username === user.getUsername()) {
                         myAccountColor = "settingsHightlightUser";
                     }
 
@@ -636,7 +636,7 @@ async function loadUsersListPage(setting) {
                <br>
                `;
 
-                    if (testUser && currentUser.username !== testUser.getUsername()) {
+                    if (user && currentUser.username !== user.getUsername()) {
                         usersTemplateHTML += `
                <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Besøk</button>
                 `;
@@ -777,7 +777,7 @@ async function loadAPIPage() {
                 response = await fetch("/api", config);
             }
 
-            if (response && response.status === 200 && testUser) {
+            if (response && response.status === 200 && user) {
 
                 const data = await response.json();
 

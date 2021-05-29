@@ -17,8 +17,8 @@ async function updatePassword() {
                     method: "POST",
                     headers: {
                         "content-type": "application/json",
-                        "authtoken": testUser.getToken(),
-                        "userinfo": JSON.stringify(testUser.getUser())
+                        "authtoken": user.getToken(),
+                        "userinfo": JSON.stringify(user.getUser())
                     },
                     body: JSON.stringify(body)
                 }
@@ -30,7 +30,7 @@ async function updatePassword() {
                     localStorage.clear();
                     sessionStorage.clear();
                     alert(`Passordet ble endret. Du blir nå logget ut`);
-                    sessionStorage.setItem("cachedUsername", testUser.getUsername());
+                    sessionStorage.setItem("cachedUsername", user.getUsername());
                     location.reload();
                 } else {
                     alert(data.message)
@@ -82,8 +82,8 @@ async function updateAboutMe() {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
-                    "authtoken": testUser.getToken(),
-                    "userinfo": JSON.stringify(testUser.getUser())
+                    "authtoken": user.getToken(),
+                    "userinfo": JSON.stringify(user.getUser())
                 },
                 body: JSON.stringify(body)
             }
@@ -319,7 +319,7 @@ async function saveDisplayname() {
                     localStorage.clear();
                     sessionStorage.clear();
                     alert(`Visningsnavet ble endret til: ${fixedDisplayname}. Du blir nå logget ut`);
-                    sessionStorage.setItem("cachedUsername", testUser.getUsername());
+                    sessionStorage.setItem("cachedUsername", user.getUsername());
                     location.reload();
                 } else {
                     alert("Visningsnavet kunne ikke bli oppdatert. Vennligst prøv igjen.")

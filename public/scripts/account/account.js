@@ -104,7 +104,7 @@ function displayUserDetailsCached() {
 
 async function requestAccountDetails() {
 
-    if (testUser) {
+    if (user) {
 
         try {
             lifts = JSON.parse(localStorage.getItem("cachedLifts_owner"));
@@ -163,7 +163,7 @@ async function requestAccountDetails() {
             localStorage.removeItem("cachedHasGoalsLeft_owner");
         }
 
-        const resp = await getAccountDetails(testUser.getId());
+        const resp = await getAccountDetails(user.getId());
 
         if (resp) {
 
@@ -224,22 +224,18 @@ function displayInformation(respInfo) {
 
         if (checkExistingLifts === checkUpdatedLifts) {
             updateLifts = false;
-            console.log("skipped update lifts");
         }
 
         if (checkExistingGoals === checkUpdatedGoals) {
             updateGoals = false;
-            console.log("skipped update goals");
         }
 
         if (checkExistingBadgeColors === checkUpdatedBadgeColors) {
             updateBadgeColors = false;
-            console.log("skipped update badgeColors");
         }
 
         if (checkExistingActiveTrainingsplit === checkUpdatedActiveTrainingsplit) {
             updateActiveTrainingsplit = false;
-            console.log("skipped update activeTrainingsplit");
         }
 
     } catch {

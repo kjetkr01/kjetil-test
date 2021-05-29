@@ -354,14 +354,14 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
 
     let creatorTxt = "";
 
-    if (testUser && testUser.getId() !== resp.user_id) {
+    if (user && user.getId() !== resp.user_id) {
 
-        const cachedSubscribedTrainingsplits_owner = JSON.parse(sessionStorage.getItem("cachedSubscribedTrainingsplits_owner"));
+        const subscribedtrainingsplits = user.getSetting("subscribedtrainingsplits");
 
         let isSubscribed = false;
 
-        if (cachedSubscribedTrainingsplits_owner) {
-            if (Object.keys(cachedSubscribedTrainingsplits_owner).includes(resp.trainingsplit_id.toString())) {
+        if (subscribedtrainingsplits) {
+            if (Object.keys(subscribedtrainingsplits).includes(resp.trainingsplit_id.toString())) {
                 isSubscribed = true;
             }
         }
@@ -633,7 +633,7 @@ async function changeTrainingsplitDay() {
 
 async function addExercise() {
 
-    if (trainingsplit && testUser) {
+    if (trainingsplit && user) {
 
         const selectNewExercise = document.getElementById("selectNewExercise").value;
         const inputNewExercise = document.getElementById("inputNewExercise").value;
@@ -659,8 +659,8 @@ async function addExercise() {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
-                    "authtoken": testUser.getToken(),
-                    "userinfo": JSON.stringify(testUser.getUser()),
+                    "authtoken": user.getToken(),
+                    "userinfo": JSON.stringify(user.getUser()),
                 },
                 body: JSON.stringify(body)
             }
@@ -679,7 +679,7 @@ async function addExercise() {
 
 async function deleteExercise(aExercise) {
 
-    if (trainingsplit && testUser) {
+    if (trainingsplit && user) {
 
         const exercise = aExercise;
 
@@ -706,8 +706,8 @@ async function deleteExercise(aExercise) {
                     method: "POST",
                     headers: {
                         "content-type": "application/json",
-                        "authtoken": testUser.getToken(),
-                        "userinfo": JSON.stringify(testUser.getUser()),
+                        "authtoken": user.getToken(),
+                        "userinfo": JSON.stringify(user.getUser()),
                     },
                     body: JSON.stringify(body)
                 }
@@ -727,7 +727,7 @@ async function deleteExercise(aExercise) {
 
 async function deleteRowExercise(aExercise, aIndex) {
 
-    if (trainingsplit && testUser) {
+    if (trainingsplit && user) {
 
         const exercise = aExercise;
         const index = aIndex;
@@ -747,8 +747,8 @@ async function deleteRowExercise(aExercise, aIndex) {
                     method: "POST",
                     headers: {
                         "content-type": "application/json",
-                        "authtoken": testUser.getToken(),
-                        "userinfo": JSON.stringify(testUser.getUser()),
+                        "authtoken": user.getToken(),
+                        "userinfo": JSON.stringify(user.getUser()),
                     },
                     body: JSON.stringify(body)
                 }
@@ -769,7 +769,7 @@ async function deleteRowExercise(aExercise, aIndex) {
 
 async function addRowExercise(aExercise) {
 
-    if (trainingsplit && testUser) {
+    if (trainingsplit && user) {
 
         const exercise = aExercise;
 
@@ -784,8 +784,8 @@ async function addRowExercise(aExercise) {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
-                    "authtoken": testUser.getToken(),
-                    "userinfo": JSON.stringify(testUser.getUser()),
+                    "authtoken": user.getToken(),
+                    "userinfo": JSON.stringify(user.getUser()),
                 },
                 body: JSON.stringify(body)
             }
@@ -804,7 +804,7 @@ async function addRowExercise(aExercise) {
 
 async function moveExerciseOrder(aIndex, aMoveUp) {
 
-    if (trainingsplit && testUser) {
+    if (trainingsplit && user) {
 
         const index = aIndex;
         const moveUp = aMoveUp;
@@ -820,8 +820,8 @@ async function moveExerciseOrder(aIndex, aMoveUp) {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
-                    "authtoken": testUser.getToken(),
-                    "userinfo": JSON.stringify(testUser.getUser()),
+                    "authtoken": user.getToken(),
+                    "userinfo": JSON.stringify(user.getUser()),
                 },
                 body: JSON.stringify(body)
             }
@@ -842,7 +842,7 @@ async function copyTrainingsplit(aTrainingsplit_id, aOwner_id) {
 
     const trainingsplit_id = aTrainingsplit_id;
 
-    if (trainingsplit_id && testUser) {
+    if (trainingsplit_id && user) {
 
         const owner_id = aOwner_id;
 
@@ -861,8 +861,8 @@ async function copyTrainingsplit(aTrainingsplit_id, aOwner_id) {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
-                    "authtoken": testUser.getToken(),
-                    "userinfo": JSON.stringify(testUser.getUser()),
+                    "authtoken": user.getToken(),
+                    "userinfo": JSON.stringify(user.getUser()),
                 },
                 body: JSON.stringify(body)
             }
@@ -890,20 +890,20 @@ async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTraining
 
     const trainingsplit_id = aTrainingsplit_id;
 
-    if (trainingsplit_id && testUser) {
+    if (trainingsplit_id && user) {
 
         const owner_id = aOwner_id;
 
         if (owner_id) {
 
-            const cachedSubscribedTrainingsplits_owner = JSON.parse(sessionStorage.getItem("cachedSubscribedTrainingsplits_owner"));
-            if (cachedSubscribedTrainingsplits_owner) {
-                const cachedSubscribedTrainingsplits_ownerKeys = Object.keys(cachedSubscribedTrainingsplits_owner);
+            const subscribedtrainingsplits = user.getSetting("subscribedtrainingsplits");
+            if (subscribedtrainingsplits) {
+                const subscribedtrainingsplitsKeys = Object.keys(subscribedtrainingsplits);
 
                 const tIDString = trainingsplit_id.toString();
-                if (cachedSubscribedTrainingsplits_ownerKeys.includes(tIDString)) {
+                if (subscribedtrainingsplitsKeys.includes(tIDString)) {
                     const trainingsplit_name = document.getElementById("trainingsplit_name");
-                    const confirmUnsub = confirm(`Vil du si opp abonnementet på ${trainingsplit_name.textContent || cachedSubscribedTrainingsplits_owner[trainingsplit_id] || "planen"}?`);
+                    const confirmUnsub = confirm(`Vil du si opp abonnementet på ${trainingsplit_name.textContent || subscribedtrainingsplitsKeys[trainingsplit_id] || "planen"}?`);
                     if (confirmUnsub === false) {
                         return;
                     }
@@ -917,8 +917,8 @@ async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTraining
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
-                    "authtoken": testUser.getToken(),
-                    "userinfo": JSON.stringify(testUser.getUser()),
+                    "authtoken": user.getToken(),
+                    "userinfo": JSON.stringify(user.getUser()),
                 },
                 body: JSON.stringify(body)
             }
@@ -927,19 +927,19 @@ async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTraining
             const data = await resp.json();
 
             if (data.status === true) {
-                if (cachedSubscribedTrainingsplits_owner) {
-                    const cachedSubscribedTrainingsplits_ownerKeys = Object.keys(cachedSubscribedTrainingsplits_owner);
+                if (subscribedtrainingsplits) {
+                    const subscribedtrainingsplitsKeys = Object.keys(subscribedtrainingsplits);
                     const tIDString = trainingsplit_id.toString();
-                    if (!cachedSubscribedTrainingsplits_ownerKeys.includes(tIDString) && !data.msg.includes("ikke lenger")) {
-                        cachedSubscribedTrainingsplits_owner[tIDString] = aTrainingsplit_name;
+                    if (!subscribedtrainingsplitsKeys.includes(tIDString) && !data.msg.includes("ikke lenger")) {
+                        subscribedtrainingsplits[tIDString] = aTrainingsplit_name;
                     } else {
-                        for (let i = 0; i < cachedSubscribedTrainingsplits_ownerKeys.length; i++) {
-                            if (cachedSubscribedTrainingsplits_ownerKeys[i] === tIDString) {
-                                delete cachedSubscribedTrainingsplits_owner[cachedSubscribedTrainingsplits_ownerKeys[i]];
+                        for (let i = 0; i < subscribedtrainingsplitsKeys.length; i++) {
+                            if (subscribedtrainingsplitsKeys[i] === tIDString) {
+                                delete subscribedtrainingsplits[subscribedtrainingsplitsKeys[i]];
                             }
                         }
                     }
-                    sessionStorage.setItem("cachedSubscribedTrainingsplits_owner", JSON.stringify(cachedSubscribedTrainingsplits_owner));
+                    user.changeSetting("subscribedtrainingsplits", subscribedtrainingsplits);
                 }
                 location.reload();
             } else {

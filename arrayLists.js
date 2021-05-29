@@ -7,15 +7,16 @@ module.exports.allowedGoals = ["benkpress", "knebøy", "markløft", "skulderpres
 //badgeColors
 const gradientTxt = "(gradient)";
 module.exports.badgeColors = {
-    "redBadgeG": `Rød ${gradientTxt}`,
-    "yellowBadgeG": `Gul ${gradientTxt}`,
-    "blueBadgeG": `Blå ${gradientTxt}`,
-    "themeBadgeG": `Følg tema ${gradientTxt}`,
+    // name = name that will be displayed to user. Border = border color around badge when viewed/edited
+    "redBadgeG": { "name": `Rød ${gradientTxt}`, "border": "972F2F" },
+    "yellowBadgeG": { "name": `Gul ${gradientTxt}`, "border": "C96E4C" },
+    "blueBadgeG": { "name": `Blå ${gradientTxt}`, "border": "2B2379" },
+    "themeBadgeG": { "name": `Følg tema ${gradientTxt}`, "border": null },
 
-    "redBadge": `Rød`,
-    "yellowBadge": `Gul`,
-    "blueBadge": `Blå`,
-    "themeBadge": `Følg tema`,
+    "redBadge": { "name": `Rød`, "border": "E36262" },
+    "yellowBadge": { "name": `Gul`, "border": "DBB331" },
+    "blueBadge": { "name": `Blå`, "border": "626BE3" },
+    "themeBadge": { "name": `Følg tema`, "border": null },
 };
 //styles/badges/badgeColors.css for reference
 

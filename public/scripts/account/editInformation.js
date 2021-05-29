@@ -215,8 +215,8 @@ function enableOverlayView(aType, aExercise, aId) {
 
                 const color = lift.color;
 
-                if (badgeColorBorders.hasOwnProperty(color)) {
-                    document.getElementById("viewLiftorGoal").style.border = `1px solid #${badgeColorBorders[color]}`;
+                if (badgeColorsJSON[color]) {
+                    document.getElementById("viewLiftorGoal").style.border = `1px solid #${badgeColorsJSON[color].border}`;
                 }
 
                 if (navigator.onLine) {
@@ -261,8 +261,8 @@ function enableOverlayView(aType, aExercise, aId) {
 
                 const color = goal.color;
 
-                if (badgeColorBorders.hasOwnProperty(color)) {
-                    document.getElementById("viewLiftorGoal").style.border = `1px solid #${badgeColorBorders[color]}`;
+                if (badgeColorsJSON[color]) {
+                    document.getElementById("viewLiftorGoal").style.border = `1px solid #${badgeColorsJSON[color].border}`;
                 }
 
                 if (navigator.onLine) {
@@ -378,14 +378,14 @@ function enableOverlayEdit(aType, aExercise, aId) {
 
                 for (let i = 0; i < badgeColorsValues.length; i++) {
                     if (badgeColorsValues[i][0] === color) {
-                        inp4.innerHTML += `<option selected="selected" value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}</option>`;
+                        inp4.innerHTML += `<option selected="selected" value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1].name}</option>`;
                     } else {
-                        inp4.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}</option>`;
+                        inp4.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1].name}</option>`;
                     }
                 }
 
-                if (badgeColorBorders.hasOwnProperty(color)) {
-                    document.getElementById("editLiftorGoal").style.border = `1px solid #${badgeColorBorders[color]}`;
+                if (badgeColorsJSON[color]) {
+                    document.getElementById("editLiftorGoal").style.border = `1px solid #${badgeColorsJSON[color].border}`;
                 }
 
                 GcancelE.innerHTML = `<button id="cancelE" class="pointer" onclick="disableOverlay('editLiftOrGoal');enableOverlayView('lift', '${exercise}', '${id}');"">Avbryt</button>`;
@@ -442,14 +442,14 @@ function enableOverlayEdit(aType, aExercise, aId) {
 
                 for (let i = 0; i < badgeColorsValues.length; i++) {
                     if (badgeColorsValues[i][0] === color) {
-                        inp4.innerHTML += `<option selected="selected" value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}</option>`;
+                        inp4.innerHTML += `<option selected="selected" value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1].name}</option>`;
                     } else {
-                        inp4.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1]}</option>`;
+                        inp4.innerHTML += `<option value="${badgeColorsValues[i][0]}">${badgeColorsValues[i][1].name}</option>`;
                     }
                 }
 
-                if (badgeColorBorders.hasOwnProperty(color)) {
-                    document.getElementById("editLiftorGoal").style.border = `1px solid #${badgeColorBorders[color]}`;
+                if (badgeColorsJSON[color]) {
+                    document.getElementById("editLiftorGoal").style.border = `1px solid #${badgeColorsJSON[color].border}`;
                 }
 
                 GcancelE.innerHTML = `<button id="cancelE" class="pointer" onclick="disableOverlay('editLiftOrGoal');enableOverlayView('goal', '${exercise}', '${id}');"">Avbryt</button>`;
@@ -796,7 +796,7 @@ function enableOverlayEditDays() {
     let showSaveBtn = false;
 
     const allTrainingsplits = JSON.parse(localStorage.getItem("cachedAllTrainingsplits_owner"));
-    const subscribedTrainingsplits = JSON.parse(sessionStorage.getItem("cachedSubscribedTrainingsplits_owner"));
+    const subscribedTrainingsplits = user.getSetting("subscribedtrainingsplits");
 
     if (!activetrainingsplit) {
         const hiddeDOMs = ["Gtitle4workoutPlans", "Gline4workoutPlans", "GtextworkoutPlans"];
@@ -806,7 +806,7 @@ function enableOverlayEditDays() {
     } else {
         const textworkoutPlans = document.getElementById("textworkoutPlans");
 
-        if (activetrainingsplit.user_id !== testUser.getId()) {
+        if (activetrainingsplit.user_id !== user.getId()) {
             textworkoutPlans.innerHTML = `${activetrainingsplit.trainingsplit_name} (av ${activetrainingsplit.owner})`;
         } else {
             textworkoutPlans.innerHTML = activetrainingsplit.trainingsplit_name;
@@ -1328,8 +1328,8 @@ function changeOverlayBorderColor() {
 
         const editLiftorGoal = document.getElementById("editLiftorGoal");
 
-        if (badgeColorBorders.hasOwnProperty(inpVal.value)) {
-            editLiftorGoal.style.border = `1px solid #${badgeColorBorders[inpVal.value]}`;
+        if (badgeColorsJSON[inpVal.value]) {
+            editLiftorGoal.style.border = `1px solid #${badgeColorsJSON[inpVal.value].border}`;
         } else {
             editLiftorGoal.style.border = "";
         }
