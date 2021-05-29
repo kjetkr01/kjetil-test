@@ -171,16 +171,17 @@ server.post("/authenticate", async function (req, res) {
           if (username && password) {
 
                const requestUser = await validateUser(username, password);
-               const isValid = requestUser.isValid;
 
-               if (isValid) {
+               if (requestUser.status === true) {
+                    
                     const userInfo = {
                          "id": requestUser.userInfo.id,
                          "username": requestUser.userInfo.username,
                          "displayname": requestUser.userInfo.displayname
                     }
+                   
                     const sessionToken = createToken(requestUser.userInfo);
-                    res.status(200).json({ "authToken": sessionToken, "user": userInfo }).end();
+                    res.status(200).json({ "authToken": sessionToken, "user": userInfo, "settings": requestUser.userSettings }).end();
                } else {
                     res.status(403).json("Brukernavn eller passord er feil!").end();
                }

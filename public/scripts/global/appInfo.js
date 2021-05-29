@@ -28,14 +28,14 @@ const ongoingUpdatesArr = [
     "TITLE:Innstillinger",
     "Personvern (75%)",
     "TITLE:Badges",
-    "Lage større versjon av badge (mål-badge, på startsiden) (95%)",
+    "Lage større versjon av badge (mål-badge, på startsiden) (100%)",
     "TITLE:Splash Screen (iOS)",
     "Fikse slik at splash screen funker på landscape mode (iPad) (50%)",
     "TITLE:Språk",
     "God formulering og ordbruk (33%)",
     "TITLE:Annet",
     "Optimalisering",
-    "Synkronisere løft, mål og reps filter mellom flere enheter (90%)",
+    "Synkronisere løft, mål og reps filter mellom flere enheter (100%)",
 ];
 
 //

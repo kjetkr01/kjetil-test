@@ -24,15 +24,11 @@ class User {
 
 async function validateUser(username, password) {
     try {
-        let isValid = false;
         password = crypto.createHmac('sha256', secret)
             .update(password)
             .digest('hex');
         const resp = await database.validateUser(username, password);
-        if (resp !== null) {
-            isValid = true;
-        }
-        return { "isValid": isValid, "userInfo": resp };
+        return resp;
     } catch (error) {
         console.error(error);
     }

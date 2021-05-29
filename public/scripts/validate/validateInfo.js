@@ -98,7 +98,7 @@ async function login(username, password, rmbrMe) {
 
             if (resp) {
 
-                if (resp.authToken) {
+                if (resp.authToken && resp.user && resp.settings) {
 
                     localStorage.clear();
                     sessionStorage.clear();
@@ -106,9 +106,11 @@ async function login(username, password, rmbrMe) {
                     if (rmbrMe === true) {
                         localStorage.setItem("authToken", resp.authToken);
                         localStorage.setItem("user", JSON.stringify(resp.user));
+                        localStorage.setItem("userSettings", JSON.stringify(resp.settings));
                     } else {
                         sessionStorage.setItem("authToken", resp.authToken);
                         sessionStorage.setItem("user", JSON.stringify(resp.user));
+                        sessionStorage.setItem("userSettings", JSON.stringify(resp.settings));
                     }
 
                     message = "Login successful";

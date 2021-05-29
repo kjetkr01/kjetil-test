@@ -37,24 +37,17 @@ for (let i = 0; i < themeKeys.length; i++) {
 // create global user class
 
 function createUserClass() {
+
     const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
     const userObj = localStorage.getItem("user") || sessionStorage.getItem("user");
-    if (userObj) {
+    const settingsObj = localStorage.getItem("userSettings") || sessionStorage.getItem("userSettings");
+
+    if (token && userObj && settingsObj) {
         try {
 
-            const testSettings = localStorage.getItem("userSettings");
+            user = new TUser(token, JSON.parse(userObj), JSON.parse(settingsObj));
 
-            // userSettings not always loading first
-            if (token && userObj) {
-                user = new TUser(token, JSON.parse(userObj), {});
-            }
-
-            if (user && testSettings) {
-                user.setSettings(JSON.parse(testSettings));
-            }
-
-            //auto redirect to login if token is invalid
-            //window.onload = validateToken;
+            // redirects to login if token is invalid
             validateToken();
             async function validateToken() {
 
@@ -96,36 +89,18 @@ function createUserClass() {
                 }
             }
 
-            /*userDisplayname = JSON.parse(user);
-    
-            username = userDisplayname.username;
-            userID = userDisplayname.id;
-    
-            automaticUpdates = userDisplayname.automaticUpdates;
-            badgesize = userDisplayname.badgesize;
-            badgedetails = userDisplayname.badgedetails;
-    
-            preferredColorTheme = allowedThemes[userDisplayname.preferredColorTheme].theme;
-    
-            if (preferredColorTheme !== sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(preferredColorTheme) === true) {
-                if (localStorage.getItem("user")) {
-                    localStorage.setItem("colorTheme", preferredColorTheme);
-                } else {
-                    sessionStorage.setItem("colorTheme", preferredColorTheme);
-                }
-            }
-    
-            userDisplayname = userDisplayname.displayname;*/
-
         } catch (err) {
 
-            console.log("invalid user object");
             console.log("ERROR:");
             console.log("------------------------------------");
             console.log(err);
             console.log("------------------------------------");
 
         }
+    } else {
+        localStorage.clear();
+        sessionStorage.clear();
+        redirectToLogin();
     }
 }
 
@@ -169,7 +144,11 @@ function TUser(aToken, aUser, aSettings) {
 
     this.changeSetting = function (aSetting, aValue) {
         settings[aSetting.toLowerCase()] = aValue;
-        localStorage.setItem("userSettings", JSON.stringify(settings));
+        if (localStorage.getItem("user")) {
+            localStorage.setItem("userSettings", JSON.stringify(settings));
+        } else {
+            sessionStorage.setItem("userSettings", JSON.stringify(settings));
+        }
     }
 
     this.getSettings = function () {
@@ -344,10 +323,15 @@ async function getAccountDetails(aUserID) {
             if (resp) {
 
                 if (resp.hasOwnProperty("updatedUserObject")) {
+
+                    const s = resp.info.settings;
+
                     if (localStorage.getItem("user")) {
                         localStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
+                        localStorage.setItem("userSettings", JSON.stringify(s));
                     } else {
                         sessionStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
+                        sessionStorage.setItem("userSettings", JSON.stringify(s));
                     }
 
                     if (resp.hasOwnProperty("cacheDetails")) {
@@ -368,37 +352,33 @@ async function getAccountDetails(aUserID) {
                         localStorage.removeItem("cachedAllTrainingsplits_owner");
                     }
 
-                    if (resp.info.hasOwnProperty("settings")) {
-                        const s = resp.info.settings;
-                        if (s.hasOwnProperty("leaderboards_filter_reps")) {
-                            if (s.leaderboards_filter_reps) {
-                                localStorage.setItem("leaderboards_filter_reps", s.leaderboards_filter_reps);
-                            } else {
-                                localStorage.removeItem("leaderboards_filter_reps");
-                            }
+                    if (s.hasOwnProperty("leaderboards_filter_reps")) {
+                        if (s.leaderboards_filter_reps) {
+                            localStorage.setItem("leaderboards_filter_reps", s.leaderboards_filter_reps);
+                        } else {
+                            localStorage.removeItem("leaderboards_filter_reps");
                         }
-                        if (s.hasOwnProperty("display_lifts_owner")) {
-                            if (s.display_lifts_owner) {
-                                if (localStorage.getItem("display_lifts_owner") !== s.display_lifts_owner) {
-                                    localStorage.setItem("display_lifts_owner", s.display_lifts_owner);
-                                }
-                            } else {
-                                localStorage.removeItem("display_lifts_owner");
-                            }
-                        }
-                        if (s.hasOwnProperty("display_goals_owner")) {
-                            if (s.display_goals_owner) {
-                                if (localStorage.getItem("display_goals_owner") !== s.display_goals_owner) {
-                                    localStorage.setItem("display_goals_owner", s.display_goals_owner);
-                                }
-                            } else {
-                                localStorage.removeItem("display_goals_owner");
-                            }
-                        }
-
-                        localStorage.setItem("userSettings", JSON.stringify(s));
-
                     }
+                    if (s.hasOwnProperty("display_lifts_owner")) {
+                        if (s.display_lifts_owner) {
+                            if (localStorage.getItem("display_lifts_owner") !== s.display_lifts_owner) {
+                                localStorage.setItem("display_lifts_owner", s.display_lifts_owner);
+                            }
+                        } else {
+                            localStorage.removeItem("display_lifts_owner");
+                        }
+                    }
+                    if (s.hasOwnProperty("display_goals_owner")) {
+                        if (s.display_goals_owner) {
+                            if (localStorage.getItem("display_goals_owner") !== s.display_goals_owner) {
+                                localStorage.setItem("display_goals_owner", s.display_goals_owner);
+                            }
+                        } else {
+                            localStorage.removeItem("display_goals_owner");
+                        }
+                    }
+
+
 
                     const newColorTheme = allowedThemes[resp.info.settings.preferredcolortheme].theme;
 

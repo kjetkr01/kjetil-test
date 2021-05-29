@@ -85,26 +85,47 @@ class StorageHandler {
 
     async validateUser(username, password) {
         const client = new pg.Client(this.credentials);
-        let results = null;
+        let results = false;
+        let userInfo = {};
+        let userSettings = {};
         try {
             await client.connect();
-            // evt legge til lifts og andre ting brukeren trenger å motta
 
             results = await client.query(`
-            SELECT users.id, users.username, users.password, users.displayname, user_settings.*
-            FROM users, user_settings
-            WHERE users.username = $1
-            AND users.password = $2
-            AND users.id = user_settings.user_id`,
+            SELECT id, username, password, displayname
+            FROM users
+            WHERE username = $1
+            AND password = $2`,
                 [username, password]);
 
-            results = (results.rows.length > 0) ? results.rows[0] : null;
+            if (results.rows.length > 0) {
+                userInfo = results.rows[0];
+
+                results = await client.query(`
+                SELECT *
+                FROM user_settings
+                WHERE user_id = $1`,
+                    [userInfo.id]);
+
+                if (results.rows.length > 0) {
+                    delete results.rows[0].user_id;
+                    userSettings = results.rows[0];
+                    results = true;
+                } else {
+                    results = false;
+                }
+
+            } else {
+                results = false;
+            }
+
+
             client.end();
         } catch (err) {
             console.log(err);
         }
 
-        return results;
+        return { "status": results, "userInfo": userInfo, "userSettings": userSettings };
     }
 
     //
@@ -1240,13 +1261,13 @@ class StorageHandler {
                 FROM user_goals
                 WHERE user_id = $1`,
                 [userid]);
-
+ 
             if (results.rows.length === 1) {
-
+ 
                 const goals = results.rows[0][exercise];
-
+ 
                 let modify = false;
-
+ 
                 for (let i = 0; i < goals.length; i++) {
                     const current = goals[i].id;
                     const completed = goals[i].completed;
@@ -1259,21 +1280,21 @@ class StorageHandler {
                         }
                     }
                 }
-
+ 
                 if (modify === true) {
-
+ 
                     await client.query(`
                         UPDATE user_goals
                         SET ${exercise} = $1
                         WHERE user_id = $2`,
                         [JSON.stringify(goals), userid]);
-
+ 
                     let medalscount = await client.query(`
                         SELECT medalscount
                         FROM user_details
                         WHERE user_id = $1`,
                         [userid]);
-
+ 
                     if (medalscount.rows.length > 0) {
                         medalscount = medalscount.rows[0].medalscount;
                         medalscount++;
@@ -1282,7 +1303,7 @@ class StorageHandler {
                         SET medalscount = $1
                         WHERE user_id = $2`,
                             [medalscount, userid]);
-
+ 
                         results = true;
                     }
                 }
