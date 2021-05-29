@@ -79,8 +79,8 @@ async function updateUserInfo(aSkipReqData) {
         userInfo = cachedDetails_owner;
     }
 
-    if (!settings && localStorage.getItem("userSettings")) {
-        settings = JSON.parse(localStorage.getItem("userSettings"));
+    if (!settings && user) {
+        settings = user.getSettings();
     }
 
     const currentSetting = sessionStorage.getItem("currentSetting") || ELoadSettings.settings;

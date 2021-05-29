@@ -6,6 +6,7 @@ function loadSetting(aSetting) {
         if (setting === `${ELoadSettings.aboutApp.name} (1)`) {
             setting = ELoadSettings.aboutApp.name;
         }
+
         saveNewScrollPos = false;
         titleDom.innerHTML = setting;
         document.title = setting;
@@ -231,9 +232,11 @@ function loadAboutMePage() {
 function loadAppearancePage() {
 
     let disabled = "";
+    let pointer = `class="pointer"`;
 
     if (!navigator.onLine) {
         disabled = "disabled";
+        pointer = "";
     }
 
     settingsGrid.innerHTML = justTextTemplate("Her kan du endre utseende på appen!", "left");
@@ -260,7 +263,7 @@ function loadAppearancePage() {
     }
 
     const appearanceThemeHTML = `
-    <select ${disabled} id="appearanceThemeSelection" class="pointer">
+    <select ${disabled} id="appearanceThemeSelection" ${pointer}>
        ${appearanceThemeOptionsHTML}
     </select>
     `;
@@ -281,7 +284,7 @@ function loadAppearancePage() {
     }
 
     const themeColorSelectionHTML = `
-    <select ${disabled} id="themeColorSelection" class="pointer">
+    <select ${disabled} id="themeColorSelection" ${pointer}>
     ${themeColorOptionsHTML}
     </select>
     `;
@@ -304,9 +307,11 @@ function loadAppearancePage() {
 function loadProgressionInfoPage() {
 
     let disabled = "";
+    let pointer = `class="pointer"`;
 
     if (!navigator.onLine) {
         disabled = "disabled";
+        pointer = "";
     }
 
     settingsGrid.innerHTML = justTextTemplate("Her kan du endre hvor mye informasjon du ønsker å se på startsiden!", "left");
@@ -332,7 +337,7 @@ function loadProgressionInfoPage() {
     }
 
     const badeSizeHTML = `
-    <select ${disabled} id="badgeSizeSelection" class="pointer">
+    <select ${disabled} id="badgeSizeSelection" ${pointer}>
        ${badeSizeOptionsHTML}
     </select>
     `;
@@ -365,10 +370,11 @@ function loadProgressionInfoPage() {
     let disabledTxt = "";
     if (settings.badgesize === badgeSizesObj[0].value) {
         disabledTxt = "disabled";
+        pointer = "";
     }
 
     const badgeDetailsHTML = `
-    <select ${disabledTxt} ${disabled} id="badgeDetailsSelection" class="pointer">
+    <select ${disabledTxt} ${disabled} id="badgeDetailsSelection" ${pointer}>
        ${badgeDetailsOptionsHTML}
     </select>
     `;

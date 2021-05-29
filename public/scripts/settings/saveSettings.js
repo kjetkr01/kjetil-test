@@ -29,9 +29,9 @@ async function updatePassword() {
                 if (data.status === true) {
                     localStorage.clear();
                     sessionStorage.clear();
-                    alert(`Passordet ble endret. Du blir nå logget ut`);
                     sessionStorage.setItem("cachedUsername", user.getUsername());
-                    location.reload();
+                    alert(`Passordet ble endret. Du blir nå logget ut`);
+                    redirectToLogin();
                 } else {
                     alert(data.message)
                 }
@@ -132,8 +132,7 @@ async function updateCheckboxSetting(aSetting, aValue) {
             const resp = await callServerAPIPost(infoHeader, url);
 
             if (resp === true) {
-                //updateUserInfo();
-                updateLocalSettings(setting, value);
+                user.changeSetting(setting, value);
                 setTimeout(() => {
                     loadSetting();
                     isUpdatingCheckboxSetting = false;
@@ -163,18 +162,7 @@ async function savePreferredApperance() {
 
             if (resp === true) {
 
-                /*const newColorTheme = allowedThemes[value].theme;
-     
-                if (newColorTheme !== sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(newColorTheme) === true) {
-                    preferredColorTheme = allowedThemes[value].theme;
-                    sessionStorage.setItem("colorTheme", preferredColorTheme);
-                    changeColorTheme();
-                    //lastColorTheme.href = `styles/themes/${preferredColorTheme}.css`;
-                    //lastColorTheme.id = `themeStyleCSS-${preferredColorTheme}`;
-                }*/
-
                 if (value === "0" || value === "1" || value === "2") {
-                    //sessionStorage.setItem("theme", value);
 
                     if (localStorage.getItem("user")) {
                         localStorage.setItem("theme", value);
@@ -185,9 +173,8 @@ async function savePreferredApperance() {
                     changeColorTheme();
                 }
 
-                updateUserInfo();
-                //loadSetting();
-                //changeColorTheme();
+                user.changeSetting(setting, parseInt(value));
+
                 isUpdatingCheckboxSetting = false;
             }
         }
@@ -221,7 +208,6 @@ async function saveColorTheme() {
 
                 if (newColorTheme !== localStorage.getItem("colorTheme") || sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(newColorTheme) === true) {
                     preferredColorTheme = allowedThemes[value].theme;
-                    //sessionStorage.setItem("colorTheme", preferredColorTheme);
 
                     if (localStorage.getItem("user")) {
                         localStorage.setItem("colorTheme", preferredColorTheme);
@@ -230,13 +216,10 @@ async function saveColorTheme() {
                     }
 
                     changeColorTheme();
-                    //lastColorTheme.href = `styles/themes/${preferredColorTheme}.css`;
-                    //lastColorTheme.id = `themeStyleCSS-${preferredColorTheme}`;
                 }
 
-                updateUserInfo();
-                //loadSetting();
-                //changeColorTheme();
+                user.changeSetting(setting, parseInt(value));
+
                 isUpdatingCheckboxSetting = false;
             }
         }
@@ -256,7 +239,8 @@ async function updateBadgeSize() {
         const resp = await callServerAPIPost(infoHeader, url);
 
         if (resp === true) {
-            updateUserInfo();
+            user.changeSetting(setting, parseInt(value));
+            loadSetting();
         }
     }
 }
@@ -272,7 +256,7 @@ async function updateBadgeDetails() {
         const resp = await callServerAPIPost(infoHeader, url);
 
         if (resp === true) {
-            updateUserInfo();
+            user.changeSetting(setting, parseInt(value));
         }
     }
 }
@@ -318,9 +302,9 @@ async function saveDisplayname() {
                 if (resp === true) {
                     localStorage.clear();
                     sessionStorage.clear();
-                    alert(`Visningsnavet ble endret til: ${fixedDisplayname}. Du blir nå logget ut`);
                     sessionStorage.setItem("cachedUsername", user.getUsername());
-                    location.reload();
+                    alert(`Visningsnavet ble endret til: ${fixedDisplayname}. Du blir nå logget ut`);
+                    redirectToLogin();
                 } else {
                     alert("Visningsnavet kunne ikke bli oppdatert. Vennligst prøv igjen.")
                 }
@@ -357,9 +341,9 @@ async function saveUsername() {
                 if (resp === true) {
                     localStorage.clear();
                     sessionStorage.clear();
-                    alert(`Brukernavnet ble endret til: ${newUsername}. Du blir nå logget ut`);
                     sessionStorage.setItem("cachedUsername", newUsername);
-                    location.reload();
+                    alert(`Brukernavnet ble endret til: ${newUsername}. Du blir nå logget ut`);
+                    redirectToLogin();
                 } else {
                     alert("Brukernavnet er opptatt!")
                 }
@@ -370,23 +354,5 @@ async function saveUsername() {
         }
     } else {
         alert("Du må ha internettforbindelse for å endre brukernavn!");
-    }
-}
-
-function updateLocalSettings(aSetting, aValue) {
-    if (navigator.onLine) {
-
-        if (aSetting) {
-
-            const setting = aSetting;
-            const value = aValue;
-
-            settings[setting] = value;
-
-            localStorage.setItem("userSettings", JSON.stringify(settings));
-
-        } else {
-            updateUserInfo();
-        }
     }
 }

@@ -168,10 +168,12 @@ function TUser(aToken, aUser, aSettings) {
     }
 
     this.changeSetting = function (aSetting, aValue) {
-        if (settings[aSetting.toLowerCase()]) {
-            settings[aSetting.toLowerCase()] = aValue;
-            localStorage.setItem("userSettings", JSON.stringify(settings));
-        }
+        settings[aSetting.toLowerCase()] = aValue;
+        localStorage.setItem("userSettings", JSON.stringify(settings));
+    }
+
+    this.getSettings = function () {
+        return settings;
     }
 
     this.setSettings = function (aNewSettings) {
@@ -401,7 +403,8 @@ async function getAccountDetails(aUserID) {
                     const newColorTheme = allowedThemes[resp.info.settings.preferredcolortheme].theme;
 
                     if (user && user.getSetting("preferredcolortheme") !== newColorTheme && checkAllowedThemes.includes(newColorTheme) === true) {
-                        user.changeSetting("preferredcolortheme", newColorTheme);
+
+                        user.changeSetting("preferredcolortheme", resp.info.settings.preferredcolortheme);
 
                         if (localStorage.getItem("user")) {
                             localStorage.setItem("colorTheme", newColorTheme);
@@ -415,6 +418,8 @@ async function getAccountDetails(aUserID) {
                     const newTheme = resp.info.settings.preferredtheme;
 
                     if (newTheme === 0 || newTheme === 1 || newTheme === 2) {
+
+                        user.changeSetting("preferredtheme", resp.info.settings.preferredtheme);
 
                         if (localStorage.getItem("user")) {
                             localStorage.setItem("theme", newTheme);
@@ -434,14 +439,6 @@ async function getAccountDetails(aUserID) {
 
                 return resp;
 
-            } else {
-
-                /*if (userID === viewingUser) {
-                    sessionStorage.clear();
-                    localStorage.clear();
-                    alert("Det har oppstått en feil. Du blir nå logget ut. Vennligst logg inn på nytt");
-                    location.reload();
-                }*/
             }
         }
     }
