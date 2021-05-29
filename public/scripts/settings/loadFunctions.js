@@ -912,34 +912,3 @@ async function loadDeleteMePage() {
     settingsGrid.innerHTML += getBottomSpacingTemplate();
 
 }
-
-async function acceptPendingUser(username, acceptOrDeny) {
-    if (!username || acceptOrDeny === "") {
-        return;
-    }
-
-    let statusMsg = "godta";
-    let statusMsg2 = "Du har nå godtatt forespørselen til: ";
-
-    if (!acceptOrDeny) {
-        statusMsg = "avslå";
-        statusMsg2 = "Du har nå avslått forespørselen til: ";
-    }
-
-    const confirmPress = confirm("Er du sikker på at du vil " + statusMsg + " " + username + " sin forespørsel?");
-    if (confirmPress === true) {
-
-        const infoHeader = { "pendingUser": username, "acceptOrDeny": acceptOrDeny };
-        const url = `/users/pending/${username}/${acceptOrDeny}`;
-
-        const results = await callServerAPIPost(infoHeader, url);
-
-        if (results === "Ok") {
-            alert(statusMsg2 + username);
-        } else {
-            alert("Feil, brukeren finnes ikke!");
-        }
-
-        loadSetting(ELoadSettings.pendingUsers.name);
-    }
-}

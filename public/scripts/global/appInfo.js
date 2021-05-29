@@ -32,7 +32,7 @@ const ongoingUpdatesArr = [
     "TITLE:Splash Screen (iOS)",
     "Fikse slik at splash screen funker på landscape mode (iPad) (50%)",
     "TITLE:Språk",
-    "God formulering og ordbruk (33%)",
+    "God formulering og ordbruk (36%)",
     "TITLE:Annet",
     "Optimalisering",
     "Synkronisere løft, mål og reps filter mellom flere enheter (100%)",
