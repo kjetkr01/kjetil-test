@@ -47,7 +47,7 @@ async function whoIsWorkingOutToday() {
 
     let info = {};
 
-    if (token && user) {
+    if (testUser) {
 
         const infoHeader = {};
         const url = `/whoIsWorkingOutToday`;
@@ -58,8 +58,6 @@ async function whoIsWorkingOutToday() {
             info = resp;
         }
 
-    } else {
-        console.log("Invalid token, username skipped whoIsWorkingOutToday")
     }
 
     return info;
@@ -68,8 +66,8 @@ async function whoIsWorkingOutToday() {
 
 function displayPartOfDayMsg() {
 
-    if (userDisplayname) {
-        const partOfDayMsg = partOfDayMessage(userDisplayname);
+    if (testUser) {
+        const partOfDayMsg = partOfDayMessage(testUser.getDisplayname());
         const titleDom = document.getElementById("title");
         const nameDom = document.getElementById("name");
 
@@ -139,7 +137,7 @@ async function checkWhoIsWorkingOutToday() {
                 shortenedFullName += `${splitFullName[j][0]}.`;
             }
 
-            if (userID === resp[i].id) {
+            if (testUser && testUser.getId() === resp[i].id) {
 
                 peopleWorkoutList.innerHTML += `
                 <button class="accountOwner fadeInUp animate pointer" onClick="viewUser('${resp[i].id}')">${shortenedFullName}</button>
@@ -219,7 +217,7 @@ async function requestAccountDetails() {
 
         const cachedGoalsLeft = JSON.parse(localStorage.getItem("cachedGoalsLeft_owner"));
 
-        if (badgesize === 1) {
+        if (testUser.getSetting("badgesize") === 1) {
             document.getElementById("Gbadges").style.minHeight = "200px";
         } else {
             document.getElementById("Gbadges").style.minHeight = "110px";
@@ -248,7 +246,7 @@ async function requestAccountDetails() {
         localStorage.removeItem("cachedHasGoalsLeft_owner");
     }
 
-    const resp = await getAccountDetails(userID);
+    const resp = await getAccountDetails(testUser.getId());
 
     if (resp) {
         if (resp.hasOwnProperty("info")) {
@@ -288,7 +286,7 @@ async function displayBadges(aInfo) {
         const checkExistingBadgeColors = JSON.stringify(badgeColorsJSON);
         const checkUpdatedBadgeColors = JSON.stringify(info.badgeColors);
 
-        if (checkExistingLifts === checkUpdatedLifts && checkExistingGoals === checkUpdatedGoals && badgesize === info.settings.badgesize && badgedetails === info.settings.badgedetails) {
+        if (checkExistingLifts === checkUpdatedLifts && checkExistingGoals === checkUpdatedGoals && testUser.getSetting("badgesize") === info.settings.badgesize && testUser.getSetting("badgedetails") === info.settings.badgedetails) {
             updateGoals = false;
             console.log("skipped update lifts/goals");
         }
@@ -302,8 +300,8 @@ async function displayBadges(aInfo) {
 
     }
 
-    badgesize = info.settings.badgesize || 0;
-    badgedetails = info.settings.badgedetails || 0;
+    testUser.setSetting("badgesize", info.settings.badgesize);
+    testUser.setSetting("badgedetails", info.settings.badgedetails);
 
     if (updateBadgeColors === true) {
         badgeColors = new TbadgeColors(info.badgeColors);
@@ -313,7 +311,7 @@ async function displayBadges(aInfo) {
         lifts = info.lifts;
         goals = info.goals;
         showGoalBadgeAnimations = true;
-        if (badgesize === 1) {
+        if (testUser.getSetting("badgesize") === 1) {
             document.getElementById("Gbadges").style.minHeight = "200px";
         } else {
             document.getElementById("Gbadges").style.minHeight = "110px";
@@ -540,14 +538,14 @@ async function displayGoals(checkIfCompleted) {
 
             for (let i = 0; i < arr.length; i++) {
 
-                const badge = getBadgeGoals(badgesize, arr[i], arr[i].id);
+                const badge = getBadgeGoals(testUser.getSetting("badgesize"), arr[i], arr[i].id);
 
                 const badgesGoalsTableRow = document.getElementById("badgesTableRow");
 
                 if (badge && badgesGoalsTableRow) {
                     badgesGoalsTableRow.innerHTML += badge;
 
-                    if (badgesize === 1) {
+                    if (testUser.getSetting("badgesize") === 1) {
 
                         const progressCircle = document.getElementById(`${arr[i].exercise}-${arr[i].id}-progress`);
 

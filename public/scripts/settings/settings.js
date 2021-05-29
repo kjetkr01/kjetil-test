@@ -52,7 +52,7 @@ const ELoadSettings = {
 async function updateUserInfo(aSkipReqData) {
 
     if (navigator.onLine && aSkipReqData !== true) {
-        const resp = await getAccountDetails(userID);
+        const resp = await getAccountDetails(testUser.getId());
         if (resp) {
 
             const rInfo = resp.info;
@@ -137,7 +137,7 @@ function confirmLogout() {
     if (logout === true) {
         localStorage.clear();
         sessionStorage.clear();
-        sessionStorage.setItem("cachedUsername", username);
+        sessionStorage.setItem("cachedUsername", testUser.getUsername());
         redirectToLogin();
     }
 }
@@ -240,8 +240,8 @@ async function displayInformationAboutUser() {
                 method: "GET",
                 headers: {
                     "content-type": "application/json",
-                    "authtoken": token,
-                    "userinfo": user,
+                    "authtoken": testUser.getToken(),
+                    "userinfo": JSON.stringify(testUser.getUser())
                 }
             }
 
@@ -411,7 +411,7 @@ async function deleteAccount() {
 
         if (usernameInpDeletion && usernameInpDeletion.length >= 3 && passwordInpDeletion) {
 
-            if (usernameInpDeletion === username) {
+            if (usernameInpDeletion === testUser.getUsername()) {
 
                 const confirmAccountDeletion = confirm(`Er du sikkert på at du ønsker å slette kontoen din? Dette kan ikke angres!`);
 
@@ -426,8 +426,8 @@ async function deleteAccount() {
                         method: "POST",
                         headers: {
                             "content-type": "application/json",
-                            "authtoken": token,
-                            "userinfo": user
+                            "authtoken": testUser.getToken(),
+                            "userinfo": JSON.stringify(testUser.getUser())
                         },
                         body: JSON.stringify(body)
                     }

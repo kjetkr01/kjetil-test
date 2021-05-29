@@ -17,8 +17,8 @@ async function updatePassword() {
                     method: "POST",
                     headers: {
                         "content-type": "application/json",
-                        "authtoken": token,
-                        "userinfo": user
+                        "authtoken": testUser.getToken(),
+                        "userinfo": JSON.stringify(testUser.getUser())
                     },
                     body: JSON.stringify(body)
                 }
@@ -30,7 +30,7 @@ async function updatePassword() {
                     localStorage.clear();
                     sessionStorage.clear();
                     alert(`Passordet ble endret. Du blir nå logget ut`);
-                    sessionStorage.setItem("cachedUsername", username);
+                    sessionStorage.setItem("cachedUsername", testUser.getUsername());
                     location.reload();
                 } else {
                     alert(data.message)
@@ -75,15 +75,15 @@ async function updateAboutMe() {
                 weight: weightInp
             }
 
-            const body = { "authToken": token, "userInfo": user, "updateSettings": updateSettings };
+            const body = { "updateSettings": updateSettings };
             const url = `/user/update/settings/about/me`;
 
             const config = {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
-                    "authtoken": token,
-                    "userinfo": user,
+                    "authtoken": testUser.getToken(),
+                    "userinfo": JSON.stringify(testUser.getUser())
                 },
                 body: JSON.stringify(body)
             }
@@ -319,7 +319,7 @@ async function saveDisplayname() {
                     localStorage.clear();
                     sessionStorage.clear();
                     alert(`Visningsnavet ble endret til: ${fixedDisplayname}. Du blir nå logget ut`);
-                    sessionStorage.setItem("cachedUsername", username);
+                    sessionStorage.setItem("cachedUsername", testUser.getUsername());
                     location.reload();
                 } else {
                     alert("Visningsnavet kunne ikke bli oppdatert. Vennligst prøv igjen.")

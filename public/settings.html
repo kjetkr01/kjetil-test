@@ -91,6 +91,7 @@
 <body>
 
    <script>
+      createUserClass();
       registerServiceWorker();
       changeColorTheme();
    </script>
@@ -127,8 +128,6 @@
 
 <script>
 
-   lockBodyPosition();
-
    const titleDom = document.getElementById("title");
    const settingsDom = document.getElementById("GsettingsGrid");
    const settingsGrid = document.getElementById("settingsGrid");
@@ -136,24 +135,29 @@
    let settings = null;
    let saveNewScrollPos = true;
 
-   if (!navigator.onLine && !localStorage.getItem("userSettings")) {
-      setTimeout(() => {
-         alert("Innstillinger har ikke blitt lastet ned. Vennligst prøv igjen når du har internett tilkobling");
-         redirectToAccount();
-      }, 500);
-   } else {
+   if (testUser) {
 
-      updateUserInfo(true);
+      lockBodyPosition();
 
-      settingsDom.addEventListener("scroll", function () {
-         if (saveNewScrollPos === true) {
-            const currentScroll = settingsDom.scrollTop;
-            const currentSetting = sessionStorage.getItem("currentSetting");
-            if (currentSetting) {
-               sessionStorage.setItem(`@scroll-${currentSetting}`, currentScroll);
+      if (!navigator.onLine && !localStorage.getItem("userSettings")) {
+         setTimeout(() => {
+            alert("Innstillinger har ikke blitt lastet ned. Vennligst prøv igjen når du har internett tilkobling");
+            redirectToAccount();
+         }, 500);
+      } else {
+
+         updateUserInfo(true);
+
+         settingsDom.addEventListener("scroll", function () {
+            if (saveNewScrollPos === true) {
+               const currentScroll = settingsDom.scrollTop;
+               const currentSetting = sessionStorage.getItem("currentSetting");
+               if (currentSetting) {
+                  sessionStorage.setItem(`@scroll-${currentSetting}`, currentScroll);
+               }
             }
-         }
-      });
+         });
+      }
    }
 
 </script>

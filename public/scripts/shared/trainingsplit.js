@@ -354,7 +354,7 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
 
     let creatorTxt = "";
 
-    if (userID !== resp.user_id) {
+    if (testUser && testUser.getId() !== resp.user_id) {
 
         const cachedSubscribedTrainingsplits_owner = JSON.parse(sessionStorage.getItem("cachedSubscribedTrainingsplits_owner"));
 
@@ -633,7 +633,7 @@ async function changeTrainingsplitDay() {
 
 async function addExercise() {
 
-    if (trainingsplit) {
+    if (trainingsplit && testUser) {
 
         const selectNewExercise = document.getElementById("selectNewExercise").value;
         const inputNewExercise = document.getElementById("inputNewExercise").value;
@@ -652,15 +652,15 @@ async function addExercise() {
 
             await saveTrainingsplit(false);
 
-            const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit.id, "exercise": exercise, "day": trainingsplit.day };
+            const body = { "trainingsplit_id": trainingsplit.id, "exercise": exercise, "day": trainingsplit.day };
             const url = `/user/add/trainingsplit/exercise`;
 
             const config = {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
-                    "authtoken": token,
-                    "userinfo": user,
+                    "authtoken": testUser.getToken(),
+                    "userinfo": JSON.stringify(testUser.getUser()),
                 },
                 body: JSON.stringify(body)
             }
@@ -679,7 +679,7 @@ async function addExercise() {
 
 async function deleteExercise(aExercise) {
 
-    if (trainingsplit) {
+    if (trainingsplit && testUser) {
 
         const exercise = aExercise;
 
@@ -699,15 +699,15 @@ async function deleteExercise(aExercise) {
 
                 await saveTrainingsplit(false);
 
-                const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit.id, "exercise": exercise, "day": trainingsplit.day };
+                const body = { "trainingsplit_id": trainingsplit.id, "exercise": exercise, "day": trainingsplit.day };
                 const url = `/user/delete/trainingsplit/exercise`;
 
                 const config = {
                     method: "POST",
                     headers: {
                         "content-type": "application/json",
-                        "authtoken": token,
-                        "userinfo": user,
+                        "authtoken": testUser.getToken(),
+                        "userinfo": JSON.stringify(testUser.getUser()),
                     },
                     body: JSON.stringify(body)
                 }
@@ -727,7 +727,7 @@ async function deleteExercise(aExercise) {
 
 async function deleteRowExercise(aExercise, aIndex) {
 
-    if (trainingsplit) {
+    if (trainingsplit && testUser) {
 
         const exercise = aExercise;
         const index = aIndex;
@@ -740,15 +740,15 @@ async function deleteRowExercise(aExercise, aIndex) {
 
                 await saveTrainingsplit(false);
 
-                const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit.id, "exercise": exercise, "index": index, "day": trainingsplit.day };
+                const body = { "trainingsplit_id": trainingsplit.id, "exercise": exercise, "index": index, "day": trainingsplit.day };
                 const url = `/user/delete/trainingsplit/exercise/row`;
 
                 const config = {
                     method: "POST",
                     headers: {
                         "content-type": "application/json",
-                        "authtoken": token,
-                        "userinfo": user,
+                        "authtoken": testUser.getToken(),
+                        "userinfo": JSON.stringify(testUser.getUser()),
                     },
                     body: JSON.stringify(body)
                 }
@@ -769,7 +769,7 @@ async function deleteRowExercise(aExercise, aIndex) {
 
 async function addRowExercise(aExercise) {
 
-    if (trainingsplit) {
+    if (trainingsplit && testUser) {
 
         const exercise = aExercise;
 
@@ -777,15 +777,15 @@ async function addRowExercise(aExercise) {
 
             await saveTrainingsplit(false);
 
-            const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit.id, "exercise": exercise, "day": trainingsplit.day };
+            const body = { "trainingsplit_id": trainingsplit.id, "exercise": exercise, "day": trainingsplit.day };
             const url = `/user/add/trainingsplit/exercise/row`;
 
             const config = {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
-                    "authtoken": token,
-                    "userinfo": user,
+                    "authtoken": testUser.getToken(),
+                    "userinfo": JSON.stringify(testUser.getUser()),
                 },
                 body: JSON.stringify(body)
             }
@@ -804,7 +804,7 @@ async function addRowExercise(aExercise) {
 
 async function moveExerciseOrder(aIndex, aMoveUp) {
 
-    if (trainingsplit) {
+    if (trainingsplit && testUser) {
 
         const index = aIndex;
         const moveUp = aMoveUp;
@@ -813,15 +813,15 @@ async function moveExerciseOrder(aIndex, aMoveUp) {
 
             await saveTrainingsplit(false);
 
-            const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit.id, "day": trainingsplit.day, "index": index, "moveUp": moveUp };
+            const body = { "trainingsplit_id": trainingsplit.id, "day": trainingsplit.day, "index": index, "moveUp": moveUp };
             const url = `/user/update/trainingsplit/exercise/move`;
 
             const config = {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
-                    "authtoken": token,
-                    "userinfo": user,
+                    "authtoken": testUser.getToken(),
+                    "userinfo": JSON.stringify(testUser.getUser()),
                 },
                 body: JSON.stringify(body)
             }
@@ -842,7 +842,7 @@ async function copyTrainingsplit(aTrainingsplit_id, aOwner_id) {
 
     const trainingsplit_id = aTrainingsplit_id;
 
-    if (trainingsplit_id) {
+    if (trainingsplit_id && testUser) {
 
         const owner_id = aOwner_id;
 
@@ -854,15 +854,15 @@ async function copyTrainingsplit(aTrainingsplit_id, aOwner_id) {
                 return;
             }
 
-            const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit_id, "owner_id": owner_id };
+            const body = { "trainingsplit_id": trainingsplit_id, "owner_id": owner_id };
             const url = `/user/copy/trainingsplit`;
 
             const config = {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
-                    "authtoken": token,
-                    "userinfo": user,
+                    "authtoken": testUser.getToken(),
+                    "userinfo": JSON.stringify(testUser.getUser()),
                 },
                 body: JSON.stringify(body)
             }
@@ -890,7 +890,7 @@ async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTraining
 
     const trainingsplit_id = aTrainingsplit_id;
 
-    if (trainingsplit_id) {
+    if (trainingsplit_id && testUser) {
 
         const owner_id = aOwner_id;
 
@@ -910,15 +910,15 @@ async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTraining
                 }
             }
 
-            const body = { "authToken": token, "userInfo": user, "trainingsplit_id": trainingsplit_id, "owner_id": owner_id };
+            const body = { "trainingsplit_id": trainingsplit_id, "owner_id": owner_id };
             const url = `/user/subunsub/trainingsplit`;
 
             const config = {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
-                    "authtoken": token,
-                    "userinfo": user,
+                    "authtoken": testUser.getToken(),
+                    "userinfo": JSON.stringify(testUser.getUser()),
                 },
                 body: JSON.stringify(body)
             }

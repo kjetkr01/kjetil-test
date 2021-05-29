@@ -16,6 +16,10 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
             goalBadgeAnimations = animationClasses;
         }
 
+        if (!aSize) {
+            aSize = 0;
+        }
+
         if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.exercise && aBadgeInfo.kg && aBadgeInfo.untilGoal >= 0 && aBadgeInfo.msg && aId) {
 
             const size = aSize;
@@ -51,9 +55,9 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
 
         let currentProgressionPercent = `${userBadgeInfo.progressionPercent}%`;
 
-        if (badgedetails === 1) {
+        if (testUser.getSetting("badgedetails") === 1) {
             currentProgressionPercent = "";
-        } else if (badgedetails === 2) {
+        } else if (testUser.getSetting("badgedetails") === 2) {
             untilGoal = "";
         }
 
@@ -276,6 +280,10 @@ function getBadgeLift(aSize, aBadgeInfo, aId) {
             liftBadgeAnimations = animationClasses;
         }
 
+        if (!aSize) {
+            aSize = 0;
+        }
+
         if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.exercise && aBadgeInfo.kg && aBadgeInfo.msg && aId) {
 
             const size = aSize;
@@ -486,6 +494,10 @@ function getBadgeTrainingsplit(aSize, aBadgeInfo) {
             trainingsplitBadgeAnimations = "";
         } else {
             trainingsplitBadgeAnimations = animationClasses;
+        }
+
+        if (!aSize) {
+            aSize = 0;
         }
 
         if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.day && aBadgeInfo.trainingsplit && aBadgeInfo.trainingsplit) {

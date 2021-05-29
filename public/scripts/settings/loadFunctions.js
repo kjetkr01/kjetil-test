@@ -579,7 +579,7 @@ async function loadUsersListPage(setting) {
                             profileStatus = `<p class="settingsPendingUsername" style="color:green;">Offentlig</p>`;
                         }
 
-                        if (currentUser.username === username) {
+                        if (testUser && currentUser.username === testUser.getUsername()) {
                             myAccountColor = "settingsHightlightUser";
                         }
 
@@ -589,7 +589,7 @@ async function loadUsersListPage(setting) {
                    <p class="settingsPendingUsername">ID: ${currentUser.id}</p>
                    `;
 
-                        if (currentUser.username !== username) {
+                        if (testUser && currentUser.username !== testUser.getUsername()) {
                             usersTemplateHTML += `
                     ${profileStatus}
                     <p class="settingsPendingUsername">${hasAPIAccessTxt}</p>
@@ -626,7 +626,7 @@ async function loadUsersListPage(setting) {
                     const currentUser = resp.allUsers[usersKeys[i]];
 
                     let myAccountColor = "";
-                    if (currentUser.username === username) {
+                    if (testUser && currentUser.username === testUser.getUsername()) {
                         myAccountColor = "settingsHightlightUser";
                     }
 
@@ -636,7 +636,7 @@ async function loadUsersListPage(setting) {
                <br>
                `;
 
-                    if (currentUser.username !== username) {
+                    if (testUser && currentUser.username !== testUser.getUsername()) {
                         usersTemplateHTML += `
                <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Besøk</button>
                 `;
@@ -777,7 +777,7 @@ async function loadAPIPage() {
                 response = await fetch("/api", config);
             }
 
-            if (response && response.status === 200) {
+            if (response && response.status === 200 && testUser) {
 
                 const data = await response.json();
 
@@ -812,7 +812,7 @@ async function loadAPIPage() {
                     method: "GET",
                     headers: {
                         "content-type": "application/json",
-                        "uid": userID,
+                        "uid": userInfo.id.toString(),
                         "key": userInfo.apikey
                     }
                 }
@@ -831,8 +831,6 @@ async function loadAPIPage() {
                 settingsGrid.innerHTML += getAPITextTemplate(fullExampleAPIText);
 
                 settingsGrid.innerHTML += getCenteredTextTemplate("Eksempel Response:", "", "spacingTop");
-
-
 
                 const days = ["søndag", "mandag", "tirsdag", "onsdag", "torsdag", "fredag", "lørdag"];
                 const dayNum = new Date().getDay();

@@ -168,7 +168,7 @@ async function requestAccountDetails() {
 
     if (viewingUser) {
 
-        if (userID === parseInt(viewingUser)) {
+        if (testUser && testUser.getId() === parseInt(viewingUser)) {
             redirectToAccount();
         } else {
 

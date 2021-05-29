@@ -173,7 +173,7 @@ async function getListOfLeaderboard(aLeaderboard) {
             return;
         }
 
-        if (token && user && aLeaderboard) {
+        if (testUser && aLeaderboard) {
 
             const reps = localStorage.getItem("leaderboards_filter_reps") || "1";
             viewingLeaderboard = aLeaderboard;
@@ -248,7 +248,7 @@ async function getListOfLeaderboard(aLeaderboard) {
                     let placementHTML = `${i + 1}.`;
                     let usernameHTML = `<button class="peopleLeaderboardsListName pointer" onClick="viewUser('${resp[i].id}')">${resp[i].username}</button>`;
 
-                    if (resp[i].id === userID) {
+                    if (resp[i].id === testUser.getId()) {
                         usernameHTML = `<button class="accountOwner pointer" onClick="viewUser('${resp[i].id}')">${resp[i].username}</button>`;
                     }
 

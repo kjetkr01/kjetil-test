@@ -94,6 +94,7 @@
 <body>
 
    <script>
+      createUserClass();
       registerServiceWorker();
       changeColorTheme();
    </script>
@@ -275,61 +276,66 @@
 </body>
 
 <script>
-   checkConnection("c6r2");
-   if (sessionStorage.getItem("settings_notification_update") === "true") {
-      document.getElementById("settings").innerHTML += `1`;
-   }
 
-   lockBodyPosition();
-   getCreateNewLiftorGoalOverlay();
-   getViewLiftorGoalOverlay();
-   getEditLiftorGoalOverlay();
-   geteditworkoutPlanOverlay();
+   if (testUser) {
 
-   displayUserDetailsCached();
-
-   if (checkIfValidParams() === true) {
-      document.getElementById("userGrid").innerHTML = "";
-      requestTrainingsplitDetails();
-   } else {
-
-      if (window.location.search.length > 0) {
-         window.location.search = "";
-      }
-
-      requestAccountDetails();
-
-      //sessionStorage.removeItem("trainingsplit");
-      const GuserGrid = document.getElementById("GuserGrid");
-
-      if (sessionStorage.getItem("usergrid_scroll_y_main")) {
-         GuserGrid.scrollTop = sessionStorage.getItem("usergrid_scroll_y_main");
-      }
-
-      GuserGrid.addEventListener("scroll", function () {
-         const scrollY = GuserGrid.scrollTop;
-         sessionStorage.setItem("usergrid_scroll_y_main", scrollY);
-      });
-
-      GbadgesLifts.addEventListener("scroll", function () {
-         const scrollX = GbadgesLifts.scrollLeft;
-         sessionStorage.setItem("badgeslifts_scroll_x", scrollX);
-      });
-
-      GbadgesGoals.addEventListener("scroll", function () {
-         const scrollX = GbadgesGoals.scrollLeft;
-         sessionStorage.setItem("badgesgoals_scroll_x", scrollX);
-      });
-
-      GbadgesTrainingsplit.addEventListener("scroll", function () {
-         const scrollX = GbadgesTrainingsplit.scrollLeft;
-         sessionStorage.setItem("badgestrainingsplit_scroll_x", scrollX);
-      });
-   }
-
-   setInterval(() => {
       checkConnection("c6r2");
-   }, 1000);
+      if (sessionStorage.getItem("settings_notification_update") === "true") {
+         document.getElementById("settings").innerHTML += `1`;
+      }
+
+      lockBodyPosition();
+      getCreateNewLiftorGoalOverlay();
+      getViewLiftorGoalOverlay();
+      getEditLiftorGoalOverlay();
+      geteditworkoutPlanOverlay();
+
+      displayUserDetailsCached();
+
+      if (checkIfValidParams() === true) {
+         document.getElementById("userGrid").innerHTML = "";
+         requestTrainingsplitDetails();
+      } else {
+
+         if (window.location.search.length > 0) {
+            window.location.search = "";
+         }
+
+         requestAccountDetails();
+
+         //sessionStorage.removeItem("trainingsplit");
+         const GuserGrid = document.getElementById("GuserGrid");
+
+         if (sessionStorage.getItem("usergrid_scroll_y_main")) {
+            GuserGrid.scrollTop = sessionStorage.getItem("usergrid_scroll_y_main");
+         }
+
+         GuserGrid.addEventListener("scroll", function () {
+            const scrollY = GuserGrid.scrollTop;
+            sessionStorage.setItem("usergrid_scroll_y_main", scrollY);
+         });
+
+         GbadgesLifts.addEventListener("scroll", function () {
+            const scrollX = GbadgesLifts.scrollLeft;
+            sessionStorage.setItem("badgeslifts_scroll_x", scrollX);
+         });
+
+         GbadgesGoals.addEventListener("scroll", function () {
+            const scrollX = GbadgesGoals.scrollLeft;
+            sessionStorage.setItem("badgesgoals_scroll_x", scrollX);
+         });
+
+         GbadgesTrainingsplit.addEventListener("scroll", function () {
+            const scrollX = GbadgesTrainingsplit.scrollLeft;
+            sessionStorage.setItem("badgestrainingsplit_scroll_x", scrollX);
+         });
+      }
+
+      setInterval(() => {
+         checkConnection("c6r2");
+      }, 1000);
+
+   }
 
 </script>
 

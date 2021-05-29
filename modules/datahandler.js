@@ -1006,7 +1006,6 @@ class StorageHandler {
 
         const client = new pg.Client(this.credentials);
         let results = false;
-        //let info = {};
         let infoList = [];
 
         try {

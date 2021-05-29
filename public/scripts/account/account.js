@@ -104,81 +104,84 @@ function displayUserDetailsCached() {
 
 async function requestAccountDetails() {
 
-    try {
-        lifts = JSON.parse(localStorage.getItem("cachedLifts_owner"));
-        goals = JSON.parse(localStorage.getItem("cachedGoals_owner"));
-        badgeColorsJSON = JSON.parse(localStorage.getItem("cachedBadgeColors"));
+    if (testUser) {
 
-        const cachedLiftsLeft = JSON.parse(localStorage.getItem("cachedLiftsLeft_owner"));
-        const cachedGoalsLeft = JSON.parse(localStorage.getItem("cachedGoalsLeft_owner"));
-        const cachedTrainingsplitsLeft = JSON.parse(localStorage.getItem("cachedTrainingsplitsLeft_owner"));
+        try {
+            lifts = JSON.parse(localStorage.getItem("cachedLifts_owner"));
+            goals = JSON.parse(localStorage.getItem("cachedGoals_owner"));
+            badgeColorsJSON = JSON.parse(localStorage.getItem("cachedBadgeColors"));
 
-        activetrainingsplit = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
+            const cachedLiftsLeft = JSON.parse(localStorage.getItem("cachedLiftsLeft_owner"));
+            const cachedGoalsLeft = JSON.parse(localStorage.getItem("cachedGoalsLeft_owner"));
+            const cachedTrainingsplitsLeft = JSON.parse(localStorage.getItem("cachedTrainingsplitsLeft_owner"));
 
-        if (cachedLiftsLeft >= 0) {
-            liftsLeft = new TliftsLeft(cachedLiftsLeft);
+            activetrainingsplit = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
+
+            if (cachedLiftsLeft >= 0) {
+                liftsLeft = new TliftsLeft(cachedLiftsLeft);
+            }
+
+            if (cachedGoalsLeft >= 0) {
+                goalsLeft = new TgoalsLeft(cachedGoalsLeft);
+            }
+
+            if (cachedTrainingsplitsLeft >= 0) {
+                trainingsplitsLeft = new TtrainingsplitsLeft(cachedTrainingsplitsLeft);
+            }
+
+            if (lifts) {
+                showLiftBadgeAnimations = false;
+                liftsInfo = new Tlifts(lifts);
+                displayLifts();
+            }
+
+            if (goals) {
+                showGoalBadgeAnimations = false;
+                goalsInfo = new Tgoals(goals);
+                displayGoals();
+            }
+
+            if (activetrainingsplit) {
+                sessionStorage.removeItem("hasActiveTrainingsplit");
+                showTrainingsplitBadgeAnimations = false;
+            } else {
+                sessionStorage.setItem("hasActiveTrainingsplit", false);
+            }
+
+            displayTrainingsplit();
+
+            if (badgeColorsJSON) {
+                badgeColors = new TbadgeColors(badgeColorsJSON);
+            }
+
+
+
+        } catch {
+            localStorage.removeItem("cachedLifts_owner");
+            localStorage.removeItem("cachedHasLiftsLeft_owner");
+            localStorage.removeItem("cachedGoals_owner");
+            localStorage.removeItem("cachedHasGoalsLeft_owner");
         }
 
-        if (cachedGoalsLeft >= 0) {
-            goalsLeft = new TgoalsLeft(cachedGoalsLeft);
+        const resp = await getAccountDetails(testUser.getId());
+
+        if (resp) {
+
+            if (resp.hasOwnProperty("info")) {
+                localStorage.setItem("cachedLifts_owner", JSON.stringify(resp.info.lifts));
+                localStorage.setItem("cachedLiftsLeft_owner", resp.info.liftsLeft);
+                localStorage.setItem("cachedGoals_owner", JSON.stringify(resp.info.goals));
+                localStorage.setItem("cachedGoalsLeft_owner", resp.info.goalsLeft);
+                localStorage.setItem("cachedBadgeColors", JSON.stringify(resp.info.badgeColors));
+                localStorage.setItem("cachedTrainingsplitsLeft_owner", resp.info.trainingsplitsLeft);
+                displayInformation(resp.info);
+                return;
+            }
         }
 
-        if (cachedTrainingsplitsLeft >= 0) {
-            trainingsplitsLeft = new TtrainingsplitsLeft(cachedTrainingsplitsLeft);
-        }
-
-        if (lifts) {
-            showLiftBadgeAnimations = false;
-            liftsInfo = new Tlifts(lifts);
-            displayLifts();
-        }
-
-        if (goals) {
-            showGoalBadgeAnimations = false;
-            goalsInfo = new Tgoals(goals);
-            displayGoals();
-        }
-
-        if (activetrainingsplit) {
-            sessionStorage.removeItem("hasActiveTrainingsplit");
-            showTrainingsplitBadgeAnimations = false;
-        } else {
-            sessionStorage.setItem("hasActiveTrainingsplit", false);
-        }
-
-        displayTrainingsplit();
-
-        if (badgeColorsJSON) {
-            badgeColors = new TbadgeColors(badgeColorsJSON);
-        }
-
-
-
-    } catch {
-        localStorage.removeItem("cachedLifts_owner");
-        localStorage.removeItem("cachedHasLiftsLeft_owner");
-        localStorage.removeItem("cachedGoals_owner");
-        localStorage.removeItem("cachedHasGoalsLeft_owner");
+        //alert("Det har oppstått en feil!");
+        //redirectToFeed();
     }
-
-    const resp = await getAccountDetails(userID);
-
-    if (resp) {
-
-        if (resp.hasOwnProperty("info")) {
-            localStorage.setItem("cachedLifts_owner", JSON.stringify(resp.info.lifts));
-            localStorage.setItem("cachedLiftsLeft_owner", resp.info.liftsLeft);
-            localStorage.setItem("cachedGoals_owner", JSON.stringify(resp.info.goals));
-            localStorage.setItem("cachedGoalsLeft_owner", resp.info.goalsLeft);
-            localStorage.setItem("cachedBadgeColors", JSON.stringify(resp.info.badgeColors));
-            localStorage.setItem("cachedTrainingsplitsLeft_owner", resp.info.trainingsplitsLeft);
-            displayInformation(resp.info);
-            return;
-        }
-    }
-
-    //alert("Det har oppstått en feil!");
-    //redirectToFeed();
 }
 
 // end of requestAccountDetails

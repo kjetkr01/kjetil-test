@@ -94,11 +94,12 @@
 <body>
 
    <script>
+      createUserClass();
       registerServiceWorker();
       if (!sessionStorage.getItem("user") && !localStorage.getItem("user")) {
          redirectToLogin();
       }
-      changeColorTheme()
+      changeColorTheme();
    </script>
 
    <div id="createNewLiftorGoalOverlay" style="display: none;" class="overlay noselect"></div>
@@ -225,96 +226,99 @@
 
 <script>
 
-   checkConnection("c6r2");
+   if (testUser) {
 
-   checkForUpdate();
-   async function checkForUpdate() {
-      if (navigator.onLine) {
-         const serverApplication = await callServerAPIPost({}, `/application`);
-         if (serverApplication) {
-            if (serverApplication.version.fullNumber !== application.version.fullNumber) {
+      checkConnection("c6r2");
 
-               if (automaticUpdates === true) {
-                  updateApplication(false);
-                  localStorage.setItem("updated_version_text", `${serverApplication.name} ble oppdatert til versjon ${serverApplication.version.fullNumber}`);
+      checkForUpdate();
+      async function checkForUpdate() {
+         if (navigator.onLine) {
+            const serverApplication = await callServerAPIPost({}, `/application`);
+            if (serverApplication) {
+               if (serverApplication.version.fullNumber !== application.version.fullNumber) {
+
+                  if (testUser && testUser.getSetting("automaticupdates") === true) {
+                     updateApplication(false);
+                     localStorage.setItem("updated_version_text", `${serverApplication.name} ble oppdatert til versjon ${serverApplication.version.fullNumber}`);
+                  }
+
+                  sessionStorage.setItem("settings_notification_update", true);
+
+               } else {
+                  sessionStorage.removeItem("settings_notification_update");
                }
-
-               sessionStorage.setItem("settings_notification_update", true);
-
-            } else {
-               sessionStorage.removeItem("settings_notification_update");
             }
          }
       }
-   }
 
-   updatedNotification();
-   function updatedNotification() {
-      if (navigator.onLine) {
-         if (localStorage.getItem("updated_version_text")) {
-            const updatedVersionOverlay = document.getElementById("updatedVersionOverlay");
-            const updateAlert = localStorage.getItem("updated_version_text");
-            const informationUV = document.getElementById("informationUV");
+      updatedNotification();
+      function updatedNotification() {
+         if (navigator.onLine) {
+            if (localStorage.getItem("updated_version_text")) {
+               const updatedVersionOverlay = document.getElementById("updatedVersionOverlay");
+               const updateAlert = localStorage.getItem("updated_version_text");
+               const informationUV = document.getElementById("informationUV");
 
-            updatedVersionOverlay.style.display = "block";
+               updatedVersionOverlay.style.display = "block";
 
-            informationUV.innerHTML = updateAlert;
-            const closingInUV = document.getElementById("closingInUV");
-            let secondsLeft = 4;
-            closingInUV.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
-            let countDown = setInterval(() => {
-               secondsLeft--;
-               if (secondsLeft <= 0) {
-                  clearInterval(countDown);
+               informationUV.innerHTML = updateAlert;
+               const closingInUV = document.getElementById("closingInUV");
+               let secondsLeft = 4;
+               closingInUV.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
+               let countDown = setInterval(() => {
+                  secondsLeft--;
+                  if (secondsLeft <= 0) {
+                     clearInterval(countDown);
 
-                  informationUV.innerHTML = "";
-                  closingInUV.innerHTML = "";
-                  updatedVersionOverlay.style.display = "none";
-               } else {
-                  closingInUV.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
-               }
-            }, 1000);
+                     informationUV.innerHTML = "";
+                     closingInUV.innerHTML = "";
+                     updatedVersionOverlay.style.display = "none";
+                  } else {
+                     closingInUV.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
+                  }
+               }, 1000);
 
-            localStorage.removeItem("updated_version_text");
+               localStorage.removeItem("updated_version_text");
+            }
          }
       }
+
+      lockBodyPosition();
+      getCreateNewLiftorGoalOverlay();
+      getViewLiftorGoalOverlay();
+      getEditLiftorGoalOverlay();
+
+      function intervals() {
+
+         let savedDay = new Date().getDay();
+
+         setInterval(() => {
+
+            const currentDay = new Date().getDay()
+            if (savedDay !== currentDay) {
+               savedDay = currentDay;
+               checkWhoIsWorkingOutToday();
+            }
+
+         }, 15000);
+
+         setInterval(() => {
+            displayPartOfDayMsg();
+         }, 60000);
+
+         setInterval(() => {
+            checkConnection("c6r2");
+         }, 1000);
+
+      }
+
+      intervals();
+
+      displayPartOfDayMsg();
+      checkWhoIsWorkingOutToday();
+      requestAccountDetails();
+
    }
-
-   lockBodyPosition();
-   getCreateNewLiftorGoalOverlay();
-   getViewLiftorGoalOverlay();
-   getEditLiftorGoalOverlay();
-
-   function intervals() {
-
-      let savedDay = new Date().getDay();
-
-      setInterval(() => {
-
-         const currentDay = new Date().getDay()
-         if (savedDay !== currentDay) {
-            savedDay = currentDay;
-            checkWhoIsWorkingOutToday();
-         }
-
-      }, 15000);
-
-      setInterval(() => {
-         displayPartOfDayMsg();
-      }, 60000);
-
-      setInterval(() => {
-         checkConnection("c6r2");
-      }, 1000);
-
-   }
-
-   intervals();
-
-   displayPartOfDayMsg();
-   checkWhoIsWorkingOutToday();
-   requestAccountDetails();
-   //displayBadges();
 
 </script>
 

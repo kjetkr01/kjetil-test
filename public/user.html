@@ -93,7 +93,10 @@
 
 <body>
 
-   <script>changeColorTheme();</script>
+   <script>
+      createUserClass();
+      changeColorTheme();
+   </script>
 
    <div id="viewLiftorGoalOverlay" style="display: none;" class="overlay noselect"></div>
 
@@ -104,9 +107,6 @@
       <div id="c3r1"></div>
 
       <div id="GbackBtn">
-         <!--<img id="backBtn" onclick="returnToPrevious();" draggable="false" class="icons fadeInLeft animate delaySmall"
-            src="images/backIcon.svg" alt="Tilbake">
-         </img>-->
 
          <svg id="backBtn" class="backBtnIcon fadeInLeft animate delaySmall pointer" style="stroke:white;"
             draggable="false" onclick="returnToPrevious();" xmlns="http://www.w3.org/2000/svg"
@@ -219,36 +219,40 @@
 
 <script>
 
-   const referrer = sessionStorage.getItem("visit_user_referrer");
+   if (testUser) {
 
-   function returnToPrevious() {
+      const referrer = sessionStorage.getItem("visit_user_referrer");
 
-      const redirect = sessionStorage.getItem("visit_user_referrer");
+      function returnToPrevious() {
 
-      if (redirect) {
-         sessionStorage.removeItem("visit_user_referrer");
-         location.href = redirect;
-      } else {
-         redirectToFeed();
+         const redirect = sessionStorage.getItem("visit_user_referrer");
+
+         if (redirect) {
+            sessionStorage.removeItem("visit_user_referrer");
+            location.href = redirect;
+         } else {
+            redirectToFeed();
+         }
       }
+
+      lockBodyPosition();
+      getViewLiftorGoalOverlay();
+
+      displayUserDetailsCached();
+      if (checkIfValidParams() === true && navigator.onLine) {
+         document.getElementById("GbackBtn").innerHTML = "";
+         document.getElementById("userGrid").innerHTML = "";
+         requestTrainingsplitDetails();
+      } else {
+         requestAccountDetails();
+         sessionStorage.removeItem("trainingsplit");
+      }
+
+      setInterval(() => {
+         checkConnection("c6r2");
+      }, 5000);
+
    }
-
-   lockBodyPosition();
-   getViewLiftorGoalOverlay();
-
-   displayUserDetailsCached();
-   if (checkIfValidParams() === true && navigator.onLine) {
-      document.getElementById("GbackBtn").innerHTML = "";
-      document.getElementById("userGrid").innerHTML = "";
-      requestTrainingsplitDetails();
-   } else {
-      requestAccountDetails();
-      sessionStorage.removeItem("trainingsplit");
-   }
-
-   setInterval(() => {
-      checkConnection("c6r2");
-   }, 5000);
 
 </script>
 

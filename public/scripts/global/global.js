@@ -1,14 +1,10 @@
 // global variables
 
-const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
-const user = localStorage.getItem("user") || sessionStorage.getItem("user");
-let userDisplayname, showGymCloseTime, username, userID;
 let isUpdatingUserObject = false;
-let preferredColorTheme = null;
-let automaticUpdates = null;
-let badgesize = null;
-let badgedetails = null;
+
 let lockedBody = false;
+
+let testUser = null;
 
 const repsSM = 10; // 1 rep * 10 (repsSM) = 10 points. 1 kg = 1 point
 
@@ -48,42 +44,151 @@ for (let i = 0; i < themeKeys.length; i++) {
 
 //
 
-// update global user variables
+// create global user class
 
-if (user) {
-    try {
+function createUserClass() {
+    const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
+    const userObj = localStorage.getItem("user") || sessionStorage.getItem("user");
+    if (userObj) {
+        try {
 
-        userDisplayname = JSON.parse(user);
+            const testSettings = localStorage.getItem("userSettings");
 
-        username = userDisplayname.username;
-        userID = userDisplayname.id;
-
-        automaticUpdates = userDisplayname.automaticUpdates;
-        badgesize = userDisplayname.badgesize;
-        badgedetails = userDisplayname.badgedetails;
-
-        preferredColorTheme = allowedThemes[userDisplayname.preferredColorTheme].theme;
-
-        if (preferredColorTheme !== sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(preferredColorTheme) === true) {
-            if (localStorage.getItem("user")) {
-                localStorage.setItem("colorTheme", preferredColorTheme);
-            } else {
-                sessionStorage.setItem("colorTheme", preferredColorTheme);
+            // userSettings not always loading first
+            if (token && userObj) {
+                testUser = new TUser(token, JSON.parse(userObj), {});
             }
+
+            if (testUser && testSettings) {
+                testUser.setSettings(JSON.parse(testSettings));
+            }
+
+            //auto redirect to login if token is invalid
+            //window.onload = validateToken;
+            validateToken();
+            async function validateToken() {
+
+                if (!window.navigator.onLine) {
+                    return;
+                }
+
+                const currentPage = window.location.pathname;
+
+                const blackListedPages = ["/access.html", "/login.html", "/userlifts.html"];
+
+                //blacklists login pages
+                if (blackListedPages.includes(currentPage)) {
+
+                    console.log(`"${currentPage}" is a blacklisted page, skipped token verification`);
+                    return;
+
+                } else {
+
+                    if (testUser) {
+
+                        const infoHeader = {};
+                        const url = `/validate`;
+
+                        const resp = await callServerAPIPost(infoHeader, url);
+
+                        if (resp) {
+
+                        } else {
+                            localStorage.clear();
+                            sessionStorage.clear();
+                            sessionStorage.setItem("cachedUsername", testUser.getUsername());
+                            redirectToLogin();
+                        }
+
+                    } else {
+                        redirectToLogin();
+                    }
+                }
+            }
+
+            /*userDisplayname = JSON.parse(user);
+    
+            username = userDisplayname.username;
+            userID = userDisplayname.id;
+    
+            automaticUpdates = userDisplayname.automaticUpdates;
+            badgesize = userDisplayname.badgesize;
+            badgedetails = userDisplayname.badgedetails;
+    
+            preferredColorTheme = allowedThemes[userDisplayname.preferredColorTheme].theme;
+    
+            if (preferredColorTheme !== sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(preferredColorTheme) === true) {
+                if (localStorage.getItem("user")) {
+                    localStorage.setItem("colorTheme", preferredColorTheme);
+                } else {
+                    sessionStorage.setItem("colorTheme", preferredColorTheme);
+                }
+            }
+    
+            userDisplayname = userDisplayname.displayname;*/
+
+        } catch (err) {
+
+            console.log("invalid user object");
+            console.log("ERROR:");
+            console.log("------------------------------------");
+            console.log(err);
+            console.log("------------------------------------");
+
         }
-
-        userDisplayname = userDisplayname.displayname;
-
-    } catch (err) {
-
-        console.log("invalid user object");
-        console.log("ERROR:");
-        console.log("------------------------------------");
-        console.log(err);
-        console.log("------------------------------------");
-
     }
 }
+
+
+// User class (for logged inn user)
+function TUser(aToken, aUser, aSettings) {
+
+    const token = aToken;
+
+    const user = {
+        "id": aUser.id,
+        "displayname": aUser.displayname,
+        "username": aUser.username
+    }
+
+    let settings = aSettings;
+
+    this.getToken = function () {
+        return token;
+    }
+
+    this.getUser = function () {
+        return user;
+    }
+
+    this.getId = function () {
+        return user.id;
+    }
+
+    this.getDisplayname = function () {
+        return user.displayname;
+    }
+
+    this.getUsername = function () {
+        return user.username;
+    }
+
+    this.getSetting = function (aSetting) {
+        return settings[aSetting.toLowerCase()];
+    }
+
+    this.setSetting = function (aSetting, aValue) {
+        settings[aSetting.toLowerCase()] = aValue;
+    }
+
+    this.setSettings = function (aNewSettings) {
+        settings = aNewSettings;
+    }
+
+}
+
+
+
 
 // changeColorTheme
 
@@ -186,48 +291,6 @@ function viewUser(viewUser) {
 
 //
 
-//auto redirect to login if token is invalid
-window.onload = validateToken;
-async function validateToken() {
-
-    if (!window.navigator.onLine) {
-        return;
-    }
-
-    const currentPage = window.location.pathname;
-
-    const blackListedPages = ["/access.html", "/login.html", "/userlifts.html"];
-
-    //blacklists login pages
-    if (blackListedPages.includes(currentPage)) {
-
-        console.log(`"${currentPage}" is a blacklisted page, skipped token verification`);
-        return;
-
-    } else {
-
-        if (token && user) {
-
-            const infoHeader = {};
-            const url = `/validate`;
-
-            const resp = await callServerAPIPost(infoHeader, url);
-
-            if (resp) {
-
-            } else {
-                localStorage.clear();
-                sessionStorage.clear();
-                sessionStorage.setItem("cachedUsername", username);
-                redirectToLogin();
-            }
-
-        } else {
-            redirectToLogin();
-        }
-    }
-}
-
 async function callServerAPIPost(aInfoBody, aUrl) {
 
     if (!window.navigator.onLine) {
@@ -238,12 +301,19 @@ async function callServerAPIPost(aInfoBody, aUrl) {
         return;
     }
 
+    let userInfoObj = null;
+    let token = null;
+    if (testUser) {
+        userInfoObj = JSON.stringify(testUser.getUser());
+        token = testUser.getToken();
+    }
+
     const config = {
         method: "POST",
         headers: {
             "content-type": "application/json",
             "authtoken": token,
-            "userinfo": user,
+            "userinfo": userInfoObj,
         },
         body: JSON.stringify(aInfoBody)
     }
@@ -263,7 +333,7 @@ async function callServerAPIPost(aInfoBody, aUrl) {
 async function getAccountDetails(aUserID) {
     if (navigator.onLine) {
 
-        if (token && user && aUserID) {
+        if (testUser) {
 
             isUpdatingUserObject = true;
 
@@ -340,8 +410,8 @@ async function getAccountDetails(aUserID) {
 
                     const newColorTheme = allowedThemes[resp.updatedUserObject.preferredColorTheme].theme;
 
-                    if (preferredColorTheme !== newColorTheme && checkAllowedThemes.includes(newColorTheme) === true) {
-                        preferredColorTheme = newColorTheme;
+                    if (testUser && testUser.getSetting("preferredcolortheme") !== newColorTheme && checkAllowedThemes.includes(newColorTheme) === true) {
+                        testUser.setSetting("preferredcolortheme", newColorTheme);
 
                         if (localStorage.getItem("user")) {
                             localStorage.setItem("colorTheme", newColorTheme);
@@ -664,7 +734,7 @@ function redirectToUser(viewUser) {
     const viewingUser = viewUser;
 
     if (viewingUser) {
-        if (userID === parseInt(viewingUser)) {
+        if (testUser && testUser.getId() === parseInt(viewingUser)) {
             redirectToAccount();
         } else {
             sessionStorage.setItem("visit_user_referrer", document.URL);

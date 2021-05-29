@@ -87,6 +87,7 @@
 <body>
 
    <script>
+      createUserClass();
       registerServiceWorker();
       changeColorTheme();
    </script>
@@ -182,23 +183,28 @@
 </body>
 
 <script>
-   checkConnection("c6r2");
 
-   lockBodyPosition();
-   loadLeaderboards();
+const list = document.getElementById("peopleLeaderboardsList");
+      const usermsg1 = document.getElementById("GpeopleLeaderboardsTxt");
+      const GlistOfLeaderboards = document.getElementById("GlistOfLeaderboards");
 
-   const list = document.getElementById("peopleLeaderboardsList");
-   const usermsg1 = document.getElementById("GpeopleLeaderboardsTxt");
-   const GlistOfLeaderboards = document.getElementById("GlistOfLeaderboards");
+   if (testUser) {
 
-   setInterval(() => {
       checkConnection("c6r2");
-   }, 1000);
 
-   GlistOfLeaderboards.addEventListener("scroll", function () {
-      const scrollX = GlistOfLeaderboards.scrollLeft;
-      sessionStorage.setItem("leaderboards_scrollX", scrollX);
-   });
+      lockBodyPosition();
+      loadLeaderboards();
+
+      setInterval(() => {
+         checkConnection("c6r2");
+      }, 1000);
+
+      GlistOfLeaderboards.addEventListener("scroll", function () {
+         const scrollX = GlistOfLeaderboards.scrollLeft;
+         sessionStorage.setItem("leaderboards_scrollX", scrollX);
+      });
+
+   }
 
 </script>
 

@@ -806,7 +806,7 @@ function enableOverlayEditDays() {
     } else {
         const textworkoutPlans = document.getElementById("textworkoutPlans");
 
-        if (activetrainingsplit.user_id !== userID) {
+        if (activetrainingsplit.user_id !== testUser.getId()) {
             textworkoutPlans.innerHTML = `${activetrainingsplit.trainingsplit_name} (av ${activetrainingsplit.owner})`;
         } else {
             textworkoutPlans.innerHTML = activetrainingsplit.trainingsplit_name;
@@ -1070,7 +1070,6 @@ async function deleteTrainingsplit(aTrainingsplit_id) {
 
         if (resp === true) {
             sessionStorage.removeItem("trainingsplit");
-            alert("Treningsplanen er nå slettet!");
             window.location.search = "";
         } else {
             alert("Kunne ikke slette treningsplanen. Det har oppstått en feil!");
