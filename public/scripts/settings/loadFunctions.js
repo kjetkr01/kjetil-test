@@ -666,7 +666,7 @@ async function loadUsersListPage(setting) {
         scrollToSavedPos(setting);
         saveNewScrollPos = true;
     } else {
-        settingsGrid.innerHTML = justTextTemplate("Kunne ikke laste inn listen med brukere. Ingen internettforbindelse", "left");
+        settingsGrid.innerHTML = justTextTemplate(`Kunne ikke laste inn listen med brukere. ${defaultTxt.noConnection}`, "left");
     }
 }
 
@@ -753,7 +753,7 @@ async function loadPendingUsersPage(setting) {
         scrollToSavedPos(setting);
         saveNewScrollPos = true;
     } else {
-        settingsGrid.innerHTML = justTextTemplate("Kunne ikke laste inn listen med forespørsler. Ingen internettforbindelse", "left");
+        settingsGrid.innerHTML = justTextTemplate(`Kunne ikke laste inn listen med forespørsler. ${defaultTxt.noConnection}`, "left");
     }
 }
 
@@ -871,7 +871,7 @@ async function loadAPIPage() {
 
             } else {
                 if (!navigator.onLine) {
-                    settingsGrid.innerHTML = justTextTemplate("Kunne ikke laste inn listen med APIer. Vennligst prøv igjen når du har internettforbindelse.", "left");
+                    settingsGrid.innerHTML = justTextTemplate("Kunne ikke laste inn listen med APIer. Vennligst prøv igjen når du har Internett-tilkobling.", "left");
                 } else {
                     settingsGrid.innerHTML = justTextTemplate("Det her oppstått en feil, kunne ikke laste inn listen med APIer.", "left");
                 }

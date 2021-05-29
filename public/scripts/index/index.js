@@ -156,7 +156,12 @@ async function checkWhoIsWorkingOutToday() {
         }
 
     } else {
-        peopleWorkoutTxt.innerHTML = `I dag er det ingen som trener`;
+        if (navigator.onLine) {
+            peopleWorkoutTxt.innerHTML = `I dag er det ingen som trener`;
+        } else {
+            peopleWorkoutTxt.innerHTML = defaultTxt.noConnection;
+        }
+
     }
 
     sessionStorage.setItem("cached_peopleWorkoutTxt", peopleWorkoutTxt.innerHTML);

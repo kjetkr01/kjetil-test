@@ -139,9 +139,9 @@
 
       lockBodyPosition();
 
-      if (!navigator.onLine && !localStorage.getItem("userSettings")) {
+      if (!navigator.onLine && !user.getSettings()) {
          setTimeout(() => {
-            alert("Innstillinger har ikke blitt lastet ned. Vennligst prøv igjen når du har internett tilkobling");
+            alert("Innstillinger har ikke blitt lastet ned. Vennligst prøv igjen når du har Internett-tilkobling");
             redirectToAccount();
          }, 500);
       } else {

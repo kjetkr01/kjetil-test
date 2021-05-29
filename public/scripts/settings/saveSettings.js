@@ -44,7 +44,7 @@ async function updatePassword() {
             alert("Vennligst fyll inn alle feltene.");
         }
     } else {
-        alert("Du må ha internettforbindelse for å endre passord!");
+        alert("Du må ha Internett-tilkobling for å endre passord!");
     }
 }
 
@@ -99,7 +99,7 @@ async function updateAboutMe() {
             }, 2000);
         }
     } else {
-        alert("Du må ha internettforbindelse for å endre detaljer om deg!");
+        alert("Du må ha Internett-tilkobling for å endre detaljer om deg!");
     }
 }
 
@@ -314,7 +314,7 @@ async function saveDisplayname() {
             }
         }
     } else {
-        alert("Du må ha internettforbindelse for å endre visningsnavn!");
+        alert("Du må ha Internett-tilkobling for å endre visningsnavn!");
     }
 }
 
@@ -353,6 +353,6 @@ async function saveUsername() {
             }
         }
     } else {
-        alert("Du må ha internettforbindelse for å endre brukernavn!");
+        alert("Du må ha Internett-tilkobling for å endre brukernavn!");
     }
 }

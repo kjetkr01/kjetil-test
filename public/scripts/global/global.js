@@ -8,6 +8,10 @@ let user = null;
 
 const repsSM = 10; // 1 rep * 10 (repsSM) = 10 points. 1 kg = 1 point
 
+const defaultTxt = {
+    "noConnection": "Ingen Internett-tilkobling"
+}
+
 const errorText = "Det har oppstått en feil!";
 const loadingText = "Laster...";
 const errorLoadingText = "Kunne ikke laste inn innholdet.";
@@ -430,7 +434,7 @@ async function getAccountDetails(aUserID) {
 
 function checkConnection(aDom) {
 
-    const offlineTxt = "Ingen internettforbindelse";
+    const offlineTxt = defaultTxt.noConnection;
     const onlineTxt = "Tilkoblet";
 
     if (aDom) {
@@ -564,8 +568,6 @@ function sortByLiftsOrGoalVisitor(aDom, aType) {
             displayGoals();
         }
     }
-
-    //location.reload();
 }
 
 //
@@ -621,7 +623,7 @@ function updateApplication(aShowNotification) {
         let confirmUpdate = true;
 
         if (aShowNotification !== false) {
-            confirmUpdate = confirm("Ønsker du å oppdatere? (Krever internett tilkobling)");
+            confirmUpdate = confirm("Ønsker du å oppdatere? (Krever Internett-tilkobling)");
         }
 
         if (confirmUpdate === true) {
@@ -631,7 +633,7 @@ function updateApplication(aShowNotification) {
         }
     } else {
         if (aShowNotification !== false) {
-            alert("Kunne ikke oppdatere! Krever internett tilkobling");
+            alert("Kunne ikke oppdatere! Krever Internett-tilkobling");
         }
     }
 }

@@ -34,7 +34,7 @@ async function loadLeaderboards() {
             let leaderboardsUserTxt = "";
 
             if (!navigator.onLine) {
-                leaderboardsUserTxt = "<br>Ledertavler krever internettforbindelse";
+                leaderboardsUserTxt = `<br>${defaultTxt.noConnection}`;
             } else if (cached_leaderboardUserTxt) {
                 leaderboardsUserTxt = `<br>${cached_leaderboardUserTxt}`;
             }

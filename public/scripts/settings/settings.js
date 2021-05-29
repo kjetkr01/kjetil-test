@@ -377,7 +377,7 @@ async function displayInformationAboutUser() {
 
         } else {
             if (!navigator.onLine) {
-                informationAboutUser.innerHTML = `<br>Kunne ikke hente opplysningene dine. Krever internettforbindelse for å laste ned nytt innhold.`;
+                informationAboutUser.innerHTML = `<br>Kunne ikke hente opplysningene dine. Krever Internett-tilkobling for å laste ned nytt innhold.`;
             } else {
                 informationAboutUser.innerHTML = `<br>Det her oppstått en feil, kunne ikke hente opplysningene dine. Vennligst prøv igjen.`;
             }
@@ -453,7 +453,7 @@ async function deleteAccount() {
             alert("Vennligst fyll ut feltene");
         }
     } else {
-        alert("Du må ha internettforbindelse for å kunne slette kontoen din!");
+        alert("Du må ha Internett-tilkobling for å kunne slette kontoen din!");
     }
 }
 
@@ -554,7 +554,7 @@ async function removeMedal(aMedalsCount, aCount) {
             }
         }
     } else {
-        alert("Det kreves internettforbindelse for å fjerne medaljer!");
+        alert("Det kreves Internett-tilkobling for å fjerne medaljer!");
     }
 }
 

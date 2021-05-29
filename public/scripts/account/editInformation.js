@@ -642,7 +642,7 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aInp4, aType, aColor, aId) {
 
         }
     } else {
-        msg = "Krever internettforbindelse!";
+        msg = defaultTxt.noConnection;
         isValid = false;
     }
 
@@ -953,7 +953,7 @@ async function createNewTrainingsplit() {
         }
 
     } else {
-        respMsg.textContent = "Du må ha internettforbindelse for å opprette ny treningsplan";
+        respMsg.textContent = "Du må ha Internett-tilkobling for å opprette ny treningsplan";
     }
 }
 
@@ -1011,7 +1011,7 @@ async function setActiveTrainingsplit() {
         }
 
     } else {
-        respMsg.textContent = "Du må ha internettforbindelse for å sette en treningsplan som aktiv";
+        respMsg.textContent = "Du må ha Internett-tilkobling for å sette en treningsplan som aktiv";
     }
 }
 
@@ -1047,7 +1047,7 @@ async function setNoneActiveTrainingsplit() {
         }
 
     } else {
-        respMsg.textContent = "Du må ha internettforbindelse for å fjerne en treningsplan som er aktiv";
+        respMsg.textContent = "Du må ha Internett-tilkobling for å fjerne en treningsplan som er aktiv";
     }
 }
 
@@ -1111,7 +1111,7 @@ async function editTrainingsplit() {
         }
 
     } else {
-        respMsg.textContent = "Du må ha internettforbindelse for å kunne redigere en treningsplan";
+        respMsg.textContent = "Du må ha Internett-tilkobling for å kunne redigere en treningsplan";
     }
 }
 
@@ -1313,7 +1313,7 @@ async function saveTrainingsplit(aReload) {
             }
 
         } else {
-            alert("Du må ha internettforbindelse for å kunne lagre treningsplanen!");
+            alert("Du må ha Internett-tilkobling for å kunne lagre treningsplanen!");
         }
     }
 }
