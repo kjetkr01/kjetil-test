@@ -97,7 +97,6 @@
 
    <script>
       createUserClass();
-      //registerServiceWorker();
       if (!sessionStorage.getItem("user") && !localStorage.getItem("user")) {
          redirectToLogin();
       }
@@ -239,7 +238,7 @@
             if (serverApplication) {
                if (serverApplication.version.fullNumber !== application.version.fullNumber) {
 
-                  if (user && user.getSetting("automaticupdates") === true) {
+                  if (user.getSetting("automaticupdates") === true) {
                      updateApplication(false);
                      localStorage.setItem("updated_version_text", `${serverApplication.name} ble oppdatert til versjon ${serverApplication.version.fullNumber}`);
                   }

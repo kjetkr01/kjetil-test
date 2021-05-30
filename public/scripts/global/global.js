@@ -1,10 +1,6 @@
 // global variables
 
-let isUpdatingUserObject = false;
-
-let lockedBody = false;
-
-let user = null;
+let user = null, lockedBody = false;
 
 const repsSM = 10; // 1 rep * 10 (repsSM) = 10 points. 1 kg = 1 point
 
@@ -314,16 +310,12 @@ async function getAccountDetails(aUserID) {
 
         if (user) {
 
-            isUpdatingUserObject = true;
-
             const viewingUser = aUserID;
 
             const infoHeader = { "viewingUser": viewingUser };
             const url = `/users/details/${viewingUser}`;
 
             const resp = await callServerAPIPost(infoHeader, url);
-
-            isUpdatingUserObject = false;
 
             if (resp) {
 
@@ -606,18 +598,6 @@ function getDaysSinceAndDate(aDate) {
 }
 
 //
-
-/*async function registerServiceWorker() {
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js')
-            .then(function (registration) {
-                console.log(`[Service Worker] Registration successful, scope is: ${registration.scope}`);
-            })
-            .catch(function (error) {
-                console.log(`[Service Worker] Registration failed, error: ${error}`);
-            });
-    }
-}*/
 
 function updateApplication(aShowNotification) {
     if (window.navigator.onLine) {

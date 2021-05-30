@@ -1,4 +1,4 @@
-const cacheName = 'js13kPWA-v30';
+const cacheName = 'TS-PWA-v30';
 
 const contentToCache = [
     '/registerSW.js',
