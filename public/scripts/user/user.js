@@ -448,7 +448,7 @@ function displayLifts() {
         arr.sort(function (a, b) { return b.kg - a.kg });
         for (let i = 0; i < arr.length; i++) {
 
-            const badge = getBadgeLift(0, arr[i], arr[i].id);
+            const badge = getBadgeLift(arr[i], arr[i].id);
             const badgesLiftsTableRow = document.getElementById("badgesLiftsTableRow");
 
             if (badge && badgesLiftsTableRow) {
@@ -735,8 +735,7 @@ function displayTrainingsplit() {
 
                     for (let i = 0; i < arr.length; i++) {
 
-                        //const badge = getBadgeTrainingsplit(size, arr[i]);
-                        const badge = getBadgeTrainingsplit(0, arr[i]);
+                        const badge = getBadgeTrainingsplit(arr[i]);
 
                         if (badge) {
                             document.getElementById("badgesTrainingsplitTableRow").innerHTML += badge;

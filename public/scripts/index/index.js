@@ -303,8 +303,13 @@ async function displayBadges(aInfo) {
 
     }
 
-    user.changeSetting("badgesize", info.settings.badgesize);
-    user.changeSetting("badgedetails", info.settings.badgedetails);
+    if (user.getSetting("badgesize") !== info.settings.badgesize) {
+        user.changeSetting("badgesize", info.settings.badgesize);
+    }
+
+    if (user.getSetting("badgedetails") !== info.settings.badgedetails) {
+        user.changeSetting("badgedetails", info.settings.badgedetails);
+    }
 
     if (updateBadgeColors === true) {
         badgeColors = new TbadgeColors(info.badgeColors);

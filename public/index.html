@@ -80,6 +80,8 @@
    <link rel="stylesheet" href="styles/shared/badges.css">
    <link rel="stylesheet" href="styles/shared/badgeColors.css">
 
+   <script src="registerSW.js" type="module"></script>
+
    <script src="ts_application.js" type="text/javascript"></script>
    <script src="scripts/global/appInfo.js" type="text/javascript"></script>
    <script src="scripts/global/global.js" type="text/javascript"></script>
@@ -95,7 +97,7 @@
 
    <script>
       createUserClass();
-      registerServiceWorker();
+      //registerServiceWorker();
       if (!sessionStorage.getItem("user") && !localStorage.getItem("user")) {
          redirectToLogin();
       }

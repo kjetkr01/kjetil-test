@@ -2,12 +2,12 @@
 
     // Oppdatere disse når ny commit
 
-    const updates = 936;
-    const updateDay = "29.05.2021";
+    const updates = 937;
+    const updateDay = "30.05.2021";
 
     // Slutt
 
-    const expectedUpdates = 950;
+    const expectedUpdates = 975;
     const upd = updateDay.split(".");
 
     const app = {

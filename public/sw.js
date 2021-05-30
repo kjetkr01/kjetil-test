@@ -1,6 +1,7 @@
-const cacheName = 'js13kPWA-v29';
+const cacheName = 'js13kPWA-v30';
 
 const contentToCache = [
+    '/registerSW.js',
     '/account.html',
     '/images/appIcon.png',
     '/images/trash.svg',

@@ -73,7 +73,6 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
             80: "Veldig bra!",
             76: "Nærmer deg mål!",
             75: "3/4",
-            69: "Nice!",
             65: "Snart 3/4!",
             51: "God progresjon!",
             50: "Halvveis!",
@@ -87,7 +86,7 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
             0: "En begynnelse",
         }
 
-        const exact = [1, 25, 69, 75, 99]; // for special numbers :)
+        const exact = [1, 25, 75, 99]; // for special numbers :)
 
         const progressionTxtKeys = Object.keys(progressTxtList);
 
@@ -122,7 +121,7 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
 
         const badgeTemplate = `
 <td>
-<div class="bigBadges ${goalBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayView('goal', '${userBadgeInfo.exercise}', '${aId}');">
+<div class="bigBadges ${goalBadgeAnimations} ${userBadgeInfo.color} pointer" onClick="enableOverlayView('goal', '${userBadgeInfo.exercise}', '${aId}');">
 
 
 
@@ -185,7 +184,7 @@ ${progressionTxt}
 
         const badgeTemplate = `
 <td>
-<div class="smallBadges ${goalBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayView('goal', '${userBadgeInfo.exercise}', '${aId}');">
+<div class="smallBadges ${goalBadgeAnimations} ${userBadgeInfo.color} pointer" onClick="enableOverlayView('goal', '${userBadgeInfo.exercise}', '${aId}');">
 
 <div id="Gexercise">
 <p id="exercise">
@@ -270,7 +269,7 @@ nytt mål
 
 
 
-function getBadgeLift(aSize, aBadgeInfo, aId) {
+function getBadgeLift(aBadgeInfo, aId) {
 
     try {
 
@@ -280,24 +279,9 @@ function getBadgeLift(aSize, aBadgeInfo, aId) {
             liftBadgeAnimations = animationClasses;
         }
 
-        if (!aSize) {
-            aSize = 0;
-        }
+        if (aBadgeInfo && aBadgeInfo.exercise && aBadgeInfo.kg && aBadgeInfo.msg && aId) {
 
-        if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.exercise && aBadgeInfo.kg && aBadgeInfo.msg && aId) {
-
-            const size = aSize;
-            const badgeInfo = aBadgeInfo;
-            const id = aId;
-
-            switch (size) {
-                case 0:
-                    return smallBadge(badgeInfo, id);
-                case 1:
-                    return bigBadge(badgeInfo, id);
-                default:
-                    return smallBadge(badgeInfo, id);
-            }
+            return smallBadge(aBadgeInfo, aId);
 
         } else {
 
@@ -309,95 +293,13 @@ function getBadgeLift(aSize, aBadgeInfo, aId) {
         return emptyBadge();
     }
 
-    // bigBadge with lift
-
-    function bigBadge(userBadgeInfo, aId) {
-
-        const badgeTemplate = `
-<td>
-<div class="bigBadges ${liftBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayView('lift', '${userBadgeInfo.exercise}', '${aId}');">
-
-
-
-<!--
-<div id="c1b"></div>
-<div id="c2b"></div>
-<div id="c3b"></div>
-<div id="c4b"></div>
-<div id="c5b"></div>
-<div id="c6b"></div>
--->
-
-
-<div id="Gprogression">
-
-
-<div class="circular">
-<div class="inner" style="background-color: #E36262;">
-</div>
-<div class="outer">
-</div>
-<div id="percentNum" class="numb">
-0%</div>
-<div class="circle">
-<div class="dot">
-<span></span>
-</div>
-<div class="bar left">
-<div class="progress">
-</div>
-</div>
-<div class="bar right">
-<div class="progress">
-</div>
-</div>
-</div>
-</div>
-
-
-</div>
-
-<div id="GkgLeft">
-<p id="kgLeft">
-15.5 kg igjen
-</p>
-</div>
-
-<div id="Gexercise">
-<p id="exercise">
-Benkpress
-</p>
-</div>
-
-<div id="Gkg">
-<p id="kg">
-130 kg
-</p>
-</div>
-
-<div id="Gmsg">
-<p id="msg">
-Nærmer deg!
-</p>
-</div>
-
-</div>
-</td>
-`;
-
-        return badgeTemplate;
-
-    }
-
-    // end of bigBadge with lift
-
     // smallBadge with lift
 
     function smallBadge(userBadgeInfo, aId) {
 
         const badgeTemplate = `
 <td>
-<div class="smallBadges ${liftBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="enableOverlayView('lift', '${userBadgeInfo.exercise}', '${aId}');">
+<div class="smallBadges ${liftBadgeAnimations} ${userBadgeInfo.color} pointer" onClick="enableOverlayView('lift', '${userBadgeInfo.exercise}', '${aId}');">
 
 <!--
 <div id="c1b"></div>
@@ -486,7 +388,7 @@ nytt løft
 
 }
 
-function getBadgeTrainingsplit(aSize, aBadgeInfo) {
+function getBadgeTrainingsplit(aBadgeInfo) {
 
     try {
 
@@ -496,23 +398,9 @@ function getBadgeTrainingsplit(aSize, aBadgeInfo) {
             trainingsplitBadgeAnimations = animationClasses;
         }
 
-        if (!aSize) {
-            aSize = 0;
-        }
+        if (aBadgeInfo && aBadgeInfo.day && aBadgeInfo.trainingsplit && aBadgeInfo.trainingsplit) {
 
-        if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.day && aBadgeInfo.trainingsplit && aBadgeInfo.trainingsplit) {
-
-            const size = aSize;
-            const badgeInfo = aBadgeInfo;
-
-            switch (size) {
-                case 0:
-                    return smallBadge(badgeInfo);
-                case 1:
-                    return bigBadge(badgeInfo);
-                default:
-                    return smallBadge(badgeInfo);
-            }
+            return smallBadge(aBadgeInfo);
 
         } else {
 
@@ -524,105 +412,23 @@ function getBadgeTrainingsplit(aSize, aBadgeInfo) {
         return emptyBadge();
     }
 
-    // bigBadge with trainingsplit
-
-    function bigBadge(userBadgeInfo) {
-
-        const badgeTemplate = `
-<td>
-<div class="bigBadges ${trainingsplitBadgeAnimations} ${aBadgeInfo.color} pointer">
-
-
-
-<!--
-<div id="c1b"></div>
-<div id="c2b"></div>
-<div id="c3b"></div>
-<div id="c4b"></div>
-<div id="c5b"></div>
-<div id="c6b"></div>
--->
-
-
-<div id="Gprogression">
-
-
-<div class="circular">
-<div class="inner" style="background-color: #E36262;">
-</div>
-<div class="outer">
-</div>
-<div id="percentNum" class="numb">
-0%</div>
-<div class="circle">
-<div class="dot">
-<span></span>
-</div>
-<div class="bar left">
-<div class="progress">
-</div>
-</div>
-<div class="bar right">
-<div class="progress">
-</div>
-</div>
-</div>
-</div>
-
-
-</div>
-
-<div id="GkgLeft">
-<p id="kgLeft">
-15.5 kg igjen
-</p>
-</div>
-
-<div id="Gexercise">
-<p id="exercise">
-Benkpress
-</p>
-</div>
-
-<div id="Gkg">
-<p id="kg">
-130 kg
-</p>
-</div>
-
-<div id="Gmsg">
-<p id="msg">
-Nærmer deg!
-</p>
-</div>
-
-</div>
-</td>
-`;
-
-        return badgeTemplate;
-
-    }
-
-    // end of bigBadge with trainingsplit
-
     // smallBadge with trainingsplit
 
     function smallBadge(userBadgeInfo) {
 
         const badgeTemplate = `
 <td>
-<div class="smallBadgesTrainingsplit ${trainingsplitBadgeAnimations} ${aBadgeInfo.color} pointer" onClick="viewTrainingsplit('${aBadgeInfo.trainingsplit_id}','${aBadgeInfo.day}')">
+<div class="smallBadgesTrainingsplit ${trainingsplitBadgeAnimations} ${userBadgeInfo.color} pointer" onClick="viewTrainingsplit('${userBadgeInfo.trainingsplit_id}','${userBadgeInfo.day}')">
 
 <div id="Gday">
 <p id="day">
-${aBadgeInfo.day}
+${userBadgeInfo.day}
 </p>
 </div>
 
 <div id="GtrainingsplitTxt">
 <p id="trainingsplitTxt">
-${aBadgeInfo.trainingsplit}
+${userBadgeInfo.trainingsplit}
 </p>
 </div>
 

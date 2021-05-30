@@ -120,7 +120,7 @@ function TUser(aToken, aUser, aSettings) {
         "username": aUser.username
     }
 
-    let settings = aSettings;
+    const settings = aSettings;
 
     this.getToken = function () {
         return token;
@@ -142,27 +142,28 @@ function TUser(aToken, aUser, aSettings) {
         return user.username;
     }
 
+    this.getSettings = function () {
+        return settings;
+    }
+
     this.getSetting = function (aSetting) {
         return settings[aSetting.toLowerCase()];
     }
 
     this.changeSetting = function (aSetting, aValue) {
-        settings[aSetting.toLowerCase()] = aValue;
-        if (localStorage.getItem("user")) {
-            localStorage.setItem("userSettings", JSON.stringify(settings));
+        const setting = aSetting.toLowerCase();
+        if (settings.hasOwnProperty(setting)) {
+            settings[setting] = aValue;
+            console.log(`SUCCESS : user.changeSetting() : "${setting}" = ${aValue}`); // debug for now
+            if (localStorage.getItem("user")) {
+                localStorage.setItem("userSettings", JSON.stringify(settings));
+            } else {
+                sessionStorage.setItem("userSettings", JSON.stringify(settings));
+            }
         } else {
-            sessionStorage.setItem("userSettings", JSON.stringify(settings));
+            console.log(`ERROR : user.changeSetting() : "${setting}" = ${aValue}`); // debug for now
         }
     }
-
-    this.getSettings = function () {
-        return settings;
-    }
-
-    this.setSettings = function (aNewSettings) {
-        settings = aNewSettings;
-    }
-
 }
 
 
@@ -386,7 +387,7 @@ async function getAccountDetails(aUserID) {
 
                     const newColorTheme = allowedThemes[resp.info.settings.preferredcolortheme].theme;
 
-                    if (user && user.getSetting("preferredcolortheme") !== newColorTheme && checkAllowedThemes.includes(newColorTheme) === true) {
+                    if (user && user.getSetting("preferredcolortheme") !== resp.info.settings.preferredcolortheme && checkAllowedThemes.includes(newColorTheme) === true) {
 
                         user.changeSetting("preferredcolortheme", resp.info.settings.preferredcolortheme);
 
@@ -401,7 +402,7 @@ async function getAccountDetails(aUserID) {
 
                     const newTheme = resp.info.settings.preferredtheme;
 
-                    if (newTheme === 0 || newTheme === 1 || newTheme === 2) {
+                    if (user && user.getSetting("preferredtheme") !== newTheme) {
 
                         user.changeSetting("preferredtheme", resp.info.settings.preferredtheme);
 
@@ -606,7 +607,7 @@ function getDaysSinceAndDate(aDate) {
 
 //
 
-async function registerServiceWorker() {
+/*async function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js')
             .then(function (registration) {
@@ -616,7 +617,7 @@ async function registerServiceWorker() {
                 console.log(`[Service Worker] Registration failed, error: ${error}`);
             });
     }
-}
+}*/
 
 function updateApplication(aShowNotification) {
     if (window.navigator.onLine) {
