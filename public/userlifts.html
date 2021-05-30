@@ -327,7 +327,7 @@
             let maxBadgesPerRow = 0;
             for (let i = 0; i < arr.length; i++) {
 
-               const badge = getBadgeLift(0, arr[i], arr[i].id);
+               const badge = getBadgeLift(arr[i], arr[i].id);
                let badgesLiftsTableRow = document.getElementById(`${name}-${num}`);
 
                maxBadgesPerRow = Math.floor(document.body.clientWidth / badgeSizePX);

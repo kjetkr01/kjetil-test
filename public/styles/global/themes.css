@@ -103,10 +103,10 @@
 }
 
 .test_fullColorTheme-light {
---main-headerBackground:  #1b8ad4;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-headerBackground:  #166ba0;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
---main-backgroundColor1: #01a2ff;
---main-backgroundColorRGBLowOpacity: #01a2ff40;
+--main-backgroundColor1: #1376b8;
+--main-backgroundColorRGBLowOpacity: #1376b840;
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
 --main-accountOwnerColor: var(--main-backgroundColor1);
@@ -114,19 +114,19 @@
 
 
 --main-lineBorder: 1px #ffffff solid;
---main-border: 1px #e6e6e685 solid;
---main-border2: 0.75px #dfdfdf85 solid;
+--main-border: 1px #d7e3eb90 solid;
+--main-border2: 0.75px #c9dde985 solid;
 
---main-backgroundColor2: #72add1;
---main-backgroundColor3: #86bfe2;
+--main-backgroundColor2: #8eb3ce;
+--main-backgroundColor3: #a1cae4;
 
 --main-headerTextColor: white;
 --main-textColorLight: white;
---main-textColorDark: black;
+--main-textColorDark: #04273d;
 --main-textColorBadges: white;
 
---main-iconsActiveColor: #000000;
---main-iconsDefaultColor: #446c86;
+--main-iconsActiveColor: #083d5e;
+--main-iconsDefaultColor: #6693af;
 }
 
 /* END OF LIGHT THEME VALUES */
