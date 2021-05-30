@@ -162,10 +162,8 @@ async function savePreferredApperance() {
 
             if (resp === true) {
 
-                if (value === "0" || value === "1" || value === "2") {
-
+                if (value !== user.getSetting("preferredtheme")) {
                     user.changeSetting(setting, parseInt(value));
-
                     changeColorTheme();
                 }
 
@@ -186,8 +184,6 @@ async function saveColorTheme() {
 
         if (isUpdatingCheckboxSetting === false) {
 
-            console.log(1)
-
             isUpdatingCheckboxSetting = true;
 
             const value = document.getElementById("themeColorSelection").value;
@@ -202,11 +198,14 @@ async function saveColorTheme() {
 
                 const newColorTheme = allowedThemes[value].theme;
 
-                if (newColorTheme !== localStorage.getItem("colorTheme") || sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(newColorTheme) === true) {
-                    preferredColorTheme = allowedThemes[value].theme;
+                let colortheme = null;
 
+                if (allowedThemes[user.getSetting("preferredcolortheme")]) {
+                    colortheme = allowedThemes[user.getSetting("preferredcolortheme")].theme
+                }
+
+                if (newColorTheme !== colortheme && checkAllowedThemes.includes(newColorTheme) === true) {
                     user.changeSetting(setting, parseInt(value));
-
                     changeColorTheme();
                 }
 
