@@ -241,12 +241,12 @@ function loadAppearancePage() {
 
     settingsGrid.innerHTML = justTextTemplate("Her kan du endre utseende på appen!", "left");
 
-    const theme = localStorage.getItem("theme") || sessionStorage.getItem("theme") || "0";
+    const theme = user.getSetting("preferredtheme");
 
     const themes = {
-        0: { "name": "Automatisk", "theme": "0" },
-        1: { "name": "Lys", "theme": "1" },
-        2: { "name": "Mørk", "theme": "2" }
+        0: { "name": "Automatisk", "theme": 0 },
+        1: { "name": "Lys", "theme": 1 },
+        2: { "name": "Mørk", "theme": 2 }
     }
 
     const themeKeys = Object.keys(themes);
@@ -272,8 +272,7 @@ function loadAppearancePage() {
 
     const colorThemeKeys = Object.keys(allowedThemes);
     let themeColorOptionsHTML = "";
-    let colorTheme = allowedThemes[0].theme;
-    const preferredTheme = localStorage.getItem("colorTheme") || sessionStorage.getItem("colorTheme") || colorTheme;
+    const preferredTheme = allowedThemes[user.getSetting("preferredcolortheme")].theme;
     for (let i = 0; i < colorThemeKeys.length; i++) {
 
         if (preferredTheme === allowedThemes[colorThemeKeys[i]].theme) {

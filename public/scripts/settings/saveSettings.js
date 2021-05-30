@@ -164,16 +164,10 @@ async function savePreferredApperance() {
 
                 if (value === "0" || value === "1" || value === "2") {
 
-                    if (localStorage.getItem("user")) {
-                        localStorage.setItem("theme", value);
-                    } else {
-                        sessionStorage.setItem("theme", value);
-                    }
+                    user.changeSetting(setting, parseInt(value));
 
                     changeColorTheme();
                 }
-
-                user.changeSetting(setting, parseInt(value));
 
                 isUpdatingCheckboxSetting = false;
             }
@@ -192,6 +186,8 @@ async function saveColorTheme() {
 
         if (isUpdatingCheckboxSetting === false) {
 
+            console.log(1)
+
             isUpdatingCheckboxSetting = true;
 
             const value = document.getElementById("themeColorSelection").value;
@@ -209,16 +205,10 @@ async function saveColorTheme() {
                 if (newColorTheme !== localStorage.getItem("colorTheme") || sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(newColorTheme) === true) {
                     preferredColorTheme = allowedThemes[value].theme;
 
-                    if (localStorage.getItem("user")) {
-                        localStorage.setItem("colorTheme", preferredColorTheme);
-                    } else {
-                        sessionStorage.setItem("colorTheme", preferredColorTheme);
-                    }
+                    user.changeSetting(setting, parseInt(value));
 
                     changeColorTheme();
                 }
-
-                user.changeSetting(setting, parseInt(value));
 
                 isUpdatingCheckboxSetting = false;
             }

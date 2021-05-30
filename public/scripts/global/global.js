@@ -15,13 +15,15 @@ const errorLoadingText = "Kunne ikke laste inn innholdet.";
 const allowedThemes = {
     0: { "id": 0, "name": "Standard", "theme": "default" },
     1: { "id": 1, "name": "Blå", "theme": "blue" },
-    2: { "id": 2, "name": "Test (Full)", "theme": "test_full" }
+    2: { "id": 2, "name": "Test (Full)", "theme": "test_full" },
+    3: { "id": 3, "name": "Test 2 (Full)", "theme": "test2_full" }
 }
 
 const themeColors = {
     "default": { "lightHex": "327a94", "darkHex": "1c4553" },
     "blue": { "lightHex": "3247bb", "darkHex": "202b6b" },
-    "test_full": { "lightHex": "166ba0", "darkHex": "09314b" }
+    "test_full": { "lightHex": "166ba0", "darkHex": "09314b" },
+    "test2_full": { "lightHex": "e6e6e6", "darkHex": "09314b" }
 }
 
 const allowedExercises = ["benkpress", "markløft", "knebøy", "skulderpress"];
@@ -170,33 +172,25 @@ function TUser(aToken, aUser, aSettings) {
 function changeColorTheme() {
 
     let colorTheme = allowedThemes[0].theme;
-    const preferredTheme = localStorage.getItem("colorTheme") || sessionStorage.getItem("colorTheme") || colorTheme;
+    let theme = 0;
 
-    if (checkAllowedThemes.includes(preferredTheme) === true) {
-        colorTheme = preferredTheme;
-    }
-
-    if (colorTheme !== sessionStorage.getItem("colorTheme")) {
-        if (localStorage.getItem("user")) {
-            localStorage.setItem("colorTheme", colorTheme);
-        } else {
-            sessionStorage.setItem("colorTheme", colorTheme);
+    if (user) {
+        if (allowedThemes[user.getSetting("preferredcolortheme")]) {
+            colorTheme = allowedThemes[user.getSetting("preferredcolortheme")].theme;
         }
+        theme = user.getSetting("preferredtheme");
     }
-
-    const theme = localStorage.getItem("theme") || sessionStorage.getItem("theme") || "0";
 
     const themeColorDOM = document.getElementById("themeColor");
     const themeColor = themeColors[colorTheme];
 
-    if (theme === "1") {
+    if (theme === 1) {
         themeColorDOM.content = `#${themeColor.lightHex}`;
         document.body.classList = `${colorTheme}ColorTheme-light lightMode`;
-    } else if (theme === "2") {
+    } else if (theme === 2) {
         themeColorDOM.content = `#${themeColor.darkHex}`;
         document.body.classList = `${colorTheme}ColorTheme-dark darkMode`;
     } else {
-
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             // dark mode
             themeColorDOM.content = `#${themeColor.darkHex}`;
@@ -217,9 +211,12 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', che
 
 function checkIfAllowedScheme(e) {
     const newColorScheme = e.matches ? "dark" : "light";
-    const theme = localStorage.getItem("theme") || sessionStorage.getItem("theme") || "0";
+    let theme = 0;
+    if (user) {
+        theme = user.getSetting("preferredtheme");
+    }
 
-    if (theme === "0") {
+    if (theme === 0) {
         if (newColorScheme === "dark" || newColorScheme === "light") {
             changeColorTheme();
         }
@@ -383,12 +380,6 @@ async function getAccountDetails(aUserID) {
 
                         user.changeSetting("preferredcolortheme", resp.info.settings.preferredcolortheme);
 
-                        if (localStorage.getItem("user")) {
-                            localStorage.setItem("colorTheme", newColorTheme);
-                        } else {
-                            sessionStorage.setItem("colorTheme", newColorTheme);
-                        }
-
                         changeColorTheme();
                     }
 
@@ -397,12 +388,6 @@ async function getAccountDetails(aUserID) {
                     if (user && user.getSetting("preferredtheme") !== newTheme) {
 
                         user.changeSetting("preferredtheme", resp.info.settings.preferredtheme);
-
-                        if (localStorage.getItem("user")) {
-                            localStorage.setItem("theme", newTheme);
-                        } else {
-                            sessionStorage.setItem("theme", newTheme);
-                        }
 
                         changeColorTheme();
                     }

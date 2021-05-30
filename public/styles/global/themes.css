@@ -129,6 +129,33 @@
 --main-iconsDefaultColor: #6693af;
 }
 
+.test2_fullColorTheme-light {
+--main-headerBackground:  #e6e6e6;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
+--main-backgroundColor1: #363636;
+--main-backgroundColorRGBLowOpacity: #0D2E4140;
+--main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
+
+--main-accountOwnerColor: var(--main-backgroundColor1);
+
+
+
+--main-lineBorder: 1px #ffffff solid;
+--main-border: 1px #d7e3eb90 solid;
+--main-border2: 0.75px #c9dde985 solid;
+
+--main-backgroundColor2: #e6e6e6;
+--main-backgroundColor3: #e6e6e6;
+
+--main-headerTextColor: black;
+--main-textColorLight: white;
+--main-textColorDark: black;
+--main-textColorBadges: white;
+
+--main-iconsActiveColor: #000000;
+--main-iconsDefaultColor: #808080;
+}
+
 /* END OF LIGHT THEME VALUES */
 
 

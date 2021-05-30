@@ -173,13 +173,13 @@ server.post("/authenticate", async function (req, res) {
                const requestUser = await validateUser(username, password);
 
                if (requestUser.status === true) {
-                    
+
                     const userInfo = {
                          "id": requestUser.userInfo.id,
                          "username": requestUser.userInfo.username,
                          "displayname": requestUser.userInfo.displayname
                     }
-                   
+
                     const sessionToken = createToken(requestUser.userInfo);
                     res.status(200).json({ "authToken": sessionToken, "user": userInfo, "settings": requestUser.userSettings }).end();
                } else {
@@ -487,7 +487,7 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
                "displayleaderboards": [true, false],
                "displayworkoutlist": [true, false],
                "preferredtheme": ["0", "1", "2"],
-               "preferredcolortheme": ["0", "1", "2"],
+               "preferredcolortheme": ["0", "1", "2", "3"],
                "badgesize": ["0", "1"],
                "badgedetails": ["0", "1", "2"],
                "automaticupdates": [true, false],
