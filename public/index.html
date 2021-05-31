@@ -97,9 +97,6 @@
 
    <script>
       createUserClass();
-      if (!sessionStorage.getItem("user") && !localStorage.getItem("user")) {
-         redirectToLogin();
-      }
       changeColorTheme();
    </script>
 
@@ -218,13 +215,13 @@
 
 <script>
 
-   if (user) {
+   getCreateNewLiftorGoalOverlay();
+   getViewLiftorGoalOverlay();
+   getEditLiftorGoalOverlay();
+   getTSAlertOverlay();
+   getTSConfirmOverlay();
 
-      getCreateNewLiftorGoalOverlay();
-      getViewLiftorGoalOverlay();
-      getEditLiftorGoalOverlay();
-      getTSAlertOverlay();
-      getTSConfirmOverlay();
+   if (user) {
 
       lockBodyPosition();
       checkConnection("c6r2");
@@ -296,8 +293,6 @@
       checkWhoIsWorkingOutToday();
       requestAccountDetails();
 
-   } else {
-      redirectToLogin();
    }
 
 </script>

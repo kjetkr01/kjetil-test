@@ -182,21 +182,27 @@
 
    async function requestAccess() {
 
-      const displayname = document.getElementById("inp1").value;
-      const username = document.getElementById("inp2").value;
-      const psw = document.getElementById("inp3").value;
-      const confirmPsw = document.getElementById("inp4").value;
+      const respmsg = document.getElementById("respMsg");
 
-      const resp = await validate(displayname, username, psw, confirmPsw);
+      if (navigator.onLine) {
 
-      if (resp) {
-         const respmsg = document.getElementById("respMsg");
-         respmsg.innerHTML = resp;
-         if (resp.includes("Du har nå bedt om tilgang!")) {
-            sessionStorage.setItem("cachedUsername", username);
+         const displayname = document.getElementById("inp1").value;
+         const username = document.getElementById("inp2").value;
+         const psw = document.getElementById("inp3").value;
+         const confirmPsw = document.getElementById("inp4").value;
+
+         const resp = await validate(displayname, username, psw, confirmPsw);
+
+         if (resp) {
+            respmsg.innerHTML = resp;
+            if (resp.includes("Du har nå bedt om tilgang!")) {
+               sessionStorage.setItem("cachedUsername", username);
+            }
+         } else {
+            respmsg.innerHTML = errorText;
          }
       } else {
-         respmsg.innerHTML = errorText;
+         respmsg.innerHTML = "Du må ha Internett-tilkobling for å be om tilgang!";
       }
    };
 

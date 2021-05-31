@@ -279,14 +279,14 @@
 
 <script>
 
-   if (user) {
+   getCreateNewLiftorGoalOverlay();
+   getViewLiftorGoalOverlay();
+   getEditLiftorGoalOverlay();
+   geteditworkoutPlanOverlay();
+   getTSAlertOverlay();
+   getTSConfirmOverlay();
 
-      getCreateNewLiftorGoalOverlay();
-      getViewLiftorGoalOverlay();
-      getEditLiftorGoalOverlay();
-      geteditworkoutPlanOverlay();
-      getTSAlertOverlay();
-      getTSConfirmOverlay();
+   if (user) {
 
       lockBodyPosition();
       checkConnection("c6r2");
@@ -340,8 +340,6 @@
          checkConnection("c6r2");
       }, 1000);
 
-   } else {
-      redirectToLogin();
    }
 
 </script>

@@ -203,23 +203,31 @@
    });
    async function loginUser() {
       try {
-         const rmbrMe = document.getElementById("rmbrMeBtn").checked;
 
-         const username = document.getElementById("inp1").value;
-         const psw = document.getElementById("inp2");
+         const respmsg = document.getElementById("respMsg");
 
-         if (username && psw) {
+         if (navigator.onLine) {
 
-            const resp = await login(username, psw.value, rmbrMe);
+            const rmbrMe = document.getElementById("rmbrMeBtn").checked;
 
-            if (resp === "Login successful") {
-               redirectToFeed();
-            } else {
-               const respmsg = document.getElementById("respMsg");
-               respmsg.innerHTML = resp;
-               psw.value = "";
+            const username = document.getElementById("inp1").value;
+            const psw = document.getElementById("inp2");
+
+            if (username && psw) {
+
+               const resp = await login(username, psw.value, rmbrMe);
+
+               if (resp === "Login successful") {
+                  redirectToFeed();
+               } else {
+                  respmsg.innerHTML = resp;
+                  psw.value = "";
+               }
             }
+         } else {
+            respmsg.innerHTML = "Du må ha Internett-tilkobling for å logge inn!";
          }
+
       } catch (err) {
          alert(err);
       }

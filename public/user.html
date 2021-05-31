@@ -221,10 +221,10 @@
 
 <script>
 
-   if (user) {
+   getViewLiftorGoalOverlay();
+   getTSAlertOverlay();
 
-      getViewLiftorGoalOverlay();
-      getTSAlertOverlay();
+   if (user) {
 
       lockBodyPosition();
 
@@ -256,8 +256,6 @@
          checkConnection("c6r2");
       }, 5000);
 
-   } else {
-      redirectToLogin();
    }
 
 </script>

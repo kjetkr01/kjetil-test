@@ -50,62 +50,69 @@ function createUserClass() {
             user = new TUser(token, JSON.parse(userObj), JSON.parse(settingsObj));
 
             // redirects to login if token is invalid
-            validateToken();
-            async function validateToken() {
+            if (navigator.onLine) {
+                validateToken();
+                async function validateToken() {
 
-                if (!window.navigator.onLine) {
-                    return;
-                }
+                    const currentPage = window.location.pathname;
 
-                const currentPage = window.location.pathname;
+                    const blackListedPages = ["/access.html", "/login.html", "/userlifts.html"];
 
-                const blackListedPages = ["/access.html", "/login.html", "/userlifts.html"];
+                    //blacklists login pages
+                    if (blackListedPages.includes(currentPage)) {
 
-                //blacklists login pages
-                if (blackListedPages.includes(currentPage)) {
-
-                    console.log(`"${currentPage}" is a blacklisted page, skipped token verification`);
-                    return;
-
-                } else {
-
-                    if (user) {
-
-                        const infoHeader = {};
-                        const url = `/validate`;
-
-                        const resp = await callServerAPIPost(infoHeader, url);
-
-                        if (resp) {
-
-                        } else {
-                            localStorage.clear();
-                            sessionStorage.clear();
-                            sessionStorage.setItem("cachedUsername", user.getUsername());
-                            redirectToLogin();
-                        }
+                        console.log(`"${currentPage}" is a blacklisted page, skipped token verification`);
+                        return;
 
                     } else {
-                        redirectToLogin();
+
+                        if (user) {
+
+                            const infoHeader = {};
+                            const url = `/validate`;
+
+                            const resp = await callServerAPIPost(infoHeader, url);
+
+                            if (!resp) {
+                                userError();
+                            }
+
+                        } else {
+                            userError();
+                        }
                     }
                 }
             }
 
         } catch (err) {
-
-            console.log("ERROR:");
-            console.log("------------------------------------");
-            console.log(err);
-            console.log("------------------------------------");
-
+            userError();
         }
+
     } else {
+        userError();
+    }
+
+    function userError() {
+        const userErrorTxt = "Det har oppstått en feil. Du blir nå logget ut.";
+        const maxWaitTime = 1000;
+        let waitTime = 0;
         localStorage.clear();
         sessionStorage.clear();
-        redirectToLogin();
+        let waitUntilDomIsLoaded = setInterval(() => {
+            waitTime++;
+            if (waitTime < maxWaitTime) {
+
+                if (document.getElementById("TSAlertOverlay")) {
+                    clearInterval(waitUntilDomIsLoaded);
+                    showAlert(userErrorTxt, true, "redirectToLogin();");
+                }
+            } else {
+                alert(userErrorTxt) // Took too long
+                redirectToLogin();
+            }
+        }, 100);
     }
 }
-
 
 // User class (for logged inn user)
 function TUser(aToken, aUser, aSettings) {

@@ -1471,76 +1471,76 @@ grid-area: c2oUV;
 
 
 .overlay>.TSAlert {
-    word-break: keep-all;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    width: 80vw;
-        max-width: 450px;
-    height: auto;
-    overflow-y: scroll;
-    
-    background-color: var(--main-backgroundColor2);
-    
-    border: 1px solid var(--main-backgroundColor1);
-    border-radius: 16px;
-    
-    display: grid;
-    grid-template-areas:
-    
-    "c1oTSAlert"
-    "GinformationTSAlert"
-    "GextraTSAlert"
-    "c2oTSAlert"
-    ;
-    
-    grid-template-rows: /* nedover */
-    
-    0px /* c1oTSAlert */
-    
-    auto /* GinformationTSAlert */
-    
-    auto /* GextraTSAlert */
-    
-    0px /* c2oTSAlert */
-    
-    ;
-    
-    grid-template-columns: /* bortover */
-    1fr;
-    }
-    
-    
-    
-    /* end of grid */
-    
-    
-    
-    /* elements */
-    
-    #GinformationTSAlert > #informationTSAlert {
-    font-size: 18px;
-    margin-top: 20px;
-    margin-bottom: 5px;
-    }
-    
-    #GextraTSAlert > #extraTSAlert{
-    font-size: 16px;
-    margin-bottom: 20px;
-    margin-top: 5px;
-    }
-    
-    #informationTSAlert, #extraTSAlert{
-    margin-left: 15px;
-    margin-right: 15px;
-    color: var(--main-textColorDark);
-    }
+word-break: keep-all;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+-ms-transform: translate(-50%,-50%);
+width: 80vw;
+max-width: 450px;
+height: auto;
+overflow-y: scroll;
 
-    .TSAlertBtn {
+background-color: var(--main-backgroundColor2);
 
-        word-break: keep-all;
+border: 1px solid var(--main-backgroundColor1);
+border-radius: 16px;
+
+display: grid;
+grid-template-areas:
+
+"c1oTSAlert"
+"GinformationTSAlert"
+"GextraTSAlert"
+"c2oTSAlert"
+;
+
+grid-template-rows: /* nedover */
+
+0px /* c1oTSAlert */
+
+auto /* GinformationTSAlert */
+
+auto /* GextraTSAlert */
+
+0px /* c2oTSAlert */
+
+;
+
+grid-template-columns: /* bortover */
+1fr;
+}
+
+
+
+/* end of grid */
+
+
+
+/* elements */
+
+#GinformationTSAlert > #informationTSAlert {
+font-size: 18px;
+margin-top: 20px;
+margin-bottom: 5px;
+}
+
+#GextraTSAlert > #extraTSAlert{
+font-size: 16px;
+margin-bottom: 20px;
+margin-top: 5px;
+}
+
+#informationTSAlert, #extraTSAlert{
+margin-left: 15px;
+margin-right: 15px;
+color: var(--main-textColorDark);
+}
+
+.TSAlertBtn {
+
+word-break: keep-all;
 white-space: nowrap;
 font-size: 14px;
 font-weight: bold;
@@ -1554,153 +1554,153 @@ box-shadow: var(--main-boxShadow);
 
 height: 26px;
 width: fit-content;
-    }
-    
-    /* end of elements */
-    
-    
-    
-    /* spacing & other */
-    
-    .TSAlert > #c1oTSAlert {
-    grid-area: c1oTSAlert;
-    }
-    
-    .TSAlert > #GinformationTSAlert {
-    grid-area: GinformationTSAlert;
-    }
-    
-    .TSAlert > #GextraTSAlert{
-    grid-area: GextraTSAlert;
-    }
-    
-    .TSAlert > #c2oTSAlert {
-    grid-area: c2oTSAlert;
-    }
+}
+
+/* end of elements */
 
 
-    .overlay>.TSConfirm {
-        word-break: keep-all;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        -ms-transform: translate(-50%,-50%);
-        width: 80vw;
-        max-width: 450px;
-        height: auto;
-        overflow-y: scroll;
-        
-        background-color: var(--main-backgroundColor2);
-        
-        border: 1px solid var(--main-backgroundColor1);
-        border-radius: 16px;
-        
-        display: grid;
-        grid-template-areas:
-        
-        "c1oTSConfirm c1oTSConfirm c1oTSConfirm"
-        "GinformationTSConfirm GinformationTSConfirm GinformationTSConfirm"
-        "GcancelBtnTSConfirm c2oTSConfirm GacceptBtnTSConfirm"
-        "c3oTSConfirm c3oTSConfirm c3oTSConfirm"
-        ;
-        
-        grid-template-rows: /* nedover */
-        
-        0px /* c1oTSConfirm */
-        
-        auto /* GinformationTSConfirm */
-        
-        auto /* GButtonsTSConfirm */
-        
-        0px /* c3oTSConfirm */
-        
-        ;
-        
-        grid-template-columns: /* bortover */
-        1fr;
-        }
-        
-        
-        
-        /* end of grid */
-        
-        
-        
-        /* elements */
-        
-        #GinformationTSConfirm > #informationTSConfirm {
-        font-size: 18px;
-        margin-top: 20px;
-        margin-bottom: 5px;
-        }
-        
-        #GcancelBtnTSConfirm > #cancelBtnTSConfirm {
-            float:left;
-        }
 
-        #GacceptBtnTSConfirm > #acceptBtnTSConfirm {
-            float: right;
-            }
+/* spacing & other */
 
-            #cancelBtnTSConfirm, #acceptBtnTSConfirm {
-                margin-bottom: 20px;
-            margin-top: 5px;
-            }
-        
-        #informationTSConfirm, #cancelBtnTSConfirm, #acceptBtnTSConfirm {
-        margin-left: 15px;
-        margin-right: 15px;
-        color: var(--main-textColorDark);
-        }
-    
-        .TSConfirmBtn {
-    
-            word-break: keep-all;
-    white-space: nowrap;
-    font-size: 14px;
-    font-weight: bold;
-    font-family: var(--main-font-Family-Verdana);
-    margin-right: 10px;
-    background-color: var(--main-backgroundColor1);
-    color: var(--main-textColorDark);
-    border-radius: 8px;
-    border: 1px var(--main-backgroundColor1) solid;
-    box-shadow: var(--main-boxShadow);
-    
-    height: 26px;
-    width: fit-content;
-        }
-        
-        /* end of elements */
-        
-        
-        
-        /* spacing & other */
-        
-        .TSConfirm > #c1oTSConfirm {
-        grid-area: c1oTSConfirm;
-        }
-        
-        .TSConfirm > #GinformationTSConfirm {
-        grid-area: GinformationTSConfirm;
-        }
+.TSAlert > #c1oTSAlert {
+grid-area: c1oTSAlert;
+}
 
-        .TSConfirm > #GcancelBtnTSConfirm{
-            grid-area: GcancelBtnTSConfirm;
-            }
+.TSAlert > #GinformationTSAlert {
+grid-area: GinformationTSAlert;
+}
 
-        .TSConfirm > #c2oTSConfirm {
-            grid-area: c2oTSConfirm;
-            }
-        
-        .TSConfirm > #GacceptBtnTSConfirm{
-        grid-area: GacceptBtnTSConfirm;
-        }
-        
-        .TSConfirm > #c3oTSConfirm {
-        grid-area: c3oTSConfirm;
-        }
+.TSAlert > #GextraTSAlert{
+grid-area: GextraTSAlert;
+}
+
+.TSAlert > #c2oTSAlert {
+grid-area: c2oTSAlert;
+}
+
+
+.overlay>.TSConfirm {
+word-break: keep-all;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+-ms-transform: translate(-50%,-50%);
+width: 80vw;
+max-width: 450px;
+height: auto;
+overflow-y: scroll;
+
+background-color: var(--main-backgroundColor2);
+
+border: 1px solid var(--main-backgroundColor1);
+border-radius: 16px;
+
+display: grid;
+grid-template-areas:
+
+"c1oTSConfirm c1oTSConfirm c1oTSConfirm"
+"GinformationTSConfirm GinformationTSConfirm GinformationTSConfirm"
+"GcancelBtnTSConfirm c2oTSConfirm GacceptBtnTSConfirm"
+"c3oTSConfirm c3oTSConfirm c3oTSConfirm"
+;
+
+grid-template-rows: /* nedover */
+
+0px /* c1oTSConfirm */
+
+auto /* GinformationTSConfirm */
+
+auto /* GButtonsTSConfirm */
+
+0px /* c3oTSConfirm */
+
+;
+
+grid-template-columns: /* bortover */
+1fr;
+}
+
+
+
+/* end of grid */
+
+
+
+/* elements */
+
+#GinformationTSConfirm > #informationTSConfirm {
+font-size: 18px;
+margin-top: 20px;
+margin-bottom: 5px;
+}
+
+#GcancelBtnTSConfirm > #cancelBtnTSConfirm {
+float:left;
+}
+
+#GacceptBtnTSConfirm > #acceptBtnTSConfirm {
+float: right;
+}
+
+#cancelBtnTSConfirm, #acceptBtnTSConfirm {
+margin-bottom: 20px;
+margin-top: 5px;
+}
+
+#informationTSConfirm, #cancelBtnTSConfirm, #acceptBtnTSConfirm {
+margin-left: 15px;
+margin-right: 15px;
+color: var(--main-textColorDark);
+}
+
+.TSConfirmBtn {
+
+word-break: keep-all;
+white-space: nowrap;
+font-size: 14px;
+font-weight: bold;
+font-family: var(--main-font-Family-Verdana);
+margin-right: 10px;
+background-color: var(--main-backgroundColor1);
+color: var(--main-textColorDark);
+border-radius: 8px;
+border: 1px var(--main-backgroundColor1) solid;
+box-shadow: var(--main-boxShadow);
+
+height: 26px;
+width: fit-content;
+}
+
+/* end of elements */
+
+
+
+/* spacing & other */
+
+.TSConfirm > #c1oTSConfirm {
+grid-area: c1oTSConfirm;
+}
+
+.TSConfirm > #GinformationTSConfirm {
+grid-area: GinformationTSConfirm;
+}
+
+.TSConfirm > #GcancelBtnTSConfirm{
+grid-area: GcancelBtnTSConfirm;
+}
+
+.TSConfirm > #c2oTSConfirm {
+grid-area: c2oTSConfirm;
+}
+
+.TSConfirm > #GacceptBtnTSConfirm{
+grid-area: GacceptBtnTSConfirm;
+}
+
+.TSConfirm > #c3oTSConfirm {
+grid-area: c3oTSConfirm;
+}
 
 /* end of spacing & other */
 

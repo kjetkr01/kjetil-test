@@ -1,4 +1,4 @@
-const cacheName = 'TS-PWA-v30';
+const cacheName = 'TS-PWA-v31';
 
 const contentToCache = [
     '/registerSW.js',
@@ -50,6 +50,15 @@ const contentToCache = [
     '/styles/shared/userGrid.css',
     '/ts_application.js',
     '/user.html',
+    '/login.html',
+    '/styles/login/desktop.css',
+    '/styles/login/mobile.css',
+    '/styles/login/common.css',
+    '/access.html',
+    '/styles/access/desktop.css',
+    '/styles/access/mobile.css',
+    '/styles/access/common.css',
+    '/scripts/validate/validateInfo.js',
 ]
 
 self.addEventListener('install', (e) => {

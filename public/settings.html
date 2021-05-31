@@ -143,35 +143,25 @@
    let settings = null;
    let saveNewScrollPos = true;
 
-   if (user) {
+   getTSAlertOverlay();
+   getTSConfirmOverlay();
 
-      getTSAlertOverlay();
-      getTSConfirmOverlay();
+   if (user) {
 
       lockBodyPosition();
 
-      if (!navigator.onLine && !user.getSettings()) {
-         setTimeout(() => {
-            //alert("Innstillinger har ikke blitt lastet ned. Vennligst prøv igjen når du har Internett-tilkobling");
-            showAlert("Innstillinger har ikke blitt lastet ned. Vennligst prøv igjen når du har Internett-tilkobling", true, "redirectToAccount();");
-            //redirectToAccount();
-         }, 500);
-      } else {
+      updateUserInfo(true);
 
-         updateUserInfo(true);
-
-         settingsDom.addEventListener("scroll", function () {
-            if (saveNewScrollPos === true) {
-               const currentScroll = settingsDom.scrollTop;
-               const currentSetting = sessionStorage.getItem("currentSetting");
-               if (currentSetting) {
-                  sessionStorage.setItem(`@scroll-${currentSetting}`, currentScroll);
-               }
+      settingsDom.addEventListener("scroll", function () {
+         if (saveNewScrollPos === true) {
+            const currentScroll = settingsDom.scrollTop;
+            const currentSetting = sessionStorage.getItem("currentSetting");
+            if (currentSetting) {
+               sessionStorage.setItem(`@scroll-${currentSetting}`, currentScroll);
             }
-         });
-      }
-   } else {
-      redirectToLogin();
+         }
+      });
+
    }
 
 </script>

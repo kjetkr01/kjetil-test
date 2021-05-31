@@ -194,9 +194,9 @@
    const usermsg1 = document.getElementById("GpeopleLeaderboardsTxt");
    const GlistOfLeaderboards = document.getElementById("GlistOfLeaderboards");
 
-   if (user) {
+   getTSAlertOverlay();
 
-      getTSAlertOverlay();
+   if (user) {
 
       lockBodyPosition();
       checkConnection("c6r2");
@@ -212,8 +212,6 @@
          sessionStorage.setItem("leaderboards_scrollX", scrollX);
       });
 
-   } else {
-      redirectToLogin();
    }
 
 </script>
