@@ -1430,7 +1430,7 @@ grid-template-columns: /* bortover */
 /* elements */
 
 #GinformationTSAlert > #informationTSAlert {
-font-size: 16px;
+font-size: 18px;
 margin-top: 20px;
 margin-bottom: 5px;
 }
@@ -1450,7 +1450,7 @@ color: var(--main-textColorDark);
 .TSAlertBtn {
 word-break: keep-all;
 white-space: nowrap;
-font-size: 14px;
+font-size: 15px;
 font-weight: bold;
 font-family: var(--main-font-Family-Verdana);
 margin-right: 10px;
@@ -1538,7 +1538,7 @@ grid-template-columns: /* bortover */
 /* elements */
 
 #GinformationTSConfirm > #informationTSConfirm {
-font-size: 16px;
+font-size: 18px;
 margin-top: 20px;
 margin-bottom: 5px;
 }
@@ -1563,10 +1563,9 @@ color: var(--main-textColorDark);
 }
 
 .TSConfirmBtn {
-
 word-break: keep-all;
 white-space: nowrap;
-font-size: 14px;
+font-size: 15px;
 font-weight: bold;
 font-family: var(--main-font-Family-Verdana);
 margin-right: 10px;
