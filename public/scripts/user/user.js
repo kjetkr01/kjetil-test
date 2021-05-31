@@ -233,7 +233,7 @@ function displayInformation(respInfo) {
     const medalscount = info.info.medalscount;
     memberSince = info.member_since;
 
-    badgeColors = new TbadgeColors(info.badgeColors);
+    badgeColorsJSON = new TbadgeColors(info.badgeColors);
 
     lifts = info.lifts;
     goals = info.goals;
