@@ -30,21 +30,26 @@ async function updatePassword() {
                     localStorage.clear();
                     sessionStorage.clear();
                     sessionStorage.setItem("cachedUsername", user.getUsername());
-                    alert(`Passordet ble endret. Du blir nå logget ut`);
-                    redirectToLogin();
+                    /*alert(`Passordet ble endret. Du blir nå logget ut`);
+                    redirectToLogin();*/
+                    showAlert(`Passordet ble endret. Du blir nå logget ut`, true, "redirectToLogin();");
                 } else {
-                    alert(data.message)
+                    //alert(data.message);
+                    showAlert(data.message, true);
                 }
 
             } else {
-                alert("Ønskede passord og gjenta ønskede stemmer ikke");
+                //alert("Ønskede passord og gjenta ønskede stemmer ikke");
+                showAlert("Ønskede passord og gjenta ønskede stemmer ikke", true);
             }
 
         } else {
-            alert("Vennligst fyll inn alle feltene.");
+            //alert("Vennligst fyll inn alle feltene.");
+            showAlert("Vennligst fyll ut alle feltene", true);
         }
     } else {
-        alert("Du må ha Internett-tilkobling for å endre passord!");
+        //alert("Du må ha Internett-tilkobling for å endre passord!");
+        showAlert("Du må ha Internett-tilkobling for å endre passord!", true);
     }
 }
 
@@ -99,7 +104,8 @@ async function updateAboutMe() {
             }, 2000);
         }
     } else {
-        alert("Du må ha Internett-tilkobling for å endre detaljer om deg!");
+        //alert("Du må ha Internett-tilkobling for å endre detaljer om deg!");
+        showAlert("Du må ha Internett-tilkobling for å endre detaljer om deg!", true);
     }
 }
 
@@ -250,98 +256,120 @@ async function updateBadgeDetails() {
     }
 }
 
+async function saveDisplaynameConfirm() {
+    if (navigator.onLine) {
+
+        showConfirm("Hvis du endrer visningsnavnet. Må du logge inn på nytt", "saveDisplayname();")
+
+    } else {
+        //alert("Du må ha Internett-tilkobling for å endre visningsnavn!");
+        showAlert(`Du må ha Internett-tilkobling for å endre visningsnavn!`, true);
+    }
+}
+
 async function saveDisplayname() {
     if (navigator.onLine) {
 
-        const confirmSaveDisplayname = confirm("Hvis du endrer visningsnavnet. Må du logge inn på nytt");
+        const displaynameInp = document.getElementById("displaynameInp").value;
 
-        if (confirmSaveDisplayname === true) {
+        let splitDisplayName = displaynameInp.split(" ");
+        let fixedDisplayname = "";
 
-            const displaynameInp = document.getElementById("displaynameInp").value;
+        const letters = /^[A-Za-z0-9 ]+$/;
 
-            let splitDisplayName = displaynameInp.split(" ");
-            let fixedDisplayname = "";
+        if (displaynameInp.match(letters)) {
 
-            const letters = /^[A-Za-z0-9 ]+$/;
+            for (let i = 0; i < splitDisplayName.length; i++) {
 
-            if (displaynameInp.match(letters)) {
-
-                for (let i = 0; i < splitDisplayName.length; i++) {
-
-                    function upperCaseFirstLetter(string) {
-                        return string.charAt(0).toUpperCase() + string.slice(1);
-                    }
-
-                    function lowerCaseAllWordsExceptFirstLetters(string) {
-                        return string.replace(/\S*/g, function (word) {
-                            return word.charAt(0) + word.slice(1).toLowerCase();
-                        });
-                    }
-
-                    fixedDisplayname += upperCaseFirstLetter(lowerCaseAllWordsExceptFirstLetters(splitDisplayName[i])) + " ";
+                function upperCaseFirstLetter(string) {
+                    return string.charAt(0).toUpperCase() + string.slice(1);
                 }
 
-                fixedDisplayname = fixedDisplayname.trimRight();
-
-                const infoHeader = { "newDisplayname": fixedDisplayname };
-                const url = `/user/update/displayname`;
-
-                const resp = await callServerAPIPost(infoHeader, url);
-
-                if (resp === true) {
-                    localStorage.clear();
-                    sessionStorage.clear();
-                    sessionStorage.setItem("cachedUsername", user.getUsername());
-                    alert(`Visningsnavet ble endret til: ${fixedDisplayname}. Du blir nå logget ut`);
-                    redirectToLogin();
-                } else {
-                    alert("Visningsnavet kunne ikke bli oppdatert. Vennligst prøv igjen.")
+                function lowerCaseAllWordsExceptFirstLetters(string) {
+                    return string.replace(/\S*/g, function (word) {
+                        return word.charAt(0) + word.slice(1).toLowerCase();
+                    });
                 }
 
-            } else {
-                alert("Ugyldig visningsnavn!");
+                fixedDisplayname += upperCaseFirstLetter(lowerCaseAllWordsExceptFirstLetters(splitDisplayName[i])) + " ";
             }
+
+            fixedDisplayname = fixedDisplayname.trimRight();
+
+            const infoHeader = { "newDisplayname": fixedDisplayname };
+            const url = `/user/update/displayname`;
+
+            const resp = await callServerAPIPost(infoHeader, url);
+
+            if (resp === true) {
+                localStorage.clear();
+                sessionStorage.clear();
+                sessionStorage.setItem("cachedUsername", user.getUsername());
+                /*alert(`Visningsnavet ble endret til: ${fixedDisplayname}. Du blir nå logget ut`);
+                redirectToLogin();*/
+                showAlert(`Visningsnavet ble endret til: ${fixedDisplayname}. Du blir nå logget ut`, true, "redirectToLogin();");
+            } else {
+                //alert("Visningsnavet kunne ikke bli oppdatert. Vennligst prøv igjen.")
+                showAlert(`Visningsnavet kunne ikke bli oppdatert. Vennligst prøv igjen`, true);
+            }
+
+        } else {
+            //alert("Ugyldig visningsnavn!");
+            showAlert(`Ugyldig visningsnavn!`, true);
         }
+
     } else {
-        alert("Du må ha Internett-tilkobling for å endre visningsnavn!");
+        //alert("Du må ha Internett-tilkobling for å endre visningsnavn!");
+        showAlert(`Du må ha Internett-tilkobling for å endre visningsnavn!`, true);
+    }
+}
+
+async function saveUsernameConfirm() {
+    if (navigator.onLine) {
+
+        showConfirm("Hvis du endrer brukernavnet. Må du logge inn på nytt", "saveUsername();");
+
+    } else {
+        //alert("Du må ha Internett-tilkobling for å endre brukernavn!");
+        showAlert(`Du må ha Internett-tilkobling for å endre brukernavn!`, true);
     }
 }
 
 async function saveUsername() {
     if (navigator.onLine) {
 
-        const confirmSaveUsername = confirm("Hvis du endrer brukernavnet. Må du logge inn på nytt");
+        const usernameInp = document.getElementById("usernameInp").value;
 
-        if (confirmSaveUsername === true) {
+        const newUsername = usernameInp.toLowerCase();
 
-            const usernameInp = document.getElementById("usernameInp").value;
+        const letters = /^[a-z0-9]+$/;
 
-            const newUsername = usernameInp.toLowerCase();
+        if (newUsername.match(letters)) {
 
-            const letters = /^[a-z0-9]+$/;
+            const infoHeader = { "newUsername": newUsername };
+            const url = `/user/update/username`;
 
-            if (newUsername.match(letters)) {
+            const resp = await callServerAPIPost(infoHeader, url);
 
-                const infoHeader = { "newUsername": newUsername };
-                const url = `/user/update/username`;
-
-                const resp = await callServerAPIPost(infoHeader, url);
-
-                if (resp === true) {
-                    localStorage.clear();
-                    sessionStorage.clear();
-                    sessionStorage.setItem("cachedUsername", newUsername);
-                    alert(`Brukernavnet ble endret til: ${newUsername}. Du blir nå logget ut`);
-                    redirectToLogin();
-                } else {
-                    alert("Brukernavnet er opptatt!")
-                }
-
+            if (resp === true) {
+                localStorage.clear();
+                sessionStorage.clear();
+                sessionStorage.setItem("cachedUsername", newUsername);
+                /*alert(`Brukernavnet ble endret til: ${newUsername}. Du blir nå logget ut`);
+                redirectToLogin();*/
+                showAlert(`Brukernavnet ble endret til: ${newUsername}. Du blir nå logget ut`, true, "redirectToLogin();");
             } else {
-                alert("Ugyldig brukernavn!");
+                //alert("Brukernavnet er opptatt!")
+                showAlert(`Brukernavnet ble endret til: ${newUsername}. Du blir nå logget ut`, true);
             }
+
+        } else {
+            //alert("Ugyldig brukernavn!");
+            showAlert(`Ugyldig brukernavn!`, true);
         }
+
     } else {
-        alert("Du må ha Internett-tilkobling for å endre brukernavn!");
+        //alert("Du må ha Internett-tilkobling for å endre brukernavn!");
+        showAlert(`Du må ha Internett-tilkobling for å endre brukernavn!`, true);
     }
 }

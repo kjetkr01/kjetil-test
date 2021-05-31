@@ -188,22 +188,26 @@ async function requestAccountDetails() {
                     displayInformation(resp.info);
                     return;
                 } else if (resp.includes("sin profil er privat!") === true) {
-                    alert(resp);
-                    returnToPrevious();
+                    //alert(resp);
+                    //returnToPrevious();
+                    showAlert(resp, true, "returnToPrevious();");
                 } else {
-                    alert("Det har oppstått en feil!");
-                    redirectToFeed();
+                    /*alert("Det har oppstått en feil!");
+                    redirectToFeed();*/
+                    showAlert("Det har oppstått en feil!", true, "redirectToFeed();");
                 }
 
             } else {
-                alert("Det har oppstått en feil!");
-                redirectToFeed();
+                /*alert("Det har oppstått en feil!");
+                redirectToFeed();*/
+                showAlert("Det har oppstått en feil!", true, "redirectToFeed();");
             }
         }
 
     } else {
-        alert("Det har oppstått en feil!");
-        redirectToFeed();
+        /*alert("Det har oppstått en feil!");
+        redirectToFeed();*/
+        showAlert("Det har oppstått en feil!", true, "redirectToFeed();");
     }
 }
 

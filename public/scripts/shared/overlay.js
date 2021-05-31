@@ -56,7 +56,7 @@ function getCreateNewLiftorGoalOverlay() {
             <p id="respC"></p>
          </div>
          <div id="GcancelC">
-            <button id="cancelC" class="pointer" onclick="disableOverlay('createLiftOrGoal');">Avbryt</button>
+            <button id="cancelC" class="pointer" onclick="disableOverlays();">Avbryt</button>
          </div>
          <div id="GsaveC">
          </div>
@@ -132,7 +132,7 @@ function getEditLiftorGoalOverlay() {
             <p id="respE"></p>
          </div>
          <div id="GcancelE">
-            <button id="cancelE" class="pointer" onclick="disableOverlay('editLiftOrGoal');">Lukk</button>
+            <button id="cancelE" class="pointer" onclick="disableOverlays();">Lukk</button>
          </div>
          <div id="GsaveE">
          </div>
@@ -209,7 +209,7 @@ function geteditworkoutPlanOverlay() {
          <p id="respworkoutPlans"></p>
       </div>
       <div id="GcancelworkoutPlans">
-         <button id="cancelworkoutPlans" class="pointer" onclick="disableOverlay('editDays');">Avbryt</button>
+         <button id="cancelworkoutPlans" class="pointer" onclick="disableOverlays();">Avbryt</button>
       </div>
       <div id="GsaveworkoutPlans">
       </div>
@@ -266,7 +266,7 @@ function getViewLiftorGoalOverlay() {
            <p id="inp3W" class="inputLiftOrGoal"></p>
         </div>
         <div id="GcancelW">
-           <button id="cancelW" class="pointer" onclick="disableOverlay('viewLiftOrGoal');">Lukk</button>
+           <button id="cancelW" class="pointer" onclick="disableOverlays();">Lukk</button>
         </div>
         <div id="GeditW">
         </div>
@@ -279,4 +279,133 @@ function getViewLiftorGoalOverlay() {
 
    }
 
+}
+
+
+// TSAlertOverlay
+function getTSAlertOverlay() {
+
+   if (document.getElementById("TSAlert") === null) {
+
+
+      const html = `
+       
+         <div id="TSAlert" class="TSAlert noselect">
+         <div id="GinformationTSAlert">
+            <p id="informationTSAlert"></p>
+         </div>
+         <div id="GextraTSAlert">
+            <p id="extraTSAlert"></p>
+         </div>
+      </div>
+
+       `;
+
+      document.getElementById("TSAlertOverlay").innerHTML = html;
+
+   }
+}
+
+// TSConfirmOverlay
+function getTSConfirmOverlay() {
+
+   if (document.getElementById("TSConfirm") === null) {
+
+
+      const html = `
+       
+      <div id="TSConfirm" class="TSConfirm noselect">
+         <div id="GinformationTSConfirm">
+            <p id="informationTSConfirm">Ønsker du å godta denne meldingen?</p>
+         </div>
+         <div id="GcancelBtnTSConfirm">
+            <button id="cancelBtnTSConfirm" class="TSConfirmBtn pointer" onClick="disableOverlay('TSConfirmOverlay');">Avbryt</button>
+         </div>
+         <div id="GacceptBtnTSConfirm">
+         </div>
+      </div>
+
+       `;
+
+      document.getElementById("TSConfirmOverlay").innerHTML = html;
+
+   }
+}
+
+function showAlert(aInformation, aDisplayCloseBtn, aPerformWhenUserCloseOverlay) {
+   const TSAlertOverlay = document.getElementById("TSAlertOverlay");
+   const informationTSAlert = document.getElementById("informationTSAlert");
+   const extraTSAlert = document.getElementById("extraTSAlert");
+
+   if (TSAlertOverlay && informationTSAlert && extraTSAlert) {
+      if (TSAlertOverlay.style.display === "none") {
+         const information = aInformation;
+         if (information) {
+            const displayCloseBtn = aDisplayCloseBtn;
+            const performWhenUserCloseOverlay = aPerformWhenUserCloseOverlay;
+
+            TSAlertOverlay.style.display = "block";
+            informationTSAlert.innerHTML = information;
+            extraTSAlert.innerHTML = "";
+
+            if (displayCloseBtn === true) {
+               extraTSAlert.innerHTML = `<button onClick="disableOverlays();${performWhenUserCloseOverlay}" class="TSAlertBtn pointer">Ok</button>`;
+            } else {
+               // auto close alert.
+               let secondsLeft = 4;
+               extraTSAlert.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
+               let countDown = setInterval(() => {
+                  secondsLeft--;
+                  if (secondsLeft <= 0) {
+                     clearInterval(countDown);
+
+                     informationTSAlert.innerHTML = "";
+                     extraTSAlert.innerHTML = "";
+                     TSAlertOverlay.style.display = "none";
+                  } else {
+                     extraTSAlert.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
+                  }
+               }, 1000);
+            }
+         }
+      }
+   }
+}
+
+function showConfirm(aInformation, aPerformWhenUserAccept) {
+   const TSConfirmOverlay = document.getElementById("TSConfirmOverlay");
+   const informationTSConfirm = document.getElementById("informationTSConfirm");
+   const GacceptBtnTSConfirm = document.getElementById("GacceptBtnTSConfirm");
+
+   if (TSConfirmOverlay && informationTSConfirm && GacceptBtnTSConfirm) {
+      if (TSConfirmOverlay.style.display === "none") {
+         GacceptBtnTSConfirm.innerHTML = "";
+         const information = aInformation;
+         const performWhenUserAccept = aPerformWhenUserAccept;
+         if (information && performWhenUserAccept) {
+            TSConfirmOverlay.style.display = "block";
+            informationTSConfirm.innerHTML = information;
+            GacceptBtnTSConfirm.innerHTML = `<button id="acceptBtnTSConfirm" class="TSConfirmBtn pointer" onClick="disableOverlay('TSConfirmOverlay');${performWhenUserAccept}">Godta</button>`;
+         }
+      }
+   }
+}
+
+function disableOverlay(aOverlay) {
+   const overlayDom = document.getElementById(aOverlay);
+   if (overlayDom) {
+      overlayDom.style.display = "none";
+   }
+}
+
+function disableOverlays() {
+
+   const overlayIDs = ["createNewLiftorGoalOverlay", "viewLiftorGoalOverlay", "editLiftorGoalOverlay", "editworkoutPlanOverlay", "TSAlertOverlay", "TSConfirmOverlay"];
+
+   for (let i = 0; i < overlayIDs.length; i++) {
+      const overlayDom = document.getElementById(overlayIDs[i]);
+      if (overlayDom) {
+         overlayDom.style.display = "none";
+      }
+   }
 }

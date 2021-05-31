@@ -81,7 +81,8 @@ function enableOverlayCreate(aType) {
 
             createNewLiftorGoalOverlay.style.display = "block";
         } else {
-            alert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
+            //alert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
+            showAlert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
             return;
         }
     }
@@ -220,7 +221,7 @@ function enableOverlayView(aType, aExercise, aId) {
                 }
 
                 if (navigator.onLine) {
-                    GeditW.innerHTML = `<button id="editW" class="pointer" onClick="disableOverlay('viewLiftOrGoal');enableOverlayEdit('lift', '${exercise}', '${id}');">Endre</button>`;
+                    GeditW.innerHTML = `<button id="editW" class="pointer" onClick="disableOverlays();enableOverlayEdit('lift', '${exercise}', '${id}');">Endre</button>`;
                 } else {
                     GeditW.innerHTML = `<button id="editW" disabled>Endre</button>`;
                 }
@@ -228,7 +229,8 @@ function enableOverlayView(aType, aExercise, aId) {
                 viewLiftorGoalOverlay.style.display = "block";
 
             } else {
-                alert("Det har oppstått et problem!");
+                //alert("Det har oppstått et problem!");
+                showAlert("Det har oppstått et problem!");
             }
 
         } else if (type === "goal" && goalsInfo) {
@@ -266,7 +268,7 @@ function enableOverlayView(aType, aExercise, aId) {
                 }
 
                 if (navigator.onLine) {
-                    GeditW.innerHTML = `<button id="editW" class="pointer" onClick="disableOverlay('viewLiftOrGoal');enableOverlayEdit('goal', '${exercise}', '${id}');">Endre</button>`;
+                    GeditW.innerHTML = `<button id="editW" class="pointer" onClick="disableOverlays();enableOverlayEdit('goal', '${exercise}', '${id}');">Endre</button>`;
                 } else {
                     GeditW.innerHTML = `<button id="editW" disabled>Endre</button>`;
                 }
@@ -274,11 +276,13 @@ function enableOverlayView(aType, aExercise, aId) {
                 viewLiftorGoalOverlay.style.display = "block";
 
             } else {
-                alert("Det har oppstått et problem!");
+                //alert("Det har oppstått et problem!");
+                showAlert("Det har oppstått et problem!");
             }
 
         } else {
-            alert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
+            //alert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
+            showAlert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
         }
     }
 }
@@ -388,12 +392,13 @@ function enableOverlayEdit(aType, aExercise, aId) {
                     document.getElementById("editLiftorGoal").style.border = `1px solid #${badgeColorsJSON[color].border}`;
                 }
 
-                GcancelE.innerHTML = `<button id="cancelE" class="pointer" onclick="disableOverlay('editLiftOrGoal');enableOverlayView('lift', '${exercise}', '${id}');"">Avbryt</button>`;
+                GcancelE.innerHTML = `<button id="cancelE" class="pointer" onclick="disableOverlays();enableOverlayView('lift', '${exercise}', '${id}');"">Avbryt</button>`;
 
                 editLiftorGoalOverlay.style.display = "block";
 
             } else {
-                alert("Det har oppstått et problem!");
+                //alert("Det har oppstått et problem!");
+                showAlert("Det har oppstått et problem!");
             }
 
         } else if (type === "goal" && goalsInfo) {
@@ -452,16 +457,18 @@ function enableOverlayEdit(aType, aExercise, aId) {
                     document.getElementById("editLiftorGoal").style.border = `1px solid #${badgeColorsJSON[color].border}`;
                 }
 
-                GcancelE.innerHTML = `<button id="cancelE" class="pointer" onclick="disableOverlay('editLiftOrGoal');enableOverlayView('goal', '${exercise}', '${id}');"">Avbryt</button>`;
+                GcancelE.innerHTML = `<button id="cancelE" class="pointer" onclick="disableOverlays();enableOverlayView('goal', '${exercise}', '${id}');"">Avbryt</button>`;
 
                 editLiftorGoalOverlay.style.display = "block";
 
             } else {
-                alert("Det har oppstått et problem!");
+                //alert("Det har oppstått et problem!");
+                showAlert("Det har oppstått et problem!");
             }
 
         } else {
-            alert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
+            //alert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
+            showAlert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
         }
     }
 }
@@ -566,9 +573,6 @@ async function saveLiftOrGoal(aType, editOrCreate, aId) {
                     //respMsg.textContent = "Lagret!";
                     saveBtn.innerHTML = "Lagret!";
                     setTimeout(() => {
-                        disableOverlay();
-                    }, 500);
-                    setTimeout(() => {
                         location.reload();
                     }, 500);
                 } else {
@@ -580,7 +584,8 @@ async function saveLiftOrGoal(aType, editOrCreate, aId) {
                 respMsg.textContent = validateInfo.msg;
             }
         } else {
-            alert("Det har oppstått en feil!");
+            //alert("Det har oppstått en feil!");
+            showAlert("Det har oppstått en feil!");
         }
     }
 }
@@ -660,22 +665,25 @@ function deleteLiftOrGoalConfirm(aExercise, aType, aId) {
             const id = aId;
 
             if (type === "lift") {
-                const confirmation = confirm(`Er du sikkert på at du vil slette løftet ${capitalizeFirstLetter(exercise)}? Dette kan ikke angres!`);
+                /*const confirmation = confirm(`Er du sikkert på at du vil slette løftet ${capitalizeFirstLetter(exercise)}? Dette kan ikke angres!`);
                 if (confirmation === true) {
                     deleteLiftOrGoal(exercise, type, id);
-                }
+                }*/
+                showConfirm(`Er du sikkert på at du vil slette løftet ${capitalizeFirstLetter(exercise)}? Dette kan ikke angres!`, `deleteLiftOrGoal('${exercise}', '${type}', '${id}');`);
             }
 
             if (type === "goal") {
-                const confirmation = confirm(`Er du sikkert på at du vil slette målet ${capitalizeFirstLetter(exercise)}? Dette kan ikke angres!`);
+                /*const confirmation = confirm(`Er du sikkert på at du vil slette målet ${capitalizeFirstLetter(exercise)}? Dette kan ikke angres!`);
                 if (confirmation === true) {
                     deleteLiftOrGoal(exercise, type, id);
-                }
+                }*/
+                showConfirm(`Er du sikkert på at du vil slette målet ${capitalizeFirstLetter(exercise)}? Dette kan ikke angres!`, `deleteLiftOrGoal('${exercise}', '${type}', '${id}');`);
             }
 
 
         } else {
-            alert("Det har oppstått en feil!");
+            //alert("Det har oppstått en feil!");
+            showAlert("Det har oppstått en feil!");
         }
     }
 }
@@ -712,9 +720,6 @@ async function deleteLiftOrGoal(aExercise, aType, aId) {
                 deleteBtn.innerHTML = `Slettet!`;
                 //respMsg.textContent = `${typeMsg} ble slettet!`;
                 setTimeout(() => {
-                    disableOverlay();
-                }, 500);
-                setTimeout(() => {
                     location.reload();
                 }, 500);
             } else {
@@ -727,7 +732,8 @@ async function deleteLiftOrGoal(aExercise, aType, aId) {
 
 
         } else {
-            alert("Det har oppstått en feil!");
+            //alert("Det har oppstått en feil!");
+            showAlert("Det har oppstått en feil!");
         }
     }
 }
@@ -753,31 +759,6 @@ function onlyAllowedKeys(evt, aType) {
         } else {
             return false;
         }
-    }
-}
-
-
-function disableOverlay() {
-
-    const createNewLiftorGoalOverlay = document.getElementById("createNewLiftorGoalOverlay");
-    const viewLiftorGoalOverlay = document.getElementById("viewLiftorGoalOverlay");
-    const editLiftorGoalOverlay = document.getElementById("editLiftorGoalOverlay");
-    const editDaysOverlay = document.getElementById("editworkoutPlanOverlay");
-
-    if (createNewLiftorGoalOverlay) {
-        createNewLiftorGoalOverlay.style.display = "none";
-    }
-
-    if (viewLiftorGoalOverlay) {
-        viewLiftorGoalOverlay.style.display = "none";
-    }
-
-    if (editLiftorGoalOverlay) {
-        editLiftorGoalOverlay.style.display = "none";
-    }
-
-    if (editDaysOverlay) {
-        editDaysOverlay.style.display = "none";
     }
 }
 
@@ -997,9 +978,6 @@ async function setActiveTrainingsplit() {
             if (resp === true) {
                 saveworkoutPlansBtn.innerHTML = "Lagret!";
                 setTimeout(() => {
-                    disableOverlay();
-                }, 500);
-                setTimeout(() => {
                     location.reload();
                 }, 500);
             } else {
@@ -1037,9 +1015,6 @@ async function setNoneActiveTrainingsplit() {
         if (resp === true) {
             respMsg.textContent = "Treningsplanen er ikke lenger aktiv!";
             setTimeout(() => {
-                disableOverlay();
-            }, 500);
-            setTimeout(() => {
                 location.reload();
             }, 500);
         } else {
@@ -1053,11 +1028,11 @@ async function setNoneActiveTrainingsplit() {
 
 // end of setNoneActiveTrainingsplit
 
-// deleteTrainingsplit
+// deleteTrainingsplitConfirm
 
-async function deleteTrainingsplit(aTrainingsplit_id) {
+async function deleteTrainingsplitConfirm(aTrainingsplit_id) {
 
-    const confirmDelete = confirm("Er du sikker på at du ønsker å slette treningsplanen? Dette kan ikke angres!");
+    /*const confirmDelete = confirm("Er du sikker på at du ønsker å slette treningsplanen? Dette kan ikke angres!");
 
     if (confirmDelete === true) {
 
@@ -1072,8 +1047,31 @@ async function deleteTrainingsplit(aTrainingsplit_id) {
             sessionStorage.removeItem("trainingsplit");
             window.location.search = "";
         } else {
-            alert("Kunne ikke slette treningsplanen. Det har oppstått en feil!");
+            //alert("Kunne ikke slette treningsplanen. Det har oppstått en feil!");
+            showAlert("Kunne ikke slette treningsplanen. Det har oppstått en feil!");
         }
+    }*/
+
+    showConfirm("Er du sikker på at du ønsker å slette treningsplanen? Dette kan ikke angres!", `deleteTrainingsplit(${aTrainingsplit_id});`);
+}
+
+// end of deleteTrainingsplitConfirm
+
+async function deleteTrainingsplit(aTrainingsplit_id) {
+
+    const trainingsplit_id = aTrainingsplit_id;
+
+    const infoHeader = { "trainingsplit_id": trainingsplit_id };
+    const url = `/user/delete/trainingsplit`;
+
+    const resp = await callServerAPIPost(infoHeader, url);
+
+    if (resp === true) {
+        sessionStorage.removeItem("trainingsplit");
+        window.location.search = "";
+    } else {
+        //alert("Kunne ikke slette treningsplanen. Det har oppstått en feil!");
+        showAlert("Kunne ikke slette treningsplanen. Det har oppstått en feil!");
     }
 }
 
@@ -1306,14 +1304,17 @@ async function saveTrainingsplit(aReload) {
                         isSavingTrainingsplit = false;
                     }, 1000);
                 } else {
-                    alert("Kunne ikke lagre treningsplanen!");
+                    //alert("Kunne ikke lagre treningsplanen!");
+                    showAlert("Kunne ikke lagre treningsplanen!");
                 }
             } else {
-                alert("Kunne ikke lagre treningsplanen!");
+                //alert("Kunne ikke lagre treningsplanen!");
+                showAlert("Kunne ikke lagre treningsplanen!");
             }
 
         } else {
-            alert("Du må ha Internett-tilkobling for å kunne lagre treningsplanen!");
+            //alert("Du må ha Internett-tilkobling for å kunne lagre treningsplanen!");
+            showAlert("Du må ha Internett-tilkobling for å kunne lagre treningsplanen!");
         }
     }
 }

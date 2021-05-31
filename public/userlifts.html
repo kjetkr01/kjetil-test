@@ -93,6 +93,8 @@
 <body>
 
    <div id="viewLiftorGoalOverlay" style="display: none;" class="overlay noselect"></div>
+   <div id="TSAlertOverlay" style="display: none;" class="overlay noselect"></div>
+   <div id="TSConfirmOverlay" style="display: none;" class="overlay noselect"></div>
 
    <section id="page">
 
@@ -139,6 +141,9 @@
    */
 
    getViewLiftorGoalOverlay();
+   getTSAlertOverlay();
+   getTSConfirmOverlay();
+
    lockBodyPosition();
 
    const themeColorDOM = document.getElementById("themeColor");
@@ -183,9 +188,11 @@
          } else {
             localStorage.clear();
             if (data.error) {
-               alert(data.error);
+               //alert(data.error);
+               showAlert(data.error, true, "location.reload();");
+            } else {
+               location.reload();
             }
-            location.reload();
          }
       }
 
@@ -428,12 +435,8 @@
             }
          }
 
-         const confirmClear = confirm(`Vil du tømme localStorage for følgende elementer? ${elements}`);
+         showConfirm(`Vil du tømme localStorage for følgende elementer? ${elements}`, "localStorage.clear();location.reload();");
 
-         if (confirmClear === true) {
-            localStorage.clear();
-            location.reload();
-         }
       } else {
          if (tap === 1) {
             setTimeout(() => {

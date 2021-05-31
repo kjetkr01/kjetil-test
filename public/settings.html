@@ -70,6 +70,8 @@
 
    <link rel="stylesheet" href="styles/global/themes.css">
 
+   <link rel="stylesheet" href="styles/shared/overlay.css">
+
 
    <link rel="stylesheet" href="styles/settings/desktop.css">
    <link rel="stylesheet" href="styles/settings/mobile.css">
@@ -88,6 +90,8 @@
    <script src="scripts/settings/templateFunctions.js" type="text/javascript"></script>
    <script src="scripts/settings/saveSettings.js" type="text/javascript"></script>
 
+   <script src="scripts/shared/overlay.js" type="text/javascript"></script>
+
 </head>
 
 <body>
@@ -96,6 +100,9 @@
       createUserClass();
       changeColorTheme();
    </script>
+
+   <div id="TSAlertOverlay" style="display: none;" class="overlay noselect"></div>
+   <div id="TSConfirmOverlay" style="display: none;" class="overlay noselect"></div>
 
    <section id="page">
 
@@ -138,12 +145,16 @@
 
    if (user) {
 
+      getTSAlertOverlay();
+      getTSConfirmOverlay();
+
       lockBodyPosition();
 
       if (!navigator.onLine && !user.getSettings()) {
          setTimeout(() => {
-            alert("Innstillinger har ikke blitt lastet ned. Vennligst prøv igjen når du har Internett-tilkobling");
-            redirectToAccount();
+            //alert("Innstillinger har ikke blitt lastet ned. Vennligst prøv igjen når du har Internett-tilkobling");
+            showAlert("Innstillinger har ikke blitt lastet ned. Vennligst prøv igjen når du har Internett-tilkobling", true, "redirectToAccount();");
+            //redirectToAccount();
          }, 500);
       } else {
 

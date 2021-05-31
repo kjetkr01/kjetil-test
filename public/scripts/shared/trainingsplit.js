@@ -158,7 +158,7 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
     document.getElementById("smallTitle").innerHTML += top + daysList;
     const toolBarHTML = `
     <button id="saveTrainingsplitBtn" class="trainingsplitButton pointer fadeIn animate" onClick="saveTrainingsplit();">Lagre</button>
-    <button class="trainingsplitButton pointer fadeIn animate" onClick="deleteTrainingsplit('${resp.trainingsplit_id}');"><img src="images/trash.svg"></img></button>
+    <button class="trainingsplitButton pointer fadeIn animate" onClick="deleteTrainingsplitConfirm('${resp.trainingsplit_id}');"><img src="images/trash.svg"></img></button>
     <br>
     <br>
     <div id="addNewExerciseDiv">
@@ -236,7 +236,7 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
             <br><input id="${exerciseName}-trainingsplit_name" style="font-size:18.75px;font-weight:bolder;" class="trainingsplitNameInput fadeInUp animate" value="${exerciseName}" maxlength="30" placeholder="Øvelse">
             ${upBtnHTML}
             ${downBtnHTML}
-            <button class="trainingsplitButton pointer fadeIn animate" onClick="deleteExercise('${exerciseName}');"><img src="images/trash.svg"></button>
+            <button class="trainingsplitButton pointer fadeIn animate" onClick="deleteExerciseConfirm('${exerciseName}');"><img src="images/trash.svg"></button>
             </input>
             <hr class="trainingsplitLine fadeInUp animate">`;
 
@@ -280,7 +280,7 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
             ${optionsHTMLList}
             </select>
     
-            <button class="trainingsplitButton pointer" onClick="deleteRowExercise('${exerciseName}', ${j});"><img src="images/trash.svg"></button>
+            <button class="trainingsplitButton pointer" onClick="deleteRowExerciseConfirm('${exerciseName}', ${j});"><img src="images/trash.svg"></button>
             </p>
             <hr class="trainingsplitSmallLine fadeInUp animate delayMedium">`;
             }
@@ -385,7 +385,7 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
         }
 
         if (isSubscribed === true) {
-            subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id}, '${resp.trainingsplit_name}');">${subscribed_trainingsplit}</button>`;
+            subscribeHTML = `<button class="trainingsplitButton pointer" onClick="subOrUnsubToTrainingsplitConfirm(${resp.trainingsplit_id}, ${resp.user_id}, '${resp.trainingsplit_name}');">${subscribed_trainingsplit}</button>`;
             if (!navigator.onLine) {
                 subscribeHTML = `<button disabled class="trainingsplitButton">${subscribed_trainingsplit}</button>`;
             }
@@ -399,7 +399,7 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
         </svg>
         `;
 
-        let copyHTML = `<button class="trainingsplitButton pointer" onClick="copyTrainingsplit(${resp.trainingsplit_id}, ${resp.user_id});">${copy_trainingsplit}</button>`;
+        let copyHTML = `<button class="trainingsplitButton pointer" onClick="copyTrainingsplitConfirm(${resp.trainingsplit_id}, ${resp.user_id});">${copy_trainingsplit}</button>`;
         if (!navigator.onLine) {
             copyHTML = `<button disabled class="trainingsplitButton">${copy_trainingsplit}</button>`;
         }
@@ -671,8 +671,31 @@ async function addExercise() {
             if (data === true) {
                 location.reload();
             } else {
-                alert(data.msg);
+                //alert(data.msg);
+                showAlert(data.msg, true);
             }
+        }
+    }
+}
+
+async function deleteExerciseConfirm(aExercise) {
+
+    if (trainingsplit && user) {
+
+        const exercise = aExercise;
+
+        if (exercise) {
+
+            let exerciseName = `${exercise}`;
+
+            const domName = document.getElementById(`${exercise}-trainingsplit_name`);
+
+            if (domName) {
+                exerciseName = domName.value;
+            }
+
+            showConfirm(`Er du sikker på at du vil slette øvelsen ${exerciseName}? Dette kan ikke angres!`, `deleteExercise('${exercise}');`);
+
         }
     }
 }
@@ -693,36 +716,48 @@ async function deleteExercise(aExercise) {
                 exerciseName = domName.value;
             }
 
-            const confirmDelete = confirm(`Er du sikker på at du vil slette øvelsen ${exerciseName}? Dette kan ikke angres!`);
+            await saveTrainingsplit(false);
 
-            if (confirmDelete === true) {
+            const body = { "trainingsplit_id": trainingsplit.id, "exercise": exercise, "day": trainingsplit.day };
+            const url = `/user/delete/trainingsplit/exercise`;
 
-                await saveTrainingsplit(false);
+            const config = {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    "authtoken": user.getToken(),
+                    "userinfo": JSON.stringify(user.getUser()),
+                },
+                body: JSON.stringify(body)
+            }
 
-                const body = { "trainingsplit_id": trainingsplit.id, "exercise": exercise, "day": trainingsplit.day };
-                const url = `/user/delete/trainingsplit/exercise`;
+            const resp = await fetch(url, config);
+            const data = await resp.json();
 
-                const config = {
-                    method: "POST",
-                    headers: {
-                        "content-type": "application/json",
-                        "authtoken": user.getToken(),
-                        "userinfo": JSON.stringify(user.getUser()),
-                    },
-                    body: JSON.stringify(body)
-                }
-
-                const resp = await fetch(url, config);
-                const data = await resp.json();
-
-                if (data === true) {
-                    location.reload();
-                } else {
-                    alert(data.msg);
-                }
+            if (data === true) {
+                location.reload();
+            } else {
+                //alert(data.msg);
+                showAlert(data.msg, true);
             }
         }
     }
+}
+
+async function deleteRowExerciseConfirm(aExercise, aIndex) {
+
+    if (trainingsplit && user) {
+
+        const exercise = aExercise;
+        const index = aIndex;
+
+        if (exercise) {
+
+            showConfirm(`Er du sikker på at du vil slette rad nr ${index + 1} fra øvelsen ${exercise}? Dette kan ikke angres!`, `deleteRowExercise('${exercise}', '${index}');`);
+
+        }
+    }
+
 }
 
 async function deleteRowExercise(aExercise, aIndex) {
@@ -734,37 +769,32 @@ async function deleteRowExercise(aExercise, aIndex) {
 
         if (exercise) {
 
-            const confirmDelete = confirm(`Er du sikker på at du vil slette rad nr ${index + 1} fra øvelsen ${exercise}? Dette kan ikke angres!`);
+            await saveTrainingsplit(false);
 
-            if (confirmDelete === true) {
+            const body = { "trainingsplit_id": trainingsplit.id, "exercise": exercise, "index": index, "day": trainingsplit.day };
+            const url = `/user/delete/trainingsplit/exercise/row`;
 
-                await saveTrainingsplit(false);
+            const config = {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    "authtoken": user.getToken(),
+                    "userinfo": JSON.stringify(user.getUser()),
+                },
+                body: JSON.stringify(body)
+            }
 
-                const body = { "trainingsplit_id": trainingsplit.id, "exercise": exercise, "index": index, "day": trainingsplit.day };
-                const url = `/user/delete/trainingsplit/exercise/row`;
+            const resp = await fetch(url, config);
+            const data = await resp.json();
 
-                const config = {
-                    method: "POST",
-                    headers: {
-                        "content-type": "application/json",
-                        "authtoken": user.getToken(),
-                        "userinfo": JSON.stringify(user.getUser()),
-                    },
-                    body: JSON.stringify(body)
-                }
-
-                const resp = await fetch(url, config);
-                const data = await resp.json();
-
-                if (data === true) {
-                    location.reload();
-                } else {
-                    alert(data.msg);
-                }
+            if (data === true) {
+                location.reload();
+            } else {
+                //alert(data.msg);
+                showAlert(data.msg, true);
             }
         }
     }
-
 }
 
 async function addRowExercise(aExercise) {
@@ -796,7 +826,8 @@ async function addRowExercise(aExercise) {
             if (data === true) {
                 location.reload();
             } else {
-                alert(data.msg);
+                //alert(data.msg);
+                showAlert(data.msg, true);
             }
         }
     }
@@ -832,8 +863,25 @@ async function moveExerciseOrder(aIndex, aMoveUp) {
             if (data === true) {
                 location.reload();
             } else {
-                alert(data.msg);
+                //alert(data.msg);
+                showAlert(data.msg, true);
             }
+        }
+    }
+}
+
+async function copyTrainingsplitConfirm(aTrainingsplit_id, aOwner_id) {
+
+    const trainingsplit_id = aTrainingsplit_id;
+
+    if (trainingsplit_id && user) {
+
+        const owner_id = aOwner_id;
+
+        if (owner_id) {
+
+            const trainingsplit_name = document.getElementById("trainingsplit_name");
+            showConfirm(`Vil du ta en kopi av ${trainingsplit_name.textContent || "planen"}?`, `copyTrainingsplit('${trainingsplit_id}', '${owner_id}');`);
         }
     }
 }
@@ -847,12 +895,6 @@ async function copyTrainingsplit(aTrainingsplit_id, aOwner_id) {
         const owner_id = aOwner_id;
 
         if (owner_id) {
-
-            const trainingsplit_name = document.getElementById("trainingsplit_name");
-            const confirmCopy = confirm(`Vil du ta en kopi av ${trainingsplit_name.textContent || "planen"}?`);
-            if (confirmCopy === false) {
-                return;
-            }
 
             const body = { "trainingsplit_id": trainingsplit_id, "owner_id": owner_id };
             const url = `/user/copy/trainingsplit`;
@@ -871,22 +913,26 @@ async function copyTrainingsplit(aTrainingsplit_id, aOwner_id) {
             const data = await resp.json();
 
             if (data.status === true) {
-                const loadNewTrainingsplit = confirm("Planen er nå kopiert. Ønsker du å laste den inn i redigeringsmodus?");
-                if (loadNewTrainingsplit === true) {
-                    const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-                    const dayNum = new Date().getDay();
-                    const day = days[dayNum];
-                    window.location.href = `account.html?trainingsplit_id=${data.newtrainingsplit_id}&edit=true&day=${day}`;
-                }
+                showConfirm("Planen er nå kopiert. Ønsker du å laste den inn i redigeringsmodus?", `loadIntoEditTrainingsplit('${data.newtrainingsplit_id}');`);
             } else {
-                alert(data.msg);
+                //alert(data.msg);
+                showAlert(data.msg, true);
             }
         }
     }
 }
 
+function loadIntoEditTrainingsplit(aNewTrainingsplit_id) {
+    if (aNewTrainingsplit_id) {
+        const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+        const dayNum = new Date().getDay();
+        const day = days[dayNum];
+        window.location.href = `account.html?trainingsplit_id=${aNewTrainingsplit_id}&edit=true&day=${day}`;
+    }
+}
 
-async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTrainingsplit_name) {
+
+async function subOrUnsubToTrainingsplitConfirm(aTrainingsplit_id, aOwner_id, aTrainingsplit_name) {
 
     const trainingsplit_id = aTrainingsplit_id;
 
@@ -903,12 +949,28 @@ async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTraining
                 const tIDString = trainingsplit_id.toString();
                 if (subscribedtrainingsplitsKeys.includes(tIDString)) {
                     const trainingsplit_name = document.getElementById("trainingsplit_name");
-                    const confirmUnsub = confirm(`Vil du si opp abonnementet på ${trainingsplit_name.textContent || subscribedtrainingsplitsKeys[trainingsplit_id] || "planen"}?`);
-                    if (confirmUnsub === false) {
-                        return;
-                    }
+                    showConfirm(`
+                    Vil du si opp abonnementet på ${trainingsplit_name.textContent || subscribedtrainingsplitsKeys[trainingsplit_id] || "planen"}?`,
+                        `subOrUnsubToTrainingsplit('${trainingsplit_id}', '${owner_id}', '${aTrainingsplit_name}');`);
+                } else {
+                    subOrUnsubToTrainingsplit(trainingsplit_id, owner_id, aTrainingsplit_name);
                 }
             }
+        }
+    }
+}
+
+async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTrainingsplit_name) {
+
+    const trainingsplit_id = aTrainingsplit_id;
+
+    if (trainingsplit_id && user) {
+
+        const owner_id = aOwner_id;
+
+        if (owner_id) {
+
+            const subscribedtrainingsplits = user.getSetting("subscribedtrainingsplits");
 
             const body = { "trainingsplit_id": trainingsplit_id, "owner_id": owner_id };
             const url = `/user/subunsub/trainingsplit`;
@@ -943,7 +1005,8 @@ async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTraining
                 }
                 location.reload();
             } else {
-                alert(data.msg);
+                //alert(data.msg);
+                showAlert(data.msg, true);
             }
         }
     }

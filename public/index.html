@@ -107,17 +107,8 @@
 
    <div id="viewLiftorGoalOverlay" style="display: none;" class="overlay noselect"></div>
    <div id="editLiftorGoalOverlay" style="display: none;" class="overlay noselect"></div>
-
-   <div id="updatedVersionOverlay" style="display: none;" class="overlay noselect">
-      <div id="updatedVersion" class="updatedVersion noselect">
-         <div id="GinformationUV">
-            <p id="informationUV"></p>
-         </div>
-         <div id="GclosingInUV">
-            <p id="closingInUV"></p>
-         </div>
-      </div>
-   </div>
+   <div id="TSAlertOverlay" style="display: none;" class="overlay noselect"></div>
+   <div id="TSConfirmOverlay" style="display: none;" class="overlay noselect"></div>
 
    <section id="page">
 
@@ -229,6 +220,13 @@
 
    if (user) {
 
+      getCreateNewLiftorGoalOverlay();
+      getViewLiftorGoalOverlay();
+      getEditLiftorGoalOverlay();
+      getTSAlertOverlay();
+      getTSConfirmOverlay();
+
+      lockBodyPosition();
       checkConnection("c6r2");
 
       checkForUpdate();
@@ -256,38 +254,17 @@
       function updatedNotification() {
          if (navigator.onLine) {
             if (localStorage.getItem("updated_version_text")) {
-               const updatedVersionOverlay = document.getElementById("updatedVersionOverlay");
-               const updateAlert = localStorage.getItem("updated_version_text");
-               const informationUV = document.getElementById("informationUV");
+               const TSAlertOverlay = document.getElementById("TSAlertOverlay");
+               if (TSAlertOverlay.style.display === "none") {
 
-               updatedVersionOverlay.style.display = "block";
+                  const updateAlert = localStorage.getItem("updated_version_text");
+                  showAlert(updateAlert);
 
-               informationUV.innerHTML = updateAlert;
-               const closingInUV = document.getElementById("closingInUV");
-               let secondsLeft = 4;
-               closingInUV.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
-               let countDown = setInterval(() => {
-                  secondsLeft--;
-                  if (secondsLeft <= 0) {
-                     clearInterval(countDown);
-
-                     informationUV.innerHTML = "";
-                     closingInUV.innerHTML = "";
-                     updatedVersionOverlay.style.display = "none";
-                  } else {
-                     closingInUV.innerHTML = `Lukkes om ${secondsLeft} sekunder`;
-                  }
-               }, 1000);
-
-               localStorage.removeItem("updated_version_text");
+                  localStorage.removeItem("updated_version_text");
+               }
             }
          }
       }
-
-      lockBodyPosition();
-      getCreateNewLiftorGoalOverlay();
-      getViewLiftorGoalOverlay();
-      getEditLiftorGoalOverlay();
 
       function intervals() {
 

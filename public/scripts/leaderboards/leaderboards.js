@@ -310,8 +310,9 @@ async function getListOfLeaderboard(aLeaderboard) {
             } else {
                 //usermsg1.textContent = errorLoadingText;
                 usermsg1.innerHTML = peopleLeaderboardsTxtHTML();
-                alert(`Ledertavlen ${viewingLeaderboard} finnes ikke!`);
-                window.history.back();
+                showAlert(`Ledertavlen ${viewingLeaderboard} finnes ikke!`, true, "window.history.back();");
+                //alert(`Ledertavlen ${viewingLeaderboard} finnes ikke!`);
+                //window.history.back();
             }
 
         } else {

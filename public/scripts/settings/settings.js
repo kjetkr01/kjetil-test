@@ -132,14 +132,17 @@ function clearAllScrollPos() {
 }
 
 function confirmLogout() {
-    const logout = confirm("Er du sikker på at du vil logge ut?");
+
+    /*const logout = confirm("Er du sikker på at du vil logge ut?");
 
     if (logout === true) {
         localStorage.clear();
         sessionStorage.clear();
         sessionStorage.setItem("cachedUsername", user.getUsername());
         redirectToLogin();
-    }
+    }*/
+
+    showConfirm("Er du sikker på at du vil logge ut?", `localStorage.clear();sessionStorage.clear();sessionStorage.setItem('cachedUsername', '${user.getUsername()}');redirectToLogin();`);
 }
 
 function aboutMeResetValues() {
@@ -209,35 +212,46 @@ function checkIfEdited(aType) {
     }
 }
 
-async function acceptPendingUser(username, acceptOrDeny) {
+async function acceptPendingUserConfirm(username, acceptOrDeny) {
     if (!username || acceptOrDeny === "") {
         return;
     }
 
     let statusMsg = "godta";
-    let statusMsg2 = "Du har nå godtatt forespørselen til: ";
 
     if (!acceptOrDeny) {
         statusMsg = "avslå";
-        statusMsg2 = "Du har nå avslått forespørselen til: ";
     }
 
-    const confirmPress = confirm("Er du sikker på at du vil " + statusMsg + " " + username + " sin forespørsel?");
-    if (confirmPress === true) {
+    showConfirm("Er du sikker på at du vil " + statusMsg + " " + username + " sin forespørsel?", `acceptPendingUser('${username}', ${acceptOrDeny})`);
 
-        const infoHeader = { "pendingUser": username, "acceptOrDeny": acceptOrDeny };
-        const url = `/users/pending/${username}/${acceptOrDeny}`;
+}
 
-        const results = await callServerAPIPost(infoHeader, url);
-
-        if (results === "Ok") {
-            alert(statusMsg2 + username);
-        } else {
-            alert("Feil, brukeren finnes ikke!");
-        }
-
-        loadSetting(ELoadSettings.pendingUsers.name);
+async function acceptPendingUser(username, acceptOrDeny) {
+    if (!username || acceptOrDeny === "") {
+        return;
     }
+
+    let statusMsg = "Du har nå godtatt forespørselen til: ";
+
+    if (!acceptOrDeny) {
+        statusMsg = "Du har nå avslått forespørselen til: ";
+    }
+
+    const infoHeader = { "pendingUser": username, "acceptOrDeny": acceptOrDeny };
+    const url = `/users/pending/${username}/${acceptOrDeny}`;
+
+    const results = await callServerAPIPost(infoHeader, url);
+
+    if (results === "Ok") {
+        //alert(statusMsg2 + username);
+        showAlert(statusMsg + username, true);
+    } else {
+        //alert("Feil, brukeren finnes ikke!");
+        showAlert("Feil, brukeren finnes ikke!", true);
+    }
+
+    loadSetting(ELoadSettings.pendingUsers.name);
 }
 
 async function displayInformationAboutUser() {
@@ -434,6 +448,33 @@ async function deleteInfoCache(aCacheName, aURL) {
     }
 }
 
+async function deleteAccountConfirm() {
+    if (navigator.onLine) {
+
+        const usernameInpDeletion = document.getElementById("usernameInpDeletion").value;
+        const passwordInpDeletion = document.getElementById("passwordInpDeletion").value;
+
+        if (usernameInpDeletion && usernameInpDeletion.length >= 3 && passwordInpDeletion) {
+
+            if (usernameInpDeletion === user.getUsername()) {
+
+                showConfirm(`Er du sikkert på at du ønsker å slette kontoen din? Dette kan ikke angres!`, "deleteAccount();");
+
+            } else {
+                //alert("Brukernavnet stemmer ikke med kontoen")
+                showAlert(`Brukernavnet stemmer ikke med kontoen`, true);
+            }
+
+        } else {
+            //alert("Vennligst fyll ut feltene");
+            showAlert(`Vennligst fyll ut feltene!`, true);
+        }
+    } else {
+        //alert("Du må ha Internett-tilkobling for å kunne slette kontoen din!");
+        showAlert(`Du må ha Internett-tilkobling for å kunne slette kontoen din!`, true);
+    }
+}
+
 async function deleteAccount() {
     if (navigator.onLine) {
 
@@ -444,47 +485,56 @@ async function deleteAccount() {
 
             if (usernameInpDeletion === user.getUsername()) {
 
-                const confirmAccountDeletion = confirm(`Er du sikkert på at du ønsker å slette kontoen din? Dette kan ikke angres!`);
+                // delete account
 
-                if (confirmAccountDeletion === true) {
+                const body = { "authorization": "Basic " + window.btoa(`${usernameInpDeletion}:${passwordInpDeletion}`) };
+                const url = `/user/deleteMe`;
 
-                    // delete account
+                const config = {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json",
+                        "authtoken": user.getToken(),
+                        "userinfo": JSON.stringify(user.getUser())
+                    },
+                    body: JSON.stringify(body)
+                }
 
-                    const body = { "authorization": "Basic " + window.btoa(`${usernameInpDeletion}:${passwordInpDeletion}`) };
-                    const url = `/user/deleteMe`;
+                const response = await fetch(url, config);
+                const data = await response.json();
 
-                    const config = {
-                        method: "POST",
-                        headers: {
-                            "content-type": "application/json",
-                            "authtoken": user.getToken(),
-                            "userinfo": JSON.stringify(user.getUser())
-                        },
-                        body: JSON.stringify(body)
-                    }
-
-                    const response = await fetch(url, config);
-                    const data = await response.json();
-
-                    if (data.status === true) {
-                        sessionStorage.clear();
-                        localStorage.clear();
-                        alert(`${data.message} Takk for at du var medlem av ${application.name}`);
-                        location.reload();
-                    } else {
-                        alert(`Det har oppstått en feil: ${data.message}`);
-                    }
+                if (data.status === true) {
+                    sessionStorage.clear();
+                    localStorage.clear();
+                    //alert(`${data.message} Takk for at du var medlem av ${application.name}`);
+                    //location.reload();
+                    showAlert(`${data.message} Takk for at du var medlem av ${application.name}`, true, "redirectToLogin();");
+                } else {
+                    //alert(`Det har oppstått en feil: ${data.message}`);
+                    showAlert(`Det har oppstått en feil: ${data.message}`, true);
                 }
 
             } else {
-                alert("Brukernavnet stemmer ikke med kontoen")
+                //alert("Brukernavnet stemmer ikke med kontoen")
+                showAlert(`Brukernavnet stemmer ikke med kontoen`, true);
             }
 
         } else {
-            alert("Vennligst fyll ut feltene");
+            //alert("Vennligst fyll ut feltene");
+            showAlert(`Vennligst fyll ut feltene!`, true);
         }
     } else {
-        alert("Du må ha Internett-tilkobling for å kunne slette kontoen din!");
+        //alert("Du må ha Internett-tilkobling for å kunne slette kontoen din!");
+        showAlert(`Du må ha Internett-tilkobling for å kunne slette kontoen din!`, true);
+    }
+}
+
+async function giveAPIAccessConfirm(aUsername, aID) {
+
+    if (aID && aUsername) {
+
+        showConfirm(`Er du sikker på at du ønsker å gi ${aUsername} (${aID}) API tilgang?`, `giveAPIAccess('${aUsername}', '${aID}');`);
+
     }
 }
 
@@ -495,22 +545,27 @@ async function giveAPIAccess(aUsername, aID) {
         const giveAPIUsername = aUsername;
         const giveAPIID = parseInt(aID);
 
-        const confirmGiveAPIAccess = confirm(`Er du sikker på at du ønsker å gi ${giveAPIUsername} (${giveAPIID}) API tilgang?`);
+        const infoHeader = { "giveAPIUserAccess": giveAPIID };
+        const url = `/user/giveAPIAccess`;
 
-        if (confirmGiveAPIAccess === true) {
+        const resp = await callServerAPIPost(infoHeader, url);
 
-            const infoHeader = { "giveAPIUserAccess": giveAPIID };
-            const url = `/user/giveAPIAccess`;
-
-            const resp = await callServerAPIPost(infoHeader, url);
-
-            if (resp !== true) {
-                alert(`Det har oppståtte en feil. ${giveAPIUsername} kunne ikke få API tilgang.`);
-            }
-
-            loadSetting(ELoadSettings.users.name);
-
+        if (resp !== true) {
+            //alert(`Det har oppståtte en feil. ${giveAPIUsername} kunne ikke få API tilgang.`);
+            showAlert(`Det har oppstått en feil. ${giveAPIUsername} kunne ikke få API tilgang!`, true);
         }
+
+        loadSetting(ELoadSettings.users.name);
+
+    }
+}
+
+async function removeAPIAccessConfirm(aUsername, aID) {
+
+    if (aID && aUsername) {
+
+        showConfirm(`Er du sikker på at du ønsker å fjerne ${aUsername} (${aID}) sin API tilgang?`, `removeAPIAccess('${aUsername}', '${aID}');`);
+
     }
 }
 
@@ -521,27 +576,22 @@ async function removeAPIAccess(aUsername, aID) {
         const removeAPIUsername = aUsername;
         const removeAPIID = parseInt(aID);
 
-        const confirmRemoveAPIAccess = confirm(`Er du sikker på at du ønsker å fjerne ${removeAPIUsername} (${removeAPIID}) sin API tilgang?`);
+        const infoHeader = { "removeAPIUserAccess": removeAPIID };
+        const url = `/user/removeAPIAccess`;
 
-        if (confirmRemoveAPIAccess === true) {
+        const resp = await callServerAPIPost(infoHeader, url);
 
-            const infoHeader = { "removeAPIUserAccess": removeAPIID };
-            const url = `/user/removeAPIAccess`;
-
-            const resp = await callServerAPIPost(infoHeader, url);
-
-            if (resp !== true) {
-                alert(`Det har oppståtte en feil. ${removeAPIUsername} kunne ikke fjerne API tilgang.`);
-            }
-
-            loadSetting(ELoadSettings.users.name);
-
+        if (resp !== true) {
+            //alert(`Det har oppståtte en feil. ${removeAPIUsername} kunne ikke fjerne API tilgang.`);
+            showAlert(`Det har oppståtte en feil. ${removeAPIUsername} kunne ikke fjerne API tilgang`, true);
         }
+
+        loadSetting(ELoadSettings.users.name);
 
     }
 }
 
-async function removeMedal(aMedalsCount, aCount) {
+async function removeMedalConfirm(aMedalsCount, aCount) {
 
     if (navigator.onLine) {
 
@@ -566,22 +616,41 @@ async function removeMedal(aMedalsCount, aCount) {
                 medalsTxt += "r";
             }
 
-            const confirmRemove = confirm(`Er du sikker ønsker å fjerne ${count} ${medalsTxt}?${remainingTxt}`);
+            showConfirm(`Er du sikker ønsker å fjerne ${count} ${medalsTxt}?${remainingTxt}`, `removeMedal(${aMedalsCount}, ${count});`);
 
-            if (confirmRemove === true) {
-                const infoHeader = { "count": count };
-                const url = `/user/details/decrease/medalscount`;
+        }
+    } else {
+        //alert("Det kreves Internett-tilkobling for å fjerne medaljer!");
+        showAlert("Det kreves Internett-tilkobling for å fjerne medaljer!", true);
+    }
+}
 
-                const resp = await callServerAPIPost(infoHeader, url);
+async function removeMedal(aMedalsCount, aCount) {
 
-                if (resp === true) {
-                    updateUserInfo();
-                    loadSetting();
-                }
+    if (navigator.onLine) {
+
+        if (aMedalsCount > 0) {
+
+            aCount = parseInt(aCount);
+            if (isNaN(aCount)) {
+                aCount = 1;
+            }
+
+            const count = aCount;
+
+            const infoHeader = { "count": count };
+            const url = `/user/details/decrease/medalscount`;
+
+            const resp = await callServerAPIPost(infoHeader, url);
+
+            if (resp === true) {
+                updateUserInfo();
+                loadSetting();
             }
         }
     } else {
-        alert("Det kreves Internett-tilkobling for å fjerne medaljer!");
+        //alert("Det kreves Internett-tilkobling for å fjerne medaljer!");
+        showAlert("Det kreves Internett-tilkobling for å fjerne medaljer!", true);
     }
 }
 

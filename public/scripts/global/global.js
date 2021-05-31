@@ -589,7 +589,9 @@ function updateApplication(aShowNotification) {
         let confirmUpdate = true;
 
         if (aShowNotification !== false) {
-            confirmUpdate = confirm("Ønsker du å oppdatere? (Krever Internett-tilkobling)");
+            //confirmUpdate = confirm("Ønsker du å oppdatere? (Krever Internett-tilkobling)");
+            showConfirm("Ønsker du å oppdatere? (Krever Internett-tilkobling)", "sessionStorage.removeItem('settings_notification_update');removeServiceWorker();deleteAllCaches();");
+            return;
         }
 
         if (confirmUpdate === true) {
@@ -599,18 +601,21 @@ function updateApplication(aShowNotification) {
         }
     } else {
         if (aShowNotification !== false) {
-            alert("Kunne ikke oppdatere! Krever Internett-tilkobling");
+            //alert("Kunne ikke oppdatere! Krever Internett-tilkobling");
+            showAlert("Kunne ikke oppdatere! Krever Internett-tilkobling", true);
         }
     }
 }
 
 function deleteCachesAndUnregisterSW() {
-    const confirmDeleteCache = confirm("Er du sikker på at du ønsker å tømme caches (Offline modus vil være utilgjengelig frem til ny cache blir lastet ned)");
+    /*const confirmDeleteCache = confirm("Er du sikker på at du ønsker å tømme caches (Offline modus vil være utilgjengelig frem til ny cache blir lastet ned)");
 
     if (confirmDeleteCache === true) {
         removeServiceWorker();
         deleteAllCaches();
-    }
+    }*/
+
+    showConfirm("Er du sikker på at du ønsker å tømme caches (Offline modus vil være utilgjengelig frem til ny cache blir lastet ned)", "removeServiceWorker();deleteAllCaches();");
 }
 
 function removeServiceWorker() {

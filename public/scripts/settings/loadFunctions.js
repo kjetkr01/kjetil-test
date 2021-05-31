@@ -79,8 +79,8 @@ async function loadDefaultPage(setting) {
     titleDom.innerHTML = ELoadSettings.settings.name;
     settingsGrid.innerHTML = "";
 
-    settingsGrid.innerHTML += getTemplate("Visningsnavn", "", `<input id="displaynameInp" maxlength="20" onKeydown="return validateDisplaynameInput();" style="text-align:right;" class='settingsInput' value='${userInfo.displayname}'></input><button onClick="saveDisplayname();" style="display:none;" id="displaynameSaveBtn" class="settingsButton pointer">Lagre</button>`, "borderTop");
-    settingsGrid.innerHTML += getTemplate("Brukernavn", "", `<input id="usernameInp" maxlength="20" onKeydown="return validateUsernameInput();" style="text-align:right;" class='settingsInput' value='${userInfo.username}'></input><button onClick="saveUsername();" style="display:none;" id="usernameSaveBtn" class="settingsButton pointer">Lagre</button>`);
+    settingsGrid.innerHTML += getTemplate("Visningsnavn", "", `<input id="displaynameInp" maxlength="20" onKeydown="return validateDisplaynameInput();" style="text-align:right;" class='settingsInput' value='${userInfo.displayname}'></input><button onClick="saveDisplaynameConfirm();" style="display:none;" id="displaynameSaveBtn" class="settingsButton pointer">Lagre</button>`, "borderTop");
+    settingsGrid.innerHTML += getTemplate("Brukernavn", "", `<input id="usernameInp" maxlength="20" onKeydown="return validateUsernameInput();" style="text-align:right;" class='settingsInput' value='${userInfo.username}'></input><button onClick="saveUsernameConfirm();" style="display:none;" id="usernameSaveBtn" class="settingsButton pointer">Lagre</button>`);
 
     settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.password.name, "passwordDiv");
 
@@ -403,14 +403,14 @@ function loadMedalsCounterPage() {
 
         settingsGrid.innerHTML += justTextTemplate("Har det oppstått en feil og du for mange medaljer? Under kan du fjerne medaljer", "left");
 
-        settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton pointer' onClick="removeMedal(${userInfo.medalscount}, '1');">Fjern 1 medalje</button>`, "", "spacingTop");
+        settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton pointer' onClick="removeMedalConfirm(${userInfo.medalscount}, '1');">Fjern 1 medalje</button>`, "", "spacingTop");
 
         const numbers = ["10", "25"];
 
         for (let i = 0; i < numbers.length; i++) {
             const num = parseInt(numbers[i]);
             if (userInfo.medalscount >= num) {
-                settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton pointer' onClick="removeMedal(${userInfo.medalscount}, '${num}');">Fjern ${num} medaljer</button>`, "", "spacingTop");
+                settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton pointer' onClick="removeMedalConfirm(${userInfo.medalscount}, '${num}');">Fjern ${num} medaljer</button>`, "", "spacingTop");
             }
         }
     }
@@ -574,10 +574,10 @@ async function loadUsersListPage(setting) {
                         let myAccountColor = "";
                         let profileStatus = `<p class="settingsPendingUsername" style="color:red;">Privat</p>`;
 
-                        let hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsAcceptPendingUser pointer" onClick="giveAPIAccess('${currentUser.username}','${currentUser.id}');">Gi API tilgang</button>`;
+                        let hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsAcceptPendingUser pointer" onClick="giveAPIAccessConfirm('${currentUser.username}','${currentUser.id}');">Gi API tilgang</button>`;
 
                         if (allAPIUsersArr.includes(currentUser.id)) {
-                            hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsDeclinePendingUser pointer" onClick="removeAPIAccess('${currentUser.username}','${currentUser.id}');">Fjern API tilgang</button>`;
+                            hasAPIAccessTxt = `<button style="padding:0;margin:0;" class="settingsDeclinePendingUser pointer" onClick="removeAPIAccessConfirm('${currentUser.username}','${currentUser.id}');">Fjern API tilgang</button>`;
                         }
 
                         if (currentUser.publicprofile === true) {
@@ -739,8 +739,8 @@ async function loadPendingUsersPage(setting) {
        <p class="settingsPendingUserFullName">${resp[pendingUserKeys[i]].displayname}</p>
        <p class="settingsPendingUsername">${resp[pendingUserKeys[i]].username}</p>
        <p class="settingsPendingUsername">${msg}</p>
-       <button class="settingsAcceptPendingUser pointer" onClick='acceptPendingUser("${resp[pendingUserKeys[i]].username}", true);'>Godta</button>
-       <button class="settingsDeclinePendingUser pointer" onClick='acceptPendingUser("${resp[pendingUserKeys[i]].username}", false);'>Avslå</button>
+       <button class="settingsAcceptPendingUser pointer" onClick='acceptPendingUserConfirm("${resp[pendingUserKeys[i]].username}", true);'>Godta</button>
+       <button class="settingsDeclinePendingUser pointer" onClick='acceptPendingUserConfirm("${resp[pendingUserKeys[i]].username}", false);'>Avslå</button>
        `;
 
                 settingsGrid.innerHTML += getCenteredTextTemplate(pendingTemplateHTML, "infoAboutApp1", "spacingTop");
@@ -906,7 +906,7 @@ async function loadDeleteMePage() {
     settingsGrid.innerHTML += getCenteredTextTemplate("Skriv inn ditt passordet ditt", "usernameDiv", "spacingTop");
     settingsGrid.innerHTML += getCenteredTextTemplate("<input class='settingsInput' id='passwordInpDeletion' type='password' placeholder='Fyll inn'></input>");
 
-    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton pointer' style='color:red;' onClick="deleteAccount()">Slett kontoen min</button>`, "", "spacingTop");
+    settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton pointer' style='color:red;' onClick="deleteAccountConfirm()">Slett kontoen min</button>`, "", "spacingTop");
 
     settingsGrid.innerHTML += getBottomSpacingTemplate();
 

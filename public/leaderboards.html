@@ -75,6 +75,8 @@
    <link rel="stylesheet" href="styles/leaderboards/mobile.css">
    <link rel="stylesheet" href="styles/leaderboards/common.css">
 
+   <link rel="stylesheet" href="styles/shared/overlay.css">
+
    <link rel="stylesheet" href="styles/leaderboards/board.css">
 
    <script src="registerSW.js" type="module"></script>
@@ -83,6 +85,7 @@
    <script src="scripts/global/appInfo.js" type="text/javascript"></script>
    <script src="scripts/global/global.js" type="text/javascript"></script>
    <script src="scripts/leaderboards/leaderboards.js" type="text/javascript"></script>
+   <script src="scripts/shared/overlay.js" type="text/javascript"></script>
 
 </head>
 
@@ -92,6 +95,8 @@
       createUserClass();
       changeColorTheme();
    </script>
+
+   <div id="TSAlertOverlay" style="display: none;" class="overlay noselect"></div>
 
    <section id="page">
 
@@ -191,9 +196,11 @@
 
    if (user) {
 
-      checkConnection("c6r2");
+      getTSAlertOverlay();
 
       lockBodyPosition();
+      checkConnection("c6r2");
+
       loadLeaderboards();
 
       setInterval(() => {

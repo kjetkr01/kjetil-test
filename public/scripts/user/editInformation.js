@@ -73,7 +73,8 @@ function enableOverlayView(aType, aExercise, aId) {
                 viewLiftorGoalOverlay.style.display = "block";
 
             } else {
-                alert("Det har oppstått et problem!");
+                //alert("Det har oppstått et problem!");
+                showAlert("Det har oppstått et problem!", true);
             }
 
         } else if (type === "goal" && goalsInfo) {
@@ -113,11 +114,13 @@ function enableOverlayView(aType, aExercise, aId) {
                 viewLiftorGoalOverlay.style.display = "block";
 
             } else {
-                alert("Det har oppstått et problem!");
+                //alert("Det har oppstått et problem!");
+                showAlert("Det har oppstått et problem!", true);
             }
 
         } else {
-            alert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
+            //alert(`Det har oppstått en feil: "${aType}" finnes ikke!`);
+            showAlert(`Det har oppstått en feil: "${aType}" finnes ikke!`, true);
         }
     }
 }
@@ -167,24 +170,5 @@ function Ttrainingsplit(aTrainingsplit) {
 
     this.info = function () {
         return trainingsplit;
-    }
-}
-
-function disableOverlay() {
-
-    const createNewLiftorGoalOverlay = document.getElementById("createNewLiftorGoalOverlay");
-    const viewLiftorGoalOverlay = document.getElementById("viewLiftorGoalOverlay");
-    const editDaysOverlay = document.getElementById("editworkoutPlanOverlay");
-
-    if (createNewLiftorGoalOverlay) {
-        createNewLiftorGoalOverlay.style.display = "none";
-    }
-
-    if (viewLiftorGoalOverlay) {
-        viewLiftorGoalOverlay.style.display = "none";
-    }
-
-    if (editDaysOverlay) {
-        editDaysOverlay.style.display = "none";
     }
 }

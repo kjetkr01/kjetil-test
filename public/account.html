@@ -104,8 +104,9 @@
 
    <div id="viewLiftorGoalOverlay" style="display: none;" class="overlay noselect"></div>
    <div id="editLiftorGoalOverlay" style="display: none;" class="overlay noselect"></div>
-
    <div id="editworkoutPlanOverlay" style="display: none;" class="overlay noselect"></div>
+   <div id="TSAlertOverlay" style="display: none;" class="overlay noselect"></div>
+   <div id="TSConfirmOverlay" style="display: none;" class="overlay noselect"></div>
 
    <section id="page">
 
@@ -280,16 +281,19 @@
 
    if (user) {
 
-      checkConnection("c6r2");
-      if (sessionStorage.getItem("settings_notification_update") === "true") {
-         document.getElementById("settings").innerHTML += `1`;
-      }
-
-      lockBodyPosition();
       getCreateNewLiftorGoalOverlay();
       getViewLiftorGoalOverlay();
       getEditLiftorGoalOverlay();
       geteditworkoutPlanOverlay();
+      getTSAlertOverlay();
+      getTSConfirmOverlay();
+
+      lockBodyPosition();
+      checkConnection("c6r2");
+
+      if (sessionStorage.getItem("settings_notification_update") === "true") {
+         document.getElementById("settings").innerHTML += `1`;
+      }
 
       displayUserDetailsCached();
 

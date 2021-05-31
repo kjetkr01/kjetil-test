@@ -25,6 +25,8 @@ ${createBtn("Sondre Olsen", "10")}.
 
 const ongoingUpdatesText = "Pågående oppdateringer";
 const ongoingUpdatesArr = [
+    "TITLE:Farge-tema",
+    "Lage flere farge-temaer",
     "TITLE:Innstillinger",
     "Personvern (75%)",
     "TITLE:Badges",
@@ -34,8 +36,10 @@ const ongoingUpdatesArr = [
     "TITLE:Språk",
     "God formulering og ordbruk (36%)",
     "TITLE:Annet",
-    "Optimalisering",
+    "Custom Alert Box (0%)",
     "Synkronisere løft, mål og reps filter mellom flere enheter (100%)",
+    "Optimalisering",
+    "Annet",
 ];
 
 //
@@ -46,9 +50,6 @@ const ongoingUpdatesArr = [
 
 const plannedUpdatesText = "Kommende oppdateringer";
 const plannedUpdatesArr = [
-    "TITLE:Farge-tema",
-    "Lage flere farge-temaer",
-
     "TITLE:Løft/Mål",
     "Legge til flere løft og mål. Foreløpi bare: Benkpress, Knebøy, Markløft, Skulderpress",
 
