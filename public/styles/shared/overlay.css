@@ -1379,97 +1379,6 @@ grid-area: c9oWP;
 /* end of spacing & other */
 
 
-.overlay>.updatedVersion {
-word-break: keep-all;
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%,-50%);
--ms-transform: translate(-50%,-50%);
-width: 90%;
-max-width: 550px;
-height: auto;
-overflow-y: scroll;
-
-background-color: var(--main-backgroundColor2);
-
-border: 1px solid var(--main-backgroundColor1);
-border-radius: 16px;
-
-display: grid;
-grid-template-areas:
-
-"c1oUV"
-"GinformationUV"
-"GclosingInUV"
-"c2oUV"
-;
-
-grid-template-rows: /* nedover */
-
-0px /* c1oUV */
-
-auto /* GinformationUV */
-
-auto /* GinformationUV */
-
-0px /* c2oUV */
-
-;
-
-grid-template-columns: /* bortover */
-1fr;
-}
-
-
-
-/* end of grid */
-
-
-
-/* elements */
-
-#GinformationUV > #informationUV {
-font-size: 18px;
-margin-top: 20px;
-margin-bottom: 5px;
-}
-
-#GclosingInUV > #closingInUV{
-font-size: 16px;
-margin-bottom: 20px;
-margin-top: 5px;
-}
-
-#informationUV, #closingInUV{
-margin-left: 15px;
-margin-right: 15px;
-color: var(--main-textColorDark);
-}
-
-/* end of elements */
-
-
-
-/* spacing & other */
-
-.updatedVersion > #c1oUV {
-grid-area: c1oUV;
-}
-
-.updatedVersion > #GinformationUV {
-grid-area: GinformationUV;
-}
-
-.updatedVersion > #GclosingInUV{
-grid-area: GclosingInUV;
-}
-
-.updatedVersion > #c2oUV {
-grid-area: c2oUV;
-}
-
-
 .overlay>.TSAlert {
 word-break: keep-all;
 position: absolute;
@@ -1521,13 +1430,13 @@ grid-template-columns: /* bortover */
 /* elements */
 
 #GinformationTSAlert > #informationTSAlert {
-font-size: 18px;
+font-size: 16px;
 margin-top: 20px;
 margin-bottom: 5px;
 }
 
 #GextraTSAlert > #extraTSAlert{
-font-size: 16px;
+font-size: 14px;
 margin-bottom: 20px;
 margin-top: 5px;
 }
@@ -1539,7 +1448,6 @@ color: var(--main-textColorDark);
 }
 
 .TSAlertBtn {
-
 word-break: keep-all;
 white-space: nowrap;
 font-size: 14px;
@@ -1630,7 +1538,7 @@ grid-template-columns: /* bortover */
 /* elements */
 
 #GinformationTSConfirm > #informationTSConfirm {
-font-size: 18px;
+font-size: 16px;
 margin-top: 20px;
 margin-bottom: 5px;
 }
