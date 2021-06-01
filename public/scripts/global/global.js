@@ -1,6 +1,6 @@
 // global variables
 
-let user = null, lockedBody = false;
+let user = null, lockedBody = false, allowedLifts = null, allowedGoals = null;
 
 const repsSM = 10; // 1 rep * 10 (repsSM) = 10 points. 1 kg = 1 point
 
@@ -26,7 +26,15 @@ const themeColors = {
     "test2_full": { "lightHex": "e6e6e6", "darkHex": "09314b" }
 }
 
-const allowedExercises = ["benkpress", "markløft", "knebøy", "skulderpress"];
+try {
+    if (sessionStorage.getItem("allowedLifts")) {
+        allowedLifts = JSON.parse(sessionStorage.getItem("allowedLifts"));
+    }
+    if (sessionStorage.getItem("allowedGoals")) {
+        allowedGoals = JSON.parse(sessionStorage.getItem("allowedGoals"));
+    }
+} catch {
+}
 
 const themeKeys = Object.keys(allowedThemes);
 const checkAllowedThemes = [];
@@ -379,7 +387,12 @@ async function getAccountDetails(aUserID) {
                         }
                     }
 
-
+                    if (resp.info.hasOwnProperty("allowedLifts")) {
+                        sessionStorage.setItem("allowedLifts", JSON.stringify(resp.info.allowedLifts));
+                    }
+                    if (resp.info.hasOwnProperty("allowedGoals")) {
+                        sessionStorage.setItem("allowedGoals", JSON.stringify(resp.info.allowedGoals));
+                    }
 
                     const newColorTheme = allowedThemes[resp.info.settings.preferredcolortheme].theme;
 
@@ -467,17 +480,15 @@ async function sortByLiftsOrGoalOwner(aDom, aType) {
         if (type === "lift") {
             showLiftBadgeAnimations = true;
             sessionStorage.removeItem("badgeslifts_scroll_x");
-            if (allowedExercises.includes(dom.value)) {
-                localStorage.setItem('display_lifts_owner', dom.value);
-                if (navigator.onLine) {
-                    const value = dom.value;
-                    const setting = "display_lifts_owner";
+            localStorage.setItem('display_lifts_owner', dom.value);
+            if (navigator.onLine) {
+                const value = dom.value;
+                const setting = "display_lifts_owner";
 
-                    const infoHeader = { "updateSetting": setting, "value": value };
-                    const url = `/user/update/settings/${setting}`;
+                const infoHeader = { "updateSetting": setting, "value": value };
+                const url = `/user/update/settings/${setting}`;
 
-                    await callServerAPIPost(infoHeader, url);
-                }
+                await callServerAPIPost(infoHeader, url);
             } else {
                 localStorage.removeItem('display_lifts_owner');
                 if (navigator.onLine) {
@@ -497,17 +508,15 @@ async function sortByLiftsOrGoalOwner(aDom, aType) {
         if (type === "goal") {
             showGoalBadgeAnimations = true;
             sessionStorage.removeItem("badgesgoals_scroll_x");
-            if (allowedExercises.includes(dom.value)) {
-                localStorage.setItem('display_goals_owner', dom.value);
-                if (navigator.onLine) {
-                    const value = dom.value;
-                    const setting = "display_goals_owner";
+            localStorage.setItem('display_goals_owner', dom.value);
+            if (navigator.onLine) {
+                const value = dom.value;
+                const setting = "display_goals_owner";
 
-                    const infoHeader = { "updateSetting": setting, "value": value };
-                    const url = `/user/update/settings/${setting}`;
+                const infoHeader = { "updateSetting": setting, "value": value };
+                const url = `/user/update/settings/${setting}`;
 
-                    await callServerAPIPost(infoHeader, url);
-                }
+                await callServerAPIPost(infoHeader, url);
             } else {
                 localStorage.removeItem('display_goals_owner');
                 if (navigator.onLine) {
@@ -534,22 +543,12 @@ function sortByLiftsOrGoalVisitor(aDom, aType) {
     if (dom && type) {
 
         if (type === "lift") {
-            if (allowedExercises.includes(dom.value)) {
-                sessionStorage.setItem('display_lifts_visitor', dom.value);
-            } else {
-                sessionStorage.removeItem('display_lifts_visitor');
-            }
-
+            sessionStorage.setItem('display_lifts_visitor', dom.value);
             displayLifts();
         }
 
         if (type === "goal") {
-            if (allowedExercises.includes(dom.value)) {
-                sessionStorage.setItem('display_goals_visitor', dom.value);
-            } else {
-                sessionStorage.removeItem('display_goals_visitor');
-            }
-
+            sessionStorage.setItem('display_goals_visitor', dom.value);
             displayGoals();
         }
     }

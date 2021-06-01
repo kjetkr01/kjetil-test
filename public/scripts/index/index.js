@@ -355,8 +355,7 @@ async function displayGoals(checkIfCompleted) {
         let showGoals = goals;
 
         if (sortBy) {
-            if (allowedExercises.includes(sortBy)) {
-
+            if (goals[sortBy]) {
                 showGoals = goals[sortBy];
                 if (showGoals.length === 0) {
                     sortBy = null;
@@ -371,6 +370,9 @@ async function displayGoals(checkIfCompleted) {
                         await callServerAPIPost(infoHeader, url);
                     }
                 }
+            } else {
+                sortBy = null;
+                localStorage.removeItem("display_goals_owner");
             }
         }
 

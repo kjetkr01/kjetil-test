@@ -31,6 +31,8 @@ const ongoingUpdatesArr = [
     "Personvern (75%)",
     "TITLE:Badges",
     "Lage større versjon av badge (mål-badge, på startsiden) (100%)",
+    "TITLE:Mål",
+    "Kunne legge til vekt mål. (Opp eller ned i vekt) (0%)",
     "TITLE:Splash Screen (iOS)",
     "Fikse slik at splash screen funker på landscape mode (iPad) (50%)",
     "TITLE:Språk",

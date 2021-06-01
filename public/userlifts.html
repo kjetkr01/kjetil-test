@@ -231,14 +231,14 @@
          let showLifts = lifts;
 
          if (sortBy) {
-            if (allowedExercises.includes(sortBy)) {
-
+            if (lifts[sortBy]) {
                showLifts = lifts[sortBy];
                if (showLifts.length === 0) {
                   sortBy = null;
                   sessionStorage.removeItem("display_lifts_visitor");
                }
-
+            } else {
+               sortBy = null;
             }
          }
 

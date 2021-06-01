@@ -920,6 +920,8 @@ class StorageHandler {
                         }
                     }
                     userCacheObj.badgeColors = badgeColors;
+                    userCacheObj.allowedLifts = allowedLifts;
+                    userCacheObj.allowedGoals = allowedGoals;
                     userDetails = userCacheObj;
                     results = true;
                 } else {
@@ -1071,7 +1073,7 @@ class StorageHandler {
 
     //  -------------------------------  save/update lift or goal  ------------------------------- //
 
-    async saveLiftOrGoal(userid, info, color) {
+    async saveLiftOrGoal(userid, info) {
         //userid, info, color
         //userid, reps, exercise, kg, date, type, color
         const client = new pg.Client(this.credentials);
@@ -1083,6 +1085,7 @@ class StorageHandler {
         const date = info.date;
         const type = info.type;
         const id = info.id;
+        const color = info.color;
 
         try {
             await client.connect();

@@ -498,15 +498,35 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
 
           if (EAllowedSettings[setting] && currentUser.username && EAllowedSettings[setting].includes(value) || EAllowedSettings[setting][0] === "bypass") {
 
+               const savedValue = value;
+
                if (EAllowedSettings[setting][1] === "check-lifts") {
-                    if (!allowedLifts.includes(value)) {
-                         value = null;
+                    for (let i = 0; i < allowedLifts.length; i++) {
+                         if (allowedLifts[i] === savedValue) {
+                              value = savedValue;
+                              break;
+                         } else {
+                              value = null;
+                         }
                     }
+
+                    /*if (!allowedLifts.includes(value)) {
+                         value = null;
+                    }*/
                }
                else if (EAllowedSettings[setting][1] === "check-goals") {
-                    if (!allowedGoals.includes(value)) {
-                         value = null;
+                    for (let i = 0; i < allowedGoals.length; i++) {
+                         if (allowedGoals[i] === savedValue) {
+                              value = savedValue;
+                              break;
+                         } else {
+                              value = null;
+                         }
                     }
+
+                    /*if (!allowedGoals.includes(value)) {
+                         value = null;
+                    }*/
                }
 
                const resp = await updateUserSetting(currentUser.username, setting, value);
@@ -756,16 +776,18 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
                     }
                }
 
-               for (let i = 0; i < allowedLifts.length; i++) {
-                    if (info.exercise === allowedLifts[i]) {
-                         isValid = true;
+               if (info.type === "lift") {
+                    for (let i = 0; i < allowedLifts.length; i++) {
+                         if (info.exercise === allowedLifts[i]) {
+                              isValid = true;
+                              break;
+                         }
                     }
-               }
-
-               if (isValid === false) {
+               } else if (info.type === "goal") {
                     for (let i = 0; i < allowedGoals.length; i++) {
                          if (info.exercise === allowedGoals[i]) {
                               isValid = true;
+                              break;
                          }
                     }
                }
@@ -791,7 +813,8 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
                }
 
                if (isValid === true) {
-                    const saveLiftOrGoalResp = await saveLiftOrGoal(currentUser.id, info, color);
+                    info.color = color;
+                    const saveLiftOrGoalResp = await saveLiftOrGoal(currentUser.id, info);
                     res.status(200).json(saveLiftOrGoalResp).end();
                } else {
                     res.status(403).json("invalid information").end();

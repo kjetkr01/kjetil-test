@@ -353,8 +353,7 @@ async function displayLifts(hasLiftsLeft) {
         let showLifts = lifts;
 
         if (sortBy) {
-            if (allowedExercises.includes(sortBy)) {
-
+            if (lifts[sortBy]) {
                 showLifts = lifts[sortBy];
                 if (showLifts.length === 0) {
                     sortBy = null;
@@ -370,7 +369,9 @@ async function displayLifts(hasLiftsLeft) {
                         await callServerAPIPost(infoHeader, url);
                     }
                 }
-
+            } else {
+                sortBy = null;
+                localStorage.removeItem("display_lifts_owner");
             }
         }
 
@@ -516,8 +517,7 @@ async function displayGoals(hasGoalsLeft, checkIfCompleted) {
         let showGoals = goals;
 
         if (sortBy) {
-            if (allowedExercises.includes(sortBy)) {
-
+            if (goals[sortBy]) {
                 showGoals = goals[sortBy];
                 if (showGoals.length === 0) {
                     sortBy = null;
@@ -532,6 +532,9 @@ async function displayGoals(hasGoalsLeft, checkIfCompleted) {
                         await callServerAPIPost(infoHeader, url);
                     }
                 }
+            } else {
+                sortBy = null;
+                localStorage.removeItem("display_goals_owner");
             }
         }
 

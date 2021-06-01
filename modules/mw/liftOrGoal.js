@@ -1,8 +1,8 @@
 const database = require("../datahandler");
 
-async function saveLiftOrGoal(userid, info, color) {
+async function saveLiftOrGoal(userid, info) {
     try {
-        const resp = await database.saveLiftOrGoal(userid, info, color);
+        const resp = await database.saveLiftOrGoal(userid, info);
         return resp;
     } catch (error) {
         console.error(error);

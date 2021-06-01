@@ -2,7 +2,7 @@
 module.exports.allowedLifts = ["benkpress", "knebøy", "markløft", "skulderpress"];
 
 //allowedGoals
-module.exports.allowedGoals = ["benkpress", "knebøy", "markløft", "skulderpress"];
+module.exports.allowedGoals = ["benkpress", "knebøy", "markløft", "skulderpress"]; //,"opp i vekt", "ned i vekt"
 
 //badgeColors
 const gradientTxt = "(gradient)";

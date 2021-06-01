@@ -352,14 +352,15 @@ function displayLifts() {
     let showLifts = lifts;
 
     if (sortBy) {
-        if (allowedExercises.includes(sortBy)) {
-
+        if (lifts[sortBy]) {
             showLifts = lifts[sortBy];
             if (showLifts.length === 0) {
                 sortBy = null;
                 sessionStorage.removeItem("display_lifts_visitor");
             }
-
+        } else {
+            sortBy = null;
+            sessionStorage.removeItem("display_lifts_visitor");
         }
     }
 
@@ -418,8 +419,8 @@ function displayLifts() {
             }
         }
 
-        if (sortBy) {
-            if (allowedExercises.includes(sortBy)) {
+        if (sortBy && allowedLifts) {
+            if (allowedLifts.includes(sortBy)) {
                 document.getElementById("lifts").innerHTML = `Løft: ${selectHTML}`;
             }
         }
@@ -476,13 +477,15 @@ function displayGoals() {
     let showGoals = goals;
 
     if (sortBy) {
-        if (allowedExercises.includes(sortBy)) {
-
+        if (goals[sortBy]) {
             showGoals = goals[sortBy];
             if (showGoals.length === 0) {
                 sortBy = null;
                 sessionStorage.removeItem("display_goals_visitor");
             }
+        } else {
+            sortBy = null;
+            sessionStorage.removeItem("display_goals_visitor");
         }
     }
 
@@ -640,8 +643,8 @@ function displayGoals() {
             }
         }
 
-        if (sortBy) {
-            if (allowedExercises.includes(sortBy)) {
+        if (sortBy && allowedGoals) {
+            if (allowedGoals.includes(sortBy)) {
                 document.getElementById("goals").innerHTML = `Mål: ${selectHTML}`;
             }
         }
