@@ -415,35 +415,37 @@ async function displayGoals(checkIfCompleted) {
 
                         if (current.includes("i vekt")) {
 
-                            let calcWeight = 0;
-                            if (user) {
-                                if (user.getDetail("weight")) {
-                                    calcWeight = user.getDetail("weight");
-                                }
-                            }
+                            const calcWeight = user.getDetail("weight");
 
-                            if (current.includes("opp i vekt")) {
+                            if (calcWeight) {
 
-                                kgUntilGoal = goalKg - calcWeight;
-                                if (kgUntilGoal <= 0) {
-                                    msg = "Målet er nådd!";
-                                    untilGoal = 0;
+                                if (current.includes("opp i vekt")) {
+
+                                    kgUntilGoal = goalKg - calcWeight;
+                                    if (kgUntilGoal <= 0) {
+                                        msg = "Målet er nådd!";
+                                        untilGoal = 0;
+                                    } else {
+                                        msg = `${checkIfDecimal(kgUntilGoal)} kg igjen`;
+                                        untilGoal = kgUntilGoal;
+                                        calcPercent(calcWeight, goalKg);
+                                    }
                                 } else {
-                                    msg = `${checkIfDecimal(kgUntilGoal)} kg igjen`;
-                                    untilGoal = kgUntilGoal;
-                                    calcPercent(calcWeight, goalKg);
+
+                                    kgUntilGoal = calcWeight - goalKg;
+                                    if (kgUntilGoal <= 0) {
+                                        msg = "Målet er nådd!";
+                                        untilGoal = 0;
+                                    } else {
+                                        msg = `${checkIfDecimal(kgUntilGoal)} kg igjen`;
+                                        untilGoal = kgUntilGoal;
+                                        calcPercent(goalKg, calcWeight);
+                                    }
                                 }
+
                             } else {
-
-                                kgUntilGoal = calcWeight - goalKg;
-                                if (kgUntilGoal <= 0) {
-                                    msg = "Målet er nådd!";
-                                    untilGoal = 0;
-                                } else {
-                                    msg = `${checkIfDecimal(kgUntilGoal)} kg igjen`;
-                                    untilGoal = kgUntilGoal;
-                                    calcPercent(goalKg, calcWeight);
-                                }
+                                msg = "Vekt er ugyldig";
+                                untilGoal = 100;
                             }
 
                         } else {
