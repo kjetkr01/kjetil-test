@@ -375,7 +375,7 @@ transform: translate(-50%,-50%);
 -ms-transform: translate(-50%,-50%);
 width: 90vw;
 max-width: 550px;
-height: 90vh;
+height: auto;
 max-height: 410px;
 overflow-y: scroll;
 
@@ -433,9 +433,9 @@ auto /* Ginp1W */
 
 
 
-25px /* Gtitle3W */
+auto /* Gtitle3W */
 
-10px /* Gline3W */
+auto /* Gline3W */
 
 auto /* Ginp2W */
 
@@ -487,6 +487,8 @@ width: 250px;
 }
 
 #Gline3W > #line3W {
+    margin-top: 2.5px;
+    margin-bottom: 7.5px;
 }
 
 #Gline4W > #line4W {
@@ -505,7 +507,7 @@ width: 250px;
 }
 
 #GeditW > #editW {
-color: var(--main-backgroundColor1);
+    color: var(--main-backgroundColor1);
 }
 
 #cancelW, #editW {
@@ -532,6 +534,7 @@ width: 125px;
 }
 
 #Gtitle3W > #title3W {
+    margin-top: 5px;
 }
 
 #Gtitle4W > #title4W {
@@ -659,7 +662,7 @@ transform: translate(-50%,-50%);
 -ms-transform: translate(-50%,-50%);
 width: 90vw;
 max-width: 550px;
-height: 90vh;
+height: auto;
 max-height: 560px;
 overflow-y: scroll;
 
@@ -734,9 +737,9 @@ auto /* Ginp2E */
 
 
 
-25px /* Gtitle4E */
+auto /* Gtitle4E */
 
-10px /* Gline4E */
+auto /* Gline4E */
 
 auto /* Ginp3E */
 
@@ -793,6 +796,8 @@ width: 250px;
 }
 
 #Gline4E > #line4E {
+    margin-top: 2.5px;
+    margin-bottom: 7.5px;
 }
 
 #Gline5E > #line5E {

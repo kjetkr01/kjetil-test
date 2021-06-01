@@ -75,11 +75,14 @@ async function updateUserInfo(aSkipReqData) {
     }
 
     if (!userInfo) {
-        const cachedDetails_owner = JSON.parse(localStorage.getItem("cachedDetails_owner"));
-        userInfo = cachedDetails_owner;
+        const userDetails = user.getDetails();
+        userDetails.id = user.getId();
+        userDetails.username = user.getUsername();
+        userDetails.displayname = user.getDisplayname();
+        userInfo = userDetails;
     }
 
-    if (!settings && user) {
+    if (!settings) {
         settings = user.getSettings();
     }
 

@@ -32,7 +32,7 @@ const ongoingUpdatesArr = [
     "TITLE:Badges",
     "Lage større versjon av badge (mål-badge, på startsiden) (100%)",
     "TITLE:Mål",
-    "Kunne legge til vekt mål. (Opp eller ned i vekt) (0%)",
+    "Kunne legge til vekt mål. (Opp eller ned i vekt) (25%)",
     "TITLE:Splash Screen (iOS)",
     "Fikse slik at splash screen funker på landscape mode (iPad) (50%)",
     "TITLE:Språk",
@@ -70,10 +70,10 @@ const aboutAppBottomInfo = `
 Prosjekt oppstart: ${getDateFormat("20", "11", "2020")}
 <br><br>
 Sist oppdatert: ${calcDaysSinceUpdate()}
-<br><br>
-<a href="https://kjetkr01.github.io/" target="_blank">kjetkr01.github.io</a>
 `;
 /*
+<br><br>
+<a href="https://kjetkr01.github.io/" target="_blank">kjetkr01.github.io</a>
 Full redesign: ${getDateFormat("19", "01", "2021")}
 */
 

@@ -98,7 +98,7 @@ async function login(username, password, rmbrMe) {
 
             if (resp) {
 
-                if (resp.authToken && resp.user && resp.settings) {
+                if (resp.authToken && resp.user && resp.user.details && resp.user.settings) {
 
                     localStorage.clear();
                     sessionStorage.clear();
@@ -106,11 +106,13 @@ async function login(username, password, rmbrMe) {
                     if (rmbrMe === true) {
                         localStorage.setItem("authToken", resp.authToken);
                         localStorage.setItem("user", JSON.stringify(resp.user));
-                        localStorage.setItem("userSettings", JSON.stringify(resp.settings));
+                        localStorage.setItem("userDetails", JSON.stringify(resp.user.details));
+                        localStorage.setItem("userSettings", JSON.stringify(resp.user.settings));
                     } else {
                         sessionStorage.setItem("authToken", resp.authToken);
                         sessionStorage.setItem("user", JSON.stringify(resp.user));
-                        sessionStorage.setItem("userSettings", JSON.stringify(resp.settings));
+                        sessionStorage.setItem("userDetails", JSON.stringify(resp.user.details));
+                        sessionStorage.setItem("userSettings", JSON.stringify(resp.user.settings));
                     }
 
                     message = "Login successful";

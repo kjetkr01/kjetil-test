@@ -1,5 +1,26 @@
 let liftsLeft = null, goalsLeft = null, trainingsplitsLeft = null, liftsInfo = null, goalsInfo = null, badgeColors = null;
 
+function changeVisibility() {
+    const inp1 = document.getElementById("inp1C");
+    const hideDoms = ["Gtitle4C", "Gline4C", "Ginp3C"];
+
+    if (inp1.value.includes("i vekt")) {
+        for (let x = 0; x < hideDoms.length; x++) {
+            const dom = document.getElementById(hideDoms[x]);
+            if (dom) {
+                dom.classList = "hidden";
+            }
+        }
+    } else {
+        for (let x = 0; x < hideDoms.length; x++) {
+            const dom = document.getElementById(hideDoms[x]);
+            if (dom) {
+                dom.removeAttribute("class");
+            }
+        }
+    }
+}
+
 function enableOverlayCreate(aType) {
 
     if (aType) {
@@ -20,6 +41,7 @@ function enableOverlayCreate(aType) {
 
         title1.innerHTML = "";
         inp1.innerHTML = "";
+        inp1.removeAttribute("onChange");
         inp2.value = "";
         inp3.value = "";
         inp4.value = "";
@@ -42,7 +64,7 @@ function enableOverlayCreate(aType) {
                     const currentlySorting = localStorage.getItem("display_lifts_owner");
                     for (let i = 0; i < allowedLifts.length; i++) {
 
-                        if (allowedLifts[i] === currentlySorting && allowedLifts.includes(currentlySorting)) {
+                        if (allowedLifts[i] === currentlySorting) {
                             inp1.innerHTML += `<option selected="selected" value="${allowedLifts[i]}">${capitalizeFirstLetter(allowedLifts[i])}`;
                         } else {
                             inp1.innerHTML += `<option value="${allowedLifts[i]}">${capitalizeFirstLetter(allowedLifts[i])}`;
@@ -67,6 +89,7 @@ function enableOverlayCreate(aType) {
 
                 if (allowedGoals && allowedGoals.length > 0) {
                     respMsg.innerHTML = `Du kan lage ${goalsLeftInfo} mål til`;
+                    inp1.setAttribute("onChange", "changeVisibility();");
                     const currentlySorting = localStorage.getItem("display_goals_owner");
                     for (let i = 0; i < allowedGoals.length; i++) {
                         if (allowedGoals[i] === currentlySorting && allowedGoals.includes(currentlySorting)) {
@@ -228,10 +251,12 @@ function enableOverlayView(aType, aExercise, aId) {
                     document.getElementById("viewLiftorGoal").style.border = `1px solid #${badgeColorsJSON[color].border}`;
                 }
 
-                if (navigator.onLine) {
-                    GeditW.innerHTML = `<button id="editW" class="pointer" onClick="disableOverlays();enableOverlayEdit('lift', '${exercise}', '${id}');">Endre</button>`;
-                } else {
-                    GeditW.innerHTML = `<button id="editW" disabled>Endre</button>`;
+                if (location.href.includes("account.html")) {
+                    if (navigator.onLine) {
+                        GeditW.innerHTML = `<button id="editW" class="pointer" onClick="disableOverlays();enableOverlayEdit('lift', '${exercise}', '${id}');">Endre</button>`;
+                    } else {
+                        GeditW.innerHTML = `<button id="editW" disabled>Endre</button>`;
+                    }
                 }
 
                 viewLiftorGoalOverlay.style.display = "block";
@@ -263,7 +288,29 @@ function enableOverlayView(aType, aExercise, aId) {
 
             if (goal) {
                 inp1.innerHTML = goal.kg;
-                inp2.innerHTML = goal.reps;
+
+                const hideDoms = ["Gtitle3W", "Gline3W", "Ginp2W"];
+
+                if (exercise.includes("i vekt")) {
+
+                    for (let x = 0; x < hideDoms.length; x++) {
+                        const dom = document.getElementById(hideDoms[x]);
+                        if (dom) {
+                            dom.classList = "hidden";
+                        }
+                    }
+
+                } else {
+
+                    for (let x = 0; x < hideDoms.length; x++) {
+                        const dom = document.getElementById(hideDoms[x]);
+                        if (dom) {
+                            dom.removeAttribute("class");
+                        }
+                    }
+
+                    inp2.innerHTML = goal.reps;
+                }
 
                 const daysSinceAndDate = getDaysSinceAndDate(goal.date);
 
@@ -275,10 +322,12 @@ function enableOverlayView(aType, aExercise, aId) {
                     document.getElementById("viewLiftorGoal").style.border = `1px solid #${badgeColorsJSON[color].border}`;
                 }
 
-                if (navigator.onLine) {
-                    GeditW.innerHTML = `<button id="editW" class="pointer" onClick="disableOverlays();enableOverlayEdit('goal', '${exercise}', '${id}');">Endre</button>`;
-                } else {
-                    GeditW.innerHTML = `<button id="editW" disabled>Endre</button>`;
+                if (location.href.includes("account.html")) {
+                    if (navigator.onLine) {
+                        GeditW.innerHTML = `<button id="editW" class="pointer" onClick="disableOverlays();enableOverlayEdit('goal', '${exercise}', '${id}');">Endre</button>`;
+                    } else {
+                        GeditW.innerHTML = `<button id="editW" disabled>Endre</button>`;
+                    }
                 }
 
                 viewLiftorGoalOverlay.style.display = "block";
@@ -432,9 +481,32 @@ function enableOverlayEdit(aType, aExercise, aId) {
             }
 
             if (goal) {
+
+                const hideDoms = ["Gtitle3E", "Gline3E", "Ginp2E"];
+
+                if (exercise.includes("i vekt")) {
+
+                    for (let x = 0; x < hideDoms.length; x++) {
+                        const dom = document.getElementById(hideDoms[x]);
+                        if (dom) {
+                            dom.classList = "hidden";
+                        }
+                    }
+
+                } else {
+
+                    for (let x = 0; x < hideDoms.length; x++) {
+                        const dom = document.getElementById(hideDoms[x]);
+                        if (dom) {
+                            dom.removeAttribute("class");
+                        }
+                    }
+
+                    inp2.value = goal.reps;
+                }
+
                 checkIfEdited(goal);
                 inp1.value = goal.kg;
-                inp2.value = goal.reps;
                 inp3.value = goal.date;
 
                 if (navigator.onLine) {
@@ -557,7 +629,11 @@ async function saveLiftOrGoal(aType, editOrCreate, aId) {
 
                 inp1 = document.getElementById("title1E").value;
                 inp2 = document.getElementById("inp1E").value;
-                inp3 = document.getElementById("inp2E").value;
+                if (document.getElementById("Ginp2E").classList[0] === "hidden") {
+                    inp3 = `skipinp3-weightgoal-${aId}`;
+                } else {
+                    inp3 = document.getElementById("inp2E").value;
+                }
                 inp4 = document.getElementById("inp3E").value;
                 color = document.getElementById("inp4E").value;
                 saveBtn = document.getElementById("saveE");
@@ -624,12 +700,14 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aInp4, aType, aColor, aId) {
                 return { "isValid": isValid, "msg": msg };
             }
 
-            if (isNaN(input3)) {
-                msg = "Reps er ugyldig! Eksempel: 4";
-                return { "isValid": isValid, "msg": msg };
-            } else if (input3 <= 0) {
-                msg = "Reps må være større enn 1!";
-                return { "isValid": isValid, "msg": msg };
+            if (aInp3 !== `skipinp3-weightgoal-${aId}`) {
+                if (isNaN(input3)) {
+                    msg = "Reps er ugyldig! Eksempel: 4";
+                    return { "isValid": isValid, "msg": msg };
+                } else if (input3 <= 0) {
+                    msg = "Reps må være større enn 1!";
+                    return { "isValid": isValid, "msg": msg };
+                }
             }
 
             //Date format = YYYY-MM-DD
@@ -654,6 +732,7 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aInp4, aType, aColor, aId) {
             isValid = true;
 
         }
+
     } else {
         msg = defaultTxt.noConnection;
         isValid = false;
@@ -1041,16 +1120,16 @@ async function setNoneActiveTrainingsplit() {
 async function deleteTrainingsplitConfirm(aTrainingsplit_id) {
 
     /*const confirmDelete = confirm("Er du sikker på at du ønsker å slette treningsplanen? Dette kan ikke angres!");
-
+ 
     if (confirmDelete === true) {
-
+ 
         const trainingsplit_id = aTrainingsplit_id;
-
+ 
         const infoHeader = { "trainingsplit_id": trainingsplit_id };
         const url = `/user/delete/trainingsplit`;
-
+ 
         const resp = await callServerAPIPost(infoHeader, url);
-
+ 
         if (resp === true) {
             sessionStorage.removeItem("trainingsplit");
             window.location.search = "";

@@ -50,12 +50,13 @@ function createUserClass() {
 
     const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
     const userObj = localStorage.getItem("user") || sessionStorage.getItem("user");
+    const detailsObj = localStorage.getItem("userDetails") || sessionStorage.getItem("userDetails");
     const settingsObj = localStorage.getItem("userSettings") || sessionStorage.getItem("userSettings");
 
     if (token && userObj && settingsObj) {
         try {
 
-            user = new TUser(token, JSON.parse(userObj), JSON.parse(settingsObj));
+            user = new TUser(token, JSON.parse(userObj), JSON.parse(detailsObj), JSON.parse(settingsObj));
 
             // redirects to login if token is invalid
             if (navigator.onLine) {
@@ -109,7 +110,6 @@ function createUserClass() {
         let waitUntilDomIsLoaded = setInterval(() => {
             waitTime++;
             if (waitTime < maxWaitTime) {
-
                 if (document.getElementById("TSAlertOverlay")) {
                     clearInterval(waitUntilDomIsLoaded);
                     showAlert(userErrorTxt, true, "redirectToLogin();");
@@ -123,7 +123,7 @@ function createUserClass() {
 }
 
 // User class (for logged inn user)
-function TUser(aToken, aUser, aSettings) {
+function TUser(aToken, aUser, aDetails, aSettings) {
 
     const token = aToken;
 
@@ -132,6 +132,8 @@ function TUser(aToken, aUser, aSettings) {
         "displayname": aUser.displayname,
         "username": aUser.username
     }
+
+    const details = aDetails;
 
     const settings = aSettings;
 
@@ -153,6 +155,33 @@ function TUser(aToken, aUser, aSettings) {
 
     this.getUsername = function () {
         return user.username;
+    }
+
+    this.getDetails = function () {
+        return details;
+    }
+
+    this.getDetail = function (aDetail) {
+        if (details) {
+            return details[aDetail.toLowerCase()];
+        } else {
+            return null;
+        }
+    }
+
+    this.changeDetail = function (aDetail, aValue) {
+        const detail = aDetail.toLowerCase();
+        if (details && details.hasOwnProperty(detail)) {
+            details[detail] = aValue;
+            console.log(`SUCCESS : user.changeDetail() : "${detail}" = ${aValue}`); // debug for now
+            if (localStorage.getItem("user")) {
+                localStorage.setItem("userDetails", JSON.stringify(details));
+            } else {
+                sessionStorage.setItem("userDetails", JSON.stringify(details));
+            }
+        } else {
+            console.log(`ERROR : user.changeDetail() : "${detail}" = ${aValue}`); // debug for now
+        }
     }
 
     this.getSettings = function () {
@@ -337,16 +366,12 @@ async function getAccountDetails(aUserID) {
 
                     if (localStorage.getItem("user")) {
                         localStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
+                        localStorage.setItem("userDetails", JSON.stringify(resp.userDetails));
                         localStorage.setItem("userSettings", JSON.stringify(s));
                     } else {
                         sessionStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
+                        sessionStorage.setItem("userDetails", JSON.stringify(resp.userDetails));
                         sessionStorage.setItem("userSettings", JSON.stringify(s));
-                    }
-
-                    if (resp.hasOwnProperty("cacheDetails")) {
-                        localStorage.setItem("cachedDetails_owner", JSON.stringify(resp.cacheDetails));
-                    } else {
-                        localStorage.removeItem("cachedDetails_owner");
                     }
 
                     if (resp.info.hasOwnProperty("activetrainingsplit")) {

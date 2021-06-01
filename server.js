@@ -177,11 +177,13 @@ server.post("/authenticate", async function (req, res) {
                     const userInfo = {
                          "id": requestUser.userInfo.id,
                          "username": requestUser.userInfo.username,
-                         "displayname": requestUser.userInfo.displayname
+                         "displayname": requestUser.userInfo.displayname,
+                         "settings": requestUser.userInfo.settings,
+                         "details": requestUser.userInfo.details,
                     }
 
                     const sessionToken = createToken(requestUser.userInfo);
-                    res.status(200).json({ "authToken": sessionToken, "user": userInfo, "settings": requestUser.userSettings }).end();
+                    res.status(200).json({ "authToken": sessionToken, "user": userInfo }).end();
                } else {
                     res.status(403).json("Brukernavn eller passord er feil!").end();
                }
@@ -403,12 +405,11 @@ server.post("/users/details/:user", auth, async (req, res) => {
                                         "displayname": resp.userDetails.displayname
                                    }
 
-                                   cacheDetails.id = resp.userDetails.id;
-                                   cacheDetails.username = resp.userDetails.username;
+                                   delete cacheDetails.displayname;
                                    cacheDetails.isadmin = resp.userDetails.isadmin;
                                    cacheDetails.apikey = resp.userDetails.apikey;
 
-                                   res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo, "cacheDetails": cacheDetails }).end();
+                                   res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo, "userDetails": cacheDetails }).end();
                               } else {
                                    res.status(200).json({ "info": resp.userDetails, "cacheDetails": cacheDetails }).end();
                               }
@@ -841,6 +842,21 @@ server.post("/user/update/goals/completed", auth, async (req, res) => {
 
           if (currentUser.id) {
 
+               const completedGoalsListKeys = Object.keys(completedGoalsList);
+               for (let i = 0; i < completedGoalsListKeys.length; i++) {
+                    let isValid = false;
+                    const current = completedGoalsListKeys[i];
+                    for (let j = 0; j < allowedGoals.length; j++) {
+                         if (current === allowedGoals[j]) {
+                              isValid = true;
+                              break;
+                         }
+                    }
+                    if (isValid !== true) {
+                         delete completedGoalsList[current];
+                    }
+               }
+
                const resp = await setGoalAsComplete(currentUser.id, completedGoalsList);
 
                if (resp.status === true) {
@@ -1057,7 +1073,15 @@ server.post("/user/add/trainingsplit/exercise", auth, async (req, res) => {
 
                const maxExerciseLength = 30;
 
-               if (exercise.length <= maxExerciseLength || allowedLifts.includes(exercise.toLowerCase())) {
+               let isValid = false;
+               for (let z = 0; z < allowedLifts.length; z++) {
+                    if (exercise.toLowerCase() === allowedLifts[z]) {
+                         isValid = true;
+                         break;
+                    }
+               }
+
+               if (exercise.length <= maxExerciseLength || isValid === true) {
                     const resp = await addExerciseTrainingsplit(currentUser.id, trainingsplit_id, exercise, day);
 
                     if (resp.status === true) {

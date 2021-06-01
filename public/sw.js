@@ -1,4 +1,4 @@
-const cacheName = 'TS-PWA-v31';
+const cacheName = 'TS-PWA-v32';
 
 const contentToCache = [
     '/registerSW.js',
@@ -9,7 +9,7 @@ const contentToCache = [
     '/leaderboards.html',
     '/manifest.json',
     '/scripts/account/account.js',
-    '/scripts/account/editInformation.js',
+    '/scripts/shared/editInformation.js',
     '/scripts/global/appInfo.js',
     '/scripts/shared/badges.js',
     '/scripts/global/global.js',
@@ -20,7 +20,6 @@ const contentToCache = [
     '/scripts/settings/saveSettings.js',
     '/scripts/settings/settings.js',
     '/scripts/settings/templateFunctions.js',
-    '/scripts/user/editInformation.js',
     '/scripts/user/user.js',
     '/scripts/shared/trainingsplit.js',
     '/settings.html',

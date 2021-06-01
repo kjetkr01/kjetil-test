@@ -109,8 +109,22 @@ class StorageHandler {
 
                 if (results.rows.length > 0) {
                     delete results.rows[0].user_id;
-                    userSettings = results.rows[0];
-                    results = true;
+                    userInfo.settings = results.rows[0];
+
+                    results = await client.query(`
+                SELECT *
+                FROM user_details
+                WHERE user_id = $1`,
+                        [userInfo.id]);
+
+                    if (results.rows.length > 0) {
+                        delete results.rows[0].user_id;
+                        userInfo.details = results.rows[0];
+                        results = true;
+                    } else {
+                        results = false;
+                    }
+
                 } else {
                     results = false;
                 }
@@ -125,7 +139,7 @@ class StorageHandler {
             console.log(err);
         }
 
-        return { "status": results, "userInfo": userInfo, "userSettings": userSettings };
+        return { "status": results, "userInfo": userInfo };
     }
 
     //
@@ -252,7 +266,14 @@ class StorageHandler {
                 }
 
                 for (let j = 0; j < liftKeys.length; j++) {
-                    if (allowedLifts.includes(liftKeys[j])) {
+                    let isValid = false;
+                    for (let z = 0; z < allowedLifts.length; z++) {
+                        if (liftKeys[j] === allowedLifts[z]) {
+                            isValid = true;
+                            break;
+                        }
+                    }
+                    if (isValid === true) {
                         const extra = lifts[liftKeys[j]];
                         let done = false;
                         for (let k = 0; k < extra.length; k++) {
@@ -296,7 +317,15 @@ class StorageHandler {
         try {
             await client.connect();
 
-            if (allowedLifts.includes(leaderboard) || leaderboard === "totalt") {
+            let isValid = false;
+            for (let z = 0; z < allowedLifts.length; z++) {
+                if (leaderboard === allowedLifts[z]) {
+                    isValid = true;
+                    break;
+                }
+            }
+
+            if (isValid === true || leaderboard === "totalt") {
 
                 if (leaderboard === "totalt") {
 
@@ -1097,7 +1126,7 @@ class StorageHandler {
             }
 
             results = await client.query(`
-                                SELECT ${exercise}
+                                SELECT "${exercise}"
                                 FROM ${table}
                                 WHERE user_id = $1`,
                 [userid]);
@@ -1107,6 +1136,10 @@ class StorageHandler {
                 const liftsOrGoals = results.rows[0][exercise];
 
                 const liftOrGoal = { "id": id, "reps": reps, "kg": kg, "date": date, "color": color };
+
+                if (exercise.includes("i vekt")) {
+                    delete liftOrGoal.reps;
+                }
 
                 if (type === "goal") {
                     liftOrGoal.completed = false;
@@ -1151,7 +1184,7 @@ class StorageHandler {
 
                 await client.query(`
                                 UPDATE ${table}
-                                SET ${exercise} = $1
+                                SET "${exercise}" = $1
                                 WHERE user_id = $2`,
                     [JSON.stringify(liftsOrGoals), userid]);
 
@@ -1188,69 +1221,66 @@ class StorageHandler {
             for (let i = 0; i < completedGoalsListKeys.length; i++) {
                 const current = completedGoalsListKeys[i];
 
-                if (allowedGoals.includes(current) === true) {
-
-                    results = await client.query(`
-                        SELECT ${current}
+                results = await client.query(`
+                        SELECT "${current}"
                         FROM user_goals
                         WHERE user_id = $1`,
-                        [userid]);
+                    [userid]);
 
-                    if (results.rows.length === 1) {
+                if (results.rows.length === 1) {
 
-                        const currentList = completedGoalsList[current];
-                        const currentListKeys = Object.keys(currentList);
+                    const currentList = completedGoalsList[current];
+                    const currentListKeys = Object.keys(currentList);
 
-                        const goals = results.rows[0][current];
+                    const goals = results.rows[0][current];
 
-                        let modify = false;
-                        let modifyCount = 0;
+                    let modify = false;
+                    let modifyCount = 0;
 
-                        for (let j = 0; j < currentListKeys.length; j++) {
+                    for (let j = 0; j < currentListKeys.length; j++) {
 
-                            const currentGoal = currentList[currentListKeys[j]];
+                        const currentGoal = currentList[currentListKeys[j]];
 
-                            for (let i = 0; i < goals.length; i++) {
-                                const goal = goals[i];
-                                const completed = goal.completed;
-                                if (currentGoal === goal.id) {
-                                    if (completed !== true) {
-                                        modify = true;
-                                        modifyCount++;
-                                        goals[i].completed = true;
-                                    } else {
-                                        break;
-                                    }
+                        for (let z = 0; z < goals.length; z++) {
+                            const goal = goals[z];
+                            const completed = goal.completed;
+                            if (currentGoal === goal.id) {
+                                if (completed !== true) {
+                                    modify = true;
+                                    modifyCount++;
+                                    goals[z].completed = true;
+                                } else {
+                                    break;
                                 }
                             }
                         }
+                    }
 
-                        if (modify === true) {
+                    if (modify === true) {
 
-                            if (modifyCount < maxGoals.default) {
-                                await client.query(`
+                        if (modifyCount < maxGoals.default) {
+                            await client.query(`
                                 UPDATE user_goals
-                                SET ${current} = $1
+                                SET "${current}" = $1
                                 WHERE user_id = $2`,
-                                    [JSON.stringify(goals), userid]);
+                                [JSON.stringify(goals), userid]);
 
-                                let medalscount = await client.query(`
+                            let medalscount = await client.query(`
                                 SELECT medalscount
                                 FROM user_details
                                 WHERE user_id = $1`,
-                                    [userid]);
+                                [userid]);
 
-                                if (medalscount.rows.length > 0) {
+                            if (medalscount.rows.length > 0) {
 
-                                    medalscount = medalscount.rows[0].medalscount;
-                                    medalscount = medalscount + modifyCount;
-                                    totalMedals = medalscount;
-                                    await client.query(`
+                                medalscount = medalscount.rows[0].medalscount;
+                                medalscount = medalscount + modifyCount;
+                                totalMedals = medalscount;
+                                await client.query(`
                                 UPDATE user_details
                                 SET medalscount = $1
                                 WHERE user_id = $2`,
-                                        [medalscount, userid]);
-                                }
+                                    [medalscount, userid]);
                             }
                         }
                     }
@@ -1397,7 +1427,7 @@ class StorageHandler {
             }
 
             results = await client.query(`
-                                SELECT ${exercise}
+                                SELECT "${exercise}"
                                 FROM ${table}
                                 WHERE user_id = $1`,
                 [userid]);
@@ -1422,7 +1452,7 @@ class StorageHandler {
 
                     await client.query(`
                                 UPDATE ${table}
-                                SET ${exercise} = $1
+                                SET "${exercise}" = $1
                                 WHERE user_id = $2`,
                         [JSON.stringify(liftsOrGoals), userid]);
 
