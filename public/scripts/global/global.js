@@ -15,15 +15,15 @@ const errorLoadingText = "Kunne ikke laste inn innholdet.";
 const allowedThemes = {
     0: { "id": 0, "name": "Standard", "theme": "default" },
     1: { "id": 1, "name": "Blå", "theme": "blue" },
-    2: { "id": 2, "name": "Test (Full)", "theme": "test_full" },
-    3: { "id": 3, "name": "Test 2 (Full)", "theme": "test2_full" }
+    2: { "id": 2, "name": "Standard (Test) (Full)", "theme": "default_full" },
+    3: { "id": 3, "name": "Blå (Test) (Full)", "theme": "blue_full" }
 }
 
 const themeColors = {
     "default": { "lightHex": "327a94", "darkHex": "1c4553" },
     "blue": { "lightHex": "3247bb", "darkHex": "202b6b" },
-    "test_full": { "lightHex": "166ba0", "darkHex": "09314b" },
-    "test2_full": { "lightHex": "e6e6e6", "darkHex": "09314b" }
+    "default_full": { "lightHex": "327a94", "darkHex": "1c4553" },
+    "blue_full": { "lightHex": "2e42af", "darkHex": "09314b" }
 }
 
 try {

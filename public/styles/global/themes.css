@@ -20,6 +20,10 @@
 --default-light-iconsActiveColor: #231f20;
 --default-light-iconsDefaultColor: #8D8D8D;
 
+--default-light-emptyBadgeColor: #8d8d8d;
+--default-light-emptyBadgeShadow: #8d8d8d70;
+--default-light-emptyBadgeBorderColor: white;
+
 /* END OF DEFAULT LIGHT VALUES */
 
 
@@ -39,6 +43,10 @@
 
 --default-dark-iconsActiveColor: #e0e0e0;
 --default-dark-iconsDefaultColor: #808080;
+
+--default-dark-emptyBadgeColor: #6d6d6d;
+--default-dark-emptyBadgeShadow: #72727270;
+--default-dark-emptyBadgeBorderColor: white;
 
 /* END OF DEFAULT DARK VALUES */
 }
@@ -73,6 +81,11 @@
 
 --main-iconsActiveColor: var(--default-light-iconsActiveColor);
 --main-iconsDefaultColor: var(--default-light-iconsDefaultColor);
+
+--main-emptyBadgeColor: var(--default-light-emptyBadgeColor);
+--main-emptyBadgeShadow: var(--default-light-emptyBadgeShadow);
+--main-emptyBadgeBorderColor: var(--default-light-emptyBadgeBorderColor);
+
 }
 
 .blueColorTheme-light {
@@ -100,36 +113,14 @@
 
 --main-iconsActiveColor: var(--default-light-iconsActiveColor);
 --main-iconsDefaultColor: var(--default-light-iconsDefaultColor);
+
+--main-emptyBadgeColor: var(--default-light-emptyBadgeColor);
+--main-emptyBadgeShadow: var(--default-light-emptyBadgeShadow);
+--main-emptyBadgeBorderColor: var(--default-light-emptyBadgeBorderColor);
 }
 
-.test_fullColorTheme-light {
---main-headerBackground:  #166ba0;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
---main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
---main-backgroundColor1: #1376b8;
---main-backgroundColorRGBLowOpacity: #1376b840;
---main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
---main-accountOwnerColor: var(--main-backgroundColor1);
-
-
-
---main-lineBorder: 1px #ffffff solid;
---main-border: 1px #d7e3eb90 solid;
---main-border2: 0.75px #c9dde985 solid;
-
---main-backgroundColor2: #8eb3ce;
---main-backgroundColor3: #a1cae4;
-
---main-headerTextColor: white;
---main-textColorLight: white;
---main-textColorDark: #04273d;
---main-textColorBadges: white;
-
---main-iconsActiveColor: #083d5e;
---main-iconsDefaultColor: #6693af;
-}
-
-.test2_fullColorTheme-light {
+.default_fullColorTheme-light {
 --main-headerBackground:  #e6e6e6;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
 --main-backgroundColor1: #363636;
@@ -154,6 +145,42 @@
 
 --main-iconsActiveColor: #000000;
 --main-iconsDefaultColor: #808080;
+
+--main-emptyBadgeColor: #8d8d8d;
+--main-emptyBadgeShadow: #8d8d8d70;
+--main-emptyBadgeBorderColor: white;
+}
+
+
+.blue_fullColorTheme-light {
+--main-headerBackground:  #2e42af;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
+--main-backgroundColor1: #314ad4;
+--main-backgroundColorRGBLowOpacity: #3a53e240;
+--main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
+
+--main-accountOwnerColor: var(--main-backgroundColor1);
+
+
+
+--main-lineBorder: 1px #ffffff solid;
+--main-border: 1px #d7e3eb90 solid;
+--main-border2: 0.75px #c9dde985 solid;
+
+--main-backgroundColor2: #989fdb;
+--main-backgroundColor3: #b5bae4;
+
+--main-headerTextColor: white;
+--main-textColorLight: white;
+--main-textColorDark: #04273d;
+--main-textColorBadges: white;
+
+--main-iconsActiveColor: #083d5e;
+--main-iconsDefaultColor: #8188c2;
+
+--main-emptyBadgeColor: #6a6fa1;
+--main-emptyBadgeShadow: #585b7a70;
+--main-emptyBadgeBorderColor: white;
 }
 
 /* END OF LIGHT THEME VALUES */
@@ -185,6 +212,10 @@
 
 --main-iconsActiveColor: var(--default-dark-iconsActiveColor);
 --main-iconsDefaultColor: var(--default-dark-iconsDefaultColor);
+
+--main-emptyBadgeColor: var(--default-dark-emptyBadgeColor);
+--main-emptyBadgeShadow: var(--default-dark-emptyBadgeShadow);
+--main-emptyBadgeBorderColor: var(--default-dark-emptyBadgeBorderColor);
 }
 
 .blueColorTheme-dark {
@@ -212,12 +243,46 @@
 
 --main-iconsActiveColor: var(--default-dark-iconsActiveColor);
 --main-iconsDefaultColor: var(--default-dark-iconsDefaultColor);
+
+--main-emptyBadgeColor: var(--default-dark-emptyBadgeColor);
+--main-emptyBadgeShadow: var(--default-dark-emptyBadgeShadow);
+--main-emptyBadgeBorderColor: var(--default-dark-emptyBadgeBorderColor);
 }
 
 
+.default_fullColorTheme-dark {
+--main-headerBackground:  #3d8ec4;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
+--main-backgroundColor1: #8ba9bd;
+--main-backgroundColorRGBLowOpacity: #586e7c40;
+--main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
+
+--main-accountOwnerColor: #135f92;
 
 
-.test_fullColorTheme-dark {
+
+--main-lineBorder: 1px #ffffff solid;
+--main-border: 1px #e6e6e685 solid;
+--main-border2: 0.75px #dfdfdf85 solid;
+
+--main-backgroundColor2: #586d7e;
+--main-backgroundColor3: #5e84a0;
+
+--main-headerTextColor: white;
+--main-textColorLight: white;
+--main-textColorDark: white;
+--main-textColorBadges: white;
+
+--main-iconsActiveColor: #ffffff;
+--main-iconsDefaultColor: #747474;
+
+--main-emptyBadgeColor: #6d6d6d;
+--main-emptyBadgeShadow: #72727270;
+--main-emptyBadgeBorderColor: white;
+}
+
+
+.blue_fullColorTheme-dark {
 --main-headerBackground:  #09314b;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
 --main-backgroundColor1: #0c3f61;
@@ -242,5 +307,10 @@
 
 --main-iconsActiveColor: #ffffff;
 --main-iconsDefaultColor: #747474;
+
+--main-emptyBadgeColor: #1d394b;
+--main-emptyBadgeShadow: #12202970;
+--main-emptyBadgeBorderColor: #82aac2;
 }
+
 /* END OF DARK THEME VALUES */

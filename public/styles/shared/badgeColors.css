@@ -53,7 +53,7 @@ box-shadow: var(--bsSize) var(--main-backgroundColorRGBLowOpacity);
 
 
 .emptyBadge {
-background-color: var(--main-iconsDefaultColor); /* 8d8d8d før */
-box-shadow: var(--bsSize) rgba(141,141,141, 0.4);
-border: 1px dashed white;
+background-color: var(--main-emptyBadgeColor); /* 8d8d8d før */
+box-shadow: var(--bsSize) var(--main-emptyBadgeShadow);
+border: 1px dashed var(--main-emptyBadgeBorderColor);
 }
