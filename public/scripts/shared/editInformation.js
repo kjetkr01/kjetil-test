@@ -53,6 +53,17 @@ function enableOverlayCreate(aType) {
             inp4.setAttribute('max', today);
         }
 
+        const doms = ["Gtitle4C", "Gline4C", "Ginp3C"];
+        for (let x = 0; x < doms.length; x++) {
+            const dom = document.getElementById(doms[x]);
+            if (dom) {
+                dom.removeAttribute("class");
+            }
+        }
+
+
+
+
         if (navigator.onLine) {
 
             if (type === "lift" && liftsLeft) {
@@ -94,10 +105,17 @@ function enableOverlayCreate(aType) {
                     for (let i = 0; i < allowedGoals.length; i++) {
                         if (allowedGoals[i] === currentlySorting && allowedGoals.includes(currentlySorting)) {
                             inp1.innerHTML += `<option selected="selected" value="${allowedGoals[i]}">${capitalizeFirstLetter(allowedGoals[i])}`;
+                            for (let x = 0; x < doms.length; x++) {
+                                const dom = document.getElementById(doms[x]);
+                                if (dom) {
+                                    dom.classList = "hidden";
+                                }
+                            }
                         } else {
                             inp1.innerHTML += `<option value="${allowedGoals[i]}">${capitalizeFirstLetter(allowedGoals[i])}`;
                         }
                     }
+
                     if (navigator.onLine) {
                         Gsave.innerHTML = `<button id="saveC" class="pointer" onclick="saveLiftOrGoal('goal','create');">Lagre</button>`;
                     } else {
@@ -210,6 +228,15 @@ function enableOverlayView(aType, aExercise, aId) {
         inp2.value = "";
         inp3.value = "";
 
+        const doms = ["Gtitle3W", "Gline3W", "Ginp2W"];
+
+        for (let x = 0; x < doms.length; x++) {
+            const dom = document.getElementById(doms[x]);
+            if (dom) {
+                dom.removeAttribute("class");
+            }
+        }
+
         const today = new Date().toISOString().substr(0, 10) || null;
 
         if (today) {
@@ -289,25 +316,16 @@ function enableOverlayView(aType, aExercise, aId) {
             if (goal) {
                 inp1.innerHTML = goal.kg;
 
-                const hideDoms = ["Gtitle3W", "Gline3W", "Ginp2W"];
-
                 if (exercise.includes("i vekt")) {
 
-                    for (let x = 0; x < hideDoms.length; x++) {
-                        const dom = document.getElementById(hideDoms[x]);
+                    for (let x = 0; x < doms.length; x++) {
+                        const dom = document.getElementById(doms[x]);
                         if (dom) {
                             dom.classList = "hidden";
                         }
                     }
 
                 } else {
-
-                    for (let x = 0; x < hideDoms.length; x++) {
-                        const dom = document.getElementById(hideDoms[x]);
-                        if (dom) {
-                            dom.removeAttribute("class");
-                        }
-                    }
 
                     inp2.innerHTML = goal.reps;
                 }
@@ -322,7 +340,7 @@ function enableOverlayView(aType, aExercise, aId) {
                     document.getElementById("viewLiftorGoal").style.border = `1px solid #${badgeColorsJSON[color].border}`;
                 }
 
-                if (location.href.includes("account.html")) {
+                if (location.href.includes("account.html") || location.href.includes("index.html")) {
                     if (navigator.onLine) {
                         GeditW.innerHTML = `<button id="editW" class="pointer" onClick="disableOverlays();enableOverlayEdit('goal', '${exercise}', '${id}');">Endre</button>`;
                     } else {
@@ -383,6 +401,15 @@ function enableOverlayEdit(aType, aExercise, aId) {
         Gsave.innerHTML = "";
         respMsg.innerHTML = "";
         const showDeleteBtn = true;
+
+        const showDoms = ["Gtitle3E", "Gline3E", "Ginp2E"];
+
+        for (let x = 0; x < showDoms.length; x++) {
+            const dom = document.getElementById(showDoms[x]);
+            if (dom) {
+                dom.removeAttribute("class");
+            }
+        }
 
         const tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
         const today = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1).substr(0, 10);
@@ -494,13 +521,6 @@ function enableOverlayEdit(aType, aExercise, aId) {
                     }
 
                 } else {
-
-                    for (let x = 0; x < hideDoms.length; x++) {
-                        const dom = document.getElementById(hideDoms[x]);
-                        if (dom) {
-                            dom.removeAttribute("class");
-                        }
-                    }
 
                     inp2.value = goal.reps;
                 }
@@ -619,7 +639,11 @@ async function saveLiftOrGoal(aType, editOrCreate, aId) {
 
                 inp1 = document.getElementById("inp1C").value;
                 inp2 = document.getElementById("inp2C").value;
-                inp3 = document.getElementById("inp3C").value;
+                if (document.getElementById("Ginp3C").classList[0] === "hidden") {
+                    inp3 = `skipinp3-weightgoal`;
+                } else {
+                    inp3 = document.getElementById("inp3C").value;
+                }
                 inp4 = document.getElementById("inp4C").value;
                 saveBtn = document.getElementById("saveC");
             }
@@ -630,7 +654,7 @@ async function saveLiftOrGoal(aType, editOrCreate, aId) {
                 inp1 = document.getElementById("title1E").value;
                 inp2 = document.getElementById("inp1E").value;
                 if (document.getElementById("Ginp2E").classList[0] === "hidden") {
-                    inp3 = `skipinp3-weightgoal-${aId}`;
+                    inp3 = `skipinp3-weightgoal`;
                 } else {
                     inp3 = document.getElementById("inp2E").value;
                 }
@@ -700,7 +724,8 @@ function validateLiftOrGoal(aInp1, aInp2, aInp3, aInp4, aType, aColor, aId) {
                 return { "isValid": isValid, "msg": msg };
             }
 
-            if (aInp3 !== `skipinp3-weightgoal-${aId}`) {
+
+            if (aInp3 !== `skipinp3-weightgoal`) {
                 if (isNaN(input3)) {
                     msg = "Reps er ugyldig! Eksempel: 4";
                     return { "isValid": isValid, "msg": msg };
