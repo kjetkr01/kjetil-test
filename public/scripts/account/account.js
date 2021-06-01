@@ -349,9 +349,9 @@ async function displayLifts(hasLiftsLeft) {
 
     try {
 
-        hasLiftsLeft = localStorage.getItem("cachedLiftsLeft_owner") > 0 || false;
-
         document.getElementById("badgesLiftsTableRow").innerHTML = "";
+
+        hasLiftsLeft = localStorage.getItem("cachedLiftsLeft_owner") > 0 || false;
 
         let sortBy = localStorage.getItem("display_lifts_owner");
 
@@ -372,6 +372,8 @@ async function displayLifts(hasLiftsLeft) {
                         const url = `/user/update/settings/${setting}`;
 
                         await callServerAPIPost(infoHeader, url);
+                        showLiftBadgeAnimations = false;
+                        document.getElementById("badgesLiftsTableRow").innerHTML = "";
                     }
                 }
             } else {
@@ -507,6 +509,8 @@ async function displayGoals(hasGoalsLeft, checkIfCompleted) {
 
     try {
 
+        document.getElementById("badgesGoalsTableRow").innerHTML = "";
+
         const completedGoalsList = {};
 
         if (checkIfCompleted !== true) {
@@ -514,8 +518,6 @@ async function displayGoals(hasGoalsLeft, checkIfCompleted) {
         }
 
         hasGoalsLeft = localStorage.getItem("cachedGoalsLeft_owner") > 0 || false;
-
-        document.getElementById("badgesGoalsTableRow").innerHTML = "";
 
         let sortBy = localStorage.getItem("display_goals_owner");
 
@@ -535,6 +537,8 @@ async function displayGoals(hasGoalsLeft, checkIfCompleted) {
                         const url = `/user/update/settings/${setting}`;
 
                         await callServerAPIPost(infoHeader, url);
+                        showGoalBadgeAnimations = false;
+                        document.getElementById("badgesGoalsTableRow").innerHTML = "";
                     }
                 }
             } else {

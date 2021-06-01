@@ -291,9 +291,8 @@ ${firstName[0]} har ingen løft, mål eller treningsplan
 
 function displayLifts() {
 
-    let sortBy = sessionStorage.getItem("display_lifts_visitor");
-
     document.getElementById("badgesLiftsTableRow").innerHTML = "";
+    let sortBy = sessionStorage.getItem("display_lifts_visitor");
 
     let showLifts = lifts;
 
@@ -418,6 +417,7 @@ function displayLifts() {
 
 function displayGoals() {
 
+    document.getElementById("badgesGoalsTableRow").innerHTML = "";
     let sortBy = sessionStorage.getItem("display_goals_visitor");
 
     let showGoals = goals;

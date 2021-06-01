@@ -341,6 +341,8 @@ async function displayGoals(checkIfCompleted) {
 
     try {
 
+        document.getElementById("badgesTableRow").innerHTML = "";
+
         const completedGoalsList = {};
 
         if (checkIfCompleted !== true) {
@@ -350,8 +352,6 @@ async function displayGoals(checkIfCompleted) {
         hasGoalsLeft = localStorage.getItem("cachedGoalsLeft_owner") > 0 || false;
 
         const smallTitle = document.getElementById("smallTitle");
-
-        document.getElementById("badgesTableRow").innerHTML = "";
 
         let sortBy = localStorage.getItem("display_goals_owner");
 
@@ -371,6 +371,8 @@ async function displayGoals(checkIfCompleted) {
                         const url = `/user/update/settings/${setting}`;
 
                         await callServerAPIPost(infoHeader, url);
+                        showGoalBadgeAnimations = false;
+                        document.getElementById("badgesTableRow").innerHTML = "";
                     }
                 }
             } else {
