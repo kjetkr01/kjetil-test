@@ -153,33 +153,33 @@
 
 
 .blue_fullColorTheme-light {
---main-headerBackground:  #2e42af;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-headerBackground:  #1378bb;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
---main-backgroundColor1: #314ad4;
---main-backgroundColorRGBLowOpacity: #3a53e240;
+--main-backgroundColor1: #147abe;
+--main-backgroundColorRGBLowOpacity: #147abe40;
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
 --main-accountOwnerColor: var(--main-backgroundColor1);
 
 
 
---main-lineBorder: 1px #ffffff solid;
---main-border: 1px #d7e3eb90 solid;
---main-border2: 0.75px #c9dde985 solid;
+--main-lineBorder: 1px #214f6e solid;
+--main-border: 1px #164e7085 solid;
+--main-border2:  0.75px #15456485 solid;
 
---main-backgroundColor2: #989fdb;
---main-backgroundColor3: #b5bae4;
+--main-backgroundColor2: #a7d4f0;
+--main-backgroundColor3: #c8e9ff;
 
 --main-headerTextColor: white;
 --main-textColorLight: white;
 --main-textColorDark: #04273d;
 --main-textColorBadges: white;
 
---main-iconsActiveColor: #083d5e;
---main-iconsDefaultColor: #8188c2;
+--main-iconsActiveColor: #1d455f;
+--main-iconsDefaultColor: #7794a8;
 
---main-emptyBadgeColor: #6a6fa1;
---main-emptyBadgeShadow: #585b7a70;
+--main-emptyBadgeColor: #5a7283;
+--main-emptyBadgeShadow: #5a728370;
 --main-emptyBadgeBorderColor: white;
 }
 

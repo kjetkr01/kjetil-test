@@ -23,7 +23,7 @@ const themeColors = {
     "default": { "lightHex": "327a94", "darkHex": "1c4553" },
     "blue": { "lightHex": "3247bb", "darkHex": "202b6b" },
     "default_full": { "lightHex": "327a94", "darkHex": "1c4553" },
-    "blue_full": { "lightHex": "2e42af", "darkHex": "09314b" }
+    "blue_full": { "lightHex": "1378bb", "darkHex": "09314b" }
 }
 
 try {

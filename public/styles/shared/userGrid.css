@@ -290,11 +290,13 @@ font-size: 18px;
 }
 
 .trainingsplitLine {
+border: var(--main-lineBorder);
 margin-top: 2.5px;
 margin-bottom: 5px;
 }
 
 .trainingsplitSmallLine {
+border: var(--main-border);
 margin-top: 2.5px;
 margin-bottom: 5px;
 opacity: 50%;
