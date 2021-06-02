@@ -1,69 +1,95 @@
-const cacheName = 'TS-PWA-v35';
+const cacheName = 'TS-PWA-v37';
 
 const contentToCache = [
+
+    /* MAIN */
+
     '/',
     '/registerSW.js',
-    '/account.html',
-    '/images/appIcon.png',
-    '/images/trash.svg',
+    '/ts_application.js',
+    '/manifest.json',
+
+    '/login.html',
+    '/access.html',
     '/index.html',
     '/leaderboards.html',
-    '/manifest.json',
-    '/scripts/account/account.js',
-    '/scripts/shared/editInformation.js',
+    '/account.html',
+    '/settings.html',
+    '/user.html',
+
+    /* IMAGES */
+
+    '/images/appIcon.png',
+    '/images/trash.svg',
+
+    /* SCRIPTS */
+
     '/scripts/global/appInfo.js',
-    '/scripts/shared/badges.js',
     '/scripts/global/global.js',
-    '/scripts/index/index.js',
-    '/scripts/leaderboards/leaderboards.js',
+
+    '/scripts/shared/editInformation.js',
+    '/scripts/shared/badges.js',
+    '/scripts/shared/trainingsplit.js',
     '/scripts/shared/overlay.js',
-    '/styles/shared/overlay.css',
+
+    '/scripts/validate/validateInfo.js',
+    '/scripts/index/index.js',
+
+    '/scripts/leaderboards/leaderboards.js',
+
+    '/scripts/account/account.js',
+
     '/scripts/settings/loadFunctions.js',
     '/scripts/settings/saveSettings.js',
     '/scripts/settings/settings.js',
     '/scripts/settings/templateFunctions.js',
     '/scripts/user/user.js',
-    '/scripts/shared/trainingsplit.js',
-    '/settings.html',
-    '/styles/account/common.css',
-    '/styles/account/desktop.css',
-    '/styles/account/mobile.css',
-    '/styles/shared/badgeColors.css',
-    '/styles/shared/badges.css',
+
+    /* STYLES */
+
     '/styles/global/global.css',
     '/styles/global/globalClasses.css',
     '/styles/global/globalVariables.css',
+    '/styles/global/themes.css',
+
+    '/styles/shared/badgeColors.css',
+    '/styles/shared/badges.css',
+    '/styles/shared/userGrid.css',
+    '/styles/shared/overlay.css',
+
+    '/styles/login/desktop.css',
+    '/styles/login/mobile.css',
+    '/styles/login/common.css',
+
+    '/styles/access/desktop.css',
+    '/styles/access/mobile.css',
+    '/styles/access/common.css',
+
     '/styles/index/common.css',
     '/styles/index/desktop.css',
     '/styles/index/mobile.css',
+
+    '/styles/account/common.css',
+    '/styles/account/desktop.css',
+    '/styles/account/mobile.css',
+
     '/styles/leaderboards/board.css',
     '/styles/leaderboards/common.css',
     '/styles/leaderboards/desktop.css',
     '/styles/leaderboards/mobile.css',
+
     '/styles/settings/common.css',
     '/styles/settings/desktop.css',
     '/styles/settings/mobile.css',
     '/styles/settings/settingsGrid.css',
-    '/styles/global/themes.css',
+
     '/styles/user/common.css',
     '/styles/user/desktop.css',
     '/styles/user/mobile.css',
-    '/styles/shared/userGrid.css',
-    '/ts_application.js',
-    '/user.html',
-    '/login.html',
-    '/styles/login/desktop.css',
-    '/styles/login/mobile.css',
-    '/styles/login/common.css',
-    '/access.html',
-    '/styles/access/desktop.css',
-    '/styles/access/mobile.css',
-    '/styles/access/common.css',
-    '/scripts/validate/validateInfo.js',
 ]
 
 self.addEventListener('install', (e) => {
-    //self.skipWaiting();
+    self.skipWaiting();
     console.log(`[Service Worker] Install - ${cacheName}`);
     e.waitUntil((async () => {
         const cache = await caches.open(cacheName);

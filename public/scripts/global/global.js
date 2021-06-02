@@ -657,14 +657,6 @@ function removeServiceWorker() {
     });
 }
 
-function updateServiceWorker() {
-    navigator.serviceWorker.getRegistrations().then(function (registrations) {
-        for (let registration of registrations) {
-            registration.update();
-        }
-    });
-}
-
 async function deleteAllCaches() {
     const cachesKeys = await caches.keys();
     for (let i = 0; i < cachesKeys.length; i++) {
