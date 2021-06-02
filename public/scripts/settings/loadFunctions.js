@@ -469,7 +469,7 @@ async function loadAboutAppPage(setting) {
                 const allCaches = await caches.keys();
                 if (allCaches.length > 0) {
                     let state = "not active";
-                    if (navigator.serviceWorker !== undefined) {
+                    if ('serviceWorker' in navigator) {
                         if (navigator.serviceWorker.controller) {
                             if (navigator.serviceWorker.controller.state) {
                                 state = navigator.serviceWorker.controller.state;
@@ -480,13 +480,14 @@ async function loadAboutAppPage(setting) {
                     const totalCacheSizeBytes = await cachesSize();
                     const totalCacheSizeMB = parseFloat(totalCacheSizeBytes / 1000000).toFixed(2);
                     settingsGrid.innerHTML += getCenteredTextTemplate(`
-                Service Worker: ${state}
-                <br>
-                ${allCaches} ~ ${totalCacheSizeMB || 0} MB
-                <br>
-                <button class="settingsButton pointer" onClick="deleteCachesConfirm();">Tøm cache</button>
-                `, "left", "spacingTop");
+                    Service Worker: ${state}
+                    <br>
+                    ${allCaches} ~ ${totalCacheSizeMB || 0} MB
+                    <br>
+                    <button class="settingsButton pointer" onClick="deleteCachesConfirm();">Tøm cache</button>
+                    `, "left", "spacingTop");
                 }
+
             } catch (err) {
                 console.log(err);
             }

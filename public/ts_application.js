@@ -2,7 +2,7 @@
 
     // Oppdatere disse når ny commit
 
-    const updates = 959;
+    const updates = 960;
     const updateDay = "02.06.2021";
 
     // Slutt
