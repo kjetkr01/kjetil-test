@@ -1,4 +1,4 @@
-const cacheName = 'TS-PWA-v34';
+const cacheName = 'TS-PWA-v35';
 
 const contentToCache = [
     '/registerSW.js',
@@ -62,6 +62,7 @@ const contentToCache = [
 ]
 
 self.addEventListener('install', (e) => {
+    //self.skipWaiting();
     console.log(`[Service Worker] Install - ${cacheName}`);
     e.waitUntil((async () => {
         const cache = await caches.open(cacheName);
@@ -69,7 +70,6 @@ self.addEventListener('install', (e) => {
         await cache.addAll(contentToCache);
         console.log('[Service Worker] Downloaded: app shell and content');
     })());
-    self.skipWaiting();
 });
 
 self.addEventListener('activate', (e) => {

@@ -627,8 +627,8 @@ function updateApplication(aShowNotification) {
 
         if (confirmUpdate === true) {
             sessionStorage.removeItem("settings_notification_update");
-            removeServiceWorker();
-            deleteAllCaches();
+            //removeServiceWorker();
+            //deleteAllCaches();
         }
     } else {
         if (aShowNotification !== false) {
