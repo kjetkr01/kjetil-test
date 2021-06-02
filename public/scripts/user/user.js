@@ -136,6 +136,13 @@ async function requestAccountDetails() {
                 } else if (resp.includes("sin profil er privat!") === true) {
                     //alert(resp);
                     //returnToPrevious();
+                    const doms = ["title", "info", "gym", "medalsInfo", "memberSince"];
+                    for (let i = 0; i < doms.length; i++) {
+                        const dom = document.getElementById(doms[i]);
+                        if (dom) {
+                            dom.innerHTML = "";
+                        }
+                    }
                     showAlert(resp, true, "returnToPrevious();");
                 } else {
                     /*alert("Det har oppstått en feil!");

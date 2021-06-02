@@ -121,9 +121,9 @@
 
 
 .default_fullColorTheme-light {
---main-headerBackground:  #e6e6e6;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-headerBackground:  #327a94;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
---main-backgroundColor1: #363636;
+--main-backgroundColor1: #225a6e;
 --main-backgroundColorRGBLowOpacity: #0D2E4140;
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
@@ -131,20 +131,20 @@
 
 
 
---main-lineBorder: 1px #ffffff solid;
---main-border: 1px #d7e3eb90 solid;
---main-border2: 0.75px #c9dde985 solid;
+--main-lineBorder: 1px #757575 solid;
+--main-border: 1px #75757585 solid;
+--main-border2: 0.75px #92929285 solid;
 
---main-backgroundColor2: #e6e6e6;
---main-backgroundColor3: #e6e6e6;
+--main-backgroundColor2: #c3dde7;
+--main-backgroundColor3: #92c8db;
 
---main-headerTextColor: black;
+--main-headerTextColor: white;
 --main-textColorLight: white;
 --main-textColorDark: black;
 --main-textColorBadges: white;
 
---main-iconsActiveColor: #000000;
---main-iconsDefaultColor: #808080;
+--main-iconsActiveColor: #113b4b;
+--main-iconsDefaultColor: #3f86a1;
 
 --main-emptyBadgeColor: #8d8d8d;
 --main-emptyBadgeShadow: #8d8d8d70;
@@ -167,7 +167,7 @@
 --main-border: 1px #164e7085 solid;
 --main-border2:  0.75px #15456485 solid;
 
---main-backgroundColor2: #a7d4f0;
+--main-backgroundColor2: #b6d7ec;
 --main-backgroundColor3: #c8e9ff;
 
 --main-headerTextColor: white;
