@@ -2,7 +2,7 @@
 
 
 #title, #gym, #info {
-color:var(--main-headerTextColor);
+color: var(--main-headerTextColor);
 font-weight: bold;
 font-family: var(--main-font-Family-Verdana);
 }

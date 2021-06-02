@@ -12,13 +12,13 @@ opacity: 85%;
 }
 
 #settings {
+float: right;
 margin-top: 10px;
 word-break: keep-all;
 white-space: nowrap;
 }
 
 .settingsBtn {
-float:right;
 margin-right: 20px;
 word-break: keep-all;
 font-size: 14px; /* 16px før */

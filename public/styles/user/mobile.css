@@ -66,19 +66,20 @@ margin-left: 20px;
 
 #Gtitle > #title {
 min-height: 40px;
+font-size: 26px;
 }
 
 #Ggym > #gym {
-/*min-height: 6vh;*/
+font-size: 18px;
 }
 
 #Ginfo > #info {
-/*min-height: 4.10vh;*/
 margin-top: 12.5px;
+font-size: 14px;
 }
 
 #GmedalsInfo > #medalsInfo {
-margin-top: 12.5px;
+margin-top: 10px;
 margin-right: 20px;
 float: right;
 }
@@ -91,14 +92,6 @@ float: right;
 word-break: keep-all;
 font-size: 18px;
 margin-top: 18px;
-}
-
-#title {
-font-size: 26px;
-}
-
-#gym {
-font-size: 18px;
 }
 
 #title, #gym, #smallTitle, #badges, #today, #peopleWorkoutTxt {
