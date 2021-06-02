@@ -234,7 +234,8 @@
          if (navigator.onLine && sessionStorage.getItem("checkedForUpdate") !== "true") {
             const serverApplication = await callServerAPIPost({}, `/application`);
             if (serverApplication) {
-               //checkedForUpdate prevents unnecessary requests to server
+               // checkedForUpdate prevents unnecessary requests to server
+               // only auto checks for update once a session
                sessionStorage.setItem("checkedForUpdate", true);
                if (serverApplication.version.fullNumber !== application.version.fullNumber) {
 
