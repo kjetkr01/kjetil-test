@@ -619,14 +619,15 @@ function updateApplication(aShowNotification) {
     if (window.navigator.onLine) {
         let confirmUpdate = true;
 
+        sessionStorage.removeItem('settings_notification_update');
+
         if (aShowNotification !== false) {
             //confirmUpdate = confirm("Ønsker du å oppdatere? (Krever Internett-tilkobling)");
-            showConfirm("Ønsker du å oppdatere? (Krever Internett-tilkobling)", "sessionStorage.removeItem('settings_notification_update');deleteAllCaches();");
+            showConfirm("Ønsker du å oppdatere? (Krever Internett-tilkobling)", "deleteAllCaches();");
             return;
         }
 
         if (confirmUpdate === true) {
-            sessionStorage.removeItem("settings_notification_update");
             deleteAllCaches();
         }
     } else {
