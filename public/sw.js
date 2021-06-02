@@ -1,6 +1,7 @@
 const cacheName = 'TS-PWA-v35';
 
 const contentToCache = [
+    '/',
     '/registerSW.js',
     '/account.html',
     '/images/appIcon.png',
