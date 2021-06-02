@@ -94,15 +94,18 @@ async function updateUserInfo(aSkipReqData) {
 function scrollToSavedPos(setting, extraScroll) {
 
     let currentScroll = parseInt(sessionStorage.getItem(`@scroll-${setting}`));
-    if (!isNaN(currentScroll)) {
+    if (isNaN(currentScroll)) {
+        currentScroll = 0;
+    }
 
-        if (extraScroll > 0 && currentScroll < 25) {
-            currentScroll = extraScroll;
-        }
+    if (extraScroll > 0 && currentScroll < 25) {
+        currentScroll = extraScroll;
+    }
 
-        if (currentScroll) {
-            settingsDom.scrollTo(0, currentScroll);
-        }
+    console.log(currentScroll)
+
+    if (currentScroll) {
+        settingsDom.scrollTo(0, currentScroll);
     }
 }
 

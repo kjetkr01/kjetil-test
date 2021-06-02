@@ -231,9 +231,11 @@
 
       checkForUpdate();
       async function checkForUpdate() {
-         if (navigator.onLine) {
+         if (navigator.onLine && sessionStorage.getItem("checkedForUpdate") !== "true") {
             const serverApplication = await callServerAPIPost({}, `/application`);
             if (serverApplication) {
+               //checkedForUpdate prevents unnecessary requests to server
+               sessionStorage.setItem("checkedForUpdate", true);
                if (serverApplication.version.fullNumber !== application.version.fullNumber) {
 
                   if (user.getSetting("automaticupdates") === true) {
