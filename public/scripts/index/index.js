@@ -97,74 +97,75 @@ async function checkWhoIsWorkingOutToday() {
 
     currentDayInfo();
 
-    const resp = await whoIsWorkingOutToday();
+    if (navigator.onLine) {
 
-    if (resp.length > 0) {
+        const resp = await whoIsWorkingOutToday();
 
-        if (resp.length === 1) {
-            peopleWorkoutTxt.innerHTML = `I dag trener ${resp.length} person`;
-        } else {
-            peopleWorkoutTxt.innerHTML = `I dag trener ${resp.length} personer`;
-        }
+        if (resp.length > 0) {
 
-        resp.sort(function (a, b) {
-            if (a.todaysWorkout < b.todaysWorkout) {
-                return -1;
+            if (resp.length === 1) {
+                peopleWorkoutTxt.innerHTML = `I dag trener ${resp.length} person`;
+            } else {
+                peopleWorkoutTxt.innerHTML = `I dag trener ${resp.length} personer`;
             }
-            if (a.todaysWorkout > b.todaysWorkout) {
-                return 1;
-            }
-            return 0;
-        });
 
-        let currentWorkout = "";
+            resp.sort(function (a, b) {
+                if (a.todaysWorkout < b.todaysWorkout) {
+                    return -1;
+                }
+                if (a.todaysWorkout > b.todaysWorkout) {
+                    return 1;
+                }
+                return 0;
+            });
 
-        for (let i = 0; i < resp.length; i++) {
-            let splitFullName = resp[i].userFullName.split(" ");
-            let shortenedFullName = "";
+            let currentWorkout = "";
 
-            if (currentWorkout !== resp[i].todaysWorkout) {
-                peopleWorkoutList.innerHTML += `
+            for (let i = 0; i < resp.length; i++) {
+                let splitFullName = resp[i].userFullName.split(" ");
+                let shortenedFullName = "";
+
+                if (currentWorkout !== resp[i].todaysWorkout) {
+                    peopleWorkoutList.innerHTML += `
                <button class="peopleWorkoutListWorkout fadeIn">${resp[i].todaysWorkout}</button>
                <br>
                `;
 
-                currentWorkout = resp[i].todaysWorkout;
-            }
+                    currentWorkout = resp[i].todaysWorkout;
+                }
 
-            shortenedFullName = splitFullName[0] + " ";
-            for (let j = 1; j < splitFullName.length; j++) {
-                shortenedFullName += `${splitFullName[j][0]}.`;
-            }
+                shortenedFullName = splitFullName[0] + " ";
+                for (let j = 1; j < splitFullName.length; j++) {
+                    shortenedFullName += `${splitFullName[j][0]}.`;
+                }
 
-            if (user && user.getId() === resp[i].id) {
+                if (user && user.getId() === resp[i].id) {
 
-                peopleWorkoutList.innerHTML += `
+                    peopleWorkoutList.innerHTML += `
                 <button class="accountOwner fadeInUp animate pointer" onClick="viewUser('${resp[i].id}')">${shortenedFullName}</button>
                 <br>
                 `;
 
-            } else {
+                } else {
 
-                peopleWorkoutList.innerHTML += `
+                    peopleWorkoutList.innerHTML += `
             <button class="peopleWorkoutListName fadeInUp animate pointer" onClick="viewUser('${resp[i].id}')">${shortenedFullName}</button>
             <br>
             `;
 
+                }
+
             }
 
+        } else {
+            peopleWorkoutTxt.innerHTML = `I dag er det ingen som trener`;
         }
+
+        sessionStorage.setItem("cached_peopleWorkoutTxt", peopleWorkoutTxt.innerHTML);
 
     } else {
-        if (navigator.onLine) {
-            peopleWorkoutTxt.innerHTML = `I dag er det ingen som trener`;
-        } else {
-            peopleWorkoutTxt.innerHTML = defaultTxt.noConnection;
-        }
-
+        peopleWorkoutTxt.innerHTML = defaultTxt.noConnection;
     }
-
-    sessionStorage.setItem("cached_peopleWorkoutTxt", peopleWorkoutTxt.innerHTML);
 
 }
 
