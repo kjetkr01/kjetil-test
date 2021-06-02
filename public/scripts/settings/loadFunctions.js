@@ -484,7 +484,7 @@ async function loadAboutAppPage(setting) {
                 <br>
                 ${allCaches} ~ ${totalCacheSizeMB || 0} MB
                 <br>
-                <button class="settingsButton pointer" onClick="deleteCachesAndUnregisterSW();">Tøm cache</button>
+                <button class="settingsButton pointer" onClick="deleteCachesConfirm();">Tøm cache</button>
                 `, "left", "spacingTop");
                 }
             } catch (err) {

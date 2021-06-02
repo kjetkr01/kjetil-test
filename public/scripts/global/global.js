@@ -621,14 +621,13 @@ function updateApplication(aShowNotification) {
 
         if (aShowNotification !== false) {
             //confirmUpdate = confirm("Ønsker du å oppdatere? (Krever Internett-tilkobling)");
-            showConfirm("Ønsker du å oppdatere? (Krever Internett-tilkobling)", "sessionStorage.removeItem('settings_notification_update');removeServiceWorker();deleteAllCaches();");
+            showConfirm("Ønsker du å oppdatere? (Krever Internett-tilkobling)", "sessionStorage.removeItem('settings_notification_update');deleteAllCaches();");
             return;
         }
 
         if (confirmUpdate === true) {
             sessionStorage.removeItem("settings_notification_update");
-            //removeServiceWorker();
-            //deleteAllCaches();
+            deleteAllCaches();
         }
     } else {
         if (aShowNotification !== false) {
@@ -638,7 +637,7 @@ function updateApplication(aShowNotification) {
     }
 }
 
-function deleteCachesAndUnregisterSW() {
+function deleteCachesConfirm() {
     /*const confirmDeleteCache = confirm("Er du sikker på at du ønsker å tømme caches (Offline modus vil være utilgjengelig frem til ny cache blir lastet ned)");
 
     if (confirmDeleteCache === true) {
@@ -646,7 +645,7 @@ function deleteCachesAndUnregisterSW() {
         deleteAllCaches();
     }*/
 
-    showConfirm("Er du sikker på at du ønsker å tømme caches (Offline modus vil være utilgjengelig frem til ny cache blir lastet ned)", "removeServiceWorker();deleteAllCaches();");
+    showConfirm("Er du sikker på at du ønsker å tømme caches (Offline modus vil være utilgjengelig frem til ny cache blir lastet ned)", "deleteAllCaches();");
 }
 
 function removeServiceWorker() {
@@ -654,6 +653,7 @@ function removeServiceWorker() {
         for (let registration of registrations) {
             registration.unregister();
         }
+        location.reload();
     });
 }
 
@@ -670,7 +670,7 @@ async function deleteAllCaches() {
     for (let i = 0; i < cachesKeys.length; i++) {
         await caches.delete(cachesKeys[i]);
     }
-    location.reload();
+    removeServiceWorker();
 }
 
 // redirect functions
