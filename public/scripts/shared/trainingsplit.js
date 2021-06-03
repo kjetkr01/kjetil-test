@@ -44,7 +44,7 @@ async function requestTrainingsplitDetails() {
             document.title = `Treningsplan`;
 
             document.getElementById("smallTitle").innerHTML = `<div>
-                <svg class="backBtnIcon iconsDefaultColor pointer" draggable="false"
+                <svg id="backBtnTrainingsplit" class="backBtnIcon iconsDefaultColor pointer" draggable="false"
                    onclick="exitTrainingsplit();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
                    <g id="Layer_2" data-name="Layer 2">
                       <g id="Layer_1-2" data-name="Layer 1">
@@ -104,7 +104,8 @@ async function requestTrainingsplitDetails() {
 const exerciseListCount = [];
 function loadEditTrainingsplit(aResp, aSelectedDay) {
 
-    document.getElementById("account").setAttribute("onclick", "exitTrainingsplit();");
+    document.getElementById("backBtnTrainingsplit").setAttribute("onclick", "exitTrainingsplitConfirm();");
+    document.getElementById("account").setAttribute("onclick", "exitTrainingsplitConfirm();");
 
     const resp = aResp;
 
@@ -510,8 +511,9 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
                                 <p class="trainingsplitInline">kg (${info.number}%)</p>
                                 `;
                                 } else {
-                                    if (!ORMLifts.includes(exercise)) {
-                                        ORMLifts.push(exercise);
+                                    const checkExercise = capitalizeFirstLetter(exercise);
+                                    if (!ORMLifts.includes(checkExercise)) {
+                                        ORMLifts.push(checkExercise);
                                     }
                                 }
                             }
@@ -1016,10 +1018,13 @@ async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTraining
     }
 }
 
+async function exitTrainingsplitConfirm() {
+    showConfirm("Vil du lagre før du forlater?", "exitTrainingsplit(true);", "exitTrainingsplit();");
+}
 
-async function exitTrainingsplit() {
+async function exitTrainingsplit(aSave) {
 
-    if (trainingsplit.edit === "true") {
+    if (trainingsplit.edit === "true" && aSave === true) {
         await saveTrainingsplit(false);
     }
 

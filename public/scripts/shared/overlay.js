@@ -319,7 +319,6 @@ function getTSConfirmOverlay() {
             <p id="informationTSConfirm">Ønsker du å godta denne meldingen?</p>
          </div>
          <div id="GcancelBtnTSConfirm">
-            <button id="cancelBtnTSConfirm" class="TSConfirmBtn pointer" onClick="disableOverlay('TSConfirmOverlay');">Avbryt</button>
          </div>
          <div id="GacceptBtnTSConfirm">
          </div>
@@ -372,20 +371,24 @@ function showAlert(aInformation, aDisplayCloseBtn, aPerformWhenUserCloseOverlay)
    }
 }
 
-function showConfirm(aInformation, aPerformWhenUserAccept) {
+function showConfirm(aInformation, aPerformWhenUserAccept, aPerformWhenUserDeny) {
    const TSConfirmOverlay = document.getElementById("TSConfirmOverlay");
    const informationTSConfirm = document.getElementById("informationTSConfirm");
+   const GcancelBtnTSConfirm = document.getElementById("GcancelBtnTSConfirm");
    const GacceptBtnTSConfirm = document.getElementById("GacceptBtnTSConfirm");
 
    if (TSConfirmOverlay && informationTSConfirm && GacceptBtnTSConfirm) {
       if (TSConfirmOverlay.style.display === "none") {
+         GcancelBtnTSConfirm.innerHTML = `<button id="cancelBtnTSConfirm" class="TSConfirmBtn pointer" onClick="disableOverlay('TSConfirmOverlay');">Avbryt</button>`;
          GacceptBtnTSConfirm.innerHTML = "";
          const information = aInformation;
          const performWhenUserAccept = aPerformWhenUserAccept;
+         const performWhenUserDeny = aPerformWhenUserDeny;
          if (information && performWhenUserAccept) {
             TSConfirmOverlay.style.display = "block";
             informationTSConfirm.innerHTML = information;
             GacceptBtnTSConfirm.innerHTML = `<button id="acceptBtnTSConfirm" class="TSConfirmBtn pointer" onClick="disableOverlay('TSConfirmOverlay');${performWhenUserAccept}">Godta</button>`;
+            GcancelBtnTSConfirm.innerHTML = `<button id="cancelBtnTSConfirm" class="TSConfirmBtn pointer" onClick="disableOverlay('TSConfirmOverlay');${performWhenUserDeny}">Avbryt</button>`;
          }
       }
    }
