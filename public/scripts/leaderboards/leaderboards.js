@@ -8,7 +8,7 @@ let updateLeaderboardList = true;
 
 async function loadLeaderboards() {
 
-    const reps = localStorage.getItem("leaderboards_filter_reps") || "1";
+    const reps = user.getSetting("leaderboards_filter_reps") || "1";
     const scrollToX = sessionStorage.getItem("leaderboards_scrollX");
 
     const leaderboardsTableRowDom = document.getElementById("leaderboardsTableRow");
@@ -149,7 +149,6 @@ async function loadLeaderboards() {
 
                 getListOfLeaderboard();
             } else {
-                localStorage.removeItem("leaderboards_filter_reps");
                 await updateLeaderboardsFilterReps();
                 if (retryLoadOnce === true) {
                     loadLeaderboards();
@@ -178,7 +177,7 @@ async function getListOfLeaderboard(aLeaderboard) {
 
         if (user && aLeaderboard) {
 
-            const reps = localStorage.getItem("leaderboards_filter_reps") || "1";
+            const reps = user.getSetting("leaderboards_filter_reps") || "1";
             viewingLeaderboard = aLeaderboard;
             leaderboardIsLoading = true;
 
@@ -345,7 +344,6 @@ async function changeLeaderboardReps() {
 
     const reps = document.getElementById("leaderboardReps").value;
 
-    localStorage.setItem("leaderboards_filter_reps", reps);
     sessionStorage.removeItem("cached_viewingLeaderboard");
     sessionStorage.removeItem("leaderboards_scrollX");
 
@@ -361,8 +359,11 @@ async function updateLeaderboardsFilterReps(aValue) {
     if (!aValue) {
         aValue = null;
     }
+
     const value = aValue;
     const setting = "leaderboards_filter_reps";
+
+    user.changeSetting("leaderboards_filter_reps", value);
 
     const infoHeader = { "updateSetting": setting, "value": value };
     const url = `/user/update/settings/${setting}`;

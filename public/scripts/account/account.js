@@ -144,10 +144,7 @@ async function requestAccountDetails() {
             }
 
             if (activetrainingsplit) {
-                sessionStorage.removeItem("hasActiveTrainingsplit");
                 showTrainingsplitBadgeAnimations = false;
-            } else {
-                sessionStorage.setItem("hasActiveTrainingsplit", false);
             }
 
             displayTrainingsplit();
@@ -214,9 +211,11 @@ function displayInformation(respInfo) {
 
         const checkExistingLifts = JSON.stringify(lifts);
         const checkUpdatedLifts = JSON.stringify(info.lifts);
+        const checkUpdatedDisplayLifts = info.settings.display_lifts_owner;
 
         const checkExistingGoals = JSON.stringify(goals);
         const checkUpdatedGoals = JSON.stringify(info.goals);
+        const checkUpdatedDisplayGoals = info.settings.display_goals_owner;
 
         const checkExistingBadgeColors = JSON.stringify(badgeColorsJSON);
         const checkUpdatedBadgeColors = JSON.stringify(info.badgeColors);
@@ -224,11 +223,11 @@ function displayInformation(respInfo) {
         const checkExistingActiveTrainingsplit = JSON.stringify(activetrainingsplit);
         const checkUpdatedActiveTrainingsplit = JSON.stringify(info.activetrainingsplit);
 
-        if (checkExistingLifts === checkUpdatedLifts) {
+        if (checkExistingLifts === checkUpdatedLifts && checkUpdatedDisplayLifts === user.getSetting("display_lifts_owner")) {
             updateLifts = false;
         }
 
-        if (checkExistingGoals === checkUpdatedGoals && weight === user.getDetail("weight")) {
+        if (checkExistingGoals === checkUpdatedGoals && weight === user.getDetail("weight") && checkUpdatedDisplayGoals === user.getSetting("display_goals_owner")) {
             updateGoals = false;
         }
 
@@ -236,7 +235,7 @@ function displayInformation(respInfo) {
             updateBadgeColors = false;
         }
 
-        if (checkExistingActiveTrainingsplit === checkUpdatedActiveTrainingsplit) {
+        if (checkExistingActiveTrainingsplit === checkUpdatedActiveTrainingsplit && info.settings.activetrainingsplit === user.getSetting("activetrainingsplit")) {
             updateActiveTrainingsplit = false;
         }
 
@@ -250,12 +249,18 @@ function displayInformation(respInfo) {
 
     if (updateLifts === true) {
         lifts = info.lifts;
+        if (user.getSetting("display_lifts_owner") !== info.settings.display_lifts_owner) {
+            user.changeSetting("display_lifts_owner", info.settings.display_lifts_owner);
+        }
         showLiftBadgeAnimations = true;
     }
 
     if (updateGoals === true) {
         if (user.getDetail("weight") !== weight) {
             user.changeDetail("weight", weight);
+        }
+        if (user.getSetting("display_goals_owner") !== info.settings.display_goals_owner) {
+            user.changeSetting("display_goals_owner", info.settings.display_goals_owner);
         }
         goals = info.goals;
         showGoalBadgeAnimations = true;
@@ -353,16 +358,16 @@ async function displayLifts(hasLiftsLeft) {
 
         hasLiftsLeft = localStorage.getItem("cachedLiftsLeft_owner") > 0 || false;
 
-        let sortBy = localStorage.getItem("display_lifts_owner");
+        let sortByLifts = user.getSetting("display_lifts_owner");
 
         let showLifts = lifts;
 
-        if (sortBy) {
-            if (lifts[sortBy]) {
-                showLifts = lifts[sortBy];
+        if (sortByLifts) {
+            if (lifts[sortByLifts]) {
+                showLifts = lifts[sortByLifts];
                 if (showLifts.length === 0) {
-                    sortBy = null;
-                    localStorage.removeItem("display_lifts_owner");
+                    sortByLifts = null;
+                    user.changeSetting("display_lifts_owner", null);
 
                     if (navigator.onLine) {
                         const value = null;
@@ -372,13 +377,11 @@ async function displayLifts(hasLiftsLeft) {
                         const url = `/user/update/settings/${setting}`;
 
                         await callServerAPIPost(infoHeader, url);
-                        showLiftBadgeAnimations = false;
-                        document.getElementById("badgesLiftsTableRow").innerHTML = "";
                     }
                 }
             } else {
-                sortBy = null;
-                localStorage.removeItem("display_lifts_owner");
+                sortByLifts = null;
+                user.changeSetting("display_lifts_owner", null);
             }
         }
 
@@ -386,14 +389,14 @@ async function displayLifts(hasLiftsLeft) {
 
         const arr = [];
 
-        if (sortBy === null) {
+        if (sortByLifts === null) {
             for (let i = 0; i < keys.length; i++) {
                 const exerciseLift = lifts[keys[i]];
                 displayPerExercise(exerciseLift, keys[i]);
             }
         } else {
             const exerciseLift = showLifts;
-            displayPerExercise(exerciseLift, sortBy);
+            displayPerExercise(exerciseLift, sortByLifts);
         }
 
         function displayPerExercise(aExerciseLift, aCurrent) {
@@ -441,7 +444,7 @@ async function displayLifts(hasLiftsLeft) {
 
                     let html = `<option value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${lifts[keys[x]].length})</option>`;
 
-                    if (keys[x] === sortBy) {
+                    if (keys[x] === sortByLifts) {
                         html = `<option selected="selected" value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${lifts[keys[x]].length})</option>`;
                     }
 
@@ -467,13 +470,6 @@ async function displayLifts(hasLiftsLeft) {
                     badgesLiftsTableRow.innerHTML += badge;
                 }
             }
-
-            setTimeout(() => {
-                if (localStorage.getItem("display_lifts_owner") !== sortBy) {
-                    showLiftBadgeAnimations = true;
-                    displayLifts();
-                }
-            }, 1000);
 
         } else {
             document.getElementById("lifts").innerHTML = `Du har ingen løft enda!`;
@@ -519,16 +515,17 @@ async function displayGoals(hasGoalsLeft, checkIfCompleted) {
 
         hasGoalsLeft = localStorage.getItem("cachedGoalsLeft_owner") > 0 || false;
 
-        let sortBy = localStorage.getItem("display_goals_owner");
+        let sortByGoals = user.getSetting("display_goals_owner");
 
         let showGoals = goals;
 
-        if (sortBy) {
-            if (goals[sortBy]) {
-                showGoals = goals[sortBy];
+        if (sortByGoals) {
+            if (goals[sortByGoals]) {
+                showGoals = goals[sortByGoals];
                 if (showGoals.length === 0) {
-                    sortBy = null;
-                    localStorage.removeItem("display_goals_owner");
+                    sortByGoals = null;
+                    user.changeSetting("display_goals_owner", null);
+
                     if (navigator.onLine) {
                         const value = null;
                         const setting = "display_goals_owner";
@@ -537,13 +534,11 @@ async function displayGoals(hasGoalsLeft, checkIfCompleted) {
                         const url = `/user/update/settings/${setting}`;
 
                         await callServerAPIPost(infoHeader, url);
-                        showGoalBadgeAnimations = false;
-                        document.getElementById("badgesGoalsTableRow").innerHTML = "";
                     }
                 }
             } else {
-                sortBy = null;
-                localStorage.removeItem("display_goals_owner");
+                sortByGoals = null;
+                user.changeSetting("display_goals_owner", null);
             }
         }
 
@@ -551,14 +546,14 @@ async function displayGoals(hasGoalsLeft, checkIfCompleted) {
 
         const arr = [];
 
-        if (sortBy === null) {
+        if (sortByGoals === null) {
             for (let i = 0; i < keys.length; i++) {
                 const exerciseGoal = goals[keys[i]];
                 displayPerExercise(exerciseGoal, keys[i]);
             }
         } else {
             const exerciseGoal = showGoals;
-            displayPerExercise(exerciseGoal, sortBy);
+            displayPerExercise(exerciseGoal, sortByGoals);
         }
 
         function displayPerExercise(aExerciseGoal, aCurrent) {
@@ -612,7 +607,7 @@ async function displayGoals(hasGoalsLeft, checkIfCompleted) {
                                 }
 
                             } else {
-                                msg = "Vekt er ugyldig";
+                                msg = "Din vekt kreves";
                                 untilGoal = 100;
                             }
 
@@ -762,7 +757,7 @@ async function displayGoals(hasGoalsLeft, checkIfCompleted) {
 
                     let html = `<option value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${goals[keys[x]].length})</option>`;
 
-                    if (keys[x] === sortBy) {
+                    if (keys[x] === sortByGoals) {
                         html = `<option selected="selected" value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${goals[keys[x]].length})</option>`;
                     }
 
@@ -812,13 +807,6 @@ async function displayGoals(hasGoalsLeft, checkIfCompleted) {
                 }
             }
 
-            setTimeout(() => {
-                if (localStorage.getItem("display_goals_owner") !== sortBy) {
-                    showGoalBadgeAnimations = true;
-                    displayGoals();
-                }
-            }, 1000);
-
         } else {
             document.getElementById("goals").innerHTML = `Du har ingen mål enda!`;
         }
@@ -855,7 +843,7 @@ function displayTrainingsplit() {
 
     try {
 
-        if (sessionStorage.getItem("hasActiveTrainingsplit") === "false" && !activetrainingsplit) {
+        if (user.getSetting("activetrainingsplit") === null && !activetrainingsplit) {
             showTrainingsplitBadgeAnimations = false;
         }
 

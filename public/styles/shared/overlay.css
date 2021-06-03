@@ -33,7 +33,7 @@ transform: translate(-50%,-50%);
 width: 90vw;
 max-width: 550px;
 height: auto;
-max-height: 515px;
+max-height: 90vh; /* 515px før */
 overflow-y: scroll;
 
 background-color: var(--main-backgroundColor2);
@@ -378,7 +378,7 @@ transform: translate(-50%,-50%);
 width: 90vw;
 max-width: 550px;
 height: auto;
-max-height: 380px;
+max-height: 90vh; /* 380px */
 overflow-y: scroll;
 
 background-color: var(--main-backgroundColor2);
@@ -666,7 +666,7 @@ transform: translate(-50%,-50%);
 width: 90vw;
 max-width: 550px;
 height: auto;
-max-height: 545px;
+max-height: 90vh; /* 545px før */
 overflow-y: scroll;
 
 background-color: var(--main-backgroundColor2);
@@ -1027,8 +1027,8 @@ transform: translate(-50%,-50%);
 -ms-transform: translate(-50%,-50%);
 width: 90%;
 max-width: 550px;
-height: 90vh;
-max-height: 620px;
+height: auto;
+max-height: 90vh; /* 620px før */
 overflow-y: scroll;
 
 background-color: var(--main-backgroundColor2);
@@ -1079,13 +1079,13 @@ grid-template-rows: /* nedover */
 
 10px /* Gline1workoutPlans */
 
-30px /* c2oWP */
+auto /* c2oWP */
 
 
 
-25px /* Gtitle2workoutPlans */
+auto /* Gtitle2workoutPlans */
 
-10px /* Gline2workoutPlans */
+auto /* Gline2workoutPlans */
 
 auto /* GlistworkoutPlans */
 
@@ -1103,7 +1103,7 @@ auto /* GcreateplanworkoutPlans */
 
 
 
-25px /* Gtitle3workoutPlans */
+auto /* Gtitle3workoutPlans */
 
 10px /* Gline3workoutPlans */
 
@@ -1115,7 +1115,7 @@ auto /* GviewsubplanworkoutPlans */
 
 
 
-25px /* Gtitle4workoutPlans */
+auto /* Gtitle4workoutPlans */
 
 10px /* Gline4workoutPlans */
 
@@ -1151,6 +1151,7 @@ width: 200px;
 }
 
 #Gline2workoutPlans > #line2workoutPlans {
+    margin-bottom: 10px;
 }
 
 #Gline3workoutPlans > #line3workoutPlans {
@@ -1240,6 +1241,7 @@ border: transparent;
 }
 
 #Gtitle2workoutPlans > #title2workoutPlans {
+    margin-top: 30px;
 }
 
 #Gtitle3workoutPlans > #title3workoutPlans {

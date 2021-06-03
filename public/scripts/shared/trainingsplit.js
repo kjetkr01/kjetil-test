@@ -39,6 +39,14 @@ async function requestTrainingsplitDetails() {
 
     try {
 
+        const hideDoms = ["feed", "leaderboards", "account", "settings"];
+        for (let i = 0; i < hideDoms.length; i++) {
+            const dom = document.getElementById(hideDoms[i]);
+            if (dom) {
+                dom.classList = "hidden";
+            }
+        }
+
         if (trainingsplit.id) {
 
             document.title = `Treningsplan`;

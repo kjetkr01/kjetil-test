@@ -15,7 +15,7 @@
             state: "a", // a = alpha / b = beta / rc = release candidate / r = release
             major: 6,
             minor: 2,
-            revision: 19,
+            revision: 20,
             buildnumber: 946,
         },
         lastUpdated: {

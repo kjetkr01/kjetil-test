@@ -362,16 +362,14 @@ async function getAccountDetails(aUserID) {
 
                 if (resp.hasOwnProperty("updatedUserObject")) {
 
-                    const s = resp.info.settings;
-
                     if (localStorage.getItem("user")) {
                         localStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
                         localStorage.setItem("userDetails", JSON.stringify(resp.userDetails));
-                        localStorage.setItem("userSettings", JSON.stringify(s));
+                        localStorage.setItem("userSettings", JSON.stringify(resp.info.settings));
                     } else {
                         sessionStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
                         sessionStorage.setItem("userDetails", JSON.stringify(resp.userDetails));
-                        sessionStorage.setItem("userSettings", JSON.stringify(s));
+                        sessionStorage.setItem("userSettings", JSON.stringify(resp.info.settings));
                     }
 
                     if (resp.info.hasOwnProperty("activetrainingsplit")) {
@@ -384,32 +382,6 @@ async function getAccountDetails(aUserID) {
                         localStorage.setItem("cachedAllTrainingsplits_owner", JSON.stringify(resp.info.alltrainingsplits));
                     } else {
                         localStorage.removeItem("cachedAllTrainingsplits_owner");
-                    }
-
-                    if (s.hasOwnProperty("leaderboards_filter_reps")) {
-                        if (s.leaderboards_filter_reps) {
-                            localStorage.setItem("leaderboards_filter_reps", s.leaderboards_filter_reps);
-                        } else {
-                            localStorage.removeItem("leaderboards_filter_reps");
-                        }
-                    }
-                    if (s.hasOwnProperty("display_lifts_owner")) {
-                        if (s.display_lifts_owner) {
-                            if (localStorage.getItem("display_lifts_owner") !== s.display_lifts_owner) {
-                                localStorage.setItem("display_lifts_owner", s.display_lifts_owner);
-                            }
-                        } else {
-                            localStorage.removeItem("display_lifts_owner");
-                        }
-                    }
-                    if (s.hasOwnProperty("display_goals_owner")) {
-                        if (s.display_goals_owner) {
-                            if (localStorage.getItem("display_goals_owner") !== s.display_goals_owner) {
-                                localStorage.setItem("display_goals_owner", s.display_goals_owner);
-                            }
-                        } else {
-                            localStorage.removeItem("display_goals_owner");
-                        }
                     }
 
                     if (resp.info.hasOwnProperty("allowedLifts")) {
@@ -499,32 +471,28 @@ async function sortByLiftsOrGoalOwner(aDom, aType) {
 
     const dom = document.getElementById(aDom);
     const type = aType;
+    let domValue = null;
 
     if (dom && type) {
+
+        if (!dom.value || dom.value === "null") {
+            domValue = null;
+        } else {
+            domValue = dom.value;
+        }
 
         if (type === "lift") {
             showLiftBadgeAnimations = true;
             sessionStorage.removeItem("badgeslifts_scroll_x");
-            localStorage.setItem('display_lifts_owner', dom.value);
+            user.changeSetting("display_lifts_owner", domValue);
             if (navigator.onLine) {
-                const value = dom.value;
+                const value = domValue;
                 const setting = "display_lifts_owner";
 
                 const infoHeader = { "updateSetting": setting, "value": value };
                 const url = `/user/update/settings/${setting}`;
 
                 await callServerAPIPost(infoHeader, url);
-            } else {
-                localStorage.removeItem('display_lifts_owner');
-                if (navigator.onLine) {
-                    const value = null;
-                    const setting = "display_lifts_owner";
-
-                    const infoHeader = { "updateSetting": setting, "value": value };
-                    const url = `/user/update/settings/${setting}`;
-
-                    await callServerAPIPost(infoHeader, url);
-                }
             }
 
             displayLifts();
@@ -533,26 +501,15 @@ async function sortByLiftsOrGoalOwner(aDom, aType) {
         if (type === "goal") {
             showGoalBadgeAnimations = true;
             sessionStorage.removeItem("badgesgoals_scroll_x");
-            localStorage.setItem('display_goals_owner', dom.value);
+            user.changeSetting("display_goals_owner", domValue);
             if (navigator.onLine) {
-                const value = dom.value;
+                const value = domValue;
                 const setting = "display_goals_owner";
 
                 const infoHeader = { "updateSetting": setting, "value": value };
                 const url = `/user/update/settings/${setting}`;
 
                 await callServerAPIPost(infoHeader, url);
-            } else {
-                localStorage.removeItem('display_goals_owner');
-                if (navigator.onLine) {
-                    const value = null;
-                    const setting = "display_goals_owner";
-
-                    const infoHeader = { "updateSetting": setting, "value": value };
-                    const url = `/user/update/settings/${setting}`;
-
-                    await callServerAPIPost(infoHeader, url);
-                }
             }
 
             displayGoals();

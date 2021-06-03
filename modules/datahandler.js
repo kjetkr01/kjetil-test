@@ -1495,7 +1495,7 @@ class StorageHandler {
 
             if (allTrainingsplits.rows.length < maxTrainingsplits.default) {
 
-                const trainingsplitName = `Treningsplan ${allTrainingsplits.rows.length + 1} `;
+                const trainingsplitName = `Treningsplan ${allTrainingsplits.rows.length + 1}`;
 
                 const newTrainingsplit = await client.query(`
                                 INSERT INTO user_trainingsplit(user_id, trainingsplit_name)
