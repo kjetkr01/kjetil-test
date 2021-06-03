@@ -29,6 +29,8 @@ const ongoingUpdatesArr = [
     "Lage flere farge-temaer",
     "TITLE:Innstillinger",
     "Personvern (75%)",
+    "TITLE:Treningsplan",
+    "Enklere se hvilken dag det er på badgesene (40%)",
     "TITLE:Splash Screen (iOS)",
     "Fikse slik at splash screen funker på landscape mode (iPad) (50%)",
     "TITLE:Språk",

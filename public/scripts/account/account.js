@@ -866,12 +866,17 @@ function displayTrainingsplit() {
             const arr = [];
 
             if (keys.length > 0) {
+                const dayNum = new Date().getDay();
+                const day = days[dayNum];
                 for (let i = 0; i < keys.length; i++) {
 
                     if (days.includes(keys[i]) && daysNorwegian[keys[i]]) {
                         let activeTrainingsplitKeys = activetrainingsplit[keys[i]];
                         if (activeTrainingsplitKeys.short.length > 0) {
-                            const color = "redBadgeG";
+                            let color = "trainingsplit_defaultBadgeG";
+                            if (keys[i] === day) {
+                                color = "trainingsplit_todayBadgeG";
+                            }
                             arr.push({ "day": daysNorwegian[keys[i]], "trainingsplit": activeTrainingsplitKeys.short, "color": color, "trainingsplit_id": activetrainingsplit.trainingsplit_id });
                         }
                     }

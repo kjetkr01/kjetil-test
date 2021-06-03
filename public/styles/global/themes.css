@@ -21,7 +21,7 @@
 --default-light-iconsDefaultColor: #8D8D8D;
 
 --default-light-emptyBadgeColor: #8d8d8d;
---default-light-emptyBadgeShadow: #8d8d8d70;
+--default-light-emptyBadgeShadow: #8d8d8d80;
 --default-light-emptyBadgeBorderColor: white;
 
 /* END OF DEFAULT LIGHT VALUES */
@@ -45,7 +45,7 @@
 --default-dark-iconsDefaultColor: #808080;
 
 --default-dark-emptyBadgeColor: #6d6d6d;
---default-dark-emptyBadgeShadow: #72727270;
+--default-dark-emptyBadgeShadow: #72727280;
 --default-dark-emptyBadgeBorderColor: white;
 
 /* END OF DEFAULT DARK VALUES */
@@ -60,7 +60,7 @@
 --main-headerBackground:  #327a94;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
 --main-backgroundColor1: #3c93b3;
---main-backgroundColorRGBLowOpacity: #3c93b340;
+--main-backgroundColorRGBLowOpacity: #327a9480;
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
 --main-accountOwnerColor: var(--main-backgroundColor1);
@@ -92,7 +92,7 @@
 --main-headerBackground:  #3247bb;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
 --main-backgroundColor1: #3a53e2;
---main-backgroundColorRGBLowOpacity: #3a53e240;
+--main-backgroundColorRGBLowOpacity: #3247bb80;
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
 --main-accountOwnerColor: var(--main-backgroundColor1);
@@ -120,43 +120,11 @@
 }
 
 
-.default_fullColorTheme-light {
---main-headerBackground:  #327a94;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
---main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
---main-backgroundColor1: #225a6e;
---main-backgroundColorRGBLowOpacity: #0D2E4140;
---main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
-
---main-accountOwnerColor: var(--main-backgroundColor1);
-
-
-
---main-lineBorder: 1px #757575 solid;
---main-border: 1px #75757585 solid;
---main-border2: 0.75px #92929285 solid;
-
---main-backgroundColor2: #c3dde7;
---main-backgroundColor3: #92c8db;
-
---main-headerTextColor: white;
---main-textColorLight: white;
---main-textColorDark: black;
---main-textColorBadges: white;
-
---main-iconsActiveColor: #113b4b;
---main-iconsDefaultColor: #3f86a1;
-
---main-emptyBadgeColor: #8d8d8d;
---main-emptyBadgeShadow: #8d8d8d70;
---main-emptyBadgeBorderColor: white;
-}
-
-
 .blue_fullColorTheme-light {
 --main-headerBackground:  #1378bb;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
 --main-backgroundColor1: #147abe;
---main-backgroundColorRGBLowOpacity: #147abe40;
+--main-backgroundColorRGBLowOpacity: #1378bb80;
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
 --main-accountOwnerColor: var(--main-backgroundColor1);
@@ -179,9 +147,41 @@
 --main-iconsDefaultColor: #7794a8;
 
 --main-emptyBadgeColor: #5a7283;
---main-emptyBadgeShadow: #5a728370;
+--main-emptyBadgeShadow: #5a728380;
 --main-emptyBadgeBorderColor: white;
 }
+
+.blue_full_gradientColorTheme-light {
+    --main-headerBackground:  #1378bb;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+    --main-bodyBackgroundColor: var(--main-backgroundColor2); /* #78CFF0 */
+    --main-bodyBackgroundImage: linear-gradient(52deg, rgba(163, 163, 163, 0.09) 0%, rgba(163, 163, 163, 0.09) 33.3%,rgba(100, 100, 100, 0.09) 33.3%, rgba(100, 100, 100, 0.09) 66.6%,rgba(162, 162, 162, 0.09) 66.6%, rgba(162, 162, 162, 0.09) 99%),linear-gradient(258deg, rgba(193, 193, 193, 0.06) 0%, rgba(193, 193, 193, 0.06) 33.3%,rgba(169, 169, 169, 0.06) 33.3%, rgba(169, 169, 169, 0.06) 66.6%,rgba(92, 92, 92, 0.06) 66.6%, rgba(92, 92, 92, 0.06) 99%),linear-gradient(129deg, rgba(45, 45, 45, 0.03) 0%, rgba(45, 45, 45, 0.03) 33.3%,rgba(223, 223, 223, 0.03) 33.3%, rgba(223, 223, 223, 0.03) 66.6%,rgba(173, 173, 173, 0.03) 66.6%, rgba(173, 173, 173, 0.03) 99%),linear-gradient(280deg, rgba(226, 226, 226, 0.06) 0%, rgba(226, 226, 226, 0.06) 33.3%,rgba(81, 81, 81, 0.06) 33.3%, rgba(81, 81, 81, 0.06) 66.6%,rgba(186, 186, 186, 0.06) 66.6%, rgba(186, 186, 186, 0.06) 99%),linear-gradient(85deg, rgba(225, 225, 225, 0.04) 0%, rgba(225, 225, 225, 0.04) 33.3%,rgba(95, 95, 95, 0.04) 33.3%, rgba(95, 95, 95, 0.04) 66.6%,rgba(39, 39, 39, 0.04) 66.6%, rgba(39, 39, 39, 0.04) 99%),linear-gradient(128deg, rgba(184, 184, 184, 0.06) 0%, rgba(184, 184, 184, 0.06) 33.3%,rgba(0, 0, 0, 0.06) 33.3%, rgba(0, 0, 0, 0.06) 66.6%,rgba(140, 140, 140, 0.06) 66.6%, rgba(140, 140, 140, 0.06) 99.89999999999999%),linear-gradient(323deg, rgba(40, 40, 40, 0.07) 0%, rgba(40, 40, 40, 0.07) 33.3%,rgba(214, 214, 214, 0.07) 33.3%, rgba(214, 214, 214, 0.07) 66.6%,rgba(190, 190, 190, 0.07) 66.6%, rgba(190, 190, 190, 0.07) 99.89999999999999%),linear-gradient(61deg, rgba(230, 230, 230, 0) 0%, rgba(230, 230, 230, 0) 33.3%,rgba(241, 241, 241, 0) 33.3%, rgba(241, 241, 241, 0) 66.6%,rgba(55, 55, 55, 0) 66.6%, rgba(55, 55, 55, 0) 99%),linear-gradient(0deg, #2625e3,#0bbaef);
+    --main-backgroundColor1: #147abe;
+    --main-backgroundColorRGBLowOpacity: #1378bb80;
+    --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
+    
+    --main-accountOwnerColor: var(--main-backgroundColor1);
+    
+    
+    
+    --main-lineBorder: 1px #214f6e solid;
+    --main-border: 1px #164e7085 solid;
+    --main-border2:  0.75px #15456485 solid;
+    
+    --main-backgroundColor2: #b6d7ec;
+    --main-backgroundColor3: #c8e9ff;
+    
+    --main-headerTextColor: white;
+    --main-textColorLight: white;
+    --main-textColorDark: #04273d;
+    --main-textColorBadges: white;
+    
+    --main-iconsActiveColor: #1d455f;
+    --main-iconsDefaultColor: #7794a8;
+    
+    --main-emptyBadgeColor: #5a7283;
+    --main-emptyBadgeShadow: #5a728380;
+    --main-emptyBadgeBorderColor: white;
+    }
 
 /* END OF LIGHT THEME VALUES */
 
@@ -191,7 +191,7 @@
 --main-headerBackground:  #1c4553;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
 --main-backgroundColor1: #265f72;
---main-backgroundColorRGBLowOpacity: #265f7240;
+--main-backgroundColorRGBLowOpacity: #1c455380;
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
 --main-accountOwnerColor: #30738b;
@@ -222,7 +222,7 @@
 --main-headerBackground:  #202b6b;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
 --main-backgroundColor1: #293797;
---main-backgroundColorRGBLowOpacity: #29379740;
+--main-backgroundColorRGBLowOpacity: #202b6b80;
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
 --main-accountOwnerColor: #4154c0;
@@ -250,43 +250,44 @@
 }
 
 
-.default_fullColorTheme-dark {
---main-headerBackground:  #3d8ec4;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
---main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
---main-backgroundColor1: #8ba9bd;
---main-backgroundColorRGBLowOpacity: #586e7c40;
---main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
-
---main-accountOwnerColor: #135f92;
-
-
-
---main-lineBorder: 1px #ffffff solid;
---main-border: 1px #e6e6e685 solid;
---main-border2: 0.75px #dfdfdf85 solid;
-
---main-backgroundColor2: #586d7e;
---main-backgroundColor3: #5e84a0;
-
---main-headerTextColor: white;
---main-textColorLight: white;
---main-textColorDark: white;
---main-textColorBadges: white;
-
---main-iconsActiveColor: #ffffff;
---main-iconsDefaultColor: #747474;
-
---main-emptyBadgeColor: #6d6d6d;
---main-emptyBadgeShadow: #72727270;
---main-emptyBadgeBorderColor: white;
-}
-
-
 .blue_fullColorTheme-dark {
+    --main-headerBackground:  #09314b;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+    --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
+    --main-backgroundColor1: #0c3f61;
+    --main-backgroundColorRGBLowOpacity: #09314b80;
+    --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
+    
+    --main-accountOwnerColor: #135f92;
+    
+    
+    
+    --main-lineBorder: 1px #ffffff solid;
+    --main-border: 1px #e6e6e685 solid;
+    --main-border2: 0.75px #dfdfdf85 solid;
+    
+    --main-backgroundColor2: #1e2830;
+    --main-backgroundColor3: #161e24;
+    
+    --main-headerTextColor: white;
+    --main-textColorLight: white;
+    --main-textColorDark: white;
+    --main-textColorBadges: white;
+    
+    --main-iconsActiveColor: #ffffff;
+    --main-iconsDefaultColor: #747474;
+    
+    --main-emptyBadgeColor: #1d394b;
+    --main-emptyBadgeShadow: #12202980;
+    --main-emptyBadgeBorderColor: #82aac2;
+    }
+
+
+.blue_full_gradientColorTheme-dark {
 --main-headerBackground:  #09314b;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
---main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
+--main-bodyBackgroundColor: var(--main-backgroundColor2); /* #78CFF0 */
+--main-bodyBackgroundImage: linear-gradient(52deg, rgba(163, 163, 163, 0.09) 0%, rgba(163, 163, 163, 0.09) 33.3%,rgba(100, 100, 100, 0.09) 33.3%, rgba(100, 100, 100, 0.09) 66.6%,rgba(162, 162, 162, 0.09) 66.6%, rgba(162, 162, 162, 0.09) 99%),linear-gradient(258deg, rgba(193, 193, 193, 0.06) 0%, rgba(193, 193, 193, 0.06) 33.3%,rgba(169, 169, 169, 0.06) 33.3%, rgba(169, 169, 169, 0.06) 66.6%,rgba(92, 92, 92, 0.06) 66.6%, rgba(92, 92, 92, 0.06) 99%),linear-gradient(129deg, rgba(45, 45, 45, 0.03) 0%, rgba(45, 45, 45, 0.03) 33.3%,rgba(223, 223, 223, 0.03) 33.3%, rgba(223, 223, 223, 0.03) 66.6%,rgba(173, 173, 173, 0.03) 66.6%, rgba(173, 173, 173, 0.03) 99%),linear-gradient(280deg, rgba(226, 226, 226, 0.06) 0%, rgba(226, 226, 226, 0.06) 33.3%,rgba(81, 81, 81, 0.06) 33.3%, rgba(81, 81, 81, 0.06) 66.6%,rgba(186, 186, 186, 0.06) 66.6%, rgba(186, 186, 186, 0.06) 99%),linear-gradient(85deg, rgba(225, 225, 225, 0.04) 0%, rgba(225, 225, 225, 0.04) 33.3%,rgba(95, 95, 95, 0.04) 33.3%, rgba(95, 95, 95, 0.04) 66.6%,rgba(39, 39, 39, 0.04) 66.6%, rgba(39, 39, 39, 0.04) 99%),linear-gradient(128deg, rgba(184, 184, 184, 0.06) 0%, rgba(184, 184, 184, 0.06) 33.3%,rgba(0, 0, 0, 0.06) 33.3%, rgba(0, 0, 0, 0.06) 66.6%,rgba(140, 140, 140, 0.06) 66.6%, rgba(140, 140, 140, 0.06) 99.89999999999999%),linear-gradient(323deg, rgba(40, 40, 40, 0.07) 0%, rgba(40, 40, 40, 0.07) 33.3%,rgba(214, 214, 214, 0.07) 33.3%, rgba(214, 214, 214, 0.07) 66.6%,rgba(190, 190, 190, 0.07) 66.6%, rgba(190, 190, 190, 0.07) 99.89999999999999%),linear-gradient(61deg, rgba(230, 230, 230, 0) 0%, rgba(230, 230, 230, 0) 33.3%,rgba(241, 241, 241, 0) 33.3%, rgba(241, 241, 241, 0) 66.6%,rgba(55, 55, 55, 0) 66.6%, rgba(55, 55, 55, 0) 99%),linear-gradient(0deg, rgb(16,14,165),rgb(0,118,150));
 --main-backgroundColor1: #0c3f61;
---main-backgroundColorRGBLowOpacity: #0c3f6140;
+--main-backgroundColorRGBLowOpacity: #09314b80;
 --main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
 
 --main-accountOwnerColor: #135f92;
@@ -309,7 +310,7 @@
 --main-iconsDefaultColor: #747474;
 
 --main-emptyBadgeColor: #1d394b;
---main-emptyBadgeShadow: #12202970;
+--main-emptyBadgeShadow: #12202980;
 --main-emptyBadgeBorderColor: #82aac2;
 }
 

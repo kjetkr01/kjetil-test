@@ -299,7 +299,7 @@ ${firstName[0]} har ingen løft, mål eller treningsplan
 function displayLifts() {
 
     document.getElementById("badgesLiftsTableRow").innerHTML = "";
-    let sortBy = sessionStorage.getItem("display_lifts_visitor");
+    let sortBy = sessionStorage.getItem("lifts_filter_exercise_visitor");
 
     let showLifts = lifts;
 
@@ -308,11 +308,11 @@ function displayLifts() {
             showLifts = lifts[sortBy];
             if (showLifts.length === 0) {
                 sortBy = null;
-                sessionStorage.removeItem("display_lifts_visitor");
+                sessionStorage.removeItem("lifts_filter_exercise_visitor");
             }
         } else {
             sortBy = null;
-            sessionStorage.removeItem("display_lifts_visitor");
+            sessionStorage.removeItem("lifts_filter_exercise_visitor");
         }
     }
 
@@ -425,7 +425,7 @@ function displayLifts() {
 function displayGoals() {
 
     document.getElementById("badgesGoalsTableRow").innerHTML = "";
-    let sortBy = sessionStorage.getItem("display_goals_visitor");
+    let sortBy = sessionStorage.getItem("goals_filter_exercise_visitor");
 
     let showGoals = goals;
 
@@ -434,11 +434,11 @@ function displayGoals() {
             showGoals = goals[sortBy];
             if (showGoals.length === 0) {
                 sortBy = null;
-                sessionStorage.removeItem("display_goals_visitor");
+                sessionStorage.removeItem("goals_filter_exercise_visitor");
             }
         } else {
             sortBy = null;
-            sessionStorage.removeItem("display_goals_visitor");
+            sessionStorage.removeItem("goals_filter_exercise_visitor");
         }
     }
 
@@ -713,13 +713,17 @@ function displayTrainingsplit() {
             const arr = [];
 
             if (keys.length > 0) {
+                const dayNum = new Date().getDay();
+                const day = days[dayNum];
                 for (let i = 0; i < keys.length; i++) {
 
                     if (days.includes(keys[i]) && daysNorwegian[keys[i]]) {
                         let activeTrainingsplitKeys = activetrainingsplit[keys[i]];
                         if (activeTrainingsplitKeys.short.length) {
-                            const color = "redBadgeG";
-
+                            let color = "trainingsplit_defaultBadgeG";
+                            if (keys[i] === day) {
+                                color = "trainingsplit_todayBadgeG";
+                            }
                             arr.push({ "day": daysNorwegian[keys[i]], "trainingsplit": activeTrainingsplitKeys.short, "color": color, "trainingsplit_id": activetrainingsplit.trainingsplit_id });
                         }
                     }

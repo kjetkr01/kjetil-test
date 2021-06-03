@@ -510,10 +510,6 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
                               value = null;
                          }
                     }
-
-                    /*if (!allowedLifts.includes(value)) {
-                         value = null;
-                    }*/
                }
                else if (EAllowedSettings[setting][1] === "check-goals") {
                     for (let i = 0; i < allowedGoals.length; i++) {

@@ -5,6 +5,10 @@ margin: 0;
 
 body {
 background-color: var(--main-bodyBackgroundColor);
+background-image: var(--main-bodyBackgroundImage);
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-size: cover;
 /* background-color: var(--main-bodyBackgroundColor); */
 word-break: break-all;
 font-family: var(--main-font-Family-Arial);
@@ -16,8 +20,8 @@ text-decoration: none;
 }
 
 select {
-    padding: 0px;
-    appearance: none;
+padding: 0px;
+appearance: none;
 -webkit-appearance: none;
 -moz-appearance: none;
 border: none;

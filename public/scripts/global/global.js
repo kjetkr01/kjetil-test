@@ -15,15 +15,15 @@ const errorLoadingText = "Kunne ikke laste inn innholdet.";
 const allowedThemes = {
     0: { "id": 0, "name": "Standard", "theme": "default" },
     1: { "id": 1, "name": "Blå", "theme": "blue" },
-    2: { "id": 2, "name": "Standard (Test) (Full)", "theme": "default_full" },
-    3: { "id": 3, "name": "Blå (Test) (Full)", "theme": "blue_full" }
+    2: { "id": 2, "name": "Blå (Test) (Full)", "theme": "blue_full" },
+    3: { "id": 3, "name": "Blå (Test) (Full m/ gradient)", "theme": "blue_full_gradient" }
 }
 
 const themeColors = {
     "default": { "lightHex": "327a94", "darkHex": "1c4553" },
     "blue": { "lightHex": "3247bb", "darkHex": "202b6b" },
-    "default_full": { "lightHex": "327a94", "darkHex": "1c4553" },
-    "blue_full": { "lightHex": "1378bb", "darkHex": "09314b" }
+    "blue_full": { "lightHex": "1378bb", "darkHex": "09314b" },
+    "blue_full_gradient": { "lightHex": "b6d7ec", "darkHex": "1e2830" }
 }
 
 try {
@@ -525,12 +525,12 @@ function sortByLiftsOrGoalVisitor(aDom, aType) {
     if (dom && type) {
 
         if (type === "lift") {
-            sessionStorage.setItem('display_lifts_visitor', dom.value);
+            sessionStorage.setItem('lifts_filter_exercise_visitor', dom.value);
             displayLifts();
         }
 
         if (type === "goal") {
-            sessionStorage.setItem('display_goals_visitor', dom.value);
+            sessionStorage.setItem('goals_filter_exercise_visitor', dom.value);
             displayGoals();
         }
     }
@@ -658,8 +658,6 @@ function redirectToUser(viewUser) {
             redirectToAccount();
         } else {
             sessionStorage.setItem("visit_user_referrer", document.URL);
-            //sessionStorage.removeItem('display_goals_visitor');
-            //sessionStorage.removeItem('display_lifts_visitor');
             location.href = `user.html?user_id=${viewingUser}`;
         }
     } else {
