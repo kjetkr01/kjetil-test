@@ -12,11 +12,11 @@
         name: "Treningstatistikken",
         logoURL: "images/appIcon.png",
         version: {
-            state: "alpha", // alpha / beta / release candidate
+            state: "a", // a = alpha / b = beta / rc = release candidate / r = release
             major: 6,
             minor: 2,
             revision: 18,
-            buildnumber: 941,
+            buildnumber: 942,
         },
         lastUpdated: {
             day: upd[0],
@@ -29,20 +29,8 @@
         }
     }
 
-    let custom = "";
-    if (app.version.state !== "release") {
-        switch (app.version.state) {
-            case "alpha":
-                custom = "-a";
-                break;
-            case "beta":
-                custom = "-b";
-                break;
-            case "release candidate":
-                custom = "-rc";
-                break;
-        }
-        app.version.fullNumber = `${app.version.major}.${app.version.minor}.${app.version.revision}.${custom}${app.version.buildnumber}`;
+    if (app.version.state !== "r") {
+        app.version.fullNumber = `${app.version.major}.${app.version.minor}.${app.version.revision}-${app.version.state}.${app.version.buildnumber}`;
     } else {
         app.version.fullNumber = `${app.version.major}.${app.version.minor}.${app.version.revision}.${app.version.buildnumber}`;
     }
