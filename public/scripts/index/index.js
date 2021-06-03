@@ -315,6 +315,10 @@ async function displayBadges(aInfo) {
         badgeColors = new TbadgeColors(info.badgeColors);
     }
 
+    if (user.getSetting("display_lifts_owner") !== info.settings.display_lifts_owner) {
+        user.changeSetting("display_lifts_owner", info.settings.display_lifts_owner);
+    }
+
     if (updateGoals === true) {
         if (user.getSetting("badgesize") !== info.settings.badgesize) {
             user.changeSetting("badgesize", info.settings.badgesize);
