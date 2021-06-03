@@ -124,6 +124,28 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
         "sunday": "Søndag"
     }
 
+    let exerciseListHTML = "";
+    try {
+        const allowedLifts = JSON.parse(sessionStorage.getItem("allowedLifts"));
+        if (allowedLifts) {
+            let exerciseListOptionsHTML = "";
+            for (let v = 0; v < allowedLifts.length; v++) {
+                const exercise = capitalizeFirstLetter(allowedLifts[v]);
+                exerciseListOptionsHTML += `<option value="${exercise}">${exercise}</option>`;
+            }
+            exerciseListHTML = `
+            <select id="selectNewExercise" class="trainingsplitSelect pointer">
+            <option value=null>Velg øvelse her</option>
+            ${exerciseListOptionsHTML}
+            </select>
+            eller fyll inn`;
+        }
+    } catch {
+
+    }
+
+    document.getElementById("smallTitle").innerHTML += top;
+
     let optionsHTML = "";
 
     const EDaysKeys = Object.keys(EDays);
@@ -136,37 +158,14 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
         }
     }
 
-    const daysList = `Velg dag: <select id="trainingsplitSelectDay" onChange="changeTrainingsplitDay();" class="trainingsplitSelect pointer">${optionsHTML}</select>`;
-
-    const cachedLifts_owner = JSON.parse(localStorage.getItem("cachedLifts_owner"));
-
-    const exercisesList = [];
-
-    if (cachedLifts_owner) {
-        const cachedLifts_ownerKeys = Object.keys(cachedLifts_owner);
-        for (let i = 0; i < cachedLifts_ownerKeys.length; i++) {
-            exercisesList.push(capitalizeFirstLetter(cachedLifts_ownerKeys[i]));
-        }
-    }
-
-    let exerciseListOptionsHTML = "";
-
-    for (let v = 0; v < exercisesList.length; v++) {
-        exerciseListOptionsHTML += `<option value="${exercisesList[v]}">${exercisesList[v]}</option>`;
-    }
-
-    document.getElementById("smallTitle").innerHTML += top + daysList;
     const toolBarHTML = `
     <button id="saveTrainingsplitBtn" class="trainingsplitButton pointer fadeIn animate" onClick="saveTrainingsplit();">Lagre</button>
     <button class="trainingsplitButton pointer fadeIn animate" onClick="deleteTrainingsplitConfirm('${resp.trainingsplit_id}');"><img src="images/trash.svg"></img></button>
     <br>
     <br>
+    <select id="trainingsplitSelectDay" onChange="changeTrainingsplitDay();" class="trainingsplitSelect pointer">${optionsHTML}</select>
     <div id="addNewExerciseDiv">
-    <select id="selectNewExercise" class="trainingsplitSelect pointer">
-    <option value=null>Velg øvelse her</option>
-    ${exerciseListOptionsHTML}
-    </select>
-    eller fyll inn
+    ${exerciseListHTML}
     <input id="inputNewExercise" class="trainingsplitNameInput" maxlength="30" placeholder="Øvelse"></input>
 
     <button class="trainingsplitButton pointer" onClick="addExercise();">Legg til øvelse</button>
@@ -187,7 +186,7 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
 
     document.getElementById("trainingsplitInfo").innerHTML = `
     <p><h4>Info:</h4>
-    ${shortTxt}Format: 2 x 3 = 2 Sets, 3 Reps.
+    ${shortTxt}Format: 3 x 2 = 3 Reps, 2 Sets. Reps kan feks være 3, Teknisk max, 60 sek osv
     <br>80 % = 80 % av 1 Rep/ORM i øvelsen (krever ORM i løftet for automatisk utregning)
     <br>Du kan ha ${maxTrainingsplitsExercisesPerDay} øvelser per dag.
     <br>Du kan ha ${maxTrainingsplitsExerciseRows} rader per øvelse.
@@ -270,12 +269,17 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
                 trainingsplitTable.innerHTML += `
             <p class="trainingsplitListRow fadeInUp animate delaySmall">
             ${j + 1}.
-            <input id="${exerciseName}-${j}-sets" class="trainingsplitSetsInput" maxlength="2" value="${info.sets}"></input>
+           
+            Reps
+            <input id="${exerciseName}-${j}-reps" class="trainingsplitRepsInput" maxlength="15" value="${info.reps}"></input>
+
             x
-            <input id="${exerciseName}-${j}-reps" class="trainingsplitRepsInput" maxlength="2" value="${info.reps}"></input>
 
+            Sets
+            <input id="${exerciseName}-${j}-sets" class="trainingsplitSetsInput" maxlength="2" value="${info.sets}"></input>
+
+            Tall
             <input id="${exerciseName}-${j}-number" class="trainingsplitInput" maxlength="6" value="${info.number}"></input>
-
             <select id="${exerciseName}-${j}-value" class="trainingsplitSelect pointer">
             ${optionsHTMLList}
             </select>
@@ -340,7 +344,7 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
         }
     }
 
-    const daysList = `<br>Velg dag: <select id="trainingsplitSelectDay" onChange="changeTrainingsplitDay();" class="trainingsplitSelect pointer">${optionsHTML}</select>`;
+    const daysList = `<br><select id="trainingsplitSelectDay" onChange="changeTrainingsplitDay();" class="trainingsplitSelect pointer">${optionsHTML}</select>`;
 
     document.getElementById("userGrid").innerHTML = `
     <div id="trainingsplitDiv">
@@ -523,9 +527,9 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
                         <div class="${animation} delaySmall">
                         <p class="trainingsplitListRow trainingsplitInline">
                         ${j + 1}.
-                        <p class="trainingsplitInline" style="margin-left:30px;">${info.sets}</p>
+                        <p class="trainingsplitInline" style="margin-left:30px;">${info.reps}</p>
                         x
-                        <p class="trainingsplitInline">${info.reps}</p>
+                        <p class="trainingsplitInline">${info.sets}</p>
                         ${extraHTML}
                         </p>
                         </div>

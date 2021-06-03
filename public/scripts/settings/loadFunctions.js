@@ -761,12 +761,17 @@ async function loadPendingUsersPage(setting) {
 async function loadAPIPage() {
 
     let response = null;
-    const allCaches = await caches.keys();
-    if (allCaches.length > 0) {
-        const cache = await caches.open(allCaches[0]);
-        if (cache) {
-            response = await cache.match("/api");
+
+    try {
+        const allCaches = await caches.keys();
+        if (allCaches.length > 0) {
+            const cache = await caches.open(allCaches[0]);
+            if (cache) {
+                response = await cache.match("/api");
+            }
         }
+    } catch {
+
     }
 
     if (userInfo.hasOwnProperty("apikey")) {

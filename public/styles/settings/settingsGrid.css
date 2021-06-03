@@ -4,10 +4,6 @@
 font-family: var(--main-font-Family-Verdana);
 }
 
-select {
-outline: none;
-}
-
 /*@media only screen and (max-width: 1024px) {*/ /* 768px var før, men passer bedre med 1024px for ipad */
 
 /* grid */
@@ -263,10 +259,6 @@ color: var(--main-accountOwnerColor);
 font-size: 14px;
 text-align: right;
 text-align-last: right;
-appearance: none;
--webkit-appearance: none;
--moz-appearance: none;
-border: none;
 background-color: var(--main-backgroundColor3);
 }
 

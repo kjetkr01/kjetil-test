@@ -214,11 +214,6 @@ font-size: 20px;
 color: var(--main-textColorDark);
 /*font-weight: bold;*/
 font-family: var(--main-font-Family-Verdana);
-appearance: none;
--webkit-appearance: none;
--moz-appearance: none;
-border: none;
-outline: none;
 background-color: var(--main-backgroundColor2);
 }
 
@@ -240,21 +235,22 @@ height: 30px;
 width: fit-content;
 }
 
+#trainingsplitSelectDay {
+font-size: 20px;
+font-weight: bold;
+}
+
 .trainingsplitSelect {
 font-size: 18px;
 /*color: var(--main-accountOwnerColor);*/
-color: var(--main-textColorDark);
+color: var(--main-accountOwnerColor);
 /*font-weight: bold;*/
-appearance: none;
--webkit-appearance: none;
--moz-appearance: none;
-border: none;
-outline: none;
 background-color: var(--main-backgroundColor2);
 }
 
 .trainingsplitNameInput, .trainingsplitSetsInput, .trainingsplitRepsInput, .trainingsplitInput {
 font-size: 18px;
+padding: 0;
 color: var(--main-textColorDark);
 appearance: none;
 -webkit-appearance: none;
@@ -264,21 +260,19 @@ outline: none;
 background-color: var(--main-backgroundColor2);
 }
 
-.trainingsplitSetsInput, .trainingsplitRepsInput {
-width: 36px;
+.trainingsplitRepsInput{
+text-align: left;
+width: 138px;
 }
 
 .trainingsplitSetsInput{
-text-align: right;
-}
-
-.trainingsplitRepsInput{
 text-align: left;
+width: 36px;
 }
 
 .trainingsplitInput{
 width: 42px;
-text-align: right;
+text-align: left;
 }
 
 #trainingsplitDiv {

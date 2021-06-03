@@ -1296,15 +1296,19 @@ async function saveTrainingsplit(aReload) {
                             }
 
                             for (let j = 0; j < count; j++) {
-                                const d = ["sets", "reps", "number", "value"];
-                                const enu = { "sets": 0, "reps": 0, "number": 0, "value": 0 };
+                                const d = ["reps", "sets", "number", "value"];
+                                const enu = { "reps": "0", "sets": 0, "number": 0, "value": 0 };
 
                                 for (let k = 0; k < d.length; k++) {
                                     const dom = document.getElementById(`${key[0]}-${j}-${d[k]}`);
                                     if (dom) {
-                                        let n = parseFloat(dom.value);
-                                        if (!isNaN(n)) {
-                                            if (d[k] === "sets" || d[k] === "reps") {
+                                        let n = dom.value;
+                                        if (d[k] !== "reps") {
+                                            n = parseFloat(n);
+                                        }
+
+                                        if (!isNaN(n) || d[k] === "reps") {
+                                            if (d[k] === "sets") {
                                                 const lowest = 0;
                                                 const higest = 99;
                                                 if (n < lowest || n > higest) {
@@ -1313,6 +1317,10 @@ async function saveTrainingsplit(aReload) {
                                                     } else if (n > higest) {
                                                         n = higest;
                                                     }
+                                                }
+                                            } else if (d[k] === "reps") {
+                                                if (n.length > 15) {
+                                                    n = "0";
                                                 }
                                             }
                                             enu[d[k]] = n;
@@ -1349,7 +1357,6 @@ async function saveTrainingsplit(aReload) {
                                         }
                                         break;
                                     }
-
                                 }
 
                                 cacheList.push(enu);

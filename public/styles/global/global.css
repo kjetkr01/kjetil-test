@@ -15,6 +15,15 @@ color: var(--main-textColorDark);
 text-decoration: none;
 }
 
+select {
+    padding: 0px;
+    appearance: none;
+-webkit-appearance: none;
+-moz-appearance: none;
+border: none;
+outline: none;
+}
+
 input {
 outline-style: none;
 -webkit-touch-callout: none;
