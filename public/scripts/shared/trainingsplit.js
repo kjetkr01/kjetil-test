@@ -433,14 +433,13 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
 
             const trainingsplitTable = document.getElementById("trainingsplitTable");
 
+            trainingsplitTable.innerHTML += `<br><h3 class="${animation}">${exerciseName}</h3>`;
+
             if (exerciseList.length > 0) {
+                trainingsplitTable.innerHTML += `<hr class="trainingsplitLine ${animation}">`;
 
                 for (let j = 0; j < exerciseList.length; j++) {
                     const info = exerciseList[j];
-
-                    if (j === 0) {
-                        trainingsplitTable.innerHTML += `<br><h3 class="${animation}">${exerciseName}</h3><hr class="trainingsplitLine ${animation}">`;
-                    }
 
                     const list = {
                         0: "Ingen",
@@ -534,6 +533,7 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
                         </p>
                         </div>
                         <hr class="trainingsplitSmallLine ${animation} delayMedium">`;
+
                 }
             }
         }
