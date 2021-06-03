@@ -484,10 +484,10 @@ async function sortByLiftsOrGoalOwner(aDom, aType) {
         if (type === "lift") {
             showLiftBadgeAnimations = true;
             sessionStorage.removeItem("badgeslifts_scroll_x");
-            user.changeSetting("display_lifts_owner", domValue);
+            user.changeSetting("lifts_filter_exercise", domValue);
             if (navigator.onLine) {
                 const value = domValue;
-                const setting = "display_lifts_owner";
+                const setting = "lifts_filter_exercise";
 
                 const infoHeader = { "updateSetting": setting, "value": value };
                 const url = `/user/update/settings/${setting}`;
@@ -501,10 +501,10 @@ async function sortByLiftsOrGoalOwner(aDom, aType) {
         if (type === "goal") {
             showGoalBadgeAnimations = true;
             sessionStorage.removeItem("badgesgoals_scroll_x");
-            user.changeSetting("display_goals_owner", domValue);
+            user.changeSetting("goals_filter_exercise", domValue);
             if (navigator.onLine) {
                 const value = domValue;
-                const setting = "display_goals_owner";
+                const setting = "goals_filter_exercise";
 
                 const infoHeader = { "updateSetting": setting, "value": value };
                 const url = `/user/update/settings/${setting}`;

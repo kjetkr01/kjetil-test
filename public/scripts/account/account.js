@@ -211,11 +211,11 @@ function displayInformation(respInfo) {
 
         const checkExistingLifts = JSON.stringify(lifts);
         const checkUpdatedLifts = JSON.stringify(info.lifts);
-        const checkUpdatedDisplayLifts = info.settings.display_lifts_owner;
+        const checkUpdatedLiftsFilter = info.settings.lifts_filter_exercise;
 
         const checkExistingGoals = JSON.stringify(goals);
         const checkUpdatedGoals = JSON.stringify(info.goals);
-        const checkUpdatedDisplayGoals = info.settings.display_goals_owner;
+        const checkUpdatedGoalsFilter = info.settings.goals_filter_exercise;
 
         const checkExistingBadgeColors = JSON.stringify(badgeColorsJSON);
         const checkUpdatedBadgeColors = JSON.stringify(info.badgeColors);
@@ -223,11 +223,11 @@ function displayInformation(respInfo) {
         const checkExistingActiveTrainingsplit = JSON.stringify(activetrainingsplit);
         const checkUpdatedActiveTrainingsplit = JSON.stringify(info.activetrainingsplit);
 
-        if (checkExistingLifts === checkUpdatedLifts && checkUpdatedDisplayLifts === user.getSetting("display_lifts_owner")) {
+        if (checkExistingLifts === checkUpdatedLifts && checkUpdatedLiftsFilter === user.getSetting("lifts_filter_exercise")) {
             updateLifts = false;
         }
 
-        if (checkExistingGoals === checkUpdatedGoals && weight === user.getDetail("weight") && checkUpdatedDisplayGoals === user.getSetting("display_goals_owner")) {
+        if (checkExistingGoals === checkUpdatedGoals && weight === user.getDetail("weight") && checkUpdatedGoalsFilter === user.getSetting("goals_filter_exercise")) {
             updateGoals = false;
         }
 
@@ -249,8 +249,8 @@ function displayInformation(respInfo) {
 
     if (updateLifts === true) {
         lifts = info.lifts;
-        if (user.getSetting("display_lifts_owner") !== info.settings.display_lifts_owner) {
-            user.changeSetting("display_lifts_owner", info.settings.display_lifts_owner);
+        if (user.getSetting("lifts_filter_exercise") !== info.settings.lifts_filter_exercise) {
+            user.changeSetting("lifts_filter_exercise", info.settings.lifts_filter_exercise);
         }
         showLiftBadgeAnimations = true;
     }
@@ -259,8 +259,8 @@ function displayInformation(respInfo) {
         if (user.getDetail("weight") !== weight) {
             user.changeDetail("weight", weight);
         }
-        if (user.getSetting("display_goals_owner") !== info.settings.display_goals_owner) {
-            user.changeSetting("display_goals_owner", info.settings.display_goals_owner);
+        if (user.getSetting("goals_filter_exercise") !== info.settings.goals_filter_exercise) {
+            user.changeSetting("goals_filter_exercise", info.settings.goals_filter_exercise);
         }
         goals = info.goals;
         showGoalBadgeAnimations = true;
@@ -358,7 +358,7 @@ async function displayLifts(hasLiftsLeft) {
 
         hasLiftsLeft = localStorage.getItem("cachedLiftsLeft_owner") > 0 || false;
 
-        let sortByLifts = user.getSetting("display_lifts_owner");
+        let sortByLifts = user.getSetting("lifts_filter_exercise");
 
         let showLifts = lifts;
 
@@ -367,11 +367,11 @@ async function displayLifts(hasLiftsLeft) {
                 showLifts = lifts[sortByLifts];
                 if (showLifts.length === 0) {
                     sortByLifts = null;
-                    user.changeSetting("display_lifts_owner", null);
+                    user.changeSetting("lifts_filter_exercise", null);
 
                     if (navigator.onLine) {
                         const value = null;
-                        const setting = "display_lifts_owner";
+                        const setting = "lifts_filter_exercise";
 
                         const infoHeader = { "updateSetting": setting, "value": value };
                         const url = `/user/update/settings/${setting}`;
@@ -381,7 +381,7 @@ async function displayLifts(hasLiftsLeft) {
                 }
             } else {
                 sortByLifts = null;
-                user.changeSetting("display_lifts_owner", null);
+                user.changeSetting("lifts_filter_exercise", null);
             }
         }
 
@@ -515,7 +515,7 @@ async function displayGoals(hasGoalsLeft, checkIfCompleted) {
 
         hasGoalsLeft = localStorage.getItem("cachedGoalsLeft_owner") > 0 || false;
 
-        let sortByGoals = user.getSetting("display_goals_owner");
+        let sortByGoals = user.getSetting("goals_filter_exercise");
 
         let showGoals = goals;
 
@@ -524,11 +524,11 @@ async function displayGoals(hasGoalsLeft, checkIfCompleted) {
                 showGoals = goals[sortByGoals];
                 if (showGoals.length === 0) {
                     sortByGoals = null;
-                    user.changeSetting("display_goals_owner", null);
+                    user.changeSetting("goals_filter_exercise", null);
 
                     if (navigator.onLine) {
                         const value = null;
-                        const setting = "display_goals_owner";
+                        const setting = "goals_filter_exercise";
 
                         const infoHeader = { "updateSetting": setting, "value": value };
                         const url = `/user/update/settings/${setting}`;
@@ -538,7 +538,7 @@ async function displayGoals(hasGoalsLeft, checkIfCompleted) {
                 }
             } else {
                 sortByGoals = null;
-                user.changeSetting("display_goals_owner", null);
+                user.changeSetting("goals_filter_exercise", null);
             }
         }
 

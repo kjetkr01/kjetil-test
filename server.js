@@ -493,8 +493,8 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
                "badgedetails": ["0", "1", "2"],
                "automaticupdates": [true, false],
                "leaderboards_filter_reps": ["bypass"],
-               "display_lifts_owner": ["bypass", "check-lifts"],
-               "display_goals_owner": ["bypass", "check-goals"],
+               "lifts_filter_exercise": ["bypass", "check-lifts"],
+               "goals_filter_exercise": ["bypass", "check-goals"],
           }
 
           if (EAllowedSettings[setting] && currentUser.username && EAllowedSettings[setting].includes(value) || EAllowedSettings[setting][0] === "bypass") {
