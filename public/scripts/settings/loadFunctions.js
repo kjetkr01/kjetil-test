@@ -724,14 +724,15 @@ async function loadPendingUsersPage(setting) {
 
                         const daysSinceTime = parseInt((d - requestDate) / (1000 * 3600 * 24));
 
-                        if (d < requestDate) {
+                        if (d < requestDate || daysSinceTime === 0) {
                             //fremtiden
-                        } else if (daysSinceTime > 1) {
-                            msg = `${parseInt(daysSinceTime)} dager siden`;
+                            msg = `Fremtiden (${requestDate})`;
                         } else if (daysSinceTime === 1) {
-                            msg = `I går`;
-                        } else if (daysSinceTime === 0) {
                             msg = `I dag`;
+                        } else if (daysSinceTime === 2) {
+                            msg = `I går`;
+                        } else if (daysSinceTime > 2) {
+                            msg = `${parseInt(daysSinceTime)} dager siden`;
                         }
                     }
                 }
