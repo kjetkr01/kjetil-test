@@ -2,22 +2,21 @@
 
     // Oppdatere disse når ny commit
 
-    const updates = 968;
     const updateDay = "03.06.2021";
 
     // Slutt
 
-    const expectedUpdates = 1000;
     const upd = updateDay.split(".");
 
     const app = {
         name: "Treningstatistikken",
         logoURL: "images/appIcon.png",
         version: {
-            state: "",
-            major: 0, // major++ = minor = 0 && revision = 0 // 4
-            minor: 0, // minor++ = revision = 0 // 4
-            revision: 0,
+            state: "alpha", // alpha / beta / release candidate
+            major: 6,
+            minor: 2,
+            revision: 18,
+            buildnumber: 941,
         },
         lastUpdated: {
             day: upd[0],
@@ -30,34 +29,25 @@
         }
     }
 
-    if (updates / expectedUpdates >= 1) {
-        app.version.state = `alpha 100%`;
+    let custom = "";
+    if (app.version.state !== "release") {
+        switch (app.version.state) {
+            case "alpha":
+                custom = "-a";
+                break;
+            case "beta":
+                custom = "-b";
+                break;
+            case "release candidate":
+                custom = "-rc";
+                break;
+        }
+        app.version.fullNumber = `${app.version.major}.${app.version.minor}.${app.version.revision}.${custom}${app.version.buildnumber}`;
     } else {
-        app.version.state = `alpha ${parseFloat((updates / expectedUpdates) * 100).toFixed(1)}%`;
+        app.version.fullNumber = `${app.version.major}.${app.version.minor}.${app.version.revision}.${app.version.buildnumber}`;
     }
 
-    const majorCount = 150;
-    const minorCount = 25;
-
-    let rest = updates;
-
-    if (rest / majorCount >= 1) {
-        app.version.major = parseInt(rest / majorCount);
-        rest = rest - (app.version.major * majorCount);
-    }
-
-    if (rest > 0) {
-        if (rest / minorCount >= 1) {
-            app.version.minor = parseInt(rest / minorCount);
-            rest = rest - (app.version.minor * minorCount);
-        }
-        if (rest > 0) {
-            app.version.revision = rest;
-        }
-    }
-
-    app.version.fullNumber = `${app.version.major}.${app.version.minor}.${app.version.revision}`;
-    app.version.full = `Versjon ${app.version.fullNumber} (${app.version.state})`;
+    app.version.full = `Versjon ${app.version.fullNumber}`;
 
     exports.ts_application = app;
 

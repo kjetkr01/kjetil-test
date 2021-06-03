@@ -90,7 +90,7 @@ async function checkWhoIsWorkingOutToday() {
     peopleWorkoutTxt.innerHTML = "";
 
     const cached_peopleWorkoutTxt = sessionStorage.getItem("cached_peopleWorkoutTxt");
-    if (cached_peopleWorkoutTxt) {
+    if (cached_peopleWorkoutTxt || !navigator.onLine) {
         peopleWorkoutTxt.classList = "noselect";
         peopleWorkoutTxt.innerHTML = cached_peopleWorkoutTxt;
     }

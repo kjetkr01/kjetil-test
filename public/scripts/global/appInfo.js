@@ -156,12 +156,12 @@ function calcDaysSinceUpdate() {
 
     if (todayDate < updateDate) {
         //fremtiden
-    } else if (daysSinceTime > 1) {
-        string = `${parseInt(daysSinceTime)} dager siden`;
-    } else if (daysSinceTime === 1) {
-        string = `${parseInt(daysSinceTime)} dag siden`;
     } else if (daysSinceTime === 0) {
         string = `I dag`;
+    } else if (daysSinceTime === 1) {
+        string = `${parseInt(daysSinceTime)} dag siden`;
+    } else if (daysSinceTime > 1) {
+        string = `${parseInt(daysSinceTime)} dager siden`;
     } else {
         string = application.lastUpdated.date;
     }

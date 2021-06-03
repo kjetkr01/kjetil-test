@@ -205,7 +205,7 @@ async function getListOfLeaderboard(aLeaderboard) {
             const selectHTML = `<select id="leaderboardReps" class="changeLeaderboardRepsSelect pointer" onchange="changeLeaderboardReps();"></select>`;
 
             if (Object.keys(resp).length === 1) {
-                leaderboardsUserTxt = "Det er 1 bruker på tavlen";
+                leaderboardsUserTxt = `Det er 1 bruker på tavlen`;
             } else {
                 leaderboardsUserTxt = `Det er ${parseInt(Object.keys(resp).length)} brukere på tavlen`;
             }
