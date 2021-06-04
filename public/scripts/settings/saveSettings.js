@@ -154,26 +154,21 @@ async function updateCheckboxSetting(aSetting, aValue) {
 async function savePreferredApperance() {
     if (navigator.onLine) {
 
-        if (isUpdatingCheckboxSetting === false) {
+        isUpdatingCheckboxSetting = true;
 
-            isUpdatingCheckboxSetting = true;
+        const value = document.getElementById("appearanceThemeSelection").value;
+        const setting = "preferredtheme";
 
-            const value = document.getElementById("appearanceThemeSelection").value;
-            const setting = "preferredtheme";
+        const infoHeader = { "updateSetting": setting, "value": value };
+        const url = `/user/update/settings/${setting}`;
 
-            const infoHeader = { "updateSetting": setting, "value": value };
-            const url = `/user/update/settings/${setting}`;
+        const resp = await callServerAPIPost(infoHeader, url);
 
-            const resp = await callServerAPIPost(infoHeader, url);
+        if (resp === true) {
 
-            if (resp === true) {
-
-                if (value !== user.getSetting("preferredtheme")) {
-                    user.changeSetting(setting, parseInt(value));
-                    changeColorTheme();
-                }
-
-                isUpdatingCheckboxSetting = false;
+            if (value !== user.getSetting("preferredtheme")) {
+                user.changeSetting(setting, parseInt(value));
+                changeColorTheme();
             }
         }
     }
@@ -188,34 +183,21 @@ async function savePreferredApperance() {
 async function saveColorTheme() {
     if (navigator.onLine) {
 
-        if (isUpdatingCheckboxSetting === false) {
+        isUpdatingCheckboxSetting = true;
 
-            isUpdatingCheckboxSetting = true;
+        const value = document.getElementById("themeColorSelection").value;
+        const setting = "preferredcolortheme";
 
-            const value = document.getElementById("themeColorSelection").value;
-            const setting = "preferredcolortheme";
+        const infoHeader = { "updateSetting": setting, "value": value };
+        const url = `/user/update/settings/${setting}`;
 
-            const infoHeader = { "updateSetting": setting, "value": value };
-            const url = `/user/update/settings/${setting}`;
+        const resp = await callServerAPIPost(infoHeader, url);
 
-            const resp = await callServerAPIPost(infoHeader, url);
+        if (resp === true) {
 
-            if (resp === true) {
-
-                const newColorTheme = allowedThemes[value].theme;
-
-                let colortheme = null;
-
-                if (allowedThemes[user.getSetting("preferredcolortheme")]) {
-                    colortheme = allowedThemes[user.getSetting("preferredcolortheme")].theme
-                }
-
-                if (newColorTheme !== colortheme && checkAllowedThemes.includes(newColorTheme) === true) {
-                    user.changeSetting(setting, parseInt(value));
-                    changeColorTheme();
-                }
-
-                isUpdatingCheckboxSetting = false;
+            if (value !== user.getSetting("preferredcolortheme") && allowedColorThemes[value]) {
+                user.changeSetting(setting, parseInt(value));
+                changeColorTheme();
             }
         }
     }

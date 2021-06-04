@@ -244,7 +244,7 @@ function loadAppearancePage() {
     const theme = user.getSetting("preferredtheme");
 
     const themes = {
-        0: { "name": "Automatisk", "theme": 0 },
+        0: { "name": "Følg system", "theme": 0 },
         1: { "name": "Lys", "theme": 1 },
         2: { "name": "Mørk", "theme": 2 }
     }
@@ -270,15 +270,16 @@ function loadAppearancePage() {
 
     settingsGrid.innerHTML += getTemplate("Tema", "appearanceThemeInp", appearanceThemeHTML, "borderTop");
 
-    const colorThemeKeys = Object.keys(allowedThemes);
+    const colorThemeKeys = Object.keys(allowedColorThemes);
     let themeColorOptionsHTML = "";
-    const preferredTheme = allowedThemes[user.getSetting("preferredcolortheme")].theme;
+    const preferredTheme = allowedColorThemes[user.getSetting("preferredcolortheme")].theme;
+
     for (let i = 0; i < colorThemeKeys.length; i++) {
 
-        if (preferredTheme === allowedThemes[colorThemeKeys[i]].theme) {
-            themeColorOptionsHTML += `<option selected="selected" value="${colorThemeKeys[i]}">${allowedThemes[colorThemeKeys[i]].name}</option>`;
+        if (preferredTheme === allowedColorThemes[colorThemeKeys[i]].theme) {
+            themeColorOptionsHTML += `<option selected="selected" value="${colorThemeKeys[i]}">${allowedColorThemes[colorThemeKeys[i]].name}</option>`;
         } else {
-            themeColorOptionsHTML += `<option value="${colorThemeKeys[i]}">${allowedThemes[colorThemeKeys[i]].name}</option>`;
+            themeColorOptionsHTML += `<option value="${colorThemeKeys[i]}">${allowedColorThemes[colorThemeKeys[i]].name}</option>`;
         }
     }
 
@@ -599,13 +600,13 @@ async function loadUsersListPage(setting) {
                             usersTemplateHTML += `
                     ${profileStatus}
                     <p class="settingsPendingUsername">${hasAPIAccessTxt}</p>
-                   <br>
-                   <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Besøk</button>
+                    <br>
+                    <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Besøk</button>
                     `;
                         } else {
                             usersTemplateHTML += `
-                   <br>
-                   <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Din bruker</button>
+                    <br>
+                    <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Din bruker</button>
                     `;
                         }
 

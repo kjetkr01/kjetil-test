@@ -488,7 +488,7 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
                "displayleaderboards": [true, false],
                "displayworkoutlist": [true, false],
                "preferredtheme": ["0", "1", "2"],
-               "preferredcolortheme": ["0", "1", "2", "3"],
+               "preferredcolortheme": ["0", "1", "2", "3", "4"],
                "badgesize": ["0", "1"],
                "badgedetails": ["0", "1", "2"],
                "automaticupdates": [true, false],

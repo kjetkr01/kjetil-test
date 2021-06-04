@@ -17,6 +17,10 @@ color:var(--main-textColorDark);
 font-family: var(--main-font-Family-Verdana);
 }
 
+#c4r1 {
+border-top: var(--main-border);
+}
+
 #smallTitle{
 opacity: 85%;
 }

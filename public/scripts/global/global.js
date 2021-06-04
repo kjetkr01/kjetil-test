@@ -1,6 +1,6 @@
 // global variables
 
-let user = null, lockedBody = false, allowedLifts = null, allowedGoals = null;
+let user = null, allowedLifts = null, allowedGoals = null;
 
 const repsSM = 10; // 1 rep * 10 (repsSM) = 10 points. 1 kg = 1 point
 
@@ -12,18 +12,13 @@ const errorText = "Det har oppstått en feil!";
 const loadingText = "Laster...";
 const errorLoadingText = "Kunne ikke laste inn innholdet.";
 
-const allowedThemes = {
-    0: { "id": 0, "name": "Standard", "theme": "default" },
-    1: { "id": 1, "name": "Blå", "theme": "blue" },
-    2: { "id": 2, "name": "Blå (Test) (Full)", "theme": "blue_full" },
-    3: { "id": 3, "name": "Blå (Test) (Full m/ gradient)", "theme": "blue_full_gradient" }
-}
-
-const themeColors = {
-    "default": { "lightHex": "327a94", "darkHex": "1c4553" },
-    "blue": { "lightHex": "3247bb", "darkHex": "202b6b" },
-    "blue_full": { "lightHex": "1378bb", "darkHex": "09314b" },
-    "blue_full_gradient": { "lightHex": "b6d7ec", "darkHex": "1e2830" }
+const allowedColorThemes = {
+    // first is default
+    0: { "theme": "default", "name": "Standard", "lightHex": "327a94", "darkHex": "1c4553" },
+    1: { "theme": "blue", "name": "Blå", "lightHex": "3247bb", "darkHex": "202b6b" },
+    2: { "theme": "blue_full", "name": "Blå (Test) (Full)", "lightHex": "0161E8", "darkHex": "09314b" },
+    3: { "theme": "blue_full_gradient", "name": "Blå (Test) (Full m/ gradient)", "lightHex": "b6d7ec", "darkHex": "1e2830" },
+    4: { "theme": "test_full_simple", "name": "Test (Test) (Full enkel)", "lightHex": "b6d7ec", "darkHex": "1e2830" },
 }
 
 try {
@@ -36,11 +31,7 @@ try {
 } catch {
 }
 
-const themeKeys = Object.keys(allowedThemes);
-const checkAllowedThemes = [];
-for (let i = 0; i < themeKeys.length; i++) {
-    checkAllowedThemes.push(allowedThemes[themeKeys[i]].theme);
-}
+
 
 //
 
@@ -215,18 +206,21 @@ function TUser(aToken, aUser, aDetails, aSettings) {
 
 function changeColorTheme() {
 
-    let colorTheme = allowedThemes[0].theme;
+    const defaultValues = allowedColorThemes[Object.keys(allowedColorThemes)[0]];
+    let colorTheme = defaultValues.theme;
+    let themeColor = defaultValues;
     let theme = 0;
 
     if (user) {
-        if (allowedThemes[user.getSetting("preferredcolortheme")]) {
-            colorTheme = allowedThemes[user.getSetting("preferredcolortheme")].theme;
+        if (allowedColorThemes[user.getSetting("preferredcolortheme")]) {
+            const preferredTheme = allowedColorThemes[user.getSetting("preferredcolortheme")];
+            colorTheme = preferredTheme.theme;
+            themeColor = preferredTheme;
         }
         theme = user.getSetting("preferredtheme");
     }
 
     const themeColorDOM = document.getElementById("themeColor");
-    const themeColor = themeColors[colorTheme];
 
     if (theme === 1) {
         themeColorDOM.content = `#${themeColor.lightHex}`;
@@ -244,10 +238,6 @@ function changeColorTheme() {
             themeColorDOM.content = `#${themeColor.lightHex}`;
             document.body.classList = `${colorTheme}ColorTheme-light lightMode`;
         }
-    }
-
-    if (lockedBody === true) {
-        document.body.classList.add("lockedBody");
     }
 }
 
@@ -270,32 +260,6 @@ function checkIfAllowedScheme(e) {
 //
 
 //
-
-function lockBodyPosition() {
-
-    if (window.navigator.standalone === true) {
-
-        if (document.body.classList !== "lockedBody") {
-
-            document.body.classList.add("lockedBody");
-            lockedBody = true;
-
-            window.addEventListener("scroll", (e) => {
-
-                const element = document.getElementById("page");
-
-                if (element) {
-
-                    const isOwerflown = element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
-
-                    if (isOwerflown === false) {
-                        e.preventDefault();
-                    }
-                }
-            });
-        }
-    }
-}
 
 
 function viewUser(viewUser) {
@@ -391,9 +355,9 @@ async function getAccountDetails(aUserID) {
                         sessionStorage.setItem("allowedGoals", JSON.stringify(resp.info.allowedGoals));
                     }
 
-                    const newColorTheme = allowedThemes[resp.info.settings.preferredcolortheme].theme;
+                    const newColorTheme = resp.info.settings.preferredcolortheme;
 
-                    if (user && user.getSetting("preferredcolortheme") !== resp.info.settings.preferredcolortheme && checkAllowedThemes.includes(newColorTheme) === true) {
+                    if (user && user.getSetting("preferredcolortheme") !== resp.info.settings.preferredcolortheme && allowedColorThemes[newColorTheme] === true) {
 
                         user.changeSetting("preferredcolortheme", resp.info.settings.preferredcolortheme);
 
