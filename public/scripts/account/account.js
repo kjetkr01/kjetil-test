@@ -75,9 +75,11 @@ function displayUserDetailsCached() {
             infoList.textContent = "";
         }
 
-        if (cacheDetails.hasOwnProperty("member_since")) {
+        const member_since = user.getDetail("member_since");
 
-            const splitDate = cacheDetails.member_since.split("-");
+        if (member_since) {
+
+            const splitDate = member_since.split("-");
 
             const day = splitDate[2];
             const month = splitDate[1];
@@ -100,7 +102,6 @@ function displayUserDetailsCached() {
             document.getElementById("memberSince").innerHTML = `Medlem siden<br>${string}`;
         }
     } catch {
-        localStorage.removeItem("cacheDetails_owner");
     }
 }
 
@@ -921,7 +922,6 @@ function displayTrainingsplit() {
 }
 
 /// ------------ end of displayTrainingsplit --------------- ///
-
 if (memberSince) {
 
     const splitDate = memberSince.split("-");
