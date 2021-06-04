@@ -860,6 +860,13 @@ class StorageHandler {
                                     if (username.rows.length > 0) {
                                         userCacheObj.activetrainingsplit.owner = username.rows[0].username;
                                     }
+
+                                } else {
+                                    await client.query(`
+                                    UPDATE user_settings
+                                    SET activetrainingsplit = null
+                                    WHERE user_id = $1`,
+                                        [userIDReq]);
                                 }
                             }
                         }

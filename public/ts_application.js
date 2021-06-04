@@ -2,7 +2,7 @@
 
     // Oppdatere disse når ny commit
 
-    const updateDay = "03.06.2021";
+    const updateDay = "04.06.2021";
 
     // Slutt
 
@@ -16,7 +16,7 @@
             major: 6,
             minor: 2,
             revision: 21,
-            buildnumber: 949,
+            buildnumber: 950,
         },
         lastUpdated: {
             day: upd[0],
