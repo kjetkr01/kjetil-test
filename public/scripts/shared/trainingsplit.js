@@ -635,7 +635,11 @@ function viewTrainingsplit(aId, aDay) {
             vuser_id = `user_id=${viewinguser_id}&`;
         }
 
-        window.location.search = `?${vuser_id}trainingsplit_id=${aId}&edit=false&day=${day}`;
+        if (location.href.includes("index.html")) {
+            window.location.href = `/account.html?${vuser_id}trainingsplit_id=${aId}&edit=false&day=${day}`;
+        } else {
+            window.location.search = `?${vuser_id}trainingsplit_id=${aId}&edit=false&day=${day}`;
+        }
     }
 }
 

@@ -127,7 +127,7 @@ async function checkWhoIsWorkingOutToday() {
 
                 if (currentWorkout !== resp[i].todaysWorkout) {
                     peopleWorkoutList.innerHTML += `
-               <button class="peopleWorkoutListWorkout fadeIn">${resp[i].todaysWorkout}</button>
+               <button id="workout-${resp[i].todaysWorkout}" class="peopleWorkoutListWorkout fadeIn">${resp[i].todaysWorkout}</button>
                <br>
                `;
 
@@ -140,14 +140,22 @@ async function checkWhoIsWorkingOutToday() {
                 }
 
                 if (user && user.getId() === resp[i].id) {
+                    const workoutBtn = document.getElementById(`workout-${currentWorkout}`);
+                    workoutBtn.classList += " pointer";
 
+                    const days = ["Søndag", "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag"];
+
+                    const dayNum = new Date().getDay();
+                    const day = days[dayNum];
+
+                    const link = `viewTrainingsplit('${user.getSetting("activetrainingsplit")}','${day}');`;
+                    workoutBtn.setAttribute("onclick", link);
                     peopleWorkoutList.innerHTML += `
                 <button class="accountOwner fadeInUp animate pointer" onClick="viewUser('${resp[i].id}')">${shortenedFullName}</button>
                 <br>
                 `;
 
                 } else {
-
                     peopleWorkoutList.innerHTML += `
             <button class="peopleWorkoutListName fadeInUp animate pointer" onClick="viewUser('${resp[i].id}')">${shortenedFullName}</button>
             <br>
