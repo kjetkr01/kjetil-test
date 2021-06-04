@@ -1,11 +1,11 @@
 const cacheName = 'TS-PWA-v37';
+const swName = '[Service Worker]';
 
 const contentToCache = [
 
     /* MAIN */
 
     '/',
-    '/registerSW.js',
     '/ts_application.js',
     '/manifest.json',
 
@@ -86,32 +86,42 @@ const contentToCache = [
     '/styles/user/common.css',
     '/styles/user/desktop.css',
     '/styles/user/mobile.css',
-]
+];
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+        .then(function (registration) {
+            console.log(`${swName} Registration successful, scope is: ${registration.scope}`);
+        })
+        .catch(function (error) {
+            console.log(`${swName} Registration failed, error: ${error}`);
+        });
+}
 
 self.addEventListener('install', (e) => {
     self.skipWaiting();
-    console.log(`[Service Worker] Install - ${cacheName}`);
+    console.log(`${swName} Install - ${cacheName}`);
     e.waitUntil((async () => {
         const cache = await caches.open(cacheName);
-        console.log('[Service Worker] Caching all: app shell and content');
+        console.log(`${swName} Caching all: app shell and content`);
         await cache.addAll(contentToCache);
-        console.log('[Service Worker] Downloaded: app shell and content');
+        console.log(`${swName} Downloaded: app shell and content`);
     })());
 });
 
 self.addEventListener('activate', (e) => {
-    console.log(`[Service Worker] ${cacheName} now ready to handle fetches!`);
+    console.log(`${swName} ${cacheName} now ready to handle fetches!`);
 });
 
 self.addEventListener('fetch', (e) => {
     e.respondWith((async () => {
         const r = await caches.match(e.request, { ignoreSearch: true });
-        //console.log(`[Service Worker] Fetching resource: ${e.request.url}`);
+        //console.log(`${swName} Fetching resource: ${e.request.url}`);
         if (r) { return r; }
         const response = await fetch(e.request);
         const cache = await caches.open(cacheName);
         if (e.request.method !== "POST") {
-            //console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
+            //console.log(`${swName} Caching new resource: ${e.request.url}`);
             cache.put(e.request, response.clone());
         }
         return response;
