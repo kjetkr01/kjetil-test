@@ -465,6 +465,13 @@ function capitalizeFirstLetter(string) {
 
 //
 
+function useHTTPS() {
+    if (location.protocol !== 'https:' && !location.href.includes("localhost")) {
+        location.replace(`https:${location.href.substring(location.protocol.length)}`);
+        console.log("changed to https");
+    }
+}
+
 //
 
 async function sortByLiftsOrGoalOwner(aDom, aType) {

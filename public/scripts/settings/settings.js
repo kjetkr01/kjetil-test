@@ -4,7 +4,7 @@ const ELoadSettings = {
         value: 1
     },
     password: {
-        name: `Passord`,
+        name: `Endre Passord`,
         value: 2
     },
     aboutMe: {
