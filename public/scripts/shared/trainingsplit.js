@@ -635,7 +635,7 @@ function viewTrainingsplit(aId, aDay) {
             vuser_id = `user_id=${viewinguser_id}&`;
         }
 
-        if (location.href.includes("index.html")) {
+        if (!location.href.includes("user.html")) {
             window.location.href = `/account.html?${vuser_id}trainingsplit_id=${aId}&edit=false&day=${day}`;
         } else {
             window.location.search = `?${vuser_id}trainingsplit_id=${aId}&edit=false&day=${day}`;
