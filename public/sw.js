@@ -1,4 +1,4 @@
-const cacheName = 'TS-PWA-v39';
+const cacheName = 'TS-PWA-v40';
 const swName = '[Service Worker]';
 
 const contentToCache = [
@@ -6,6 +6,7 @@ const contentToCache = [
     /* MAIN */
 
     '/',
+    '/sw.js',
     '/ts_application.js',
     '/manifest.json',
 
