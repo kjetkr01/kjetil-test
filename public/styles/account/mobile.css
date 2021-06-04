@@ -22,10 +22,6 @@ grid-template-areas:
 
 "c3r1 c3r1 c3r1 c3r1 c3r1 c3r1 c3r1"
 "GuserGrid GuserGrid GuserGrid GuserGrid GuserGrid GuserGrid GuserGrid"
-
-"c1r2 c1r2 c1r2 c1r2 c1r2 c1r2 c1r2"
-"c2r2 Gfeed c3r2 Gleaderboards c4r2 Gaccount c5r2"
-"c6r2 c6r2 c6r2 c6r2 c6r2 c6r2 c6r2"
 ;
 
 grid-template-rows: /* nedover */
@@ -45,12 +41,6 @@ auto /* Gsettings */
 10px /* c3r1 */
 
 1fr /* GuserGrid */
-
-var(--main-footerHeightTop) /* c1r2 */
-
-var(--main-footerIconHeight) /* Glinks */
-
-var(--main-footerHeightBottom) /* c2r2 */
 ;
 
 grid-template-columns: /* bortover */
@@ -153,55 +143,9 @@ overflow-y: scroll;
 overflow-x: hidden;
 }
 
-
-
-#page > #c1r2 {
-grid-area: c1r2;
-}
-
-#page > #c2r2 {
-grid-area: c2r2;
-}
-
-#page > #Gfeed {
-grid-area: Gfeed;
-}
-
-#page > #c3r2 {
-grid-area: c3r2;
-}
-
-#page > #Gleaderboards {
-grid-area: Gleaderboards;
-}
-
-#page > #c4r2 {
-grid-area: c4r2;
-}
-
-#page > #Gaccount {
-grid-area: Gaccount;
-}
-
-#page > #c5r2 {
-grid-area: c5r2;
-}
-
-#page > #c6r2 {
-grid-area: c6r2;
-}
-
-
 #Gsettings, #GsmallTitle, #c3r1, #GuserGrid {
 background-color: var(--main-backgroundColor2);
 }
-
-#c1r2, #c2r2, #Gfeed, #c3r2, #Gleaderboards, #c4r2, #Gaccount, #c5r2, #c6r2 {
-background-color: var(--main-backgroundColor3);
-}
-
-
-
 /* end of spacing & other */
 
 /*}*/

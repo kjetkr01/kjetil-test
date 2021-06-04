@@ -42,13 +42,7 @@ margin-left: auto;
 margin-right: auto;
 }
 
-#c6r2 {
-padding-top: 5px;
-font-size: 14px;
-text-align: center;
-}
-
-#c1r2, #Gsettings, #GsmallTitle {
+#Gsettings, #GsmallTitle {
 /*border-top: 1px #75757585 solid;*/
 border-top: var(--main-border);
 }

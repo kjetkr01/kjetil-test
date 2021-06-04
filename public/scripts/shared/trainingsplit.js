@@ -39,12 +39,13 @@ async function requestTrainingsplitDetails() {
 
     try {
 
-        const hideDoms = ["feed", "leaderboards", "account", "settings"];
-        for (let i = 0; i < hideDoms.length; i++) {
-            const dom = document.getElementById(hideDoms[i]);
-            if (dom) {
-                dom.classList = "hidden";
-            }
+        const accountFooterDom = document.getElementById("accountFooter");
+        const settingsDom = document.getElementById("settings")
+        if (accountFooterDom) {
+            accountFooterDom.classList = "hidden";
+        }
+        if (settingsDom) {
+            settingsDom.classList = "hidden";
         }
 
         if (trainingsplit.id) {

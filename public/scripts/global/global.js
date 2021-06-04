@@ -466,7 +466,7 @@ function capitalizeFirstLetter(string) {
 //
 
 function useHTTPS() {
-    if (location.protocol !== 'https:' && !location.href.includes("localhost")) {
+    if (location.protocol !== 'https:' && location.href.includes("kjetil-test.herokuapp.com")) {
         location.replace(`https:${location.href.substring(location.protocol.length)}`);
     }
 }

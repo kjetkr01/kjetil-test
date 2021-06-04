@@ -31,13 +31,7 @@ margin-left: 5vw;
 margin-right: 5vw;
 }
 
-#c6r2 {
-padding-top: 5px;
-font-size: 14px;
-text-align: center;
-}
-
-#c1r2, #c2r1 {
+#c2r1 {
 /*border-top: 1px #75757585 solid;*/
 border-top: var(--main-border);
 }
