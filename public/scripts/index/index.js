@@ -148,12 +148,12 @@ async function checkWhoIsWorkingOutToday() {
                     const dayNum = new Date().getDay();
                     const day = days[dayNum];
 
-                    const link = `viewTrainingsplit('${user.getSetting("activetrainingsplit")}','${day}');`;
+                    const link = `sessionStorage.setItem("trainingsplit_return_to_feed", true);viewTrainingsplit('${user.getSetting("activetrainingsplit")}','${day}');`;
                     workoutBtn.setAttribute("onclick", link);
                     peopleWorkoutList.innerHTML += `
-                <button class="accountOwner fadeInUp animate pointer" onClick="viewUser('${resp[i].id}')">${shortenedFullName}</button>
-                <br>
-                `;
+                    <button class="accountOwner fadeInUp animate pointer" onClick="viewUser('${resp[i].id}')">${shortenedFullName}</button>
+                    <br>
+                    `;
 
                 } else {
                     peopleWorkoutList.innerHTML += `

@@ -355,23 +355,26 @@ async function getAccountDetails(aUserID) {
                         sessionStorage.setItem("allowedGoals", JSON.stringify(resp.info.allowedGoals));
                     }
 
+                    let updatedThemeValues = false;
+
                     const newColorTheme = resp.info.settings.preferredcolortheme;
 
-                    if (user && user.getSetting("preferredcolortheme") !== resp.info.settings.preferredcolortheme && allowedColorThemes[newColorTheme] === true) {
-
-                        user.changeSetting("preferredcolortheme", resp.info.settings.preferredcolortheme);
-
-                        changeColorTheme();
+                    if (user.getSetting("preferredcolortheme") !== newColorTheme && allowedColorThemes[newColorTheme]) {
+                        user.changeSetting("preferredcolortheme", newColorTheme);
+                        updatedThemeValues = true;
                     }
 
                     const newTheme = resp.info.settings.preferredtheme;
 
-                    if (user && user.getSetting("preferredtheme") !== newTheme) {
+                    if (user.getSetting("preferredtheme") !== newTheme) {
+                        user.changeSetting("preferredtheme", newTheme);
+                        updatedThemeValues = true;
+                    }
 
-                        user.changeSetting("preferredtheme", resp.info.settings.preferredtheme);
-
+                    if (updatedThemeValues === true) {
                         changeColorTheme();
                     }
+
                 } else {
                     if (resp.hasOwnProperty("cacheDetails")) {
                         sessionStorage.setItem(`cachedDetails_visitor_${viewingUser}`, JSON.stringify(resp.cacheDetails));

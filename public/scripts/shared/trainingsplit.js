@@ -1066,9 +1066,15 @@ async function exitTrainingsplit(aSave) {
 
     const viewinguser_id = urlParamsT.get("user_id");
 
-    if (viewinguser_id) {
+    const referrer = sessionStorage.getItem("trainingsplit_return_to_feed");
+    if (referrer === "true") {
+        sessionStorage.removeItem("trainingsplit_return_to_feed");
+        redirectToFeed();
+    } else if (viewinguser_id) {
         window.location.search = `?user_id=${viewinguser_id}`;
     } else {
         window.location.search = "";
     }
+
+
 }
