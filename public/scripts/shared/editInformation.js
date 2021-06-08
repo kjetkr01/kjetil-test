@@ -213,6 +213,11 @@ function enableOverlayView(aType, aExercise, aId) {
         const inp3 = document.getElementById("inp3W");
         const GeditW = document.getElementById("GeditW");
 
+        let showEditBtn = false;
+        if (!location.href.includes("user.html")) {
+            showEditBtn = true;
+        }
+
         const viewLiftorGoalOverlay = document.getElementById("viewLiftorGoalOverlay");
         viewLiftorGoal.style.border = "";
 
@@ -278,7 +283,7 @@ function enableOverlayView(aType, aExercise, aId) {
                     document.getElementById("viewLiftorGoal").style.border = `1px solid #${badgeColorsJSON[color].border}`;
                 }
 
-                if (location.href.includes("account.html")) {
+                if (showEditBtn === true) {
                     if (navigator.onLine) {
                         GeditW.innerHTML = `<button id="editW" class="pointer" onClick="disableOverlays();enableOverlayEdit('lift', '${exercise}', '${id}');">Endre</button>`;
                     } else {
@@ -340,7 +345,7 @@ function enableOverlayView(aType, aExercise, aId) {
                     document.getElementById("viewLiftorGoal").style.border = `1px solid #${badgeColorsJSON[color].border}`;
                 }
 
-                if (location.href.includes("account.html") || location.href.includes("index.html")) {
+                if (showEditBtn === true) {
                     if (navigator.onLine) {
                         GeditW.innerHTML = `<button id="editW" class="pointer" onClick="disableOverlays();enableOverlayEdit('goal', '${exercise}', '${id}');">Endre</button>`;
                     } else {
