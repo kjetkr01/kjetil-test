@@ -318,8 +318,8 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
 
     const GuserGrid = document.getElementById("GuserGrid");
 
-    if (GuserGrid.scrollHeight > (GuserGrid.clientHeight + 600)) {
-        const backToTopBtn = `<button class="trainingsplitButton pointer" onClick="document.getElementById('GuserGrid').scrollTop = 0;">Tilbake til toppen</button>`;
+    if (GuserGrid.scrollHeight > (GuserGrid.clientHeight + 300)) {
+        const backToTopBtn = `<button style="margin-bottom:20px;" class="trainingsplitButton pointer" onClick="document.getElementById('GuserGrid').scrollTop = 0;">Tilbake til toppen</button>`;
         document.getElementById("trainingsplitBottom").innerHTML = backToTopBtn;
     }
 
@@ -563,8 +563,8 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
 
     const GuserGrid = document.getElementById("GuserGrid");
 
-    if (GuserGrid.scrollHeight > (GuserGrid.clientHeight + 600)) {
-        const backToTopBtn = `<button class="trainingsplitButton pointer" onClick="document.getElementById('GuserGrid').scrollTop = 0;">Tilbake til toppen</button>`;
+    if (GuserGrid.scrollHeight > (GuserGrid.clientHeight + 300)) {
+        const backToTopBtn = `<button style="margin-bottom:20px;" class="trainingsplitButton pointer" onClick="document.getElementById('GuserGrid').scrollTop = 0;">Tilbake til toppen</button>`;
         document.getElementById("trainingsplitBottom").innerHTML = backToTopBtn;
     }
 
