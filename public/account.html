@@ -86,7 +86,9 @@
 
    <script src="ts_application.js" type="text/javascript"></script>
    <script src="scripts/global/appInfo.js" type="text/javascript"></script>
+   <script src="scripts/global/user.js" type="text/javascript"></script>
    <script src="scripts/global/global.js" type="text/javascript"></script>
+   <script src="scripts/global/functions.js" type="text/javascript"></script>
    <script src="scripts/account/account.js" type="text/javascript"></script>
    <script src="scripts/shared/editInformation.js" type="text/javascript"></script>
    <script src="scripts/shared/badges.js" type="text/javascript"></script>
@@ -289,7 +291,7 @@
 
    if (user) {
 
-      checkConnection("footerInfo");
+      checkConnection();
 
       if (sessionStorage.getItem("settings_notification_update") === "true") {
          document.getElementById("settings").innerHTML += `1`;
@@ -337,7 +339,7 @@
       }
 
       setInterval(() => {
-         checkConnection("footerInfo");
+         checkConnection();
       }, 1000);
 
    }

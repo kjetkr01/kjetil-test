@@ -20,7 +20,7 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
             aSize = 0;
         }
 
-        if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.exercise && aBadgeInfo.kg && aBadgeInfo.untilGoal >= 0 && aBadgeInfo.msg && aId) {
+        if (aSize === 0 || aSize === 1 && aBadgeInfo && aBadgeInfo.exercise && aBadgeInfo.kg && aBadgeInfo.msg && aId) {
 
             const size = aSize;
             const badgeInfo = aBadgeInfo;
@@ -51,14 +51,12 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
 
         //console.log(userBadgeInfo);
 
-        let untilGoal = userBadgeInfo.msg;
-
         let currentProgressionPercent = `${userBadgeInfo.progressionPercent}%`;
 
         if (user.getSetting("badgedetails") === 1) {
             currentProgressionPercent = "";
         } else if (user.getSetting("badgedetails") === 2) {
-            untilGoal = "";
+            userBadgeInfo.msg = "";
         }
 
         let progressionTxt = "";
@@ -91,7 +89,7 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
         const progressionTxtKeys = Object.keys(progressTxtList);
 
         if (progress >= 100) {
-            untilGoal = "";
+            userBadgeInfo.msg = "";
         }
 
         for (let i = 0; i < progressionTxtKeys.length; i++) {
@@ -146,7 +144,7 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
 
 <div id="GkgLeft">
 <p id="kgLeft">
-${untilGoal}
+${userBadgeInfo.msg}
 </p>
 </div>
 

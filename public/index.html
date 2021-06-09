@@ -85,7 +85,9 @@
 
    <script src="ts_application.js" type="text/javascript"></script>
    <script src="scripts/global/appInfo.js" type="text/javascript"></script>
+   <script src="scripts/global/user.js" type="text/javascript"></script>
    <script src="scripts/global/global.js" type="text/javascript"></script>
+   <script src="scripts/global/functions.js" type="text/javascript"></script>
    <script src="scripts/index/index.js" type="text/javascript"></script>
 
    <script src="scripts/shared/editInformation.js" type="text/javascript"></script>
@@ -220,7 +222,7 @@
 
    if (user) {
 
-      checkConnection("footerInfo");
+      checkConnection();
 
       checkForUpdate();
       async function checkForUpdate() {
@@ -289,7 +291,7 @@
          }, 60000);
 
          setInterval(() => {
-            checkConnection("footerInfo");
+            checkConnection();
          }, 1000);
 
       }

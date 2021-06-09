@@ -418,7 +418,7 @@ async function displayGoals(checkIfCompleted) {
 
         function displayPerExercise(aExerciseGoal, aCurrent) {
 
-            let kgUntilGoal = 0, repsUntilGoal = 0, msg = "", untilGoal = 0, progressionPercent = 0;;
+            let kgUntilGoal = 0, repsUntilGoal = 0, msg = "", progressionPercent = 0;;
 
             const exerciseGoal = aExerciseGoal;
             const current = aCurrent;
@@ -447,10 +447,8 @@ async function displayGoals(checkIfCompleted) {
                                     kgUntilGoal = goalKg - calcWeight;
                                     if (kgUntilGoal <= 0) {
                                         msg = "Målet er nådd!";
-                                        untilGoal = 0;
                                     } else {
                                         msg = `${checkIfDecimal(kgUntilGoal)} kg igjen`;
-                                        untilGoal = kgUntilGoal;
                                         calcPercent(calcWeight, goalKg);
                                     }
                                 } else {
@@ -458,17 +456,14 @@ async function displayGoals(checkIfCompleted) {
                                     kgUntilGoal = calcWeight - goalKg;
                                     if (kgUntilGoal <= 0) {
                                         msg = "Målet er nådd!";
-                                        untilGoal = 0;
                                     } else {
                                         msg = `${checkIfDecimal(kgUntilGoal)} kg igjen`;
-                                        untilGoal = kgUntilGoal;
                                         calcPercent(goalKg, calcWeight);
                                     }
                                 }
 
                             } else {
                                 msg = "Din vekt kreves";
-                                untilGoal = 100;
                             }
 
                         } else {
@@ -497,24 +492,19 @@ async function displayGoals(checkIfCompleted) {
 
                                     if (repsUntilGoal <= 0) {
                                         msg = "Målet er nådd!";
-                                        untilGoal = 0;
                                     } else if (repsUntilGoal === 1) {
                                         msg = `1 rep igjen`;
-                                        untilGoal = repsSM;
                                         calcPercent(highestLiftKg.reps, goalReps);
                                     } else {
                                         msg = `${repsUntilGoal} reps igjen`;
-                                        untilGoal = repsUntilGoal * repsSM;
                                         calcPercent(highestLiftKg.reps, goalReps);
                                     }
                                 } else {
                                     kgUntilGoal = goalKg - highestLiftKg.kg;
                                     if (kgUntilGoal <= 0) {
                                         msg = "Målet er nådd!";
-                                        untilGoal = 0;
                                     } else {
                                         msg = `${checkIfDecimal(kgUntilGoal)} kg igjen`;
-                                        untilGoal = kgUntilGoal;
                                         calcPercent(highestLiftKg.kg, goalKg);
                                     }
                                 }
@@ -525,28 +515,22 @@ async function displayGoals(checkIfCompleted) {
                                     repsUntilGoal = goalReps - liftsList[goalKg];
                                     if (repsUntilGoal <= 0) {
                                         msg = "Målet er nådd!";
-                                        untilGoal = 0;
                                     } else if (repsUntilGoal === 1) {
                                         msg = `1 rep igjen`;
-                                        untilGoal = repsSM;
                                         calcPercent(liftsList[goalKg], goalReps);
                                     } else {
                                         msg = `${repsUntilGoal} reps igjen`;
-                                        untilGoal = repsUntilGoal * repsSM;
                                         calcPercent(liftsList[goalKg], goalReps);
                                     }
                                 } else if (highestLiftKg.reps >= goalReps && highestLiftKg.kg >= goalKg) {
                                     msg = "Målet er nådd!";
-                                    untilGoal = 0;
                                 } else {
                                     msg = `${goalReps} reps igjen`;
-                                    untilGoal = goalReps * repsSM;
                                     calcPercent(liftsList[goalKg], goalReps);
                                 }
                             } else {
                                 kgUntilGoal = goalKg - highestLiftKg.kg;
                                 msg = `${checkIfDecimal(kgUntilGoal)} kg igjen`;
-                                untilGoal = kgUntilGoal;
                                 calcPercent(highestLiftKg.kg, goalKg);
                             }
                         }
@@ -572,8 +556,18 @@ async function displayGoals(checkIfCompleted) {
                             return num;
                         }
 
-                        if (untilGoal === 0) {
+                        if (msg === "Målet er nådd!") {
                             progressionPercent = 100;
+                        }
+
+                        if (progressionPercent < 0) {
+                            progressionPercent = 0;
+                        }
+                        if (progressionPercent > 100) {
+                            progressionPercent = 100;
+                        }
+
+                        if (progressionPercent === 100) {
                             if (checkIfCompleted === true) {
                                 if (goalKeys.completed !== true) {
                                     if (!completedGoalsList[current]) {
@@ -584,18 +578,12 @@ async function displayGoals(checkIfCompleted) {
                             }
                         }
 
-                        if (progressionPercent < 0) {
-                            progressionPercent = 0;
-                        }
-                        if (progressionPercent > 100) {
-                            progressionPercent = 100;
-                        }
                     } else {
                         progressionPercent = 100;
                         msg = "Målet er nådd!";
                     }
 
-                    arr.push({ "exercise": capitalizeFirstLetter(current), "kg": goalKg, "untilGoal": untilGoal, "msg": msg, "color": color, "id": id, "progressionPercent": progressionPercent });
+                    arr.push({ "exercise": capitalizeFirstLetter(current), "kg": goalKg, "msg": msg, "color": color, "id": id, "progressionPercent": progressionPercent });
 
                 }
             }
@@ -605,7 +593,6 @@ async function displayGoals(checkIfCompleted) {
 
             smallTitle.textContent = "Din fremgang";
 
-            //arr.sort(function (a, b) { return a.untilGoal - b.untilGoal });
             arr.sort(function (a, b) { return b.progressionPercent - a.progressionPercent });
 
             for (let i = 0; i < arr.length; i++) {
