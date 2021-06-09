@@ -16,7 +16,7 @@
             major: 6,
             minor: 3,
             revision: 23,
-            buildnumber: 960,
+            buildnumber: 961,
         },
         lastUpdated: {
             day: upd[0],
