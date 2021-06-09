@@ -114,6 +114,8 @@ function backToPrevious() {
     } else if (titleDom.innerHTML === ELoadSettings.deleteMe.name) {
         loadSetting(ELoadSettings.privacy.name);
     } else {
+        const currentSetting = sessionStorage.getItem("currentSetting");
+        sessionStorage.removeItem(`@scroll-${currentSetting}`);
         loadSetting(ELoadSettings.settings.name);
     }
 }

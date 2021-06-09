@@ -15,8 +15,6 @@ async function loadLeaderboards() {
     leaderboardsTableRowDom.innerHTML = "";
 
     let cached_leaderboardsArrOrder = null;
-    let cached_viewingLeaderboard = null;
-
 
     try {
 
@@ -46,7 +44,7 @@ async function loadLeaderboards() {
         }
 
         cached_leaderboardsArrOrder = JSON.parse(localStorage.getItem("cached_leaderboardsArrOrder"));
-        cached_viewingLeaderboard = sessionStorage.getItem("cached_viewingLeaderboard");
+        viewingLeaderboard = sessionStorage.getItem("viewingLeaderboard");
 
         if (cached_leaderboardsArrOrder) {
             for (let i = 0; i < cached_leaderboardsArrOrder.length; i++) {
@@ -71,8 +69,8 @@ async function loadLeaderboards() {
         localStorage.removeItem("cached_leaderboardsArrOrder");
     }
 
-    if (document.getElementById(cached_viewingLeaderboard)) {
-        document.getElementById(cached_viewingLeaderboard).classList.add("active");
+    if (document.getElementById(viewingLeaderboard)) {
+        document.getElementById(viewingLeaderboard).classList.add("active");
         if (scrollToX) {
             document.getElementById("GlistOfLeaderboards").scrollTo(scrollToX, 0);
         }
@@ -100,8 +98,8 @@ async function loadLeaderboards() {
                     const keys = Object.keys(leaderboards);
 
                     leaderboardsArrOrder.push({ "leaderboard": [keys[i]], "usersCount": leaderboards[keys[i]] });
-                    if (keys[i] === cached_viewingLeaderboard) {
-                        viewingLeaderboard = cached_viewingLeaderboard;
+                    if (keys[i] === viewingLeaderboard) {
+                        viewingLeaderboard = viewingLeaderboard;
                     }
                 }
 
@@ -181,7 +179,7 @@ async function getListOfLeaderboard(aLeaderboard) {
             viewingLeaderboard = aLeaderboard;
             leaderboardIsLoading = true;
 
-            sessionStorage.setItem("cached_viewingLeaderboard", viewingLeaderboard);
+            sessionStorage.setItem("viewingLeaderboard", viewingLeaderboard);
 
             if (document.getElementById(viewingLeaderboard)) {
                 if (document.getElementById(previousLeaderboard)) {
@@ -344,7 +342,7 @@ async function changeLeaderboardReps() {
 
     const reps = document.getElementById("leaderboardReps").value;
 
-    sessionStorage.removeItem("cached_viewingLeaderboard");
+    sessionStorage.removeItem("viewingLeaderboard");
     sessionStorage.removeItem("leaderboards_scrollX");
 
     if (navigator.onLine) {

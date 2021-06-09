@@ -268,6 +268,7 @@ async function requestAccountDetails() {
             localStorage.setItem("cachedLiftsLeft_owner", resp.info.liftsLeft);
             localStorage.setItem("cachedGoals_owner", JSON.stringify(resp.info.goals));
             localStorage.setItem("cachedGoalsLeft_owner", resp.info.goalsLeft);
+            localStorage.setItem("cachedBadgeColors", JSON.stringify(resp.info.badgeColors));
             displayBadges(resp.info);
             return;
         }
@@ -320,6 +321,7 @@ async function displayBadges(aInfo) {
     }
 
     if (updateBadgeColors === true) {
+        badgeColorsJSON = info.badgeColors;
         badgeColors = new TbadgeColors(info.badgeColors);
     }
 

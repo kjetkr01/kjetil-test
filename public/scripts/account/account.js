@@ -245,6 +245,7 @@ function displayInformation(respInfo) {
     }
 
     if (updateBadgeColors === true) {
+        badgeColorsJSON = info.badgeColors;
         badgeColors = new TbadgeColors(info.badgeColors);
     }
 

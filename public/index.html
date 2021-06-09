@@ -224,23 +224,29 @@
 
       checkForUpdate();
       async function checkForUpdate() {
-         if (navigator.onLine && sessionStorage.getItem("checkedForUpdate") !== "true") {
-            const serverApplication = await callServerAPIPost({}, `/application`);
-            if (serverApplication) {
+
+         if (navigator.onLine) {
+            const lastChecked = localStorage.getItem("lastChecked");
+            const tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+            const today = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1).substr(0, 10);
+            if (lastChecked !== today) {
                // lastChecked prevents unnecessary requests to server
-               // only auto checks for update once a session
-               sessionStorage.setItem("checkedForUpdate", true);
-               if (serverApplication.version.fullNumber !== application.version.fullNumber) {
+               // only auto checks for update once a day
+               const serverApplication = await callServerAPIPost({}, `/application`);
+               if (serverApplication) {
+                  localStorage.setItem("lastChecked", today);
+                  if (serverApplication.version.fullNumber !== application.version.fullNumber) {
 
-                  if (user.getSetting("automaticupdates") === true) {
-                     updateApplication(false);
-                     localStorage.setItem("updated_version_text", `${serverApplication.name} ble oppdatert til versjon ${serverApplication.version.fullNumber}`);
+                     if (user.getSetting("automaticupdates") === true) {
+                        updateApplication(false);
+                        localStorage.setItem("updated_version_text", `${serverApplication.name} ble oppdatert til versjon ${serverApplication.version.fullNumber}`);
+                     } else {
+                        sessionStorage.setItem("settings_notification_update", true);
+                     }
+
                   } else {
-                     sessionStorage.setItem("settings_notification_update", true);
+                     sessionStorage.removeItem("settings_notification_update");
                   }
-
-               } else {
-                  sessionStorage.removeItem("settings_notification_update");
                }
             }
          }
