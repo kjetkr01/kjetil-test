@@ -137,7 +137,7 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
 
 <div id="Gprogression" class="${userBadgeInfo.exercise}-${aId}-class">
 
-<svg id="id="${userBadgeInfo.exercise}-${aId}" style="width: 50px; height: 50px; margin-left: 10px;">
+<svg id="${userBadgeInfo.exercise}-${aId}" style="width: 50px; height: 50px; margin-left: 10px;">
         <circle r="20" cx="25" cy="25" id="${userBadgeInfo.exercise}-${aId}-track" class="track"></circle>
         <circle r="20" cx="25" cy="25" id="${userBadgeInfo.exercise}-${aId}-progress" class="progress"></circle>
         <text x="50%" y="50%" text-anchor="middle" fill="#FFFFFF" font-size="13px" font-weight="bold" dy=".3em">${currentProgressionPercent}</text>
