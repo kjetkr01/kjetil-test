@@ -228,7 +228,7 @@
 
          document.getElementById("badgesLifts").innerHTML = `<tr id="badgesLiftsTableRow-1"></tr>`;
 
-         let sortBy = sessionStorage.getItem("display_lifts_visitor");
+         let sortBy = sessionStorage.getItem("lifts_filter_exercise_visitor");
 
          let showLifts = lifts;
 
@@ -237,7 +237,7 @@
                showLifts = lifts[sortBy];
                if (showLifts.length === 0) {
                   sortBy = null;
-                  sessionStorage.removeItem("display_lifts_visitor");
+                  sessionStorage.removeItem("lifts_filter_exercise_visitor");
                }
             } else {
                sortBy = null;

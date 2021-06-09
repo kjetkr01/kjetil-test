@@ -350,9 +350,11 @@ async function getAccountDetails(aUserID) {
 
                     if (resp.info.hasOwnProperty("allowedLifts")) {
                         sessionStorage.setItem("allowedLifts", JSON.stringify(resp.info.allowedLifts));
+                        allowedLifts = resp.info.allowedLifts;
                     }
                     if (resp.info.hasOwnProperty("allowedGoals")) {
                         sessionStorage.setItem("allowedGoals", JSON.stringify(resp.info.allowedGoals));
+                        allowedGoals = resp.info.allowedGoals;
                     }
 
                     let updatedThemeValues = false;

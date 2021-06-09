@@ -92,11 +92,9 @@ const getLiftsAPI = require("./modules/mw/API").getLiftsAPI;
 /* */
 
 
-/* arrayList */
+/* ECustomList */
 
-const allowedLifts = require("./arrayLists").allowedLifts;
-const allowedGoals = require("./arrayLists").allowedGoals;
-const badgeColors = require("./arrayLists").badgeColors;
+const ECustomList = require("./customList").ECustomList;
 
 /* */
 
@@ -483,27 +481,13 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
           const setting = req.body.updateSetting;
           let value = req.body.value;
 
-          const EAllowedSettings = {
-               "publicprofile": [true, false],
-               "displayleaderboards": [true, false],
-               "displayworkoutlist": [true, false],
-               "preferredtheme": ["0", "1", "2"],
-               "preferredcolortheme": ["0", "1", "2", "3", "4"],
-               "badgesize": ["0", "1"],
-               "badgedetails": ["0", "1", "2"],
-               "automaticupdates": [true, false],
-               "leaderboards_filter_reps": ["bypass"],
-               "lifts_filter_exercise": ["bypass", "check-lifts"],
-               "goals_filter_exercise": ["bypass", "check-goals"],
-          }
-
-          if (EAllowedSettings[setting] && currentUser.username && EAllowedSettings[setting].includes(value) || EAllowedSettings[setting][0] === "bypass") {
+          if (ECustomList.allowed.settings[setting] && currentUser.username && ECustomList.allowed.settings[setting].includes(value) || ECustomList.allowed.settings[setting][0] === "bypass") {
 
                const savedValue = value;
 
-               if (EAllowedSettings[setting][1] === "check-lifts") {
-                    for (let i = 0; i < allowedLifts.length; i++) {
-                         if (allowedLifts[i] === savedValue) {
+               if (ECustomList.allowed.settings[setting][1] === "check-lifts") {
+                    for (let i = 0; i < ECustomList.allowed.lifts.length; i++) {
+                         if (ECustomList.allowed.lifts[i] === savedValue) {
                               value = savedValue;
                               break;
                          } else {
@@ -511,19 +495,15 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
                          }
                     }
                }
-               else if (EAllowedSettings[setting][1] === "check-goals") {
-                    for (let i = 0; i < allowedGoals.length; i++) {
-                         if (allowedGoals[i] === savedValue) {
+               else if (ECustomList.allowed.settings[setting][1] === "check-goals") {
+                    for (let i = 0; i < ECustomList.allowed.goals.length; i++) {
+                         if (ECustomList.allowed.goals[i] === savedValue) {
                               value = savedValue;
                               break;
                          } else {
                               value = null;
                          }
                     }
-
-                    /*if (!allowedGoals.includes(value)) {
-                         value = null;
-                    }*/
                }
 
                const resp = await updateUserSetting(currentUser.username, setting, value);
@@ -763,7 +743,7 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
 
                // fikse slik at den heller teller antall feil og om det er 0 feil, så fortsett!! sånn som i "/user/update/trainingDays/:info"
 
-               const badgeColorValues = Object.entries(badgeColors);
+               const badgeColorValues = Object.entries(ECustomList.other.badgeColors);
 
                let color = badgeColorValues[0][0];
 
@@ -774,15 +754,15 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
                }
 
                if (info.type === "lift") {
-                    for (let i = 0; i < allowedLifts.length; i++) {
-                         if (info.exercise === allowedLifts[i]) {
+                    for (let i = 0; i < ECustomList.allowed.lifts.length; i++) {
+                         if (info.exercise === ECustomList.allowed.lifts[i]) {
                               isValid = true;
                               break;
                          }
                     }
                } else if (info.type === "goal") {
-                    for (let i = 0; i < allowedGoals.length; i++) {
-                         if (info.exercise === allowedGoals[i]) {
+                    for (let i = 0; i < ECustomList.allowed.goals.length; i++) {
+                         if (info.exercise === ECustomList.allowed.goals[i]) {
                               isValid = true;
                               break;
                          }
@@ -842,8 +822,8 @@ server.post("/user/update/goals/completed", auth, async (req, res) => {
                for (let i = 0; i < completedGoalsListKeys.length; i++) {
                     let isValid = false;
                     const current = completedGoalsListKeys[i];
-                    for (let j = 0; j < allowedGoals.length; j++) {
-                         if (current === allowedGoals[j]) {
+                    for (let j = 0; j < ECustomList.allowed.goals.length; j++) {
+                         if (current === ECustomList.allowed.goals[j]) {
                               isValid = true;
                               break;
                          }
@@ -913,15 +893,15 @@ server.post("/user/delete/liftOrGoal/:info", auth, async (req, res) => {
 
                // fikse slik at den heller teller antall feil og om det er 0 feil, så fortsett!! sånn som i "/user/update/trainingDays/:info"
 
-               for (let i = 0; i < allowedLifts.length; i++) {
-                    if (info.exercise === allowedLifts[i]) {
+               for (let i = 0; i < ECustomList.allowed.lifts.length; i++) {
+                    if (info.exercise === ECustomList.allowed.lifts[i]) {
                          isValid = true;
                     }
                }
 
                if (isValid === false) {
-                    for (let i = 0; i < allowedGoals.length; i++) {
-                         if (info.exercise === allowedGoals[i]) {
+                    for (let i = 0; i < ECustomList.allowed.goals.length; i++) {
+                         if (info.exercise === ECustomList.allowed.goals[i]) {
                               isValid = true;
                          }
                     }
@@ -1070,8 +1050,8 @@ server.post("/user/add/trainingsplit/exercise", auth, async (req, res) => {
                const maxExerciseLength = 30;
 
                let isValid = false;
-               for (let z = 0; z < allowedLifts.length; z++) {
-                    if (exercise.toLowerCase() === allowedLifts[z]) {
+               for (let z = 0; z < ECustomList.allowed.lifts.length; z++) {
+                    if (exercise.toLowerCase() === ECustomList.allowed.lifts[z]) {
                          isValid = true;
                          break;
                     }
@@ -1698,7 +1678,7 @@ server.get("/getLifts/user", async function (req, res) {
                     const resp = {
                          "userDetails": getLifts.userDetails,
                          "userLifts": getLifts.userLifts,
-                         "badgeColors": badgeColors
+                         "badgeColors": ECustomList.other.badgeColors
                     }
 
                     res.status(200).json(resp).end();

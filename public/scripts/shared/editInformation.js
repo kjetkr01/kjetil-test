@@ -214,7 +214,8 @@ function enableOverlayView(aType, aExercise, aId) {
         const GeditW = document.getElementById("GeditW");
 
         let showEditBtn = false;
-        if (!location.href.includes("user.html")) {
+
+        if (document.getElementById("editLiftorGoal")) {
             showEditBtn = true;
         }
 
@@ -462,9 +463,9 @@ function enableOverlayEdit(aType, aExercise, aId) {
                     Gsave.innerHTML = `<button id="saveE" disabled onclick="saveLiftOrGoal('lift','edit', '${id}');">Lagre</button>`;
                 } else {
                     if (showDeleteBtn === true) {
-                        GdeleteE.innerHTML = `<button id="deleteE" disabled onclick="deleteLiftOrGoalConfirm('${exercise}', 'lift', '${id}');">Slett løftet</button>`;
+                        GdeleteE.innerHTML = `<button id="deleteE" disabled><img src="images/trash.svg"></img></button>`;
                     }
-                    Gsave.innerHTML = `<button id="saveE" disabled onclick="saveLiftOrGoal('lift','edit', '${id}');">Lagre</button>`;
+                    Gsave.innerHTML = `<button id="saveE" disabled>Lagre</button>`;
                 }
 
                 const color = lift.color;
@@ -543,9 +544,9 @@ function enableOverlayEdit(aType, aExercise, aId) {
                     Gsave.innerHTML = `<button id="saveE" disabled onclick="saveLiftOrGoal('goal','edit', '${id}');">Lagre</button>`;
                 } else {
                     if (showDeleteBtn === true) {
-                        GdeleteE.innerHTML = `<button id="deleteE" disabled onclick="deleteLiftOrGoalConfirm('${exercise}', 'goal', '${id}');">Slett målet</button>`;
+                        GdeleteE.innerHTML = `<button id="deleteE" disabled><img src="images/trash.svg"></img></button>`;
                     }
-                    Gsave.innerHTML = `<button id="saveE" disabled onclick="saveLiftOrGoal('goal','edit', '${id}');">Lagre</button>`;
+                    Gsave.innerHTML = `<button id="saveE" disabled>Lagre</button>`;
                 }
 
                 const color = goal.color;

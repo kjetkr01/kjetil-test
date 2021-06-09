@@ -1,14 +1,6 @@
 const pg = require("pg");
 const dbCredentials = process.env.DATABASE_URL || require("../localenv").credentials;
-const allowedLifts = require("../arrayLists").allowedLifts;
-const allowedGoals = require("../arrayLists").allowedGoals;
-const badgeColors = require("../arrayLists").badgeColors;
-const maxLifts = require("../arrayLists").maxLifts;
-const maxGoals = require("../arrayLists").maxGoals;
-const maxTrainingsplits = require("../arrayLists").maxTrainingsplits;
-const maxTrainingsplitsExercisesPerDay = require("../arrayLists").maxTrainingsplitsExercisesPerDay;
-const maxTrainingsplitsExerciseRows = require("../arrayLists").maxTrainingsplitsExerciseRows;
-const maxSubscribedTrainingsplits = require("../arrayLists").maxSubscribedTrainingsplits;
+const ECustomList = require("../customList").ECustomList;
 
 class StorageHandler {
 
@@ -267,8 +259,8 @@ class StorageHandler {
 
                 for (let j = 0; j < liftKeys.length; j++) {
                     let isValid = false;
-                    for (let z = 0; z < allowedLifts.length; z++) {
-                        if (liftKeys[j] === allowedLifts[z]) {
+                    for (let z = 0; z < ECustomList.allowed.lifts.length; z++) {
+                        if (liftKeys[j] === ECustomList.allowed.lifts[z]) {
                             isValid = true;
                             break;
                         }
@@ -318,8 +310,8 @@ class StorageHandler {
             await client.connect();
 
             let isValid = false;
-            for (let z = 0; z < allowedLifts.length; z++) {
-                if (leaderboard === allowedLifts[z]) {
+            for (let z = 0; z < ECustomList.allowed.lifts.length; z++) {
+                if (leaderboard === ECustomList.allowed.lifts[z]) {
                     isValid = true;
                     break;
                 }
@@ -802,7 +794,7 @@ class StorageHandler {
                             }
                         }
 
-                        const liftsLeft = maxLifts.default - liftsUsed;
+                        const liftsLeft = ECustomList.max.lifts - liftsUsed;
 
                         const goalKeys = Object.keys(userCacheObj.goals);
 
@@ -818,7 +810,7 @@ class StorageHandler {
                             }
                         }
 
-                        const goalsLeft = maxGoals.default - goalsUsed;
+                        const goalsLeft = ECustomList.max.goals - goalsUsed;
 
                         userCacheObj.liftsLeft = liftsLeft;
                         userCacheObj.goalsLeft = goalsLeft;
@@ -881,7 +873,7 @@ class StorageHandler {
                             userCacheObj.alltrainingsplits = allTrainingsplits.rows;
                         }
 
-                        const trainingsplitsLeft = maxTrainingsplits.default - allTrainingsplits.rows.length;
+                        const trainingsplitsLeft = ECustomList.max.trainingsplits - allTrainingsplits.rows.length;
                         userCacheObj.trainingsplitsLeft = trainingsplitsLeft;
 
                     } else {
@@ -955,9 +947,9 @@ class StorageHandler {
                             }
                         }
                     }
-                    userCacheObj.badgeColors = badgeColors;
-                    userCacheObj.allowedLifts = allowedLifts;
-                    userCacheObj.allowedGoals = allowedGoals;
+                    userCacheObj.badgeColors = ECustomList.other.badgeColors;
+                    userCacheObj.allowedLifts = ECustomList.allowed.lifts;
+                    userCacheObj.allowedGoals = ECustomList.allowed.goals;
                     userDetails = userCacheObj;
                     results = true;
                 } else {
@@ -1265,7 +1257,7 @@ class StorageHandler {
 
                     if (modify === true) {
 
-                        if (modifyCount < maxGoals.default) {
+                        if (modifyCount < ECustomList.max.goals) {
                             await client.query(`
                                 UPDATE user_goals
                                 SET "${current}" = $1
@@ -1500,7 +1492,7 @@ class StorageHandler {
                                 WHERE user_id = $1`,
                 [userid]);
 
-            if (allTrainingsplits.rows.length < maxTrainingsplits.default) {
+            if (allTrainingsplits.rows.length < ECustomList.max.trainingsplits) {
 
                 const trainingsplitName = `Treningsplan ${allTrainingsplits.rows.length + 1}`;
 
@@ -1612,8 +1604,8 @@ class StorageHandler {
                 let canEdit = false;
                 if (trainingsplit.user_id === userid) {
                     canEdit = true;
-                    trainingsplit.maxTrainingsplitsExerciseRows = maxTrainingsplitsExerciseRows.default;
-                    trainingsplit.maxTrainingsplitsExercisesPerDay = maxTrainingsplitsExercisesPerDay.default;
+                    trainingsplit.maxTrainingsplitsExerciseRows = ECustomList.max.trainingsplitsExerciseRows;
+                    trainingsplit.maxTrainingsplitsExercisesPerDay = ECustomList.max.trainingsplitsExercisesPerDay;
                 } else {
                     let username = await client.query(`
                         SELECT username
@@ -1753,7 +1745,7 @@ class StorageHandler {
 
                 if (editedTrainingsplit) {
 
-                    if (maxTrainingsplitsExercisesPerDay.default > editedTrainingsplit.list.length) {
+                    if (ECustomList.max.trainingsplitsExercisesPerDay > editedTrainingsplit.list.length) {
 
                         let create = true;
                         for (let i = 0; i < editedTrainingsplit.list.length; i++) {
@@ -1784,7 +1776,7 @@ class StorageHandler {
                             msg = "Øvelsen er allerede lagt til i planen!";
                         }
                     } else {
-                        msg = `Du kan ikke ha flere enn ${maxTrainingsplitsExercisesPerDay.default} øvelser på en dag!`;
+                        msg = `Du kan ikke ha flere enn ${ECustomList.max.trainingsplitsExercisesPerDay} øvelser på en dag!`;
                     }
                 }
             }
@@ -1884,11 +1876,11 @@ class StorageHandler {
 
                     for (let i = 0; i < editedTrainingsplit.list.length; i++) {
                         if (editedTrainingsplit.list[i][exercise]) {
-                            if (maxTrainingsplitsExerciseRows.default > editedTrainingsplit.list[i][exercise].length) {
+                            if (ECustomList.max.trainingsplitsExerciseRows > editedTrainingsplit.list[i][exercise].length) {
                                 update = true;
                                 editedTrainingsplit.list[i][exercise].push({ "sets": 0, "reps": 0, "number": 0, "value": 0 });
                             } else {
-                                msg = `Du kan ikke ha flere rader enn ${maxTrainingsplitsExerciseRows.default} på en øvelse!`;
+                                msg = `Du kan ikke ha flere rader enn ${ECustomList.max.trainingsplitsExerciseRows} på en øvelse!`;
                             }
                             break;
                         }
@@ -1946,7 +1938,7 @@ class StorageHandler {
 
                 if (editedTrainingsplit) {
 
-                    if (maxTrainingsplitsExercisesPerDay.default > editedTrainingsplit.list.length) {
+                    if (ECustomList.max.trainingsplitsExercisesPerDay >= editedTrainingsplit.list.length) {
 
                         let delta = 1;
 
@@ -1971,7 +1963,7 @@ class StorageHandler {
                         results = true;
 
                     } else {
-                        msg = `Du kan ikke ha flere enn ${maxTrainingsplitsExercisesPerDay.default} øvelser på en dag!`;
+                        msg = `Du kan ikke ha flere enn ${ECustomList.max.trainingsplitsExercisesPerDay} øvelser på en dag!`;
                     }
                 }
             }
@@ -2064,7 +2056,7 @@ class StorageHandler {
                                 WHERE user_id = $1`,
                 [userid]);
 
-            if (allTrainingsplits.rows.length < maxTrainingsplits.default) {
+            if (allTrainingsplits.rows.length < ECustomList.max.trainingsplits) {
 
                 let copyTrainingsplit = await client.query(`
                                 SELECT *
@@ -2104,7 +2096,7 @@ class StorageHandler {
                 }
 
             } else {
-                msg = `Du kan ikke ha flere enn ${maxTrainingsplits.default} treningsplaner!`;
+                msg = `Du kan ikke ha flere enn ${ECustomList.max.trainingsplits} treningsplaner!`;
                 results = false;
             }
 
@@ -2165,13 +2157,13 @@ class StorageHandler {
 
                 } else {
 
-                    if (subscribedTrainingsplits.length < maxSubscribedTrainingsplits.default) {
+                    if (subscribedTrainingsplits.length < ECustomList.max.subscribedTrainingsplits) {
                         //subscribe
                         subscribedTrainingsplits.push(tIDString);
                         msg = `Du abonnerer nå på denne planen`;
                         update = true;
                     } else {
-                        msg = `Du kan ikke abonnere på flere enn ${maxSubscribedTrainingsplits.default} treningsplaner!`;
+                        msg = `Du kan ikke abonnere på flere enn ${ECustomList.max.subscribedTrainingsplits} treningsplaner!`;
                         update = false;
                     }
                 }

@@ -318,7 +318,7 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
 
     const GuserGrid = document.getElementById("GuserGrid");
 
-    if (GuserGrid.scrollHeight > (GuserGrid.clientHeight + 300)) {
+    if (GuserGrid.scrollHeight > (GuserGrid.clientHeight + 100)) {
         const backToTopBtn = `<button style="margin-bottom:20px;" class="trainingsplitButton pointer" onClick="document.getElementById('GuserGrid').scrollTop = 0;">Tilbake til toppen</button>`;
         document.getElementById("trainingsplitBottom").innerHTML = backToTopBtn;
     }
@@ -563,19 +563,10 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
 
     const GuserGrid = document.getElementById("GuserGrid");
 
-    if (GuserGrid.scrollHeight > (GuserGrid.clientHeight + 300)) {
+    if (GuserGrid.scrollHeight > (GuserGrid.clientHeight + 100)) {
         const backToTopBtn = `<button style="margin-bottom:20px;" class="trainingsplitButton pointer" onClick="document.getElementById('GuserGrid').scrollTop = 0;">Tilbake til toppen</button>`;
         document.getElementById("trainingsplitBottom").innerHTML = backToTopBtn;
     }
-
-    if (sessionStorage.getItem("usergrid_scroll_y_view")) {
-        GuserGrid.scrollTop = sessionStorage.getItem("usergrid_scroll_y_view");
-    }
-
-    GuserGrid.addEventListener("scroll", function () {
-        const scrollY = GuserGrid.scrollTop;
-        sessionStorage.setItem("usergrid_scroll_y_view", scrollY);
-    });
 }
 
 function viewTrainingsplitOwnerList() {
