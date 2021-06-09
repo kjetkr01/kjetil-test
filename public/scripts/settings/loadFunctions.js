@@ -422,12 +422,12 @@ function loadMedalsCounterPage() {
 
 async function loadAboutAppPage(setting) {
 
-    const imageURL = new Image();
+    /*const imageURL = new Image();
     imageURL.src = application.logoURL;
 
-    imageURL.onload = async function () {
+    imageURL.onload = async function () {*/
 
-        if (sessionStorage.getItem("currentSetting") === ELoadSettings.aboutApp.name) {
+        //if (sessionStorage.getItem("currentSetting") === ELoadSettings.aboutApp.name) {
 
             const imageHTML = `
             <img id="logo" src="${application.logoURL}" alt="" draggable="false" class="noselect settingsLogo"></img>
@@ -502,9 +502,17 @@ async function loadAboutAppPage(setting) {
                 const serverApplication = await callServerAPIPost(infoHeader, url);
                 if (serverApplication) {
                     if (serverApplication.version.fullNumber !== application.version.fullNumber) {
-                        document.getElementById("newUpdateAvailable").innerHTML = `
-                    Nyeste versjon: ${serverApplication.version.fullNumber}<br>
-                    <button class="settingsButton pointer" onClick="updateApplication();">Oppdater</button>`;
+                        let html = `
+                        Nyeste versjon: ${serverApplication.version.fullNumber}<br>
+                        <button class="settingsButton pointer" onClick="updateApplication();">Oppdater nå</button>`;
+
+                        if (user.getSetting("automaticupdates") === true) {
+                            html += `
+                            <br><br>
+                            Versjonen blir installert automatisk i morgen (Krever Internett-tilkobling)`;
+                        }
+
+                        document.getElementById("newUpdateAvailable").innerHTML = html;
                         sessionStorage.setItem("settings_notification_update", true);
                         scrollToSavedPos(setting, 25);
                     } else {
@@ -519,8 +527,8 @@ async function loadAboutAppPage(setting) {
 
             scrollToSavedPos(setting);
             saveNewScrollPos = true;
-        }
-    }
+       // }
+    //}
 }
 
 async function loadUsersListPage(setting) {
