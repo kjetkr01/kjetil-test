@@ -1,5 +1,3 @@
-let user = null;
-
 // create global user class
 
 function createUserClass() {

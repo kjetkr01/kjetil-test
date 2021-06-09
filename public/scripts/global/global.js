@@ -1,6 +1,6 @@
 // global variables
 
-let allowedLifts = null, allowedGoals = null;
+let user, allowedLifts = null, allowedGoals = null;
 
 const defaultTxt = {
     "noConnection": "Ingen Internett-tilkobling"
