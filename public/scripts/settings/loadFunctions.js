@@ -422,12 +422,12 @@ function loadMedalsCounterPage() {
 
 async function loadAboutAppPage(setting) {
 
-    /*const imageURL = new Image();
+    const imageURL = new Image();
     imageURL.src = application.logoURL;
 
-    imageURL.onload = async function () {*/
+    imageURL.onload = async function () {
 
-        //if (sessionStorage.getItem("currentSetting") === ELoadSettings.aboutApp.name) {
+        if (sessionStorage.getItem("currentSetting") === ELoadSettings.aboutApp.name) {
 
             const imageHTML = `
             <img id="logo" src="${application.logoURL}" alt="" draggable="false" class="noselect settingsLogo"></img>
@@ -527,8 +527,8 @@ async function loadAboutAppPage(setting) {
 
             scrollToSavedPos(setting);
             saveNewScrollPos = true;
-       // }
-    //}
+        }
+    }
 }
 
 async function loadUsersListPage(setting) {

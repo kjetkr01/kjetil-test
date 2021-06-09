@@ -399,7 +399,7 @@ async function displayInformationAboutUser() {
                         let extraTxt = "";
                         if (navigator.onLine) {
                             extraTxt = `
-                            <button class="settingsButton pointer" onClick="deleteInfoCache('${cacheName}', '${url}')">Hent nyeste data</button>`;
+                            <button class="settingsButton pointer" onClick="showConfirm('Ønsker du å hente nyeste data? (Krever Internett-forbindelse)', 'deleteInfoCache();');">Hent nyeste data</button>`;
                         }
                         informationAboutUser.innerHTML += `
                         <br>Informasjonen ble hentet fra cache.
@@ -440,10 +440,12 @@ async function displayInformationAboutUser() {
     }
 }
 
-async function deleteInfoCache(aCacheName, aURL) {
-    if (aCacheName && aURL) {
-        const cacheName = aCacheName;
-        const url = aURL;
+async function deleteInfoCache() {
+
+    const allCaches = await caches.keys();
+    if (allCaches.length > 0) {
+        const cacheName = allCaches[0];
+        const url = "/user/allinformation";
 
         const cache = await caches.open(cacheName);
         if (cache) {
