@@ -12,41 +12,6 @@ function createUserClass() {
 
             user = new TUser(token, JSON.parse(userObj), JSON.parse(detailsObj), JSON.parse(settingsObj));
 
-            // redirects to login if token is invalid
-            if (navigator.onLine) {
-                validateToken();
-                async function validateToken() {
-
-                    const currentPage = window.location.pathname;
-
-                    const blackListedPages = ["/access.html", "/login.html", "/userlifts.html"];
-
-                    //blacklists login pages
-                    if (blackListedPages.includes(currentPage)) {
-
-                        console.log(`"${currentPage}" is a blacklisted page, skipped token verification`);
-                        return;
-
-                    } else {
-
-                        if (user) {
-
-                            const infoHeader = {};
-                            const url = `/validate`;
-
-                            const resp = await callServerAPIPost(infoHeader, url);
-
-                            if (!resp) {
-                                userError();
-                            }
-
-                        } else {
-                            userError();
-                        }
-                    }
-                }
-            }
-
         } catch (err) {
             userError();
         }
@@ -54,26 +19,26 @@ function createUserClass() {
     } else {
         userError();
     }
+}
 
-    function userError() {
-        const userErrorTxt = "Det har oppstått en feil. Du blir nå logget ut.";
-        const maxWaitTime = 1000;
-        let waitTime = 0;
-        localStorage.clear();
-        sessionStorage.clear();
-        let waitUntilDomIsLoaded = setInterval(() => {
-            waitTime++;
-            if (waitTime < maxWaitTime) {
-                if (document.getElementById("TSAlertOverlay")) {
-                    clearInterval(waitUntilDomIsLoaded);
-                    showAlert(userErrorTxt, true, "redirectToLogin();");
-                }
-            } else {
-                alert(userErrorTxt) // Took too long
-                redirectToLogin();
+function userError() {
+    const userErrorTxt = "Det har oppstått en feil. Du blir nå logget ut.";
+    const maxWaitTime = 1000;
+    let waitTime = 0;
+    localStorage.clear();
+    sessionStorage.clear();
+    let waitUntilDomIsLoaded = setInterval(() => {
+        waitTime++;
+        if (waitTime < maxWaitTime) {
+            if (document.getElementById("TSAlertOverlay")) {
+                clearInterval(waitUntilDomIsLoaded);
+                showAlert(userErrorTxt, true, "redirectToLogin();");
             }
-        }, 100);
-    }
+        } else {
+            alert(userErrorTxt) // Took too long
+            redirectToLogin();
+        }
+    }, 100);
 }
 
 // User class (for logged inn user)

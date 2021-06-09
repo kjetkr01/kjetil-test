@@ -95,6 +95,8 @@ async function callServerAPIPost(aInfoBody, aUrl) {
 
     if (response.status === 200 || data.includes("opptatt") || data.includes("privat")) {
         return data;
+    } else if (data.includes("invalid token")) {
+        userError();
     } else {
         console.log("not returning data, recieved status:" + response.status)
     }

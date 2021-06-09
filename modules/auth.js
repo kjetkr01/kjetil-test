@@ -12,8 +12,6 @@ const authenticator = async (req, res, next) => {
 
     const resp = validateToken(token, userInfo);
 
-    //console.log(`valid token: ${resp}`); // test / grei log i terminal
-
     if (!resp) {
       return res.status(403).json("invalid token").end();
     } else {

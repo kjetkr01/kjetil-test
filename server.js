@@ -1459,20 +1459,6 @@ server.post("/user/deleteMe", auth, async (req, res) => {
 
 //
 
-// test
-
-server.post("/validate", auth, async (req, res) => {
-
-     //const currentUser = JSON.parse(req.headers.userinfo);
-
-     //console.log("valid, current user: " + currentUser.username); // test / grei log i terminal
-
-     res.status(200).json({ "status": "ok" }).end();
-
-});
-
-//
-
 // -------------------------------  give user api access ---------------------- //
 
 server.post("/user/giveAPIAccess", auth, async (req, res) => {
