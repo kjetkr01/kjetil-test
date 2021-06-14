@@ -11,18 +11,21 @@ function checkIfValidParams() {
     try {
 
         const id = parseInt(urlParamsT.get("trainingsplit_id"));
-        const edit = urlParamsT.get("edit");
-        const day = urlParamsT.get("day");
+        let edit = urlParamsT.get("edit");
+        let day = urlParamsT.get("day");
 
         const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
         if (!isNaN(id)) {
-            if (edit === "true" || edit === "false") {
-                if (days.includes(day)) {
-                    validParams = true;
-                    trainingsplit = { "id": id, "edit": edit, "day": day };
-                }
+            if (edit !== "true" && edit !== "false") {
+                edit = "false";
             }
+            if (!days.includes(day)) {
+                day = days[1];
+            }
+
+            trainingsplit = { "id": id, "edit": edit, "day": day };
+            validParams = true;
         }
 
     } catch (err) {
@@ -39,29 +42,9 @@ async function requestTrainingsplitDetails() {
 
     try {
 
-        const accountFooterDom = document.getElementById("accountFooter");
-        const settingsDom = document.getElementById("settings")
-        if (accountFooterDom) {
-            accountFooterDom.classList = "hidden";
-        }
-        if (settingsDom) {
-            settingsDom.classList = "hidden";
-        }
-
         if (trainingsplit.id) {
 
             document.title = `Treningsplan`;
-
-            document.getElementById("smallTitle").innerHTML = `<div>
-                <svg id="backBtnTrainingsplit" class="backBtnIcon iconsDefaultColor pointer" draggable="false"
-                   onclick="exitTrainingsplit();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.49 39.22">
-                   <g id="Layer_2" data-name="Layer 2">
-                      <g id="Layer_1-2" data-name="Layer 1">
-                         <polyline class="cls-1" points="21.25 1.24 2.48 20.02 20.45 37.99" />
-                      </g>
-                   </g>
-                </svg>
-             </div>`;
 
             let resp = null;
 
@@ -94,27 +77,24 @@ async function requestTrainingsplitDetails() {
                 }
 
             } else {
-                smallTitle.innerHTML = `Kunne ikke hente planen!`;
-                setTimeout(() => {
-                    window.location.search = "";
-                }, 2000);
+                showAlert("Kunne ikke hente planen!", true, "returnToPrevious();");
             }
         } else {
-            window.location.search = "";
+            returnToPrevious();
         }
 
 
     } catch (err) {
         console.log(err);
-        window.location.search = "";
+        returnToPrevious();
     }
 }
 
 const exerciseListCount = [];
 function loadEditTrainingsplit(aResp, aSelectedDay) {
 
-    document.getElementById("backBtnTrainingsplit").setAttribute("onclick", "exitTrainingsplitConfirm();");
-    document.getElementById("account").setAttribute("onclick", "exitTrainingsplitConfirm();");
+    //document.getElementById("backBtnTrainingsplit").setAttribute("onclick", "exitTrainingsplitConfirm();");
+    //document.getElementById("account").setAttribute("onclick", "exitTrainingsplitConfirm();");
 
     const resp = aResp;
 
@@ -122,7 +102,7 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
     const maxTrainingsplitsExerciseRows = resp.maxTrainingsplitsExerciseRows;
     const maxTrainingsplitsExercisesPerDay = resp.maxTrainingsplitsExercisesPerDay;
 
-    const top = `<br><h3>Redigerer:</h3><input id="trainingsplitNameInp" class="trainingsplitNameInput" maxlength="20" value="${resp.trainingsplit_name}"></input>`;
+    const top = `<br><input id="trainingsplitNameInp" class="trainingsplitNameInput" maxlength="20" value="${resp.trainingsplit_name}"></input>`;
 
     const EDays = {
         "monday": "Mandag",
@@ -154,7 +134,9 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
 
     }
 
-    document.getElementById("smallTitle").innerHTML += top;
+    document.getElementById("title").innerHTML = "Redigerer:";
+
+    document.getElementById("info").innerHTML += top;
 
     let optionsHTML = "";
 
@@ -369,15 +351,14 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
 
     document.getElementById("userGrid").innerHTML = `
     <div id="trainingsplitDiv">
-    <p id="trainingsplitToolBar"></p>
-    <br>
-    <p id="trainingsplitInfo"></p>
     <p id="trainingsplitTable"></p>
     <br><br>
     <p id="trainingsplitBottom"></p>
     </div>`;
 
-    let creatorTxt = "";
+    document.getElementById("title").innerHTML = resp.trainingsplit_name;
+
+    document.getElementById("info").innerHTML += `${daysList}<br>${selectedDay.short || 'I dag er det fri fra trening :)'}`;
 
     if (user && user.getId() !== resp.user_id) {
 
@@ -429,12 +410,9 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
             copyHTML = `<button disabled class="trainingsplitButton">${copy_trainingsplit}</button>`;
         }
 
-        creatorTxt = `Av: ${resp.owner}<br>`;
-        const trainingsplitToolBar = document.getElementById("trainingsplitToolBar");
-        trainingsplitToolBar.innerHTML += `${copyHTML}${subscribeHTML}`;
+        document.getElementById("createdBy").innerHTML = `Av: ${resp.owner}`;
+        document.getElementById("info").innerHTML += `<br><br>${copyHTML}${subscribeHTML}`;
     }
-
-    document.getElementById("smallTitle").innerHTML += `<br><h3 id="trainingsplit_name">${resp.trainingsplit_name}</h3>${creatorTxt}${daysList}<br>${selectedDay.short || 'I dag er det fri fra trening :)'}`;
 
     let animation = "fadeInUp animate";
     if (showTrainingsplitAnimations === false) {
@@ -443,7 +421,6 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
 
     if (selectedDay.list.length > 0) {
 
-        const trainingsplitInfo = document.getElementById("trainingsplitInfo");
         const arr = selectedDay.list;
 
         for (let i = 0; i < arr.length; i++) {
@@ -540,10 +517,6 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
                         }
                     }
 
-                    if (ORMLifts.length > 0) {
-                        trainingsplitInfo.innerHTML = `Denne planen fungrerer best hvis du har 1 Rep / ORM i følgende løft: ${ORMLifts}`;
-                    }
-
                     trainingsplitTable.innerHTML += `
                         <div class="${animation} delaySmall">
                         <p class="trainingsplitListRow trainingsplitInline">
@@ -561,6 +534,10 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
         }
     }
 
+    if (ORMLifts.length > 0) {
+        document.getElementById("info").innerHTML += `<br><br>Denne planen fungrerer best hvis du har 1 Rep / ORM i følgende løft: ${ORMLifts}`;
+    }
+
     const GuserGrid = document.getElementById("GuserGrid");
 
     if (GuserGrid.scrollHeight > (GuserGrid.clientHeight + 100)) {
@@ -574,7 +551,7 @@ function viewTrainingsplitOwnerList() {
     const trainingsplit_id = document.getElementById("listworkoutPlans");
     if (trainingsplit_id) {
         if (trainingsplit_id.value !== "" && trainingsplit_id.value !== "null") {
-            viewTrainingsplit(trainingsplit_id.value);
+            redirectToTrainingsplit(trainingsplit_id.value);
         } else {
             document.getElementById("respworkoutPlans").textContent = `Vennligst velg en treningsplan fra "Dine planer" listen!`;
         }
@@ -587,7 +564,7 @@ function viewTrainingsplitSubList() {
 
     if (trainingsplit_id) {
         if (trainingsplit_id.value !== "" && trainingsplit_id.value !== "null") {
-            viewTrainingsplit(trainingsplit_id.value);
+            redirectToTrainingsplit(trainingsplit_id.value);
         } else {
             document.getElementById("respworkoutPlans").textContent = `Vennligst velg en treningsplan fra "Abonnerte planer" listen!`;
         }
@@ -620,18 +597,7 @@ function viewTrainingsplit(aId, aDay) {
             }
         }
 
-        const viewinguser_id = urlParamsT.get("user_id");
-        let vuser_id = "";
-
-        if (viewinguser_id) {
-            vuser_id = `user_id=${viewinguser_id}&`;
-        }
-
-        if (!location.href.includes("user.html")) {
-            window.location.href = `/account.html?${vuser_id}trainingsplit_id=${aId}&edit=false&day=${day}`;
-        } else {
-            window.location.search = `?${vuser_id}trainingsplit_id=${aId}&edit=false&day=${day}`;
-        }
+        window.location.href = `/trainingsplit.html?trainingsplit_id=${aId}&edit=false&day=${day}`;
     }
 }
 
@@ -901,20 +867,7 @@ async function copyTrainingsplitConfirm(aTrainingsplit_id, aOwner_id) {
 
         if (owner_id) {
 
-            let trainingsplit_name = document.getElementById("trainingsplit_name");
-            if (trainingsplit_name) {
-                if (trainingsplit_name.textContent) {
-                    trainingsplit_name = trainingsplit_name.textContent;
-                }
-            } else {
-                trainingsplit_name = document.getElementById("trainingsplitNameInp");
-                if (trainingsplit_name) {
-                    if (trainingsplit_name.value) {
-                        trainingsplit_name = trainingsplit_name.value;
-                    }
-                }
-            }
-            showConfirm(`Vil du ta en kopi av ${trainingsplit_name || "planen"}?`, `copyTrainingsplit('${trainingsplit_id}', '${owner_id}');`);
+            showConfirm(`Vil du ta en kopi av treningsplanen?`, `copyTrainingsplit('${trainingsplit_id}', '${owner_id}');`);
         }
     }
 }
@@ -960,7 +913,8 @@ function loadIntoEditTrainingsplit(aNewTrainingsplit_id) {
         const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
         const dayNum = new Date().getDay();
         const day = days[dayNum];
-        window.location.href = `account.html?trainingsplit_id=${aNewTrainingsplit_id}&edit=true&day=${day}`;
+        //window.location.href = `trainingsplit.html?trainingsplit_id=${aNewTrainingsplit_id}&edit=true&day=${day}`;
+        redirectToTrainingsplit(aNewTrainingsplit_id, day, true);
     }
 }
 
@@ -981,7 +935,7 @@ async function subOrUnsubToTrainingsplitConfirm(aTrainingsplit_id, aOwner_id, aT
 
                 const tIDString = trainingsplit_id.toString();
                 if (subscribedtrainingsplitsKeys.includes(tIDString)) {
-                    const trainingsplit_name = document.getElementById("trainingsplit_name");
+                    const trainingsplit_name = document.getElementById("title");
                     showConfirm(`
                     Vil du si opp abonnementet på ${trainingsplit_name.textContent || subscribedtrainingsplitsKeys[trainingsplit_id] || "planen"}?`,
                         `subOrUnsubToTrainingsplit('${trainingsplit_id}', '${owner_id}', '${aTrainingsplit_name}');`);

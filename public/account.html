@@ -299,44 +299,34 @@
 
       displayUserDetailsCached();
 
-      if (checkIfValidParams() === true) {
-         document.getElementById("userGrid").innerHTML = "";
-         requestTrainingsplitDetails();
-      } else {
+      requestAccountDetails();
 
-         if (window.location.search.length > 0) {
-            window.location.search = "";
-         }
+      //sessionStorage.removeItem("trainingsplit");
+      const GuserGrid = document.getElementById("GuserGrid");
 
-         requestAccountDetails();
-
-         //sessionStorage.removeItem("trainingsplit");
-         const GuserGrid = document.getElementById("GuserGrid");
-
-         if (sessionStorage.getItem("usergrid_scroll_y_main")) {
-            GuserGrid.scrollTop = sessionStorage.getItem("usergrid_scroll_y_main");
-         }
-
-         GuserGrid.addEventListener("scroll", function () {
-            const scrollY = GuserGrid.scrollTop;
-            sessionStorage.setItem("usergrid_scroll_y_main", scrollY);
-         });
-
-         GbadgesLifts.addEventListener("scroll", function () {
-            const scrollX = GbadgesLifts.scrollLeft;
-            sessionStorage.setItem("badgeslifts_scroll_x", scrollX);
-         });
-
-         GbadgesGoals.addEventListener("scroll", function () {
-            const scrollX = GbadgesGoals.scrollLeft;
-            sessionStorage.setItem("badgesgoals_scroll_x", scrollX);
-         });
-
-         GbadgesTrainingsplit.addEventListener("scroll", function () {
-            const scrollX = GbadgesTrainingsplit.scrollLeft;
-            sessionStorage.setItem("badgestrainingsplit_scroll_x", scrollX);
-         });
+      if (sessionStorage.getItem("usergrid_scroll_y_main")) {
+         GuserGrid.scrollTop = sessionStorage.getItem("usergrid_scroll_y_main");
       }
+
+      GuserGrid.addEventListener("scroll", function () {
+         const scrollY = GuserGrid.scrollTop;
+         sessionStorage.setItem("usergrid_scroll_y_main", scrollY);
+      });
+
+      GbadgesLifts.addEventListener("scroll", function () {
+         const scrollX = GbadgesLifts.scrollLeft;
+         sessionStorage.setItem("badgeslifts_scroll_x", scrollX);
+      });
+
+      GbadgesGoals.addEventListener("scroll", function () {
+         const scrollX = GbadgesGoals.scrollLeft;
+         sessionStorage.setItem("badgesgoals_scroll_x", scrollX);
+      });
+
+      GbadgesTrainingsplit.addEventListener("scroll", function () {
+         const scrollX = GbadgesTrainingsplit.scrollLeft;
+         sessionStorage.setItem("badgestrainingsplit_scroll_x", scrollX);
+      });
 
       setInterval(() => {
          checkConnection();

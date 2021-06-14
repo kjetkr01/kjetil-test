@@ -1045,7 +1045,7 @@ async function createNewTrainingsplit() {
         if (resp) {
             respMsg.textContent = "Oprettet ny treningsplan!";
             setTimeout(() => {
-                window.location.search = `?trainingsplit_id=${resp}&edit=true&day=monday`;
+                redirectToTrainingsplit(resp, "monday", true);
             }, 500);
         } else {
             respMsg.textContent = "Det har oppstått en feil!";
@@ -1211,14 +1211,7 @@ async function editTrainingsplit() {
                 const dayNum = new Date().getDay();
                 const day = days[dayNum];
 
-                const viewinguser_id = urlParamsT.get("user_id");
-                let vuser_id = "";
-
-                if (viewinguser_id) {
-                    vuser_id = `user_id=${viewinguser_id}&`;
-                }
-
-                window.location.search = `?${vuser_id}trainingsplit_id=${trainingsplit_id}&edit=true&day=${day}`;
+                redirectToTrainingsplit(trainingsplit_id, day, true);
             } else {
                 respMsg.textContent = `Vennligst velg en treningsplan fra "Dine planer" listen!`;
             }

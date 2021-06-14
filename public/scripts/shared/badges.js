@@ -414,9 +414,23 @@ function getBadgeTrainingsplit(aBadgeInfo) {
 
     function smallBadge(userBadgeInfo) {
 
+        let day = "monday";
+
+        const days = {
+            "Søndag": "sunday",
+            "Mandag": "monday",
+            "Tirsdag": "tuesday",
+            "Onsdag": "wednesday",
+            "Torsdag": "thursday",
+            "Fredag": "friday",
+            "Lørdag": "saturday",
+        }
+
+        day = days[userBadgeInfo.day];
+
         const badgeTemplate = `
 <td>
-<div class="smallBadgesTrainingsplit ${trainingsplitBadgeAnimations} ${userBadgeInfo.color} pointer" onClick="viewTrainingsplit('${userBadgeInfo.trainingsplit_id}','${userBadgeInfo.day}')">
+<div class="smallBadgesTrainingsplit ${trainingsplitBadgeAnimations} ${userBadgeInfo.color} pointer" onClick="redirectToTrainingsplit('${userBadgeInfo.trainingsplit_id}','${day}');">
 
 <div id="Gday">
 <p id="day">

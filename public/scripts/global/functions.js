@@ -435,6 +435,31 @@ function redirectToUser(viewUser) {
     }
 }
 
+function redirectToTrainingsplit(aTrainingsplitID, aDay, aEdit) {
+    const trainingsplit_id = aTrainingsplitID;
+    const day = aDay;
+    const edit = aEdit;
+
+    let daySearch = `&day=${day}`;
+    let editSearch = `&edit=${edit}`;
+
+    const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+
+    if (!days.includes(day)) {
+        daySearch = "";
+    }
+    if (edit !== true) {
+        editSearch = "";
+    }
+
+    if (trainingsplit_id) {
+        sessionStorage.setItem("visit_trainingsplit_referrer", document.URL);
+        location.href = `trainingsplit.html?trainingsplit_id=${trainingsplit_id}${daySearch}${editSearch}`;
+    } else {
+        redirectToFeed();
+    }
+}
+
 function redirectToAccount() {
 
     location.href = "account.html";

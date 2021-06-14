@@ -243,15 +243,7 @@
          }
       }
 
-      displayUserDetailsCached();
-      if (checkIfValidParams() === true && navigator.onLine) {
-         document.getElementById("GbackBtn").innerHTML = "";
-         document.getElementById("userGrid").innerHTML = "";
-         requestTrainingsplitDetails();
-      } else {
-         requestAccountDetails();
-         sessionStorage.removeItem("trainingsplit");
-      }
+      requestAccountDetails();
    }
 
 </script>

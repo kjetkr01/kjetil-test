@@ -1,4 +1,4 @@
-const cacheName = 'TS-PWA-v42';
+const cacheName = 'TS-PWA-v43';
 const swName = '[Service Worker]';
 
 const contentToCache = [
@@ -17,6 +17,7 @@ const contentToCache = [
     '/account.html',
     '/settings.html',
     '/user.html',
+    '/trainingsplit.html',
 
     /* IMAGES */
 
@@ -90,6 +91,10 @@ const contentToCache = [
     '/styles/user/common.css',
     '/styles/user/desktop.css',
     '/styles/user/mobile.css',
+
+    '/styles/trainingsplit/common.css',
+    '/styles/trainingsplit/desktop.css',
+    '/styles/trainingsplit/mobile.css',
 ];
 
 if ('serviceWorker' in navigator) {

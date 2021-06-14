@@ -143,12 +143,12 @@ async function checkWhoIsWorkingOutToday() {
                     const workoutBtn = document.getElementById(`workout-${currentWorkout}`);
                     workoutBtn.classList += " pointer";
 
-                    const days = ["Søndag", "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag"];
+                    const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
                     const dayNum = new Date().getDay();
                     const day = days[dayNum];
 
-                    const link = `sessionStorage.setItem("trainingsplit_return_to_feed", true);viewTrainingsplit('${user.getSetting("activetrainingsplit")}','${day}');`;
+                    const link = `redirectToTrainingsplit('${user.getSetting("activetrainingsplit")}','${day}');`;
                     workoutBtn.setAttribute("onclick", link);
                     peopleWorkoutList.innerHTML += `
                     <button class="accountOwner fadeInUp animate pointer" onClick="viewUser('${resp[i].id}')">${shortenedFullName}</button>
@@ -162,7 +162,6 @@ async function checkWhoIsWorkingOutToday() {
             `;
 
                 }
-
             }
 
         } else {
