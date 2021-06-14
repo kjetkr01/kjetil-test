@@ -870,6 +870,11 @@ class StorageHandler {
                             [userIDReq]);
 
                         if (allTrainingsplits.rows.length > 0) {
+                            allTrainingsplits.rows.sort(function (a, b) {
+                                if (a.trainingsplit_name < b.trainingsplit_name) { return -1; }
+                                if (a.trainingsplit_name > b.trainingsplit_name) { return 1; }
+                                return 0;
+                            });
                             userCacheObj.alltrainingsplits = allTrainingsplits.rows;
                         }
 

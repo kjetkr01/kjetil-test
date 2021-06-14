@@ -160,12 +160,14 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
 
     let copyHTML = `<button class="trainingsplitButton pointer" onClick="copyTrainingsplitConfirm(${resp.trainingsplit_id}, ${resp.user_id});">${copy_trainingsplit}</button>`;
 
-    const toolBarHTML = `
+
+    document.getElementById("info").innerHTML += `
+    <br>
     <button id="saveTrainingsplitBtn" class="trainingsplitButton pointer fadeIn animate" onClick="saveTrainingsplit();">Lagre</button>
     ${copyHTML}
-    <button class="trainingsplitButton pointer fadeIn animate" onClick="deleteTrainingsplitConfirm('${resp.trainingsplit_id}');"><img src="images/trash.svg"></img></button>
-    <br>
-    <br>
+    <button class="trainingsplitButton pointer fadeIn animate" onClick="deleteTrainingsplitConfirm('${resp.trainingsplit_id}');"><img src="images/trash.svg"></img></button>`;
+
+    const toolBarHTML = `
     <select id="trainingsplitSelectDay" onChange="changeTrainingsplitDay();" class="trainingsplitSelect pointer">${optionsHTML}</select>
     <div id="addNewExerciseDiv">
     ${exerciseListHTML}
