@@ -1624,7 +1624,7 @@ class StorageHandler {
 
                 trainingsplit = results.rows[0];
 
-                if (trainingsplit.public === true || isSubscribed === true) {
+                if (trainingsplit.user_id === userid || trainingsplit.public === true || isSubscribed === true) {
                     let canEdit = false;
                     if (trainingsplit.user_id === userid) {
                         canEdit = true;
@@ -1710,6 +1710,37 @@ class StorageHandler {
 
                 results = true;
             }
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return results;
+    }
+
+    //
+
+
+    //  -------------------------------  change TrainingsplitVisibility (user)  ------------------------------- //
+
+    async changeTrainingsplitVisibility(userid, trainingsplit_id, value) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+
+        try {
+            await client.connect();
+
+            await client.query(`
+            UPDATE user_trainingsplit
+            SET public = $1
+            WHERE trainingsplit_id = $2
+            AND user_id = $3`,
+            [value, trainingsplit_id, userid]);
+
+            results = true;
 
         } catch (err) {
             client.end();

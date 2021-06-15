@@ -117,6 +117,15 @@ async function saveTrainingsplit(userid, trainingsplit_id, day, list, trainingsp
     }
 }
 
+async function changeTrainingsplitVisibility(userid, trainingsplit_id, value) {
+    try {
+        const resp = await database.changeTrainingsplitVisibility(userid, trainingsplit_id, value);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 module.exports.createTrainingsplit = createTrainingsplit;
 module.exports.setActiveTrainingsplit = setActiveTrainingsplit;
 module.exports.getTrainingsplit = getTrainingsplit;
@@ -130,3 +139,4 @@ module.exports.copyTrainingsplit = copyTrainingsplit;
 module.exports.subUnsubTrainingsplit = subUnsubTrainingsplit;
 module.exports.setNotActiveTrainingsplit = setNotActiveTrainingsplit;
 module.exports.saveTrainingsplit = saveTrainingsplit;
+module.exports.changeTrainingsplitVisibility = changeTrainingsplitVisibility;

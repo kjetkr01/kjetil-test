@@ -57,6 +57,7 @@ const copyTrainingsplit = require("./modules/mw/trainingsplit").copyTrainingspli
 const subUnsubTrainingsplit = require("./modules/mw/trainingsplit").subUnsubTrainingsplit;
 const setNotActiveTrainingsplit = require("./modules/mw/trainingsplit").setNotActiveTrainingsplit;
 const saveTrainingsplit = require("./modules/mw/trainingsplit").saveTrainingsplit;
+const changeTrainingsplitVisibility = require("./modules/mw/trainingsplit").changeTrainingsplitVisibility;
 
 /* */
 
@@ -1226,6 +1227,40 @@ server.post("/user/copy/trainingsplit", auth, async (req, res) => {
                     res.status(200).json(resp).end();
                } else {
                     res.status(403).json(resp).end();
+               }
+          } else {
+               res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+
+//
+
+// change visibility trainingsplit
+
+server.post("/user/change/trainingsplit/visibility", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+          let value = req.body.value;
+
+          if (!isNaN(trainingsplit_id)) {
+
+               if (value !== true) {
+                    value = false;
+               }
+
+               const resp = await changeTrainingsplitVisibility(currentUser.id, trainingsplit_id, value);
+
+               if (resp === true) {
+                    res.status(200).json(resp).end();
+               } else {
+                    res.status(403).json({ "status": false, "msg": `Det har oppstått en feil!` }).end();
                }
           } else {
                res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
