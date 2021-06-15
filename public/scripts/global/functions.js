@@ -206,15 +206,9 @@ function checkConnection() {
             dom.textContent = onlineTxt;
             dom.style.color = "green";
 
-            const footerDom = document.getElementById("accountFooter");
-
-            if (!footerDom || footerDom.className.includes("hidden")) {
-
-            } else {
-                setInterval(() => {
-                    location.reload();
-                }, 2500);
-            }
+            setInterval(() => {
+                location.reload();
+            }, 2500);
         }
     }
 }

@@ -986,12 +986,6 @@ async function changeTrainingsplitVisibility(aTrainingsplit_id, aValue) {
         const resp = await fetch(url, config);
         const data = await resp.json();
 
-        /*let visibilityTxt = "privat";
-
-        if (value === true) {
-            visibilityTxt = "offentlig";
-        }*/
-
         if (data === true) {
             const changeTrainingsplitVisibilityBtn = document.getElementById("changeTrainingsplitVisibilityBtn");
 
@@ -1016,7 +1010,6 @@ async function changeTrainingsplitVisibility(aTrainingsplit_id, aValue) {
                 changeTrainingsplitVisibilityBtn.innerHTML = privateVisibility;
             }
 
-            //showAlert(`Planen sin synlighet er nå endret til: ${visibilityTxt}`, true);
         } else {
             //alert(data.msg);
             showAlert(data.msg, true);

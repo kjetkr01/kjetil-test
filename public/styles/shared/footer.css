@@ -3,7 +3,6 @@ position: fixed;
 left: 0;
 bottom: 0;
 width: 100%;
-text-align: center;
 background-color: var(--main-backgroundColor3);
 text-align: center;
 max-height: var(--main-footerIconHeight);
@@ -29,6 +28,6 @@ margin-right: 12.5vw;
 }
 
 #footerInfo {
-font-size: 14px;
+font-size: 12px;
 text-align: center;
 }
