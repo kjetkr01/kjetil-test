@@ -1,12 +1,20 @@
 {
   "name": "Treningsstatistikken - Test App",
   "short_name": "Treningsstatistikken",
+  "description": "Sjekk progresjon for løft og mål.",
   "lang": "nb-NO",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#000000",
+  "background_color": "#FFFFFF",
+  "categories": [
+    "training",
+    "workout",
+    "lift",
+    "goal",
+    "progression"
+  ],
   "icons": [
     {
       "src": "images/appIcon.png",

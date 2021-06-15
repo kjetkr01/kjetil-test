@@ -22,6 +22,41 @@
 
    <!-- -->
 
+   <!-- splashscreen for ios -->
+
+   <link href="images/splashscreens/iphone5_splash.png"
+      media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/iphone6_splash.png"
+      media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/iphoneplus_splash.png"
+      media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/iphonex_splash.png"
+      media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/iphonexr_splash.png"
+      media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/iphonexsmax_splash.png"
+      media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/ipad_splash.png"
+      media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/ipadpro1_splash.png"
+      media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/ipadpro3_splash.png"
+      media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/ipadpro2_splash.png"
+      media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+
+   <!-- -->
+
    <!-- status bar color -->
 
    <meta id="themeColor" name="theme-color" content="#357F9B">
@@ -33,184 +68,50 @@
    <link rel="stylesheet" href="styles/global/globalClasses.css">
    <link rel="stylesheet" href="styles/global/global.css">
 
-   <!-- themeStyleCSS -->
-   <!--<link id="themeStyleCSS-default" rel="stylesheet" href="styles/themes/default.css">
-   <link id="themeStyleCSS-blue" rel="stylesheet" href="styles/themes/blue.css">-->
-   <!-- themeStyleCSS -->
-   <link id="themeStyleCSS-blue" rel="stylesheet" href="styles/themes/themes.css">
-
-   <link rel="stylesheet" href="styles/themes/globalThemeValues.css">
+   <link rel="stylesheet" href="styles/global/themes.css">
 
 
    <link rel="stylesheet" href="styles/account/desktop.css">
    <link rel="stylesheet" href="styles/account/mobile.css">
    <link rel="stylesheet" href="styles/account/common.css">
-   <link rel="stylesheet" href="styles/account/overlay.css">
 
-   <link rel="stylesheet" href="styles/badges/badges.css">
-   <link rel="stylesheet" href="styles/badges/badgeColors.css">
-   <link rel="stylesheet" href="styles/userAndAccount/userGrid.css">
-   <!--<link rel="stylesheet" href="styles/index/progressbar.css">-->
+   <link rel="stylesheet" href="styles/shared/overlay.css">
+   <link rel="stylesheet" href="styles/shared/footer.css">
 
-   <script src="scripts/appInfo.js" type="text/javascript"></script>
-   <script src="scripts/global.js" type="text/javascript"></script>
-   <script src="scripts/badges/ownerBadges.js" type="text/javascript"></script>
+   <link rel="stylesheet" href="styles/shared/badges.css">
+   <link rel="stylesheet" href="styles/shared/badgeColors.css">
+   <link rel="stylesheet" href="styles/shared/userGrid.css">
+
+   <script src="sw.js" type="module"></script>
+
+   <script src="ts_application.js" type="text/javascript"></script>
+   <script src="scripts/global/appInfo.js" type="text/javascript"></script>
+   <script src="scripts/global/user.js" type="text/javascript"></script>
+   <script src="scripts/global/global.js" type="text/javascript"></script>
+   <script src="scripts/global/functions.js" type="text/javascript"></script>
    <script src="scripts/account/account.js" type="text/javascript"></script>
-   <script src="scripts/account/editInformation.js" type="text/javascript"></script>
-
-   <script src="scripts/overlay/overlay.js" type="text/javascript"></script>
+   <script src="scripts/shared/editInformation.js" type="text/javascript"></script>
+   <script src="scripts/shared/badges.js" type="text/javascript"></script>
+   <script src="scripts/shared/trainingsplit.js" type="text/javascript"></script>
+   <script src="scripts/shared/overlay.js" type="text/javascript"></script>
 
 </head>
 
 <body>
 
-   <script>changeColorTheme();</script>
+   <script>
+      useHTTPS();
+      createUserClass();
+      changeColorTheme();
+   </script>
 
-   <div id="createNewLiftorGoalOverlay" style="display: none;" class="overlay"></div>
+   <div id="createNewLiftorGoalOverlay" style="display: none;" class="overlay noselect"></div>
 
-   <div id="editLiftorGoalOverlay" style="display: none;" class="overlay"></div>
-
-   <!--
-   <div id="editDaysOverlay" style="display: none;" class="overlay">
-      <div id="editDays" class="editDays">
-         <div id="Gtitle1EditDays">
-            <p id="title1EditDays">Treningsplan</p>
-         </div>
-         <div id="Gline1EditDays">
-            <hr id="line1EditDays">
-         </div>
-         <div id="Gtitle2EditDays">
-            <p id="title2EditDays">Dine dager</p>
-         </div>
-         <div id="Gline2EditDays">
-            <hr id="line2EditDays">
-         </div>
-         <div id="GlistEditDays">
-            <table id="listEditDays" class="daysTable">
-
-               <tr>
-                  <td class="daysTabletd">
-                     <label for="Mandag">Mandag</label>
-                  </td>
-                  <td class="daysTabletd">
-                     <input id="Mandag" class="editDaysCheckbox" type="checkbox"></input>
-                  </td>
-               </tr>
-
-               <tr>
-                  <td class="daysTabletd">
-                     <label for="Tirsdag">Tirsdag</label>
-                  </td>
-                  <td class="daysTabletd">
-                     <input id="Tirsdag" class="editDaysCheckbox" type="checkbox"></input>
-                  </td>
-               </tr>
-
-               <tr>
-                  <td class="daysTabletd">
-                     <label for="Onsdag">Onsdag</label>
-                  </td>
-                  <td class="daysTabletd">
-                     <input id="Onsdag" class="editDaysCheckbox" type="checkbox"></input>
-                  </td>
-               </tr>
-
-               <tr>
-                  <td class="daysTabletd">
-                     <label for="Torsdag">Torsdag</label>
-                  </td>
-                  <td class="daysTabletd">
-                     <input id="Torsdag" class="editDaysCheckbox" type="checkbox"></input>
-                  </td>
-               </tr>
-
-               <tr>
-                  <td class="daysTabletd">
-                     <label for="Fredag">Fredag</label>
-                  </td>
-                  <td class="daysTabletd">
-                     <input id="Fredag" class="editDaysCheckbox" type="checkbox"></input>
-                  </td>
-               </tr>
-
-               <tr>
-                  <td class="daysTabletd">
-                     <label for="Lørdag">Lørdag</label>
-                  </td>
-                  <td class="daysTabletd">
-                     <input id="Lørdag" class="editDaysCheckbox" type="checkbox"></input>
-                  </td>
-               </tr>
-
-               <tr>
-                  <td class="daysTabletd">
-                     <label for="Søndag">Søndag</label>
-                  </td>
-                  <td class="daysTabletd">
-                     <input id="Søndag" class="editDaysCheckbox" type="checkbox"></input>
-                  </td>
-               </tr>
-
-            </table>
-         </div>
-         <div id="GrespEditDays">
-            <p id="respEditDays"></p>
-         </div>
-         <div id="GcancelEditDays">
-            <button id="cancelEditDays" class="pointer" onclick="disableOverlay('editDays');">Avbryt</button>
-         </div>
-         <div id="GsaveEditDays">
-            <button id="saveEditDays" class="pointer" onclick="saveTrainingDays();">Lagre</button>
-         </div>
-      </div>
-   </div>
-   -->
-
-   <div id="editworkoutPlanOverlay" style="display: none;" class="overlay">
-      <div id="workoutPlans" class="workoutPlans">
-         <div id="Gtitle1workoutPlans">
-            <p id="title1workoutPlans">Treningsplan</p>
-         </div>
-         <div id="Gline1workoutPlans">
-            <hr id="line1workoutPlans">
-         </div>
-         <div id="Gtitle2workoutPlans">
-            <p id="title2workoutPlans">Dine planer</p>
-         </div>
-         <div id="Gline2workoutPlans">
-            <hr id="line2workoutPlans">
-         </div>
-         <div id="GlistworkoutPlans">
-            <select id="listworkoutPlans">
-               <option value="0">Plan 1</option>
-               <option selected="selected" value="1">Plan 2</option>
-            </select>
-         </div>
-         <div id="GeditplanworkoutPlans">
-            <button id="editplanworkoutPlans">Rediger</button>
-         </div>
-         <div id="Gtitle3workoutPlans">
-            <p id="title3workoutPlans">Aktiv plan</p>
-         </div>
-         <div id="Gline3workoutPlans">
-            <hr id="line3workoutPlans">
-         </div>
-         <div id="GtextworkoutPlans">
-            <p id="textworkoutPlans">
-               plan 2
-            </p>
-         </div>
-         <div id="GrespworkoutPlans">
-            <p id="respworkoutPlans"></p>
-         </div>
-         <div id="GcancelworkoutPlans">
-            <button id="cancelworkoutPlans" class="pointer" onclick="disableOverlay('editDays');">Avbryt</button>
-         </div>
-         <div id="GsaveworkoutPlans">
-            <button id="saveworkoutPlans" class="pointer" onclick="saveTrainingDays();">Lagre</button>
-         </div>
-      </div>
-   </div>
+   <div id="viewLiftorGoalOverlay" style="display: none;" class="overlay noselect"></div>
+   <div id="editLiftorGoalOverlay" style="display: none;" class="overlay noselect"></div>
+   <div id="editworkoutPlanOverlay" style="display: none;" class="overlay noselect"></div>
+   <div id="TSAlertOverlay" style="display: none;" class="overlay noselect"></div>
+   <div id="TSConfirmOverlay" style="display: none;" class="overlay noselect"></div>
 
    <section id="page">
 
@@ -243,9 +144,26 @@
          </table>
       </div>
 
+      <div id="GmedalsInfo">
+         <p id="medalsInfo" class="noselect infoTable fadeIn animate delayMedium">
+         </p>
+      </div>
+
+      <div id="GsmallTitle">
+         <p id="smallTitle" class="noselect">
+         </p>
+      </div>
+
       <div id="Gsettings">
-         <button id="settings" class="noselect settingsBtn pointer" onclick="redirectToSettings();">
-            Innstillinger
+         <button style="height: 33px;" id="settings" class="noselect settingsBtn pointer"
+            onclick="redirectToSettings();">
+
+            <svg style="vertical-align: text-top;" xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+               fill="white" class="bi bi-gear-wide-connected" viewBox="0 0 16 16">
+               <path
+                  d="M7.068.727c.243-.97 1.62-.97 1.864 0l.071.286a.96.96 0 0 0 1.622.434l.205-.211c.695-.719 1.888-.03 1.613.931l-.08.284a.96.96 0 0 0 1.187 1.187l.283-.081c.96-.275 1.65.918.931 1.613l-.211.205a.96.96 0 0 0 .434 1.622l.286.071c.97.243.97 1.62 0 1.864l-.286.071a.96.96 0 0 0-.434 1.622l.211.205c.719.695.03 1.888-.931 1.613l-.284-.08a.96.96 0 0 0-1.187 1.187l.081.283c.275.96-.918 1.65-1.613.931l-.205-.211a.96.96 0 0 0-1.622.434l-.071.286c-.243.97-1.62.97-1.864 0l-.071-.286a.96.96 0 0 0-1.622-.434l-.205.211c-.695.719-1.888.03-1.613-.931l.08-.284a.96.96 0 0 0-1.186-1.187l-.284.081c-.96.275-1.65-.918-.931-1.613l.211-.205a.96.96 0 0 0-.434-1.622l-.286-.071c-.97-.243-.97-1.62 0-1.864l.286-.071a.96.96 0 0 0 .434-1.622l-.211-.205c-.719-.695-.03-1.888.931-1.613l.284.08a.96.96 0 0 0 1.187-1.186l-.081-.284c-.275-.96.918-1.65 1.613-.931l.205.211a.96.96 0 0 0 1.622-.434l.071-.286zM12.973 8.5H8.25l-2.834 3.779A4.998 4.998 0 0 0 12.973 8.5zm0-1a4.998 4.998 0 0 0-7.557-3.779l2.834 3.78h4.723zM5.048 3.967c-.03.021-.058.043-.087.065l.087-.065zm-.431.355A4.984 4.984 0 0 0 3.002 8c0 1.455.622 2.765 1.615 3.678L7.375 8 4.617 4.322zm.344 7.646.087.065-.087-.065z" />
+            </svg>
+
          </button>
       </div>
 
@@ -291,76 +209,130 @@
                </table>
             </div>
 
-            <div id="GmemberSince">
+            <div id="Gtrainingsplit">
+               <p id="trainingsplit">
+                  Treningsplan
+               </p>
+            </div>
+
+            <div id="GlineTrainingsplit">
+               <hr id="lineTrainingsplit">
+            </div>
+
+            <div id="GbadgesTrainingsplit">
+               <table id="badgesTrainingsplit">
+                  <tr id="badgesTrainingsplitTableRow">
+                  </tr>
+               </table>
+            </div>
+
+            <div id="GmemberSince" style="margin-bottom: 90px;">
                <p id="memberSince" class="fadeIn animate delaySmall"></p>
             </div>
 
          </div>
       </div>
 
-      <div id="Gfeed" class="noselect pointer">
-         <svg id="feed" class="icons iconsFooterDefaultColor" draggable="false" onclick="redirectToFeed();"
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.5 33.4">
-            <g id="Layer_2" data-name="Layer 2">
-               <g id="Layer_1-2" data-name="Layer 1">
-                  <rect class="cls-1" x="1.75" y="1.75" width="30" height="30" rx="6" />
-                  <path class="cls-1"
-                     d="M21.47,9.49c0,.06-.23.11-.5.11H9.47c-.28,0-.5,0-.5-.11s.22-.11.5-.11H21C21.24,9.38,21.47,9.43,21.47,9.49Z" />
-                  <path class="cls-1"
-                     d="M18.47,15.45c0,.06-.23.11-.5.11H9.47c-.28,0-.5-.05-.5-.11s.22-.12.5-.12H18C18.24,15.33,18.47,15.39,18.47,15.45Z" />
-               </g>
-            </g>
-         </svg>
-      </div>
-
-      <div id="Gleaderboards" class="noselect pointer">
-         <svg id="leaderboards" class="icons iconsFooterDefaultColor" draggable="false"
-            onclick="redirectToLeaderboards();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.5 33.4">
-            <g id="Layer_2" data-name="Layer 2">
-               <g id="Layer_1-2" data-name="Layer 1">
-                  <rect class="cls-1" x="1.75" y="11.7" width="9.71" height="19.9" rx="3" />
-                  <rect class="cls-1" x="11.9" y="1.75" width="9.71" height="29.85" rx="3" />
-                  <rect class="cls-1" x="22.04" y="15.02" width="9.71" height="16.58" rx="3" />
-                  <line class="cls-2" x1="4.84" y1="31.9" x2="28.66" y2="31.9" />
-                  <line class="cls-1" x1="21.6" y1="15.02" x2="27.38" y2="15.02" />
-                  <line class="cls-1" x1="6.38" y1="11.7" x2="12.15" y2="11.7" />
-               </g>
-            </g>
-         </svg>
-      </div>
-
-      <div id="Gaccount" class="noselect pointer">
-         <svg id="account" class="icons iconsFooterActiveColor" draggable="false" onclick="redirectToAccount();"
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.5 33.5">
-            <g id="Layer_2" data-name="Layer 2">
-               <g id="Layer_1-2" data-name="Layer 1">
-                  <circle class="icons iconsFooterActiveColor" cx="16.75" cy="16.75" r="15" />
-                  <circle class="icons iconsFooterActiveColor" cx="16.75" cy="10.95" r="4.46" />
-                  <path class="icons"
-                     d="M7.83,23.25a3.05,3.05,0,0,1,.56-1.48,3.52,3.52,0,0,1,1-.86,12.08,12.08,0,0,1,2.12-1.16,16.64,16.64,0,0,1,4.89-1.07c.62,0,7.27-.18,8.93,3.43a4,4,0,0,1,.33,1.14,10.75,10.75,0,0,1-3.22,3.14A11.54,11.54,0,0,1,16.75,28a10.78,10.78,0,0,1-3.37-.54,10.64,10.64,0,0,1-1.85-.82,11.49,11.49,0,0,1-1.65-1.18A12.67,12.67,0,0,1,7.83,23.25Z" />
-               </g>
-            </g>
-         </svg>
-      </div>
-
    </section>
+
+   <footer id="accountFooter">
+      <svg id="feed" class="icons iconsFooterDefaultColor" draggable="false" onclick="redirectToFeed();"
+         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.5 33.4">
+         <g id="Layer_2" data-name="Layer 2">
+            <g id="Layer_1-2" data-name="Layer 1">
+               <rect class="cls-1" x="1.75" y="1.75" width="30" height="30" rx="6" />
+               <path class="cls-1"
+                  d="M21.47,9.49c0,.06-.23.11-.5.11H9.47c-.28,0-.5,0-.5-.11s.22-.11.5-.11H21C21.24,9.38,21.47,9.43,21.47,9.49Z" />
+               <path class="cls-1"
+                  d="M18.47,15.45c0,.06-.23.11-.5.11H9.47c-.28,0-.5-.05-.5-.11s.22-.12.5-.12H18C18.24,15.33,18.47,15.39,18.47,15.45Z" />
+            </g>
+         </g>
+      </svg>
+
+      <svg id="leaderboards" class="icons iconsFooterDefaultColor" draggable="false" onclick="redirectToLeaderboards();"
+         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.5 33.4">
+         <g id="Layer_2" data-name="Layer 2">
+            <g id="Layer_1-2" data-name="Layer 1">
+               <rect class="cls-1" x="1.75" y="11.7" width="9.71" height="19.9" rx="3" />
+               <rect class="cls-1" x="11.9" y="1.75" width="9.71" height="29.85" rx="3" />
+               <rect class="cls-1" x="22.04" y="15.02" width="9.71" height="16.58" rx="3" />
+               <line class="cls-2" x1="4.84" y1="31.9" x2="28.66" y2="31.9" />
+               <line class="cls-1" x1="21.6" y1="15.02" x2="27.38" y2="15.02" />
+               <line class="cls-1" x1="6.38" y1="11.7" x2="12.15" y2="11.7" />
+            </g>
+         </g>
+      </svg>
+
+      <svg id="account" class="icons iconsFooterActiveColor" draggable="false" onclick="redirectToAccount();"
+         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.5 33.5">
+         <g id="Layer_2" data-name="Layer 2">
+            <g id="Layer_1-2" data-name="Layer 1">
+               <circle class="icons iconsFooterActiveColor" cx="16.75" cy="16.75" r="15" />
+               <circle class="icons iconsFooterActiveColor" cx="16.75" cy="10.95" r="4.46" />
+               <path class="icons"
+                  d="M7.83,23.25a3.05,3.05,0,0,1,.56-1.48,3.52,3.52,0,0,1,1-.86,12.08,12.08,0,0,1,2.12-1.16,16.64,16.64,0,0,1,4.89-1.07c.62,0,7.27-.18,8.93,3.43a4,4,0,0,1,.33,1.14,10.75,10.75,0,0,1-3.22,3.14A11.54,11.54,0,0,1,16.75,28a10.78,10.78,0,0,1-3.37-.54,10.64,10.64,0,0,1-1.85-.82,11.49,11.49,0,0,1-1.65-1.18A12.67,12.67,0,0,1,7.83,23.25Z" />
+            </g>
+         </g>
+      </svg>
+
+      <p id="footerInfo" class="noselect"></p>
+   </footer>
 
 </body>
 
 <script>
 
-   if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js');
-   }
-
-   lockBodyPosition();
    getCreateNewLiftorGoalOverlay();
+   getViewLiftorGoalOverlay();
    getEditLiftorGoalOverlay();
-   requestAccountDetails();
+   geteditworkoutPlanOverlay();
+   getTSAlertOverlay();
+   getTSConfirmOverlay();
 
-   setInterval(() => {
-      checkConnection("c6r2");
-   }, 1000);
+   if (user) {
+
+      checkConnection();
+
+      if (sessionStorage.getItem("settings_notification_update") === "true") {
+         document.getElementById("settings").innerHTML += `1`;
+      }
+
+      displayUserDetailsCached();
+
+      requestAccountDetails();
+
+      //sessionStorage.removeItem("trainingsplit");
+      const GuserGrid = document.getElementById("GuserGrid");
+
+      if (sessionStorage.getItem("usergrid_scroll_y_main")) {
+         GuserGrid.scrollTop = sessionStorage.getItem("usergrid_scroll_y_main");
+      }
+
+      GuserGrid.addEventListener("scroll", function () {
+         const scrollY = GuserGrid.scrollTop;
+         sessionStorage.setItem("usergrid_scroll_y_main", scrollY);
+      });
+
+      GbadgesLifts.addEventListener("scroll", function () {
+         const scrollX = GbadgesLifts.scrollLeft;
+         sessionStorage.setItem("badgeslifts_scroll_x", scrollX);
+      });
+
+      GbadgesGoals.addEventListener("scroll", function () {
+         const scrollX = GbadgesGoals.scrollLeft;
+         sessionStorage.setItem("badgesgoals_scroll_x", scrollX);
+      });
+
+      GbadgesTrainingsplit.addEventListener("scroll", function () {
+         const scrollX = GbadgesTrainingsplit.scrollLeft;
+         sessionStorage.setItem("badgestrainingsplit_scroll_x", scrollX);
+      });
+
+      setInterval(() => {
+         checkConnection();
+      }, 1000);
+
+   }
 
 </script>
 

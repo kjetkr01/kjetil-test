@@ -22,6 +22,41 @@
 
    <!-- -->
 
+   <!-- splashscreen for ios -->
+
+   <link href="images/splashscreens/iphone5_splash.png"
+      media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/iphone6_splash.png"
+      media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/iphoneplus_splash.png"
+      media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/iphonex_splash.png"
+      media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/iphonexr_splash.png"
+      media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/iphonexsmax_splash.png"
+      media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/ipad_splash.png"
+      media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/ipadpro1_splash.png"
+      media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/ipadpro3_splash.png"
+      media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/ipadpro2_splash.png"
+      media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+
+   <!-- -->
+
    <!-- status bar color -->
 
    <meta id="themeColor" name="theme-color" content="#357F9B">
@@ -33,51 +68,50 @@
    <link rel="stylesheet" href="styles/global/globalClasses.css">
    <link rel="stylesheet" href="styles/global/global.css">
 
-   <!-- themeStyleCSS -->
-   <!--<link id="themeStyleCSS-default" rel="stylesheet" href="styles/themes/default.css">
-   <link id="themeStyleCSS-blue" rel="stylesheet" href="styles/themes/blue.css">-->
-   <!-- themeStyleCSS -->
-   <link id="themeStyleCSS-blue" rel="stylesheet" href="styles/themes/themes.css">
-
-   <link rel="stylesheet" href="styles/themes/globalThemeValues.css">
+   <link rel="stylesheet" href="styles/global/themes.css">
 
 
    <link rel="stylesheet" href="styles/user/desktop.css">
    <link rel="stylesheet" href="styles/user/mobile.css">
    <link rel="stylesheet" href="styles/user/common.css">
-   <link rel="stylesheet" href="styles/user/overlay.css">
+   <link rel="stylesheet" href="styles/shared/overlay.css">
 
-   <link rel="stylesheet" href="styles/badges/badges.css">
-   <link rel="stylesheet" href="styles/badges/badgeColors.css">
-   <link rel="stylesheet" href="styles/userAndAccount/userGrid.css">
-   <!--<link rel="stylesheet" href="styles/index/progressbar.css">-->
+   <link rel="stylesheet" href="styles/shared/badges.css">
+   <link rel="stylesheet" href="styles/shared/badgeColors.css">
+   <link rel="stylesheet" href="styles/shared/userGrid.css">
 
-   <script src="scripts/appInfo.js" type="text/javascript"></script>
-   <script src="scripts/global.js" type="text/javascript"></script>
-   <script src="scripts/badges/userBadges.js" type="text/javascript"></script>
+   <script src="ts_application.js" type="text/javascript"></script>
+   <script src="scripts/global/appInfo.js" type="text/javascript"></script>
+   <script src="scripts/global/user.js" type="text/javascript"></script>
+   <script src="scripts/global/global.js" type="text/javascript"></script>
+   <script src="scripts/global/functions.js" type="text/javascript"></script>
    <script src="scripts/user/user.js" type="text/javascript"></script>
-   <script src="scripts/user/editInformation.js" type="text/javascript"></script>
-   <script src="scripts/overlay/overlay.js" type="text/javascript"></script>
+   <script src="scripts/shared/editInformation.js" type="text/javascript"></script>
+   <script src="scripts/shared/badges.js" type="text/javascript"></script>
+   <script src="scripts/shared/trainingsplit.js" type="text/javascript"></script>
+   <script src="scripts/shared/overlay.js" type="text/javascript"></script>
 
 </head>
 
 <body>
 
-   <script>changeColorTheme();</script>
+   <script>
+      useHTTPS();
+      createUserClass();
+      changeColorTheme();
+   </script>
 
-   <div id="viewLiftorGoalOverlay" style="display: none;" class="overlay"></div>
+   <div id="viewLiftorGoalOverlay" style="display: none;" class="overlay noselect"></div>
+   <div id="TSAlertOverlay" style="display: none;" class="overlay noselect"></div>
+   <div id="TSConfirmOverlay" style="display: none;" class="overlay noselect"></div>
 
    <section id="page">
 
       <div id="c1r1"></div>
       <div id="c2r1"></div>
       <div id="c3r1"></div>
-      <div id="c4r1"></div>
 
       <div id="GbackBtn">
-         <!--<img id="backBtn" onclick="returnToPrevious();" draggable="false" class="icons fadeInLeft animate delaySmall"
-            src="images/backIcon.svg" alt="Tilbake">
-         </img>-->
 
          <svg id="backBtn" class="backBtnIcon fadeInLeft animate delaySmall pointer" style="stroke:white;"
             draggable="false" onclick="returnToPrevious();" xmlns="http://www.w3.org/2000/svg"
@@ -105,6 +139,16 @@
             <tr id="infoList">
             </tr>
          </table>
+      </div>
+
+      <div id="GmedalsInfo">
+         <p id="medalsInfo" class="noselect infoTable fadeIn animate delayMedium">
+         </p>
+      </div>
+
+      <div id="GsmallTitle">
+         <p id="smallTitle" class="noselect">
+         </p>
       </div>
 
       <div id="GuserGrid" class="userGrid noselect">
@@ -149,6 +193,24 @@
                </table>
             </div>
 
+
+            <div id="Gtrainingsplit" class="hidden">
+               <p id="trainingsplit">
+                  Treningsplan
+               </p>
+            </div>
+
+            <div id="GlineTrainingsplit" class="hidden">
+               <hr id="lineTrainingsplit">
+            </div>
+
+            <div id="GbadgesTrainingsplit" class="hidden">
+               <table id="badgesTrainingsplit">
+                  <tr id="badgesTrainingsplitTableRow">
+                  </tr>
+               </table>
+            </div>
+
             <div id="GmemberSince">
                <p id="memberSince" class="fadeIn animate delaySmall"></p>
             </div>
@@ -162,30 +224,27 @@
 
 <script>
 
-   const referrer = sessionStorage.getItem("visit_user_referrer");
-
-   if (referrer !== document.referrer && document.referrer !== document.URL) {
-      sessionStorage.setItem("visit_user_referrer", document.referrer);
-   }
-
-   function returnToPrevious() {
-
-      const redirect = sessionStorage.getItem("visit_user_referrer");
-
-      if (redirect) {
-         location.href = redirect;
-      } else {
-         redirectToFeed();
-      }
-   }
-
-   lockBodyPosition();
    getViewLiftorGoalOverlay();
-   requestAccountDetails();
+   getTSAlertOverlay();
+   getTSConfirmOverlay();
 
-   setInterval(() => {
-      checkConnection("c6r2");
-   }, 5000);
+   if (user) {
+
+      const referrer = sessionStorage.getItem("visit_user_referrer");
+
+      function returnToPrevious() {
+         const redirect = sessionStorage.getItem("visit_user_referrer");
+
+         if (redirect) {
+            sessionStorage.removeItem("visit_user_referrer");
+            location.href = redirect;
+         } else {
+            redirectToFeed();
+         }
+      }
+
+      requestAccountDetails();
+   }
 
 </script>
 

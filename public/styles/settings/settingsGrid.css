@@ -4,10 +4,6 @@
 font-family: var(--main-font-Family-Verdana);
 }
 
-select {
-outline: none;
-}
-
 /*@media only screen and (max-width: 1024px) {*/ /* 768px var før, men passer bedre med 1024px for ipad */
 
 /* grid */
@@ -71,11 +67,13 @@ grid-area: cS4;
 }
 
 .borderT {
-border-top: 1px #75757585 solid;
+/*border-top: 1px #75757585 solid;*/
+border-top: var(--main-border);
 }
 
 .borderB {
-border-bottom: 1px #75757585 solid;
+/*border-bottom: 1px #75757585 solid;*/
+border-bottom: var(--main-border);
 }
 
 .spacingTop {
@@ -261,10 +259,6 @@ color: var(--main-accountOwnerColor);
 font-size: 14px;
 text-align: right;
 text-align-last: right;
-appearance: none;
--webkit-appearance: none;
--moz-appearance: none;
-border: none;
 background-color: var(--main-backgroundColor3);
 }
 
@@ -309,7 +303,7 @@ top: 0;
 left: 0;
 right: 0;
 bottom: 0;
-background-color: #ccc;
+background-color: var(--main-iconsDefaultColor);
 -webkit-transition: .4s;
 transition: .4s;
 }
@@ -377,6 +371,8 @@ margin-top: 10px;
 color: var(--main-textColorDark);
 opacity: 60%;
 font-size: 14px;
+margin-left: 20px;
+margin-right: 20px;
 }
 
 .settingsLogo {

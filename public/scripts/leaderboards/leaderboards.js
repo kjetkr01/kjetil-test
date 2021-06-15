@@ -8,39 +8,43 @@ let updateLeaderboardList = true;
 
 async function loadLeaderboards() {
 
-    const reps = sessionStorage.getItem("leaderboards_filter_reps") || "1";
+    const reps = user.getSetting("leaderboards_filter_reps") || "1";
     const scrollToX = sessionStorage.getItem("leaderboards_scrollX");
 
     const leaderboardsTableRowDom = document.getElementById("leaderboardsTableRow");
     leaderboardsTableRowDom.innerHTML = "";
 
     let cached_leaderboardsArrOrder = null;
-    let cached_viewingLeaderboard = null;
 
-    //ikke last inn på nytt hvis arr er likt?
     try {
 
-        const cached_leaderboardUserTxt = localStorage.getItem("cached_leaderboardUserTxt");
+        let cached_leaderboardUserTxt = sessionStorage.getItem("cached_leaderboardUserTxt");
 
-        if (cached_leaderboardUserTxt) {
+        let repsText = "";
+        if (reps === "1") {
+            repsText = `ORM / 1 rep`;
+        } else {
+            repsText = `${reps} reps`;
+        }
 
-            let repsText = "";
-            if (reps === "1") {
-                repsText = `ORM / 1 rep`;
-            } else {
-                repsText = `${reps} reps`;
+        if (repsText) {
+
+            let leaderboardsUserTxt = "";
+
+            if (!navigator.onLine) {
+                leaderboardsUserTxt = `<br>${defaultTxt.noConnection}`;
+            } else if (cached_leaderboardUserTxt) {
+                leaderboardsUserTxt = `<br>${cached_leaderboardUserTxt}`;
             }
 
-            if (repsText) {
-                const usermsg1 = document.getElementById("peopleLeaderboardsTxt");
-                usermsg1.classList = "noselect";
-                usermsg1.innerHTML = `Filter: <select class="changeLeaderboardRepsSelect" disabled><option>${repsText}</option></select><br>${cached_leaderboardUserTxt}`;
-                showPeopleLeaderboardsTxtAnimation = false;
-            }
+            const usermsg1 = document.getElementById("peopleLeaderboardsTxt");
+            usermsg1.classList = "noselect";
+            usermsg1.innerHTML = `Filter: <select class="changeLeaderboardRepsSelect" disabled><option>${repsText}</option></select>${leaderboardsUserTxt}`;
+            showPeopleLeaderboardsTxtAnimation = false;
         }
 
         cached_leaderboardsArrOrder = JSON.parse(localStorage.getItem("cached_leaderboardsArrOrder"));
-        cached_viewingLeaderboard = localStorage.getItem("cached_viewingLeaderboard");
+        viewingLeaderboard = sessionStorage.getItem("viewingLeaderboard");
 
         if (cached_leaderboardsArrOrder) {
             for (let i = 0; i < cached_leaderboardsArrOrder.length; i++) {
@@ -57,23 +61,25 @@ async function loadLeaderboards() {
              <button id="${currentLeaderboard}" class="leaderboardsList pointer" onclick="getListOfLeaderboard('${currentLeaderboard}');">${capitalizeFirstLetter(currentLeaderboard)} (${usersCount})</button>
           </td>`;
             }
+
+            firstLeaderboard = cached_leaderboardsArrOrder[0].leaderboard[0];
         }
 
     } catch {
         localStorage.removeItem("cached_leaderboardsArrOrder");
     }
 
-    if (document.getElementById(cached_viewingLeaderboard)) {
-        document.getElementById(cached_viewingLeaderboard).classList.add("active");
+    if (document.getElementById(viewingLeaderboard)) {
+        document.getElementById(viewingLeaderboard).classList.add("active");
         if (scrollToX) {
             document.getElementById("GlistOfLeaderboards").scrollTo(scrollToX, 0);
         }
     };
 
-    const body = { "authToken": token, "userInfo": user, "reps": reps };
+    const infoHeader = { "reps": reps };
     const url = `/users/list/all/leaderboards`;
 
-    const resp = await callServerAPI(body, url);
+    const resp = await callServerAPIPost(infoHeader, url);
 
     if (resp) {
 
@@ -92,8 +98,8 @@ async function loadLeaderboards() {
                     const keys = Object.keys(leaderboards);
 
                     leaderboardsArrOrder.push({ "leaderboard": [keys[i]], "usersCount": leaderboards[keys[i]] });
-                    if (keys[i] === cached_viewingLeaderboard) {
-                        viewingLeaderboard = cached_viewingLeaderboard;
+                    if (keys[i] === viewingLeaderboard) {
+                        viewingLeaderboard = viewingLeaderboard;
                     }
                 }
 
@@ -108,7 +114,6 @@ async function loadLeaderboards() {
 
                     if (checkExistingLeaderboardsArrOrder === checkUpdatedLeaderboardsArrOrder) {
                         updateLeaderboardList = false;
-                        console.log("skipped update leaderboardsArr");
                     }
 
                 } catch {
@@ -142,7 +147,7 @@ async function loadLeaderboards() {
 
                 getListOfLeaderboard();
             } else {
-                sessionStorage.removeItem("leaderboards_filter_reps");
+                await updateLeaderboardsFilterReps();
                 if (retryLoadOnce === true) {
                     loadLeaderboards();
                     retryLoadOnce = false;
@@ -158,107 +163,109 @@ let leaderboardIsLoading = false;
 
 async function getListOfLeaderboard(aLeaderboard) {
 
-    if (!aLeaderboard) {
-        aLeaderboard = viewingLeaderboard || firstLeaderboard;
-    }
+    if (navigator.onLine) {
 
-    if (leaderboardIsLoading === true || previousLeaderboard === aLeaderboard) {
-        return;
-    }
-
-    if (token && user && aLeaderboard) {
-
-        const reps = sessionStorage.getItem("leaderboards_filter_reps") || "1";
-        viewingLeaderboard = aLeaderboard;
-        leaderboardIsLoading = true;
-
-        localStorage.setItem("cached_viewingLeaderboard", viewingLeaderboard);
-
-        if (document.getElementById(viewingLeaderboard)) {
-            if (document.getElementById(previousLeaderboard)) {
-                document.getElementById(previousLeaderboard).classList.remove("active");
-            }
-
-            document.getElementById(viewingLeaderboard).classList.add("active");
-        };
-
-        list.innerHTML = "";
-
-        const body = { "authToken": token, "userInfo": user, "leaderboard": viewingLeaderboard, "reps": reps };
-        const url = `/users/list/all/leaderboards/${viewingLeaderboard}`;
-
-        const resp = await callServerAPI(body, url);
-
-        usermsg1.innerHTML = "";
-        let leaderboardsUserTxt = "";
-
-        const selectHTML = `<select id="leaderboardReps" class="changeLeaderboardRepsSelect pointer" onchange="changeLeaderboardReps();"></select>`;
-
-        if (Object.keys(resp).length === 1) {
-            leaderboardsUserTxt = "Det er 1 bruker på tavlen";
-        } else {
-            leaderboardsUserTxt = `Det er ${parseInt(Object.keys(resp).length)} brukere på tavlen`;
+        if (!aLeaderboard) {
+            aLeaderboard = viewingLeaderboard || firstLeaderboard;
         }
 
-        usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Filter: ${selectHTML}<br>${leaderboardsUserTxt}`);
-
-        localStorage.setItem("cached_leaderboardUserTxt", leaderboardsUserTxt);
-
-        for (let x = 0; x < repsList.length; x++) {
-
-            if (repsList[x] !== "0") {
-
-                let repsText = "";
-                if (repsList[x] === "1") {
-                    repsText = `ORM / 1 rep`;
-                } else {
-                    repsText = `${repsList[x]} reps`;
-                }
-
-                let html = `<option value="${repsList[x]}">${repsText}</option>`;
-                if (repsList[x] === reps) {
-                    html = `<option selected="selected" value="${repsList[x]}">${repsText}</option>`;
-                }
-
-                document.getElementById("leaderboardReps").innerHTML += html;
-            }
+        if (leaderboardIsLoading === true || previousLeaderboard === aLeaderboard) {
+            return;
         }
 
-        list.innerHTML = "";
-        previousLeaderboard = viewingLeaderboard;
+        if (user && aLeaderboard) {
 
-        if (Object.keys(resp).length > 0) {
+            const reps = user.getSetting("leaderboards_filter_reps") || "1";
+            viewingLeaderboard = aLeaderboard;
+            leaderboardIsLoading = true;
 
-            // sorts leaderboard in correct order, from highest to lowest
-            resp.sort(function (a, b) { return b[viewingLeaderboard] - a[viewingLeaderboard] });
-            //
+            sessionStorage.setItem("viewingLeaderboard", viewingLeaderboard);
 
-            for (let i = 0; i < Object.keys(resp).length; i++) {
-
-                let svgMedalColor = null;
-                let svgMedal = null;
-
-                let placementHTML = `${i + 1}.`;
-                let usernameHTML = `<button class="peopleLeaderboardsListName pointer" onClick="viewUser('${resp[i].id}')">${resp[i].username}</button>`;
-
-                if (resp[i].id === userID) {
-                    usernameHTML = `<button class="accountOwner pointer" onClick="viewUser('${resp[i].id}')">${resp[i].username}</button>`;
+            if (document.getElementById(viewingLeaderboard)) {
+                if (document.getElementById(previousLeaderboard)) {
+                    document.getElementById(previousLeaderboard).classList.remove("active");
                 }
 
-                switch (i) {
-                    case 0:
-                        svgMedalColor = "medalIconGold";
-                        break;
-                    case 1:
-                        svgMedalColor = "medalIconSilver";
-                        break;
-                    case 2:
-                        svgMedalColor = "medalIconBronze";
-                        break;
-                }
+                document.getElementById(viewingLeaderboard).classList.add("active");
+            };
 
-                if (svgMedal === null && svgMedalColor !== null) {
-                    placementHTML = `
+            list.innerHTML = "";
+
+            const infoBody = { "leaderboard": viewingLeaderboard, "reps": reps };
+            const url = `/users/list/all/leaderboards/${viewingLeaderboard}`;
+
+            const resp = await callServerAPIPost(infoBody, url);
+
+            usermsg1.innerHTML = "";
+            let leaderboardsUserTxt = "";
+
+            const selectHTML = `<select id="leaderboardReps" class="changeLeaderboardRepsSelect pointer" onchange="changeLeaderboardReps();"></select>`;
+
+            if (Object.keys(resp).length === 1) {
+                leaderboardsUserTxt = `Det er 1 bruker på tavlen`;
+            } else {
+                leaderboardsUserTxt = `Det er ${parseInt(Object.keys(resp).length)} brukere på tavlen`;
+            }
+
+            usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Filter: ${selectHTML}<br>${leaderboardsUserTxt}`);
+
+            sessionStorage.setItem("cached_leaderboardUserTxt", leaderboardsUserTxt);
+
+            for (let x = 0; x < repsList.length; x++) {
+
+                if (repsList[x] !== "0") {
+
+                    let repsText = "";
+                    if (repsList[x] === "1") {
+                        repsText = `ORM / 1 rep`;
+                    } else {
+                        repsText = `${repsList[x]} reps`;
+                    }
+
+                    let html = `<option value="${repsList[x]}">${repsText}</option>`;
+                    if (repsList[x] === reps) {
+                        html = `<option selected="selected" value="${repsList[x]}">${repsText}</option>`;
+                    }
+
+                    document.getElementById("leaderboardReps").innerHTML += html;
+                }
+            }
+
+            list.innerHTML = "";
+            previousLeaderboard = viewingLeaderboard;
+
+            if (Object.keys(resp).length > 0) {
+
+                // sorts leaderboard in correct order, from highest to lowest
+                resp.sort(function (a, b) { return b[viewingLeaderboard] - a[viewingLeaderboard] });
+                //
+
+                for (let i = 0; i < Object.keys(resp).length; i++) {
+
+                    let svgMedalColor = null;
+                    let svgMedal = null;
+
+                    let placementHTML = `${i + 1}.`;
+                    let usernameHTML = `<button class="peopleLeaderboardsListName pointer" onClick="viewUser('${resp[i].id}')">${resp[i].username}</button>`;
+
+                    if (resp[i].id === user.getId()) {
+                        usernameHTML = `<button class="accountOwner pointer" onClick="viewUser('${resp[i].id}')">${resp[i].username}</button>`;
+                    }
+
+                    switch (i) {
+                        case 0:
+                            svgMedalColor = "medalIconGold";
+                            break;
+                        case 1:
+                            svgMedalColor = "medalIconSilver";
+                            break;
+                        case 2:
+                            svgMedalColor = "medalIconBronze";
+                            break;
+                    }
+
+                    if (svgMedal === null && svgMedalColor !== null) {
+                        placementHTML = `
                     <svg id="placement" class="medals ${svgMedalColor}" draggable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
                         <defs>
                             </defs>
@@ -270,9 +277,9 @@ async function getListOfLeaderboard(aLeaderboard) {
                     </g>
                 </svg>
                 `;
-                }
+                    }
 
-                list.innerHTML += `
+                    list.innerHTML += `
              <div class="leaderboard fadeInUp animate">
              <div id="Gplacement">
                 <div id="placement">
@@ -293,20 +300,22 @@ async function getListOfLeaderboard(aLeaderboard) {
           <hr class="boardLine fadeIn animate delayMedium">
              `;
 
+                }
+
+                leaderboardIsLoading = false;
+
+            } else {
+                //usermsg1.textContent = errorLoadingText;
+                usermsg1.innerHTML = peopleLeaderboardsTxtHTML();
+                showAlert(`Ledertavlen ${viewingLeaderboard} finnes ikke!`, true, "window.history.back();");
+                //alert(`Ledertavlen ${viewingLeaderboard} finnes ikke!`);
+                //window.history.back();
             }
 
-            leaderboardIsLoading = false;
-
         } else {
-            //usermsg1.textContent = errorLoadingText;
-            usermsg1.innerHTML = peopleLeaderboardsTxtHTML();
-            alert(`Ledertavlen ${viewingLeaderboard} finnes ikke!`);
-            window.history.back();
+            //usermsg1.textContent = "Det er ingen brukere på tavlen";
+            usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Det er ingen brukere på tavlen`);
         }
-
-    } else {
-        //usermsg1.textContent = "Det er ingen brukere på tavlen";
-        usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Det er ingen brukere på tavlen`);
     }
 }
 
@@ -329,14 +338,33 @@ function peopleLeaderboardsTxtHTML(aInput) {
 }
 
 
-function changeLeaderboardReps() {
+async function changeLeaderboardReps() {
 
     const reps = document.getElementById("leaderboardReps").value;
 
-    sessionStorage.setItem("leaderboards_filter_reps", reps);
-    localStorage.removeItem("cached_viewingLeaderboard");
+    sessionStorage.removeItem("viewingLeaderboard");
     sessionStorage.removeItem("leaderboards_scrollX");
+
+    if (navigator.onLine) {
+        await updateLeaderboardsFilterReps(reps);
+    }
 
     location.reload();
 
+}
+
+async function updateLeaderboardsFilterReps(aValue) {
+    if (!aValue) {
+        aValue = null;
+    }
+
+    const value = aValue;
+    const setting = "leaderboards_filter_reps";
+
+    user.changeSetting("leaderboards_filter_reps", value);
+
+    const infoHeader = { "updateSetting": setting, "value": value };
+    const url = `/user/update/settings/${setting}`;
+
+    await callServerAPIPost(infoHeader, url);
 }

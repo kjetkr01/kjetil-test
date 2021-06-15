@@ -1,44 +1,55 @@
 // update password
 async function updatePassword() {
+    if (navigator.onLine) {
 
-    const exsistingPsw = document.getElementById("exsistingPsw").value;
-    const newPsw = document.getElementById("newPsw").value;
-    const repeatNewPsw = document.getElementById("repeatNewPsw").value;
+        const exsistingPsw = document.getElementById("exsistingPsw").value;
+        const newPsw = document.getElementById("newPsw").value;
+        const repeatNewPsw = document.getElementById("repeatNewPsw").value;
 
-    if (exsistingPsw && newPsw && repeatNewPsw) {
+        if (exsistingPsw && newPsw && repeatNewPsw) {
 
-        if (newPsw === repeatNewPsw) {
+            if (newPsw === repeatNewPsw) {
 
-            const body = { "authToken": token, "userInfo": user, "authorization": "Basic " + window.btoa(`${exsistingPsw}:${newPsw}`) };
-            const url = `/user/update/password`;
+                const body = { "authorization": "Basic " + window.btoa(`${exsistingPsw}:${newPsw}`) };
+                const url = `/user/update/password`;
 
-            const config = {
-                method: "POST",
-                headers: {
-                    "content-type": "application/json"
-                },
-                body: JSON.stringify(body)
-            }
+                const config = {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json",
+                        "authtoken": user.getToken(),
+                        "userinfo": JSON.stringify(user.getUser())
+                    },
+                    body: JSON.stringify(body)
+                }
 
-            const response = await fetch(url, config);
-            const data = await response.json();
+                const response = await fetch(url, config);
+                const data = await response.json();
 
-            if (data.status === true) {
-                localStorage.clear();
-                sessionStorage.clear();
-                alert(`Passordet ble endret. Du blir nå logget ut`);
-                sessionStorage.setItem("cachedUsername", username);
-                location.reload();
+                if (data.status === true) {
+                    localStorage.clear();
+                    sessionStorage.clear();
+                    sessionStorage.setItem("cachedUsername", user.getUsername());
+                    /*alert(`Passordet ble endret. Du blir nå logget ut`);
+                    redirectToLogin();*/
+                    showAlert(`Passordet ble endret. Du blir nå logget ut`, true, "redirectToLogin();");
+                } else {
+                    //alert(data.message);
+                    showAlert(data.message, true);
+                }
+
             } else {
-                alert(data.message)
+                //alert("Ønskede passord og gjenta ønskede stemmer ikke");
+                showAlert("Ønskede passord og gjenta ønskede stemmer ikke", true);
             }
 
         } else {
-            alert("Ønskede passord og gjenta ønskede stemmer ikke");
+            //alert("Vennligst fyll inn alle feltene.");
+            showAlert("Vennligst fyll ut alle feltene", true);
         }
-
     } else {
-        alert("Vennligst fyll inn alle feltene.");
+        //alert("Du må ha Internett-tilkobling for å endre passord!");
+        showAlert("Du må ha Internett-tilkobling for å endre passord!", true);
     }
 }
 
@@ -51,43 +62,50 @@ async function updatePassword() {
 let isUpdatingAboutMe = false;
 
 async function updateAboutMe() {
+    if (navigator.onLine) {
 
-    if (isUpdatingAboutMe === false) {
+        if (isUpdatingAboutMe === false) {
 
-        isUpdatingAboutMe = true;
+            isUpdatingAboutMe = true;
 
-        const gymInp = document.getElementById("gymInp").value;
-        const ageInp = document.getElementById("ageInp").value;
-        const heightInp = document.getElementById("heightInp").value;
-        const weightInp = document.getElementById("weightInp").value;
+            const gymInp = document.getElementById("gymInp").value;
+            const ageInp = document.getElementById("ageInp").value;
+            const heightInp = document.getElementById("heightInp").value;
+            const weightInp = document.getElementById("weightInp").value;
 
-        const updateSettings = {
-            gym: gymInp,
-            age: ageInp,
-            height: heightInp,
-            weight: weightInp
+            const updateSettings = {
+                gym: gymInp,
+                age: ageInp,
+                height: heightInp,
+                weight: weightInp
+            }
+
+            const body = { "updateSettings": updateSettings };
+            const url = `/user/update/settings/about/me`;
+
+            const config = {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    "authtoken": user.getToken(),
+                    "userinfo": JSON.stringify(user.getUser())
+                },
+                body: JSON.stringify(body)
+            }
+
+            const resp = await fetch(url, config);
+            const data = await resp.json();
+
+            document.getElementById("updateAboutMeBtn").innerHTML = data;
+
+            setTimeout(() => {
+                updateUserInfo();
+                isUpdatingAboutMe = false;
+            }, 2000);
         }
-
-        const body = { "authToken": token, "userInfo": user, "updateSettings": updateSettings };
-        const url = `/user/update/settings/about/me`;
-
-        const config = {
-            method: "POST",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(body)
-        }
-
-        const resp = await fetch(url, config);
-        const data = await resp.json();
-
-        document.getElementById("updateAboutMeBtn").innerHTML = data;
-
-        setTimeout(() => {
-            updateUserInfo();
-            isUpdatingAboutMe = false;
-        }, 2000);
+    } else {
+        //alert("Du må ha Internett-tilkobling for å endre detaljer om deg!");
+        showAlert("Du må ha Internett-tilkobling for å endre detaljer om deg!", true);
     }
 }
 
@@ -99,30 +117,34 @@ async function updateAboutMe() {
 let isUpdatingCheckboxSetting = false;
 
 async function updateCheckboxSetting(aSetting, aValue) {
+    if (navigator.onLine) {
 
-    if (isUpdatingCheckboxSetting === false) {
+        if (isUpdatingCheckboxSetting === false) {
 
-        isUpdatingCheckboxSetting = true;
+            isUpdatingCheckboxSetting = true;
 
-        const inputCategory = document.getElementsByClassName("inputCategory");
+            const inputCategory = document.getElementsByClassName("inputCategory");
 
-        for (let i = 0; i < inputCategory.length; i++) {
-            inputCategory[i].setAttribute("disabled", true);
-        }
+            for (let i = 0; i < inputCategory.length; i++) {
+                inputCategory[i].setAttribute("disabled", true);
+            }
 
-        const setting = aSetting;
-        const value = aValue;
+            const setting = aSetting;
+            const value = aValue;
 
-        const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
-        const url = `/user/update/settings/${setting}`;
+            const infoHeader = { "updateSetting": setting, "value": value };
+            const url = `/user/update/settings/${setting}`;
 
-        const resp = await callServerAPI(body, url);
+            const resp = await callServerAPIPost(infoHeader, url);
 
-        if (resp === true) {
-            //updateUserInfo();
-            updateLocalSettings(setting, value);
-            loadSetting();
-            isUpdatingCheckboxSetting = false;
+            if (resp === true) {
+                user.changeSetting(setting, value);
+                setTimeout(() => {
+                    loadSetting();
+                    isUpdatingCheckboxSetting = false;
+                }, 200);
+
+            }
         }
     }
 }
@@ -130,47 +152,24 @@ async function updateCheckboxSetting(aSetting, aValue) {
 //
 
 async function savePreferredApperance() {
-
-    if (isUpdatingCheckboxSetting === false) {
+    if (navigator.onLine) {
 
         isUpdatingCheckboxSetting = true;
 
         const value = document.getElementById("appearanceThemeSelection").value;
         const setting = "preferredtheme";
 
-        const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
+        const infoHeader = { "updateSetting": setting, "value": value };
         const url = `/user/update/settings/${setting}`;
 
-        const resp = await callServerAPI(body, url);
+        const resp = await callServerAPIPost(infoHeader, url);
 
         if (resp === true) {
 
-            /*const newColorTheme = allowedThemes[value].theme;
-
-            if (newColorTheme !== sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(newColorTheme) === true) {
-                preferredColorTheme = allowedThemes[value].theme;
-                sessionStorage.setItem("colorTheme", preferredColorTheme);
-                changeColorTheme();
-                //lastColorTheme.href = `styles/themes/${preferredColorTheme}.css`;
-                //lastColorTheme.id = `themeStyleCSS-${preferredColorTheme}`;
-            }*/
-
-            if (value === "0" || value === "1" || value === "2") {
-                //sessionStorage.setItem("theme", value);
-
-                if (localStorage.getItem("user")) {
-                    localStorage.setItem("theme", value);
-                } else {
-                    sessionStorage.setItem("theme", value);
-                }
-
+            if (value !== user.getSetting("preferredtheme")) {
+                user.changeSetting(setting, parseInt(value));
                 changeColorTheme();
             }
-
-            updateUserInfo();
-            //loadSetting();
-            //changeColorTheme();
-            isUpdatingCheckboxSetting = false;
         }
     }
 }
@@ -182,81 +181,76 @@ async function savePreferredApperance() {
 //
 
 async function saveColorTheme() {
-
-    if (isUpdatingCheckboxSetting === false) {
+    if (navigator.onLine) {
 
         isUpdatingCheckboxSetting = true;
 
         const value = document.getElementById("themeColorSelection").value;
         const setting = "preferredcolortheme";
 
-        const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
+        const infoHeader = { "updateSetting": setting, "value": value };
         const url = `/user/update/settings/${setting}`;
 
-        const resp = await callServerAPI(body, url);
+        const resp = await callServerAPIPost(infoHeader, url);
 
         if (resp === true) {
 
-            const newColorTheme = allowedThemes[value].theme;
-
-            if (newColorTheme !== localStorage.getItem("colorTheme") || sessionStorage.getItem("colorTheme") && checkAllowedThemes.includes(newColorTheme) === true) {
-                preferredColorTheme = allowedThemes[value].theme;
-                //sessionStorage.setItem("colorTheme", preferredColorTheme);
-
-                if (localStorage.getItem("user")) {
-                    localStorage.setItem("colorTheme", preferredColorTheme);
-                } else {
-                    sessionStorage.setItem("colorTheme", preferredColorTheme);
-                }
-
+            if (value !== user.getSetting("preferredcolortheme") && allowedColorThemes[value]) {
+                user.changeSetting(setting, parseInt(value));
                 changeColorTheme();
-                //lastColorTheme.href = `styles/themes/${preferredColorTheme}.css`;
-                //lastColorTheme.id = `themeStyleCSS-${preferredColorTheme}`;
             }
-
-            updateUserInfo();
-            //loadSetting();
-            //changeColorTheme();
-            isUpdatingCheckboxSetting = false;
         }
     }
 }
 
 
 async function updateBadgeSize() {
+    if (navigator.onLine) {
 
-    const value = document.getElementById("badgeSizeSelection").value;
-    const setting = "badgesize";
+        const value = document.getElementById("badgeSizeSelection").value;
+        const setting = "badgesize";
 
-    const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
-    const url = `/user/update/settings/${setting}`;
+        const infoHeader = { "updateSetting": setting, "value": value };
+        const url = `/user/update/settings/${setting}`;
 
-    const resp = await callServerAPI(body, url);
+        const resp = await callServerAPIPost(infoHeader, url);
 
-    if (resp === true) {
-        updateUserInfo();
+        if (resp === true) {
+            user.changeSetting(setting, parseInt(value));
+            loadSetting();
+        }
     }
 }
 
 async function updateBadgeDetails() {
-    const value = document.getElementById("badgeDetailsSelection").value;
-    const setting = "badgedetails";
+    if (navigator.onLine) {
+        const value = document.getElementById("badgeDetailsSelection").value;
+        const setting = "badgedetails";
 
-    const body = { "authToken": token, "userInfo": user, "updateSetting": setting, "value": value };
-    const url = `/user/update/settings/${setting}`;
+        const infoHeader = { "updateSetting": setting, "value": value };
+        const url = `/user/update/settings/${setting}`;
 
-    const resp = await callServerAPI(body, url);
+        const resp = await callServerAPIPost(infoHeader, url);
 
-    if (resp === true) {
-        updateUserInfo();
+        if (resp === true) {
+            user.changeSetting(setting, parseInt(value));
+        }
+    }
+}
+
+async function saveDisplaynameConfirm() {
+    if (navigator.onLine) {
+
+        showConfirm("Hvis du endrer visningsnavnet. Må du logge inn på nytt", "saveDisplayname();")
+
+    } else {
+        //alert("Du må ha Internett-tilkobling for å endre visningsnavn!");
+        showAlert(`Du må ha Internett-tilkobling for å endre visningsnavn!`, true);
     }
 }
 
 async function saveDisplayname() {
-
-    const confirmSaveDisplayname = confirm("Hvis du endrer visningsnavnet. Må du logge inn på nytt");
-
-    if (confirmSaveDisplayname === true) {
+    if (navigator.onLine) {
 
         const displaynameInp = document.getElementById("displaynameInp").value;
 
@@ -284,32 +278,47 @@ async function saveDisplayname() {
 
             fixedDisplayname = fixedDisplayname.trimRight();
 
-            const body = { "authToken": token, "userInfo": user, "newDisplayname": fixedDisplayname };
+            const infoHeader = { "newDisplayname": fixedDisplayname };
             const url = `/user/update/displayname`;
 
-            const resp = await callServerAPI(body, url);
+            const resp = await callServerAPIPost(infoHeader, url);
 
             if (resp === true) {
                 localStorage.clear();
                 sessionStorage.clear();
-                alert(`Visningsnavet ble endret til: ${fixedDisplayname}. Du blir nå logget ut`);
-                sessionStorage.setItem("cachedUsername", username);
-                location.reload();
+                sessionStorage.setItem("cachedUsername", user.getUsername());
+                /*alert(`Visningsnavet ble endret til: ${fixedDisplayname}. Du blir nå logget ut`);
+                redirectToLogin();*/
+                showAlert(`Visningsnavet ble endret til: ${fixedDisplayname}. Du blir nå logget ut`, true, "redirectToLogin();");
             } else {
-                alert("Visningsnavet kunne ikke bli oppdatert. Vennligst prøv igjen.")
+                //alert("Visningsnavet kunne ikke bli oppdatert. Vennligst prøv igjen.")
+                showAlert(`Visningsnavet kunne ikke bli oppdatert. Vennligst prøv igjen`, true);
             }
 
         } else {
-            alert("Ugyldig visningsnavn!");
+            //alert("Ugyldig visningsnavn!");
+            showAlert(`Ugyldig visningsnavn!`, true);
         }
+
+    } else {
+        //alert("Du må ha Internett-tilkobling for å endre visningsnavn!");
+        showAlert(`Du må ha Internett-tilkobling for å endre visningsnavn!`, true);
+    }
+}
+
+async function saveUsernameConfirm() {
+    if (navigator.onLine) {
+
+        showConfirm("Hvis du endrer brukernavnet. Må du logge inn på nytt", "saveUsername();");
+
+    } else {
+        //alert("Du må ha Internett-tilkobling for å endre brukernavn!");
+        showAlert(`Du må ha Internett-tilkobling for å endre brukernavn!`, true);
     }
 }
 
 async function saveUsername() {
-
-    const confirmSaveUsername = confirm("Hvis du endrer brukernavnet. Må du logge inn på nytt");
-
-    if (confirmSaveUsername === true) {
+    if (navigator.onLine) {
 
         const usernameInp = document.getElementById("usernameInp").value;
 
@@ -319,39 +328,30 @@ async function saveUsername() {
 
         if (newUsername.match(letters)) {
 
-            const body = { "authToken": token, "userInfo": user, "newUsername": newUsername };
+            const infoHeader = { "newUsername": newUsername };
             const url = `/user/update/username`;
 
-            const resp = await callServerAPI(body, url);
+            const resp = await callServerAPIPost(infoHeader, url);
 
             if (resp === true) {
                 localStorage.clear();
                 sessionStorage.clear();
-                alert(`Brukernavnet ble endret til: ${newUsername}. Du blir nå logget ut`);
                 sessionStorage.setItem("cachedUsername", newUsername);
-                location.reload();
+                /*alert(`Brukernavnet ble endret til: ${newUsername}. Du blir nå logget ut`);
+                redirectToLogin();*/
+                showAlert(`Brukernavnet ble endret til: ${newUsername}. Du blir nå logget ut`, true, "redirectToLogin();");
             } else {
-                alert("Brukernavnet er opptatt!")
+                //alert("Brukernavnet er opptatt!")
+                showAlert(`Brukernavnet ble endret til: ${newUsername}. Du blir nå logget ut`, true);
             }
 
         } else {
-            alert("Ugyldig brukernavn!");
+            //alert("Ugyldig brukernavn!");
+            showAlert(`Ugyldig brukernavn!`, true);
         }
-    }
-}
-
-function updateLocalSettings(aSetting, aValue) {
-
-    if (aSetting) {
-
-        const setting = aSetting;
-        const value = aValue;
-
-        settings[setting] = value;
-
-        sessionStorage.setItem("userSettings", JSON.stringify(settings));
 
     } else {
-        updateUserInfo();
+        //alert("Du må ha Internett-tilkobling for å endre brukernavn!");
+        showAlert(`Du må ha Internett-tilkobling for å endre brukernavn!`, true);
     }
 }

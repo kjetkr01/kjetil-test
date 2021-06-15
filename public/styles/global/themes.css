@@ -1,0 +1,380 @@
+:root {
+--main-font-Family-Verdana: Verdana, Geneva, Tahoma, sans-serif;
+--main-font-Family-Arial: Arial, Helvetica, sans-serif;
+
+
+/* DEFAULT LIGHT VALUES */
+
+--default-light-lineBorder: 1px #757575 solid;
+--default-light-border: 1px #75757585 solid;
+--default-light-border2: 0.75px #92929285 solid;
+
+--default-light-backgroundColor2: #F0F0F0;
+--default-light-backgroundColor3: #ffffff;
+
+--default-light-headerTextColor: white;
+--default-light-textColorLight: white;
+--default-light-textColorDark: black;
+--default-light-textColorBadges: white;
+
+--default-light-iconsActiveColor: #231f20;
+--default-light-iconsDefaultColor: #8D8D8D;
+
+--default-light-emptyBadgeColor: #8d8d8d;
+--default-light-emptyBadgeShadow: #8d8d8d80;
+--default-light-emptyBadgeBorderColor: white;
+
+/* END OF DEFAULT LIGHT VALUES */
+
+
+/* DEFAULT DARK VALUES */
+
+--default-dark-lineBorder: 1px #ffffff solid;
+--default-dark-border: 1px #75757585 solid;
+--default-dark-border2: 0.75px #92929285 solid;
+
+--default-dark-backgroundColor2: #2b2b2b;
+--default-dark-backgroundColor3: #252525; /* gammel farge: 353535 */
+
+--default-dark-headerTextColor: white;
+--default-dark-textColorLight: white;
+--default-dark-textColorDark: white;
+--default-dark-textColorBadges: white;
+
+--default-dark-iconsActiveColor: #e0e0e0;
+--default-dark-iconsDefaultColor: #808080;
+
+--default-dark-emptyBadgeColor: #6d6d6d;
+--default-dark-emptyBadgeShadow: #72727280;
+--default-dark-emptyBadgeBorderColor: white;
+
+/* END OF DEFAULT DARK VALUES */
+}
+
+
+
+
+/* LIGHT THEME VALUES */
+
+.defaultColorTheme-light {
+--main-headerBackground:  #327a94;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
+--main-backgroundColor1: #3c93b3;
+--main-backgroundColorRGBLowOpacity: #327a9480;
+--main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
+
+--main-accountOwnerColor: var(--main-backgroundColor1);
+
+
+
+--main-lineBorder: var(--default-light-lineBorder);
+--main-border: var(--default-light-border);
+--main-border2: var(--default-light-border2);
+
+--main-backgroundColor2: var(--default-light-backgroundColor2);
+--main-backgroundColor3: var(--default-light-backgroundColor3);
+
+--main-headerTextColor: var(--default-light-headerTextColor);
+--main-textColorLight: var(--default-light-textColorLight);
+--main-textColorDark: var(--default-light-textColorDark);
+--main-textColorBadges: var(--default-light-textColorBadges);
+
+--main-iconsActiveColor: var(--default-light-iconsActiveColor);
+--main-iconsDefaultColor: var(--default-light-iconsDefaultColor);
+
+--main-emptyBadgeColor: var(--default-light-emptyBadgeColor);
+--main-emptyBadgeShadow: var(--default-light-emptyBadgeShadow);
+--main-emptyBadgeBorderColor: var(--default-light-emptyBadgeBorderColor);
+
+}
+
+.blueColorTheme-light {
+--main-headerBackground:  #3247bb;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
+--main-backgroundColor1: #3a53e2;
+--main-backgroundColorRGBLowOpacity: #3247bb80;
+--main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
+
+--main-accountOwnerColor: var(--main-backgroundColor1);
+
+
+
+--main-lineBorder: var(--default-light-lineBorder);
+--main-border: var(--default-light-border);
+--main-border2: var(--default-light-border2);
+
+--main-backgroundColor2: var(--default-light-backgroundColor2);
+--main-backgroundColor3: var(--default-light-backgroundColor3);
+
+--main-headerTextColor: var(--default-light-headerTextColor);
+--main-textColorLight: var(--default-light-textColorLight);
+--main-textColorDark: var(--default-light-textColorDark);
+--main-textColorBadges: var(--default-light-textColorBadges);
+
+--main-iconsActiveColor: var(--default-light-iconsActiveColor);
+--main-iconsDefaultColor: var(--default-light-iconsDefaultColor);
+
+--main-emptyBadgeColor: var(--default-light-emptyBadgeColor);
+--main-emptyBadgeShadow: var(--default-light-emptyBadgeShadow);
+--main-emptyBadgeBorderColor: var(--default-light-emptyBadgeBorderColor);
+}
+
+
+.blue_fullColorTheme-light {
+--main-headerBackground:  #0161E8;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
+--main-backgroundColor1: #0069fc;
+--main-backgroundColorRGBLowOpacity: #0069fc80;
+--main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
+
+--main-accountOwnerColor: var(--main-backgroundColor1);
+
+
+
+--main-lineBorder: 1px #0247a7 solid;
+--main-border: 1px #02347a85 solid;
+--main-border2:  0.75px #3770c085 solid;
+
+--main-backgroundColor2: #94b9ec;
+--main-backgroundColor3: #a7c4ee;
+
+--main-headerTextColor: white;
+--main-textColorLight: white;
+--main-textColorDark: #04273d;
+--main-textColorBadges: white;
+
+--main-iconsActiveColor: #354e70;
+--main-iconsDefaultColor: #798eaa;
+
+--main-emptyBadgeColor: #798eaa;
+--main-emptyBadgeShadow: #798eaa80;
+--main-emptyBadgeBorderColor: white;
+}
+
+.blue_full_gradientColorTheme-light {
+--main-headerBackground:  #1378bb;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-bodyBackgroundColor: var(--main-backgroundColor2); /* #78CFF0 */
+--main-bodyBackgroundImage: linear-gradient(52deg, rgba(163, 163, 163, 0.09) 0%, rgba(163, 163, 163, 0.09) 33.3%,rgba(100, 100, 100, 0.09) 33.3%, rgba(100, 100, 100, 0.09) 66.6%,rgba(162, 162, 162, 0.09) 66.6%, rgba(162, 162, 162, 0.09) 99%),linear-gradient(258deg, rgba(193, 193, 193, 0.06) 0%, rgba(193, 193, 193, 0.06) 33.3%,rgba(169, 169, 169, 0.06) 33.3%, rgba(169, 169, 169, 0.06) 66.6%,rgba(92, 92, 92, 0.06) 66.6%, rgba(92, 92, 92, 0.06) 99%),linear-gradient(129deg, rgba(45, 45, 45, 0.03) 0%, rgba(45, 45, 45, 0.03) 33.3%,rgba(223, 223, 223, 0.03) 33.3%, rgba(223, 223, 223, 0.03) 66.6%,rgba(173, 173, 173, 0.03) 66.6%, rgba(173, 173, 173, 0.03) 99%),linear-gradient(280deg, rgba(226, 226, 226, 0.06) 0%, rgba(226, 226, 226, 0.06) 33.3%,rgba(81, 81, 81, 0.06) 33.3%, rgba(81, 81, 81, 0.06) 66.6%,rgba(186, 186, 186, 0.06) 66.6%, rgba(186, 186, 186, 0.06) 99%),linear-gradient(85deg, rgba(225, 225, 225, 0.04) 0%, rgba(225, 225, 225, 0.04) 33.3%,rgba(95, 95, 95, 0.04) 33.3%, rgba(95, 95, 95, 0.04) 66.6%,rgba(39, 39, 39, 0.04) 66.6%, rgba(39, 39, 39, 0.04) 99%),linear-gradient(128deg, rgba(184, 184, 184, 0.06) 0%, rgba(184, 184, 184, 0.06) 33.3%,rgba(0, 0, 0, 0.06) 33.3%, rgba(0, 0, 0, 0.06) 66.6%,rgba(140, 140, 140, 0.06) 66.6%, rgba(140, 140, 140, 0.06) 99.89999999999999%),linear-gradient(323deg, rgba(40, 40, 40, 0.07) 0%, rgba(40, 40, 40, 0.07) 33.3%,rgba(214, 214, 214, 0.07) 33.3%, rgba(214, 214, 214, 0.07) 66.6%,rgba(190, 190, 190, 0.07) 66.6%, rgba(190, 190, 190, 0.07) 99.89999999999999%),linear-gradient(61deg, rgba(230, 230, 230, 0) 0%, rgba(230, 230, 230, 0) 33.3%,rgba(241, 241, 241, 0) 33.3%, rgba(241, 241, 241, 0) 66.6%,rgba(55, 55, 55, 0) 66.6%, rgba(55, 55, 55, 0) 99%),linear-gradient(0deg, #2625e3,#0bbaef);
+--main-backgroundColor1: #147abe;
+--main-backgroundColorRGBLowOpacity: #1378bb80;
+--main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
+
+--main-accountOwnerColor: var(--main-backgroundColor1);
+
+
+
+--main-lineBorder: 1px #214f6e solid;
+--main-border: 1px #164e7085 solid;
+--main-border2:  0.75px #15456485 solid;
+
+--main-backgroundColor2: #b6d7ec;
+--main-backgroundColor3: #c8e9ff;
+
+--main-headerTextColor: white;
+--main-textColorLight: white;
+--main-textColorDark: #04273d;
+--main-textColorBadges: white;
+
+--main-iconsActiveColor: #1d455f;
+--main-iconsDefaultColor: #7794a8;
+
+--main-emptyBadgeColor: #5a7283;
+--main-emptyBadgeShadow: #5a728380;
+--main-emptyBadgeBorderColor: white;
+}
+
+
+.test_full_simpleColorTheme-light {
+--main-headerBackground:  #0161E8;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
+--main-backgroundColor1: #ffffff;
+--main-backgroundColorRGBLowOpacity: #ffffff80;
+--main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
+
+--main-accountOwnerColor: var(--main-backgroundColor1);
+
+
+
+--main-lineBorder: 1px #ffffff solid;
+--main-border: 1px #ffffff85 solid;
+--main-border2:  0.75px #ffffff85 solid;
+
+--main-backgroundColor2: #0161E8;
+--main-backgroundColor3: #ebebeb;
+
+--main-headerTextColor: white;
+--main-textColorLight: black;
+--main-textColorDark: white;
+--main-textColorBadges: white;
+
+--main-iconsActiveColor: #0161E8;
+--main-iconsDefaultColor: #b6b6b6;
+
+--main-emptyBadgeColor: #5a7283;
+--main-emptyBadgeShadow: #5a728380;
+--main-emptyBadgeBorderColor: white;
+}
+
+/* END OF LIGHT THEME VALUES */
+
+
+/* DARK THEME VALUES */
+.defaultColorTheme-dark {
+--main-headerBackground:  #1c4553;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
+--main-backgroundColor1: #265f72;
+--main-backgroundColorRGBLowOpacity: #1c455380;
+--main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
+
+--main-accountOwnerColor: #30738b;
+
+
+
+--main-lineBorder: var(--default-dark-lineBorder);
+--main-border: var(--default-dark-border);
+--main-border2: var(--default-dark-border2);
+
+--main-backgroundColor2: var(--default-dark-backgroundColor2);
+--main-backgroundColor3: var(--default-dark-backgroundColor3);
+
+--main-headerTextColor: var(--default-dark-headerTextColor);
+--main-textColorLight: var(--default-dark-textColorLight);
+--main-textColorDark: var(--default-dark-textColorDark);
+--main-textColorBadges: var(--default-dark-textColorBadges);
+
+--main-iconsActiveColor: var(--default-dark-iconsActiveColor);
+--main-iconsDefaultColor: var(--default-dark-iconsDefaultColor);
+
+--main-emptyBadgeColor: var(--default-dark-emptyBadgeColor);
+--main-emptyBadgeShadow: var(--default-dark-emptyBadgeShadow);
+--main-emptyBadgeBorderColor: var(--default-dark-emptyBadgeBorderColor);
+}
+
+.blueColorTheme-dark {
+--main-headerBackground:  #202b6b;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
+--main-backgroundColor1: #293797;
+--main-backgroundColorRGBLowOpacity: #202b6b80;
+--main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
+
+--main-accountOwnerColor: #4154c0;
+
+
+
+--main-lineBorder: var(--default-dark-lineBorder);
+--main-border: var(--default-dark-border);
+--main-border2: var(--default-dark-border2);
+
+--main-backgroundColor2: var(--default-dark-backgroundColor2);
+--main-backgroundColor3: var(--default-dark-backgroundColor3);
+
+--main-headerTextColor: var(--default-dark-headerTextColor);
+--main-textColorLight: var(--default-dark-textColorLight);
+--main-textColorDark: var(--default-dark-textColorDark);
+--main-textColorBadges: var(--default-dark-textColorBadges);
+
+--main-iconsActiveColor: var(--default-dark-iconsActiveColor);
+--main-iconsDefaultColor: var(--default-dark-iconsDefaultColor);
+
+--main-emptyBadgeColor: var(--default-dark-emptyBadgeColor);
+--main-emptyBadgeShadow: var(--default-dark-emptyBadgeShadow);
+--main-emptyBadgeBorderColor: var(--default-dark-emptyBadgeBorderColor);
+}
+
+
+.blue_fullColorTheme-dark {
+--main-headerBackground:  #09314b;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
+--main-backgroundColor1: #0c3f61;
+--main-backgroundColorRGBLowOpacity: #09314b80;
+--main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
+
+--main-accountOwnerColor: #135f92;
+
+
+
+--main-lineBorder: 1px #ffffff solid;
+--main-border: 1px #e6e6e685 solid;
+--main-border2: 0.75px #dfdfdf85 solid;
+
+--main-backgroundColor2: #1e2830;
+--main-backgroundColor3: #161e24;
+
+--main-headerTextColor: white;
+--main-textColorLight: white;
+--main-textColorDark: white;
+--main-textColorBadges: white;
+
+--main-iconsActiveColor: #ffffff;
+--main-iconsDefaultColor: #747474;
+
+--main-emptyBadgeColor: #1d394b;
+--main-emptyBadgeShadow: #12202980;
+--main-emptyBadgeBorderColor: #82aac2;
+}
+
+
+.blue_full_gradientColorTheme-dark {
+--main-headerBackground:  #09314b;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-bodyBackgroundColor: var(--main-backgroundColor2); /* #78CFF0 */
+--main-bodyBackgroundImage: linear-gradient(52deg, rgba(163, 163, 163, 0.09) 0%, rgba(163, 163, 163, 0.09) 33.3%,rgba(100, 100, 100, 0.09) 33.3%, rgba(100, 100, 100, 0.09) 66.6%,rgba(162, 162, 162, 0.09) 66.6%, rgba(162, 162, 162, 0.09) 99%),linear-gradient(258deg, rgba(193, 193, 193, 0.06) 0%, rgba(193, 193, 193, 0.06) 33.3%,rgba(169, 169, 169, 0.06) 33.3%, rgba(169, 169, 169, 0.06) 66.6%,rgba(92, 92, 92, 0.06) 66.6%, rgba(92, 92, 92, 0.06) 99%),linear-gradient(129deg, rgba(45, 45, 45, 0.03) 0%, rgba(45, 45, 45, 0.03) 33.3%,rgba(223, 223, 223, 0.03) 33.3%, rgba(223, 223, 223, 0.03) 66.6%,rgba(173, 173, 173, 0.03) 66.6%, rgba(173, 173, 173, 0.03) 99%),linear-gradient(280deg, rgba(226, 226, 226, 0.06) 0%, rgba(226, 226, 226, 0.06) 33.3%,rgba(81, 81, 81, 0.06) 33.3%, rgba(81, 81, 81, 0.06) 66.6%,rgba(186, 186, 186, 0.06) 66.6%, rgba(186, 186, 186, 0.06) 99%),linear-gradient(85deg, rgba(225, 225, 225, 0.04) 0%, rgba(225, 225, 225, 0.04) 33.3%,rgba(95, 95, 95, 0.04) 33.3%, rgba(95, 95, 95, 0.04) 66.6%,rgba(39, 39, 39, 0.04) 66.6%, rgba(39, 39, 39, 0.04) 99%),linear-gradient(128deg, rgba(184, 184, 184, 0.06) 0%, rgba(184, 184, 184, 0.06) 33.3%,rgba(0, 0, 0, 0.06) 33.3%, rgba(0, 0, 0, 0.06) 66.6%,rgba(140, 140, 140, 0.06) 66.6%, rgba(140, 140, 140, 0.06) 99.89999999999999%),linear-gradient(323deg, rgba(40, 40, 40, 0.07) 0%, rgba(40, 40, 40, 0.07) 33.3%,rgba(214, 214, 214, 0.07) 33.3%, rgba(214, 214, 214, 0.07) 66.6%,rgba(190, 190, 190, 0.07) 66.6%, rgba(190, 190, 190, 0.07) 99.89999999999999%),linear-gradient(61deg, rgba(230, 230, 230, 0) 0%, rgba(230, 230, 230, 0) 33.3%,rgba(241, 241, 241, 0) 33.3%, rgba(241, 241, 241, 0) 66.6%,rgba(55, 55, 55, 0) 66.6%, rgba(55, 55, 55, 0) 99%),linear-gradient(0deg, rgb(16,14,165),rgb(0,118,150));
+--main-backgroundColor1: #0c3f61;
+--main-backgroundColorRGBLowOpacity: #09314b80;
+--main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
+
+--main-accountOwnerColor: #135f92;
+
+
+
+--main-lineBorder: 1px #ffffff solid;
+--main-border: 1px #e6e6e685 solid;
+--main-border2: 0.75px #dfdfdf85 solid;
+
+--main-backgroundColor2: #1e2830;
+--main-backgroundColor3: #161e24;
+
+--main-headerTextColor: white;
+--main-textColorLight: white;
+--main-textColorDark: white;
+--main-textColorBadges: white;
+
+--main-iconsActiveColor: #ffffff;
+--main-iconsDefaultColor: #747474;
+
+--main-emptyBadgeColor: #1d394b;
+--main-emptyBadgeShadow: #12202980;
+--main-emptyBadgeBorderColor: #82aac2;
+}
+
+.test_full_simpleColorTheme-dark {
+--main-headerBackground:  #09314b;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-bodyBackgroundColor: var(--main-backgroundColor2); /* #78CFF0 */
+--main-backgroundColor1: #0c3f61;
+--main-backgroundColorRGBLowOpacity: #09314b80;
+--main-boxShadow: 4px 4px var(--main-backgroundColorRGBLowOpacity);
+
+--main-accountOwnerColor: #135f92;
+
+
+
+--main-lineBorder: 1px #ffffff solid;
+--main-border: 1px #e6e6e685 solid;
+--main-border2: 0.75px #dfdfdf85 solid;
+
+--main-backgroundColor2: #1e2830;
+--main-backgroundColor3: #161e24;
+
+--main-headerTextColor: white;
+--main-textColorLight: white;
+--main-textColorDark: white;
+--main-textColorBadges: white;
+
+--main-iconsActiveColor: #ffffff;
+--main-iconsDefaultColor: #747474;
+
+--main-emptyBadgeColor: #1d394b;
+--main-emptyBadgeShadow: #12202980;
+--main-emptyBadgeBorderColor: #82aac2;
+}
+
+/* END OF DARK THEME VALUES */

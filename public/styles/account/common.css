@@ -12,17 +12,13 @@ opacity: 85%;
 }
 
 #settings {
+float: right;
 margin-top: 10px;
-}
-
-.infoTable {
-text-align: center;
-width: 100%;
-margin: 0 auto;
+word-break: keep-all;
+white-space: nowrap;
 }
 
 .settingsBtn {
-float:right;
 margin-right: 20px;
 word-break: keep-all;
 font-size: 14px; /* 16px før */
@@ -46,14 +42,9 @@ margin-left: auto;
 margin-right: auto;
 }
 
-#c6r2 {
-padding-top: 5px;
-font-size: 14px;
-text-align: center;
-}
-
-#c1r2, #Gsettings {
-border-top: 1px #75757585 solid;
+#Gsettings, #GsmallTitle {
+/*border-top: 1px #75757585 solid;*/
+border-top: var(--main-border);
 }
 
 

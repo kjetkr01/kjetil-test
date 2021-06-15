@@ -1,66 +1,71 @@
 // requestAccountDetails
 let lifts = null;
 let goals = null;
+let activetrainingsplit = null;
 let badgeColorsJSON = null;
 let size = 0;
 let memberSince = null;
 
-async function requestAccountDetails() {
+function displayUserDetailsCached() {
 
     try {
-        const cacheDetails = JSON.parse(localStorage.getItem("cachedDetails_owner"));
-        lifts = JSON.parse(localStorage.getItem("cachedLifts_owner"));
-        goals = JSON.parse(localStorage.getItem("cachedGoals_owner"));
-        badgeColorsJSON = JSON.parse(localStorage.getItem("cachedBadgeColors"));
 
-        if (lifts) {
-            showLiftBadgeAnimations = false;
-            liftsInfo = new Tlifts(lifts);
-            displayLifts();
-        }
+        const userDetails = user.getDetails();
+        const displayname = user.getDisplayname();
 
-        if (goals) {
-            showGoalBadgeAnimations = false;
-            goalsInfo = new Tgoals(goals);
-            displayGoals();
-        }
-
-        if (badgeColorsJSON) {
-            badgeColors = new TbadgeColors(badgeColorsJSON);
-        }
-
-        if (cacheDetails.hasOwnProperty("displayname")) {
+        if (displayname) {
             const title = document.getElementById("title");
             title.classList = "noselect";
-            title.textContent = cacheDetails.displayname;
+            title.textContent = displayname;
         }
-        if (cacheDetails.hasOwnProperty("gym")) {
+
+        if (userDetails.hasOwnProperty("gym")) {
             const gym = document.getElementById("gym");
             gym.classList = "noselect";
-            gym.textContent = cacheDetails.gym;
+            gym.textContent = userDetails.gym;
         }
 
         let infoString = "";
 
-        const age = cacheDetails.age;
-        const height = cacheDetails.height;
-        const weight = cacheDetails.weight;
+        const age = userDetails.age;
+        const height = userDetails.height;
+        const weight = userDetails.weight;
+        const medalscount = userDetails.medalscount;
 
         if (age) {
             if (age >= 15) {
-                infoString += `<td>${age} år</td>`;
+                infoString += `<td class="cTd">${age} år</td>`;
             }
         }
         if (height) {
             if (height >= 140) {
-                infoString += `<td>${height} cm</td>`;
+                infoString += `<td class="cTd">${height} cm</td>`;
             }
         }
         if (weight) {
             if (weight >= 40) {
-                infoString += `<td>${weight} kg</td>`;
+                infoString += `<td class="cTd">${weight} kg</td>`;
             }
         }
+        if (medalscount) {
+            if (medalscount > 0) {
+                const medal = `<svg style="overflow: visible; opacity: 85%;" class="medals medalIconGold" draggable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+                <defs>
+                    </defs>
+                    <g id="Layer_2" data-name="Layer 2">
+                    <g id="Layer_1-2" data-name="Layer 1">
+                    <path class="medalIconGold"
+                    d="M28.33,17.38v-14H11.67V17.38a1.66,1.66,0,0,0,.81,1.44l7,4.18L17.8,26.9l-5.68.48,4.31,3.74-1.31,5.55,4.88-3,4.88,3-1.3-5.55,4.32-3.74-5.68-.48L20.57,23l7-4.18A1.66,1.66,0,0,0,28.33,17.38Zm-6.66,3-1.67,1-1.67-1V5h3.34Z" />
+                </g>
+            </g>
+            <text id="medalsCountTxt" class="medalsCount" x="12.5%" y="67.5%" text-anchor="end">${medalscount} x</text>
+        </svg>`;
+                const medalsInfo = document.getElementById("medalsInfo");
+                medalsInfo.classList = "noselect";
+                medalsInfo.innerHTML = medal;
+            }
+        }
+
         const infoList = document.getElementById("infoList");
         document.getElementById("info").classList = "noselect infoTable";
 
@@ -70,9 +75,11 @@ async function requestAccountDetails() {
             infoList.textContent = "";
         }
 
-        if (cacheDetails.hasOwnProperty("member_since")) {
+        const member_since = user.getDetail("member_since");
 
-            const splitDate = cacheDetails.member_since.split("-");
+        if (member_since) {
+
+            const splitDate = member_since.split("-");
 
             const day = splitDate[2];
             const month = splitDate[1];
@@ -94,32 +101,87 @@ async function requestAccountDetails() {
             document.getElementById("memberSince").classList = "";
             document.getElementById("memberSince").innerHTML = `Medlem siden<br>${string}`;
         }
-
     } catch {
-        localStorage.removeItem("cacheDetails_owner");
-        localStorage.removeItem("cachedLifts_owner");
-        localStorage.removeItem("cachedHasLiftsLeft_owner");
-        localStorage.removeItem("cachedGoals_owner");
-        localStorage.removeItem("cachedHasGoalsLeft_owner");
     }
+}
 
-    const resp = await getAccountDetails(userID);
+async function requestAccountDetails() {
 
-    if (resp) {
+    if (user) {
 
-        if (resp.hasOwnProperty("info")) {
-            localStorage.setItem("cachedLifts_owner", JSON.stringify(resp.info.lifts));
-            localStorage.setItem("cachedHasLiftsLeft_owner", resp.info.liftsLeft > 0);
-            localStorage.setItem("cachedGoals_owner", JSON.stringify(resp.info.goals));
-            localStorage.setItem("cachedHasGoalsLeft_owner", resp.info.goalsLeft > 0);
-            localStorage.setItem("cachedBadgeColors", JSON.stringify(resp.info.badgeColors));
-            displayInformation(resp.info);
-            return;
+        try {
+            lifts = JSON.parse(localStorage.getItem("cachedLifts_owner"));
+            goals = JSON.parse(localStorage.getItem("cachedGoals_owner"));
+            badgeColorsJSON = JSON.parse(localStorage.getItem("cachedBadgeColors"));
+
+            const cachedLiftsLeft = JSON.parse(localStorage.getItem("cachedLiftsLeft_owner"));
+            const cachedGoalsLeft = JSON.parse(localStorage.getItem("cachedGoalsLeft_owner"));
+            const cachedTrainingsplitsLeft = JSON.parse(localStorage.getItem("cachedTrainingsplitsLeft_owner"));
+
+            activetrainingsplit = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
+
+            if (cachedLiftsLeft >= 0) {
+                liftsLeft = new TliftsLeft(cachedLiftsLeft);
+            }
+
+            if (cachedGoalsLeft >= 0) {
+                goalsLeft = new TgoalsLeft(cachedGoalsLeft);
+            }
+
+            if (cachedTrainingsplitsLeft >= 0) {
+                trainingsplitsLeft = new TtrainingsplitsLeft(cachedTrainingsplitsLeft);
+            }
+
+            if (lifts) {
+                showLiftBadgeAnimations = false;
+                liftsInfo = new Tlifts(lifts);
+                displayLifts();
+            }
+
+            if (goals) {
+                showGoalBadgeAnimations = false;
+                goalsInfo = new Tgoals(goals);
+                displayGoals();
+            }
+
+            if (activetrainingsplit) {
+                showTrainingsplitBadgeAnimations = false;
+            }
+
+            displayTrainingsplit();
+
+            if (badgeColorsJSON) {
+                badgeColors = new TbadgeColors(badgeColorsJSON);
+            }
+
+
+
+        } catch {
+            localStorage.removeItem("cachedLifts_owner");
+            localStorage.removeItem("cachedHasLiftsLeft_owner");
+            localStorage.removeItem("cachedGoals_owner");
+            localStorage.removeItem("cachedHasGoalsLeft_owner");
         }
-    }
 
-    //alert("Det har oppstått en feil!");
-    //redirectToFeed();
+        const resp = await getAccountDetails(user.getId());
+
+        if (resp) {
+
+            if (resp.hasOwnProperty("info")) {
+                localStorage.setItem("cachedLifts_owner", JSON.stringify(resp.info.lifts));
+                localStorage.setItem("cachedLiftsLeft_owner", resp.info.liftsLeft);
+                localStorage.setItem("cachedGoals_owner", JSON.stringify(resp.info.goals));
+                localStorage.setItem("cachedGoalsLeft_owner", resp.info.goalsLeft);
+                localStorage.setItem("cachedBadgeColors", JSON.stringify(resp.info.badgeColors));
+                localStorage.setItem("cachedTrainingsplitsLeft_owner", resp.info.trainingsplitsLeft);
+                displayInformation(resp.info);
+                return;
+            }
+        }
+
+        //alert("Det har oppstått en feil!");
+        //redirectToFeed();
+    }
 }
 
 // end of requestAccountDetails
@@ -141,39 +203,41 @@ function displayInformation(respInfo) {
     const age = info.info.age;
     const height = info.info.height;
     const weight = info.info.weight;
+    const medalscount = info.info.medalscount;
     memberSince = info.member_since;
 
-    let updateLifts = true, updateGoals = true, updateBadgeColors = true;
-
-    liftsLeft = new TliftsLeft(info.liftsLeft);
-    goalsLeft = new TgoalsLeft(info.goalsLeft);
-
-    traningsplitInfo = new Ttrainingsplit(info.trainingsplit);
+    let updateLifts = true, updateGoals = true, updateBadgeColors = true, updateActiveTrainingsplit = true;
 
     try {
 
         const checkExistingLifts = JSON.stringify(lifts);
         const checkUpdatedLifts = JSON.stringify(info.lifts);
+        const checkUpdatedLiftsFilter = info.settings.lifts_filter_exercise;
 
         const checkExistingGoals = JSON.stringify(goals);
         const checkUpdatedGoals = JSON.stringify(info.goals);
+        const checkUpdatedGoalsFilter = info.settings.goals_filter_exercise;
 
         const checkExistingBadgeColors = JSON.stringify(badgeColorsJSON);
         const checkUpdatedBadgeColors = JSON.stringify(info.badgeColors);
 
-        if (checkExistingLifts === checkUpdatedLifts) {
+        const checkExistingActiveTrainingsplit = JSON.stringify(activetrainingsplit);
+        const checkUpdatedActiveTrainingsplit = JSON.stringify(info.activetrainingsplit);
+
+        if (checkExistingLifts === checkUpdatedLifts && checkUpdatedLiftsFilter === user.getSetting("lifts_filter_exercise")) {
             updateLifts = false;
-            console.log("skipped update lifts");
         }
 
-        if (checkExistingGoals === checkUpdatedGoals) {
+        if (checkExistingGoals === checkUpdatedGoals && weight === user.getDetail("weight") && checkUpdatedGoalsFilter === user.getSetting("goals_filter_exercise")) {
             updateGoals = false;
-            console.log("skipped update goals");
         }
 
         if (checkExistingBadgeColors === checkUpdatedBadgeColors) {
             updateBadgeColors = false;
-            console.log("skipped update badgeColors");
+        }
+
+        if (checkExistingActiveTrainingsplit === checkUpdatedActiveTrainingsplit && info.settings.activetrainingsplit === user.getSetting("activetrainingsplit")) {
+            updateActiveTrainingsplit = false;
         }
 
     } catch {
@@ -181,22 +245,33 @@ function displayInformation(respInfo) {
     }
 
     if (updateBadgeColors === true) {
+        badgeColorsJSON = info.badgeColors;
         badgeColors = new TbadgeColors(info.badgeColors);
     }
 
     if (updateLifts === true) {
         lifts = info.lifts;
+        if (user.getSetting("lifts_filter_exercise") !== info.settings.lifts_filter_exercise) {
+            user.changeSetting("lifts_filter_exercise", info.settings.lifts_filter_exercise);
+        }
         showLiftBadgeAnimations = true;
     }
 
     if (updateGoals === true) {
+        if (user.getDetail("weight") !== weight) {
+            user.changeDetail("weight", weight);
+        }
+        if (user.getSetting("goals_filter_exercise") !== info.settings.goals_filter_exercise) {
+            user.changeSetting("goals_filter_exercise", info.settings.goals_filter_exercise);
+        }
         goals = info.goals;
         showGoalBadgeAnimations = true;
     }
 
-    //console.log(Object.is(lifts, info.lifts));
-
-    const program = info.trainingsplit;
+    if (updateActiveTrainingsplit === true) {
+        activetrainingsplit = info.activetrainingsplit;
+        showTrainingsplitBadgeAnimations = true;
+    }
 
     if (displayname) {
         document.getElementById("title").textContent = displayname;
@@ -214,17 +289,33 @@ function displayInformation(respInfo) {
 
     if (age) {
         if (age >= 15) {
-            infoString += `<td>${age} år</td>`;
+            infoString += `<td class="cTd">${age} år</td>`;
         }
     }
     if (height) {
         if (height >= 140) {
-            infoString += `<td>${height} cm</td>`;
+            infoString += `<td class="cTd">${height} cm</td>`;
         }
     }
     if (weight) {
         if (weight >= 40) {
-            infoString += `<td>${weight} kg</td>`;
+            infoString += `<td class="cTd">${weight} kg</td>`;
+        }
+    }
+    if (medalscount) {
+        if (medalscount > 0) {
+            const medal = `<svg style="overflow: visible; opacity: 85%;" class="medals medalIconGold" draggable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+            <defs>
+                </defs>
+                <g id="Layer_2" data-name="Layer 2">
+                <g id="Layer_1-2" data-name="Layer 1">
+                <path class="medalIconGold"
+                d="M28.33,17.38v-14H11.67V17.38a1.66,1.66,0,0,0,.81,1.44l7,4.18L17.8,26.9l-5.68.48,4.31,3.74-1.31,5.55,4.88-3,4.88,3-1.3-5.55,4.32-3.74-5.68-.48L20.57,23l7-4.18A1.66,1.66,0,0,0,28.33,17.38Zm-6.66,3-1.67,1-1.67-1V5h3.34Z" />
+            </g>
+        </g>
+        <text id="medalsCountTxt" class="medalsCount" x="12.5%" y="67.5%" text-anchor="end">${medalscount} x</text>
+    </svg>`;
+            document.getElementById("medalsInfo").innerHTML = medal;
         }
     }
 
@@ -235,19 +326,25 @@ function displayInformation(respInfo) {
     }
 
     if (lifts && updateLifts === true) {
+        liftsLeft = new TliftsLeft(info.liftsLeft);
         liftsInfo = new Tlifts(info.lifts);
         displayLifts(info.liftsLeft > 0);
     }
 
     if (goals && updateGoals === true || lifts && updateLifts === true) {
+        goalsLeft = new TgoalsLeft(info.goalsLeft);
         goalsInfo = new Tgoals(info.goals);
-        displayGoals(info.goalsLeft > 0);
+        displayGoals(info.goalsLeft > 0, true);
     }
 
-    if (program) {
-        //displayTrainingsplit();
+    if (info.trainingsplitsLeft) {
+        trainingsplitsLeft = new TtrainingsplitsLeft(info.trainingsplitsLeft);
     }
 
+    if (updateActiveTrainingsplit === true) {
+        document.getElementById("trainingsplit").innerHTML = "Treningsplan";
+        displayTrainingsplit();
+    }
 }
 
 // end of displayInformation
@@ -255,56 +352,68 @@ function displayInformation(respInfo) {
 
 /// ------------ start of displayLifts --------------- ///
 
-function displayLifts(hasLiftsLeft) {
+async function displayLifts(hasLiftsLeft) {
 
-    hasLiftsLeft = localStorage.getItem("cachedHasLiftsLeft_owner") === "true" || false;
+    try {
 
-    document.getElementById("badgesLiftsTableRow").innerHTML = "";
+        document.getElementById("badgesLiftsTableRow").innerHTML = "";
 
-    let sortBy = localStorage.getItem("display_lifts_owner");
+        hasLiftsLeft = localStorage.getItem("cachedLiftsLeft_owner") > 0 || false;
 
-    let showLifts = lifts;
+        let sortByLifts = user.getSetting("lifts_filter_exercise");
 
-    if (sortBy) {
-        if (allowedExercises.includes(sortBy)) {
+        let showLifts = lifts;
 
-            showLifts = lifts[sortBy];
-            if (showLifts.length === 0) {
-                sortBy = null;
-                localStorage.removeItem("display_lifts_owner");
+        if (sortByLifts) {
+            if (lifts[sortByLifts]) {
+                showLifts = lifts[sortByLifts];
+                if (showLifts.length === 0) {
+                    sortByLifts = null;
+                    user.changeSetting("lifts_filter_exercise", null);
+
+                    if (navigator.onLine) {
+                        const value = null;
+                        const setting = "lifts_filter_exercise";
+
+                        const infoHeader = { "updateSetting": setting, "value": value };
+                        const url = `/user/update/settings/${setting}`;
+
+                        await callServerAPIPost(infoHeader, url);
+                    }
+                }
+            } else {
+                sortByLifts = null;
+                user.changeSetting("lifts_filter_exercise", null);
             }
-
         }
-    }
 
-    const keys = Object.keys(lifts);
+        const keys = Object.keys(lifts);
 
-    const arr = [];
+        const arr = [];
 
-    if (sortBy === null) {
-        for (let i = 0; i < keys.length; i++) {
-            const exerciseLift = lifts[keys[i]];
-            displayPerExercise(exerciseLift, keys[i]);
+        if (sortByLifts === null) {
+            for (let i = 0; i < keys.length; i++) {
+                const exerciseLift = lifts[keys[i]];
+                displayPerExercise(exerciseLift, keys[i]);
+            }
+        } else {
+            const exerciseLift = showLifts;
+            displayPerExercise(exerciseLift, sortByLifts);
         }
-    } else {
-        const exerciseLift = showLifts;
-        displayPerExercise(exerciseLift, sortBy);
-    }
 
-    function displayPerExercise(aExerciseLift, aCurrent) {
+        function displayPerExercise(aExerciseLift, aCurrent) {
 
-        let msg = "";
+            let msg = "";
 
-        const exerciseLift = aExerciseLift;
-        const current = aCurrent;
-        const exerciseLiftKeys = Object.keys(exerciseLift);
+            const exerciseLift = aExerciseLift;
+            const current = aCurrent;
+            const exerciseLiftKeys = Object.keys(exerciseLift);
 
-        for (let j = 0; j < exerciseLiftKeys.length; j++) {
+            for (let j = 0; j < exerciseLiftKeys.length; j++) {
 
-            const liftKeys = exerciseLift[exerciseLiftKeys[j]];
+                const liftKeys = exerciseLift[exerciseLiftKeys[j]];
 
-            if (liftKeys) {
-                if (liftKeys.kg !== "0" && liftKeys.kg !== 0 && liftKeys.kg !== "") {
+                if (liftKeys) {
 
                     const id = liftKeys.id;
                     const color = liftKeys.color || "redBadgeG";
@@ -320,63 +429,72 @@ function displayLifts(hasLiftsLeft) {
                 }
             }
         }
-    }
 
-    const selectHTML = `<select id="changeLiftFilter" class="changeFilterSelect pointer" onchange="sortByLiftsOrGoalOwner('changeLiftFilter', 'lift');"></select>`;
+        const selectHTML = `<select id="changeLiftFilter" class="changeFilterSelect pointer" onchange="sortByLiftsOrGoalOwner('changeLiftFilter', 'lift');"></select>`;
 
-    if (arr.length > 0) {
+        if (arr.length > 0) {
 
-        document.getElementById("lifts").innerHTML = `Løft: ${selectHTML}`;
+            document.getElementById("lifts").innerHTML = `Løft: ${selectHTML}`;
 
-        document.getElementById("changeLiftFilter").innerHTML = `<option id="totalLifts" value="null"></option>`;
+            document.getElementById("changeLiftFilter").innerHTML = `<option id="totalLifts" value="null"></option>`;
 
-        let totalCount = 0;
+            let totalCount = 0;
 
-        for (let x = 0; x < keys.length; x++) {
+            for (let x = 0; x < keys.length; x++) {
 
-            if (lifts[keys[x]].length > 0) {
+                if (lifts[keys[x]].length > 0) {
 
-                let html = `<option value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${lifts[keys[x]].length})</option>`;
+                    let html = `<option value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${lifts[keys[x]].length})</option>`;
 
-                if (keys[x] === sortBy) {
-                    html = `<option selected="selected" value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${lifts[keys[x]].length})</option>`;
+                    if (keys[x] === sortByLifts) {
+                        html = `<option selected="selected" value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${lifts[keys[x]].length})</option>`;
+                    }
+
+                    document.getElementById("changeLiftFilter").innerHTML += html;
+
+                    const currentLiftKeys = lifts[keys[x]];
+                    for (let z = 0; z < currentLiftKeys.length; z++) {
+                        totalCount++;
+                    }
                 }
 
-                document.getElementById("changeLiftFilter").innerHTML += html;
+            }
 
-                const currentLiftKeys = lifts[keys[x]];
-                for (let z = 0; z < currentLiftKeys.length; z++) {
-                    totalCount++;
+            document.getElementById("totalLifts").innerHTML = `Alle (${totalCount})`;
+
+            arr.sort(function (a, b) { return b.kg - a.kg });
+            for (let i = 0; i < arr.length; i++) {
+
+                const badge = getBadgeLift(arr[i], arr[i].id);
+                const badgesLiftsTableRow = document.getElementById("badgesLiftsTableRow");
+
+                if (badge && badgesLiftsTableRow) {
+                    badgesLiftsTableRow.innerHTML += badge;
                 }
             }
 
+        } else {
+            document.getElementById("lifts").innerHTML = `Du har ingen løft enda!`;
         }
 
-        document.getElementById("totalLifts").innerHTML = `Alle (${totalCount})`;
+        if (hasLiftsLeft === true || Object.entries(lifts).length === 0) {
 
-        arr.sort(function (a, b) { return b.kg - a.kg });
-        for (let i = 0; i < arr.length; i++) {
-            //const badge = getBadgeLift(size, arr[i]);
-
-            const badge = getBadgeLift(0, arr[i], arr[i].id);
+            const badge = getBadgeLift();
             const badgesLiftsTableRow = document.getElementById("badgesLiftsTableRow");
 
             if (badge && badgesLiftsTableRow) {
                 badgesLiftsTableRow.innerHTML += badge;
             }
         }
-    } else {
-        document.getElementById("lifts").innerHTML = `Du har ingen løft enda!`;
-    }
 
-    if (hasLiftsLeft === true || Object.entries(lifts).length === 0) {
-
-        const badge = getBadgeLift();
-        const badgesLiftsTableRow = document.getElementById("badgesLiftsTableRow");
-
-        if (badge && badgesLiftsTableRow) {
-            badgesLiftsTableRow.innerHTML += badge;
+        if (sessionStorage.getItem("badgeslifts_scroll_x")) {
+            GbadgesLifts.scrollLeft = sessionStorage.getItem("badgeslifts_scroll_x");
+        } else {
+            GbadgesLifts.scrollLeft = 0;
         }
+
+    } catch (err) {
+        console.log(err);
     }
 }
 
@@ -385,133 +503,306 @@ function displayLifts(hasLiftsLeft) {
 
 /// ------------ start of displayGoals --------------- ///
 
-function displayGoals(hasGoalsLeft) {
+async function displayGoals(hasGoalsLeft, checkIfCompleted) {
 
-    hasGoalsLeft = localStorage.getItem("cachedHasGoalsLeft_owner") === "true" || false;
+    try {
 
-    document.getElementById("badgesGoalsTableRow").innerHTML = "";
+        document.getElementById("badgesGoalsTableRow").innerHTML = "";
 
-    let sortBy = localStorage.getItem("display_goals_owner");
+        const completedGoalsList = {};
 
-    let showGoals = goals;
+        if (checkIfCompleted !== true) {
+            checkIfCompleted = false;
+        }
 
-    if (sortBy) {
-        if (allowedExercises.includes(sortBy)) {
+        hasGoalsLeft = localStorage.getItem("cachedGoalsLeft_owner") > 0 || false;
 
-            showGoals = goals[sortBy];
-            if (showGoals.length === 0) {
-                sortBy = null;
-                localStorage.removeItem("display_goals_owner");
+        let sortByGoals = user.getSetting("goals_filter_exercise");
+
+        let showGoals = goals;
+
+        if (sortByGoals) {
+            if (goals[sortByGoals]) {
+                showGoals = goals[sortByGoals];
+                if (showGoals.length === 0) {
+                    sortByGoals = null;
+                    user.changeSetting("goals_filter_exercise", null);
+
+                    if (navigator.onLine) {
+                        const value = null;
+                        const setting = "goals_filter_exercise";
+
+                        const infoHeader = { "updateSetting": setting, "value": value };
+                        const url = `/user/update/settings/${setting}`;
+
+                        await callServerAPIPost(infoHeader, url);
+                    }
+                }
+            } else {
+                sortByGoals = null;
+                user.changeSetting("goals_filter_exercise", null);
             }
         }
-    }
 
-    const keys = Object.keys(goals);
+        const keys = Object.keys(goals);
 
-    const arr = [];
+        const arr = [];
 
-    if (sortBy === null) {
-        for (let i = 0; i < keys.length; i++) {
-            const exerciseGoal = goals[keys[i]];
-            displayPerExercise(exerciseGoal, keys[i]);
+        if (sortByGoals === null) {
+            for (let i = 0; i < keys.length; i++) {
+                const exerciseGoal = goals[keys[i]];
+                displayPerExercise(exerciseGoal, keys[i]);
+            }
+        } else {
+            const exerciseGoal = showGoals;
+            displayPerExercise(exerciseGoal, sortByGoals);
         }
-    } else {
-        const exerciseGoal = showGoals;
-        displayPerExercise(exerciseGoal, sortBy);
-    }
 
-    function displayPerExercise(aExerciseGoal, aCurrent) {
+        function displayPerExercise(aExerciseGoal, aCurrent) {
 
-        let kgUntilGoal = 0, repsUntilGoal = 0, msg = "";
+            let kgUntilGoal = 0, repsUntilGoal = 0, msg = "", progressionPercent = 0;
 
-        const exerciseGoal = aExerciseGoal;
-        const current = aCurrent;
-        const exerciseGoalKeys = Object.keys(exerciseGoal);
+            const exerciseGoal = aExerciseGoal;
+            const current = aCurrent;
+            const exerciseGoalKeys = Object.keys(exerciseGoal);
 
-        for (let j = 0; j < exerciseGoalKeys.length; j++) {
+            for (let j = 0; j < exerciseGoalKeys.length; j++) {
 
-            const goalKeys = exerciseGoal[exerciseGoalKeys[j]];
+                const goalKeys = exerciseGoal[exerciseGoalKeys[j]];
 
-            if (goalKeys) {
+                if (goalKeys) {
 
-                const id = goalKeys.id;
-                const color = goalKeys.color || "redBadgeG";
-                const goalReps = parseInt(goalKeys.reps);
-                const goalKg = parseFloat(goalKeys.kg);
+                    const id = goalKeys.id;
+                    const color = goalKeys.color || "redBadgeG";
+                    const goalKg = parseFloat(goalKeys.kg);
 
-                let currentLiftPR = 0;
+                    if (goalKeys.completed !== true) {
 
-                const liftKeys = Object.keys(lifts[current]);
+                        if (current.includes("i vekt")) {
 
-                for (let f = 0; f < liftKeys.length; f++) {
-                    const lift = lifts[current][f];
-                    const liftReps = parseInt(lift.reps);
-                    const liftKg = parseFloat(lift.kg);
+                            const calcWeight = user.getDetail("weight");
 
-                    if (liftKg === goalKg) {
-                        repsUntilGoal = goalReps - liftReps;
+                            if (calcWeight) {
 
-                        if (repsUntilGoal <= 0) {
-                            msg = "Målet er nådd!";
-                        } else if (repsUntilGoal === 1) {
-                            msg = `1 rep igjen`;
+                                if (current.includes("opp i vekt")) {
+
+                                    kgUntilGoal = goalKg - calcWeight;
+                                    if (kgUntilGoal <= 0) {
+                                        msg = "Målet er nådd!";
+                                    } else {
+                                        msg = `${checkIfDecimal(kgUntilGoal)} kg igjen`;
+                                        calcPercent(calcWeight, goalKg);
+                                    }
+                                } else {
+
+                                    kgUntilGoal = calcWeight - goalKg;
+                                    if (kgUntilGoal <= 0) {
+                                        msg = "Målet er nådd!";
+                                    } else {
+                                        msg = `${checkIfDecimal(kgUntilGoal)} kg igjen`;
+                                        calcPercent(goalKg, calcWeight);
+                                    }
+                                }
+
+                            } else {
+                                msg = "Din vekt kreves";
+                            }
+
                         } else {
-                            msg = `${repsUntilGoal} reps igjen`;
+
+                            const goalReps = parseInt(goalKeys.reps);
+                            const liftKeys = Object.keys(lifts[current]);
+
+                            let highestLiftKg = { "kg": 0, "reps": 0 };
+
+                            const liftsList = {};
+
+                            for (let f = 0; f < liftKeys.length; f++) {
+                                const lift = lifts[current][f];
+                                const liftReps = parseInt(lift.reps);
+                                const liftKg = parseFloat(lift.kg);
+
+                                liftsList[liftKg] = liftReps;
+
+                                if (highestLiftKg.kg < liftKg) {
+                                    highestLiftKg.kg = liftKg;
+                                    highestLiftKg.reps = liftReps;
+                                }
+
+                                if (highestLiftKg.kg === goalKg) {
+                                    repsUntilGoal = goalReps - highestLiftKg.reps;
+
+                                    if (repsUntilGoal <= 0) {
+                                        msg = "Målet er nådd!";
+                                    } else if (repsUntilGoal === 1) {
+                                        msg = `1 rep igjen`;
+                                        calcPercent(highestLiftKg.reps, goalReps);
+                                    } else {
+                                        msg = `${repsUntilGoal} reps igjen`;
+                                        calcPercent(highestLiftKg.reps, goalReps);
+                                    }
+                                } else {
+                                    kgUntilGoal = goalKg - highestLiftKg.kg;
+                                    if (kgUntilGoal <= 0) {
+                                        msg = "Målet er nådd!";
+                                    } else {
+                                        msg = `${checkIfDecimal(kgUntilGoal)} kg igjen`;
+                                        calcPercent(highestLiftKg.kg, goalKg);
+                                    }
+                                }
+                            }
+
+                            if (highestLiftKg.kg >= goalKg) {
+                                if (liftsList[goalKg]) {
+                                    repsUntilGoal = goalReps - liftsList[goalKg];
+                                    if (repsUntilGoal <= 0) {
+                                        msg = "Målet er nådd!";
+                                    } else if (repsUntilGoal === 1) {
+                                        msg = `1 rep igjen`;
+                                        calcPercent(liftsList[goalKg], goalReps);
+                                    } else {
+                                        msg = `${repsUntilGoal} reps igjen`;
+                                        calcPercent(liftsList[goalKg], goalReps);
+                                    }
+                                } else if (highestLiftKg.reps >= goalReps && highestLiftKg.kg >= goalKg) {
+                                    msg = "Målet er nådd!";
+                                } else {
+                                    msg = `${goalReps} reps igjen`;
+                                    calcPercent(liftsList[goalKg], goalReps);
+                                }
+                            } else {
+                                kgUntilGoal = goalKg - highestLiftKg.kg;
+                                msg = `${checkIfDecimal(kgUntilGoal)} kg igjen`;
+                                calcPercent(highestLiftKg.kg, goalKg);
+                            }
+                        }
+
+
+                        function calcPercent(aNum1, aNum2) {
+                            const num1 = aNum1 || 0;
+                            const num2 = aNum2 || 0;
+
+                            progressionPercent = Math.floor((num1 / num2) * 100);
+                        }
+
+                        function checkIfDecimal(aNum) {
+                            let num = aNum;
+                            const checkIfDecimal = num.toString().split(".");
+                            if (checkIfDecimal.length > 1) {
+                                if (checkIfDecimal[1].length === 1) {
+                                    num = parseFloat(num).toFixed(1);
+                                } else {
+                                    num = parseFloat(num).toFixed(2);
+                                }
+                            }
+                            return num;
+                        }
+
+                        if (msg === "Målet er nådd!") {
+                            progressionPercent = 100;
+                        }
+
+                        if (progressionPercent < 0) {
+                            progressionPercent = 0;
+                        }
+                        if (progressionPercent > 100) {
+                            progressionPercent = 100;
+                        }
+
+                        if (progressionPercent === 100) {
+                            if (checkIfCompleted === true) {
+                                if (goalKeys.completed !== true) {
+                                    if (!completedGoalsList[current]) {
+                                        completedGoalsList[current] = [];
+                                    }
+                                    completedGoalsList[current].push(id);
+                                }
+                            }
                         }
 
                     } else {
-                        currentLiftPR = liftKg;
-                        kgUntilGoal = goalKg - currentLiftPR;
-                        if (kgUntilGoal <= 0) {
-                            msg = "Målet er nådd!";
-                        } else {
-                            msg = `${kgUntilGoal} kg igjen`;
+                        progressionPercent = 100;
+                        msg = "Målet er nådd!";
+                    }
+
+                    arr.push({ "exercise": capitalizeFirstLetter(current), "kg": goalKg, "msg": msg, "color": color, "id": id, "progressionPercent": progressionPercent });
+
+                }
+            }
+        }
+
+        const selectHTML = `<select id="changeGoalFilter" class="changeFilterSelect pointer" onchange="sortByLiftsOrGoalOwner('changeGoalFilter', 'goal');"></select>`;
+
+        if (arr.length > 0) {
+
+            document.getElementById("goals").innerHTML = `Mål: ${selectHTML}`;
+
+            document.getElementById("changeGoalFilter").innerHTML = `<option id="totalGoals" value="null"></option>`;
+
+            let totalCount = 0;
+
+            for (let x = 0; x < keys.length; x++) {
+
+                if (goals[keys[x]].length > 0) {
+
+                    let html = `<option value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${goals[keys[x]].length})</option>`;
+
+                    if (keys[x] === sortByGoals) {
+                        html = `<option selected="selected" value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${goals[keys[x]].length})</option>`;
+                    }
+
+                    document.getElementById("changeGoalFilter").innerHTML += html;
+
+                    const currentGoalKeys = goals[keys[x]];
+                    for (let z = 0; z < currentGoalKeys.length; z++) {
+                        totalCount++;
+                    }
+                }
+            }
+
+            document.getElementById("totalGoals").innerHTML = `Alle (${totalCount})`;
+
+            arr.sort(function (a, b) { return b.progressionPercent - a.progressionPercent });
+
+            for (let i = 0; i < arr.length; i++) {
+
+                const badge = getBadgeGoals(size, arr[i], arr[i].id);
+
+                const badgesGoalsTableRow = document.getElementById("badgesGoalsTableRow");
+
+                if (badge && badgesGoalsTableRow) {
+                    badgesGoalsTableRow.innerHTML += badge;
+                }
+            }
+
+            if (navigator.onLine) {
+                const completedGoalsListKeys = Object.keys(completedGoalsList);
+                if (completedGoalsListKeys.length > 0) {
+                    setGoalAsComplete();
+                    async function setGoalAsComplete() {
+                        const infoHeader = { "completedGoalsList": completedGoalsList };
+                        const url = `/user/update/goals/completed`;
+                        const resp = await callServerAPIPost(infoHeader, url);
+
+                        if (resp.status === true) {
+                            const medalsCountTxt = document.getElementById("medalsCountTxt");
+                            if (medalsCountTxt) {
+                                medalsCountTxt.innerHTML = `${resp.totalMedals} x`;
+                            } else {
+                                location.reload();
+                            }
                         }
                     }
                 }
-
-                arr.push({ "exercise": capitalizeFirstLetter(current), "kg": goalKg, "kgLeft": kgUntilGoal, "msg": msg, "color": color, "id": id });
-
             }
-        }
-    }
 
-    const selectHTML = `<select id="changeGoalFilter" class="changeFilterSelect pointer" onchange="sortByLiftsOrGoalOwner('changeGoalFilter', 'goal');"></select>`;
-
-    if (arr.length > 0) {
-
-        document.getElementById("goals").innerHTML = `Mål: ${selectHTML}`;
-
-        document.getElementById("changeGoalFilter").innerHTML = `<option id="totalGoals" value="null"></option>`;
-
-        let totalCount = 0;
-
-        for (let x = 0; x < keys.length; x++) {
-
-            if (goals[keys[x]].length > 0) {
-
-                let html = `<option value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${goals[keys[x]].length})</option>`;
-
-                if (keys[x] === sortBy) {
-                    html = `<option selected="selected" value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${goals[keys[x]].length})</option>`;
-                }
-
-                document.getElementById("changeGoalFilter").innerHTML += html;
-
-                const currentGoalKeys = goals[keys[x]];
-                for (let z = 0; z < currentGoalKeys.length; z++) {
-                    totalCount++;
-                }
-            }
+        } else {
+            document.getElementById("goals").innerHTML = `Du har ingen mål enda!`;
         }
 
-        document.getElementById("totalGoals").innerHTML = `Alle (${totalCount})`;
+        if (hasGoalsLeft === true || Object.entries(goals).length === 0) {
 
-        arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
-
-        for (let i = 0; i < arr.length; i++) {
-
-            const badge = getBadgeGoals(size, arr[i], arr[i].id);
+            const badge = getBadgeGoals();
 
             const badgesGoalsTableRow = document.getElementById("badgesGoalsTableRow");
 
@@ -519,21 +810,16 @@ function displayGoals(hasGoalsLeft) {
                 badgesGoalsTableRow.innerHTML += badge;
             }
         }
-    } else {
-        document.getElementById("goals").innerHTML = `Du har ingen mål enda!`;
-    }
 
-    if (hasGoalsLeft === true || Object.entries(goals).length === 0) {
-
-        const badge = getBadgeGoals();
-
-        const badgesGoalsTableRow = document.getElementById("badgesGoalsTableRow");
-
-        if (badge && badgesGoalsTableRow) {
-            badgesGoalsTableRow.innerHTML += badge;
+        if (sessionStorage.getItem("badgesgoals_scroll_x")) {
+            GbadgesGoals.scrollLeft = sessionStorage.getItem("badgesgoals_scroll_x");
+        } else {
+            GbadgesGoals.scrollLeft = 0;
         }
-    }
 
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 /// ------------ end of displayGoals --------------- ///
@@ -544,73 +830,86 @@ function displayGoals(hasGoalsLeft) {
 
 function displayTrainingsplit() {
 
-    userGrid.innerHTML += `
-<div id="Gtrainingsplit">
-<p id="trainingsplit" class="fadeIn animate delaySmall">
-Treningsplan
-</p>
-</div>
+    try {
 
-<div id="GlineTrainingsplit">
-<hr id="lineTrainingsplit" class="fadeIn animate delaySmall">
-</div>
+        if (user.getSetting("activetrainingsplit") === null && !activetrainingsplit) {
+            showTrainingsplitBadgeAnimations = false;
+        }
 
-<div id="GbadgesTrainingsplit">
-<table id="badgesTrainingsplit">
-<tr id="badgesTrainingsplitTableRow">
-</tr>
-</table>
-</div>
-`;
+        document.getElementById("badgesTrainingsplitTableRow").innerHTML = "";
+        if (activetrainingsplit) {
+            document.getElementById("trainingsplit").innerHTML = `Treningsplan (${activetrainingsplit.trainingsplit_name})`;
 
-    if (Object.entries(program).length > 0) {
-
-        const keys = Object.keys(program);
-        const arr = [];
-
-        if (keys.length > 0) {
-            for (let i = 0; i < keys.length; i++) {
-
-                let programKeys = program[keys[i]];
-                const color = programKeys.color || "redBadgeG";
-
-                /*
-                if (programKeys === "0" || programKeys === 0 || programKeys === "") {
-                    programKeys = "Fri";
-                }
-*/
-
-                arr.push({ "day": keys[i], "trainingsplit": programKeys, "color": color });
-
+            const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+            const daysNorwegian = {
+                "sunday": "Søndag",
+                "monday": "Mandag",
+                "tuesday": "Tirsdag",
+                "wednesday": "Onsdag",
+                "thursday": "Torsdag",
+                "friday": "Fredag",
+                "saturday": "Lørdag",
             }
 
-            if (arr.length > 0) {
+            const keys = Object.keys(activetrainingsplit);
+            const arr = [];
 
-                arr.sort(function (a, b) { return a.kgLeft - b.kgLeft });
+            if (keys.length > 0) {
+                const dayNum = new Date().getDay();
+                const day = days[dayNum];
+                for (let i = 0; i < keys.length; i++) {
 
-                for (let i = 0; i < arr.length; i++) {
+                    if (days.includes(keys[i]) && daysNorwegian[keys[i]]) {
+                        let activeTrainingsplitKeys = activetrainingsplit[keys[i]];
+                        if (activeTrainingsplitKeys.short.length > 0) {
+                            let color = "trainingsplit_defaultBadgeG";
+                            if (keys[i] === day) {
+                                color = "trainingsplit_todayBadgeG";
+                            }
+                            arr.push({ "day": daysNorwegian[keys[i]], "trainingsplit": activeTrainingsplitKeys.short, "color": color, "trainingsplit_id": activetrainingsplit.trainingsplit_id });
+                        }
+                    }
+                }
 
-                    //const badge = getBadgeTrainingsplit(size, arr[i]);
-                    const badge = getBadgeTrainingsplit(0, arr[i]);
+                if (arr.length > 0) {
 
-                    if (badge) {
-                        document.getElementById("badgesTrainingsplitTableRow").innerHTML += badge;
+                    for (let i = 0; i < arr.length; i++) {
+
+                        const badge = getBadgeTrainingsplit(arr[i]);
+
+                        if (badge) {
+                            document.getElementById("badgesTrainingsplitTableRow").innerHTML += badge;
+                        }
                     }
                 }
             }
+
+            const badge = getBadgeTrainingsplit();
+
+            if (badge) {
+                document.getElementById("badgesTrainingsplitTableRow").innerHTML += badge;
+            }
+
+        } else {
+            const badge = getBadgeTrainingsplit();
+
+            if (badge) {
+                document.getElementById("badgesTrainingsplitTableRow").innerHTML = badge;
+            }
         }
+    } catch (err) {
+        console.log(err)
     }
 
-    const badge = getBadgeTrainingsplit();
-
-    if (badge) {
-        document.getElementById("badgesTrainingsplitTableRow").innerHTML += badge;
+    if (sessionStorage.getItem("badgestrainingsplit_scroll_x")) {
+        GbadgesTrainingsplit.scrollLeft = sessionStorage.getItem("badgestrainingsplit_scroll_x");
+    } else {
+        GbadgesTrainingsplit.scrollLeft = 0;
     }
 
 }
 
 /// ------------ end of displayTrainingsplit --------------- ///
-
 if (memberSince) {
 
     const splitDate = memberSince.split("-");

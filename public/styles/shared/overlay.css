@@ -1,0 +1,1622 @@
+/* elements, grid and other for mobile */
+
+/*@media only screen and (max-width: 1024px) {*/ /* 768px var før, men passer bedre med 1024px for ipad */
+
+/* grid */
+
+.overlay {
+text-align: center;
+position: fixed;
+z-index: 2;
+background-color: rgba(0, 0, 0, 0.6);
+height: 100%;
+width: 100%;
+}
+
+.inputLiftOrGoal, .selectLiftOrGoal { 
+text-align: center;
+text-align-last: center;
+appearance: none;
+-webkit-appearance: none;
+-moz-appearance: none;
+border: none;
+outline: none;
+background-color: var(--main-backgroundColor2);
+}
+
+.overlay>.createNewLiftorGoal {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+-ms-transform: translate(-50%,-50%);
+width: 90vw;
+max-width: 550px;
+height: auto;
+max-height: 90vh; /* 515px før */
+overflow-y: scroll;
+
+background-color: var(--main-backgroundColor2);
+
+border: 1px solid var(--main-backgroundColor1);
+border-radius: 16px;
+
+display: grid;
+grid-template-areas:
+
+"c1oC c1oC c1oC"
+"Gtitle1C Gtitle1C Gtitle1C"
+"Gline1C Gline1C Gline1C"
+"c2oC c2oC c2oC"
+
+"Gtitle2C Gtitle2C Gtitle2C"
+"Gline2C Gline2C Gline2C"
+"Ginp1C Ginp1C Ginp1C"
+"c3oC c3oC c3oC"
+
+"Gtitle3C Gtitle3C Gtitle3C"
+"Gline3C Gline3C Gline3C"
+"Ginp2C Ginp2C Ginp2C"
+"c4oC c4oC c4oC"
+
+"Gtitle4C Gtitle4C Gtitle4C"
+"Gline4C Gline4C Gline4C"
+"Ginp3C Ginp3C Ginp3C"
+"c5oC c5oC c5oC"
+
+"Gtitle5C Gtitle5C Gtitle5C"
+"Gline5C Gline5C Gline5C"
+"Ginp4C Ginp4C Ginp4C"
+"c6oC c6oC c6oC"
+
+"GrespC GrespC GrespC"
+"GcancelC c7oC GsaveC"
+"c8oC c8oC c8oC"
+;
+
+grid-template-rows: /* nedover */
+
+15px /* c1oC */
+
+30px /* Gtitle1C */
+
+10px /* Gline1C */
+
+30px /* c2oC */
+
+
+
+25px /* Gtitle2C */
+
+10px /* Gline2C */
+
+auto /* Ginp1C */
+
+20px /* c3oC */
+
+
+
+25px /* Gtitle3C */
+
+10px /* Gline3C */
+
+auto /* Ginp2C */
+
+20px /* c4oC */
+
+
+
+auto /* Gtitle4C */
+
+auto /* Gline4C */
+
+auto /* Ginp3C */
+
+auto /* c5oC */
+
+
+25px /* Gtitle5C */
+
+10px /* Gline5C */
+
+auto /* Ginp4C */
+
+20px /* c6oC */
+
+
+auto /* GrespC */
+
+30px /* GbuttonsC */
+
+10px /* c8oC */
+
+;
+
+grid-template-columns: /* bortover */
+1fr 1fr 1fr;
+}
+
+
+
+/* end of grid */
+
+
+
+/* elements */
+
+#Gtitle1C > #title1C {
+font-size: 21px;
+}
+
+#Gline1C > #line1C {
+width: 225px;
+}
+
+#Gline2C > #line2C {
+}
+
+#Gline3C > #line3C {
+}
+
+#Gline4C > #line4C {
+margin-top: 2.5px;
+margin-bottom: 7.5px;
+}
+
+#Gline5C > #line5C {
+
+}
+
+#Ginp1C > #inp1C {
+width: fit-content;
+}
+
+#Ginp2C > #inp2C {
+width: fit-content;
+}
+
+#Ginp3C > #inp3C {
+margin-bottom: 20px;
+width: fit-content;
+}
+
+#Ginp4C > #inp4C {
+width: fit-content;
+}
+
+#GrespC > #respC {
+color: var(--main-textColorDark);
+margin: 20px;
+font-size: 16px;
+}
+
+#GcancelC > #cancelC {
+}
+
+#GsaveC > #saveC {
+color: var(--main-backgroundColor1);
+}
+
+#cancelC, #saveC {
+font-size: 15px;
+font-weight: bold;
+height: 28px;
+
+background-color: rgb(212, 212, 212);
+border-radius: 4px;
+border: transparent;
+}
+
+#inp1C, #inp2C, #inp3C, #inp4C {
+color: var(--main-textColorDark);
+font-family: var(--main-font-Family-Verdana);
+font-size: 16px;
+}
+
+::placeholder {
+color: var(--main-textColorDark);
+font-family: var(--main-font-Family-Verdana);
+font-size: 16px;
+opacity: 85%;
+}
+
+#line2C, #line3C, #line4C, #line5C {
+width: 125px;
+}
+
+#Gtitle2C > #title2C {
+}
+
+#Gtitle3C > #title3C {
+}
+
+#Gtitle4C > #title4C {
+}
+
+#Gtitle5C > #title5C {
+}
+
+#title2C, #title3C, #title4C, #title5C {
+font-size: 18px;
+}
+
+#title1C, #title2C, #title3C, #title4C, #title5C {
+color: var(--main-textColorDark);
+font-family: var(--main-font-Family-Verdana);
+font-weight: bold;
+}
+
+#line1C, #line2C, #line3C, #line4C, #line5C {
+text-align: center;
+display: block;
+margin-left: auto;
+margin-right: auto;
+
+opacity: 40%;
+border: var(--main-lineBorder);
+}
+
+
+
+/* end of elements */
+
+
+
+/* spacing & other */
+
+
+
+.createNewLiftorGoal > #c1oC {
+grid-area: c1oC;
+}
+
+.createNewLiftorGoal > #Gtitle1C {
+grid-area: Gtitle1C;
+}
+
+.createNewLiftorGoal > #Gline1C {
+grid-area: Gline1C;
+}
+
+.createNewLiftorGoal > #c2oC {
+grid-area: c2oC;
+}
+
+.createNewLiftorGoal > #Gtitle2C {
+grid-area: Gtitle2C;
+}
+
+.createNewLiftorGoal > #Gline2C {
+grid-area: Gline2C;
+}
+
+.createNewLiftorGoal > #Ginp1C {
+grid-area: Ginp1C;
+}
+
+.createNewLiftorGoal > #c3oC {
+grid-area: c3oC;
+}
+
+.createNewLiftorGoal > #Gtitle3C {
+grid-area: Gtitle3C;
+}
+
+.createNewLiftorGoal > #Gline3C {
+grid-area: Gline3C;
+}
+
+.createNewLiftorGoal > #Ginp2C {
+grid-area: Ginp2C;
+}
+
+.createNewLiftorGoal > #c4oC {
+grid-area: c4oC;
+}
+
+.createNewLiftorGoal > #Gtitle4C {
+grid-area: Gtitle4C;
+}
+
+.createNewLiftorGoal > #Gline4C {
+grid-area: Gline4C;
+}
+
+.createNewLiftorGoal > #Ginp3C {
+grid-area: Ginp3C;
+}
+
+.createNewLiftorGoal > #c5oC {
+grid-area: c5oC;
+}
+
+.createNewLiftorGoal > #Gtitle5C {
+grid-area: Gtitle5C;
+}
+
+.createNewLiftorGoal > #Gline5C {
+grid-area: Gline5C;
+}
+
+.createNewLiftorGoal > #Ginp4C {
+grid-area: Ginp4C;
+}
+
+.createNewLiftorGoal > #c6oC {
+grid-area: c6oC;
+}
+
+.createNewLiftorGoal > #GrespC {
+grid-area: GrespC;
+}
+
+.createNewLiftorGoal > #GcancelC {
+grid-area: GcancelC;
+}
+
+.createNewLiftorGoal > #c7oC {
+grid-area: c7oC;
+}
+
+.createNewLiftorGoal > #GsaveC {
+grid-area: GsaveC;
+}
+
+.createNewLiftorGoal > #c8oC {
+grid-area: c8oC;
+}
+
+/* end of spacing & other */
+
+
+.overlay>.viewLiftorGoal {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+-ms-transform: translate(-50%,-50%);
+width: 90vw;
+max-width: 550px;
+height: auto;
+max-height: 90vh; /* 380px */
+overflow-y: scroll;
+
+background-color: var(--main-backgroundColor2);
+
+border: 1px solid var(--main-backgroundColor1);
+border-radius: 16px;
+
+display: grid;
+grid-template-areas:
+
+"c1oW c1oW c1oW"
+"Gtitle1W Gtitle1W Gtitle1W"
+"Gline1W Gline1W Gline1W"
+"c2oW c2oW c2oW"
+
+"Gtitle2W Gtitle2W Gtitle2W"
+"Gline2W Gline2W Gline2W"
+"Ginp1W Ginp1W Ginp1W"
+"c3oW c3oW c3oW"
+
+"Gtitle3W Gtitle3W Gtitle3W"
+"Gline3W Gline3W Gline3W"
+"Ginp2W Ginp2W Ginp2W"
+"c4oW c4oW c4oW"
+
+"Gtitle4W Gtitle4W Gtitle4W"
+"Gline4W Gline4W Gline4W"
+"Ginp3W Ginp3W Ginp3W"
+"c5oW c5oW c5oW"
+
+"GcancelW c7oW GeditW"
+"c8oW c8oW c8oW"
+;
+
+grid-template-rows: /* nedover */
+
+15px /* c1oW */
+
+30px /* Gtitle1W */
+
+10px /* Gline1W */
+
+30px /* c2oW */
+
+
+
+25px /* Gtitle2W */
+
+10px /* Gline2W */
+
+auto /* Ginp1W */
+
+20px /* c3oW */
+
+
+
+auto /* Gtitle3W */
+
+auto /* Gline3W */
+
+auto /* Ginp2W */
+
+auto /* c4oW */
+
+
+
+25px /* Gtitle4W */
+
+10px /* Gline4W */
+
+auto /* Ginp3W */
+
+20px /* c5oW */
+
+
+
+30px /* GbuttonsW */
+
+10px /* c7oW */
+
+;
+
+grid-template-columns: /* bortover */
+1fr 1fr 1fr;
+}
+
+
+
+/* end of grid */
+
+
+
+/* elements */
+
+
+
+
+
+#Gtitle1W > #title1W {
+font-size: 21px;
+}
+
+#Gline1W > #line1W {
+width: 250px;
+}
+
+#Gline2W > #line2W {
+}
+
+#Gline3W > #line3W {
+margin-top: 2.5px;
+margin-bottom: 7.5px;
+}
+
+#Gline4W > #line4W {
+}
+
+#Ginp1W > #inp1W {
+}
+
+#Ginp2W > #inp2W {
+margin-bottom: 20px;
+}
+
+#Ginp3W > #inp3W {
+}
+
+#GcancelW > #cancelW {
+}
+
+#GeditW > #editW {
+color: var(--main-backgroundColor1);
+}
+
+#cancelW, #editW {
+font-size: 15px;
+font-weight: bold;
+height: 28px;
+
+background-color: rgb(212, 212, 212);
+border-radius: 4px;
+border: transparent;
+}
+
+#inp1W, #inp2W, #inp3W {
+color: var(--main-textColorDark);
+font-family: var(--main-font-Family-Verdana);
+font-size: 16px;
+}
+
+#line2W, #line3W, #line4W {
+width: 125px;
+}
+
+#Gtitle2W > #title2W {
+}
+
+#Gtitle3W > #title3W {
+margin-top: 5px;
+}
+
+#Gtitle4W > #title4W {
+}
+
+#title2W, #title3W, #title4W  {
+font-size: 18px;
+}
+
+#title1W, #title2W, #title3W, #title4W {
+color: var(--main-textColorDark);
+font-family: var(--main-font-Family-Verdana);
+font-weight: bold;
+}
+
+
+#line1W, #line2W, #line3W, #line4W {
+text-align: center;
+display: block;
+margin-left: auto;
+margin-right: auto;
+
+opacity: 40%;
+border: var(--main-lineBorder);
+}
+
+
+
+/* end of elements */
+
+
+
+/* spacing & other */
+
+.viewLiftorGoal > #c1oW {
+grid-area: c1oW;
+}
+
+.viewLiftorGoal > #Gtitle1W {
+grid-area: Gtitle1W;
+}
+
+.viewLiftorGoal > #Gline1W {
+grid-area: Gline1W;
+}
+
+.viewLiftorGoal > #c2oW {
+grid-area: c2oW;
+}
+
+.viewLiftorGoal > #Gtitle2W {
+grid-area: Gtitle2W;
+}
+
+.viewLiftorGoal > #Gline2W {
+grid-area: Gline2W;
+}
+
+.viewLiftorGoal > #Ginp1W {
+grid-area: Ginp1W;
+}
+
+.viewLiftorGoal > #c3oW {
+grid-area: c3oW;
+}
+
+.viewLiftorGoal > #Gtitle3W {
+grid-area: Gtitle3W;
+}
+
+.viewLiftorGoal > #Gline3W {
+grid-area: Gline3W;
+}
+
+.viewLiftorGoal > #Ginp2W {
+grid-area: Ginp2W;
+}
+
+.viewLiftorGoal > #c4oW {
+grid-area: c4oW;
+}
+
+.viewLiftorGoal > #Gtitle4W {
+grid-area: Gtitle4W;
+}
+
+.viewLiftorGoal > #Gline4W {
+grid-area: Gline4W;
+}
+
+.viewLiftorGoal > #Ginp3W {
+grid-area: Ginp3W;
+}
+
+.viewLiftorGoal > #c5oW {
+grid-area: c5oW;
+}
+
+.viewLiftorGoal > #c6oW {
+grid-area: c6oW;
+}
+
+.viewLiftorGoal > #GcancelW {
+grid-area: GcancelW;
+}
+
+.viewLiftorGoal > #c7oW {
+grid-area: c7oW;
+}
+
+.viewLiftorGoal > #GeditW {
+grid-area: GeditW;
+}
+
+.viewLiftorGoal > #c8oW {
+grid-area: c8oW;
+}
+
+
+.overlay>.editLiftorGoal {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+-ms-transform: translate(-50%,-50%);
+width: 90vw;
+max-width: 550px;
+height: auto;
+max-height: 90vh; /* 545px før */
+overflow-y: scroll;
+
+background-color: var(--main-backgroundColor2);
+
+border: 1px solid var(--main-backgroundColor1);
+border-radius: 16px;
+
+display: grid;
+grid-template-areas:
+
+"c1oE c1oE c1oE"
+"Gtitle1E Gtitle1E Gtitle1E"
+"Gline1E Gline1E Gline1E"
+"c2oE c2oE c2oE"
+
+"Gtitle2E Gtitle2E Gtitle2E"
+"Gline2E Gline2E Gline2E"
+"Ginp1E Ginp1E Ginp1E"
+"c3oE c3oE c3oE"
+
+"Gtitle3E Gtitle3E Gtitle3E"
+"Gline3E Gline3E Gline3E"
+"Ginp2E Ginp2E Ginp2E"
+"c4oE c4oE c4oE"
+
+"Gtitle4E Gtitle4E Gtitle4E"
+"Gline4E Gline4E Gline4E"
+"Ginp3E Ginp3E Ginp3E"
+"c5oE c5oE c5oE"
+
+"Gtitle5E Gtitle5E Gtitle5E"
+"Gline5E Gline5E Gline5E"
+"Ginp4E Ginp4E Ginp4E"
+"c6oE c6oE c6oE"
+
+"GdeleteE GdeleteE GdeleteE"
+"GrespE GrespE GrespE"
+"GcancelE c7oE GsaveE"
+"c8oE c8oE c8oE"
+;
+
+grid-template-rows: /* nedover */
+
+15px /* c1oE */
+
+30px /* Gtitle1E */
+
+10px /* Gline1E */
+
+30px /* c2oE */
+
+
+
+25px /* Gtitle2E */
+
+10px /* Gline2E */
+
+auto /* Ginp1E */
+
+20px /* c3oE */
+
+
+
+auto /* Gtitle3E */
+
+auto /* Gline3E */
+
+auto /* Ginp2E */
+
+auto /* c4oE */
+
+
+
+25px /* Gtitle4E */
+
+10px /* Gline4E */
+
+auto /* Ginp3E */
+
+20px /* c5oE */
+
+
+25px /* Gtitle5E */
+
+10px /* Gline5E */
+
+auto /* Ginp4E */
+
+20px /* c6oE */
+
+
+30px /* GdeleteE */
+
+auto /* GrespE */
+
+30px /* GbuttonsE */
+
+10px /* c7oE */
+
+;
+
+grid-template-columns: /* bortover */
+1fr 1fr 1fr;
+}
+
+
+
+/* end of grid */
+
+
+
+/* elements */
+
+
+
+
+
+#Gtitle1E > #title1E {
+font-size: 21px;
+}
+
+#Gline1E > #line1E {
+width: 250px;
+}
+
+#Gline2E > #line2E {
+}
+
+#Gline3E > #line3E {
+margin-top: 2.5px;
+margin-bottom: 7.5px;
+}
+
+#Gline4E > #line4E {
+}
+
+#Gline5E > #line5E {
+}
+
+#Ginp1E > #inp1E {
+width: fit-content;
+}
+
+#Ginp2E > #inp2E {
+margin-bottom: 20px;
+width: fit-content;
+}
+
+#Ginp3E > #inp3E {
+
+width: fit-content;
+}
+
+#Ginp4E > #inp4E {
+width: fit-content;
+}
+
+#GcancelE > #cancelE {
+}
+
+#GdeleteE > #deleteE {
+}
+
+#deleteE {
+color:red;
+}
+
+#GsaveE > #saveE {
+color: var(--main-backgroundColor1);
+}
+
+#GrespE > #respE {
+color: var(--main-textColorDark);
+margin: 20px;
+font-size: 16px;
+}
+
+#deleteE, #cancelE, #saveE {
+font-size: 15px;
+font-weight: bold;
+height: 28px;
+
+background-color: rgb(212, 212, 212);
+border-radius: 4px;
+border: transparent;
+}
+
+#inp1E, #inp2E, #inp3E, #inp4E {
+color: var(--main-textColorDark);
+font-family: var(--main-font-Family-Verdana);
+font-size: 16px;
+}
+
+::placeholder {
+color: var(--main-textColorDark);
+font-family: var(--main-font-Family-Verdana);
+font-size: 16px;
+opacity: 85%;
+}
+
+#line2E, #line3E, #line4E, #line5E {
+width: 125px;
+}
+
+#Gtitle2E > #title2E {
+}
+
+#Gtitle3E > #title3E {
+}
+
+#Gtitle4E > #title4E {
+}
+
+#Gtitle5E > #title5E {
+}
+
+#title2E, #title3E, #title4E, #title5E  {
+font-size: 18px;
+}
+
+#title1E, #title2E, #title3E, #title4E, #title5E {
+color: var(--main-textColorDark);
+font-family: var(--main-font-Family-Verdana);
+font-weight: bold;
+}
+
+
+#line1E, #line2E, #line3E, #line4E, #line5E {
+text-align: center;
+display: block;
+margin-left: auto;
+margin-right: auto;
+
+opacity: 40%;
+border: var(--main-lineBorder);
+}
+
+
+
+/* end of elements */
+
+
+
+/* spacing & other */
+
+.editLiftorGoal > #c1oE {
+grid-area: c1oE;
+}
+
+.editLiftorGoal > #Gtitle1E {
+grid-area: Gtitle1E;
+}
+
+.editLiftorGoal > #Gline1E {
+grid-area: Gline1E;
+}
+
+.editLiftorGoal > #c2oE {
+grid-area: c2oE;
+}
+
+.editLiftorGoal > #Gtitle2E {
+grid-area: Gtitle2E;
+}
+
+.editLiftorGoal > #Gline2E {
+grid-area: Gline2E;
+}
+
+.editLiftorGoal > #Ginp1E {
+grid-area: Ginp1E;
+}
+
+.editLiftorGoal > #c3oE {
+grid-area: c3oE;
+}
+
+.editLiftorGoal > #Gtitle3E {
+grid-area: Gtitle3E;
+}
+
+.editLiftorGoal > #Gline3E {
+grid-area: Gline3E;
+}
+
+.editLiftorGoal > #Ginp2E {
+grid-area: Ginp2E;
+}
+
+.editLiftorGoal > #c4oE {
+grid-area: c4oE;
+}
+
+.editLiftorGoal > #Gtitle4E {
+grid-area: Gtitle4E;
+}
+
+.editLiftorGoal > #Gline4E {
+grid-area: Gline4E;
+}
+
+.editLiftorGoal > #Ginp3E {
+grid-area: Ginp3E;
+}
+
+.editLiftorGoal > #c5oE {
+grid-area: c5oE;
+}
+
+.editLiftorGoal > #Gtitle5E {
+grid-area: Gtitle5E;
+}
+
+.editLiftorGoal > #Gline5E {
+grid-area: Gline5E;
+}
+
+.editLiftorGoal > #Ginp4E {
+grid-area: Ginp4E;
+}
+
+.editLiftorGoal > #c6oE {
+grid-area: c6oE;
+}
+
+.editLiftorGoal > #GdeleteE {
+grid-area: GdeleteE;
+}
+
+.editLiftorGoal > #GrespE {
+grid-area: GrespE;
+}
+
+.editLiftorGoal > #GcancelE {
+grid-area: GcancelE;
+}
+
+.editLiftorGoal > #c7oE {
+grid-area: c7oE;
+}
+
+.editLiftorGoal > #GsaveE {
+grid-area: GsaveE;
+}
+
+.editLiftorGoal > #c8oE {
+grid-area: c8oE;
+}
+
+/* end of spacing & other */
+
+
+.overlay>.workoutPlans {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+-ms-transform: translate(-50%,-50%);
+width: 90%;
+max-width: 550px;
+height: auto;
+max-height: 90vh; /* 620px før */
+overflow-y: scroll;
+
+background-color: var(--main-backgroundColor2);
+
+border: 1px solid var(--main-backgroundColor1);
+border-radius: 16px;
+
+display: grid;
+grid-template-areas:
+
+"c1oWP c1oWP c1oWP"
+"Gtitle1workoutPlans Gtitle1workoutPlans Gtitle1workoutPlans"
+"Gline1workoutPlans Gline1workoutPlans Gline1workoutPlans"
+"c2oWP c2oWP c2oWP"
+
+"Gtitle2workoutPlans Gtitle2workoutPlans Gtitle2workoutPlans"
+"Gline2workoutPlans Gline2workoutPlans Gline2workoutPlans"
+"GlistworkoutPlans GlistworkoutPlans GlistworkoutPlans"
+"GviewplanworkoutPlans GviewplanworkoutPlans GviewplanworkoutPlans"
+"c3oWP c3oWP c3oWP"
+"GeditplanworkoutPlans GeditplanworkoutPlans GeditplanworkoutPlans"
+"c4oWP c4oWP c4oWP"
+"GcreateplanworkoutPlans GcreateplanworkoutPlans GcreateplanworkoutPlans"
+"c5oWP c5oWP c5oWP"
+
+"Gtitle3workoutPlans Gtitle3workoutPlans Gtitle3workoutPlans"
+"Gline3workoutPlans Gline3workoutPlans Gline3workoutPlans"
+"GlistsubworkoutPlans GlistsubworkoutPlans GlistsubworkoutPlans"
+"GviewsubplanworkoutPlans GviewsubplanworkoutPlans GviewsubplanworkoutPlans"
+"c6oWP c6oWP c6oWP"
+
+"Gtitle4workoutPlans Gtitle4workoutPlans Gtitle4workoutPlans"
+"Gline4workoutPlans Gline4workoutPlans Gline4workoutPlans"
+"GtextworkoutPlans GtextworkoutPlans GtextworkoutPlans"
+"GsetNoneActivePlanworkoutPlans GsetNoneActivePlanworkoutPlans GsetNoneActivePlanworkoutPlans"
+"c7oWP c7oWP c7oWP"
+
+"GrespworkoutPlans GrespworkoutPlans GrespworkoutPlans"
+"GcancelworkoutPlans c8oWP GsaveworkoutPlans"
+"c9oWP c9oWP c9oWP"
+;
+
+grid-template-rows: /* nedover */
+
+15px /* c1oWP */
+
+30px /* Gtitle1workoutPlans */
+
+10px /* Gline1workoutPlans */
+
+auto /* c2oWP */
+
+
+
+auto /* Gtitle2workoutPlans */
+
+auto /* Gline2workoutPlans */
+
+auto /* GlistworkoutPlans */
+
+auto /* GviewplanworkoutPlans */
+
+0px /* c3oWP */
+
+auto /* GeditplanworkoutPlans */
+
+5px /* c4oWP */
+
+auto /* GcreateplanworkoutPlans */
+
+20px /* c5oWP */
+
+
+
+auto /* Gtitle3workoutPlans */
+
+10px /* Gline3workoutPlans */
+
+auto /* GlistsubworkoutPlans */
+
+auto /* GviewsubplanworkoutPlans */
+
+20px /* c6oWP */
+
+
+
+auto /* Gtitle4workoutPlans */
+
+10px /* Gline4workoutPlans */
+
+auto /* GtextworkoutPlans */
+
+auto /* GsetNoneActivePlanworkoutPlans */
+
+0px /* c7oWP */
+
+
+auto /* GrespworkoutPlans */
+
+30px /* GbuttonsworkoutPlans */
+
+10px /* c9oWP */
+
+;
+
+grid-template-columns: /* bortover */
+1fr 1fr 1fr;
+}
+
+/* elements */
+
+
+
+#Gtitle1workoutPlans > #title1workoutPlans {
+font-size: 21px;
+}
+
+#Gline1workoutPlans > #line1workoutPlans {
+width: 200px;
+}
+
+#Gline2workoutPlans > #line2workoutPlans {
+    margin-bottom: 10px;
+}
+
+#Gline3workoutPlans > #line3workoutPlans {
+}
+
+#Gline4workoutPlans > #line4workoutPlans {
+}
+
+#GtextworkoutPlans > #textworkoutPlans {
+font-size: 16px;
+color: var(--main-accountOwnerColor);
+}
+
+#line3workoutPlans {
+width: 190px;
+}
+
+#line2workoutPlans, #line4workoutPlans{
+width: 125px;
+}
+
+#GlistworkoutPlans > #listworkoutPlans {
+font-size: 16px;
+text-align: center;
+text-align-last: center;
+appearance: none;
+-webkit-appearance: none;
+-moz-appearance: none;
+border: none;
+color: var(--main-textColorDark);
+background-color: var(--main-backgroundColor2);
+}
+
+#GlistsubworkoutPlans > #listsubworkoutPlans {
+font-size: 16px;
+text-align: center;
+text-align-last: center;
+appearance: none;
+-webkit-appearance: none;
+-moz-appearance: none;
+border: none;
+color: var(--main-textColorDark);
+background-color: var(--main-backgroundColor2);
+}
+
+#GviewsubplanworkoutPlans > #viewsubplanworkoutPlans {
+margin-top: 5px;
+}
+
+#GviewplanworkoutPlans > #viewplanworkoutPlans{
+margin-top: 5px;
+}
+
+#GeditplanworkoutPlans > #editplanworkoutPlans {
+margin-top: 5px;
+}
+
+#GcreateplanworkoutPlans > #createplanworkoutPlans{
+margin-top: 5px;
+}
+
+#GsetNoneActivePlanworkoutPlans > #setNoneActivePlanworkoutPlans {
+margin-top: 5px;
+}
+
+#GcancelworkoutPlans > #cancelworkoutPlans {
+}
+
+#GsaveworkoutPlans > #saveworkoutPlans {
+color: var(--main-backgroundColor1);
+}
+
+#GrespworkoutPlans > #respworkoutPlans {
+color: var(--main-textColorDark);
+margin: 20px;
+font-size: 16px;
+}
+
+#cancelworkoutPlans, #saveworkoutPlans, #viewplanworkoutPlans ,#editplanworkoutPlans, #createplanworkoutPlans, #viewsubplanworkoutPlans, #setNoneActivePlanworkoutPlans {
+font-size: 15px;
+font-weight: bold;
+height: 28px;
+
+background-color: rgb(212, 212, 212);
+border-radius: 4px;
+border: transparent;
+}
+
+#Gtitle2workoutPlans > #title2workoutPlans {
+    margin-top: 30px;
+}
+
+#Gtitle3workoutPlans > #title3workoutPlans {
+}
+
+#Gtitle4workoutPlans > #title4workoutPlans {
+}
+
+#title2workoutPlans, #title3workoutPlans, #title4workoutPlans {
+font-size: 18px;
+}
+
+#title1workoutPlans, #title2workoutPlans, #title3workoutPlans, #title4workoutPlans {
+color: var(--main-textColorDark);
+font-family: var(--main-font-Family-Verdana);
+font-weight: bold;
+}
+
+
+#line1workoutPlans, #line2workoutPlans, #line3workoutPlans, #line4workoutPlans {
+text-align: center;
+display: block;
+margin-left: auto;
+margin-right: auto;
+
+opacity: 40%;
+border: var(--main-lineBorder);
+}
+
+
+
+/* end of elements */
+
+
+
+/* spacing & other */
+
+
+
+.workoutPlans > #c1oWP {
+grid-area: c1oWP;
+}
+
+.workoutPlans > #Gtitle1workoutPlans {
+grid-area: Gtitle1workoutPlans;
+}
+
+.workoutPlans > #Gline1workoutPlans {
+grid-area: Gline1workoutPlans;
+}
+
+.workoutPlans > #c2oWP {
+grid-area: c2oWP;
+}
+
+.workoutPlans > #Gtitle2workoutPlans {
+grid-area: Gtitle2workoutPlans;
+}
+
+.workoutPlans > #Gline2workoutPlans {
+grid-area: Gline2workoutPlans;
+}
+
+.workoutPlans > #GlistworkoutPlans {
+grid-area: GlistworkoutPlans;
+}
+
+.workoutPlans > #GeditplanworkoutPlans{
+grid-area: GeditplanworkoutPlans;
+}
+
+.workoutPlans > #c3oWP {
+grid-area: c3oWP;
+}
+
+.workoutPlans > #GcreateplanworkoutPlans{
+grid-area: GcreateplanworkoutPlans;
+}
+
+.workoutPlans > #c4oWP {
+grid-area: c4oWP;
+}
+
+.workoutPlans > #Gtitle3workoutPlans {
+grid-area: Gtitle3workoutPlans;
+}
+
+.workoutPlans > #Gline3workoutPlans {
+grid-area: Gline3workoutPlans;
+}
+
+.workoutPlans > #GlistsubworkoutPlans {
+grid-area: GlistsubworkoutPlans;
+}
+
+.workoutPlans > #GviewsubplanworkoutPlans {
+grid-area: GviewsubplanworkoutPlans;
+}
+
+.workoutPlans > #c5oWP {
+grid-area: c5oWP;
+}
+
+.workoutPlans > #GviewplanworkoutPlans {
+grid-area: GviewplanworkoutPlans;
+}
+
+.workoutPlans > #c6oWP {
+grid-area: c6oWP;
+}
+
+.workoutPlans > #Gtitle4workoutPlans {
+grid-area: Gtitle4workoutPlans;
+}
+
+.workoutPlans > #Gline4workoutPlans {
+grid-area: Gline4workoutPlans;
+}
+
+.workoutPlans > #GtextworkoutPlans {
+grid-area: GtextworkoutPlans;
+}
+
+.workoutPlans > #GsetNoneActivePlanworkoutPlans {
+grid-area: GsetNoneActivePlanworkoutPlans;
+}
+
+.workoutPlans > #c7oWP {
+grid-area: c7oWP;
+}
+
+.workoutPlans > #GrespworkoutPlans {
+grid-area: GrespworkoutPlans;
+}
+
+.workoutPlans > #GcancelworkoutPlans {
+grid-area: GcancelworkoutPlans;
+}
+
+.workoutPlans > #c8oWP {
+grid-area: c8oWP;
+}
+
+.workoutPlans > #GsaveworkoutPlans {
+grid-area: GsaveworkoutPlans;
+}
+
+.workoutPlans > #c9oWP {
+grid-area: c9oWP;
+}
+
+/* end of spacing & other */
+
+
+.overlay>.TSAlert {
+font-family: var(--main-font-Family-Arial) !important;
+word-break: keep-all;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+-ms-transform: translate(-50%,-50%);
+width: 80vw;
+max-width: 450px;
+height: auto;
+overflow-y: scroll;
+
+background-color: var(--main-backgroundColor2);
+
+border: 1px solid var(--main-backgroundColor1);
+border-radius: 16px;
+
+display: grid;
+grid-template-areas:
+
+"c1oTSAlert"
+"GinformationTSAlert"
+"GextraTSAlert"
+"c2oTSAlert"
+;
+
+grid-template-rows: /* nedover */
+
+0px /* c1oTSAlert */
+
+auto /* GinformationTSAlert */
+
+auto /* GextraTSAlert */
+
+0px /* c2oTSAlert */
+
+;
+
+grid-template-columns: /* bortover */
+1fr;
+}
+
+
+
+/* end of grid */
+
+
+
+/* elements */
+
+#GinformationTSAlert > #informationTSAlert {
+font-size: 16px;
+margin-top: 15px;
+margin-bottom: 5px;
+}
+
+#GextraTSAlert > #extraTSAlert{
+font-size: 14px;
+margin-bottom: 15px;
+margin-top: 5px;
+}
+
+#informationTSAlert, #extraTSAlert{
+margin-left: 15px;
+margin-right: 15px;
+color: var(--main-textColorDark);
+}
+
+.TSAlertBtn {
+font-family: var(--main-font-Family-Arial) !important;
+font-size: 15px;
+font-weight: bold;
+height: 26px;
+background-color: rgb(212, 212, 212);
+border-radius: 4px;
+border: transparent;
+color: var(--main-backgroundColor1);
+}
+
+/* end of elements */
+
+
+
+/* spacing & other */
+
+.TSAlert > #c1oTSAlert {
+grid-area: c1oTSAlert;
+}
+
+.TSAlert > #GinformationTSAlert {
+grid-area: GinformationTSAlert;
+}
+
+.TSAlert > #GextraTSAlert{
+grid-area: GextraTSAlert;
+}
+
+.TSAlert > #c2oTSAlert {
+grid-area: c2oTSAlert;
+}
+
+
+.overlay>.TSConfirm {
+font-family: var(--main-font-Family-Arial) !important;
+word-break: keep-all;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+-ms-transform: translate(-50%,-50%);
+width: 80vw;
+max-width: 450px;
+height: auto;
+overflow-y: scroll;
+
+background-color: var(--main-backgroundColor2);
+
+border: 1px solid var(--main-backgroundColor1);
+border-radius: 16px;
+
+display: grid;
+grid-template-areas:
+
+"c1oTSConfirm c1oTSConfirm c1oTSConfirm"
+"GinformationTSConfirm GinformationTSConfirm GinformationTSConfirm"
+"GcancelBtnTSConfirm c2oTSConfirm GacceptBtnTSConfirm"
+"c3oTSConfirm c3oTSConfirm c3oTSConfirm"
+;
+
+grid-template-rows: /* nedover */
+
+0px /* c1oTSConfirm */
+
+auto /* GinformationTSConfirm */
+
+auto /* GButtonsTSConfirm */
+
+0px /* c3oTSConfirm */
+
+;
+
+grid-template-columns: /* bortover */
+1fr;
+}
+
+
+
+/* end of grid */
+
+
+
+/* elements */
+
+#GinformationTSConfirm > #informationTSConfirm {
+font-size: 16px;
+margin-top: 15px;
+margin-bottom: 7.5px;
+color: var(--main-textColorDark);
+}
+
+#GcancelBtnTSConfirm > #cancelBtnTSConfirm {
+float:left;
+}
+
+#GacceptBtnTSConfirm > #acceptBtnTSConfirm {
+float: right;
+color: var(--main-backgroundColor1);
+}
+
+#cancelBtnTSConfirm, #acceptBtnTSConfirm {
+margin-bottom: 15px;
+margin-top: 7.5px;
+}
+
+#informationTSConfirm, #cancelBtnTSConfirm, #acceptBtnTSConfirm {
+margin-left: 15px;
+margin-right: 15px;
+}
+
+.TSConfirmBtn {
+font-family: var(--main-font-Family-Arial) !important;
+font-size: 15px;
+font-weight: bold;
+height: 26px;
+background-color: rgb(212, 212, 212);
+border-radius: 4px;
+border: transparent;
+}
+
+/* end of elements */
+
+
+
+/* spacing & other */
+
+.TSConfirm > #c1oTSConfirm {
+grid-area: c1oTSConfirm;
+}
+
+.TSConfirm > #GinformationTSConfirm {
+grid-area: GinformationTSConfirm;
+}
+
+.TSConfirm > #GcancelBtnTSConfirm{
+grid-area: GcancelBtnTSConfirm;
+}
+
+.TSConfirm > #c2oTSConfirm {
+grid-area: c2oTSConfirm;
+}
+
+.TSConfirm > #GacceptBtnTSConfirm{
+grid-area: GacceptBtnTSConfirm;
+}
+
+.TSConfirm > #c3oTSConfirm {
+grid-area: c3oTSConfirm;
+}
+
+/* end of spacing & other */
+
+
+/*}*/

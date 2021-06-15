@@ -31,25 +31,16 @@ margin-left: 5vw;
 margin-right: 5vw;
 }
 
-#c6r2 {
-padding-top: 5px;
-font-size: 14px;
-text-align: center;
-}
-
-#c1r2 {
-border-top: 1px #75757585 solid;
-}
-
 #c2r1 {
-border-top: 1px #75757585 solid;
+/*border-top: 1px #75757585 solid;*/
+border-top: var(--main-border);
 }
 
 .leaderboardsList {
 word-break: keep-all;
 white-space: nowrap;
 margin-right: 10px;
-font-size: 16px;
+font-size: 15px; /* 16px før */
 font-weight: bold;
 font-family: var(--main-font-Family-Verdana);
 
@@ -59,7 +50,7 @@ border-radius: 8px;
 border: 1px var(--main-backgroundColor1) solid;
 box-shadow: var(--main-boxShadow);
 
-height: 34px;
+height: 30px; /* 34px før */
 width: fit-content;
 }
 
@@ -91,15 +82,10 @@ fill: #CD7F32;
 /* end of mobile & desktop */
 
 .changeLeaderboardRepsSelect {
-font-size: 16px;
+font-size: 15.5px;
 /*color: var(--main-accountOwnerColor);*/
 color: var(--main-textColorDark);
 /*font-weight: bold;*/
 font-family: var(--main-font-Family-Verdana);
-appearance: none;
--webkit-appearance: none;
--moz-appearance: none;
-border: none;
-outline: none;
 background-color: var(--main-backgroundColor2);
 }

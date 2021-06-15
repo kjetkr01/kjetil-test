@@ -1,0 +1,69 @@
+body {
+--bsSize: 6px 6px;
+}
+
+/* Gradent Color Badges */
+
+.redBadgeG {
+background: linear-gradient(to right bottom, #E36262, #972F2F);
+box-shadow: var(--bsSize) #972f2f80;
+}
+
+.yellowBadgeG {
+background: linear-gradient(to right bottom, #DBB331, #C96E4C);
+box-shadow: var(--bsSize) #C96E4C80;
+}
+
+.blueBadgeG {
+background: linear-gradient(to right bottom, #626BE3, #2B2379);
+box-shadow: var(--bsSize) #2B237980;
+}
+
+.themeBadgeG {
+background: linear-gradient(to right bottom, var(--main-backgroundColor1), var(--main-bodyBackgroundColor));
+box-shadow: var(--bsSize) var(--main-backgroundColorRGBLowOpacity);
+}
+
+.trainingsplit_defaultBadgeG {
+background: linear-gradient(to right bottom, #E3626295, #972F2F95);
+box-shadow: var(--bsSize) #972f2f75;
+}
+
+.trainingsplit_todayBadgeG {
+background: linear-gradient(to right bottom, #E36262, #972F2F);
+box-shadow: var(--bsSize) #972f2f80;
+}
+
+/* end of Gradent Color Badges */
+
+
+/* Plain Color Badges */
+
+.redBadge {
+background-color:  #E36262;
+box-shadow: var(--bsSize) #E3626280;
+}
+
+.yellowBadge {
+background-color: #DBB331;
+box-shadow: var(--bsSize) #DBB33180;
+}
+
+.blueBadge {
+background-color: #626BE3;
+box-shadow: var(--bsSize) #626BE380;
+}
+
+.themeBadge {
+background-color: var(--main-backgroundColor1);
+box-shadow: var(--bsSize) var(--main-backgroundColorRGBLowOpacity);
+}
+
+/* end of Plain Color Badges */
+
+
+.emptyBadge {
+background-color: var(--main-emptyBadgeColor); /* 8d8d8d før */
+box-shadow: var(--bsSize) var(--main-emptyBadgeShadow);
+border: 1px dashed var(--main-emptyBadgeBorderColor);
+}

@@ -160,9 +160,9 @@ bottom: 0;
 .icons {
 height: var(--main-footerIconSize);
 width: var(--main-footerIconSize);
-fill:none;
-stroke-miterlimit:10;
-stroke-width:3.25px;
+fill: none;
+stroke-miterlimit: 10;
+stroke-width: 3.25px;
 
 outline-style: none;
 -webkit-touch-callout: none;

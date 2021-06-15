@@ -26,10 +26,6 @@ grid-template-areas:
 "c5r1 c5r1 c5r1 c5r1 c5r1 c5r1 c5r1"
 "GpeopleWorkoutList GpeopleWorkoutList GpeopleWorkoutList GpeopleWorkoutList GpeopleWorkoutList GpeopleWorkoutList GpeopleWorkoutList"
 "c6r1 c6r1 c6r1 c6r1 c6r1 c6r1 c6r1"
-
-"c1r2 c1r2 c1r2 c1r2 c1r2 c1r2 c1r2"
-"c2r2 Gfeed c3r2 Gleaderboards c4r2 Gaccount c5r2"
-"c6r2 c6r2 c6r2 c6r2 c6r2 c6r2 c6r2"
 ;
 
 grid-template-rows: /* nedover */
@@ -38,7 +34,7 @@ grid-template-rows: /* nedover */
 
 auto /* title */
 
-auto /* Gname */
+12vh /* Gname */
 
 auto /* smallTitle */
 
@@ -46,7 +42,7 @@ auto /* smallTitle */
 
 auto /* Gbadges */
 
-2vh /* c3r1 */
+10px /* c3r1 */
 
 3vh /* c4r1 */
 
@@ -60,17 +56,11 @@ auto /* Gbadges */
 
 1fr /* GpeopleWorkoutList */
 
-3vh /* c6r1 */
-
-var(--main-footerHeightTop) /* c1r2 */
-
-var(--main-footerIconHeight) /* Glinks */
-
-var(--main-footerHeightBottom) /* c2r2 */
+90px /* c6r1 */
 ;
 
 grid-template-columns: /* bortover */
-12vw auto 1fr auto 1fr auto 12vw;
+12.5vw auto 1fr auto 1fr auto 12.5vw;
 }
 
 
@@ -87,7 +77,7 @@ min-height: 45px;
 }
 
 #Gname > #name {
-min-height: 85px;
+min-height: 75px;
 }
 
 #title, #name {
@@ -96,7 +86,7 @@ font-size: 34px;
 
 #GsmallTitle > #smallTitle {
 font-size: 22px;
-min-height: 45px;
+min-height: 37.5px;
 }
 
 #title, #name, #smallTitle, #badges, #today, #peopleWorkoutTxt {
@@ -183,7 +173,7 @@ grid-area: c5r1;
 #page > #GpeopleWorkoutList {
 grid-area: GpeopleWorkoutList;
 overflow-y: auto;
-min-height: 120px;
+min-height: 60px;
 }
 
 #page > #c6r1 {
@@ -191,50 +181,8 @@ grid-area: c6r1;
 }
 
 
-
-#page > #c1r2 {
-grid-area: c1r2;
-}
-
-#page > #c2r2 {
-grid-area: c2r2;
-}
-
-#page > #Gfeed {
-grid-area: Gfeed;
-}
-
-#page > #c3r2 {
-grid-area: c3r2;
-}
-
-#page > #Gleaderboards {
-grid-area: Gleaderboards;
-}
-
-#page > #c4r2 {
-grid-area: c4r2;
-}
-
-#page > #Gaccount {
-grid-area: Gaccount;
-}
-
-#page > #c5r2 {
-grid-area: c5r2;
-}
-
-#page > #c6r2 {
-grid-area: c6r2;
-}
-
-
 #c4r1, #c5r1, #Gtoday, #Gline, #GpeopleWorkoutTxt, #c5r1, #GpeopleWorkoutList, #c6r1 {
 background-color: var(--main-backgroundColor2);
-}
-
-#c1r2, #c2r2, #Gfeed, #c3r2, #Gleaderboards, #c4r2, #Gaccount, #c5r2, #c6r2 {
-background-color: var(--main-backgroundColor3);
 }
 
 /* end of spacing & other */

@@ -8,6 +8,7 @@
 body>#page {
 overflow-y: auto;
 display: grid;
+color: var(--main-textColorDark);
 width: 100vw;
 height: 100vh;
 grid-template-areas:
@@ -16,9 +17,9 @@ grid-template-areas:
 "GbackBtn GbackBtn GbackBtn GbackBtn GbackBtn GbackBtn GbackBtn"
 "Gtitle Gtitle Gtitle Gtitle Gtitle Gtitle Gtitle"
 "Ggym Ggym Ggym Ggym Ggym Ggym Ggym"
-"Ginfo Ginfo Ginfo Ginfo Ginfo Ginfo Ginfo"
+"Ginfo Ginfo Ginfo Ginfo Ginfo GmedalsInfo GmedalsInfo"
 "c2r1 c2r1 c2r1 c2r1 c2r1 c2r1 c2r1"
-"c3r1 c3r1 c3r1 c3r1 c3r1 c3r1 c3r1"
+"GsmallTitle GsmallTitle GsmallTitle GsmallTitle GsmallTitle GsmallTitle GsmallTitle"
 
 "c3r1 c3r1 c3r1 c3r1 c3r1 c3r1 c3r1"
 "GuserGrid GuserGrid GuserGrid GuserGrid GuserGrid GuserGrid GuserGrid"
@@ -34,11 +35,11 @@ auto /* Gtitle */
 
 auto /* Ggym */
 
-auto /* info */
+auto /* info / GmedalsInfo */
 
-10px /* c2r1 */
+15px /* c2r1 */
 
-50px /* c3r1 */
+auto /* GsmallTitle */
 
 10px /* c3r1 */
 
@@ -65,27 +66,32 @@ margin-left: 20px;
 
 #Gtitle > #title {
 min-height: 40px;
+font-size: 26px;
 }
 
 #Ggym > #gym {
-/*min-height: 6vh;*/
+font-size: 18px;
 }
 
 #Ginfo > #info {
-/*min-height: 4.10vh;*/
+margin-top: 12.5px;
+font-size: 14px;
+}
+
+#GmedalsInfo > #medalsInfo {
 margin-top: 10px;
+margin-right: 20px;
+float: right;
 }
 
 #GuserGrid > #userGrid{
 
 }
 
-#title {
-font-size: 26px;
-}
-
-#gym {
+#GsmallTitle > #smallTitle{
+word-break: keep-all;
 font-size: 18px;
+margin-top: 18px;
 }
 
 #title, #gym, #smallTitle, #badges, #today, #peopleWorkoutTxt {
@@ -121,12 +127,16 @@ grid-area: Ggym;
 grid-area: Ginfo;
 }
 
+#page > #GmedalsInfo {
+grid-area: GmedalsInfo;
+}
+
 #page > #c2r1 {
 grid-area: c2r1;
 }
 
-#page > #c3r1 {
-grid-area: c3r1;
+#page > #GsmallTitle{
+grid-area: GsmallTitle;
 }
 
 #page > #c3r1 {
@@ -140,7 +150,7 @@ overflow-x: hidden;
 }
 
 
-#c3r1, #c3r1, #GuserGrid {
+#c2r1, #c3r1, #GuserGrid, #GsmallTitle {
 background-color: var(--main-backgroundColor2);
 }
 
