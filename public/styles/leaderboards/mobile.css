@@ -13,6 +13,7 @@ height: 100vh;
 grid-template-areas:
 
 "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
+"GbackBtn GbackBtn GbackBtn GbackBtn GbackBtn GbackBtn GbackBtn"
 "Gtitle Gtitle Gtitle Gtitle Gtitle Gtitle Gtitle"
 "c2r1 c2r1 c2r1 c2r1 c2r1 c2r1 c2r1"
 "GlistOfLeaderboards GlistOfLeaderboards GlistOfLeaderboards GlistOfLeaderboards GlistOfLeaderboards GlistOfLeaderboards GlistOfLeaderboards"
@@ -26,6 +27,8 @@ grid-template-areas:
 grid-template-rows: /* nedover */
 
 3vh /* c1r1 */
+
+auto /* GbackBtn */
 
 auto /* title */
 
@@ -55,6 +58,11 @@ grid-template-columns: /* bortover */
 
 
 /* elements */
+
+#GbackBtn > #backBtn {
+margin-right: 20px;
+margin-left: 20px;
+}
 
 
 #Gtitle>#title {
@@ -99,6 +107,9 @@ margin-right: 20px;
 grid-area: c1r1;
 }
 
+#page > #GbackBtn {
+grid-area: GbackBtn;
+}
 
 #page > #Gtitle {
 grid-area: Gtitle;

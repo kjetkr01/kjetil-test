@@ -407,6 +407,12 @@ function redirectToFeed() {
 
 }
 
+function redirectToExplore() {
+
+    location.href = "explore.html";
+
+}
+
 function redirectToLeaderboards() {
 
     location.href = "leaderboards.html";

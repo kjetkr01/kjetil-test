@@ -12,7 +12,7 @@ padding-bottom: var(--main-footerHeightBottom);
 border-top: var(--main-border);
 }
 
-#feed, #leaderboards, #account  {
+#feed, #explore, #account  {
 height: var(--main-footerIconHeight);
 cursor: pointer;
 display: inline-block;

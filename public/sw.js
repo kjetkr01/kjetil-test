@@ -1,4 +1,4 @@
-const cacheName = 'TS-PWA-v43';
+const cacheName = 'TS-PWA-v46';
 const swName = '[Service Worker]';
 
 const contentToCache = [
@@ -13,6 +13,7 @@ const contentToCache = [
     '/login.html',
     '/access.html',
     '/index.html',
+    '/explore.html',
     '/leaderboards.html',
     '/account.html',
     '/settings.html',
@@ -77,6 +78,11 @@ const contentToCache = [
     '/styles/account/common.css',
     '/styles/account/desktop.css',
     '/styles/account/mobile.css',
+
+    '/styles/explore/exploreBadge.css',
+    '/styles/explore/common.css',
+    '/styles/explore/desktop.css',
+    '/styles/explore/mobile.css',
 
     '/styles/leaderboards/board.css',
     '/styles/leaderboards/common.css',
