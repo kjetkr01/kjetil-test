@@ -460,6 +460,9 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
 
         const arr = selectedDay.list;
 
+        //const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+        //const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+
         for (let i = 0; i < arr.length; i++) {
 
             const exerciseInfo = arr[i];
