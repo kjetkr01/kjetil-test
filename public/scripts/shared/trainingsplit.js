@@ -47,6 +47,7 @@ async function requestTrainingsplitDetails() {
             document.title = `Treningsplan`;
 
             let resp = null;
+            let errorMsg = "Kunne ikke hente planen!";
 
             if (trainingsplit.edit !== "true") {
                 const cachedActiveTrainingsplit_owner = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
@@ -60,10 +61,25 @@ async function requestTrainingsplitDetails() {
 
             if (navigator.onLine && resp === null) {
 
-                const infoHeader = { "trainingsplit_id": trainingsplit.id };
+                const body = { "trainingsplit_id": trainingsplit.id };
                 const url = `/user/get/trainingsplit`;
 
-                resp = await callServerAPIPost(infoHeader, url);
+                const config = {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json",
+                        "authtoken": user.getToken(),
+                        "userinfo": JSON.stringify(user.getUser())
+                    },
+                    body: JSON.stringify(body)
+                }
+
+                const response = await fetch(url, config);
+                resp = await response.json();
+                if (response.status !== 200) {
+                    errorMsg = resp;
+                    resp = null;
+                }
             }
 
             if (resp) {
@@ -77,7 +93,7 @@ async function requestTrainingsplitDetails() {
                 }
 
             } else {
-                showAlert("Kunne ikke hente planen!", true, "returnToPrevious();");
+                showAlert(errorMsg, true, "returnToPrevious();");
             }
         } else {
             returnToPrevious();

@@ -992,7 +992,7 @@ server.post("/user/get/trainingsplit", auth, async (req, res) => {
                if (resp.status === true) {
                     res.status(200).json(resp.trainingsplit).end();
                } else {
-                    res.status(403).json("error, try again").end();
+                    res.status(403).json(resp.msg).end();
                }
           } else {
                res.status(403).json("error, try again").end();

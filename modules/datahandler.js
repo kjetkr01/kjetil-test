@@ -1592,6 +1592,8 @@ class StorageHandler {
         const client = new pg.Client(this.credentials);
         let results = false;
         let trainingsplit = {};
+        let isSubscribed = false;
+        let msg = "";
 
         try {
             await client.connect();
@@ -1602,29 +1604,53 @@ class StorageHandler {
             WHERE trainingsplit_id = $1`,
                 [trainingsplit_id]);
 
+            let subscribedtrainingsplits = await client.query(`
+            SELECT subscribedtrainingsplits
+            FROM user_settings
+            WHERE user_id = $1`,
+                [userid]);
+
+            if (subscribedtrainingsplits.rows.length > 0) {
+
+                subscribedtrainingsplits = subscribedtrainingsplits.rows[0].subscribedtrainingsplits;
+
+                if (subscribedtrainingsplits.includes(trainingsplit_id.toString())) {
+                    isSubscribed = true;
+                }
+            }
+
+
             if (results.rows.length > 0) {
 
                 trainingsplit = results.rows[0];
 
-                let canEdit = false;
-                if (trainingsplit.user_id === userid) {
-                    canEdit = true;
-                    trainingsplit.maxTrainingsplitsExerciseRows = ECustomList.max.trainingsplitsExerciseRows;
-                    trainingsplit.maxTrainingsplitsExercisesPerDay = ECustomList.max.trainingsplitsExercisesPerDay;
-                } else {
-                    let username = await client.query(`
+                if (trainingsplit.public === true || isSubscribed === true) {
+                    let canEdit = false;
+                    if (trainingsplit.user_id === userid) {
+                        canEdit = true;
+                        trainingsplit.maxTrainingsplitsExerciseRows = ECustomList.max.trainingsplitsExerciseRows;
+                        trainingsplit.maxTrainingsplitsExercisesPerDay = ECustomList.max.trainingsplitsExercisesPerDay;
+                    } else {
+                        let username = await client.query(`
                         SELECT username
                         FROM users
                         WHERE id = $1`,
-                        [trainingsplit.user_id]);
+                            [trainingsplit.user_id]);
 
-                    if (username.rows.length > 0) {
-                        trainingsplit.owner = username.rows[0].username;
+                        if (username.rows.length > 0) {
+                            trainingsplit.owner = username.rows[0].username;
+                        }
                     }
-                }
 
-                trainingsplit.canEdit = canEdit;
-                results = true;
+                    trainingsplit.canEdit = canEdit;
+                    results = true;
+                } else {
+                    msg = "Treningsplanen er privat!";
+                    results = false;
+                }
+            } else {
+                msg = "Treningsplanen finnes ikke!";
+                results = false;
             }
 
         } catch (err) {
@@ -1633,7 +1659,7 @@ class StorageHandler {
         }
 
         client.end();
-        return { "status": results, "trainingsplit": trainingsplit };
+        return { "status": results, "trainingsplit": trainingsplit, "msg": msg };
     }
 
     //
@@ -2428,7 +2454,7 @@ class StorageHandler {
                 if (userInfo.rows[0].isadmin !== true) {
                     delete userInfo.rows[0].isadmin;
                 }
-                userInfo.rows[0].password = "Pga sikkerhet, blir ikke passord hentet";
+                userInfo.rows[0].password = "Passord blir ikke hentet.";
                 userInformation.bruker = userInfo.rows[0];
             }
 
