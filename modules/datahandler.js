@@ -710,6 +710,7 @@ class StorageHandler {
                         userCacheObj.settings = results.rows[0];
 
                         const subscribedtsplits = userCacheObj.settings.subscribedtrainingsplits;
+                        //let temp = [];
                         const subscribedtsplitswname = {};
                         const updatedSubscriptionList = [];
 
@@ -722,12 +723,28 @@ class StorageHandler {
                                     [subscribedtsplits[i]]);
 
                                 if (name.rows.length > 0) {
+
                                     if (!updatedSubscriptionList.includes(subscribedtsplits[i])) {
+                                        //temp.push({ "trainingsplit_id": subscribedtsplits[i], "trainingsplit_name": name.rows[0].trainingsplit_name });
                                         updatedSubscriptionList.push(subscribedtsplits[i]);
                                         subscribedtsplitswname[subscribedtsplits[i]] = name.rows[0].trainingsplit_name;
                                     }
                                 }
                             }
+
+                            /*if (temp.length > 0) {
+
+                                temp.sort(function (a, b) {
+                                    if (a.trainingsplit_name < b.trainingsplit_name) { return -1; }
+                                    if (a.trainingsplit_name > b.trainingsplit_name) { return 1; }
+                                    return 0;
+                                });
+
+                                for (let z = 0; z < temp.length; z++) {
+                                    const current = temp[z];
+                                    subscribedtsplitswname[current.trainingsplit_id] = current.trainingsplit_name;
+                                }
+                            }*/
                         }
 
                         if (updatedSubscriptionList.length !== subscribedtsplits.length) {
@@ -1738,7 +1755,7 @@ class StorageHandler {
             SET public = $1
             WHERE trainingsplit_id = $2
             AND user_id = $3`,
-            [value, trainingsplit_id, userid]);
+                [value, trainingsplit_id, userid]);
 
             results = true;
 

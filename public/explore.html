@@ -184,25 +184,29 @@
             "redirect": `redirectToLeaderboards();`,
             "name": "Ledertavler",
             "description": "Sammenlign deg selv med andre brukere eller se hvor mye andre brukere tar i de ulike løftene",
-            "internetDependent": true
+            "internetDependent": true,
+            "visible": true
          },
          "Users_TS": {
             "redirect": ``, //redirectToUsers();
             "name": "Brukere",
             "description": "Kommer snart", //Vis listen med alle offentlige brukere
-            "internetDependent": true
+            "internetDependent": true,
+            "visible": true
          },
          "Workoutplans_TS": {
             "redirect": ``,
             "name": "Treningsplaner",
             "description": "Kommer snart",
-            "internetDependent": true
+            "internetDependent": true,
+            "visible": true
          },
          "Statistics_TS": {
             "redirect": ``,
             "name": "Statistikk",
             "description": "Kommer snart",
-            "internetDependent": false
+            "internetDependent": false,
+            "visible": false
          }
       }
 
@@ -211,7 +215,8 @@
             "redirect": ``,
             "name": "API",
             "description": "Kommer snart",
-            "internetDependent": false
+            "internetDependent": false,
+            "visible": true
          }
       }
 
@@ -220,7 +225,8 @@
             "redirect": ``,
             "name": "Forespørsler",
             "description": "Kommer snart", // Det er 8 forespørsler feks. Fecthe her heller så den viser antall?
-            "internetDependent": false
+            "internetDependent": false,
+            "visible": true
          }
       }
 
@@ -229,17 +235,19 @@
       for (let i = 0; i < EexploreElementsKeys.length; i++) {
          const cName = EexploreElementsKeys[i];
          const current = EexploreElements[EexploreElementsKeys[i]];
+         if (current.visible === true) {
 
-         const explorationList = document.getElementById("explorationList");
+            const explorationList = document.getElementById("explorationList");
 
-         if (current.internetDependent === true && !navigator.onLine) {
-            current.colorClass = "colorDisabled"
-            current.redirect = `showAlert('${current.name} krever Internett-forbindelse.', true);`;
-         } else {
-            current.colorClass = cName;
+            if (current.internetDependent === true && !navigator.onLine) {
+               current.colorClass = "colorDisabled"
+               current.redirect = `showAlert('${current.name} krever Internett-forbindelse.', true);`;
+            } else {
+               current.colorClass = cName;
+            }
+
+            explorationList.innerHTML += exploreBadge(cName, current);
          }
-
-         explorationList.innerHTML += exploreBadge(cName, current);
       }
 
       function exploreBadge(acName, aInfo) {

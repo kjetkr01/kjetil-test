@@ -1,4 +1,4 @@
-const cacheName = 'TS-PWA-v48';
+const cacheName = 'TS-PWA-v49';
 const swName = '[Service Worker]';
 
 const contentToCache = [
@@ -37,6 +37,7 @@ const contentToCache = [
     '/scripts/shared/badges.js',
     '/scripts/shared/trainingsplit.js',
     '/scripts/shared/overlay.js',
+    '/scripts/shared/pushToArr.js',
 
     '/scripts/validate/validateInfo.js',
     '/scripts/index/index.js',
