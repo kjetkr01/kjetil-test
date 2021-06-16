@@ -1,3 +1,4 @@
+"use strict";
 function loadSetting(aSetting) {
 
     if (settings) {

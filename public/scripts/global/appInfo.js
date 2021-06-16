@@ -1,3 +1,4 @@
+"use strict";
 const application = ts_application.ts_application;
 application.lastUpdated.date = getDateFormat(application.lastUpdated.day, application.lastUpdated.month, application.lastUpdated.year);
 

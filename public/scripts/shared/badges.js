@@ -1,3 +1,4 @@
+"use strict";
 let showLiftBadgeAnimations = true;
 let showGoalBadgeAnimations = true;
 let showTrainingsplitBadgeAnimations = true;

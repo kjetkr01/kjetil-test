@@ -1,3 +1,4 @@
+"use strict";
 let liftsLeft = null, goalsLeft = null, trainingsplitsLeft = null, liftsInfo = null, goalsInfo = null, badgeColors = null;
 
 function changeVisibility() {

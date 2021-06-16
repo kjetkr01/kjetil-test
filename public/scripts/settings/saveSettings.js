@@ -1,3 +1,4 @@
+"use strict";
 // update password
 async function updatePassword() {
     if (navigator.onLine) {

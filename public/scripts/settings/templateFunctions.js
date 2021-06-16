@@ -1,3 +1,4 @@
+"use strict";
 function getTemplate(aSetting, aDivId, aInfo, aSpacingTop) {
 
    const setting = aSetting || "Innstillingen finnes ikke!";

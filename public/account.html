@@ -157,7 +157,7 @@
 
       <div id="Gsettings">
          <button style="height: 33px;" id="settings" class="noselect settingsBtn pointer"
-            onclick="redirectToSettings();">
+            onclick="clearAllSavedScolls();redirectToSettings();">
 
             <svg style="vertical-align: text-top;" xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                fill="white" class="bi bi-gear-wide-connected" viewBox="0 0 16 16">
@@ -189,7 +189,6 @@
                   </tr>
                </table>
             </div>
-
 
             <div id="Ggoals">
                <p id="goals">
@@ -237,8 +236,8 @@
    </section>
 
    <footer id="accountFooter">
-      <svg id="feed" class="icons iconsFooterDefaultColor" draggable="false" onclick="redirectToFeed();"
-         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.5 33.4">
+      <svg id="feed" class="icons iconsFooterDefaultColor" draggable="false"
+         onclick="clearAllSavedScolls();redirectToFeed();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.5 33.4">
          <g id="Layer_2" data-name="Layer 2">
             <g id="Layer_1-2" data-name="Layer 1">
                <rect class="cls-1" x="1.75" y="1.75" width="30" height="30" rx="6" />
@@ -250,8 +249,9 @@
          </g>
       </svg>
 
-      <svg id="explore" class="icons iconsFooterDefaultColor" draggable="false" onclick="redirectToExplore();"
-         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 43.5 43.5">
+      <svg id="explore" class="icons iconsFooterDefaultColor" draggable="false"
+         onclick="clearAllSavedScolls();redirectToExplore();" xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 43.5 43.5">
          <g id="Layer_2" data-name="Layer 2">
             <g id="Layer_1-2" data-name="Layer 1">
                <circle class="cls-1" cx="21.75" cy="21.75" r="20" />
@@ -278,7 +278,7 @@
 </body>
 
 <script>
-
+   "use strict";
    getCreateNewLiftorGoalOverlay();
    getViewLiftorGoalOverlay();
    getEditLiftorGoalOverlay();

@@ -222,25 +222,25 @@
 </body>
 
 <script>
-
+   "use strict";
    getViewLiftorGoalOverlay();
    getTSAlertOverlay();
    getTSConfirmOverlay();
 
-   if (user) {
+   const referrer = sessionStorage.getItem("visit_user_referrer");
 
-      const referrer = sessionStorage.getItem("visit_user_referrer");
+   function returnToPrevious() {
+      const redirect = sessionStorage.getItem("visit_user_referrer");
 
-      function returnToPrevious() {
-         const redirect = sessionStorage.getItem("visit_user_referrer");
-
-         if (redirect) {
-            sessionStorage.removeItem("visit_user_referrer");
-            location.href = redirect;
-         } else {
-            redirectToFeed();
-         }
+      if (redirect) {
+         sessionStorage.removeItem("visit_user_referrer");
+         location.href = redirect;
+      } else {
+         redirectToFeed();
       }
+   }
+
+   if (user) {
 
       requestAccountDetails();
    }

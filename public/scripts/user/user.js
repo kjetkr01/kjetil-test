@@ -1,3 +1,4 @@
+"use strict";
 let lifts = null, goals = null, weight = 0, activetrainingsplit = null, memberSince = null, size = 0, badgeColorsJSON = null;
 
 const queryString = window.location.search;

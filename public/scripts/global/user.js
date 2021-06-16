@@ -1,3 +1,4 @@
+"use strict";
 // create global user class
 
 function createUserClass() {

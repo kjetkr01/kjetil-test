@@ -1,3 +1,4 @@
+"use strict";
 let previousLeaderboard = "";
 let firstLeaderboard = null;
 let repsList = [];
@@ -309,7 +310,7 @@ function peopleLeaderboardsTxtHTML(aInput) {
 
     const inputInfo = aInput || errorLoadingText;
 
-    peopleLeaderboardsTxtAnimation = "fadeIn animate delaySmall";
+    let peopleLeaderboardsTxtAnimation = "fadeIn animate delaySmall";
     if (showPeopleLeaderboardsTxtAnimation === false) {
         peopleLeaderboardsTxtAnimation = "";
     }
@@ -328,6 +329,8 @@ async function changeLeaderboardReps() {
 
     const reps = document.getElementById("leaderboardReps").value;
 
+    user.changeSetting("leaderboards_filter_reps", reps);
+
     if (navigator.onLine) {
         await updateLeaderboardsFilterReps(reps);
     }
@@ -343,8 +346,6 @@ async function updateLeaderboardsFilterReps(aValue) {
 
     const value = aValue;
     const setting = "leaderboards_filter_reps";
-
-    user.changeSetting("leaderboards_filter_reps", value);
 
     const infoHeader = { "updateSetting": setting, "value": value };
     const url = `/user/update/settings/${setting}`;

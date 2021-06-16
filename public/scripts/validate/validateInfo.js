@@ -1,3 +1,4 @@
+"use strict";
 // global variables
 
 const minCharLength = 3;

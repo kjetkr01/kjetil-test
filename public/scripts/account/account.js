@@ -1,3 +1,4 @@
+"use strict";
 // requestAccountDetails
 let lifts = null;
 let goals = null;
@@ -932,5 +933,16 @@ if (memberSince) {
     }
 
     document.getElementById("memberSince").innerHTML = `Medlem siden<br>${string}`;
+
+}
+
+
+function clearAllSavedScolls() {
+
+    const scrolls = ["usergrid_scroll_y_main","badgeslifts_scroll_x", "badgesgoals_scroll_x", "badgestrainingsplit_scroll_x"];
+
+    for (let i = 0; i < scrolls.length; i++) {
+        sessionStorage.removeItem(scrolls[i]);
+    }
 
 }

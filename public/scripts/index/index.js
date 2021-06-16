@@ -1,3 +1,4 @@
+"use strict";
 let lifts = null, goals = null, badgeColorsJSON = null;
 
 // usage : partOfDayMessage("Kjetil Kristiansen")
@@ -371,7 +372,7 @@ async function displayGoals(checkIfCompleted) {
             checkIfCompleted = false;
         }
 
-        hasGoalsLeft = localStorage.getItem("cachedGoalsLeft_owner") > 0 || false;
+        let hasGoalsLeft = localStorage.getItem("cachedGoalsLeft_owner") > 0 || false;
 
         const smallTitle = document.getElementById("smallTitle");
 

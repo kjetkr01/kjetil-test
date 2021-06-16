@@ -1,4 +1,4 @@
-const cacheName = 'TS-PWA-v47';
+const cacheName = 'TS-PWA-v48';
 const swName = '[Service Worker]';
 
 const contentToCache = [

@@ -1,3 +1,4 @@
+"use strict";
 // changeColorTheme
 
 function changeColorTheme() {
@@ -249,6 +250,7 @@ async function sortByLiftsOrGoalOwner(aDom, aType) {
             showLiftBadgeAnimations = true;
             sessionStorage.removeItem("badgeslifts_scroll_x");
             user.changeSetting("lifts_filter_exercise", domValue);
+            displayLifts();
             if (navigator.onLine) {
                 const value = domValue;
                 const setting = "lifts_filter_exercise";
@@ -258,14 +260,13 @@ async function sortByLiftsOrGoalOwner(aDom, aType) {
 
                 await callServerAPIPost(infoHeader, url);
             }
-
-            displayLifts();
         }
 
         if (type === "goal") {
             showGoalBadgeAnimations = true;
             sessionStorage.removeItem("badgesgoals_scroll_x");
             user.changeSetting("goals_filter_exercise", domValue);
+            displayGoals();
             if (navigator.onLine) {
                 const value = domValue;
                 const setting = "goals_filter_exercise";
@@ -275,8 +276,6 @@ async function sortByLiftsOrGoalOwner(aDom, aType) {
 
                 await callServerAPIPost(infoHeader, url);
             }
-
-            displayGoals();
         }
     }
 }

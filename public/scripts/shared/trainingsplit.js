@@ -1,3 +1,4 @@
+"use strict";
 let showTrainingsplitAnimations = true;
 let trainingsplit = null;
 
