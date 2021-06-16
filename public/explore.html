@@ -180,47 +180,46 @@
       checkConnection();
 
       const EexploreElements = {
-         "Ledertavler": {
+         "Leaderboards_TS": {
             "redirect": `redirectToLeaderboards();`,
+            "name": "Ledertavler",
             "description": "Sammenlign deg selv med andre brukere eller se hvor mye andre brukere tar i de ulike løftene",
             "internetDependent": true
          },
-         "Brukere": {
+         "Users_TS": {
             "redirect": ``, //redirectToUsers();
+            "name": "Brukere",
             "description": "Kommer snart", //Vis listen med alle offentlige brukere
             "internetDependent": true
          },
-         "Treningsplaner": {
+         "Workoutplans_TS": {
             "redirect": ``,
+            "name": "Treningsplaner",
             "description": "Kommer snart",
             "internetDependent": true
          },
-         "Statistikk": {
+         "Statistics_TS": {
             "redirect": ``,
+            "name": "Statistikk",
             "description": "Kommer snart",
-            "internetDependent": false
-         },
-         "API": {
-            "redirect": ``,
-            "description": "Test",
-            "internetDependent": false
-         },
-         "Test2": {
-            "redirect": ``,
-            "description": "Test",
-            "internetDependent": false
-         },
-         "Test3": {
-            "redirect": ``,
-            "description": "Test",
             "internetDependent": false
          }
       }
 
-      const EexploreElementsAdmin = {
-         "Forespørsler": {
+      if (user.getDetail("apikey")) {
+         EexploreElements.API_TS = {
             "redirect": ``,
-            "description": "Forespørsler beskrivelse",
+            "name": "API",
+            "description": "Kommer snart",
+            "internetDependent": false
+         }
+      }
+
+      if (user.getDetail("isadmin") === true) {
+         EexploreElements.Requests_TS = {
+            "redirect": ``,
+            "name": "Forespørsler",
+            "description": "Kommer snart",
             "internetDependent": false
          }
       }
@@ -228,24 +227,24 @@
       const EexploreElementsKeys = Object.keys(EexploreElements);
 
       for (let i = 0; i < EexploreElementsKeys.length; i++) {
-         const name = EexploreElementsKeys[i];
+         const cName = EexploreElementsKeys[i];
          const current = EexploreElements[EexploreElementsKeys[i]];
 
          const explorationList = document.getElementById("explorationList");
 
          if (current.internetDependent === true && !navigator.onLine) {
             current.colorClass = "colorDisabled"
-            current.redirect = `showAlert('${name} krever Internett-forbindelse.', true);`;
+            current.redirect = `showAlert('${current.name} krever Internett-forbindelse.', true);`;
          } else {
-            current.colorClass = name;
+            current.colorClass = cName;
          }
 
-         explorationList.innerHTML += exploreBadge(name, current);
+         explorationList.innerHTML += exploreBadge(cName, current);
       }
 
-      function exploreBadge(aName, aInfo) {
+      function exploreBadge(acName, aInfo) {
 
-         const name = aName;
+         const cName = acName;
          const info = aInfo;
 
          const color = info.colorClass;
@@ -262,7 +261,7 @@
 
 <div id="GexploreName">
 <p id="exploreName">
-${name}
+${info.name}
 </p>
 </div>
 
