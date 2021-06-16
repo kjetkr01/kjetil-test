@@ -2,7 +2,7 @@
 
     // Oppdatere disse når ny commit
 
-    const updateDay = "15.06.2021";
+    const updateDay = "16.06.2021";
 
     // Slutt
 
@@ -15,7 +15,7 @@
             state: "a", // a = alpha / b = beta / rc = release candidate / r = release
             major: 6,
             minor: 3,
-            revision: 24,
+            revision: 25,
             buildnumber: 976,
         },
         lastUpdated: {

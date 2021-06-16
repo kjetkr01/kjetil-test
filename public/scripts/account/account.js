@@ -11,13 +11,13 @@ function displayUserDetailsCached() {
     try {
 
         const userDetails = user.getDetails();
-        const displayname = user.getDisplayname();
+        //const displayname = user.getDisplayname();
 
-        if (displayname) {
+        /*if (displayname) {
             const title = document.getElementById("title");
             title.classList = "noselect";
             title.textContent = displayname;
-        }
+        }*/
 
         if (userDetails.hasOwnProperty("gym")) {
             const gym = document.getElementById("gym");
@@ -273,11 +273,11 @@ function displayInformation(respInfo) {
         showTrainingsplitBadgeAnimations = true;
     }
 
-    if (displayname) {
+    /*if (displayname) {
         document.getElementById("title").textContent = displayname;
     } else {
         document.getElementById("title").textContent = "";
-    }
+    }*/
 
     if (gym) {
         document.getElementById("gym").textContent = gym;

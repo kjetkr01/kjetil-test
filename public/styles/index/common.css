@@ -17,6 +17,10 @@ color:var(--main-textColorDark);
 font-family: var(--main-font-Family-Verdana);
 }
 
+#c1r1 {
+border-top: var(--main-borderHeader);
+}
+
 #c4r1 {
 border-top: var(--main-border);
 }

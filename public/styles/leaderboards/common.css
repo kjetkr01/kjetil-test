@@ -31,6 +31,10 @@ margin-left: 5vw;
 margin-right: 5vw;
 }
 
+#c1r1 {
+border-top: var(--main-borderHeader);
+}
+
 #c2r1 {
 /*border-top: 1px #75757585 solid;*/
 border-top: var(--main-border);

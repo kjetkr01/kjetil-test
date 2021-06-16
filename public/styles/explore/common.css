@@ -19,6 +19,10 @@ opacity: 40%;
 border: var(--main-lineBorder);
 }
 
+#c1r1 {
+border-top: var(--main-borderHeader);
+}
+
 #c2r1 {
 /*border-top: 1px #75757585 solid;*/
 border-top: var(--main-border);

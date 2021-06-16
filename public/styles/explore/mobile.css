@@ -60,7 +60,7 @@ margin-left: 20px;
 
 
 #Gtitle>#title {
-font-size: 34px;
+font-size: 32px;
 }
 
 #title, #name, #smallTitle, #explorationList {
@@ -101,7 +101,7 @@ grid-area: GbackBtn;
 
 #page > #Gtitle {
 grid-area: Gtitle;
-margin-bottom: 6vh;
+margin-bottom: 4vh;
 }
 
 #page > #c2r1 {
