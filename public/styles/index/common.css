@@ -18,7 +18,7 @@ font-family: var(--main-font-Family-Verdana);
 }
 
 #c1r1 {
-border-top: var(--main-borderHeader);
+border-top: var(--main-borderHeaderTop);
 }
 
 #c4r1 {

@@ -533,7 +533,6 @@ async function loadAboutAppPage(setting) {
 
 async function loadUsersListPage(setting) {
     settingsGrid.innerHTML = justTextTemplate(`Denne siden holder på å bli flyttet til Utforsk`, "left");
-    return;
     if (navigator.onLine) {
 
         const infoHeader = {};
@@ -562,7 +561,7 @@ async function loadUsersListPage(setting) {
                     usersText = `Det er ingen brukere`;
                 }
 
-                settingsGrid.innerHTML = justTextTemplate(usersText, "left");
+                settingsGrid.innerHTML += justTextTemplate(usersText, "left");
 
                 if (resp.allUsers[0].hasOwnProperty("id")) {
 
@@ -636,7 +635,7 @@ async function loadUsersListPage(setting) {
                     usersText = `Det er ingen brukere`;
                 }
 
-                settingsGrid.innerHTML = justTextTemplate(usersText, "left");
+                settingsGrid.innerHTML += justTextTemplate(usersText, "left");
 
                 for (let i = 0; i < usersKeys.length; i++) {
 
@@ -682,6 +681,7 @@ async function loadUsersListPage(setting) {
 }
 
 async function loadPendingUsersPage(setting) {
+    settingsGrid.innerHTML = justTextTemplate(`Denne siden holder på å bli flyttet til Utforsk`, "left");
     if (navigator.onLine) {
 
         titleDom.innerHTML = ELoadSettings.pendingUsers.name;
@@ -704,7 +704,7 @@ async function loadPendingUsersPage(setting) {
             HTMLText = `Det er ingen forespørseler`;
         }
 
-        settingsGrid.innerHTML = justTextTemplate(HTMLText, "left");
+        settingsGrid.innerHTML += justTextTemplate(HTMLText, "left");
 
         if (resp[0].hasOwnProperty("username") && sessionStorage.getItem("currentSetting") === ELoadSettings.pendingUsers.name) {
 
@@ -771,6 +771,8 @@ async function loadPendingUsersPage(setting) {
 
 async function loadAPIPage() {
 
+    settingsGrid.innerHTML = justTextTemplate(`Denne siden holder på å bli flyttet til Utforsk`, "left");
+
     let response = null;
 
     try {
@@ -804,7 +806,7 @@ async function loadAPIPage() {
 
                 const data = await response.json();
 
-                settingsGrid.innerHTML = justTextTemplate(`${application.name} har ${data.length} APIer.<br>Her kan du se din API key, BrukerID og ulike APIer.`, "left");
+                settingsGrid.innerHTML += justTextTemplate(`${application.name} har ${data.length} APIer.<br>Her kan du se din API key, BrukerID og ulike APIer.`, "left");
 
                 settingsGrid.innerHTML += getTemplate("API Key", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.apikey}' readonly="readonly"></input>`, "borderTop");
                 settingsGrid.innerHTML += getTemplate("BrukerID", "apiKeyDiv", `<input style="text-align:right;" class='settingsInput' value='${userInfo.id}' readonly="readonly"></input>`);

@@ -165,7 +165,7 @@
 
 --main-lineBorder: 1px #214f6e solid;
 --main-border: 1px #164e7085 solid;
---main-borderHeader: var(--main-border);
+--main-borderHeaderTop: var(--main-border);
 --main-border2:  0.75px #15456485 solid;
 
 --main-backgroundColor2: #b6d7ec;
@@ -329,7 +329,7 @@
 
 --main-lineBorder: 1px #ffffff solid;
 --main-border: 1px #e6e6e685 solid;
---main-borderHeader: var(--main-border);
+--main-borderHeaderTop: var(--main-border);
 --main-border2: 0.75px #dfdfdf85 solid;
 
 --main-backgroundColor2: #1e2830;

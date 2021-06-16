@@ -20,7 +20,7 @@ border: var(--main-lineBorder);
 }
 
 #c1r1 {
-border-top: var(--main-borderHeader);
+border-top: var(--main-borderHeaderTop);
 }
 
 #c2r1 {

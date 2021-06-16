@@ -43,7 +43,7 @@ margin-right: auto;
 }
 
 #c1r1 {
-border-top: var(--main-borderHeader);
+border-top: var(--main-borderHeaderTop);
 }
 
 #Gsettings, #GsmallTitle {

@@ -16,7 +16,7 @@ margin-top: 10px;
 }
 
 #c1r1 {
-border-top: var(--main-borderHeader);
+border-top: var(--main-borderHeaderTop);
 }
 
 #c1r2, #c2r1 {
