@@ -13,17 +13,20 @@ height: 100vh;
 grid-template-areas:
 
 "c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
+"GbackBtn GbackBtn GbackBtn GbackBtn GbackBtn GbackBtn GbackBtn"
 "Gtitle Gtitle Gtitle Gtitle Gtitle Gtitle Gtitle"
 "c2r1 c2r1 c2r1 c2r1 c2r1 c2r1 c2r1"
 "Ginformation Ginformation Ginformation Ginformation Ginformation Ginformation Ginformation"
 "Gline Gline Gline Gline Gline Gline Gline"
-"GexplorationList GexplorationList GexplorationList GexplorationList GexplorationList GexplorationList GexplorationList"
+"Glist Glist Glist Glist Glist Glist Glist"
 "c3r1 c3r1 c3r1 c3r1 c3r1 c3r1 c3r1"
 ;
 
 grid-template-rows: /* nedover */
 
 3vh /* c1r1 */
+
+auto /* GbackBtn */
 
 auto /* title */
 
@@ -33,7 +36,7 @@ auto /* Ginformation */
 
 2vh /* line */
 
-1fr /* GexplorationList */
+1fr /* Glist */
 
 90px /* c3r1 */
 ;
@@ -50,17 +53,22 @@ grid-template-columns: /* bortover */
 
 /* elements */
 
+#GbackBtn > #backBtn {
+margin-right: 20px;
+margin-left: 20px;
+}
+
 
 #Gtitle>#title {
 font-size: 32px;
 }
 
-#title, #name, #smallTitle, #explorationList {
+#title, #name, #smallTitle, #list {
 margin-right: 20px;
 margin-left: 20px;
 }
 
-#GexplorationList > #explorationList {
+#Glist > #list {
 
 }
 
@@ -87,6 +95,10 @@ margin-right: 20px;
 grid-area: c1r1;
 }
 
+#page > #GbackBtn {
+grid-area: GbackBtn;
+}
+
 #page > #Gtitle {
 grid-area: Gtitle;
 margin-bottom: 4vh;
@@ -100,8 +112,8 @@ grid-area: c2r1;
 grid-area: Ginformation;
 }
 
-#page > #GexplorationList {
-grid-area: GexplorationList;
+#page > #Glist {
+grid-area: Glist;
 overflow-y: auto;
 }
 
@@ -113,7 +125,7 @@ grid-area: c3r1;
 grid-area: Gline;
 }
 
-#c2r1, #c3r1, #Gline, #Ginformation, #GexplorationList {
+#c2r1, #c3r1, #Gline, #Ginformation, #Glist {
 background-color: var(--main-backgroundColor2);
 }
 
@@ -121,3 +133,37 @@ background-color: var(--main-backgroundColor2);
 /* end of spacing & other */
 
 /*}*/
+
+
+
+/* elements for mobile & desktop */
+
+
+#title {
+    color:var(--main-headerTextColor);
+    font-weight: bold;
+    font-family: var(--main-font-Family-Verdana);
+    }
+    
+    #information {
+    margin-left: 20px;
+    margin-right: 20px;
+    color:var(--main-textColorDark);
+    font-family: var(--main-font-Family-Verdana);
+    }
+    
+    #line {
+    opacity: 40%;
+    border: var(--main-lineBorder);
+    }
+    
+    #c1r1 {
+    border-top: var(--main-borderHeader);
+    }
+    
+    #c2r1 {
+    /*border-top: 1px #75757585 solid;*/
+    border-top: var(--main-border);
+    }
+    
+    /* end of mobile & desktop */

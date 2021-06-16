@@ -532,6 +532,8 @@ async function loadAboutAppPage(setting) {
 }
 
 async function loadUsersListPage(setting) {
+    settingsGrid.innerHTML = justTextTemplate(`Denne siden holder på å bli flyttet til Utforsk`, "left");
+    return;
     if (navigator.onLine) {
 
         const infoHeader = {};
@@ -646,19 +648,19 @@ async function loadUsersListPage(setting) {
                     }
 
                     let usersTemplateHTML = `
-               <p class="settingsPendingUserFullName ${myAccountColor}">${currentUser.displayname}</p>
-               <p class="settingsPendingUsername ${myAccountColor}">${currentUser.username}</p>
-               <br>
-               `;
+                    <p class="settingsPendingUserFullName ${myAccountColor}">${currentUser.displayname}</p>
+                    <p class="settingsPendingUsername ${myAccountColor}">${currentUser.username}</p>
+                    <br>
+                    `;
 
                     if (user && currentUser.username !== user.getUsername()) {
                         usersTemplateHTML += `
-               <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Besøk</button>
-                `;
+                        <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Besøk</button>
+                        `;
                     } else {
                         usersTemplateHTML += `
-               <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Din bruker</button>
-                `;
+                        <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Din bruker</button>
+                            `;
                     }
 
                     if (i === 0) {
