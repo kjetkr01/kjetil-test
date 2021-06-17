@@ -147,6 +147,8 @@
    if (user) {
 
       getUsersList();
+
+      // Get list of users
       async function getUsersList() {
 
          const information = document.getElementById("information");
@@ -181,7 +183,9 @@
             information.innerHTML = `Du må ha Internett-forbindelse for å hente listen med alle offentlige brukere`;
          }
       }
+      // End of getUsersList function
 
+      // displayAllUsersAdmin
       function displayAllUsersAdmin(aAllUsers, aAllAPIUsers) {
 
          const allUsers = aAllUsers;
@@ -210,9 +214,10 @@
             console.log(currentUser)
 
          }
-
       }
+      // End of displayAllUsersAdmin function
 
+      // displayAllUsers
       function displayAllUsers(aAllUsers) {
 
          const allUsers = aAllUsers;
@@ -239,6 +244,7 @@
 
          }
       }
+      // End of displayAllUsers function
 
    }
 

@@ -1,5 +1,5 @@
 "use strict";
-// createNewLiftorGoalOverlay
+// getCreateNewLiftorGoalOverlay
 function getCreateNewLiftorGoalOverlay() {
 
    if (document.getElementById("createNewLiftorGoal") === null) {
@@ -69,12 +69,12 @@ function getCreateNewLiftorGoalOverlay() {
 
 
    }
-
 }
+// End of getCreateNewLiftorGoalOverlay function
 
 
 
-// editLiftorGoalOverlay
+// getEditLiftorGoalOverlay
 function getEditLiftorGoalOverlay() {
 
    if (document.getElementById("editLiftorGoal") === null) {
@@ -143,12 +143,12 @@ function getEditLiftorGoalOverlay() {
 
       document.getElementById("editLiftorGoalOverlay").innerHTML = html;
 
-
    }
 }
+// End of getEditLiftorGoalOverlay function
 
 
-// editworkoutPlanOverlay
+// geteditworkoutPlanOverlay
 function geteditworkoutPlanOverlay() {
 
    if (document.getElementById("workoutPlans") === null) {
@@ -220,11 +220,11 @@ function geteditworkoutPlanOverlay() {
 
       document.getElementById("editworkoutPlanOverlay").innerHTML = html;
 
-
    }
 }
+// End of geteditworkoutPlanOverlay function
 
-// viewLiftorGoalOverlay
+// getViewLiftorGoalOverlay
 function getViewLiftorGoalOverlay() {
 
    if (document.getElementById("viewLiftorGoal") === null) {
@@ -277,13 +277,12 @@ function getViewLiftorGoalOverlay() {
 
       document.getElementById("viewLiftorGoalOverlay").innerHTML = html;
 
-
    }
-
 }
+// End of getViewLiftorGoalOverlay function
 
 
-// TSAlertOverlay
+// getTSAlertOverlay
 function getTSAlertOverlay() {
 
    if (document.getElementById("TSAlert") === null) {
@@ -306,8 +305,9 @@ function getTSAlertOverlay() {
 
    }
 }
+// End of getTSAlertOverlay function
 
-// TSConfirmOverlay
+// getTSConfirmOverlay
 function getTSConfirmOverlay() {
 
    if (document.getElementById("TSConfirm") === null) {
@@ -331,7 +331,9 @@ function getTSConfirmOverlay() {
 
    }
 }
+// End of getTSConfirmOverlay function
 
+// custom alert box
 function showAlert(aInformation, aDisplayCloseBtn, aPerformWhenUserCloseOverlay) {
    const TSAlertOverlay = document.getElementById("TSAlertOverlay");
    const informationTSAlert = document.getElementById("informationTSAlert");
@@ -371,7 +373,9 @@ function showAlert(aInformation, aDisplayCloseBtn, aPerformWhenUserCloseOverlay)
       }
    }
 }
+// End of showAlert function
 
+// custom confirm box
 function showConfirm(aInformation, aPerformWhenUserAccept, aPerformWhenUserDeny) {
    const TSConfirmOverlay = document.getElementById("TSConfirmOverlay");
    const informationTSConfirm = document.getElementById("informationTSConfirm");
@@ -394,14 +398,18 @@ function showConfirm(aInformation, aPerformWhenUserAccept, aPerformWhenUserDeny)
       }
    }
 }
+// End of showConfirm function
 
+// disableOverlay
 function disableOverlay(aOverlay) {
    const overlayDom = document.getElementById(aOverlay);
    if (overlayDom) {
       overlayDom.style.display = "none";
    }
 }
+// End of disableOverlay function
 
+// disableOverlays
 function disableOverlays() {
 
    const overlayIDs = ["createNewLiftorGoalOverlay", "viewLiftorGoalOverlay", "editLiftorGoalOverlay", "editworkoutPlanOverlay", "TSAlertOverlay", "TSConfirmOverlay"];
@@ -413,3 +421,4 @@ function disableOverlays() {
       }
    }
 }
+// End of disableOverlays functions

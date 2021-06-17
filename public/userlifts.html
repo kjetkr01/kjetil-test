@@ -81,11 +81,11 @@
    <script src="scripts/global/appInfo.js" type="text/javascript"></script>
    <script src="scripts/global/global.js" type="text/javascript"></script>
    <script src="scripts/global/functions.js" type="text/javascript"></script>
-   <script src="scripts/user/user.js" type="text/javascript"></script>
    <script src="scripts/shared/editInformation.js" type="text/javascript"></script>
    <script src="scripts/shared/badges.js" type="text/javascript"></script>
    <script src="scripts/shared/trainingsplit.js" type="text/javascript"></script>
    <script src="scripts/shared/overlay.js" type="text/javascript"></script>
+   <script src="scripts/shared/pushToArr.js" type="text/javascript"></script>
 
 </head>
 
@@ -139,13 +139,16 @@
    "use strict";
    /*
    
-   TRIPLE CLICK NAME TO RESET LOCALSTORAGE
+   TRIPLE CLICK NAME TO EMPTY LOCALSTORAGE
 
    */
 
    getViewLiftorGoalOverlay();
    getTSAlertOverlay();
    getTSConfirmOverlay();
+
+   let lifts = null,
+      badgeColorsJSON = null;
 
    const themeColorDOM = document.getElementById("themeColor");
 
@@ -168,6 +171,7 @@
    } else {
 
       getUserLifts();
+      // getUserLifts
       async function getUserLifts() {
 
          const url = `/getLifts/user`;
@@ -189,14 +193,15 @@
          } else {
             localStorage.clear();
             if (data.error) {
-               //alert(data.error);
                showAlert(data.error, true, "location.reload();");
             } else {
                location.reload();
             }
          }
       }
+      // End of getUserLifts function
 
+      // displayInformation
       function displayInformation(aRespInfo) {
 
          if (aRespInfo) {
@@ -215,148 +220,9 @@
                liftsInfo = new Tlifts(userLifts);
                displayLifts();
             }
-
-         }
-
-      }
-
-
-      /// ------------ start of displayLifts --------------- ///
-
-      function displayLifts() {
-
-         document.getElementById("badgesLifts").innerHTML = `<tr id="badgesLiftsTableRow-1"></tr>`;
-
-         let sortBy = sessionStorage.getItem("lifts_filter_exercise_visitor");
-
-         let showLifts = lifts;
-
-         if (sortBy) {
-            if (lifts[sortBy]) {
-               showLifts = lifts[sortBy];
-               if (showLifts.length === 0) {
-                  sortBy = null;
-                  sessionStorage.removeItem("lifts_filter_exercise_visitor");
-               }
-            } else {
-               sortBy = null;
-            }
-         }
-
-         const keys = Object.keys(lifts);
-
-         const arr = [];
-
-         if (sortBy === null) {
-            for (let i = 0; i < keys.length; i++) {
-               const exerciseLift = lifts[keys[i]];
-               displayPerExercise(exerciseLift, keys[i]);
-            }
-
-         } else {
-            const exerciseLift = showLifts;
-            displayPerExercise(exerciseLift, sortBy);
-         }
-
-         function displayPerExercise(aExerciseLift, aCurrent) {
-
-            let msg = "";
-
-            const exerciseLift = aExerciseLift;
-            const current = aCurrent;
-            const exerciseLiftKeys = Object.keys(exerciseLift);
-
-            for (let j = 0; j < exerciseLiftKeys.length; j++) {
-
-               const liftKeys = exerciseLift[exerciseLiftKeys[j]];
-
-               if (liftKeys) {
-
-                  const id = liftKeys.id;
-                  const color = liftKeys.color || "redBadgeG";
-
-                  if (liftKeys.reps === "1") {
-                     msg = `ORM / 1 rep`;
-                  } else {
-                     msg = `${liftKeys.reps} reps`;
-                  }
-
-                  arr.push({ "exercise": capitalizeFirstLetter(current), "kg": liftKeys.kg, "msg": msg, "color": color, "id": id });
-               }
-            }
-         }
-
-         const selectHTML = `<select id="changeLiftFilter" class="changeFilterSelect pointer" onchange="sortByLiftsOrGoalVisitor('changeLiftFilter', 'lift');"></select>`;
-
-         if (arr.length > 0) {
-
-            const showDomArr = ["GsmallTitle", "GlineLifts", "GbadgesLifts"];
-            for (let i = 0; i < showDomArr.length; i++) {
-               const dom = document.getElementById(showDomArr[i]);
-               if (dom) {
-                  dom.removeAttribute("class");
-               }
-            }
-
-
-            document.getElementById("smallTitle").innerHTML = `Løft: ${selectHTML}`;
-
-            document.getElementById("changeLiftFilter").innerHTML = `<option id="totalLifts" value="null"></option>`;
-
-            let totalCount = 0;
-
-            for (let x = 0; x < keys.length; x++) {
-
-               if (lifts[keys[x]].length > 0) {
-
-                  let html = `<option value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${lifts[keys[x]].length})</option>`;
-
-                  if (keys[x] === sortBy) {
-                     html = `<option selected="selected" value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${lifts[keys[x]].length})</option>`;
-                  }
-
-                  document.getElementById("changeLiftFilter").innerHTML += html;
-
-                  const currentLiftKeys = lifts[keys[x]];
-                  for (let z = 0; z < currentLiftKeys.length; z++) {
-                     totalCount++;
-                  }
-               }
-            }
-
-            document.getElementById("totalLifts").innerHTML = `Alle (${totalCount})`;
-
-            arr.sort(function (a, b) { return b.kg - a.kg });
-
-            const name = "badgesLiftsTableRow";
-            let num = 1;
-            const badgeSizePX = 145;
-            let badgesInRow = 0;
-            let maxBadgesPerRow = 0;
-            for (let i = 0; i < arr.length; i++) {
-
-               const badge = getBadgeLift(arr[i], arr[i].id);
-               let badgesLiftsTableRow = document.getElementById(`${name}-${num}`);
-
-               maxBadgesPerRow = Math.floor(document.body.clientWidth / badgeSizePX);
-
-               if (badgesInRow >= maxBadgesPerRow) {
-                  const badgesLifts = document.getElementById("badgesLifts");
-                  num++;
-                  badgesLifts.innerHTML += `<tr id="${name}-${num}"></tr>`;
-                  badgesLiftsTableRow = document.getElementById(`${name}-${num}`);
-                  badgesInRow = 0;
-               }
-
-               if (badge && badgesLiftsTableRow) {
-                  badgesLiftsTableRow.innerHTML += badge;
-                  badgesInRow++;
-               }
-            }
          }
       }
-
-      /// ------------ end of displayLifts --------------- ///
+      // End of displayInformation function
 
       let savedWidth = window.innerWidth;
       setInterval(() => {
@@ -367,7 +233,114 @@
       }, 500);
    }
 
+   // displays lifts if user has any
+   function displayLifts() {
 
+      document.getElementById("badgesLifts").innerHTML = `<tr id="badgesLiftsTableRow-1"></tr>`;
+
+      let sortBy = sessionStorage.getItem("lifts_filter_exercise_visitor");
+
+      let showLifts = lifts;
+
+      if (sortBy) {
+         if (lifts[sortBy]) {
+            showLifts = lifts[sortBy];
+            if (showLifts.length === 0) {
+               sortBy = null;
+               sessionStorage.removeItem("lifts_filter_exercise_visitor");
+            }
+         } else {
+            sortBy = null;
+         }
+      }
+
+      const keys = Object.keys(lifts);
+
+      const arr = [];
+
+      if (sortBy === null) {
+         for (let i = 0; i < keys.length; i++) {
+            const exerciseLift = lifts[keys[i]];
+            pushToArrPerExerciseLift(exerciseLift, keys[i], arr);
+         }
+
+      } else {
+         const exerciseLift = showLifts;
+         pushToArrPerExerciseLift(exerciseLift, sortBy, arr);
+      }
+
+      const selectHTML = `<select id="changeLiftFilter" class="changeFilterSelect pointer" onchange="sortByLiftsOrGoalVisitor('changeLiftFilter', 'lift');"></select>`;
+
+      if (arr.length > 0) {
+
+         const showDomArr = ["GsmallTitle", "GlineLifts", "GbadgesLifts"];
+         for (let i = 0; i < showDomArr.length; i++) {
+            const dom = document.getElementById(showDomArr[i]);
+            if (dom) {
+               dom.removeAttribute("class");
+            }
+         }
+
+
+         document.getElementById("smallTitle").innerHTML = `Løft: ${selectHTML}`;
+
+         document.getElementById("changeLiftFilter").innerHTML = `<option id="totalLifts" value="null"></option>`;
+
+         let totalCount = 0;
+
+         for (let x = 0; x < keys.length; x++) {
+
+            if (lifts[keys[x]].length > 0) {
+
+               let html = `<option value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${lifts[keys[x]].length})</option>`;
+
+               if (keys[x] === sortBy) {
+                  html = `<option selected="selected" value="${keys[x]}">${capitalizeFirstLetter(keys[x])} (${lifts[keys[x]].length})</option>`;
+               }
+
+               document.getElementById("changeLiftFilter").innerHTML += html;
+
+               const currentLiftKeys = lifts[keys[x]];
+               for (let z = 0; z < currentLiftKeys.length; z++) {
+                  totalCount++;
+               }
+            }
+         }
+
+         document.getElementById("totalLifts").innerHTML = `Alle (${totalCount})`;
+
+         arr.sort(function (a, b) { return b.kg - a.kg });
+
+         const name = "badgesLiftsTableRow";
+         let num = 1;
+         const badgeSizePX = 145;
+         let badgesInRow = 0;
+         let maxBadgesPerRow = 0;
+         for (let i = 0; i < arr.length; i++) {
+
+            const badge = getBadgeLift(arr[i], arr[i].id);
+            let badgesLiftsTableRow = document.getElementById(`${name}-${num}`);
+
+            maxBadgesPerRow = Math.floor(document.body.clientWidth / badgeSizePX);
+
+            if (badgesInRow >= maxBadgesPerRow) {
+               const badgesLifts = document.getElementById("badgesLifts");
+               num++;
+               badgesLifts.innerHTML += `<tr id="${name}-${num}"></tr>`;
+               badgesLiftsTableRow = document.getElementById(`${name}-${num}`);
+               badgesInRow = 0;
+            }
+
+            if (badge && badgesLiftsTableRow) {
+               badgesLiftsTableRow.innerHTML += badge;
+               badgesInRow++;
+            }
+         }
+      }
+   }
+   // End of displayLifts function
+
+   // loadInpPage
    function loadInpPage() {
 
       const removeDoms = ["viewLiftorGoalOverlay", "page"];
@@ -404,7 +377,9 @@
       </div>
       `;
    }
+   // End of loadInpPage function
 
+   // saveInp
    function saveInp() {
 
       const uidInp = document.getElementById("uidInp");
@@ -416,8 +391,10 @@
          location.reload();
       }
    }
+   // End of saveInp function
 
    let tap = 0;
+   // clearSavedInp
    function clearSavedInp() {
       tap++;
       if (tap >= 3) {
@@ -446,6 +423,7 @@
          }
       }
    }
+   // End of clearSavedInp function
 
 </script>
 

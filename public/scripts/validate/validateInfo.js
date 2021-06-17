@@ -2,11 +2,12 @@
 // global variables
 
 const minCharLength = 3,
-maxCharLength = 20;
+    maxCharLength = 20;
 
 //
 
 // usage: " validate("My Displayname", "myusername", "mypassword", "mypassword"); "
+// validates input
 async function validate(displayname, username, password, confirmpassword) {
 
     let message = "";
@@ -45,7 +46,6 @@ async function validate(displayname, username, password, confirmpassword) {
 
                         fixedDisplayname = fixedDisplayname.trimRight();
 
-                        //console.log(fixedDisplayname)
                         const infoHeader = { "authorization": "Basic " + window.btoa(`${username.toLowerCase()}:${password}:${fixedDisplayname}`) };
                         const url = `/access`;
 
@@ -78,10 +78,11 @@ async function validate(displayname, username, password, confirmpassword) {
     }
 
     return message;
-
 }
+// End of validate function
 
 // usage: " login("myusername", "mypassword"); "
+// login user
 async function login(username, password, rmbrMe) {
 
     let message = "";
@@ -134,5 +135,5 @@ async function login(username, password, rmbrMe) {
     }
 
     return message;
-
 }
+// End of login function

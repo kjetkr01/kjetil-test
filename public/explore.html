@@ -224,7 +224,7 @@
          EexploreElements.Requests_TS = {
             "redirect": ``,
             "name": "Forespørsler",
-            "description": "Kommer snart", // Det er 8 forespørsler feks. Fecthe her heller så den viser antall?
+            "description": "Kommer snart", // Det er 8 forespørsler feks. Vise antall
             "internetDependent": false,
             "visible": true
          }
@@ -250,6 +250,7 @@
          }
       }
 
+      // exploreBadge templates
       function exploreBadge(acName, aInfo) {
 
          const cName = acName;
@@ -258,33 +259,34 @@
          const color = info.colorClass;
 
          const badgeTemplate = `
-      <div style="display:inline-block;">
-<div class="exploreBadge ${color} pointer" onClick="${info.redirect}">
+         <div style="display:inline-block;">
+            <div class="exploreBadge ${color} pointer" onClick="${info.redirect}">
 
-<!--
-<div id="c1b"></div>
-<div id="c2b"></div>
-<div id="c3b"></div>
--->
+               <!--
+               <div id="c1b"></div>
+                  <div id="c2b"></div>
+                  <div id="c3b"></div>
+                  -->
 
-<div id="GexploreName">
-<p id="exploreName">
-${info.name}
-</p>
-</div>
+                  <div id="GexploreName">
+                  <p id="exploreName">
+                  ${info.name}
+                  </p>
+                  </div>
 
-<div id="GexploreDescription">
-<p id="exploreDescription">
-${info.description}
-</p>
-</div>
+                  <div id="GexploreDescription">
+                  <p id="exploreDescription">
+                  ${info.description}
+                  </p>
+               </div>
 
-</div>
-<div>
-`;
+            </div>
+         <div>
+         `;
 
          return badgeTemplate;
       }
+      // End of exploreBadge function
 
       setInterval(() => {
          checkConnection();

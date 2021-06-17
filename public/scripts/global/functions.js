@@ -1,6 +1,6 @@
 "use strict";
-// changeColorTheme
 
+// changes color theme based on user preferences
 function changeColorTheme() {
 
     const defaultValues = allowedColorThemes[Object.keys(allowedColorThemes)[0]];
@@ -37,7 +37,9 @@ function changeColorTheme() {
         }
     }
 }
+// End of changeColorTheme function
 
+// checks if allowed scheme
 function checkIfAllowedScheme(e) {
     const newColorScheme = e.matches ? "dark" : "light";
     let theme = 0;
@@ -51,19 +53,11 @@ function checkIfAllowedScheme(e) {
         }
     }
 }
+// End of checkIfAllowedScheme function
 
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', checkIfAllowedScheme);
 
-
-function viewUser(viewUser) {
-
-    if (viewUser) {
-        redirectToUser(viewUser);
-    }
-}
-
-//
-
+// calls server api post if connected to internet
 async function callServerAPIPost(aInfoBody, aUrl) {
 
     if (!window.navigator.onLine) {
@@ -102,6 +96,7 @@ async function callServerAPIPost(aInfoBody, aUrl) {
         console.log("not returning data, recieved status:" + response.status)
     }
 }
+// End of callServerAPIPost function
 
 
 // get user/owner information
@@ -186,11 +181,9 @@ async function getAccountDetails(aUserID) {
         }
     }
 }
+// End of getAccountDetails function
 
-//
-
-// check if connected to internet
-
+// check if connected to internet. If not connected, displays small text in footer
 function checkConnection() {
 
     const offlineTxt = defaultTxt.noConnection;
@@ -213,25 +206,25 @@ function checkConnection() {
         }
     }
 }
+// End of checkConnection function
 
-//
 
-//
-
+// capitalizes first letter
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
+// End of capitalizeFirstLetter function
 
-//
-
+// if user is not using https, then changes to https
 function useHTTPS() {
-    if (location.protocol !== 'https:' && location.href.includes("kjetil-test.herokuapp.com")) {
+    if (location.protocol !== 'https:' && location.href.includes("herokuapp")) {
         location.replace(`https:${location.href.substring(location.protocol.length)}`);
     }
 }
+// End of useHTTPS function
 
-//
 
+// sortByLiftsOrGoalOwner
 async function sortByLiftsOrGoalOwner(aDom, aType) {
 
     const dom = document.getElementById(aDom);
@@ -279,7 +272,9 @@ async function sortByLiftsOrGoalOwner(aDom, aType) {
         }
     }
 }
+// End of sortByLiftsOrGoalOwner function
 
+// sortByLiftsOrGoalVisitor
 function sortByLiftsOrGoalVisitor(aDom, aType) {
 
     const dom = document.getElementById(aDom);
@@ -298,11 +293,9 @@ function sortByLiftsOrGoalVisitor(aDom, aType) {
         }
     }
 }
+// End of sortByLiftsOrGoalVisitor function
 
-//
-
-//
-
+// gets days since date
 function getDaysSinceAndDate(aDate) {
     let daysSinceMsg = "";
     let fixedDate = "";
@@ -332,9 +325,9 @@ function getDaysSinceAndDate(aDate) {
 
     return { "daysSinceMsg": daysSinceMsg, "fixedDate": fixedDate };
 }
+// End of getDaysSinceAndDate function
 
-//
-
+// updates "application" / deletes old caches if connected to internet
 function updateApplication(aShowNotification) {
     if (window.navigator.onLine) {
         let confirmUpdate = true;
@@ -342,7 +335,6 @@ function updateApplication(aShowNotification) {
         sessionStorage.removeItem('settings_notification_update');
 
         if (aShowNotification !== false) {
-            //confirmUpdate = confirm("Ønsker du å oppdatere? (Krever Internett-tilkobling)");
             showConfirm("Ønsker du å oppdatere? (Krever Internett-tilkobling)", "deleteAllCaches();");
             return;
         }
@@ -352,23 +344,19 @@ function updateApplication(aShowNotification) {
         }
     } else {
         if (aShowNotification !== false) {
-            //alert("Kunne ikke oppdatere! Krever Internett-tilkobling");
             showAlert("Kunne ikke oppdatere! Krever Internett-tilkobling", true);
         }
     }
 }
+// End of updateApplication function
 
+// deleteCachesConfirm
 function deleteCachesConfirm() {
-    /*const confirmDeleteCache = confirm("Er du sikker på at du ønsker å tømme caches (Offline modus vil være utilgjengelig frem til ny cache blir lastet ned)");
-
-    if (confirmDeleteCache === true) {
-        removeServiceWorker();
-        deleteAllCaches();
-    }*/
-
     showConfirm("Er du sikker på at du ønsker å tømme caches (Offline modus vil være utilgjengelig frem til ny cache blir lastet ned)", "deleteAllCaches();");
 }
+// End of deleteCachesConfirm function
 
+// removes all service workers and reloads page
 function removeServiceWorker() {
     navigator.serviceWorker.getRegistrations().then(function (registrations) {
         for (let registration of registrations) {
@@ -377,7 +365,9 @@ function removeServiceWorker() {
         location.reload();
     });
 }
+// End of removeServiceWorker function
 
+// deletes all caches
 async function deleteAllCaches() {
     const cachesKeys = await caches.keys();
     for (let i = 0; i < cachesKeys.length; i++) {
@@ -385,47 +375,35 @@ async function deleteAllCaches() {
     }
     removeServiceWorker();
 }
+// End of deleteAllCaches function
 
-// redirect functions
+/// -------------------- Redirect functions -------------------- ///
 
 function redirectToLogin() {
-
     location.href = "/login.html";
-
 }
 
 function redirectToFeed() {
-
     location.href = "index.html";
-
 }
 
 function redirectToExplore() {
-
     location.href = "explore.html";
-
 }
 
 function redirectToLeaderboards() {
-
     location.href = "leaderboards.html";
-
 }
 
 function redirectToUsers() {
-
     location.href = "users.html";
-
 }
 
 function redirectToUsers() {
-
     location.href = "users.html";
-
 }
 
 function redirectToUser(viewUser) {
-
     const viewingUser = viewUser;
 
     if (viewingUser) {
@@ -466,14 +444,12 @@ function redirectToTrainingsplit(aTrainingsplitID, aDay, aEdit) {
 }
 
 function redirectToAccount() {
-
     location.href = "account.html";
-
 }
 
 function redirectToSettings() {
-
     sessionStorage.removeItem("currentSetting");
     location.href = "settings.html";
-
 }
+
+/// -------------------- End of redirect functions -------------------- ///

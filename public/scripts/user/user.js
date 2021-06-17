@@ -10,6 +10,7 @@ let lifts = null,
 const queryString = window.location.search,
     urlParams = new URLSearchParams(queryString);
 
+// displays cached user details if exists. Prevents waiting for content to load
 function displayUserDetailsCached() {
 
     try {
@@ -109,10 +110,10 @@ function displayUserDetailsCached() {
         localStorage.removeItem("cacheDetails_owner");
     }
 }
+// End of displayUserDetailsCached function
 
 
-// requestAccountDetails
-
+// requests account details
 async function requestAccountDetails() {
 
     const viewingUser = urlParams.get("user_id");
@@ -129,18 +130,18 @@ async function requestAccountDetails() {
             redirectToAccount();
         } else {
 
+            displayUserDetailsCached();
+
             const resp = await getAccountDetails(viewingUser);
 
             if (resp) {
                 if (resp.hasOwnProperty("info")) {
                     if (resp.cacheDetails) {
-                        //sessionStorage.setItem(`cachedDetails_visitor_${viewingUser}`, JSON.stringify(resp.cacheDetails));
+                        sessionStorage.setItem(`cachedDetails_visitor_${viewingUser}`, JSON.stringify(resp.cacheDetails));
                     }
                     displayInformation(resp.info);
                     return;
                 } else if (resp.includes("sin profil er privat!") === true) {
-                    //alert(resp);
-                    //returnToPrevious();
                     const doms = ["title", "info", "gym", "medalsInfo", "memberSince"];
                     for (let i = 0; i < doms.length; i++) {
                         const dom = document.getElementById(doms[i]);
@@ -150,30 +151,22 @@ async function requestAccountDetails() {
                     }
                     showAlert(resp, true, "returnToPrevious();");
                 } else {
-                    /*alert("Det har oppstått en feil!");
-                    redirectToFeed();*/
                     showAlert("Det har oppstått en feil!", true, "redirectToFeed();");
                 }
 
             } else {
-                /*alert("Det har oppstått en feil!");
-                redirectToFeed();*/
                 showAlert("Det har oppstått en feil!", true, "redirectToFeed();");
             }
         }
 
     } else {
-        /*alert("Det har oppstått en feil!");
-        redirectToFeed();*/
         showAlert("Det har oppstått en feil!", true, "redirectToFeed();");
     }
 }
-
-// end of requestAccountDetails
+// End of requestAccountDetails function
 
 
 // displayInformation
-
 function displayInformation(respInfo) {
 
     if (!respInfo) {
@@ -293,12 +286,10 @@ ${firstName[0]} har ingen løft, mål eller treningsplan
         }
     }
 }
+// End of displayInformation function
 
-// end of displayInformation
 
-
-/// ------------ start of displayLifts --------------- ///
-
+// displays lifts if user has any
 function displayLifts() {
 
     document.getElementById("badgesLiftsTableRow").innerHTML = "";
@@ -389,14 +380,9 @@ function displayLifts() {
         }
     }
 }
+// End of displayLifts function
 
-/// ------------ end of displayLifts --------------- ///
-
-
-
-
-/// ------------ start of displayGoals --------------- ///
-
+// displays goals if user has any
 function displayGoals() {
 
     document.getElementById("badgesGoalsTableRow").innerHTML = "";
@@ -488,13 +474,9 @@ function displayGoals() {
         }
     }
 }
+// End of displayGoals function
 
-/// ------------ end of displayGoals --------------- ///
-
-
-
-/// ------------ start of displayTrainingsplit --------------- ///
-
+// displays active trainingsplit if user has any
 function displayTrainingsplit() {
 
     try {
@@ -534,9 +516,9 @@ function displayTrainingsplit() {
         console.log(err)
     }
 }
+// End of displayTrainingsplit function
 
-/// ------------ end of displayTrainingsplit --------------- ///
-
+// displayMemberSince
 function displayMemberSince() {
 
     const memberSinceDOM = document.getElementById("memberSince");
@@ -561,5 +543,5 @@ function displayMemberSince() {
     }
 
     memberSinceDOM.innerHTML = `Medlem siden<br>${string}`;
-
 }
+// End of displayMemberSince function

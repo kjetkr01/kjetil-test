@@ -9,6 +9,7 @@ let showLiftBadgeAnimations = true,
 
 const animationClasses = "fadeInLeft animate"
 
+// getBadgeGoals
 function getBadgeGoals(aSize, aBadgeInfo, aId) {
     try {
 
@@ -47,11 +48,8 @@ function getBadgeGoals(aSize, aBadgeInfo, aId) {
         return emptyBadge();
     }
 
-    // bigBadge with goal
-
+    // bigBadge
     function bigBadge(userBadgeInfo, aId) {
-
-        //console.log(userBadgeInfo);
 
         let currentProgressionPercent = `${userBadgeInfo.progressionPercent}%`;
 
@@ -175,11 +173,9 @@ ${progressionTxt}
         return badgeTemplate;
 
     }
+    // End of getBadgeGoals function
 
-    // end of bigBadge with goal
-
-    // smallBadge with goal
-
+    // smallBadge
     function smallBadge(userBadgeInfo, aId) {
 
         const badgeTemplate = `
@@ -209,14 +205,11 @@ ${userBadgeInfo.msg}
 `;
 
         return badgeTemplate;
-
     }
+    // End of smallBadge function
 
-    // end of smallBadge with goal
 
-
-    // emptyBadge without goal (default)
-
+    // emptyBadge
     function emptyBadge() {
 
         const badgeTemplate = `
@@ -257,18 +250,14 @@ nytt mål
 `;
 
         return badgeTemplate;
-
     }
-
-    // end of emptyBadge without goal (default)
-
+    // End of emptyBadge function
 }
+// End of getBadgeGoals function
 
 
 
-
-
-
+// getBadgeLift
 function getBadgeLift(aBadgeInfo, aId) {
 
     try {
@@ -293,8 +282,7 @@ function getBadgeLift(aBadgeInfo, aId) {
         return emptyBadge();
     }
 
-    // smallBadge with lift
-
+    // smallBadge
     function smallBadge(userBadgeInfo, aId) {
 
         const badgeTemplate = `
@@ -333,14 +321,10 @@ ${userBadgeInfo.msg}
 `;
 
         return badgeTemplate;
-
     }
+    // End of smallBadge function
 
-    // end of smallBadge with lift
-
-
-    // emptyBadge without lift (default)
-
+    // emptyBadge
     function emptyBadge() {
 
         const badgeTemplate = `
@@ -381,13 +365,12 @@ nytt løft
 `;
 
         return badgeTemplate;
-
     }
-
-    // end of emptyBadge without lift (default)
-
+    // End of emptyBadge function
 }
+// End of getBadgeLift function
 
+// getBadgeTrainingsplit
 function getBadgeTrainingsplit(aBadgeInfo) {
 
     try {
@@ -412,8 +395,7 @@ function getBadgeTrainingsplit(aBadgeInfo) {
         return emptyBadge();
     }
 
-    // smallBadge with trainingsplit
-
+    // smallBadge
     function smallBadge(userBadgeInfo) {
 
         let day = "monday";
@@ -452,14 +434,10 @@ ${userBadgeInfo.trainingsplit}
 `;
 
         return badgeTemplate;
-
     }
+    // End of smallBadge function
 
-    // end of smallBadge with trainingsplit
-
-
-    // emptyBadge without trainingsplit (default)
-
+    // emptyBadge
     function emptyBadge() {
 
         const badgeTemplate = `
@@ -484,9 +462,7 @@ ${userBadgeInfo.trainingsplit}
 `;
 
         return badgeTemplate;
-
     }
-
-    // end of emptyBadge without trainingsplit (default)
-
+    // End of emptyBadge function
 }
+// End of getBadgeTrainingsplit function

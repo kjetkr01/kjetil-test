@@ -1,6 +1,6 @@
 "use strict";
-/// ------------ start of pushToArrPerExerciseLift --------------- ///
 
+// pushToArrPerExerciseLift
 function pushToArrPerExerciseLift(aExerciseLift, aCurrent, aArr) {
 
     let msg = "";
@@ -30,12 +30,9 @@ function pushToArrPerExerciseLift(aExerciseLift, aCurrent, aArr) {
         }
     }
 }
+// End of pushToArrPerExerciseLift function
 
-/// ------------ end of pushToArrPerExerciseLift --------------- ///
-
-
-/// ------------ start of pushToArrPerExerciseGoal --------------- ///
-
+// pushToArrPerExerciseGoal
 function pushToArrPerExerciseGoal(aExerciseGoal, aCurrent, aCheckIfCompleted, aCompletedGoalsList, aArr) {
 
     let kgUntilGoal = 0, repsUntilGoal = 0, msg = "", progressionPercent = 0;
@@ -211,12 +208,9 @@ function pushToArrPerExerciseGoal(aExerciseGoal, aCurrent, aCheckIfCompleted, aC
         }
     }
 }
+// End of pushToArrPerExerciseGoal function
 
-/// ------------ end of pushToArrPerExerciseGoal --------------- ///
-
-
-/// ------------ start of pushToArrActiveTrainingsplit --------------- ///
-
+// pushToArrActiveTrainingsplit
 function pushToArrActiveTrainingsplit(aActiveTrainingsplit, aKeys, aArr) {
 
     const activetrainingsplit = aActiveTrainingsplit;
@@ -250,3 +244,4 @@ function pushToArrActiveTrainingsplit(aActiveTrainingsplit, aKeys, aArr) {
         }
     }
 }
+// End of pushToArrActiveTrainingsplit function

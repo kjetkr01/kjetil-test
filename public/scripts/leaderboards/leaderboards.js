@@ -5,8 +5,10 @@ let previousLeaderboard = "",
     retryLoadOnce = true,
     viewingLeaderboard = null,
     showPeopleLeaderboardsTxtAnimation = true,
-    updateLeaderboardList = true;
+    updateLeaderboardList = true,
+    leaderboardIsLoading = false;
 
+// gets a list of all leaderboards that uses filtered reps
 async function loadLeaderboards() {
 
     const reps = user.getSetting("leaderboards_filter_reps") || "1";
@@ -143,9 +145,9 @@ async function loadLeaderboards() {
         }
     }
 }
+// End of loadLeaderboards function
 
-let leaderboardIsLoading = false;
-
+// gets a list of users on the selected leaderboard
 async function getListOfLeaderboard(aLeaderboard) {
 
     if (navigator.onLine) {
@@ -231,10 +233,10 @@ async function getListOfLeaderboard(aLeaderboard) {
                         let svgMedal = null;
 
                         let placementHTML = `${i + 1}.`;
-                        let usernameHTML = `<button class="peopleLeaderboardsListName pointer" onClick="viewUser('${resp[i].id}')">${resp[i].username}</button>`;
+                        let usernameHTML = `<button class="peopleLeaderboardsListName pointer" onClick="redirectToUser('${resp[i].id}')">${resp[i].username}</button>`;
 
                         if (resp[i].id === user.getId()) {
-                            usernameHTML = `<button class="accountOwner pointer" onClick="viewUser('${resp[i].id}')">${resp[i].username}</button>`;
+                            usernameHTML = `<button class="accountOwner pointer" onClick="redirectToUser('${resp[i].id}')">${resp[i].username}</button>`;
                         }
 
                         switch (i) {
@@ -292,20 +294,18 @@ async function getListOfLeaderboard(aLeaderboard) {
                 }
 
             } else {
-                //usermsg1.textContent = errorLoadingText;
                 usermsg1.innerHTML = peopleLeaderboardsTxtHTML();
                 showAlert(`Ledertavlen ${viewingLeaderboard} finnes ikke!`, true, "redirectToExplore();");
-                //alert(`Ledertavlen ${viewingLeaderboard} finnes ikke!`);
-                //window.history.back();
             }
 
         } else {
-            //usermsg1.textContent = "Det er ingen brukere på tavlen";
             usermsg1.innerHTML = peopleLeaderboardsTxtHTML(`Det er ingen brukere på tavlen`);
         }
     }
 }
+// End of getListOfLeaderboard function
 
+// peopleLeaderboardsTxtHTML
 function peopleLeaderboardsTxtHTML(aInput) {
 
     const inputInfo = aInput || errorLoadingText;
@@ -321,10 +321,10 @@ function peopleLeaderboardsTxtHTML(aInput) {
     </p>`;
 
     return htmlInfo;
-
 }
+// End of peopleLeaderboardsTxtHTML function
 
-
+// change leaderboards filter reps
 async function changeLeaderboardReps() {
 
     const reps = document.getElementById("leaderboardReps").value;
@@ -336,9 +336,10 @@ async function changeLeaderboardReps() {
     }
 
     location.reload();
-
 }
+// End of changeLeaderboardReps function
 
+// saves filter reps if connected to internet
 async function updateLeaderboardsFilterReps(aValue) {
     if (!aValue) {
         aValue = null;
@@ -352,3 +353,4 @@ async function updateLeaderboardsFilterReps(aValue) {
 
     await callServerAPIPost(infoHeader, url);
 }
+// End of updateLeaderboardsFilterReps function

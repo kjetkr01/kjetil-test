@@ -304,8 +304,10 @@
 
       requestAccountDetails();
 
-      //sessionStorage.removeItem("trainingsplit");
       const GuserGrid = document.getElementById("GuserGrid");
+      const GbadgesLifts = document.getElementById("GbadgesLifts");
+      const GbadgesGoals = document.getElementById("GbadgesGoals");
+      const GbadgesTrainingsplit = document.getElementById("GbadgesTrainingsplit");
 
       if (sessionStorage.getItem("usergrid_scroll_y_main")) {
          GuserGrid.scrollTop = sessionStorage.getItem("usergrid_scroll_y_main");

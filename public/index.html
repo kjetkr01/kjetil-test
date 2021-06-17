@@ -222,6 +222,8 @@
       checkConnection();
 
       checkForUpdate();
+
+      // check for new update
       async function checkForUpdate() {
 
          if (navigator.onLine) {
@@ -229,7 +231,6 @@
             const tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
             const today = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1).substr(0, 10);
             if (lastChecked !== today) {
-               // lastChecked prevents unnecessary requests to server
                // only auto checks for update once a day
                const serverApplication = await callServerAPIPost({}, `/application`);
                if (serverApplication) {
@@ -250,10 +251,12 @@
             }
          }
       }
+      // End of checkForUpdate function
 
 
 
       updatedNotification();
+      // shows notification if app has been updated to new version
       function updatedNotification() {
          if (navigator.onLine) {
             if (localStorage.getItem("updated_version_text")) {
@@ -268,6 +271,7 @@
             }
          }
       }
+      // End of updatedNotification function
 
       function intervals() {
 

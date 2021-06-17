@@ -5,6 +5,7 @@ let showTrainingsplitAnimations = true,
 const queryStringT = window.location.search,
     urlParamsT = new URLSearchParams(queryStringT);
 
+// checkIfValidParams
 function checkIfValidParams() {
 
     let validParams = false;
@@ -36,9 +37,10 @@ function checkIfValidParams() {
 
     return validParams;
 }
+// End of checkIfValidParams function
 
 
-
+// requestTrainingsplitDetails
 async function requestTrainingsplitDetails() {
 
     try {
@@ -106,12 +108,11 @@ async function requestTrainingsplitDetails() {
         returnToPrevious();
     }
 }
+// End of requestTrainingsplitDetails function
 
 const exerciseListCount = [];
+// loadEditTrainingsplit
 function loadEditTrainingsplit(aResp, aSelectedDay) {
-
-    //document.getElementById("backBtnTrainingsplit").setAttribute("onclick", "exitTrainingsplitConfirm();");
-    //document.getElementById("account").setAttribute("onclick", "exitTrainingsplitConfirm();");
 
     const resp = aResp;
 
@@ -352,7 +353,9 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
         sessionStorage.setItem("usergrid_scroll_y_edit", scrollY);
     });
 }
+// End of loadEditTrainingsplit function
 
+// loadViewTrainingsplit
 function loadViewTrainingsplit(aResp, aSelectedDay) {
 
     const resp = aResp;
@@ -586,7 +589,9 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
         document.getElementById("trainingsplitBottom").innerHTML = backToTopBtn;
     }
 }
+// End of loadViewTrainingsplit function
 
+// viewTrainingsplitOwnerList
 function viewTrainingsplitOwnerList() {
 
     const trainingsplit_id = document.getElementById("listworkoutPlans");
@@ -598,7 +603,9 @@ function viewTrainingsplitOwnerList() {
         }
     }
 }
+// End of viewTrainingsplitOwnerList function
 
+// viewTrainingsplitSubList
 function viewTrainingsplitSubList() {
 
     const trainingsplit_id = document.getElementById("listsubworkoutPlans");
@@ -611,7 +618,9 @@ function viewTrainingsplitSubList() {
         }
     }
 }
+// End of viewTrainingsplitSubList function
 
+// viewTrainingsplit
 function viewTrainingsplit(aId, aDay) {
 
     if (aId && aId !== "null") {
@@ -641,7 +650,9 @@ function viewTrainingsplit(aId, aDay) {
         window.location.href = `/trainingsplit.html?trainingsplit_id=${aId}&edit=false&day=${day}`;
     }
 }
+// End of viewTrainingsplit function
 
+// changeTrainingsplitDay
 async function changeTrainingsplitDay() {
 
     const trainingsplitSelectDay = document.getElementById("trainingsplitSelectDay");
@@ -658,7 +669,9 @@ async function changeTrainingsplitDay() {
         window.location.search = urlParamsT.toString();
     }
 }
+// End of changeTrainingsplitDay function
 
+// addExercise
 async function addExercise() {
 
     if (trainingsplit && user) {
@@ -699,13 +712,14 @@ async function addExercise() {
             if (data === true) {
                 location.reload();
             } else {
-                //alert(data.msg);
                 showAlert(data.msg, true);
             }
         }
     }
 }
+// End of addExercise function
 
+// deleteExerciseConfirm
 async function deleteExerciseConfirm(aExercise) {
 
     if (trainingsplit && user) {
@@ -721,13 +735,13 @@ async function deleteExerciseConfirm(aExercise) {
             if (domName) {
                 exerciseName = domName.value;
             }
-
             showConfirm(`Er du sikker på at du vil slette øvelsen ${exerciseName}? Dette kan ikke angres!`, `deleteExercise('${exercise}');`);
-
         }
     }
 }
+// End of deleteExerciseConfirm function
 
+// deleteExercise
 async function deleteExercise(aExercise) {
 
     if (trainingsplit && user) {
@@ -765,13 +779,14 @@ async function deleteExercise(aExercise) {
             if (data === true) {
                 location.reload();
             } else {
-                //alert(data.msg);
                 showAlert(data.msg, true);
             }
         }
     }
 }
+// End of deleteExercise function
 
+// deleteRowExerciseConfirm
 async function deleteRowExerciseConfirm(aExercise, aIndex) {
 
     if (trainingsplit && user) {
@@ -780,14 +795,13 @@ async function deleteRowExerciseConfirm(aExercise, aIndex) {
         const index = aIndex;
 
         if (exercise) {
-
             showConfirm(`Er du sikker på at du vil slette rad nr ${index + 1} fra øvelsen ${exercise}? Dette kan ikke angres!`, `deleteRowExercise('${exercise}', '${index}');`);
-
         }
     }
-
 }
+// End of deleteRowExerciseConfirm function
 
+// deleteRowExercise
 async function deleteRowExercise(aExercise, aIndex) {
 
     if (trainingsplit && user) {
@@ -818,13 +832,14 @@ async function deleteRowExercise(aExercise, aIndex) {
             if (data === true) {
                 location.reload();
             } else {
-                //alert(data.msg);
                 showAlert(data.msg, true);
             }
         }
     }
 }
+// End of deleteRowExercise function
 
+// addRowExercise
 async function addRowExercise(aExercise) {
 
     if (trainingsplit && user) {
@@ -854,13 +869,14 @@ async function addRowExercise(aExercise) {
             if (data === true) {
                 location.reload();
             } else {
-                //alert(data.msg);
                 showAlert(data.msg, true);
             }
         }
     }
 }
+// End of addRowExercise function
 
+// moveExerciseOrder
 async function moveExerciseOrder(aIndex, aMoveUp) {
 
     if (trainingsplit && user) {
@@ -891,13 +907,14 @@ async function moveExerciseOrder(aIndex, aMoveUp) {
             if (data === true) {
                 location.reload();
             } else {
-                //alert(data.msg);
                 showAlert(data.msg, true);
             }
         }
     }
 }
+// End of moveExerciseOrder function
 
+// copyTrainingsplitConfirm
 async function copyTrainingsplitConfirm(aTrainingsplit_id, aOwner_id) {
 
     const trainingsplit_id = aTrainingsplit_id;
@@ -907,12 +924,13 @@ async function copyTrainingsplitConfirm(aTrainingsplit_id, aOwner_id) {
         const owner_id = aOwner_id;
 
         if (owner_id) {
-
             showConfirm(`Vil du ta en kopi av treningsplanen?`, `copyTrainingsplit('${trainingsplit_id}', '${owner_id}');`);
         }
     }
 }
+// End of copyTrainingsplitConfirm function
 
+// copyTrainingsplit
 async function copyTrainingsplit(aTrainingsplit_id, aOwner_id) {
 
     const trainingsplit_id = aTrainingsplit_id;
@@ -942,14 +960,14 @@ async function copyTrainingsplit(aTrainingsplit_id, aOwner_id) {
             if (data.status === true) {
                 showConfirm("Planen er nå kopiert. Ønsker du å laste den inn i redigeringsmodus?", `loadIntoEditTrainingsplit('${data.newtrainingsplit_id}');`);
             } else {
-                //alert(data.msg);
                 showAlert(data.msg, true);
             }
         }
     }
 }
+// End of copyTrainingsplit function
 
-
+// changeTrainingsplitVisibilityConfirm
 async function changeTrainingsplitVisibilityConfirm(aTrainingsplit_id, aValue) {
 
     const trainingsplit_id = aTrainingsplit_id;
@@ -962,11 +980,12 @@ async function changeTrainingsplitVisibilityConfirm(aTrainingsplit_id, aValue) {
         if (value === true) {
             visibilityTxt = "offentlig?";
         }
-
         showConfirm(`Vil du gjøre treningsplanen ${visibilityTxt}`, `changeTrainingsplitVisibility('${trainingsplit_id}', ${value});`);
     }
 }
+// End of changeTrainingsplitVisibilityConfirm function
 
+// changeTrainingsplitVisibility
 async function changeTrainingsplitVisibility(aTrainingsplit_id, aValue) {
 
     const trainingsplit_id = aTrainingsplit_id;
@@ -1015,23 +1034,24 @@ async function changeTrainingsplitVisibility(aTrainingsplit_id, aValue) {
             }
 
         } else {
-            //alert(data.msg);
             showAlert(data.msg, true);
         }
     }
 }
+// End of changeTrainingsplitVisibility function
 
+// loadIntoEditTrainingsplit
 function loadIntoEditTrainingsplit(aNewTrainingsplit_id) {
     if (aNewTrainingsplit_id) {
         const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
         const dayNum = new Date().getDay();
         const day = days[dayNum];
-        //window.location.href = `trainingsplit.html?trainingsplit_id=${aNewTrainingsplit_id}&edit=true&day=${day}`;
         redirectToTrainingsplit(aNewTrainingsplit_id, day, true);
     }
 }
+// End of loadIntoEditTrainingsplit function
 
-
+// subOrUnsubToTrainingsplitConfirm
 async function subOrUnsubToTrainingsplitConfirm(aTrainingsplit_id, aOwner_id, aTrainingsplit_name) {
 
     const trainingsplit_id = aTrainingsplit_id;
@@ -1060,7 +1080,9 @@ async function subOrUnsubToTrainingsplitConfirm(aTrainingsplit_id, aOwner_id, aT
         }
     }
 }
+// End of subOrUnsubToTrainingsplitConfirm function
 
+// subOrUnsubToTrainingsplit
 async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTrainingsplit_name) {
 
     const trainingsplit_id = aTrainingsplit_id;
@@ -1106,17 +1128,20 @@ async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTraining
                 }
                 location.reload();
             } else {
-                //alert(data.msg);
                 showAlert(data.msg, true);
             }
         }
     }
 }
+// End of subOrUnsubToTrainingsplit function
 
+// exitTrainingsplitConfirm
 async function exitTrainingsplitConfirm() {
     showConfirm("Vil du lagre før du forlater?", "exitTrainingsplit(true);", "exitTrainingsplit();");
 }
+// End of exitTrainingsplitConfirm function
 
+// exitTrainingsplit
 async function exitTrainingsplit(aSave) {
 
     if (trainingsplit.edit === "true" && aSave === true) {
@@ -1134,6 +1159,5 @@ async function exitTrainingsplit(aSave) {
     } else {
         window.location.search = "";
     }
-
-
 }
+// End of exitTrainingsplit function

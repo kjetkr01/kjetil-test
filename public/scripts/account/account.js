@@ -1,23 +1,17 @@
 "use strict";
-// requestAccountDetails
+
 let lifts = null,
     goals = null,
     activetrainingsplit = null,
     badgeColorsJSON = null,
     memberSince = null;
 
+// displays cached user details if exists. Prevents waiting for content to load
 function displayUserDetailsCached() {
 
     try {
 
         const userDetails = user.getDetails();
-        //const displayname = user.getDisplayname();
-
-        /*if (displayname) {
-            const title = document.getElementById("title");
-            title.classList = "noselect";
-            title.textContent = displayname;
-        }*/
 
         if (userDetails.hasOwnProperty("gym")) {
             const gym = document.getElementById("gym");
@@ -102,7 +96,9 @@ function displayUserDetailsCached() {
     } catch {
     }
 }
+// End of displayUserDetailsCached function
 
+// requests account details
 async function requestAccountDetails() {
 
     if (user) {
@@ -176,17 +172,12 @@ async function requestAccountDetails() {
                 return;
             }
         }
-
-        //alert("Det har oppstått en feil!");
-        //redirectToFeed();
     }
 }
-
-// end of requestAccountDetails
+// End of requestAccountDetails function
 
 
 // displayInformation
-
 function displayInformation(respInfo) {
 
     if (!respInfo) {
@@ -195,7 +186,6 @@ function displayInformation(respInfo) {
 
     const info = respInfo;
 
-    const displayname = info.displayname;
     const gym = info.info.gym;
     const age = info.info.age;
     const height = info.info.height;
@@ -270,12 +260,6 @@ function displayInformation(respInfo) {
         showTrainingsplitBadgeAnimations = true;
     }
 
-    /*if (displayname) {
-        document.getElementById("title").textContent = displayname;
-    } else {
-        document.getElementById("title").textContent = "";
-    }*/
-
     if (gym) {
         document.getElementById("gym").textContent = gym;
     } else {
@@ -341,12 +325,10 @@ function displayInformation(respInfo) {
         displayTrainingsplit();
     }
 }
+// End of displayInformation function
 
-// end of displayInformation
 
-
-/// ------------ start of displayLifts --------------- ///
-
+// displays lifts if user has any
 async function displayLifts(hasLiftsLeft) {
 
     try {
@@ -463,12 +445,10 @@ async function displayLifts(hasLiftsLeft) {
         console.log(err);
     }
 }
+// End of displayLifts function
 
-/// ------------ end of displayLifts --------------- ///
 
-
-/// ------------ start of displayGoals --------------- ///
-
+// displays goals if user has any
 async function displayGoals(hasGoalsLeft, checkIfCompleted) {
 
     try {
@@ -614,13 +594,11 @@ async function displayGoals(hasGoalsLeft, checkIfCompleted) {
         console.log(err);
     }
 }
-
-/// ------------ end of displayGoals --------------- ///
-
+// End of displayGoals function
 
 
-/// ------------ start of displayTrainingsplit --------------- ///
 
+// displays active trainingsplit if user has any
 function displayTrainingsplit() {
 
     try {
@@ -677,10 +655,10 @@ function displayTrainingsplit() {
     } else {
         GbadgesTrainingsplit.scrollLeft = 0;
     }
-
 }
+// End of displayTrainingsplit function
 
-/// ------------ end of displayTrainingsplit --------------- ///
+
 if (memberSince) {
 
     const splitDate = memberSince.split("-");
@@ -706,7 +684,7 @@ if (memberSince) {
 
 }
 
-
+// Clears all saved scroll. Function gets called when "leaving" page
 function clearAllSavedScolls() {
 
     const scrolls = ["usergrid_scroll_y_main", "badgeslifts_scroll_x", "badgesgoals_scroll_x", "badgestrainingsplit_scroll_x"];
@@ -714,5 +692,5 @@ function clearAllSavedScolls() {
     for (let i = 0; i < scrolls.length; i++) {
         sessionStorage.removeItem(scrolls[i]);
     }
-
 }
+// End of clearAllSavedScolls function

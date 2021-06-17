@@ -58,6 +58,9 @@ const plannedUpdatesArr = [
 
     "TITLE:Desktop design",
     "Optimalisere desktop design",
+
+    "TITLE:Logo",
+    "Fjerne placeholder logoen og bruke en logo laget av Christoffer Simonsen",
 ];
 
 //
@@ -107,7 +110,7 @@ for (let i = 0; i < plannedUpdatesArr.length; i++) {
 }
 //
 
-
+// creates clickable button if id is being sent in
 function createBtn(aUserFullname, aUserID) {
 
     if (aUserFullname) {
@@ -126,7 +129,9 @@ function createBtn(aUserFullname, aUserID) {
         return html;
     }
 }
+// End of createBtn function
 
+// tries to create local date string
 function getDateFormat(aDay, aMonth, aYear) {
 
     const day = aDay;
@@ -148,7 +153,9 @@ function getDateFormat(aDay, aMonth, aYear) {
     }
     return string;
 }
+// End of getDateFormat function
 
+// calculates days since last application update
 function calcDaysSinceUpdate() {
 
     let string = "";
@@ -171,3 +178,4 @@ function calcDaysSinceUpdate() {
     }
     return string;
 }
+// End of calcDaysSinceUpdate function

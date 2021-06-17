@@ -1,4 +1,6 @@
 "use strict";
+
+// loads requested setting if exists
 function loadSetting(aSetting) {
 
     if (settings) {
@@ -74,7 +76,9 @@ function loadSetting(aSetting) {
         }
     }
 }
+// End of loadSetting function
 
+// loads default page in settings
 async function loadDefaultPage(setting) {
 
     titleDom.innerHTML = ELoadSettings.settings.name;
@@ -156,7 +160,9 @@ async function loadDefaultPage(setting) {
 
     saveNewScrollPos = true;
 }
+// End of loadDefaultPage function
 
+// loads password page in settings
 function loadPasswordPage() {
 
     settingsGrid.innerHTML = justTextTemplate("Her kan du endre passordet ditt", "left");
@@ -174,7 +180,9 @@ function loadPasswordPage() {
 
     settingsGrid.innerHTML += getBottomSpacingTemplate();
 }
+// End of loadPasswordPage function
 
+// loads about me page in settings
 function loadAboutMePage() {
 
     const gym = userInfo.gym || "";
@@ -229,7 +237,9 @@ function loadAboutMePage() {
 
     settingsGrid.innerHTML += getBottomSpacingTemplate();
 }
+// End of loadAboutMePage function
 
+// loads apperance page in settings
 function loadAppearancePage() {
 
     let disabled = "";
@@ -292,8 +302,6 @@ function loadAppearancePage() {
 
     settingsGrid.innerHTML += getTemplate("Farge-tema", "themeColorInp", themeColorSelectionHTML);
 
-    //settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="saveApperanceSettings();">Lagre endringer</button>`, "", "spacingTop");
-
     settingsGrid.innerHTML += getBottomSpacingTemplate();
 
     document.getElementById("appearanceThemeSelection").addEventListener("change", function (evt) {
@@ -304,7 +312,9 @@ function loadAppearancePage() {
         saveColorTheme();
     });
 }
+// End of loadAppearancePage function
 
+// loads progression info page in settings
 function loadProgressionInfoPage() {
 
     let disabled = "";
@@ -382,8 +392,6 @@ function loadProgressionInfoPage() {
 
     settingsGrid.innerHTML += getTemplate("Informasjon", "badgeDetailsInp", badgeDetailsHTML);
 
-    //settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton' onClick="alert('saveDetails');">Lagre endringer</button>`, "", "spacingTop");
-
     settingsGrid.innerHTML += getBottomSpacingTemplate();
 
     document.getElementById("badgeSizeSelection").addEventListener("change", function (evt) {
@@ -394,7 +402,9 @@ function loadProgressionInfoPage() {
         updateBadgeDetails();
     });
 }
+// End of loadProgressionInfoPage function
 
+// loads medals counter page in settings
 function loadMedalsCounterPage() {
 
     settingsGrid.innerHTML = justTextTemplate("Her kan du se hvor mange medaljer du har! Du får 1 medalje for hver fullførte mål! Andre brukere kan se dette på profilen din. Du kan også se deres antall medaljer oppnådd.", "left");
@@ -418,9 +428,10 @@ function loadMedalsCounterPage() {
     }
 
     settingsGrid.innerHTML += getBottomSpacingTemplate();
-
 }
+// End of loadMedalsCounterPage function
 
+// loads about app page in settings
 async function loadAboutAppPage(setting) {
 
     const imageURL = new Image();
@@ -435,8 +446,6 @@ async function loadAboutAppPage(setting) {
             `;
 
             settingsGrid.innerHTML = justTextTemplate(imageHTML, "center");
-
-            //document.getElementById("logo").src = application.logoURL;
 
             const appInfoHTML = `
             <strong>${application.name}</strong>
@@ -531,9 +540,14 @@ async function loadAboutAppPage(setting) {
         }
     }
 }
+// End of loadAboutAppPage function
 
+// loads users list page in settings
 async function loadUsersListPage(setting) {
-    settingsGrid.innerHTML = justTextTemplate(`Denne siden holder på å bli flyttet til Utforsk`, "left");
+
+    settingsGrid.innerHTML = justTextTemplate(`Denne siden vil bli flyttet til
+    <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="redirectToExplore();">Utforsk</button> siden.`, "left");
+
     if (navigator.onLine) {
 
         const infoHeader = {};
@@ -611,12 +625,12 @@ async function loadUsersListPage(setting) {
                     ${profileStatus}
                     <p class="settingsPendingUsername">${hasAPIAccessTxt}</p>
                     <br>
-                    <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Besøk</button>
+                    <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="redirectToUser('${currentUser.id}');">Besøk</button>
                     `;
                         } else {
                             usersTemplateHTML += `
                     <br>
-                    <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Din bruker</button>
+                    <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="redirectToUser('${currentUser.id}');">Din bruker</button>
                     `;
                         }
 
@@ -655,11 +669,11 @@ async function loadUsersListPage(setting) {
 
                     if (user && currentUser.username !== user.getUsername()) {
                         usersTemplateHTML += `
-                        <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Besøk</button>
+                        <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="redirectToUser('${currentUser.id}');">Besøk</button>
                         `;
                     } else {
                         usersTemplateHTML += `
-                        <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="viewUser('${currentUser.id}');">Din bruker</button>
+                        <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="redirectToUser('${currentUser.id}');">Din bruker</button>
                             `;
                     }
 
@@ -680,9 +694,14 @@ async function loadUsersListPage(setting) {
         settingsGrid.innerHTML = justTextTemplate(`Kunne ikke laste inn listen med brukere. ${defaultTxt.noConnection}`, "left");
     }
 }
+// End of loadUsersListPage function
 
+// loads pending users page in settings
 async function loadPendingUsersPage(setting) {
-    settingsGrid.innerHTML = justTextTemplate(`Denne siden holder på å bli flyttet til Utforsk`, "left");
+
+    settingsGrid.innerHTML = justTextTemplate(`Denne siden vil bli flyttet til
+    <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="redirectToExplore();">Utforsk</button> siden.`, "left");
+
     if (navigator.onLine) {
 
         titleDom.innerHTML = ELoadSettings.pendingUsers.name;
@@ -769,10 +788,13 @@ async function loadPendingUsersPage(setting) {
         settingsGrid.innerHTML = justTextTemplate(`Kunne ikke laste inn listen med forespørsler. ${defaultTxt.noConnection}`, "left");
     }
 }
+// End of loadPendingUsersPage function
 
+// loads api page in settings
 async function loadAPIPage() {
 
-    settingsGrid.innerHTML = justTextTemplate(`Denne siden holder på å bli flyttet til Utforsk`, "left");
+    settingsGrid.innerHTML = justTextTemplate(`Denne siden vil bli flyttet til
+    <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="redirectToExplore();">Utforsk</button> siden.`, "left");
 
     let response = null;
 
@@ -901,7 +923,9 @@ async function loadAPIPage() {
         loadSetting(ELoadSettings.settings.name);
     }
 }
+// End of loadAPIPage function
 
+// loads privacy page in settings
 async function loadPrivacyPage() {
 
     settingsGrid.innerHTML = justTextTemplate(`${application.name} samler ikke inn data fra brukeren sine.`, "left");
@@ -916,7 +940,9 @@ async function loadPrivacyPage() {
     settingsGrid.innerHTML += getBottomSpacingTemplate();
 
 }
+// End of loadPrivacyPage function
 
+// loads delete me page in settings
 async function loadDeleteMePage() {
 
     settingsGrid.innerHTML = justTextTemplate(`Her kan du slette kontoen din. <strong>Dette kan ikke angres!</strong> <br><br> Du er pålogget som: ${userInfo.displayname}<br>Brukernavn: ${userInfo.username}`, "left");
@@ -932,3 +958,4 @@ async function loadDeleteMePage() {
     settingsGrid.innerHTML += getBottomSpacingTemplate();
 
 }
+// End of loadDeleteMePage function

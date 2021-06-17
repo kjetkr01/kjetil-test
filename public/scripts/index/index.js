@@ -4,7 +4,7 @@ let lifts = null,
     badgeColorsJSON = null;
 
 // usage : partOfDayMessage("Kjetil Kristiansen")
-
+// displays part of day message, example: God morgen, Kjetil
 function partOfDayMessage(displayName) {
 
     let message = "";
@@ -44,29 +44,9 @@ function partOfDayMessage(displayName) {
 
     return { "message": message, "firstName": firstName };
 }
+// End of partOfDayMessage function
 
-
-async function whoIsWorkingOutToday() {
-
-    let info = {};
-
-    if (user) {
-
-        const infoHeader = {};
-        const url = `/whoIsWorkingOutToday`;
-
-        const resp = await callServerAPIPost(infoHeader, url);
-
-        if (resp) {
-            info = resp;
-        }
-
-    }
-
-    return info;
-
-}
-
+// displays part of day message
 function displayPartOfDayMsg() {
 
     if (user) {
@@ -82,8 +62,9 @@ function displayPartOfDayMsg() {
         }
     }
 }
+// End of displayPartOfDayMsg
 
-
+// gets a list of everyone that is working out today and what they are working out
 async function checkWhoIsWorkingOutToday() {
 
     const peopleWorkoutList = document.getElementById("peopleWorkoutList");
@@ -102,7 +83,10 @@ async function checkWhoIsWorkingOutToday() {
 
     if (navigator.onLine) {
 
-        const resp = await whoIsWorkingOutToday();
+        const infoHeader = {};
+        const url = `/whoIsWorkingOutToday`;
+
+        const resp = await callServerAPIPost(infoHeader, url);
 
         if (resp.length > 0) {
 
@@ -154,13 +138,13 @@ async function checkWhoIsWorkingOutToday() {
                     const link = `redirectToTrainingsplit('${user.getSetting("activetrainingsplit")}','${day}');`;
                     workoutBtn.setAttribute("onclick", link);
                     peopleWorkoutList.innerHTML += `
-                    <button class="accountOwner fadeInUp animate pointer" onClick="viewUser('${resp[i].id}')">${shortenedFullName}</button>
+                    <button class="accountOwner fadeInUp animate pointer" onClick="redirectToUser('${resp[i].id}')">${shortenedFullName}</button>
                     <br>
                     `;
 
                 } else {
                     peopleWorkoutList.innerHTML += `
-            <button class="peopleWorkoutListName fadeInUp animate pointer" onClick="viewUser('${resp[i].id}')">${shortenedFullName}</button>
+            <button class="peopleWorkoutListName fadeInUp animate pointer" onClick="redirectToUser('${resp[i].id}')">${shortenedFullName}</button>
             <br>
             `;
 
@@ -176,10 +160,10 @@ async function checkWhoIsWorkingOutToday() {
     } else {
         peopleWorkoutTxt.innerHTML = defaultTxt.noConnection;
     }
-
 }
+// End of checkWhoIsWorkingOutToday function
 
-
+// displays current day info, example: Torsdag 17. Juni
 function currentDayInfo() {
 
     const todayDom = document.getElementById("today");
@@ -217,13 +201,10 @@ function currentDayInfo() {
     } else {
         todayDom.textContent = dateFormat;
     }
-
-
-
 }
+// End of currentDayInfo function
 
-// requestAccountDetails
-
+// requests account details
 async function requestAccountDetails() {
 
     try {
@@ -275,13 +256,10 @@ async function requestAccountDetails() {
             return;
         }
     }
-
-    //alert("Det har oppstått en feil!");
-    //redirectToFeed();
 }
+// End of requestAccountDetails
 
-// end of requestAccountDetails
-
+// displayBadges
 async function displayBadges(aInfo) {
 
     if (!aInfo) {
@@ -359,9 +337,10 @@ async function displayBadges(aInfo) {
         goalsInfo = new Tgoals(info.goals);
         displayGoals(true);
     }
-
 }
+// End of displayBadges function
 
+// displays goals if user has any
 async function displayGoals(checkIfCompleted) {
 
     try {
@@ -519,3 +498,4 @@ async function displayGoals(checkIfCompleted) {
         console.log(err);
     }
 }
+// End of displayGoals function

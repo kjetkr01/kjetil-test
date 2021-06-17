@@ -1,6 +1,6 @@
 "use strict";
-// create global user class
 
+// creates user class
 function createUserClass() {
 
     const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
@@ -21,7 +21,9 @@ function createUserClass() {
         userError();
     }
 }
+// End of createUserClass function
 
+// Displays error if could not create user class. Then redirects to login
 function userError() {
     const userErrorTxt = "Det har oppstått en feil. Du blir nå logget ut.";
     const maxWaitTime = 1000;
@@ -41,8 +43,9 @@ function userError() {
         }
     }, 100);
 }
+// End of userError function
 
-// User class (for logged inn user)
+// User class (for logged in user)
 function TUser(aToken, aUser, aDetails, aSettings) {
 
     const token = aToken;
@@ -127,3 +130,4 @@ function TUser(aToken, aUser, aDetails, aSettings) {
         }
     }
 }
+// End of TUser class

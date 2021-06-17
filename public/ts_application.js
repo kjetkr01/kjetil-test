@@ -1,10 +1,6 @@
 (function (exports) {
 
-    // Oppdatere disse når ny commit
-
     const updateDay = "17.06.2021";
-
-    // Slutt
 
     const upd = updateDay.split(".");
 
@@ -16,7 +12,7 @@
             major: 6,
             minor: 3,
             revision: 27,
-            buildnumber: 984,
+            buildnumber: 985,
         },
         lastUpdated: {
             day: upd[0],

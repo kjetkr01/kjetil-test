@@ -171,6 +171,7 @@
 <script>
    "use strict";
    checkIfCache();
+   // checks if caches exist. If exists & has internet connection, then deletes caches.
    async function checkIfCache() {
       if (navigator.onLine) {
          const cachesKeys = await caches.keys();
@@ -180,6 +181,7 @@
          }
       }
    }
+   // End of checkIfCache
 
    const cachedUsername = sessionStorage.getItem("cachedUsername");
 
@@ -196,6 +198,8 @@
       }
 
    });
+
+   // login user
    async function loginUser() {
       try {
 
@@ -208,16 +212,13 @@
             const username = document.getElementById("inp1").value;
             const psw = document.getElementById("inp2");
 
-            if (username && psw) {
+            const resp = await login(username, psw.value, rmbrMe);
 
-               const resp = await login(username, psw.value, rmbrMe);
-
-               if (resp === "Login successful") {
-                  redirectToFeed();
-               } else {
-                  respmsg.innerHTML = resp;
-                  psw.value = "";
-               }
+            if (resp === "Login successful") {
+               redirectToFeed();
+            } else {
+               respmsg.innerHTML = resp;
+               psw.value = "";
             }
          } else {
             respmsg.innerHTML = "Du må ha Internett-tilkobling for å logge inn!";
@@ -226,7 +227,8 @@
       } catch (err) {
          alert(err);
       }
-   };
+   }
+   // End of loginUser function
 
 </script>
 

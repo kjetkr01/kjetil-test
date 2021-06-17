@@ -177,11 +177,14 @@
 
    });
 
+   // checkKeys
    function checkKeys() {
       const inp2 = document.getElementById("inp2");
       inp2.value = (inp2.value).toLowerCase();
    }
+   // End of checkKeys function
 
+   // requestAccess
    async function requestAccess() {
 
       const respmsg = document.getElementById("respMsg");
@@ -206,7 +209,8 @@
       } else {
          respmsg.innerHTML = "Du må ha Internett-tilkobling for å be om tilgang!";
       }
-   };
+   }
+   // End of requestAccess function
 
 </script>
 
