@@ -710,7 +710,6 @@ class StorageHandler {
                         userCacheObj.settings = results.rows[0];
 
                         const subscribedtsplits = userCacheObj.settings.subscribedtrainingsplits;
-                        //let temp = [];
                         const subscribedtsplitswname = {};
                         const updatedSubscriptionList = [];
 
@@ -725,26 +724,11 @@ class StorageHandler {
                                 if (name.rows.length > 0) {
 
                                     if (!updatedSubscriptionList.includes(subscribedtsplits[i])) {
-                                        //temp.push({ "trainingsplit_id": subscribedtsplits[i], "trainingsplit_name": name.rows[0].trainingsplit_name });
                                         updatedSubscriptionList.push(subscribedtsplits[i]);
                                         subscribedtsplitswname[subscribedtsplits[i]] = name.rows[0].trainingsplit_name;
                                     }
                                 }
                             }
-
-                            /*if (temp.length > 0) {
-
-                                temp.sort(function (a, b) {
-                                    if (a.trainingsplit_name < b.trainingsplit_name) { return -1; }
-                                    if (a.trainingsplit_name > b.trainingsplit_name) { return 1; }
-                                    return 0;
-                                });
-
-                                for (let z = 0; z < temp.length; z++) {
-                                    const current = temp[z];
-                                    subscribedtsplitswname[current.trainingsplit_id] = current.trainingsplit_name;
-                                }
-                            }*/
                         }
 
                         if (updatedSubscriptionList.length !== subscribedtsplits.length) {
@@ -2236,14 +2220,20 @@ class StorageHandler {
 
                 } else {
 
-                    if (subscribedTrainingsplits.length < ECustomList.max.subscribedTrainingsplits) {
-                        //subscribe
-                        subscribedTrainingsplits.push(tIDString);
-                        msg = `Du abonnerer nå på denne planen`;
-                        update = true;
+                    if (trainingsplit.rows[0].public === true) {
+
+                        if (subscribedTrainingsplits.length < ECustomList.max.subscribedTrainingsplits) {
+                            //subscribe
+                            subscribedTrainingsplits.push(tIDString);
+                            msg = `Du abonnerer nå på denne planen`;
+                            update = true;
+                        } else {
+                            msg = `Du kan ikke abonnere på flere enn ${ECustomList.max.subscribedTrainingsplits} treningsplaner!`;
+                            update = false;
+                        }
                     } else {
-                        msg = `Du kan ikke abonnere på flere enn ${ECustomList.max.subscribedTrainingsplits} treningsplaner!`;
-                        update = false;
+                        msg = `Treningsplanen er privat!`;
+                        results = false;
                     }
                 }
 

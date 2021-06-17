@@ -51,5 +51,10 @@ border-top: var(--main-borderHeaderTop);
 border-top: var(--main-border);
 }
 
+.settingsNotificationsCount {
+fill: white;
+font-size: 10px;
+}
+
 
 /* end of mobile & desktop */

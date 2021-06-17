@@ -961,19 +961,32 @@ function enableOverlayEditDays() {
     }
 
     if (Object.keys(subscribedTrainingsplits).length > 0) {
+        const temp = [];
         const subscribedTrainingsplitsKeys = Object.keys(subscribedTrainingsplits);
         let listworkoutSubscribedPlansOptionsHTML = "<option value='null'>Velg fra listen</option>";
         for (let w = 0; w < subscribedTrainingsplitsKeys.length; w++) {
-            const name = subscribedTrainingsplits[subscribedTrainingsplitsKeys[w]];
+            temp.push({ "trainingsplit_id": parseInt(subscribedTrainingsplitsKeys[w]), "trainingsplit_name": subscribedTrainingsplits[subscribedTrainingsplitsKeys[w]] });
+        }
+
+        // sorts trainingsplit names in alphabetical order
+        temp.sort(function (a, b) {
+            if (a.trainingsplit_name < b.trainingsplit_name) { return -1; }
+            if (a.trainingsplit_name > b.trainingsplit_name) { return 1; }
+            return 0;
+        });
+
+        for (let i = 0; i < temp.length; i++) {
+            const id = temp[i].trainingsplit_id;
+            const name = temp[i].trainingsplit_name;
             let selected = "";
             if (activetrainingsplit) {
                 if (activetrainingsplit.trainingsplit_id) {
-                    if (activetrainingsplit.trainingsplit_id === parseInt(subscribedTrainingsplitsKeys[w])) {
+                    if (activetrainingsplit.trainingsplit_id === id) {
                         selected = "selected";
                     }
                 }
             }
-            listworkoutSubscribedPlansOptionsHTML += `<option ${selected} value="${subscribedTrainingsplitsKeys[w]}">${name}</option>`;
+            listworkoutSubscribedPlansOptionsHTML += `<option ${selected} value="${id}">${name}</option>`;
         }
 
         document.getElementById("listsubworkoutPlans").innerHTML = listworkoutSubscribedPlansOptionsHTML;
