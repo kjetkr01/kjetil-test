@@ -11,7 +11,7 @@ const minCharLength = 3,
 async function validate(displayname, username, password, confirmpassword) {
 
     let message = "";
-    let errorMsg = `må være lengre enn ${minCharLength} tegn og kortere enn ${maxCharLength} tegn`;
+    let errorMsg = `må være mellom ${minCharLength} og ${maxCharLength} tegn`;
 
     if (displayname && username && password && confirmpassword) {
 
@@ -86,7 +86,6 @@ async function validate(displayname, username, password, confirmpassword) {
 async function login(username, password, rmbrMe) {
 
     let message = "";
-    let errorMsg = `må være lengre enn ${minCharLength} tegn og kortere enn ${maxCharLength} tegn`;
 
     if (username && password) {
 
@@ -127,7 +126,7 @@ async function login(username, password, rmbrMe) {
             }
 
         } else {
-            message = `Brukernavnet ${errorMsg}`;
+            message = "Brukernavnet eller passordet er feil!";
         }
 
     } else {

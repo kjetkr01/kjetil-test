@@ -928,7 +928,7 @@ async function loadAPIPage() {
 // loads privacy page in settings
 async function loadPrivacyPage() {
 
-    settingsGrid.innerHTML = justTextTemplate(`${application.name} samler ikke inn data fra brukeren sine.`, "left");
+    settingsGrid.innerHTML = justTextTemplate(`${application.name} respekterer personopplysningene til brukerene sine.`, "left");
 
     settingsGrid.innerHTML += getCenteredTextTemplate(`
     <button id="detailsAboutMyAccountBtn" class='settingsButton pointer' onClick="displayInformationAboutUser();">Hent mine opplysninger</button>

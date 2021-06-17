@@ -9,23 +9,15 @@ server.use(bodyParser.urlencoded({ limit: "5mb", extended: true, parameterLimit:
 server.use(bodyParser.json({ limit: "5mb" }));
 
 
-// ----------------------------- Module Requirements ----------------------- //
+/// -------------------- Module Requirements -------------------- ///
 
-/* auth.js */
-
+// auth.js
 const auth = require("./modules/auth");
 
-/* */
-
-
-/* token.js */
-
+// token.js
 const createToken = require("./modules/token").createToken;
 
-/* */
-
-/* user.js */
-
+// user.js
 const user = require("./modules/mw/user"),
      validateUser = require("./modules/mw/user").validateUser,
      acceptOrDenyUser = require("./modules/mw/user").acceptOrDenyUser,
@@ -40,38 +32,28 @@ const user = require("./modules/mw/user"),
      updatePassword = require("./modules/mw/user").updatePassword,
      updateAboutMe = require("./modules/mw/user").updateAboutMe;
 
-/* */
-
-/* trainingsplit.js */
-
+// trainingsplit.js
 const createTrainingsplit = require("./modules/mw/trainingsplit").createTrainingsplit,
-     setActiveTrainingsplit = require("./modules/mw/trainingsplit").setActiveTrainingsplit,
-     getTrainingsplit = require("./modules/mw/trainingsplit").getTrainingsplit,
      deleteTrainingsplit = require("./modules/mw/trainingsplit").deleteTrainingsplit,
-     addExerciseTrainingsplit = require("./modules/mw/trainingsplit").addExerciseTrainingsplit,
-     deleteExerciseTrainingsplit = require("./modules/mw/trainingsplit").deleteExerciseTrainingsplit,
-     addExerciseRowTrainingsplit = require("./modules/mw/trainingsplit").addExerciseRowTrainingsplit,
-     deleteExerciseRowTrainingsplit = require("./modules/mw/trainingsplit").deleteExerciseRowTrainingsplit,
-     changeExerciseOrderTrainingsplit = require("./modules/mw/trainingsplit").changeExerciseOrderTrainingsplit,
+     saveTrainingsplit = require("./modules/mw/trainingsplit").saveTrainingsplit,
+     getTrainingsplit = require("./modules/mw/trainingsplit").getTrainingsplit,
      copyTrainingsplit = require("./modules/mw/trainingsplit").copyTrainingsplit,
      subUnsubTrainingsplit = require("./modules/mw/trainingsplit").subUnsubTrainingsplit,
+     setActiveTrainingsplit = require("./modules/mw/trainingsplit").setActiveTrainingsplit,
      setNotActiveTrainingsplit = require("./modules/mw/trainingsplit").setNotActiveTrainingsplit,
-     saveTrainingsplit = require("./modules/mw/trainingsplit").saveTrainingsplit,
-     changeTrainingsplitVisibility = require("./modules/mw/trainingsplit").changeTrainingsplitVisibility;
+     changeTrainingsplitVisibility = require("./modules/mw/trainingsplit").changeTrainingsplitVisibility,
+     addExerciseTrainingsplit = require("./modules/mw/trainingsplit").addExerciseTrainingsplit,
+     deleteExerciseTrainingsplit = require("./modules/mw/trainingsplit").deleteExerciseTrainingsplit,
+     changeExerciseOrderTrainingsplit = require("./modules/mw/trainingsplit").changeExerciseOrderTrainingsplit,
+     addExerciseRowTrainingsplit = require("./modules/mw/trainingsplit").addExerciseRowTrainingsplit,
+     deleteExerciseRowTrainingsplit = require("./modules/mw/trainingsplit").deleteExerciseRowTrainingsplit;
 
-/* */
-
-
-/* liftOrGoal.js */
-
+// liftOrGoal.js
 const saveLiftOrGoal = require("./modules/mw/liftOrGoal").saveLiftOrGoal,
      setGoalAsComplete = require("./modules/mw/liftOrGoal").setGoalAsComplete,
      deleteLiftOrGoal = require("./modules/mw/liftOrGoal").deleteLiftOrGoal;
 
-/* */
-
-/* get.js */
-
+// get.js
 const getListOfUsers = require("./modules/mw/get").getListOfUsers,
      getListOfLeaderboards = require("./modules/mw/get").getListOfLeaderboards,
      getListOfUsersLeaderboard = require("./modules/mw/get").getListOfUsersLeaderboard,
@@ -81,32 +63,24 @@ const getListOfUsers = require("./modules/mw/get").getListOfUsers,
      getListOfAllUsersWorkoutToday = require("./modules/mw/get").getListOfAllUsersWorkoutToday,
      getAllUserInformation = require("./modules/mw/get").getAllUserInformation;
 
-/* */
-
-
-/* API.js */
-
+// API.js
 const getWorkoutPlanAPI = require("./modules/mw/API").getWorkoutPlanAPI,
      getTotalPBAPI = require("./modules/mw/API").getTotalPBAPI,
      getLiftsAPI = require("./modules/mw/API").getLiftsAPI;
 
-/* */
+// customlist.js
+const ECustomList = require("./modules/customList").ECustomList;
 
-
-/* ECustomList */
-
-const ECustomList = require("./customList").ECustomList;
-
-/* */
-
+// ts_application.js
 const application = require("./public/ts_application").ts_application;
 
-// ----------------------------- End Of Module Requirements ----------------------- //
+/// -------------------- End of Module Requirements -------------------- ///
 
 
 
-// ----------------------------- globale variabler ----------------------- //
+/// -------------------- Global Variables -------------------- ///
 
+// maximum username / displayname length
 const maxCharLength = 20,
      minCharLength = 3;
 
@@ -117,51 +91,17 @@ const APIErrorJSON = {
      lift: { error: "Brukeren har ikke alle nødvendige løft for å regne ut totalen. Må ha 1 rep av Benkpress, Knebøy og Markløft" },
 }
 
-//
+/// -------------------- End of Global Variables -------------------- ///
 
-// -------------------------------  get application details ---------------------- //
-
+// get application details
 server.post("/application", async function (req, res) {
-
      res.status(200).json(application).end();
-
 });
+// End of /application POST
 
-//
+/// -------------------- Login & Ask for access -------------------- ///
 
-// -------------------------------  ask for access / new user ---------------------- //
-
-server.post("/access", async function (req, res) {
-     try {
-          const credentials = req.body.authorization.split(' ')[1];
-          const [username, password, displayname] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
-
-          if (username && password && displayname) {
-
-               const newUser = new user(username, password, displayname);
-               const resp = await newUser.addToPendingList();
-
-               if (resp === null) {
-                    res.status(401).json("Brukernavnet er opptatt!").end();
-               } else {
-                    res.status(200).json("Du har nå bedt om tilgang!").end();
-               }
-
-          } else {
-               res.status(403).json(`Feil, prøv igjen`).end();
-          }
-     } catch (err) {
-          console.log(err);
-          res.status(403).json(`Feil, prøv igjen`).end();
-     }
-});
-
-//
-
-
-
-// -------------------------------  login / authenticate user ---------------------- //
-
+// login / authenticate user
 server.post("/authenticate", async function (req, res) {
      try {
           const credentials = req.body.authorization.split(' ')[1];
@@ -195,12 +135,508 @@ server.post("/authenticate", async function (req, res) {
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 });
+// End of /autenticate POST
 
-//
+// ask for access / new user
+server.post("/access", async function (req, res) {
+     try {
+          const credentials = req.body.authorization.split(' ')[1];
+          const [username, password, displayname] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
+
+          if (username && password && displayname) {
+
+               if (username.length < maxCharLength || username.length > minCharLength) {
+
+                    if (displayname.length < maxCharLength || displayname.length > minCharLength) {
+
+                         const newUser = new user(username, password, displayname);
+                         const resp = await newUser.addToPendingList();
+
+                         if (resp === null) {
+                              res.status(401).json("Brukernavnet er opptatt!").end();
+                         } else {
+                              res.status(200).json("Du har nå bedt om tilgang!").end();
+                         }
+
+                    } else {
+                         res.status(401).json(`Visningsnavnet må være mellom ${minCharLength} og ${maxCharLength} tegn!`).end();
+                    }
+
+               } else {
+                    res.status(401).json(`Brukernavnet må være mellom ${minCharLength} og ${maxCharLength} tegn!`).end();
+               }
+
+          } else {
+               res.status(403).json("Vennligst fyll ut alle feltene!").end();
+          }
+     } catch (err) {
+          console.log(err);
+          res.status(403).json(`Det har oppstått en feil, vennligst prøv igjen`).end();
+     }
+});
+// End of /access POST
 
 
-// -------------------------------  get list of users ---------------------- //
+/// -------------------- End of Login & Ask for access -------------------- ///
 
+/// -------------------- Trainingsplit -------------------- ///
+
+// create new trainingsplit
+server.post("/user/create/trainingsplit", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+
+          const resp = await createTrainingsplit(currentUser.id);
+
+          if (resp.status === true) {
+               res.status(200).json(resp.newtrainingsplit_id).end();
+          } else {
+               res.status(403).json("error, try again").end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/create/trainingsplit POST
+
+// delete trainingsplit
+server.post("/user/delete/trainingsplit", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+
+          if (!isNaN(trainingsplit_id)) {
+
+               const resp = await deleteTrainingsplit(currentUser.id, trainingsplit_id);
+
+               if (resp === true) {
+                    res.status(200).json(true).end();
+               } else {
+                    res.status(403).json("error, try again").end();
+               }
+          } else {
+               res.status(403).json("error, try again").end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/delete/trainingsplit POST
+
+// save trainingsplit
+server.post("/user/save/trainingsplit", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+          const day = req.body.day;
+          const list = req.body.list;
+          const trainingsplit_name = req.body.trainingsplit_name;
+          const mostCountExercises = req.body.mostCountExercises;
+
+          let shortTxt = "Annet";
+          if (list.length > 0) {
+               if (mostCountExercises.length > 0) {
+
+                    const txt = mostCountExercises.toString().toLowerCase();
+
+                    const shortList = {
+                         "Bryst": ["benkpress", "skråbenk", "benk", "flies", "pushup"],
+                         "Skuldre": ["skulderpress", "skulder", "skuldre", "overhead", "raise"],
+                         "Rygg": ["markløft", "pullup", "roing", "row", "hyperextension"],
+                         "Biceps": ["bicep", "curl", "hammer"],
+                         "Triceps": ["tricep", "pushdown", "dip", "crusher"],
+                         "Bein": ["knebøy", "leg", "hamstring", "lunge", "utfall"],
+                         "Mage": ["situp", "plank", "crunch", "abs", "roll"],
+                    }
+
+                    // shortList and keywords (saveTrainingsplit in account/editInformation.js ~ line 960) should be equal
+
+                    const shortListKeys = Object.keys(shortList);
+                    const names = [];
+
+                    for (let i = 0; i < shortListKeys.length; i++) {
+
+                         const current = shortListKeys[i];
+                         const keywords = shortList[current];
+
+                         for (let j = 0; j < keywords.length; j++) {
+                              const keyword = keywords[j];
+                              if (txt.includes(keyword)) {
+                                   if (!names.includes(current)) {
+                                        names.push(current);
+                                        break;
+                                   }
+                              }
+                         }
+                    }
+
+                    if (names.length >= 2) {
+                         shortTxt = `${names[0]} og ${names[1]}`;
+                    } else if (names.length >= 1) {
+                         shortTxt = names[0];
+                    }
+
+               }
+          } else {
+               shortTxt = "";
+          }
+
+          const trainingsplit_short = shortTxt;
+
+          if (!isNaN(trainingsplit_id)) {
+
+               const resp = await saveTrainingsplit(currentUser.id, trainingsplit_id, day, list, trainingsplit_name, trainingsplit_short);
+
+               if (resp === true) {
+                    res.status(200).json("saved").end();
+               } else {
+                    res.status(403).json("error").end();
+               }
+
+          } else {
+               res.status(403).json("error").end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/save/trainingsplit POST
+
+// get trainingsplit
+server.post("/user/get/trainingsplit", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+
+          if (!isNaN(trainingsplit_id)) {
+
+               const resp = await getTrainingsplit(currentUser.id, trainingsplit_id);
+
+               if (resp.status === true) {
+                    res.status(200).json(resp.trainingsplit).end();
+               } else {
+                    res.status(403).json(resp.msg).end();
+               }
+          } else {
+               res.status(403).json("error, try again").end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/get/trainingsplit POST
+
+// copy trainingsplit
+server.post("/user/copy/trainingsplit", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+          const owner_id = req.body.owner_id;
+
+          if (!isNaN(trainingsplit_id)) {
+
+               const resp = await copyTrainingsplit(currentUser.id, trainingsplit_id, owner_id);
+
+               if (resp.status === true) {
+                    res.status(200).json(resp).end();
+               } else {
+                    res.status(403).json(resp).end();
+               }
+          } else {
+               res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/copy/trainingsplit POST
+
+// sub unsub trainingsplit
+server.post("/user/subunsub/trainingsplit", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+          const owner_id = req.body.owner_id;
+
+          if (!isNaN(trainingsplit_id)) {
+
+               const resp = await subUnsubTrainingsplit(currentUser.id, trainingsplit_id, owner_id);
+
+               if (resp.status === true) {
+                    res.status(200).json(resp).end();
+               } else {
+                    res.status(403).json(resp).end();
+               }
+          } else {
+               res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/subunsub/trainingsplit POST
+
+// set active trainingsplit
+server.post("/user/setactive/trainingsplit", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+
+          if (!isNaN(trainingsplit_id)) {
+
+               const resp = await setActiveTrainingsplit(currentUser.id, trainingsplit_id);
+
+               if (resp === true) {
+                    res.status(200).json(true).end();
+               } else {
+                    res.status(403).json("error, try again").end();
+               }
+          } else {
+               res.status(403).json("error, try again").end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/setactive/trainingsplit POST
+
+// setnotactive trainingsplit
+server.post("/user/setnotactive/trainingsplit", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const resp = await setNotActiveTrainingsplit(currentUser.id);
+
+          if (resp === true) {
+               res.status(200).json(true).end();
+          } else {
+               res.status(403).json(false).end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/setnotactive/trainingsplit POST
+
+// change visibility trainingsplit
+server.post("/user/change/trainingsplit/visibility", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+          let value = req.body.value;
+
+          if (!isNaN(trainingsplit_id)) {
+
+               if (value !== true) {
+                    value = false;
+               }
+
+               const resp = await changeTrainingsplitVisibility(currentUser.id, trainingsplit_id, value);
+
+               if (resp === true) {
+                    res.status(200).json(resp).end();
+               } else {
+                    res.status(403).json({ "status": false, "msg": `Det har oppstått en feil!` }).end();
+               }
+          } else {
+               res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/change/trainingsplit/visibility POST
+
+// add exercise to trainingsplit
+server.post("/user/add/trainingsplit/exercise", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+          const exercise = req.body.exercise;
+          const day = req.body.day;
+
+          if (!isNaN(trainingsplit_id)) {
+
+               const maxExerciseLength = 30;
+
+               let isValid = false;
+               for (let z = 0; z < ECustomList.allowed.lifts.length; z++) {
+                    if (exercise.toLowerCase() === ECustomList.allowed.lifts[z]) {
+                         isValid = true;
+                         break;
+                    }
+               }
+
+               if (exercise.length <= maxExerciseLength || isValid === true) {
+                    const resp = await addExerciseTrainingsplit(currentUser.id, trainingsplit_id, exercise, day);
+
+                    if (resp.status === true) {
+                         res.status(200).json(resp.status).end();
+                    } else {
+                         res.status(403).json(resp).end();
+                    }
+               } else {
+                    res.status(403).json({ "status": false, "msg": `Navnet på øvelsen kan ikke være lengre enn ${maxExerciseLength} bokstaver!` }).end();
+               }
+          } else {
+               res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/add/trainingsplit/exercise POST
+
+// delete exercise from trainingsplit
+server.post("/user/delete/trainingsplit/exercise", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+          const exercise = req.body.exercise;
+          const day = req.body.day;
+
+          if (!isNaN(trainingsplit_id)) {
+
+               const resp = await deleteExerciseTrainingsplit(currentUser.id, trainingsplit_id, exercise, day);
+
+               if (resp.status === true) {
+                    res.status(200).json(resp.status).end();
+               } else {
+                    res.status(403).json(resp).end();
+               }
+          } else {
+               res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/delete/trainingsplit/exercise POST
+
+// move exercise trainingsplit
+server.post("/user/update/trainingsplit/exercise/move", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+          const day = req.body.day;
+          const index = req.body.index;
+          const moveUp = req.body.moveUp;
+
+          if (!isNaN(trainingsplit_id)) {
+
+               const resp = await changeExerciseOrderTrainingsplit(currentUser.id, trainingsplit_id, day, index, moveUp);
+
+               if (resp.status === true) {
+                    res.status(200).json(resp.status).end();
+               } else {
+                    res.status(403).json(resp).end();
+               }
+          } else {
+               res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/update/trainingsplit/exercise/move POST
+
+// add row to exercise trainingsplit
+server.post("/user/add/trainingsplit/exercise/row", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+          const exercise = req.body.exercise;
+          const day = req.body.day;
+
+          if (!isNaN(trainingsplit_id)) {
+
+               const resp = await addExerciseRowTrainingsplit(currentUser.id, trainingsplit_id, exercise, day);
+
+               if (resp.status === true) {
+                    res.status(200).json(resp.status).end();
+               } else {
+                    res.status(403).json(resp).end();
+               }
+          } else {
+               res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/add/trainingsplit/exercise/row POST
+
+// delete row to exercise trainingsplit
+server.post("/user/delete/trainingsplit/exercise/row", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+          const exercise = req.body.exercise;
+          const index = req.body.index;
+          const day = req.body.day;
+
+          if (!isNaN(trainingsplit_id)) {
+
+               const resp = await deleteExerciseRowTrainingsplit(currentUser.id, trainingsplit_id, exercise, index, day);
+
+               if (resp.status === true) {
+                    res.status(200).json(resp.status).end();
+               } else {
+                    res.status(403).json(resp).end();
+               }
+          } else {
+               res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/delete/trainingsplit/exercise/row POST
+
+/// -------------------- End of Trainingsplit -------------------- ///
+
+// get list of users
 server.post("/users/list/all", auth, async (req, res) => {
      try {
           let username = req.headers.userinfo;
@@ -237,11 +673,9 @@ server.post("/users/list/all", auth, async (req, res) => {
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 });
+// End of /users/list/all POST
 
-//
-
-// -------------------------------  get list of users on leaderboard ---------------------- //
-
+// get list of users on leaderboard
 server.post("/users/list/all/leaderboards", auth, async (req, res) => {
      try {
 
@@ -262,11 +696,9 @@ server.post("/users/list/all/leaderboards", auth, async (req, res) => {
      }
 
 });
+// End of /users/list/all/leaderboards POST
 
-//
-
-// -------------------------------  get list of users on specific leaderboard ---------------------- //
-
+// get list of users on specific leaderboard
 server.post("/users/list/all/leaderboards/:leaderboard", auth, async (req, res) => {
 
      try {
@@ -293,12 +725,9 @@ server.post("/users/list/all/leaderboards/:leaderboard", auth, async (req, res) 
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 });
+// End of /users/list/all/leaderboards/:leaderboard POST
 
-//
-
-
-// -------------------------------  get list of pending users (requests) ---------------------- //
-
+// get list of pending users (requests)
 server.post("/users/list/pending", auth, async (req, res) => {
      try {
 
@@ -313,8 +742,6 @@ server.post("/users/list/pending", auth, async (req, res) => {
           username = username.username;
 
           const listOfPendingUsers = await getListOfPendingUsers(username, onlyNumbers);
-
-          // list of pending status ??
 
           if (listOfPendingUsers !== false) {
 
@@ -332,11 +759,9 @@ server.post("/users/list/pending", auth, async (req, res) => {
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 });
+// End of /users/list/pending POST
 
-//
-
-// -------------------------------  accept or deny pending user ---------------------- //
-
+// accept or deny pending user
 server.post("/users/pending/:user/:acceptOrDeny", auth, async (req, res) => {
      try {
 
@@ -364,11 +789,9 @@ server.post("/users/pending/:user/:acceptOrDeny", auth, async (req, res) => {
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 });
+// End of /users/pending/:user/:acceptOrDeny POST
 
-//
-
-// -------------------------------  get user details (view userPage) ---------------------- //
-
+// get user details (view userPage)
 server.post("/users/details/:user", auth, async (req, res) => {
      try {
 
@@ -435,11 +858,9 @@ server.post("/users/details/:user", auth, async (req, res) => {
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 });
-
-//
+// End of /users/details/:user POST
 
 // get user settings and info
-
 server.post("/user/details/settingsInfo", auth, async (req, res) => {
      try {
 
@@ -470,11 +891,9 @@ server.post("/user/details/settingsInfo", auth, async (req, res) => {
           res.status(403).json("invalid user").end();
      }
 });
-
-//
+// End of /user/details/settingsInfo POST
 
 // update user settings
-
 server.post("/user/update/settings/:setting", auth, async (req, res) => {
      try {
 
@@ -523,11 +942,9 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
           res.status(403).json("invalid user").end();
      }
 });
-
-//
+// End of /user/update/settings/:setting POST
 
 // update displayname
-
 server.post("/user/update/displayname", auth, async (req, res) => {
      try {
 
@@ -559,11 +976,9 @@ server.post("/user/update/displayname", auth, async (req, res) => {
           res.status(403).json("invalid displayname").end();
      }
 });
-
-//
+// End of /user/update/displayname POST
 
 // update username
-
 server.post("/user/update/username", auth, async (req, res) => {
      try {
 
@@ -595,12 +1010,9 @@ server.post("/user/update/username", auth, async (req, res) => {
           res.status(403).json("invalid username").end();
      }
 });
-
-//
-
+// End of /user/update/username POST
 
 // update password
-
 server.post("/user/update/password", auth, async (req, res) => {
      try {
 
@@ -631,12 +1043,9 @@ server.post("/user/update/password", auth, async (req, res) => {
           res.status(403).json({ "status": false, "message": "Det har oppstått en feil" }).end();
      }
 });
-
-//
-
+// End of /user/update/password POST
 
 // update about me information
-
 server.post("/user/update/settings/about/me", auth, async (req, res) => {
      try {
 
@@ -723,13 +1132,9 @@ server.post("/user/update/settings/about/me", auth, async (req, res) => {
           res.status(403).json("invalid settings").end();
      }
 });
-
-//
-
-
+// End of /user/update/settings/about/me POST
 
 // save user lifts & goals
-
 server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
      try {
 
@@ -741,8 +1146,6 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
           if (currentUser.id && info.exercise && info.date && info.type === "lift" || info.type === "goal") {
 
                let isValid = false;
-
-               // fikse slik at den heller teller antall feil og om det er 0 feil, så fortsett!! sånn som i "/user/update/trainingDays/:info"
 
                const badgeColorValues = Object.entries(ECustomList.other.badgeColors);
 
@@ -806,11 +1209,9 @@ server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
           res.status(403).json("invalid information").end();
      }
 });
-
-//
+// End of /user/update/liftOrGoal/:info POST
 
 // set goal as completed and increment medals count
-
 server.post("/user/update/goals/completed", auth, async (req, res) => {
      try {
 
@@ -850,11 +1251,9 @@ server.post("/user/update/goals/completed", auth, async (req, res) => {
           res.status(403).json("invalid information").end();
      }
 });
-
-//
+// End of /user/update/goals/completed POST
 
 // decrease medals count
-
 server.post("/user/details/decrease/medalscount", auth, async (req, res) => {
      try {
 
@@ -877,11 +1276,9 @@ server.post("/user/details/decrease/medalscount", auth, async (req, res) => {
           res.status(403).json("invalid information").end();
      }
 });
-
-//
+// End of /user/details/decrease/medalscount POST
 
 // delete user lifts & goals
-
 server.post("/user/delete/liftOrGoal/:info", auth, async (req, res) => {
      try {
 
@@ -891,8 +1288,6 @@ server.post("/user/delete/liftOrGoal/:info", auth, async (req, res) => {
           if (currentUser.id && info.exercise && info.type === "lift" || info.type === "goal") {
 
                let isValid = false;
-
-               // fikse slik at den heller teller antall feil og om det er 0 feil, så fortsett!! sånn som i "/user/update/trainingDays/:info"
 
                for (let i = 0; i < ECustomList.allowed.lifts.length; i++) {
                     if (info.exercise === ECustomList.allowed.lifts[i]) {
@@ -923,495 +1318,9 @@ server.post("/user/delete/liftOrGoal/:info", auth, async (req, res) => {
           res.status(403).json("invalid information").end();
      }
 });
-
-//
-
-// create new trainingsplit
-
-server.post("/user/create/trainingsplit", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-
-          const resp = await createTrainingsplit(currentUser.id);
-
-          if (resp.status === true) {
-               res.status(200).json(resp.newtrainingsplit_id).end();
-          } else {
-               res.status(403).json("error, try again").end();
-          }
-
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid information").end();
-     }
-});
-
-//
-
-// set active trainingsplit
-
-server.post("/user/setactive/trainingsplit", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
-
-          if (!isNaN(trainingsplit_id)) {
-
-               const resp = await setActiveTrainingsplit(currentUser.id, trainingsplit_id);
-
-               if (resp === true) {
-                    res.status(200).json(true).end();
-               } else {
-                    res.status(403).json("error, try again").end();
-               }
-          } else {
-               res.status(403).json("error, try again").end();
-          }
-
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid information").end();
-     }
-});
-
-//
-
-// get trainingsplit
-
-server.post("/user/get/trainingsplit", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
-
-          if (!isNaN(trainingsplit_id)) {
-
-               const resp = await getTrainingsplit(currentUser.id, trainingsplit_id);
-
-               if (resp.status === true) {
-                    res.status(200).json(resp.trainingsplit).end();
-               } else {
-                    res.status(403).json(resp.msg).end();
-               }
-          } else {
-               res.status(403).json("error, try again").end();
-          }
-
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid information").end();
-     }
-});
-
-//
-
-// delete trainingsplit
-
-server.post("/user/delete/trainingsplit", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
-
-          if (!isNaN(trainingsplit_id)) {
-
-               const resp = await deleteTrainingsplit(currentUser.id, trainingsplit_id);
-
-               if (resp === true) {
-                    res.status(200).json(true).end();
-               } else {
-                    res.status(403).json("error, try again").end();
-               }
-          } else {
-               res.status(403).json("error, try again").end();
-          }
-
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid information").end();
-     }
-});
-
-//
-
-// add exercise to trainingsplit
-
-server.post("/user/add/trainingsplit/exercise", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
-          const exercise = req.body.exercise;
-          const day = req.body.day;
-
-          if (!isNaN(trainingsplit_id)) {
-
-               const maxExerciseLength = 30;
-
-               let isValid = false;
-               for (let z = 0; z < ECustomList.allowed.lifts.length; z++) {
-                    if (exercise.toLowerCase() === ECustomList.allowed.lifts[z]) {
-                         isValid = true;
-                         break;
-                    }
-               }
-
-               if (exercise.length <= maxExerciseLength || isValid === true) {
-                    const resp = await addExerciseTrainingsplit(currentUser.id, trainingsplit_id, exercise, day);
-
-                    if (resp.status === true) {
-                         res.status(200).json(resp.status).end();
-                    } else {
-                         res.status(403).json(resp).end();
-                    }
-               } else {
-                    res.status(403).json({ "status": false, "msg": `Navnet på øvelsen kan ikke være lengre enn ${maxCharLength} bokstaver!` }).end();
-               }
-          } else {
-               res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
-          }
-
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid information").end();
-     }
-});
-
-//
-
-
-// add row to exercise trainingsplit
-
-server.post("/user/add/trainingsplit/exercise/row", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
-          const exercise = req.body.exercise;
-          const day = req.body.day;
-
-          if (!isNaN(trainingsplit_id)) {
-
-               const resp = await addExerciseRowTrainingsplit(currentUser.id, trainingsplit_id, exercise, day);
-
-               if (resp.status === true) {
-                    res.status(200).json(resp.status).end();
-               } else {
-                    res.status(403).json(resp).end();
-               }
-          } else {
-               res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
-          }
-
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid information").end();
-     }
-});
-
-//
-
-
-// delete row to exercise trainingsplit
-
-server.post("/user/delete/trainingsplit/exercise/row", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
-          const exercise = req.body.exercise;
-          const index = req.body.index;
-          const day = req.body.day;
-
-          if (!isNaN(trainingsplit_id)) {
-
-               const resp = await deleteExerciseRowTrainingsplit(currentUser.id, trainingsplit_id, exercise, index, day);
-
-               if (resp.status === true) {
-                    res.status(200).json(resp.status).end();
-               } else {
-                    res.status(403).json(resp).end();
-               }
-          } else {
-               res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
-          }
-
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid information").end();
-     }
-});
-
-//
-
-// move exercise trainingsplit
-
-server.post("/user/update/trainingsplit/exercise/move", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
-          const day = req.body.day;
-          const index = req.body.index;
-          const moveUp = req.body.moveUp;
-
-          if (!isNaN(trainingsplit_id)) {
-
-               const resp = await changeExerciseOrderTrainingsplit(currentUser.id, trainingsplit_id, day, index, moveUp);
-
-               if (resp.status === true) {
-                    res.status(200).json(resp.status).end();
-               } else {
-                    res.status(403).json(resp).end();
-               }
-          } else {
-               res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
-          }
-
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid information").end();
-     }
-});
-
-//
-
-// delete exercise from trainingsplit
-
-server.post("/user/delete/trainingsplit/exercise", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
-          const exercise = req.body.exercise;
-          const day = req.body.day;
-
-          if (!isNaN(trainingsplit_id)) {
-
-               const resp = await deleteExerciseTrainingsplit(currentUser.id, trainingsplit_id, exercise, day);
-
-               if (resp.status === true) {
-                    res.status(200).json(resp.status).end();
-               } else {
-                    res.status(403).json(resp).end();
-               }
-          } else {
-               res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
-          }
-
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid information").end();
-     }
-});
-
-//
-
-
-// copy trainingsplit
-
-server.post("/user/copy/trainingsplit", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
-          const owner_id = req.body.owner_id;
-
-          if (!isNaN(trainingsplit_id)) {
-
-               const resp = await copyTrainingsplit(currentUser.id, trainingsplit_id, owner_id);
-
-               if (resp.status === true) {
-                    res.status(200).json(resp).end();
-               } else {
-                    res.status(403).json(resp).end();
-               }
-          } else {
-               res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
-          }
-
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid information").end();
-     }
-});
-
-//
-
-// change visibility trainingsplit
-
-server.post("/user/change/trainingsplit/visibility", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
-          let value = req.body.value;
-
-          if (!isNaN(trainingsplit_id)) {
-
-               if (value !== true) {
-                    value = false;
-               }
-
-               const resp = await changeTrainingsplitVisibility(currentUser.id, trainingsplit_id, value);
-
-               if (resp === true) {
-                    res.status(200).json(resp).end();
-               } else {
-                    res.status(403).json({ "status": false, "msg": `Det har oppstått en feil!` }).end();
-               }
-          } else {
-               res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
-          }
-
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid information").end();
-     }
-});
-
-//
-
-// sub unsub trainingsplit
-
-server.post("/user/subunsub/trainingsplit", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
-          const owner_id = req.body.owner_id;
-
-          if (!isNaN(trainingsplit_id)) {
-
-               const resp = await subUnsubTrainingsplit(currentUser.id, trainingsplit_id, owner_id);
-
-               if (resp.status === true) {
-                    res.status(200).json(resp).end();
-               } else {
-                    res.status(403).json(resp).end();
-               }
-          } else {
-               res.status(403).json({ "status": false, "msg": `Ugyldig trainingsplit_id!` }).end();
-          }
-
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid information").end();
-     }
-});
-
-//
-
-// setnotactive trainingsplit
-
-server.post("/user/setnotactive/trainingsplit", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-          const resp = await setNotActiveTrainingsplit(currentUser.id);
-
-          if (resp === true) {
-               res.status(200).json(true).end();
-          } else {
-               res.status(403).json(false).end();
-          }
-
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid information").end();
-     }
-});
-
-//
-
-// save trainingsplit
-
-server.post("/user/save/trainingsplit", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
-          const day = req.body.day;
-          const list = req.body.list;
-          const trainingsplit_name = req.body.trainingsplit_name;
-          const mostCountExercises = req.body.mostCountExercises;
-
-          let shortTxt = "Annet";
-          if (list.length > 0) {
-               if (mostCountExercises.length > 0) {
-
-                    const txt = mostCountExercises.toString().toLowerCase();
-
-                    const shortList = {
-                         "Bryst": ["benkpress", "skråbenk", "benk", "flies", "pushup"],
-                         "Skuldre": ["skulderpress", "skulder", "skuldre", "overhead", "raise"],
-                         "Rygg": ["markløft", "pullup", "roing", "row", "hyperextension"],
-                         "Biceps": ["bicep", "curl", "hammer"],
-                         "Triceps": ["tricep", "pushdown", "dip", "crusher"],
-                         "Bein": ["knebøy", "leg", "hamstring", "lunge", "utfall"],
-                         "Mage": ["situp", "plank", "crunch", "abs", "roll"],
-                    }
-
-                    // shortList and keywords (saveTrainingsplit in account/editInformation.js ~ line 960) should be equal
-
-                    const shortListKeys = Object.keys(shortList);
-                    const names = [];
-
-                    for (let i = 0; i < shortListKeys.length; i++) {
-
-                         const current = shortListKeys[i];
-                         const keywords = shortList[current];
-
-                         for (let j = 0; j < keywords.length; j++) {
-                              const keyword = keywords[j];
-                              if (txt.includes(keyword)) {
-                                   if (!names.includes(current)) {
-                                        names.push(current);
-                                        break;
-                                   }
-                              }
-                         }
-                    }
-
-                    if (names.length >= 2) {
-                         shortTxt = `${names[0]} og ${names[1]}`;
-                    } else if (names.length >= 1) {
-                         shortTxt = names[0];
-                    }
-
-               }
-          } else {
-               shortTxt = "";
-          }
-
-          const trainingsplit_short = shortTxt;
-
-          if (!isNaN(trainingsplit_id)) {
-
-               const resp = await saveTrainingsplit(currentUser.id, trainingsplit_id, day, list, trainingsplit_name, trainingsplit_short);
-
-               if (resp === true) {
-                    res.status(200).json("saved").end();
-               } else {
-                    res.status(403).json("error").end();
-               }
-
-          } else {
-               res.status(403).json("error").end();
-          }
-
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid information").end();
-     }
-});
-
-//
+// End of /user/delete/liftOrGoal/:info POST
 
 // get list of all people who are working out today (only public users)
-
 server.post("/whoIsWorkingOutToday", auth, async (req, res) => {
      try {
 
@@ -1427,11 +1336,9 @@ server.post("/whoIsWorkingOutToday", auth, async (req, res) => {
           res.status(403).json("error, try again").end();
      }
 });
-
-//
+// End of /whoIsWorkingOutToday POST
 
 // get all information about user
-
 server.get("/user/allinformation", auth, async (req, res) => {
      try {
 
@@ -1440,7 +1347,7 @@ server.get("/user/allinformation", auth, async (req, res) => {
           if (currentUser.id) {
 
                const resp = await getAllUserInformation(currentUser.id);
-               /* { "status": true, "information": { "username": "kjetkr01", "displayname": "yeet yeetson" } } */
+
                if (resp.status === true) {
                     res.status(200).json(resp.information).end();
                } else {
@@ -1454,11 +1361,9 @@ server.get("/user/allinformation", auth, async (req, res) => {
           res.status(403).json("Invalid user").end();
      }
 });
-
-//
+// End of /user/allinformation GET
 
 // delete my account
-
 server.post("/user/deleteMe", auth, async (req, res) => {
      try {
 
@@ -1491,11 +1396,9 @@ server.post("/user/deleteMe", auth, async (req, res) => {
           res.status(403).json({ "status": false, "message": "Vennligst fyll ut alle feltene" }).end();
      }
 });
+// End of /user/deleteMe POST
 
-//
-
-// -------------------------------  give user api access ---------------------- //
-
+// give user api access
 server.post("/user/giveAPIAccess", auth, async (req, res) => {
      try {
 
@@ -1520,11 +1423,9 @@ server.post("/user/giveAPIAccess", auth, async (req, res) => {
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 });
+// End of /user/giveAPIAccess POST
 
-//
-
-// -------------------------------  remove user api access ---------------------- //
-
+// remove user api access
 server.post("/user/removeAPIAccess", auth, async (req, res) => {
      try {
 
@@ -1549,17 +1450,11 @@ server.post("/user/removeAPIAccess", auth, async (req, res) => {
           res.status(403).json(`Feil, prøv igjen`).end();
      }
 });
-
-//
-
-
-
+// End of /user/removeAPIAccess POST
 
 // -------------------------------  API Routes ---------------------- //
 
-
-// -------------------------------  get list of different api ---------------------- //
-
+// get list of different api
 server.get("/api", function (req, res) {
 
      const defaultHeaders = "content-type, uid, key";
@@ -1572,12 +1467,9 @@ server.get("/api", function (req, res) {
 
      res.status(200).json(resp).end();
 });
+// End of /api GET
 
-//
-
-
-// -------------------------------  getWorkoutInfo ---------------------- //
-
+// getWorkoutInfo
 server.get("/getWorkoutInfo", async function (req, res) {
      try {
 
@@ -1637,13 +1529,10 @@ server.get("/getWorkoutInfo", async function (req, res) {
           console.log(err);
           res.status(403).json(APIErrorJSON.catch).end();
      }
-})
+});
+// End of /getWorkoutInfo GET
 
-
-//
-
-// -------------------------------  getTotalPB ---------------------- //
-
+// getTotalPB
 server.get("/getTotalPB", async function (req, res) {
      try {
 
@@ -1676,14 +1565,9 @@ server.get("/getTotalPB", async function (req, res) {
           res.status(403).json(APIErrorJSON.catch).end();
      }
 })
+// End of /getTotalPB GET
 
-
-//
-
-
-
-// -------------------------------  getLifts ---------------------- //
-
+// getLifts
 server.get("/getLifts/user", async function (req, res) {
      try {
 
@@ -1715,16 +1599,11 @@ server.get("/getLifts/user", async function (req, res) {
           console.log(err);
           res.status(403).json(APIErrorJSON.catch).end();
      }
-})
+});
+// End of /getLifts/user GET
 
-
-//
-
-// ------------------------------- END OF API Routes ---------------------- //
-
-
-// ------------------------------- allows the server to run on localhost  ------------------------------- //
+// ------------------------------- End of API Routes ---------------------- //
 
 server.listen(server.get('port'), function () {
      console.log('Server running', server.get('port'));
-})
+});
