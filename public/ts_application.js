@@ -10,12 +10,12 @@
 
     const app = {
         name: "Treningstatistikken",
-        logoURL: "images/appIcon.png",
+        logoURL: "images/placeholder_logo.svg",
         version: {
             state: "a", // a = alpha / b = beta / rc = release candidate / r = release
             major: 6,
             minor: 3,
-            revision: 26,
+            revision: 27,
             buildnumber: 984,
         },
         lastUpdated: {

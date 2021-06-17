@@ -1,4 +1,4 @@
-const cacheName = 'TS-PWA-v49';
+const cacheName = 'TS-PWA-v50';
 const swName = '[Service Worker]';
 
 const contentToCache = [
@@ -23,7 +23,8 @@ const contentToCache = [
 
     /* IMAGES */
 
-    '/images/appIcon.png',
+    '/images/placeholder_logo_icon.png',
+    '/images/placeholder_logo.svg',
     '/images/trash.svg',
 
     /* SCRIPTS */
