@@ -1,7 +1,8 @@
 const pg = require("pg");
 const dbCredentials = process.env.DATABASE_URL || require("../localenv").credentials;
 const ECustomList = require("../customList").ECustomList;
-
+/*const fs = require("fs");
+const test21 = fs.readFileSync("./queries/test.sql").toString();*/
 class StorageHandler {
 
     constructor(credentials) {

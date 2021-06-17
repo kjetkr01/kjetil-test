@@ -1,11 +1,11 @@
 "use strict";
-let previousLeaderboard = "";
-let firstLeaderboard = null;
-let repsList = [];
-let retryLoadOnce = true;
-let viewingLeaderboard = null;
-let showPeopleLeaderboardsTxtAnimation = true;
-let updateLeaderboardList = true;
+let previousLeaderboard = "",
+    firstLeaderboard = null,
+    repsList = [],
+    retryLoadOnce = true,
+    viewingLeaderboard = null,
+    showPeopleLeaderboardsTxtAnimation = true,
+    updateLeaderboardList = true;
 
 async function loadLeaderboards() {
 

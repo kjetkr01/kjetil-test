@@ -1,7 +1,9 @@
 "use strict";
 // global variables
 
-let user, allowedLifts = null, allowedGoals = null;
+let user,
+    allowedLifts = null,
+    allowedGoals = null;
 
 const defaultTxt = {
     "noConnection": "Ingen Internett-tilkobling"

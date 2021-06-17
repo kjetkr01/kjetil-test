@@ -1,8 +1,8 @@
 "use strict";
 // global variables
 
-const minCharLength = 3;
-const maxCharLength = 20;
+const minCharLength = 3,
+maxCharLength = 20;
 
 //
 

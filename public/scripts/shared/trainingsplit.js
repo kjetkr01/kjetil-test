@@ -1,9 +1,9 @@
 "use strict";
-let showTrainingsplitAnimations = true;
-let trainingsplit = null;
+let showTrainingsplitAnimations = true,
+    trainingsplit = null;
 
-const queryStringT = window.location.search;
-const urlParamsT = new URLSearchParams(queryStringT);
+const queryStringT = window.location.search,
+    urlParamsT = new URLSearchParams(queryStringT);
 
 function checkIfValidParams() {
 

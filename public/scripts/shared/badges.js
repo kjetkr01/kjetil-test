@@ -1,12 +1,13 @@
 "use strict";
-let showLiftBadgeAnimations = true;
-let showGoalBadgeAnimations = true;
-let showTrainingsplitBadgeAnimations = true;
+let showLiftBadgeAnimations = true,
+    showGoalBadgeAnimations = true,
+    showTrainingsplitBadgeAnimations = true,
+
+    liftBadgeAnimations = "",
+    goalBadgeAnimations = "",
+    trainingsplitBadgeAnimations = "";
 
 const animationClasses = "fadeInLeft animate"
-let liftBadgeAnimations = "";
-let goalBadgeAnimations = "";
-let trainingsplitBadgeAnimations = "";
 
 function getBadgeGoals(aSize, aBadgeInfo, aId) {
     try {

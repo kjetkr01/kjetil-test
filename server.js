@@ -26,69 +26,69 @@ const createToken = require("./modules/token").createToken;
 
 /* user.js */
 
-const user = require("./modules/mw/user");
-const validateUser = require("./modules/mw/user").validateUser;
-const acceptOrDenyUser = require("./modules/mw/user").acceptOrDenyUser;
-const deleteAccount = require("./modules/mw/user").deleteAccount;
-const giveUserAPIAccess = require("./modules/mw/user").giveUserAPIAccess;
-const removeUserAPIAccess = require("./modules/mw/user").removeUserAPIAccess;
-const decreaseMedalCount = require("./modules/mw/user").decreaseMedalCount;
+const user = require("./modules/mw/user"),
+     validateUser = require("./modules/mw/user").validateUser,
+     acceptOrDenyUser = require("./modules/mw/user").acceptOrDenyUser,
+     deleteAccount = require("./modules/mw/user").deleteAccount,
+     giveUserAPIAccess = require("./modules/mw/user").giveUserAPIAccess,
+     removeUserAPIAccess = require("./modules/mw/user").removeUserAPIAccess,
+     decreaseMedalCount = require("./modules/mw/user").decreaseMedalCount,
 
-const updateUserSetting = require("./modules/mw/user").updateUserSetting;
-const updateDisplayname = require("./modules/mw/user").updateDisplayname;
-const updateUsername = require("./modules/mw/user").updateUsername;
-const updatePassword = require("./modules/mw/user").updatePassword;
-const updateAboutMe = require("./modules/mw/user").updateAboutMe;
+     updateUserSetting = require("./modules/mw/user").updateUserSetting,
+     updateDisplayname = require("./modules/mw/user").updateDisplayname,
+     updateUsername = require("./modules/mw/user").updateUsername,
+     updatePassword = require("./modules/mw/user").updatePassword,
+     updateAboutMe = require("./modules/mw/user").updateAboutMe;
 
 /* */
 
 /* trainingsplit.js */
 
-const createTrainingsplit = require("./modules/mw/trainingsplit").createTrainingsplit;
-const setActiveTrainingsplit = require("./modules/mw/trainingsplit").setActiveTrainingsplit;
-const getTrainingsplit = require("./modules/mw/trainingsplit").getTrainingsplit;
-const deleteTrainingsplit = require("./modules/mw/trainingsplit").deleteTrainingsplit;
-const addExerciseTrainingsplit = require("./modules/mw/trainingsplit").addExerciseTrainingsplit;
-const deleteExerciseTrainingsplit = require("./modules/mw/trainingsplit").deleteExerciseTrainingsplit;
-const addExerciseRowTrainingsplit = require("./modules/mw/trainingsplit").addExerciseRowTrainingsplit;
-const deleteExerciseRowTrainingsplit = require("./modules/mw/trainingsplit").deleteExerciseRowTrainingsplit;
-const changeExerciseOrderTrainingsplit = require("./modules/mw/trainingsplit").changeExerciseOrderTrainingsplit;
-const copyTrainingsplit = require("./modules/mw/trainingsplit").copyTrainingsplit;
-const subUnsubTrainingsplit = require("./modules/mw/trainingsplit").subUnsubTrainingsplit;
-const setNotActiveTrainingsplit = require("./modules/mw/trainingsplit").setNotActiveTrainingsplit;
-const saveTrainingsplit = require("./modules/mw/trainingsplit").saveTrainingsplit;
-const changeTrainingsplitVisibility = require("./modules/mw/trainingsplit").changeTrainingsplitVisibility;
+const createTrainingsplit = require("./modules/mw/trainingsplit").createTrainingsplit,
+     setActiveTrainingsplit = require("./modules/mw/trainingsplit").setActiveTrainingsplit,
+     getTrainingsplit = require("./modules/mw/trainingsplit").getTrainingsplit,
+     deleteTrainingsplit = require("./modules/mw/trainingsplit").deleteTrainingsplit,
+     addExerciseTrainingsplit = require("./modules/mw/trainingsplit").addExerciseTrainingsplit,
+     deleteExerciseTrainingsplit = require("./modules/mw/trainingsplit").deleteExerciseTrainingsplit,
+     addExerciseRowTrainingsplit = require("./modules/mw/trainingsplit").addExerciseRowTrainingsplit,
+     deleteExerciseRowTrainingsplit = require("./modules/mw/trainingsplit").deleteExerciseRowTrainingsplit,
+     changeExerciseOrderTrainingsplit = require("./modules/mw/trainingsplit").changeExerciseOrderTrainingsplit,
+     copyTrainingsplit = require("./modules/mw/trainingsplit").copyTrainingsplit,
+     subUnsubTrainingsplit = require("./modules/mw/trainingsplit").subUnsubTrainingsplit,
+     setNotActiveTrainingsplit = require("./modules/mw/trainingsplit").setNotActiveTrainingsplit,
+     saveTrainingsplit = require("./modules/mw/trainingsplit").saveTrainingsplit,
+     changeTrainingsplitVisibility = require("./modules/mw/trainingsplit").changeTrainingsplitVisibility;
 
 /* */
 
 
 /* liftOrGoal.js */
 
-const saveLiftOrGoal = require("./modules/mw/liftOrGoal").saveLiftOrGoal;
-const setGoalAsComplete = require("./modules/mw/liftOrGoal").setGoalAsComplete;
-const deleteLiftOrGoal = require("./modules/mw/liftOrGoal").deleteLiftOrGoal;
+const saveLiftOrGoal = require("./modules/mw/liftOrGoal").saveLiftOrGoal,
+     setGoalAsComplete = require("./modules/mw/liftOrGoal").setGoalAsComplete,
+     deleteLiftOrGoal = require("./modules/mw/liftOrGoal").deleteLiftOrGoal;
 
 /* */
 
 /* get.js */
 
-const getListOfUsers = require("./modules/mw/get").getListOfUsers;
-const getListOfLeaderboards = require("./modules/mw/get").getListOfLeaderboards;
-const getListOfUsersLeaderboard = require("./modules/mw/get").getListOfUsersLeaderboard;
-const getListOfPendingUsers = require("./modules/mw/get").getListOfPendingUsers;
-const getUserDetails = require("./modules/mw/get").getUserDetails;
-const getUserSettingsAndInfo = require("./modules/mw/get").getUserSettingsAndInfo;
-const getListOfAllUsersWorkoutToday = require("./modules/mw/get").getListOfAllUsersWorkoutToday;
-const getAllUserInformation = require("./modules/mw/get").getAllUserInformation;
+const getListOfUsers = require("./modules/mw/get").getListOfUsers,
+     getListOfLeaderboards = require("./modules/mw/get").getListOfLeaderboards,
+     getListOfUsersLeaderboard = require("./modules/mw/get").getListOfUsersLeaderboard,
+     getListOfPendingUsers = require("./modules/mw/get").getListOfPendingUsers,
+     getUserDetails = require("./modules/mw/get").getUserDetails,
+     getUserSettingsAndInfo = require("./modules/mw/get").getUserSettingsAndInfo,
+     getListOfAllUsersWorkoutToday = require("./modules/mw/get").getListOfAllUsersWorkoutToday,
+     getAllUserInformation = require("./modules/mw/get").getAllUserInformation;
 
 /* */
 
 
 /* API.js */
 
-const getWorkoutPlanAPI = require("./modules/mw/API").getWorkoutPlanAPI;
-const getTotalPBAPI = require("./modules/mw/API").getTotalPBAPI;
-const getLiftsAPI = require("./modules/mw/API").getLiftsAPI;
+const getWorkoutPlanAPI = require("./modules/mw/API").getWorkoutPlanAPI,
+     getTotalPBAPI = require("./modules/mw/API").getTotalPBAPI,
+     getLiftsAPI = require("./modules/mw/API").getLiftsAPI;
 
 /* */
 
@@ -107,8 +107,8 @@ const application = require("./public/ts_application").ts_application;
 
 // ----------------------------- globale variabler ----------------------- //
 
-const maxCharLength = 20;
-const minCharLength = 3;
+const maxCharLength = 20,
+     minCharLength = 3;
 
 const APIErrorJSON = {
      catch: { error: "Det har oppstått et problem!" },

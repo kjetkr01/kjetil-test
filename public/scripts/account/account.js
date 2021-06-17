@@ -1,11 +1,10 @@
 "use strict";
 // requestAccountDetails
-let lifts = null;
-let goals = null;
-let activetrainingsplit = null;
-let badgeColorsJSON = null;
-let size = 0;
-let memberSince = null;
+let lifts = null,
+    goals = null,
+    activetrainingsplit = null,
+    badgeColorsJSON = null,
+    memberSince = null;
 
 function displayUserDetailsCached() {
 
@@ -195,7 +194,6 @@ function displayInformation(respInfo) {
     }
 
     const info = respInfo;
-    size = 0;
 
     const displayname = info.displayname;
     const gym = info.info.gym;
@@ -561,7 +559,7 @@ async function displayGoals(hasGoalsLeft, checkIfCompleted) {
 
             for (let i = 0; i < arr.length; i++) {
 
-                const badge = getBadgeGoals(size, arr[i], arr[i].id);
+                const badge = getBadgeGoals(0, arr[i], arr[i].id);
 
                 const badgesGoalsTableRow = document.getElementById("badgesGoalsTableRow");
 

@@ -1,5 +1,10 @@
 "use strict";
-let liftsLeft = null, goalsLeft = null, trainingsplitsLeft = null, liftsInfo = null, goalsInfo = null, badgeColors = null;
+let liftsLeft = null,
+    goalsLeft = null,
+    trainingsplitsLeft = null,
+    liftsInfo = null,
+    goalsInfo = null,
+    badgeColors = null;
 
 function changeVisibility() {
     const inp1 = document.getElementById("inp1C");

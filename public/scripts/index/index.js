@@ -1,5 +1,7 @@
 "use strict";
-let lifts = null, goals = null, badgeColorsJSON = null;
+let lifts = null,
+    goals = null,
+    badgeColorsJSON = null;
 
 // usage : partOfDayMessage("Kjetil Kristiansen")
 
