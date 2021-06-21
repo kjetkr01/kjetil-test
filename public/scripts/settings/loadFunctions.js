@@ -453,7 +453,7 @@ async function loadAboutAppPage(setting) {
             const appInfoHTML = `
             <strong>${application.name}</strong>
             <br>
-            <p id="applicationVersionEtc" class="settingsApplicationFullVersion">${application.version.full || application.version.fullNumber || ""}</p>
+            <p id="applicationVersionEtc" class="settingsApplicationFullVersion">${application.versionFull || application.versionFullNumber || ""}</p>
             <p id="newUpdateAvailable" class="settingsApplicationFullVersion"></p>
             `;
 
@@ -467,32 +467,13 @@ async function loadAboutAppPage(setting) {
 
             settingsGrid.innerHTML += getLeftTextTemplate(aboutAppText, "", "spacingTop");
 
-            /*if (application.updatesInfo.showOnGoing === true) {
-                settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${ongoingUpdatesText}</button>`, "", "spacingTop");
-                settingsGrid.innerHTML += getLeftTextTemplate(ongoingUpdates);
-            }
-
-            if (application.updatesInfo.showPlanned === true) {
-                settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${plannedUpdatesText}</button>`, "", "spacingTop");
-                settingsGrid.innerHTML += getLeftTextTemplate(plannedUpdates);
-            }*/
-
             settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>Versjonslogg</button>`, "", "spacingTop");
 
-            const versionLogKeys = Object.keys(application.versionLog);
-            const newestVersion = versionLogKeys[versionLogKeys.length - 1];
-            const newestVersionTextArr = application.versionLog[newestVersion].txt;
-            const newestVersionDate = application.versionLog[newestVersion].date;
+            settingsGrid.innerHTML += getLeftTextTemplate(`
+            <div id="versionLogsDiv">
+            </div>`);
 
-            let versionTxt = "";
-
-            for (let i = 0; i < newestVersionTextArr.length; i++) {
-                versionTxt += `- ${newestVersionTextArr[i]}<br>`;
-            }
-
-            settingsGrid.innerHTML += getLeftTextTemplate(`<strong>${newestVersionDate}</strong><br><br>${versionTxt}<br>Versjon ${newestVersion}`);
-
-            settingsGrid.innerHTML += getCenteredTextTemplate(aboutAppBottomInfo, "", "spacingTop");
+            showNewestVersionLog();
 
             try {
                 const allCaches = await caches.keys();
@@ -529,15 +510,15 @@ async function loadAboutAppPage(setting) {
 
                 const serverApplication = await callServerAPIPost(infoHeader, url);
                 if (serverApplication) {
-                    if (serverApplication.version.fullNumber !== application.version.fullNumber) {
+                    if (serverApplication.versionFullNumber !== application.versionFullNumber) {
                         let html = `
-                        Nyeste versjon: ${serverApplication.version.fullNumber}<br>
+                        Nyeste versjon: ${serverApplication.versionFullNumber}<br>
                         <button class="settingsButton pointer" onClick="updateApplication();">Oppdater nå</button>`;
 
                         if (user.getSetting("automaticupdates") === true) {
                             html += `
                             <br><br>
-                            Versjonen blir installert automatisk i morgen (Krever Internett-tilkobling)`;
+                            Versjonen vil prøve å installeres automatisk i morgen (Krever Internett-tilkobling)`;
                         }
 
                         document.getElementById("newUpdateAvailable").innerHTML = html;

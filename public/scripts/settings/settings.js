@@ -668,6 +668,104 @@ async function removeMedal(aMedalsCount, aCount) {
 }
 // End of removeMedal function
 
+// shows newest version details
+function showNewestVersionLog() {
+    const versionLogsDiv = document.getElementById("versionLogsDiv");
+
+    versionLogsDiv.innerHTML = "";
+
+    const versionLogKeys = Object.keys(application.versionLog);
+    const newestVersion = versionLogKeys[0];
+
+    versionLogsDiv.innerHTML = getVersionLogTemplate(newestVersion);
+
+    if (versionLogKeys.length > 1) {
+        versionLogsDiv.innerHTML += `<br>
+        <br><button class='settingsButton pointer' onclick="expandVersionLogs();">Vis mer</button>`;
+    }
+}
+// End of showNewestVersionLog function
+
+// expands version logs (shows all logs)
+function expandVersionLogs() {
+
+    const versionLogsKeys = Object.keys(application.versionLog);
+
+    const versionLogsDiv = document.getElementById("versionLogsDiv");
+
+    versionLogsDiv.innerHTML = "";
+
+    for (let i = 0; i < versionLogsKeys.length; i++) {
+        const version = versionLogsKeys[i];
+
+        if (i >= 1) {
+            versionLogsDiv.innerHTML += "<br><br>";
+        }
+
+        versionLogsDiv.innerHTML += getVersionLogTemplate(version);
+    }
+
+    versionLogsDiv.innerHTML += `
+    <br>
+    <br><button class='settingsButton pointer' onclick="showNewestVersionLog();">Vis mindre</button>`;
+}
+// End of expandVersionLogs function
+
+// returns version log template
+function getVersionLogTemplate(aVersion) {
+
+    const version = aVersion;
+
+    const versionTextArr = application.versionLog[version].txt;
+    const versionDate = application.versionLog[version].date;
+
+    let versionTxt = "";
+
+    for (let i = 0; i < versionTextArr.length; i++) {
+        versionTxt += `- ${versionTextArr[i]}<br>`;
+    }
+
+    //
+
+    let string = "";
+
+    const date = versionDate.split(".");
+
+    const todayDate = new Date();
+    const updateDate = new Date(parseInt(date[2]), (parseInt(date[1]) - 1), parseInt(date[0]));
+
+    const option = { month: "long", day: "numeric", year: "numeric" };
+    let localDate = updateDate;
+    localDate.toLocaleDateString("no-NB", option);
+
+    const dateFormat = localDate.toLocaleDateString("no-NB", option);
+
+    const daysSinceTime = parseInt((todayDate - updateDate) / (1000 * 3600 * 24));
+
+    if (todayDate < updateDate) {
+        //fremtiden
+    } else if (daysSinceTime === 0) {
+        string = `I dag`;
+    } else if (daysSinceTime === 1) {
+        string = `I går`;
+    } else if (daysSinceTime <= 14) {
+        string = `${parseInt(daysSinceTime)} dager siden`;
+    } else {
+        string = dateFormat;
+    }
+
+    //
+
+    const html = `
+    <strong>${string}</strong>
+    <br><br>${versionTxt}
+    <br>Versjon ${version}
+    `;
+
+    return html;
+}
+// End of getVersionLogTemplate function
+
 // returns approximate size of a single cache (in bytes)
 function cacheSize(c) {
     return c.keys().then(a => {

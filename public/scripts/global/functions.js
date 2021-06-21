@@ -327,6 +327,30 @@ function getDaysSinceAndDate(aDate) {
 }
 // End of getDaysSinceAndDate function
 
+// tries to create local date string
+function getDateFormat(aDay, aMonth, aYear) {
+
+    const day = aDay;
+    const month = aMonth;
+    const year = aYear;
+
+    let string = "Ugyldig dato";
+
+    if (day && month && year) {
+        if (day.length === 1 || day.length === 2 && month.length === 1 || month.length === 2 && year.length === 4) {
+
+            string = new Date(`${year}-${month}-${day}`);
+            if (isNaN(string)) {
+                string = `${day}.${month}.${year}`;
+            } else {
+                string = new Date(`${year}-${month}-${day}`).toLocaleDateString();
+            }
+        }
+    }
+    return string;
+}
+// End of getDateFormat function
+
 // updates "application" / deletes old caches if connected to internet
 function updateApplication(aShowNotification) {
     if (window.navigator.onLine) {
