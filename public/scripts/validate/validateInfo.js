@@ -8,7 +8,7 @@ const minCharLength = 3,
 
 // usage: " validate("My Displayname", "myusername", "mypassword", "mypassword"); "
 // validates input
-async function validate(displayname, username, password, confirmpassword) {
+async function validate(displayname, username, password, confirmpassword, acceptedTOS) {
 
     let message = "";
     let errorMsg = `må være mellom ${minCharLength} og ${maxCharLength} tegn`;
@@ -25,36 +25,42 @@ async function validate(displayname, username, password, confirmpassword) {
 
                     if (username.match(letters)) {
 
-                        let splitDisplayName = displayname.split(" ");
-                        let fixedDisplayname = "";
+                        if (acceptedTOS === true) {
 
-                        for (let i = 0; i < splitDisplayName.length; i++) {
+                            let splitDisplayName = displayname.split(" ");
+                            let fixedDisplayname = "";
 
-                            function upperCaseFirstLetter(string) {
-                                return string.charAt(0).toUpperCase() + string.slice(1);
+                            for (let i = 0; i < splitDisplayName.length; i++) {
+
+                                function upperCaseFirstLetter(string) {
+                                    return string.charAt(0).toUpperCase() + string.slice(1);
+                                }
+
+                                function lowerCaseAllWordsExceptFirstLetters(string) {
+                                    return string.replace(/\S*/g, function (word) {
+                                        return word.charAt(0) + word.slice(1).toLowerCase();
+                                    });
+                                }
+
+                                fixedDisplayname += upperCaseFirstLetter(lowerCaseAllWordsExceptFirstLetters(splitDisplayName[i])) + " ";
+
                             }
 
-                            function lowerCaseAllWordsExceptFirstLetters(string) {
-                                return string.replace(/\S*/g, function (word) {
-                                    return word.charAt(0) + word.slice(1).toLowerCase();
-                                });
+                            fixedDisplayname = fixedDisplayname.trimRight();
+
+                            const infoHeader = { "authorization": "Basic " + window.btoa(`${username.toLowerCase()}:${password}:${fixedDisplayname}`) };
+                            const url = `/access`;
+
+                            const resp = await callServerAPIPost(infoHeader, url);
+
+                            if (resp) {
+                                message = resp;//"godkjent";
+                            } else {
+                                message = errorText;
                             }
 
-                            fixedDisplayname += upperCaseFirstLetter(lowerCaseAllWordsExceptFirstLetters(splitDisplayName[i])) + " ";
-
-                        }
-
-                        fixedDisplayname = fixedDisplayname.trimRight();
-
-                        const infoHeader = { "authorization": "Basic " + window.btoa(`${username.toLowerCase()}:${password}:${fixedDisplayname}`) };
-                        const url = `/access`;
-
-                        const resp = await callServerAPIPost(infoHeader, url);
-
-                        if (resp) {
-                            message = resp;//"godkjent";
                         } else {
-                            message = errorText;
+                            message = `Vennligst godta bruksvilkårene!`;
                         }
 
                     } else {

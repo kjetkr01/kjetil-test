@@ -30,6 +30,7 @@ grid-template-areas:
 "Ginp3 Ginp3 Ginp3 Ginp3 Ginp3"
 "c6r2 c6r2 c6r2 c6r2 c6r2"
 "Ginp4 Ginp4 Ginp4 Ginp4 Ginp4"
+"GacceptTermsOfUse GacceptTermsOfUse GacceptTermsOfUse GacceptTermsOfUse GacceptTermsOfUse"
 "c7r2 c7r2 c7r2 c7r2 c7r2"
 "GrespMsg GrespMsg GrespMsg GrespMsg GrespMsg"
 "c8r2 c8r2 c8r2 c8r2 c8r2"
@@ -73,7 +74,9 @@ auto /* inp3 */
 
 auto /* inp4 */
 
-3vh /* c7r2 */
+auto /* GacceptTermsOfUse */
+
+1vh /* c7r2 */
 
 auto /* respMsg */
 
@@ -105,7 +108,6 @@ grid-template-columns: /* bortover */
 
 #Gtitle > #title {
 font-size: 34px;
-
 }
 
 #GsmallTitle > #smallTitle {
@@ -126,7 +128,10 @@ height: 108px;
 width: 108px;
 }
 
-
+#GacceptTermsOfUse > #acceptTermsOfUse {
+color: var(--main-textColorDark);
+margin-top: 3vh;
+}
 
 /* end of elements */
 
@@ -143,7 +148,6 @@ grid-area: Gtitle;
 #page > #GsmallTitle {
 grid-area: GsmallTitle;
 }
-
 
 
 #page > #c1r2 {
@@ -194,6 +198,10 @@ grid-area: c6r2;
 grid-area: Ginp4;
 }
 
+#page > #GacceptTermsOfUse {
+grid-area: GacceptTermsOfUse;
+}
+
 #page > #c7r2 {
 grid-area: c7r2;
 }
@@ -223,7 +231,7 @@ grid-area: c10r2;
 padding-bottom: 3vh;
 }
 
-#Glogo, #Gline, #Ginp1, #Ginp2, #Ginp3, #Ginp4, #GrespMsg, #GaskForAccessBtn, #GalreadyAccBtn, #c1r2, #c2r2, #c3r2, #c4r2, #c5r2, #c6r2, #c7r2, #c8r2, #c9r2, #c10r2 {
+#Glogo, #Gline, #Ginp1, #Ginp2, #Ginp3, #Ginp4, #GacceptTermsOfUse, #GrespMsg, #GaskForAccessBtn, #GalreadyAccBtn, #c1r2, #c2r2, #c3r2, #c4r2, #c5r2, #c6r2, #c7r2, #c8r2, #c9r2, #c10r2 {
 background-color: var(--main-backgroundColor2);
 }
 

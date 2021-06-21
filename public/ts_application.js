@@ -12,10 +12,8 @@
         }
     }
 
-    const versionLogKeys = Object.keys(app.versionLog);
-    const newestVersion = versionLogKeys[0];
-
-    app.versionFullNumber = newestVersion;
+    // Uses first (newest version) as current version
+    app.versionFullNumber = Object.keys(app.versionLog)[0];
 
     app.versionFull = `Versjon ${app.versionFullNumber}`;
 
