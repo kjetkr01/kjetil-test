@@ -14,73 +14,13 @@ class StorageHandler {
         };
     }
 
-    //  -------------------------------  ask for access / create new user  ------------------------------- //
+    /// -------------------- Login & Ask for access -------------------- ///
 
-    async addUserToPendingList(username, password, displayname) {
-        const client = new pg.Client(this.credentials);
-        let results = null;
-        try {
-            await client.connect();
-
-            // checks if username is already taken in pending_users table
-            results = await client.query(`
-            SELECT username
-            FROM pending_users
-            WHERE username=$1`,
-                [username]);
-
-            if (results.rows.length === 0) {
-
-                // checks if username is already taken in users table
-                results = await client.query(`
-                SELECT username
-                FROM users
-                WHERE username=$1`,
-                    [username]);
-
-                const tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
-                const requestDate = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1).substr(0, 10);
-
-                if (results.rows.length === 0) {
-
-                    results = await client.query(`
-                    INSERT INTO pending_users(username, password, displayname, request_date)
-                    VALUES($1, $2, $3, $4) RETURNING *;`,
-                        [username, password, displayname, requestDate]);
-
-                    results = results.rows[0];
-                    client.end();
-
-                } else {
-                    results = null;
-                    client.end();
-                }
-
-            } else {
-                results = null;
-                client.end();
-            }
-
-        } catch (err) {
-            console.log(err);
-            results = err;
-            client.end();
-        }
-
-        return results;
-    }
-
-    //
-
-
-
-    //  -------------------------------  login / validate userinfo  ------------------------------- //
-
+    // login / validate userinfo
     async validateUser(username, password) {
         const client = new pg.Client(this.credentials);
         let results = false;
         let userInfo = {};
-        let userSettings = {};
         try {
             await client.connect();
 
@@ -134,12 +74,68 @@ class StorageHandler {
 
         return { "status": results, "userInfo": userInfo };
     }
+    // End of validateUser function
 
-    //
+    // ask for access / create new user
+    async addUserToPendingList(username, password, displayname) {
+        const client = new pg.Client(this.credentials);
+        let results = null;
+        try {
+            await client.connect();
+
+            // checks if username is already taken in pending_users table
+            results = await client.query(`
+            SELECT username
+            FROM pending_users
+            WHERE username=$1`,
+                [username]);
+
+            if (results.rows.length === 0) {
+
+                // checks if username is already taken in users table
+                results = await client.query(`
+                SELECT username
+                FROM users
+                WHERE username=$1`,
+                    [username]);
+
+                const tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+                const requestDate = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1).substr(0, 10);
+
+                if (results.rows.length === 0) {
+
+                    results = await client.query(`
+                    INSERT INTO pending_users(username, password, displayname, request_date)
+                    VALUES($1, $2, $3, $4) RETURNING *;`,
+                        [username, password, displayname, requestDate]);
+
+                    results = results.rows[0];
+                    client.end();
+
+                } else {
+                    results = null;
+                    client.end();
+                }
+
+            } else {
+                results = null;
+                client.end();
+            }
+
+        } catch (err) {
+            console.log(err);
+            results = err;
+            client.end();
+        }
+
+        return results;
+    }
+    // End of addUserToPendingList function
+
+    /// -------------------- End of Login & Ask for access -------------------- ///
 
 
-    //  -------------------------------  get a list of all users in application  ------------------------------- //
-
+    // get a list of all users in application
     async getListOfAllUsers(username) {
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -147,7 +143,6 @@ class StorageHandler {
         let allAPIUsers = null;
         try {
             await client.connect();
-            // evt legge til lifts og andre ting brukeren trenger å motta
 
             const checkIfAdmin = await client.query(`
             SELECT username
@@ -189,11 +184,9 @@ class StorageHandler {
 
         return { "status": results, "allUsers": allUsers, "allAPIUsers": allAPIUsers };
     }
+    // End of getListOfAllUsers function
 
-    //
-
-    //  -------------------------------  get a list of all leaderboards in application  ------------------------------- //
-
+    // get a list of all leaderboards in application
     async getListOfLeaderboards(reps) {
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -297,11 +290,9 @@ class StorageHandler {
 
         return { "leaderboards": leaderboards, "repsList": repsList, "status": results };
     }
+    // End of getListOfLeaderboards function
 
-    //
-
-    //  -------------------------------  get a info about a specific leaderboard (users and numbers)  ------------------------------- //
-
+    // get a info about a specific leaderboard (users and numbers)
     async getListOfUsersLeaderboard(leaderboard, reps) {
         const client = new pg.Client(this.credentials);
         let results = null;
@@ -452,11 +443,9 @@ class StorageHandler {
 
         return results;
     }
+    // End of getListOfUsersLeaderboard function
 
-    //
-
-    //  -------------------------------  get a list of all pending users in application  ------------------------------- //
-
+    // get a list of all pending users in application
     async getListOfPendingUsers(username, onlyNumbers) {
 
         const client = new pg.Client(this.credentials);
@@ -498,11 +487,9 @@ class StorageHandler {
 
         return results;
     }
+    // End of getListOfPendingUsers function
 
-    //
-
-    //  -------------------------------  accept or deny pending user  ------------------------------- //
-
+    // accept or deny pending user
     async acceptOrDenyUser(username, pendingUser, acceptOrDeny) {
 
         const client = new pg.Client(this.credentials);
@@ -593,18 +580,14 @@ class StorageHandler {
                             [pendingUser]);
 
                     }
-
                 }
 
                 client.end();
 
             } else {
-
                 results = false;
                 client.end();
-
             }
-
         } catch (err) {
             console.log(err);
         }
@@ -613,12 +596,9 @@ class StorageHandler {
 
         return results;
     }
+    // End of acceptOrDenyUser function
 
-    //
-
-
-    //  -------------------------------  get workoutSplit (user)  ------------------------------- //
-
+    // get workoutSplit (user)
     async getWorkoutSplit(username) {
 
         const client = new pg.Client(this.credentials);
@@ -650,11 +630,9 @@ class StorageHandler {
         client.end();
         return { "status": results, "program": program };
     }
+    // End of getWorkoutSplit function
 
-    //
-
-    //  -------------------------------  get userdetails (view userPage)  ------------------------------- //
-
+    // get userdetails (view userPage)
     async getUserDetails(viewingUser, userID) {
 
         const client = new pg.Client(this.credentials);
@@ -976,11 +954,9 @@ class StorageHandler {
 
         return { "status": results, "userDetails": userDetails, "username": username };
     }
+    // End of getUserDetails function
 
-    //
-
-    //  -------------------------------  get userdetails (private settings page)  ------------------------------- //
-
+    // get userdetails (private settings page)
     async getUserSettingsAndInfo(username) {
 
         const client = new pg.Client(this.credentials);
@@ -1011,11 +987,9 @@ class StorageHandler {
 
         return { "status": results, "userDetails": userDetails };
     }
+    // End of getUserSettingsAndInfo function
 
-    //
-
-    //  -------------------------------  update userdetails (private settings page)  ------------------------------- //
-
+    // update userdetails (private settings page)
     async updateUserSetting(username, setting, value) {
 
         const client = new pg.Client(this.credentials);
@@ -1055,11 +1029,9 @@ class StorageHandler {
 
         return results;
     }
+    // End of updateUserSetting function
 
-    //
-
-    //  -------------------------------  get list of all public users that are working out today  ------------------------------- //
-
+    // get list of all public users that are working out today
     async getListOfAllUsersWorkoutToday() {
 
         const client = new pg.Client(this.credentials);
@@ -1103,11 +1075,9 @@ class StorageHandler {
 
         return { "status": results, "info": infoList };
     }
+    // End of getListOfAllUsersWorkoutToday function
 
-    //
-
-    //  -------------------------------  save/update lift or goal  ------------------------------- //
-
+    // save/update lift or goal
     async saveLiftOrGoal(userid, info) {
         //userid, info, color
         //userid, reps, exercise, kg, date, type, color
@@ -1209,11 +1179,9 @@ class StorageHandler {
 
         return results;
     }
+    // End of saveLiftOrGoal function
 
-    //
-
-    //  -------------------------------  set goal as complete  ------------------------------- //
-
+    // set goal as complete
     async setGoalAsComplete(userid, completedGoalsList) {
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -1295,59 +1263,6 @@ class StorageHandler {
 
             results = true;
 
-            /*results = await client.query(`
-                SELECT ${exercise}
-                FROM user_goals
-                WHERE user_id = $1`,
-                [userid]);
- 
-            if (results.rows.length === 1) {
- 
-                const goals = results.rows[0][exercise];
- 
-                let modify = false;
- 
-                for (let i = 0; i < goals.length; i++) {
-                    const current = goals[i].id;
-                    const completed = goals[i].completed;
-                    if (id === current) {
-                        if (completed !== true) {
-                            modify = true;
-                            goals[i].completed = true;
-                        } else {
-                            break;
-                        }
-                    }
-                }
- 
-                if (modify === true) {
- 
-                    await client.query(`
-                        UPDATE user_goals
-                        SET ${exercise} = $1
-                        WHERE user_id = $2`,
-                        [JSON.stringify(goals), userid]);
- 
-                    let medalscount = await client.query(`
-                        SELECT medalscount
-                        FROM user_details
-                        WHERE user_id = $1`,
-                        [userid]);
- 
-                    if (medalscount.rows.length > 0) {
-                        medalscount = medalscount.rows[0].medalscount;
-                        medalscount++;
-                        await client.query(`
-                        UPDATE user_details
-                        SET medalscount = $1
-                        WHERE user_id = $2`,
-                            [medalscount, userid]);
- 
-                        results = true;
-                    }
-                }
-            }*/
-
             client.end();
 
         } catch (err) {
@@ -1359,12 +1274,9 @@ class StorageHandler {
 
         return { "status": results, "totalMedals": totalMedals };
     }
+    // End of setGoalAsComplete function
 
-    //
-
-
-    //  -------------------------------  decrease medalscount  ------------------------------- //
-
+    // decrease medalscount
     async decreaseMedalCount(userid, count) {
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -1408,11 +1320,9 @@ class StorageHandler {
 
         return results;
     }
+    // End of decreaseMedalCount function
 
-    //
-
-    //  -------------------------------  delete lift or goal  ------------------------------- //
-
+    // delete lift or goal
     async deleteLiftOrGoal(userid, info) {
 
         const exercise = info.exercise;
@@ -1479,11 +1389,9 @@ class StorageHandler {
 
         return results;
     }
+    // End of deleteLiftOrGoal function
 
-    //
-
-    //  -------------------------------  create Trainingsplit (user)  ------------------------------- //
-
+    // create Trainingsplit (user)
     async createTrainingsplit(userid) {
 
         const client = new pg.Client(this.credentials);
@@ -1524,11 +1432,9 @@ class StorageHandler {
         client.end();
         return { "status": results, "newtrainingsplit_id": newtrainingsplit_id };
     }
+    // End of createTrainingsplit function
 
-    //
-
-    //  -------------------------------  set active Trainingsplit (user)  ------------------------------- //
-
+    // set active Trainingsplit (user)
     async setActiveTrainingsplit(userid, trainingsplit_id) {
 
         const client = new pg.Client(this.credentials);
@@ -1553,12 +1459,9 @@ class StorageHandler {
         client.end();
         return results;
     }
+    // End of setActiveTrainingsplit function
 
-    //
-
-
-    //  -------------------------------  set active Trainingsplit (user)  ------------------------------- //
-
+    // set active Trainingsplit (user)
     async setNotActiveTrainingsplit(userid) {
 
         const client = new pg.Client(this.credentials);
@@ -1583,12 +1486,9 @@ class StorageHandler {
         client.end();
         return results;
     }
+    // End of setNotActiveTrainingsplit function
 
-    //
-
-
-    //  -------------------------------  get Trainingsplit (user)  ------------------------------- //
-
+    // get Trainingsplit (user)
     async getTrainingsplit(userid, trainingsplit_id) {
 
         const client = new pg.Client(this.credentials);
@@ -1663,12 +1563,9 @@ class StorageHandler {
         client.end();
         return { "status": results, "trainingsplit": trainingsplit, "msg": msg };
     }
+    // End of getTrainingsplit function
 
-    //
-
-
-    //  -------------------------------  save Trainingsplit (user)  ------------------------------- //
-
+    // save Trainingsplit (user)
     async saveTrainingsplit(userid, trainingsplit_id, day, list, trainingsplit_name, trainingsplit_short) {
 
         const client = new pg.Client(this.credentials);
@@ -1721,12 +1618,9 @@ class StorageHandler {
         client.end();
         return results;
     }
+    // End of saveTrainingsplit function
 
-    //
-
-
-    //  -------------------------------  change TrainingsplitVisibility (user)  ------------------------------- //
-
+    // change TrainingsplitVisibility (user)
     async changeTrainingsplitVisibility(userid, trainingsplit_id, value) {
 
         const client = new pg.Client(this.credentials);
@@ -1752,12 +1646,9 @@ class StorageHandler {
         client.end();
         return results;
     }
+    // End of changeTrainingsplitVisibility function
 
-    //
-
-
-    //  -------------------------------  delete Trainingsplit (user)  ------------------------------- //
-
+    // delete Trainingsplit (user)
     async deleteTrainingsplit(userid, trainingsplit_id) {
 
         const client = new pg.Client(this.credentials);
@@ -1782,11 +1673,9 @@ class StorageHandler {
         client.end();
         return results;
     }
+    // End of deleteTrainingsplit function
 
-    //
-
-    //  -------------------------------  add exercise Trainingsplit (user)  ------------------------------- //
-
+    // add exercise Trainingsplit (user)
     async addExerciseTrainingsplit(userid, trainingsplit_id, exercise, day) {
 
         const client = new pg.Client(this.credentials);
@@ -1853,12 +1742,9 @@ class StorageHandler {
         client.end();
         return { "status": results, "msg": msg };
     }
+    // End of addExerciseTrainingsplit function
 
-    //
-
-
-    //  -------------------------------  delete exercise Trainingsplit (user)  ------------------------------- //
-
+    // delete exercise Trainingsplit (user)
     async deleteExerciseTrainingsplit(userid, trainingsplit_id, exercise, day) {
 
         const client = new pg.Client(this.credentials);
@@ -1908,12 +1794,9 @@ class StorageHandler {
         client.end();
         return { "status": results, "msg": msg };
     }
+    // End of deleteExerciseTrainingsplit function
 
-    //
-
-
-    //  -------------------------------  add exercise row Trainingsplit (user)  ------------------------------- //
-
+    // add exercise row Trainingsplit (user)
     async addExerciseRowTrainingsplit(userid, trainingsplit_id, exercise, day) {
 
         const client = new pg.Client(this.credentials);
@@ -1973,12 +1856,9 @@ class StorageHandler {
         client.end();
         return { "status": results, "msg": msg };
     }
+    // End of addExerciseRowTrainingsplit function
 
-    //
-
-
-    //  -------------------------------  add exercise Trainingsplit (user)  ------------------------------- //
-
+    // add exercise Trainingsplit (user)
     async changeExerciseOrderTrainingsplit(userid, trainingsplit_id, day, index, moveUp) {
 
         const client = new pg.Client(this.credentials);
@@ -2013,7 +1893,7 @@ class StorageHandler {
                         const arr = editedTrainingsplit.list;
 
                         const newIndex = index + delta;
-                        if (newIndex < 0 || newIndex == arr.length) return; //Already at the top or bottom.
+                        if (newIndex < 0 || newIndex == arr.length) { return; } //Already at the top or bottom.
                         const indexes = [index, newIndex].sort((a, b) => a - b); //Sort the indixes (fixed)
                         arr.splice(indexes[0], 2, arr[indexes[1]], arr[indexes[0]]); //Replace from lowest index, two elements, reverting the order
 
@@ -2040,12 +1920,9 @@ class StorageHandler {
         client.end();
         return { "status": results, "msg": msg };
     }
+    // End of changeExerciseOrderTrainingsplit function
 
-    //
-
-
-    //  -------------------------------  delete exercise row Trainingsplit (user)  ------------------------------- //
-
+    // delete exercise row Trainingsplit (user)
     async deleteExerciseRowTrainingsplit(userid, trainingsplit_id, exercise, index, day) {
 
         const client = new pg.Client(this.credentials);
@@ -2097,13 +1974,9 @@ class StorageHandler {
         client.end();
         return { "status": results, "msg": msg };
     }
+    // End of deleteExerciseRowTrainingsplit function
 
-    //
-
-
-
-    //  -------------------------------  copy Trainingsplit (user)  ------------------------------- //
-
+    // copy Trainingsplit (user)
     async copyTrainingsplit(userid, trainingsplit_id, owner_id) {
 
         const client = new pg.Client(this.credentials);
@@ -2172,12 +2045,9 @@ class StorageHandler {
         client.end();
         return { "status": results, "newtrainingsplit_id": newtrainingsplit_id, "msg": msg };
     }
+    // End of copyTrainingsplit function
 
-    //
-
-
-    //  -------------------------------  sub or unsub to Trainingsplit (user)  ------------------------------- //
-
+    // sub or unsub to Trainingsplit (user)
     async subUnsubTrainingsplit(userid, trainingsplit_id, owner_id) {
 
         const client = new pg.Client(this.credentials);
@@ -2262,12 +2132,9 @@ class StorageHandler {
         client.end();
         return { "status": results, "msg": msg };
     }
+    // End of subUnsubTrainingsplit function
 
-    //
-
-
-    //  -------------------------------  update Displayname (user)  ------------------------------- //
-
+    // update Displayname (user)
     async updateDisplayname(username, newDisplayname) {
 
         const client = new pg.Client(this.credentials);
@@ -2292,11 +2159,9 @@ class StorageHandler {
         client.end();
         return results;
     }
+    // End of updateDisplayname function
 
-    //
-
-    //  -------------------------------  update Username (user)  ------------------------------- //
-
+    // update Username (user)
     async updateUsername(username, newUsername) {
 
         const client = new pg.Client(this.credentials);
@@ -2304,8 +2169,6 @@ class StorageHandler {
 
         try {
             await client.connect();
-
-            //await client.query('UPDATE "users" SET username=$1 WHERE username=$2', [newUsername, username]);
 
             // checks if username is already taken in pending_users table
             results = await client.query(`
@@ -2351,12 +2214,9 @@ class StorageHandler {
         client.end();
         return results;
     }
+    // End of updateUsername function
 
-    //
-
-
-    //  -------------------------------  update Password (user)  ------------------------------- //
-
+    // update Password (user)
     async updatePassword(user, exsistingPsw, newPsw) {
 
         const client = new pg.Client(this.credentials);
@@ -2401,11 +2261,9 @@ class StorageHandler {
         client.end();
         return { "status": results, "message": message };
     }
+    // End of updatePassword function
 
-    //
-
-    //  -------------------------------  update about me (user)  ------------------------------- //
-
+    // update about me (user)
     async updateAboutMe(username, aboutme) {
 
         const client = new pg.Client(this.credentials);
@@ -2413,8 +2271,6 @@ class StorageHandler {
 
         try {
             await client.connect();
-
-            //await client.query('UPDATE "users" SET info=$1 WHERE username=$2', [settings, username]);
 
             const user_id = await client.query(`
                                 SELECT id
@@ -2467,13 +2323,9 @@ class StorageHandler {
         client.end();
         return results;
     }
+    // End of updateAboutMe function
 
-    //
-
-
-
-    //  -------------------------------  get all user information (user)  ------------------------------- //
-
+    // get all user information (user)
     async getAllUserInformation(user) {
 
         const client = new pg.Client(this.credentials);
@@ -2566,11 +2418,9 @@ class StorageHandler {
         client.end();
         return { "status": results, "information": userInformation };
     }
+    // End of getAllUserInformation function
 
-    //
-
-    //  -------------------------------  delete account (user)  ------------------------------- //
-
+    // delete account (user)
     async deleteAccount(username, password) {
 
         const client = new pg.Client(this.credentials);
@@ -2628,8 +2478,6 @@ class StorageHandler {
                 results = true;
             }
 
-
-
         } catch (err) {
             client.end();
             console.log(err);
@@ -2638,12 +2486,9 @@ class StorageHandler {
         client.end();
         return results;
     }
+    // End of deleteAccount function
 
-    //
-
-
-    //  -------------------------------  give user API Access  ------------------------------- //
-
+    // give user API Access
     async giveUserAPIAccess(username, giveAPIUserAccess) {
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -2671,7 +2516,6 @@ class StorageHandler {
                     const randomNum = Math.floor(Math.random() * 99999) + giveAPIUserAccess;
                     let generatedAPIKey = giveAPIUserAccess.toString() + randomNum.toString();
                     generatedAPIKey = parseInt(generatedAPIKey);
-                    //await client.query('INSERT INTO "api_keys" VALUES($1, $2)', [giveAPIUserAccess, generatedAPIKey]);
                     await client.query(`
                                 UPDATE user_api
                                 SET apikey = $2
@@ -2694,12 +2538,9 @@ class StorageHandler {
 
         return results;
     }
+    // End of giveUserAPIAccess function
 
-    //
-
-
-    //  -------------------------------  remove user API Access  ------------------------------- //
-
+    // remove user API Access
     async removeUserAPIAccess(username, removeAPIUserAccess) {
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -2725,7 +2566,6 @@ class StorageHandler {
 
                 if (results.rows.length !== 0) {
 
-                    //await client.query('DELETE FROM "api_keys" WHERE user_id=$1', [removeAPIUserAccess]);
                     await client.query(`
                                 UPDATE user_api
                                 SET apikey = default
@@ -2748,14 +2588,11 @@ class StorageHandler {
 
         return results;
     }
-
-    //
-
+    // End of removeUserAPIAccess function
 
     // api only calls
 
-    //  -------------------------------  getWorkoutPlanAPI  ------------------------------- //
-
+    // getWorkoutPlanAPI
     async getWorkoutPlanAPI(user, key) {
 
         const client = new pg.Client(this.credentials);
@@ -2795,7 +2632,6 @@ WHERE user_id = $1`,
                     const userHasPublicProfile = results.rows[0].publicprofile;
 
                     if (userHasPublicProfile === true || isOwner === true) {
-                        //results = await client.query(`SELECT "trainingsplit", "displayname" FROM "users" WHERE id = $1`, [user]);
 
                         results = await client.query(`
                         SELECT activetrainingsplit
@@ -2867,12 +2703,9 @@ WHERE user_id = $1`,
 
         return { "status": results, "info": info, "isOwner": isOwner };
     }
+    // End of getWorkoutPlanAPI function
 
-    //
-
-
-    //  -------------------------------  getTotalPBAPI  ------------------------------- //
-
+    // getTotalPBAPI
     async getTotalPBAPI(user, key) {
 
         const client = new pg.Client(this.credentials);
@@ -3005,12 +2838,9 @@ AND users.id = user_lifts.user_id`, [user]);
 
         return { "status": results, "info": info, "isOwner": isOwner };
     }
+    // End of getTotalPBAPI function
 
-    //
-
-
-    //  -------------------------------  getLiftsAPI  ------------------------------- //
-
+    // getLiftsAPI
     async getLiftsAPI(user, key) {
 
         const client = new pg.Client(this.credentials);
@@ -3092,10 +2922,8 @@ WHERE user_id = $1`, [user]);
 
         return { "status": results, "msg": { "error": msg }, "userDetails": userDetails, "userLifts": userLifts };
     }
+    // End of getLiftsAPI function
 
-    //
-
-    //
 }
 
 module.exports = new StorageHandler(dbCredentials);

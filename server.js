@@ -50,8 +50,8 @@ const createTrainingsplit = require("./modules/mw/trainingsplit").createTraining
 
 // liftOrGoal.js
 const saveLiftOrGoal = require("./modules/mw/liftOrGoal").saveLiftOrGoal,
-     setGoalAsComplete = require("./modules/mw/liftOrGoal").setGoalAsComplete,
-     deleteLiftOrGoal = require("./modules/mw/liftOrGoal").deleteLiftOrGoal;
+     deleteLiftOrGoal = require("./modules/mw/liftOrGoal").deleteLiftOrGoal,
+     setGoalAsComplete = require("./modules/mw/liftOrGoal").setGoalAsComplete;
 
 // get.js
 const getListOfUsers = require("./modules/mw/get").getListOfUsers,
@@ -178,6 +178,603 @@ server.post("/access", async function (req, res) {
 
 
 /// -------------------- End of Login & Ask for access -------------------- ///
+
+/// -------------------- User -------------------- ///
+
+// get user details (view userPage)
+server.post("/users/details/:user", auth, async (req, res) => {
+     try {
+
+          let userID = req.headers.userinfo;
+          userID = JSON.parse(userID);
+          userID = parseInt(userID.id);
+
+          const viewingUser = parseInt(req.body.viewingUser);
+
+          if (typeof viewingUser === "number" && typeof userID === "number") {
+               if (userID && viewingUser) {
+
+                    const resp = await getUserDetails(viewingUser, userID);
+
+                    if (resp.status === true) {
+                         if (resp.userDetails !== false) {
+
+                              const cacheDetails = {
+                                   "displayname": resp.userDetails.displayname,
+                                   "gym": resp.userDetails.info.gym,
+                                   "age": resp.userDetails.info.age,
+                                   "height": resp.userDetails.info.height,
+                                   "weight": resp.userDetails.info.weight,
+                                   "member_since": resp.userDetails.member_since,
+                                   "medalscount": resp.userDetails.info.medalscount
+                              }
+
+                              if (viewingUser === userID) {
+
+                                   const updatedUserInfo = {
+                                        "id": resp.userDetails.id,
+                                        "username": resp.userDetails.username,
+                                        "displayname": resp.userDetails.displayname
+                                   }
+
+                                   delete cacheDetails.displayname;
+                                   cacheDetails.isadmin = resp.userDetails.isadmin;
+                                   cacheDetails.apikey = resp.userDetails.apikey;
+
+                                   res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo, "userDetails": cacheDetails }).end();
+                              } else {
+                                   res.status(200).json({ "info": resp.userDetails, "cacheDetails": cacheDetails }).end();
+                              }
+
+                         } else {
+
+                              if (resp.username) {
+                                   res.status(403).json(`${resp.username} sin profil er privat!`).end();
+                              } else {
+                                   res.status(403).json(`Brukeren sin profil er privat!`).end();
+                              }
+                         }
+                    } else {
+                         res.status(403).json(`Brukeren finnes ikke!`).end();
+                    }
+               } else {
+                    res.status(403).json(`Feil, prøv igjen`).end();
+               }
+          } else {
+               res.status(403).json(`Feil, prøv igjen`).end();
+          }
+     } catch (err) {
+          console.log(err);
+          res.status(403).json(`Feil, prøv igjen`).end();
+     }
+});
+// End of /users/details/:user POST
+
+// update displayname
+server.post("/user/update/displayname", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const newDisplayname = req.body.newDisplayname;
+
+          const letters = /^[A-Za-z0-9 ]+$/;
+
+          if (newDisplayname.match(letters)) {
+               if (newDisplayname.length >= 3 && newDisplayname.length <= 20 && currentUser.username) {
+
+                    const resp = await updateDisplayname(currentUser.username, newDisplayname);
+
+                    if (resp === true) {
+                         res.status(200).json(resp).end();
+                    } else {
+                         res.status(403).json("error, try again").end();
+                    }
+
+               } else {
+                    res.status(403).json("invalid displayname").end();
+               }
+
+          } else {
+               res.status(403).json("invalid displayname").end();
+          }
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid displayname").end();
+     }
+});
+// End of /user/update/displayname POST
+
+// update username
+server.post("/user/update/username", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const newUsername = req.body.newUsername;
+
+          const letters = /^[A-Za-z0-9]+$/;
+
+          if (newUsername.match(letters)) {
+               if (newUsername.length >= 3 && newUsername.length <= 20 && currentUser.username) {
+
+                    const resp = await updateUsername(currentUser.username, newUsername);
+
+                    if (resp === true) {
+                         res.status(200).json(resp).end();
+                    } else {
+                         res.status(403).json("error, try again").end();
+                    }
+
+               } else {
+                    res.status(403).json("invalid username").end();
+               }
+
+          } else {
+               res.status(403).json("invalid username").end();
+          }
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid username").end();
+     }
+});
+// End of /user/update/username POST
+
+// update password
+server.post("/user/update/password", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const credentials = req.body.authorization.split(' ')[1];
+          const [exsistingPsw, newPsw] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
+
+          if (currentUser.id && exsistingPsw && newPsw) {
+               if (exsistingPsw !== newPsw) {
+
+                    const resp = await updatePassword(currentUser.id, exsistingPsw, newPsw);
+
+                    if (resp.status === true) {
+                         res.status(200).json(resp).end();
+                    } else {
+                         res.status(403).json(resp).end();
+                    }
+
+               } else {
+                    res.status(403).json({ "status": false, "message": "Passordet ble ikke endret. Eksisterende passord og nytt passord er like" }).end();
+               }
+
+          } else {
+               res.status(403).json({ "status": false, "message": "Det har oppstått en feil" }).end();
+          }
+     } catch (err) {
+          console.log(err);
+          res.status(403).json({ "status": false, "message": "Det har oppstått en feil" }).end();
+     }
+});
+// End of /user/update/password POST
+
+// update about me information
+server.post("/user/update/settings/about/me", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const settings = req.body.updateSettings;
+
+          if (settings.hasOwnProperty("gym") && settings.hasOwnProperty("age") && settings.hasOwnProperty("height") && settings.hasOwnProperty("weight") && currentUser.hasOwnProperty("username")) {
+
+               let info = {
+                    isValid: true,
+                    msg: ""
+               };
+
+               if (settings.age < 0) {
+                    settings.age = 0;
+               }
+
+               if (settings.height < 0) {
+                    settings.height = 0;
+               }
+
+               if (settings.weight < 0) {
+                    settings.weight = 0;
+               }
+
+               const gym = settings.gym || "";
+               const age = parseInt(settings.age) || 0;
+               const height = parseFloat(settings.height) || 0;
+               const weight = parseFloat(settings.weight) || 0;
+
+               const maxGymNameLength = 30;
+               const maxAge = 100;
+               const maxHeight = 205;
+               const maxWeight = 140;
+
+               const letters = /^[ÆØÅæøåA-Za-z0-9\s]+$/;
+
+               if (settings.gym.length > maxGymNameLength || !gym.match(letters) && gym !== "") {
+                    info.isValid = false;
+                    if (!gym.match(letters)) {
+                         info.msg = `Treningssenter er ugyldig`;
+                    } else {
+                         info.msg = `Treningssenter kan ikke overskride ${maxGymNameLength} bokstaver`;
+                    }
+               }
+               else if (settings.age.length > 2 || isNaN(age) === true || age > maxAge) {
+                    info.isValid = false;
+                    info.msg = `Alder kan ikke overskride ${maxAge} år`;
+               }
+               else if (settings.height.length > 6 || isNaN(height) === true || height > maxHeight) {
+                    info.isValid = false;
+                    info.msg = `Høyde kan ikke overskride ${maxHeight} cm`;
+               }
+               else if (settings.weight.length > 6 || isNaN(weight) === true || weight > maxWeight) {
+                    info.isValid = false;
+                    info.msg = `Vekt kan ikke overskride ${maxWeight} kg`;
+               }
+
+               if (info.isValid === true) {
+
+                    const updateSettings = {
+                         gym: gym,
+                         age: age,
+                         height: height,
+                         weight: weight
+                    }
+
+                    const resp = await updateAboutMe(currentUser.username, updateSettings);
+
+                    if (resp === true) {
+                         res.status(200).json("Endringer har blitt oppdatert!").end();
+                    } else {
+                         res.status(403).json("error, try again").end();
+                    }
+               } else {
+                    res.status(403).json(info.msg).end();
+               }
+
+          } else {
+               res.status(403).json("invalid settings").end();
+          }
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid settings").end();
+     }
+});
+// End of /user/update/settings/about/me POST
+
+// get user settings and info
+server.post("/user/details/settingsInfo", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+
+          if (currentUser.username) {
+
+               const resp = await getUserSettingsAndInfo(currentUser.username);
+
+               const userInfo = {
+                    "id": resp.userDetails.id,
+                    "username": resp.userDetails.username,
+                    "displayname": resp.userDetails.displayname,
+                    "preferredColorTheme": resp.userDetails.settings.preferredColorTheme,
+               }
+
+               if (resp.status === true) {
+                    res.status(200).json({ "settings": resp.userDetails.settings, "userInfo": userInfo }).end();
+               } else {
+                    res.status(403).json("error, try again").end();
+               }
+
+          } else {
+               res.status(403).json("invalid user").end();
+          }
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid user").end();
+     }
+});
+// End of /user/details/settingsInfo POST
+
+// update user settings
+server.post("/user/update/settings/:setting", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const setting = req.body.updateSetting;
+          let value = req.body.value;
+
+          if (ECustomList.allowed.settings[setting] && currentUser.username && ECustomList.allowed.settings[setting].includes(value) || ECustomList.allowed.settings[setting][0] === "bypass") {
+
+               const savedValue = value;
+
+               if (ECustomList.allowed.settings[setting][1] === "check-lifts") {
+                    for (let i = 0; i < ECustomList.allowed.lifts.length; i++) {
+                         if (ECustomList.allowed.lifts[i] === savedValue) {
+                              value = savedValue;
+                              break;
+                         } else {
+                              value = null;
+                         }
+                    }
+               }
+               else if (ECustomList.allowed.settings[setting][1] === "check-goals") {
+                    for (let i = 0; i < ECustomList.allowed.goals.length; i++) {
+                         if (ECustomList.allowed.goals[i] === savedValue) {
+                              value = savedValue;
+                              break;
+                         } else {
+                              value = null;
+                         }
+                    }
+               }
+
+               const resp = await updateUserSetting(currentUser.username, setting, value);
+
+               if (resp === true) {
+                    res.status(200).json(resp).end();
+               } else {
+                    res.status(403).json("error, try again").end();
+               }
+
+          } else {
+               res.status(403).json("invalid user").end();
+          }
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid user").end();
+     }
+});
+// End of /user/update/settings/:setting POST
+
+// decrease medals count
+server.post("/user/details/decrease/medalscount", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+          let count = parseInt(req.body.count);
+          if (isNaN(count)) {
+               count = 1;
+          }
+
+          if (currentUser.id) {
+
+               const decreaseMedalCountResp = await decreaseMedalCount(currentUser.id, count);
+               res.status(200).json(decreaseMedalCountResp).end();
+
+          } else {
+               res.status(403).json("invalid information").end();
+          }
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/details/decrease/medalscount POST
+
+// get all information about user
+server.get("/user/allinformation", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+
+          if (currentUser.id) {
+
+               const resp = await getAllUserInformation(currentUser.id);
+
+               if (resp.status === true) {
+                    res.status(200).json(resp.information).end();
+               } else {
+                    res.status(403).json("Kunne ikke hente informasjon").end();
+               }
+          } else {
+               res.status(403).json("Invalid user").end();
+          }
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("Invalid user").end();
+     }
+});
+// End of /user/allinformation GET
+
+// delete my account
+server.post("/user/deleteMe", auth, async (req, res) => {
+     try {
+
+          const currentUser = JSON.parse(req.headers.userinfo);
+
+          const credentials = req.body.authorization.split(' ')[1];
+          const [username, password] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
+
+          if (currentUser.username && username && password) {
+
+               if (currentUser.username === username) {
+
+                    const resp = await deleteAccount(currentUser.username, password);
+
+                    if (resp === true) {
+                         res.status(200).json({ "status": true, "message": "Brukeren din er nå slettet." }).end();
+                    } else {
+                         res.status(200).json({ "status": false, "message": "Brukernavnet eller passordet er feil" }).end();
+                    }
+
+               } else {
+                    res.status(403).json({ "status": false, "message": "Brukernavnet stemmer ikke med kontoen" }).end();
+               }
+
+          } else {
+               res.status(403).json({ "status": false, "message": "Vennligst fyll ut alle feltene" }).end();
+          }
+     } catch (err) {
+          console.log(err);
+          res.status(403).json({ "status": false, "message": "Vennligst fyll ut alle feltene" }).end();
+     }
+});
+// End of /user/deleteMe POST
+
+/// -------------------- End of User -------------------- ///
+
+/// -------------------- Lift & Goal -------------------- ///
+
+// save user lifts & goals
+server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
+     try {
+
+          const info = req.body.info;
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const maxKG = 300;
+          const maxReps = 100;
+
+          if (currentUser.id && info.exercise && info.date && info.type === "lift" || info.type === "goal") {
+
+               let isValid = false;
+
+               const badgeColorValues = Object.entries(ECustomList.other.badgeColors);
+
+               let color = badgeColorValues[0][0];
+
+               for (let i = 0; i < badgeColorValues.length; i++) {
+                    if (info.color === badgeColorValues[i][0]) {
+                         color = badgeColorValues[i][0];
+                    }
+               }
+
+               if (info.type === "lift") {
+                    for (let i = 0; i < ECustomList.allowed.lifts.length; i++) {
+                         if (info.exercise === ECustomList.allowed.lifts[i]) {
+                              isValid = true;
+                              break;
+                         }
+                    }
+               } else if (info.type === "goal") {
+                    for (let i = 0; i < ECustomList.allowed.goals.length; i++) {
+                         if (info.exercise === ECustomList.allowed.goals[i]) {
+                              isValid = true;
+                              break;
+                         }
+                    }
+               }
+
+               if (info.kg < 1) {
+                    info.kg = 1;
+               } else if (info.kg > maxKG) {
+                    info.kg = maxKG;
+               }
+
+               if (info.reps < 1) {
+                    info.reps = 1;
+               } else if (info.reps > maxReps) {
+                    info.reps = maxReps;
+               }
+
+               if (isValid === true) {
+                    if (info.reps > 0) {
+                         info.reps = info.reps.toString();
+                    } else {
+                         isValid = false;
+                    }
+               }
+
+               if (isValid === true) {
+                    info.color = color;
+                    const saveLiftOrGoalResp = await saveLiftOrGoal(currentUser.id, info);
+                    res.status(200).json(saveLiftOrGoalResp).end();
+               } else {
+                    res.status(403).json("invalid information").end();
+               }
+
+          } else {
+               res.status(403).json("invalid information").end();
+          }
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/update/liftOrGoal/:info POST
+
+// delete user lifts & goals
+server.post("/user/delete/liftOrGoal/:info", auth, async (req, res) => {
+     try {
+
+          const info = req.body.info;
+          const currentUser = JSON.parse(req.headers.userinfo);
+
+          if (currentUser.id && info.exercise && info.type === "lift" || info.type === "goal") {
+
+               let isValid = false;
+
+               for (let i = 0; i < ECustomList.allowed.lifts.length; i++) {
+                    if (info.exercise === ECustomList.allowed.lifts[i]) {
+                         isValid = true;
+                    }
+               }
+
+               if (isValid === false) {
+                    for (let i = 0; i < ECustomList.allowed.goals.length; i++) {
+                         if (info.exercise === ECustomList.allowed.goals[i]) {
+                              isValid = true;
+                         }
+                    }
+               }
+
+               if (isValid === true) {
+                    const saveLiftOrGoalResp = await deleteLiftOrGoal(currentUser.id, info);
+                    res.status(200).json(saveLiftOrGoalResp).end();
+               } else {
+                    res.status(403).json("invalid information").end();
+               }
+
+          } else {
+               res.status(403).json("invalid information").end();
+          }
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/delete/liftOrGoal/:info POST
+
+// set goal as completed and increment medals count
+server.post("/user/update/goals/completed", auth, async (req, res) => {
+     try {
+
+          const completedGoalsList = req.body.completedGoalsList;
+          const currentUser = JSON.parse(req.headers.userinfo);
+
+          if (currentUser.id) {
+
+               const completedGoalsListKeys = Object.keys(completedGoalsList);
+               for (let i = 0; i < completedGoalsListKeys.length; i++) {
+                    let isValid = false;
+                    const current = completedGoalsListKeys[i];
+                    for (let j = 0; j < ECustomList.allowed.goals.length; j++) {
+                         if (current === ECustomList.allowed.goals[j]) {
+                              isValid = true;
+                              break;
+                         }
+                    }
+                    if (isValid !== true) {
+                         delete completedGoalsList[current];
+                    }
+               }
+
+               const resp = await setGoalAsComplete(currentUser.id, completedGoalsList);
+
+               if (resp.status === true) {
+                    res.status(200).json(resp).end();
+               } else {
+                    res.status(403).json({ "status": false }).end();
+               }
+
+          } else {
+               res.status(403).json("invalid information").end();
+          }
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/update/goals/completed POST
+
+/// -------------------- End of Lift & Goal -------------------- ///
 
 /// -------------------- Trainingsplit -------------------- ///
 
@@ -636,6 +1233,28 @@ server.post("/user/delete/trainingsplit/exercise/row", auth, async (req, res) =>
 
 /// -------------------- End of Trainingsplit -------------------- ///
 
+
+
+/// -------------------- Other -------------------- ///
+
+// get list of all people who are working out today (only public users)
+server.post("/whoIsWorkingOutToday", auth, async (req, res) => {
+     try {
+
+          const resp = await getListOfAllUsersWorkoutToday();
+
+          if (resp.status === true) {
+               res.status(200).json(resp.info).end();
+          } else {
+               res.status(403).json("error, try again").end();
+          }
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("error, try again").end();
+     }
+});
+// End of /whoIsWorkingOutToday POST
+
 // get list of users
 server.post("/users/list/all", auth, async (req, res) => {
      try {
@@ -727,6 +1346,10 @@ server.post("/users/list/all/leaderboards/:leaderboard", auth, async (req, res) 
 });
 // End of /users/list/all/leaderboards/:leaderboard POST
 
+/// -------------------- End of Other -------------------- ///
+
+/// -------------------- Admin -------------------- ///
+
 // get list of pending users (requests)
 server.post("/users/list/pending", auth, async (req, res) => {
      try {
@@ -791,613 +1414,6 @@ server.post("/users/pending/:user/:acceptOrDeny", auth, async (req, res) => {
 });
 // End of /users/pending/:user/:acceptOrDeny POST
 
-// get user details (view userPage)
-server.post("/users/details/:user", auth, async (req, res) => {
-     try {
-
-          let userID = req.headers.userinfo;
-          userID = JSON.parse(userID);
-          userID = parseInt(userID.id);
-
-          const viewingUser = parseInt(req.body.viewingUser);
-
-          if (typeof viewingUser === "number" && typeof userID === "number") {
-               if (userID && viewingUser) {
-
-                    const resp = await getUserDetails(viewingUser, userID);
-
-                    if (resp.status === true) {
-                         if (resp.userDetails !== false) {
-
-                              const cacheDetails = {
-                                   "displayname": resp.userDetails.displayname,
-                                   "gym": resp.userDetails.info.gym,
-                                   "age": resp.userDetails.info.age,
-                                   "height": resp.userDetails.info.height,
-                                   "weight": resp.userDetails.info.weight,
-                                   "member_since": resp.userDetails.member_since,
-                                   "medalscount": resp.userDetails.info.medalscount
-                              }
-
-                              if (viewingUser === userID) {
-
-                                   const updatedUserInfo = {
-                                        "id": resp.userDetails.id,
-                                        "username": resp.userDetails.username,
-                                        "displayname": resp.userDetails.displayname
-                                   }
-
-                                   delete cacheDetails.displayname;
-                                   cacheDetails.isadmin = resp.userDetails.isadmin;
-                                   cacheDetails.apikey = resp.userDetails.apikey;
-
-                                   res.status(200).json({ "info": resp.userDetails, "updatedUserObject": updatedUserInfo, "userDetails": cacheDetails }).end();
-                              } else {
-                                   res.status(200).json({ "info": resp.userDetails, "cacheDetails": cacheDetails }).end();
-                              }
-
-                         } else {
-
-                              if (resp.username) {
-                                   res.status(403).json(`${resp.username} sin profil er privat!`).end();
-                              } else {
-                                   res.status(403).json(`Brukeren sin profil er privat!`).end();
-                              }
-                         }
-                    } else {
-                         res.status(403).json(`Brukeren finnes ikke!`).end();
-                    }
-               } else {
-                    res.status(403).json(`Feil, prøv igjen`).end();
-               }
-          } else {
-               res.status(403).json(`Feil, prøv igjen`).end();
-          }
-     } catch (err) {
-          console.log(err);
-          res.status(403).json(`Feil, prøv igjen`).end();
-     }
-});
-// End of /users/details/:user POST
-
-// get user settings and info
-server.post("/user/details/settingsInfo", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-
-          if (currentUser.username) {
-
-               const resp = await getUserSettingsAndInfo(currentUser.username);
-
-               const userInfo = {
-                    "id": resp.userDetails.id,
-                    "username": resp.userDetails.username,
-                    "displayname": resp.userDetails.displayname,
-                    "preferredColorTheme": resp.userDetails.settings.preferredColorTheme,
-               }
-
-               if (resp.status === true) {
-                    res.status(200).json({ "settings": resp.userDetails.settings, "userInfo": userInfo }).end();
-               } else {
-                    res.status(403).json("error, try again").end();
-               }
-
-          } else {
-               res.status(403).json("invalid user").end();
-          }
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid user").end();
-     }
-});
-// End of /user/details/settingsInfo POST
-
-// update user settings
-server.post("/user/update/settings/:setting", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-          const setting = req.body.updateSetting;
-          let value = req.body.value;
-
-          if (ECustomList.allowed.settings[setting] && currentUser.username && ECustomList.allowed.settings[setting].includes(value) || ECustomList.allowed.settings[setting][0] === "bypass") {
-
-               const savedValue = value;
-
-               if (ECustomList.allowed.settings[setting][1] === "check-lifts") {
-                    for (let i = 0; i < ECustomList.allowed.lifts.length; i++) {
-                         if (ECustomList.allowed.lifts[i] === savedValue) {
-                              value = savedValue;
-                              break;
-                         } else {
-                              value = null;
-                         }
-                    }
-               }
-               else if (ECustomList.allowed.settings[setting][1] === "check-goals") {
-                    for (let i = 0; i < ECustomList.allowed.goals.length; i++) {
-                         if (ECustomList.allowed.goals[i] === savedValue) {
-                              value = savedValue;
-                              break;
-                         } else {
-                              value = null;
-                         }
-                    }
-               }
-
-               const resp = await updateUserSetting(currentUser.username, setting, value);
-
-               if (resp === true) {
-                    res.status(200).json(resp).end();
-               } else {
-                    res.status(403).json("error, try again").end();
-               }
-
-          } else {
-               res.status(403).json("invalid user").end();
-          }
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid user").end();
-     }
-});
-// End of /user/update/settings/:setting POST
-
-// update displayname
-server.post("/user/update/displayname", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-          const newDisplayname = req.body.newDisplayname;
-
-          const letters = /^[A-Za-z0-9 ]+$/;
-
-          if (newDisplayname.match(letters)) {
-               if (newDisplayname.length >= 3 && newDisplayname.length <= 20 && currentUser.username) {
-
-                    const resp = await updateDisplayname(currentUser.username, newDisplayname);
-
-                    if (resp === true) {
-                         res.status(200).json(resp).end();
-                    } else {
-                         res.status(403).json("error, try again").end();
-                    }
-
-               } else {
-                    res.status(403).json("invalid displayname").end();
-               }
-
-          } else {
-               res.status(403).json("invalid displayname").end();
-          }
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid displayname").end();
-     }
-});
-// End of /user/update/displayname POST
-
-// update username
-server.post("/user/update/username", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-          const newUsername = req.body.newUsername;
-
-          const letters = /^[A-Za-z0-9]+$/;
-
-          if (newUsername.match(letters)) {
-               if (newUsername.length >= 3 && newUsername.length <= 20 && currentUser.username) {
-
-                    const resp = await updateUsername(currentUser.username, newUsername);
-
-                    if (resp === true) {
-                         res.status(200).json(resp).end();
-                    } else {
-                         res.status(403).json("error, try again").end();
-                    }
-
-               } else {
-                    res.status(403).json("invalid username").end();
-               }
-
-          } else {
-               res.status(403).json("invalid username").end();
-          }
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid username").end();
-     }
-});
-// End of /user/update/username POST
-
-// update password
-server.post("/user/update/password", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-          const credentials = req.body.authorization.split(' ')[1];
-          const [exsistingPsw, newPsw] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
-
-          if (currentUser.id && exsistingPsw && newPsw) {
-               if (exsistingPsw !== newPsw) {
-
-                    const resp = await updatePassword(currentUser.id, exsistingPsw, newPsw);
-
-                    if (resp.status === true) {
-                         res.status(200).json(resp).end();
-                    } else {
-                         res.status(403).json(resp).end();
-                    }
-
-               } else {
-                    res.status(403).json({ "status": false, "message": "Passordet ble ikke endret. Eksisterende passord og nytt passord er like" }).end();
-               }
-
-          } else {
-               res.status(403).json({ "status": false, "message": "Det har oppstått en feil" }).end();
-          }
-     } catch (err) {
-          console.log(err);
-          res.status(403).json({ "status": false, "message": "Det har oppstått en feil" }).end();
-     }
-});
-// End of /user/update/password POST
-
-// update about me information
-server.post("/user/update/settings/about/me", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-          const settings = req.body.updateSettings;
-
-          if (settings.hasOwnProperty("gym") && settings.hasOwnProperty("age") && settings.hasOwnProperty("height") && settings.hasOwnProperty("weight") && currentUser.hasOwnProperty("username")) {
-
-               let info = {
-                    isValid: true,
-                    msg: ""
-               };
-
-               if (settings.age < 0) {
-                    settings.age = 0;
-               }
-
-               if (settings.height < 0) {
-                    settings.height = 0;
-               }
-
-               if (settings.weight < 0) {
-                    settings.weight = 0;
-               }
-
-               const gym = settings.gym || "";
-               const age = parseInt(settings.age) || 0;
-               const height = parseFloat(settings.height) || 0;
-               const weight = parseFloat(settings.weight) || 0;
-
-               const maxGymNameLength = 30;
-               const maxAge = 100;
-               const maxHeight = 205;
-               const maxWeight = 140;
-
-               const letters = /^[ÆØÅæøåA-Za-z0-9\s]+$/;
-
-               if (settings.gym.length > maxGymNameLength || !gym.match(letters) && gym !== "") {
-                    info.isValid = false;
-                    if (!gym.match(letters)) {
-                         info.msg = `Treningssenter er ugyldig`;
-                    } else {
-                         info.msg = `Treningssenter kan ikke overskride ${maxGymNameLength} bokstaver`;
-                    }
-               }
-               else if (settings.age.length > 2 || isNaN(age) === true || age > maxAge) {
-                    info.isValid = false;
-                    info.msg = `Alder kan ikke overskride ${maxAge} år`;
-               }
-               else if (settings.height.length > 6 || isNaN(height) === true || height > maxHeight) {
-                    info.isValid = false;
-                    info.msg = `Høyde kan ikke overskride ${maxHeight} cm`;
-               }
-               else if (settings.weight.length > 6 || isNaN(weight) === true || weight > maxWeight) {
-                    info.isValid = false;
-                    info.msg = `Vekt kan ikke overskride ${maxWeight} kg`;
-               }
-
-               if (info.isValid === true) {
-
-                    const updateSettings = {
-                         gym: gym,
-                         age: age,
-                         height: height,
-                         weight: weight
-                    }
-
-                    const resp = await updateAboutMe(currentUser.username, updateSettings);
-
-                    if (resp === true) {
-                         res.status(200).json("Endringer har blitt oppdatert!").end();
-                    } else {
-                         res.status(403).json("error, try again").end();
-                    }
-               } else {
-                    res.status(403).json(info.msg).end();
-               }
-
-          } else {
-               res.status(403).json("invalid settings").end();
-          }
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid settings").end();
-     }
-});
-// End of /user/update/settings/about/me POST
-
-// save user lifts & goals
-server.post("/user/update/liftOrGoal/:info", auth, async (req, res) => {
-     try {
-
-          const info = req.body.info;
-          const currentUser = JSON.parse(req.headers.userinfo);
-          const maxKG = 300;
-          const maxReps = 100;
-
-          if (currentUser.id && info.exercise && info.date && info.type === "lift" || info.type === "goal") {
-
-               let isValid = false;
-
-               const badgeColorValues = Object.entries(ECustomList.other.badgeColors);
-
-               let color = badgeColorValues[0][0];
-
-               for (let i = 0; i < badgeColorValues.length; i++) {
-                    if (info.color === badgeColorValues[i][0]) {
-                         color = badgeColorValues[i][0];
-                    }
-               }
-
-               if (info.type === "lift") {
-                    for (let i = 0; i < ECustomList.allowed.lifts.length; i++) {
-                         if (info.exercise === ECustomList.allowed.lifts[i]) {
-                              isValid = true;
-                              break;
-                         }
-                    }
-               } else if (info.type === "goal") {
-                    for (let i = 0; i < ECustomList.allowed.goals.length; i++) {
-                         if (info.exercise === ECustomList.allowed.goals[i]) {
-                              isValid = true;
-                              break;
-                         }
-                    }
-               }
-
-               if (info.kg < 1) {
-                    info.kg = 1;
-               } else if (info.kg > maxKG) {
-                    info.kg = maxKG;
-               }
-
-               if (info.reps < 1) {
-                    info.reps = 1;
-               } else if (info.reps > maxReps) {
-                    info.reps = maxReps;
-               }
-
-               if (isValid === true) {
-                    if (info.reps > 0) {
-                         info.reps = info.reps.toString();
-                    } else {
-                         isValid = false;
-                    }
-               }
-
-               if (isValid === true) {
-                    info.color = color;
-                    const saveLiftOrGoalResp = await saveLiftOrGoal(currentUser.id, info);
-                    res.status(200).json(saveLiftOrGoalResp).end();
-               } else {
-                    res.status(403).json("invalid information").end();
-               }
-
-          } else {
-               res.status(403).json("invalid information").end();
-          }
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid information").end();
-     }
-});
-// End of /user/update/liftOrGoal/:info POST
-
-// set goal as completed and increment medals count
-server.post("/user/update/goals/completed", auth, async (req, res) => {
-     try {
-
-          const completedGoalsList = req.body.completedGoalsList;
-          const currentUser = JSON.parse(req.headers.userinfo);
-
-          if (currentUser.id) {
-
-               const completedGoalsListKeys = Object.keys(completedGoalsList);
-               for (let i = 0; i < completedGoalsListKeys.length; i++) {
-                    let isValid = false;
-                    const current = completedGoalsListKeys[i];
-                    for (let j = 0; j < ECustomList.allowed.goals.length; j++) {
-                         if (current === ECustomList.allowed.goals[j]) {
-                              isValid = true;
-                              break;
-                         }
-                    }
-                    if (isValid !== true) {
-                         delete completedGoalsList[current];
-                    }
-               }
-
-               const resp = await setGoalAsComplete(currentUser.id, completedGoalsList);
-
-               if (resp.status === true) {
-                    res.status(200).json(resp).end();
-               } else {
-                    res.status(403).json({ "status": false }).end();
-               }
-
-          } else {
-               res.status(403).json("invalid information").end();
-          }
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid information").end();
-     }
-});
-// End of /user/update/goals/completed POST
-
-// decrease medals count
-server.post("/user/details/decrease/medalscount", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-          let count = parseInt(req.body.count);
-          if (isNaN(count)) {
-               count = 1;
-          }
-
-          if (currentUser.id) {
-
-               const decreaseMedalCountResp = await decreaseMedalCount(currentUser.id, count);
-               res.status(200).json(decreaseMedalCountResp).end();
-
-          } else {
-               res.status(403).json("invalid information").end();
-          }
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid information").end();
-     }
-});
-// End of /user/details/decrease/medalscount POST
-
-// delete user lifts & goals
-server.post("/user/delete/liftOrGoal/:info", auth, async (req, res) => {
-     try {
-
-          const info = req.body.info;
-          const currentUser = JSON.parse(req.headers.userinfo);
-
-          if (currentUser.id && info.exercise && info.type === "lift" || info.type === "goal") {
-
-               let isValid = false;
-
-               for (let i = 0; i < ECustomList.allowed.lifts.length; i++) {
-                    if (info.exercise === ECustomList.allowed.lifts[i]) {
-                         isValid = true;
-                    }
-               }
-
-               if (isValid === false) {
-                    for (let i = 0; i < ECustomList.allowed.goals.length; i++) {
-                         if (info.exercise === ECustomList.allowed.goals[i]) {
-                              isValid = true;
-                         }
-                    }
-               }
-
-               if (isValid === true) {
-                    const saveLiftOrGoalResp = await deleteLiftOrGoal(currentUser.id, info);
-                    res.status(200).json(saveLiftOrGoalResp).end();
-               } else {
-                    res.status(403).json("invalid information").end();
-               }
-
-          } else {
-               res.status(403).json("invalid information").end();
-          }
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("invalid information").end();
-     }
-});
-// End of /user/delete/liftOrGoal/:info POST
-
-// get list of all people who are working out today (only public users)
-server.post("/whoIsWorkingOutToday", auth, async (req, res) => {
-     try {
-
-          const resp = await getListOfAllUsersWorkoutToday();
-
-          if (resp.status === true) {
-               res.status(200).json(resp.info).end();
-          } else {
-               res.status(403).json("error, try again").end();
-          }
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("error, try again").end();
-     }
-});
-// End of /whoIsWorkingOutToday POST
-
-// get all information about user
-server.get("/user/allinformation", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-
-          if (currentUser.id) {
-
-               const resp = await getAllUserInformation(currentUser.id);
-
-               if (resp.status === true) {
-                    res.status(200).json(resp.information).end();
-               } else {
-                    res.status(403).json("Kunne ikke hente informasjon").end();
-               }
-          } else {
-               res.status(403).json("Invalid user").end();
-          }
-     } catch (err) {
-          console.log(err);
-          res.status(403).json("Invalid user").end();
-     }
-});
-// End of /user/allinformation GET
-
-// delete my account
-server.post("/user/deleteMe", auth, async (req, res) => {
-     try {
-
-          const currentUser = JSON.parse(req.headers.userinfo);
-
-          const credentials = req.body.authorization.split(' ')[1];
-          const [username, password] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
-
-          if (currentUser.username && username && password) {
-
-               if (currentUser.username === username) {
-
-                    const resp = await deleteAccount(currentUser.username, password);
-
-                    if (resp === true) {
-                         res.status(200).json({ "status": true, "message": "Brukeren din er nå slettet." }).end();
-                    } else {
-                         res.status(200).json({ "status": false, "message": "Brukernavnet eller passordet er feil" }).end();
-                    }
-
-               } else {
-                    res.status(403).json({ "status": false, "message": "Brukernavnet stemmer ikke med kontoen" }).end();
-               }
-
-          } else {
-               res.status(403).json({ "status": false, "message": "Vennligst fyll ut alle feltene" }).end();
-          }
-     } catch (err) {
-          console.log(err);
-          res.status(403).json({ "status": false, "message": "Vennligst fyll ut alle feltene" }).end();
-     }
-});
-// End of /user/deleteMe POST
-
 // give user api access
 server.post("/user/giveAPIAccess", auth, async (req, res) => {
      try {
@@ -1451,6 +1467,9 @@ server.post("/user/removeAPIAccess", auth, async (req, res) => {
      }
 });
 // End of /user/removeAPIAccess POST
+
+/// -------------------- End of Admin -------------------- ///
+
 
 // -------------------------------  API Routes ---------------------- //
 
