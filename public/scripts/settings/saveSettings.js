@@ -320,13 +320,15 @@ async function saveUsername() {
 
             const resp = await callServerAPIPost(infoHeader, url);
 
+            console.log(resp)
+
             if (resp === true) {
                 localStorage.clear();
                 sessionStorage.clear();
                 sessionStorage.setItem("cachedUsername", newUsername);
                 showAlert(`Brukernavnet ble endret til: ${newUsername}. Du blir nå logget ut`, true, "redirectToLogin();");
             } else {
-                showAlert(`Brukernavnet ble endret til: ${newUsername}. Du blir nå logget ut`, true);
+                showAlert(`Brukernavnet kunne ikke bli endret. Vennligst prøv et annet brukernavn.`, true);
             }
 
         } else {

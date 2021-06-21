@@ -365,27 +365,33 @@ server.post("/user/update/settings/about/me", auth, async (req, res) => {
                     msg: ""
                };
 
+               const maxGymNameLength = 30;
+               const maxAge = 100;
+               const maxHeight = 205;
+               const maxWeight = 140;
+
                if (settings.age < 0) {
                     settings.age = 0;
+               } else if (settings.age > maxAge) {
+                    settings.age = maxAge;
                }
 
                if (settings.height < 0) {
                     settings.height = 0;
+               } else if (settings.height > maxHeight) {
+                    settings.height = maxHeight;
                }
 
                if (settings.weight < 0) {
                     settings.weight = 0;
+               } else if (settings.weight > maxWeight) {
+                    settings.weight = maxWeight;
                }
 
                const gym = settings.gym || "";
                const age = parseInt(settings.age) || 0;
                const height = parseFloat(settings.height) || 0;
                const weight = parseFloat(settings.weight) || 0;
-
-               const maxGymNameLength = 30;
-               const maxAge = 100;
-               const maxHeight = 205;
-               const maxWeight = 140;
 
                const letters = /^[ÆØÅæøåA-Za-z0-9\s]+$/;
 
@@ -396,18 +402,6 @@ server.post("/user/update/settings/about/me", auth, async (req, res) => {
                     } else {
                          info.msg = `Treningssenter kan ikke overskride ${maxGymNameLength} bokstaver`;
                     }
-               }
-               else if (settings.age.length > 2 || isNaN(age) === true || age > maxAge) {
-                    info.isValid = false;
-                    info.msg = `Alder kan ikke overskride ${maxAge} år`;
-               }
-               else if (settings.height.length > 6 || isNaN(height) === true || height > maxHeight) {
-                    info.isValid = false;
-                    info.msg = `Høyde kan ikke overskride ${maxHeight} cm`;
-               }
-               else if (settings.weight.length > 6 || isNaN(weight) === true || weight > maxWeight) {
-                    info.isValid = false;
-                    info.msg = `Vekt kan ikke overskride ${maxWeight} kg`;
                }
 
                if (info.isValid === true) {
@@ -1294,7 +1288,7 @@ server.post("/users/list/all", auth, async (req, res) => {
 });
 // End of /users/list/all POST
 
-// get list of users on leaderboard
+// get list of leaderboards
 server.post("/users/list/all/leaderboards", auth, async (req, res) => {
      try {
 

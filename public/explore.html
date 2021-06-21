@@ -184,28 +184,35 @@
             "redirect": `redirectToLeaderboards();`,
             "name": "Ledertavler",
             "description": "Sammenlign deg selv med andre brukere eller se hvor mye andre brukere tar i de ulike løftene",
-            "internetDependent": true,
+            "internetDependentOnLoad": true,
             "visible": true
          },
          "Users_TS": {
-            "redirect": ``, //redirectToUsers();
+            "redirect": ``, // redirectToUsers();
             "name": "Brukere",
-            "description": "Kommer snart", //Vis listen med alle offentlige brukere
-            "internetDependent": true,
+            "description": "Kommer snart", // Vis listen med alle offentlige brukere
+            "internetDependentOnLoad": true,
             "visible": true
          },
          "Workoutplans_TS": {
             "redirect": ``,
             "name": "Treningsplaner",
             "description": "Kommer snart",
-            "internetDependent": true,
+            "internetDependentOnLoad": true,
+            "visible": true
+         },
+         "Medals_TS": {
+            "redirect": ``,
+            "name": "Medaljer",
+            "description": "Kommer snart",
+            "internetDependentOnLoad": false, // Kan se uten internett. Men krever internett for å redusere medaljer
             "visible": true
          },
          "Statistics_TS": {
             "redirect": ``,
             "name": "Statistikk",
             "description": "Kommer snart",
-            "internetDependent": false,
+            "internetDependentOnLoad": false,
             "visible": false
          }
       }
@@ -215,7 +222,7 @@
             "redirect": ``,
             "name": "API",
             "description": "Kommer snart",
-            "internetDependent": false,
+            "internetDependentOnLoad": false,
             "visible": true
          }
       }
@@ -225,7 +232,7 @@
             "redirect": ``,
             "name": "Forespørsler",
             "description": "Kommer snart", // Det er 8 forespørsler feks. Vise antall
-            "internetDependent": false,
+            "internetDependentOnLoad": false,
             "visible": true
          }
       }
@@ -239,7 +246,7 @@
 
             const explorationList = document.getElementById("explorationList");
 
-            if (current.internetDependent === true && !navigator.onLine) {
+            if (current.internetDependentOnLoad === true && !navigator.onLine) {
                current.colorClass = "colorDisabled"
                current.redirect = `showAlert('${current.name} krever Internett-forbindelse.', true);`;
             } else {

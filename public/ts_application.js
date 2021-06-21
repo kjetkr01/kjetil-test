@@ -8,11 +8,11 @@
         name: "Treningstatistikken",
         logoURL: "images/placeholder_logo.svg",
         version: {
-            state: "a", // a = alpha / b = beta / rc = release candidate / r = release
+            state: "b", // a = alpha / b = beta / rc = release candidate / r = release
             major: 6,
             minor: 3,
             revision: 27,
-            buildnumber: 987,
+            buildnumber: 988,
         },
         lastUpdated: {
             day: upd[0],
@@ -29,6 +29,11 @@
         app.version.fullNumber = `${app.version.major}.${app.version.minor}.${app.version.revision}-${app.version.state}.${app.version.buildnumber}`;
     } else {
         app.version.fullNumber = `${app.version.major}.${app.version.minor}.${app.version.revision}.${app.version.buildnumber}`;
+    }
+
+    app.versionLog = {
+        "6.3.27.988": { "txt": ["Rettet feil"], "date": "21.06.2021" },
+        "6.3.27.989": { "txt": ["Lagt til versjonslogg"], "date": "21.06.2021" },
     }
 
     app.version.full = `Versjon ${app.version.fullNumber}`;

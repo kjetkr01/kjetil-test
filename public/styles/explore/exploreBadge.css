@@ -93,6 +93,10 @@ background-image: linear-gradient(45deg, rgb(43, 33, 93),rgb(81, 240, 237));
 background-image: linear-gradient(0deg, rgba(244, 242, 39, 0.18),rgba(36, 196, 212, 0.18)),linear-gradient(135deg, rgb(38, 157, 54),rgb(63, 173, 71),rgb(114, 206, 106),rgb(89, 190, 89),rgb(13, 140, 37),rgb(139, 223, 123),rgb(164, 239, 140));
 }
 
+.Medals_TS {
+background-image: radial-gradient(circle at 68% 88%, hsla(193,0%,4%,0.06) 0%, hsla(193,0%,4%,0.06) 68%,transparent 68%, transparent 100%),radial-gradient(circle at 64% 21%, hsla(193,0%,4%,0.06) 0%, hsla(193,0%,4%,0.06) 45%,transparent 45%, transparent 100%),radial-gradient(circle at 18% 4%, hsla(193,0%,4%,0.06) 0%, hsla(193,0%,4%,0.06) 26%,transparent 26%, transparent 100%),radial-gradient(circle at 17% 69%, hsla(193,0%,4%,0.06) 0%, hsla(193,0%,4%,0.06) 15%,transparent 15%, transparent 100%),radial-gradient(circle at 84% 26%, hsla(193,0%,4%,0.06) 0%, hsla(193,0%,4%,0.06) 45%,transparent 45%, transparent 100%),linear-gradient(45deg, rgb(181, 73, 30),rgb(187, 114, 141));
+}
+
 .Statistics_TS {
 background-image: linear-gradient(135deg, transparent 0%, transparent 17%,rgba(87, 146, 234,0.6) 17%, rgba(87, 146, 234,0.6) 59%,transparent 59%, transparent 64%,rgba(34, 81, 222,0.6) 64%, rgba(34, 81, 222,0.6) 100%),linear-gradient(45deg, transparent 0%, transparent 2%,rgb(87, 146, 234) 2%, rgb(87, 146, 234) 46%,rgb(114, 178, 239) 46%, rgb(114, 178, 239) 54%,transparent 54%, transparent 63%,rgb(7, 48, 216) 63%, rgb(7, 48, 216) 100%),linear-gradient(90deg, rgb(255,255,255),rgb(255,255,255));
 }

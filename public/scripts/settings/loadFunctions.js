@@ -407,7 +407,10 @@ function loadProgressionInfoPage() {
 // loads medals counter page in settings
 function loadMedalsCounterPage() {
 
-    settingsGrid.innerHTML = justTextTemplate("Her kan du se hvor mange medaljer du har! Du får 1 medalje for hver fullførte mål! Andre brukere kan se dette på profilen din. Du kan også se deres antall medaljer oppnådd.", "left");
+    settingsGrid.innerHTML = justTextTemplate(`Denne siden vil bli flyttet til
+    <button style="padding:0;margin:0;" class="settingsButton pointer" onClick="redirectToExplore();">Utforsk</button> siden.`, "left");
+
+    settingsGrid.innerHTML += justTextTemplate("Her kan du se hvor mange medaljer du har! Du får 1 medalje for hver fullførte mål! Andre brukere kan se dette på profilen din. Du kan også se deres antall medaljer oppnådd.", "left");
 
     settingsGrid.innerHTML += getTemplate("Medaljer oppnådd", "", `${userInfo.medalscount}`, "spacingTop");
 
@@ -464,7 +467,7 @@ async function loadAboutAppPage(setting) {
 
             settingsGrid.innerHTML += getLeftTextTemplate(aboutAppText, "", "spacingTop");
 
-            if (application.updatesInfo.showOnGoing === true) {
+            /*if (application.updatesInfo.showOnGoing === true) {
                 settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${ongoingUpdatesText}</button>`, "", "spacingTop");
                 settingsGrid.innerHTML += getLeftTextTemplate(ongoingUpdates);
             }
@@ -472,7 +475,22 @@ async function loadAboutAppPage(setting) {
             if (application.updatesInfo.showPlanned === true) {
                 settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>${plannedUpdatesText}</button>`, "", "spacingTop");
                 settingsGrid.innerHTML += getLeftTextTemplate(plannedUpdates);
+            }*/
+
+            settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>Versjonslogg</button>`, "", "spacingTop");
+
+            const versionLogKeys = Object.keys(application.versionLog);
+            const newestVersion = versionLogKeys[versionLogKeys.length - 1];
+            const newestVersionTextArr = application.versionLog[newestVersion].txt;
+            const newestVersionDate = application.versionLog[newestVersion].date;
+
+            let versionTxt = "";
+
+            for (let i = 0; i < newestVersionTextArr.length; i++) {
+                versionTxt += `- ${newestVersionTextArr[i]}<br>`;
             }
+
+            settingsGrid.innerHTML += getLeftTextTemplate(`<strong>${newestVersionDate}</strong><br><br>${versionTxt}<br>Versjon ${newestVersion}`);
 
             settingsGrid.innerHTML += getCenteredTextTemplate(aboutAppBottomInfo, "", "spacingTop");
 
