@@ -1,0 +1,150 @@
+body>#page {
+overflow-y: auto;
+display: grid;
+color: var(--main-textColorDark);
+width: 100vw;
+height: 100vh;
+grid-template-areas:
+
+"c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
+"GbackBtn GbackBtn GbackBtn GbackBtn GbackBtn GbackBtn GbackBtn"
+"Gtitle Gtitle Gtitle Gtitle Gtitle Gtitle Gtitle"
+"Ggym Ggym Ggym Ggym Ggym Ggym Ggym"
+"Ginfo Ginfo Ginfo Ginfo Ginfo GmedalsInfo GmedalsInfo"
+"c2r1 c2r1 c2r1 c2r1 c2r1 c2r1 c2r1"
+"GsmallTitle GsmallTitle GsmallTitle GsmallTitle GsmallTitle GsmallTitle GsmallTitle"
+
+"c3r1 c3r1 c3r1 c3r1 c3r1 c3r1 c3r1"
+"GuserGrid GuserGrid GuserGrid GuserGrid GuserGrid GuserGrid GuserGrid"
+;
+
+grid-template-rows: /* nedover */
+
+3vh /* c1r1 */
+
+auto /* GbackBtn */
+
+auto /* Gtitle */
+
+auto /* Ggym */
+
+auto /* info / GmedalsInfo */
+
+15px /* c2r1 */
+
+auto /* GsmallTitle */
+
+10px /* c3r1 */
+
+1fr /* GuserGrid */
+;
+
+grid-template-columns: /* bortover */
+12vw 30px 1fr 30px 1fr 30px 12vw;
+}
+
+
+
+/* end of grid */
+
+
+
+/* elements */
+
+#GbackBtn > #backBtn {
+margin-right: 20px;
+margin-left: 20px;
+}
+
+
+#Gtitle > #title {
+min-height: 40px;
+font-size: 26px;
+}
+
+#Ggym > #gym {
+font-size: 18px;
+}
+
+#Ginfo > #info {
+margin-top: 12.5px;
+font-size: 14px;
+}
+
+#GmedalsInfo > #medalsInfo {
+margin-top: 10px;
+margin-right: 20px;
+float: right;
+}
+
+#GuserGrid > #userGrid{
+
+}
+
+#GsmallTitle > #smallTitle{
+word-break: keep-all;
+font-size: 18px;
+margin-top: 18px;
+}
+
+#title, #gym, #smallTitle, #badges, #today, #peopleWorkoutTxt {
+margin-right: 20px;
+margin-left: 20px;
+}
+
+
+/* end of elements */
+
+
+
+/* spacing & other */
+
+
+#page > #c1r1 {
+grid-area: c1r1;
+}
+
+#page > #GbackBtn {
+grid-area: GbackBtn;
+}
+
+#page > #Gtitle {
+grid-area: Gtitle;
+}
+
+#page > #Ggym {
+grid-area: Ggym;
+}
+
+#page > #Ginfo {
+grid-area: Ginfo;
+}
+
+#page > #GmedalsInfo {
+grid-area: GmedalsInfo;
+}
+
+#page > #c2r1 {
+grid-area: c2r1;
+}
+
+#page > #GsmallTitle{
+grid-area: GsmallTitle;
+}
+
+#page > #c3r1 {
+grid-area: c3r1;
+}
+
+#page > #GuserGrid {
+grid-area: GuserGrid;
+overflow-y: scroll;
+overflow-x: hidden;
+}
+
+
+#c2r1, #c3r1, #GuserGrid, #GsmallTitle {
+background-color: var(--main-backgroundColor2);
+}
+
+/* end of spacing & other */

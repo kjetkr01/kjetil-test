@@ -1,5 +1,4 @@
-/* elements for mobile & desktop */
-
+/* values for mobile & desktop */
 
 #title, #createdBy {
 color: var(--main-headerTextColor);
@@ -23,6 +22,5 @@ border-top: var(--main-borderHeader);
 /*border-top: 1px #75757585 solid;*/
 border-top: var(--main-border);
 }
-
 
 /* end of mobile & desktop */

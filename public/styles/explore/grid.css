@@ -1,10 +1,3 @@
-/* elements, grid and other for mobile */
-
-/*@media only screen and (max-width: 1024px) {*/ /* 768px var før, men passer bedre med 1024px for ipad */
-
-/* grid */
-
-
 body>#page {
 overflow-y: auto;
 display: grid;
@@ -117,7 +110,4 @@ grid-area: Gline;
 background-color: var(--main-backgroundColor2);
 }
 
-
 /* end of spacing & other */
-
-/*}*/

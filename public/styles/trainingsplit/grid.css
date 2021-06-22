@@ -1,0 +1,127 @@
+body>#page {
+overflow-y: auto;
+display: grid;
+color: var(--main-textColorDark);
+width: 100vw;
+height: 100vh;
+grid-template-areas:
+
+"c1r1 c1r1 c1r1 c1r1 c1r1 c1r1 c1r1"
+"GbackBtn GbackBtn GbackBtn GbackBtn GbackBtn GbackBtn GbackBtn"
+"Gtitle Gtitle Gtitle Gtitle Gtitle Gtitle Gtitle"
+"GcreatedBy GcreatedBy GcreatedBy GcreatedBy GcreatedBy GcreatedBy GcreatedBy"
+"c2r1 c2r1 c2r1 c2r1 c2r1 c2r1 c2r1"
+"Ginfo Ginfo Ginfo Ginfo Ginfo Ginfo Ginfo"
+
+"c3r1 c3r1 c3r1 c3r1 c3r1 c3r1 c3r1"
+"GuserGrid GuserGrid GuserGrid GuserGrid GuserGrid GuserGrid GuserGrid"
+;
+
+grid-template-rows: /* nedover */
+
+3vh /* c1r1 */
+
+auto /* GbackBtn */
+
+auto /* Gtitle */
+
+auto /* createdBy */
+
+15px /* c2r1 */
+
+auto /* Ginfo */
+
+10px /* c3r1 */
+
+1fr /* GuserGrid */
+;
+
+grid-template-columns: /* bortover */
+12vw 30px 1fr 30px 1fr 30px 12vw;
+}
+
+
+
+/* end of grid */
+
+
+
+/* elements */
+
+#GbackBtn > #backBtn {
+margin-right: 20px;
+margin-left: 20px;
+}
+
+
+#Gtitle > #title {
+min-height: 40px;
+font-size: 24px;
+}
+
+#GcreatedBy > #createdBy {
+font-size: 14px;
+}
+
+#GuserGrid > #userGrid{
+
+}
+
+#Ginfo > #info{
+word-break: keep-all;
+font-size: 18px;
+}
+
+#title, #createdBy, #info, #badges, #today, #peopleWorkoutTxt {
+margin-right: 20px;
+margin-left: 20px;
+}
+
+
+/* end of elements */
+
+
+
+/* spacing & other */
+
+
+#page > #c1r1 {
+grid-area: c1r1;
+}
+
+#page > #GbackBtn {
+grid-area: GbackBtn;
+}
+
+#page > #Gtitle {
+grid-area: Gtitle;
+}
+
+#page > #GcreatedBy {
+grid-area: GcreatedBy;
+}
+
+#page > #c2r1 {
+grid-area: c2r1;
+}
+
+#page > #Ginfo{
+grid-area: Ginfo;
+}
+
+#page > #c3r1 {
+grid-area: c3r1;
+}
+
+#page > #GuserGrid {
+grid-area: GuserGrid;
+overflow-y: scroll;
+overflow-x: hidden;
+}
+
+
+#c2r1, #c3r1, #GuserGrid, #Ginfo {
+background-color: var(--main-backgroundColor2);
+}
+
+/* end of spacing & other */
