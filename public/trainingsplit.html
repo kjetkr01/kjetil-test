@@ -17,8 +17,8 @@
     <meta name="msapplication-starturl" content="/">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0">
 
-    <link rel="icon" type="image/png" sizes="192x192" href="images/appIcon.png">
-    <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+    <link rel="icon" sizes="192x192" type="image/png" href="images/placeholder_logo_icon.png">
+    <link rel="apple-touch-icon" sizes="192x192" type="image/png" href="images/placeholder_logo_icon.png">
 
     <!-- -->
 
@@ -71,9 +71,8 @@
     <link rel="stylesheet" href="styles/global/themes.css">
 
 
-    <link rel="stylesheet" href="styles/trainingsplit/desktop.css">
-    <link rel="stylesheet" href="styles/trainingsplit/mobile.css">
-    <link rel="stylesheet" href="styles/trainingsplit/common.css">
+    <link rel="stylesheet" href="styles/trainingsplit/grid.css">
+    <link rel="stylesheet" href="styles/trainingsplit/values.css">
 
     <link rel="stylesheet" href="styles/shared/overlay.css">
     <link rel="stylesheet" href="styles/shared/badges.css">
@@ -151,7 +150,7 @@
 </body>
 
 <script>
-
+    "use strict";
     getTSAlertOverlay();
     getTSConfirmOverlay();
 
@@ -166,6 +165,7 @@
 
     const referrer = sessionStorage.getItem("visit_trainingsplit_referrer");
 
+    // returnToPrevious
     function returnToPrevious() {
         const redirect = sessionStorage.getItem("visit_trainingsplit_referrer");
 
@@ -176,6 +176,7 @@
             redirectToFeed();
         }
     }
+    // End of returnToPrevious function
 
 </script>
 

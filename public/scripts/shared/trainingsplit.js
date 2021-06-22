@@ -1,9 +1,11 @@
-let showTrainingsplitAnimations = true;
-let trainingsplit = null;
+"use strict";
+let showTrainingsplitAnimations = true,
+    trainingsplit = null;
 
-const queryStringT = window.location.search;
-const urlParamsT = new URLSearchParams(queryStringT);
+const queryStringT = window.location.search,
+    urlParamsT = new URLSearchParams(queryStringT);
 
+// checkIfValidParams
 function checkIfValidParams() {
 
     let validParams = false;
@@ -35,9 +37,10 @@ function checkIfValidParams() {
 
     return validParams;
 }
+// End of checkIfValidParams function
 
 
-
+// requestTrainingsplitDetails
 async function requestTrainingsplitDetails() {
 
     try {
@@ -47,6 +50,7 @@ async function requestTrainingsplitDetails() {
             document.title = `Treningsplan`;
 
             let resp = null;
+            let errorMsg = "Kunne ikke hente planen!";
 
             if (trainingsplit.edit !== "true") {
                 const cachedActiveTrainingsplit_owner = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
@@ -60,10 +64,25 @@ async function requestTrainingsplitDetails() {
 
             if (navigator.onLine && resp === null) {
 
-                const infoHeader = { "trainingsplit_id": trainingsplit.id };
+                const body = { "trainingsplit_id": trainingsplit.id };
                 const url = `/user/get/trainingsplit`;
 
-                resp = await callServerAPIPost(infoHeader, url);
+                const config = {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json",
+                        "authtoken": user.getToken(),
+                        "userinfo": JSON.stringify(user.getUser())
+                    },
+                    body: JSON.stringify(body)
+                }
+
+                const response = await fetch(url, config);
+                resp = await response.json();
+                if (response.status !== 200) {
+                    errorMsg = resp;
+                    resp = null;
+                }
             }
 
             if (resp) {
@@ -77,7 +96,7 @@ async function requestTrainingsplitDetails() {
                 }
 
             } else {
-                showAlert("Kunne ikke hente planen!", true, "returnToPrevious();");
+                showAlert(errorMsg, true, "returnToPrevious();");
             }
         } else {
             returnToPrevious();
@@ -89,12 +108,11 @@ async function requestTrainingsplitDetails() {
         returnToPrevious();
     }
 }
+// End of requestTrainingsplitDetails function
 
 const exerciseListCount = [];
+// loadEditTrainingsplit
 function loadEditTrainingsplit(aResp, aSelectedDay) {
-
-    //document.getElementById("backBtnTrainingsplit").setAttribute("onclick", "exitTrainingsplitConfirm();");
-    //document.getElementById("account").setAttribute("onclick", "exitTrainingsplitConfirm();");
 
     const resp = aResp;
 
@@ -160,11 +178,30 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
 
     let copyHTML = `<button class="trainingsplitButton pointer" onClick="copyTrainingsplitConfirm(${resp.trainingsplit_id}, ${resp.user_id});">${copy_trainingsplit}</button>`;
 
+    const publicVisibility = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-eye" viewBox="0 0 16 16">
+    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+    </svg>`;
+
+    const privateVisibility = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-eye-slash" viewBox="0 0 16 16">
+    <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
+    <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
+    <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"/>
+    </svg>`;
+
+    let visibilityHTML = `<button id="changeTrainingsplitVisibilityBtn" class="trainingsplitButton pointer" onClick="changeTrainingsplitVisibilityConfirm(${resp.trainingsplit_id}, true);">${privateVisibility}</button>`;
+
+    if (resp.public === true) {
+        visibilityHTML = `<button id="changeTrainingsplitVisibilityBtn" class="trainingsplitButton pointer" onClick="changeTrainingsplitVisibilityConfirm(${resp.trainingsplit_id}, false);">${publicVisibility}</button>`;
+    }
 
     document.getElementById("info").innerHTML += `
     <br>
     <button id="saveTrainingsplitBtn" class="trainingsplitButton pointer fadeIn animate" onClick="saveTrainingsplit();">Lagre</button>
     ${copyHTML}
+    ${visibilityHTML}
     <button class="trainingsplitButton pointer fadeIn animate" onClick="deleteTrainingsplitConfirm('${resp.trainingsplit_id}');"><img src="images/trash.svg"></img></button>`;
 
     const toolBarHTML = `
@@ -316,7 +353,9 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
         sessionStorage.setItem("usergrid_scroll_y_edit", scrollY);
     });
 }
+// End of loadEditTrainingsplit function
 
+// loadViewTrainingsplit
 function loadViewTrainingsplit(aResp, aSelectedDay) {
 
     const resp = aResp;
@@ -424,6 +463,9 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
     if (selectedDay.list.length > 0) {
 
         const arr = selectedDay.list;
+
+        //const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+        //const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
         for (let i = 0; i < arr.length; i++) {
 
@@ -547,7 +589,9 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
         document.getElementById("trainingsplitBottom").innerHTML = backToTopBtn;
     }
 }
+// End of loadViewTrainingsplit function
 
+// viewTrainingsplitOwnerList
 function viewTrainingsplitOwnerList() {
 
     const trainingsplit_id = document.getElementById("listworkoutPlans");
@@ -559,7 +603,9 @@ function viewTrainingsplitOwnerList() {
         }
     }
 }
+// End of viewTrainingsplitOwnerList function
 
+// viewTrainingsplitSubList
 function viewTrainingsplitSubList() {
 
     const trainingsplit_id = document.getElementById("listsubworkoutPlans");
@@ -572,7 +618,9 @@ function viewTrainingsplitSubList() {
         }
     }
 }
+// End of viewTrainingsplitSubList function
 
+// viewTrainingsplit
 function viewTrainingsplit(aId, aDay) {
 
     if (aId && aId !== "null") {
@@ -602,7 +650,9 @@ function viewTrainingsplit(aId, aDay) {
         window.location.href = `/trainingsplit.html?trainingsplit_id=${aId}&edit=false&day=${day}`;
     }
 }
+// End of viewTrainingsplit function
 
+// changeTrainingsplitDay
 async function changeTrainingsplitDay() {
 
     const trainingsplitSelectDay = document.getElementById("trainingsplitSelectDay");
@@ -619,7 +669,9 @@ async function changeTrainingsplitDay() {
         window.location.search = urlParamsT.toString();
     }
 }
+// End of changeTrainingsplitDay function
 
+// addExercise
 async function addExercise() {
 
     if (trainingsplit && user) {
@@ -660,13 +712,14 @@ async function addExercise() {
             if (data === true) {
                 location.reload();
             } else {
-                //alert(data.msg);
                 showAlert(data.msg, true);
             }
         }
     }
 }
+// End of addExercise function
 
+// deleteExerciseConfirm
 async function deleteExerciseConfirm(aExercise) {
 
     if (trainingsplit && user) {
@@ -682,13 +735,13 @@ async function deleteExerciseConfirm(aExercise) {
             if (domName) {
                 exerciseName = domName.value;
             }
-
             showConfirm(`Er du sikker på at du vil slette øvelsen ${exerciseName}? Dette kan ikke angres!`, `deleteExercise('${exercise}');`);
-
         }
     }
 }
+// End of deleteExerciseConfirm function
 
+// deleteExercise
 async function deleteExercise(aExercise) {
 
     if (trainingsplit && user) {
@@ -726,13 +779,14 @@ async function deleteExercise(aExercise) {
             if (data === true) {
                 location.reload();
             } else {
-                //alert(data.msg);
                 showAlert(data.msg, true);
             }
         }
     }
 }
+// End of deleteExercise function
 
+// deleteRowExerciseConfirm
 async function deleteRowExerciseConfirm(aExercise, aIndex) {
 
     if (trainingsplit && user) {
@@ -741,14 +795,13 @@ async function deleteRowExerciseConfirm(aExercise, aIndex) {
         const index = aIndex;
 
         if (exercise) {
-
             showConfirm(`Er du sikker på at du vil slette rad nr ${index + 1} fra øvelsen ${exercise}? Dette kan ikke angres!`, `deleteRowExercise('${exercise}', '${index}');`);
-
         }
     }
-
 }
+// End of deleteRowExerciseConfirm function
 
+// deleteRowExercise
 async function deleteRowExercise(aExercise, aIndex) {
 
     if (trainingsplit && user) {
@@ -779,13 +832,14 @@ async function deleteRowExercise(aExercise, aIndex) {
             if (data === true) {
                 location.reload();
             } else {
-                //alert(data.msg);
                 showAlert(data.msg, true);
             }
         }
     }
 }
+// End of deleteRowExercise function
 
+// addRowExercise
 async function addRowExercise(aExercise) {
 
     if (trainingsplit && user) {
@@ -815,13 +869,14 @@ async function addRowExercise(aExercise) {
             if (data === true) {
                 location.reload();
             } else {
-                //alert(data.msg);
                 showAlert(data.msg, true);
             }
         }
     }
 }
+// End of addRowExercise function
 
+// moveExerciseOrder
 async function moveExerciseOrder(aIndex, aMoveUp) {
 
     if (trainingsplit && user) {
@@ -852,13 +907,14 @@ async function moveExerciseOrder(aIndex, aMoveUp) {
             if (data === true) {
                 location.reload();
             } else {
-                //alert(data.msg);
                 showAlert(data.msg, true);
             }
         }
     }
 }
+// End of moveExerciseOrder function
 
+// copyTrainingsplitConfirm
 async function copyTrainingsplitConfirm(aTrainingsplit_id, aOwner_id) {
 
     const trainingsplit_id = aTrainingsplit_id;
@@ -868,12 +924,13 @@ async function copyTrainingsplitConfirm(aTrainingsplit_id, aOwner_id) {
         const owner_id = aOwner_id;
 
         if (owner_id) {
-
             showConfirm(`Vil du ta en kopi av treningsplanen?`, `copyTrainingsplit('${trainingsplit_id}', '${owner_id}');`);
         }
     }
 }
+// End of copyTrainingsplitConfirm function
 
+// copyTrainingsplit
 async function copyTrainingsplit(aTrainingsplit_id, aOwner_id) {
 
     const trainingsplit_id = aTrainingsplit_id;
@@ -903,24 +960,98 @@ async function copyTrainingsplit(aTrainingsplit_id, aOwner_id) {
             if (data.status === true) {
                 showConfirm("Planen er nå kopiert. Ønsker du å laste den inn i redigeringsmodus?", `loadIntoEditTrainingsplit('${data.newtrainingsplit_id}');`);
             } else {
-                //alert(data.msg);
                 showAlert(data.msg, true);
             }
         }
     }
 }
+// End of copyTrainingsplit function
 
+// changeTrainingsplitVisibilityConfirm
+async function changeTrainingsplitVisibilityConfirm(aTrainingsplit_id, aValue) {
+
+    const trainingsplit_id = aTrainingsplit_id;
+    const value = aValue;
+
+    if (trainingsplit_id && user) {
+
+        let visibilityTxt = "privat? Bare nåværende abonnenter og deg vil kunne ha tilgang til planen.";
+
+        if (value === true) {
+            visibilityTxt = "offentlig?";
+        }
+        showConfirm(`Vil du gjøre treningsplanen ${visibilityTxt}`, `changeTrainingsplitVisibility('${trainingsplit_id}', ${value});`);
+    }
+}
+// End of changeTrainingsplitVisibilityConfirm function
+
+// changeTrainingsplitVisibility
+async function changeTrainingsplitVisibility(aTrainingsplit_id, aValue) {
+
+    const trainingsplit_id = aTrainingsplit_id;
+    const value = aValue;
+
+    if (trainingsplit_id && user) {
+
+        const body = { "trainingsplit_id": trainingsplit_id, "value": value };
+        const url = `/user/change/trainingsplit/visibility`;
+
+        const config = {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                "authtoken": user.getToken(),
+                "userinfo": JSON.stringify(user.getUser()),
+            },
+            body: JSON.stringify(body)
+        }
+
+        const resp = await fetch(url, config);
+        const data = await resp.json();
+
+        if (data === true) {
+            const changeTrainingsplitVisibilityBtn = document.getElementById("changeTrainingsplitVisibilityBtn");
+
+            const publicVisibility = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-eye" viewBox="0 0 16 16">
+            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+            </svg>`;
+
+            const privateVisibility = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-eye-slash" viewBox="0 0 16 16">
+            <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
+            <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
+            <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"/>
+            </svg>`;
+
+            if (value === true) {
+                changeTrainingsplitVisibilityBtn.setAttribute("onclick", `changeTrainingsplitVisibilityConfirm(${trainingsplit_id}, false);`)
+                changeTrainingsplitVisibilityBtn.innerHTML = publicVisibility;
+            } else {
+                changeTrainingsplitVisibilityBtn.setAttribute("onclick", `changeTrainingsplitVisibilityConfirm(${trainingsplit_id}, true);`)
+                changeTrainingsplitVisibilityBtn.innerHTML = privateVisibility;
+            }
+
+        } else {
+            showAlert(data.msg, true);
+        }
+    }
+}
+// End of changeTrainingsplitVisibility function
+
+// loadIntoEditTrainingsplit
 function loadIntoEditTrainingsplit(aNewTrainingsplit_id) {
     if (aNewTrainingsplit_id) {
         const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
         const dayNum = new Date().getDay();
         const day = days[dayNum];
-        //window.location.href = `trainingsplit.html?trainingsplit_id=${aNewTrainingsplit_id}&edit=true&day=${day}`;
         redirectToTrainingsplit(aNewTrainingsplit_id, day, true);
     }
 }
+// End of loadIntoEditTrainingsplit function
 
-
+// subOrUnsubToTrainingsplitConfirm
 async function subOrUnsubToTrainingsplitConfirm(aTrainingsplit_id, aOwner_id, aTrainingsplit_name) {
 
     const trainingsplit_id = aTrainingsplit_id;
@@ -939,7 +1070,8 @@ async function subOrUnsubToTrainingsplitConfirm(aTrainingsplit_id, aOwner_id, aT
                 if (subscribedtrainingsplitsKeys.includes(tIDString)) {
                     const trainingsplit_name = document.getElementById("title");
                     showConfirm(`
-                    Vil du si opp abonnementet på ${trainingsplit_name.textContent || subscribedtrainingsplitsKeys[trainingsplit_id] || "planen"}?`,
+                    Vil du si opp abonnementet på ${trainingsplit_name.textContent || subscribedtrainingsplitsKeys[trainingsplit_id] || "planen"}?
+                    Hvis treningsplanen er privat, så kan du ikke se planen igjen før den blir offentlig igjen.`,
                         `subOrUnsubToTrainingsplit('${trainingsplit_id}', '${owner_id}', '${aTrainingsplit_name}');`);
                 } else {
                     subOrUnsubToTrainingsplit(trainingsplit_id, owner_id, aTrainingsplit_name);
@@ -948,7 +1080,9 @@ async function subOrUnsubToTrainingsplitConfirm(aTrainingsplit_id, aOwner_id, aT
         }
     }
 }
+// End of subOrUnsubToTrainingsplitConfirm function
 
+// subOrUnsubToTrainingsplit
 async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTrainingsplit_name) {
 
     const trainingsplit_id = aTrainingsplit_id;
@@ -994,17 +1128,20 @@ async function subOrUnsubToTrainingsplit(aTrainingsplit_id, aOwner_id, aTraining
                 }
                 location.reload();
             } else {
-                //alert(data.msg);
                 showAlert(data.msg, true);
             }
         }
     }
 }
+// End of subOrUnsubToTrainingsplit function
 
+// exitTrainingsplitConfirm
 async function exitTrainingsplitConfirm() {
     showConfirm("Vil du lagre før du forlater?", "exitTrainingsplit(true);", "exitTrainingsplit();");
 }
+// End of exitTrainingsplitConfirm function
 
+// exitTrainingsplit
 async function exitTrainingsplit(aSave) {
 
     if (trainingsplit.edit === "true" && aSave === true) {
@@ -1022,6 +1159,5 @@ async function exitTrainingsplit(aSave) {
     } else {
         window.location.search = "";
     }
-
-
 }
+// End of exitTrainingsplit function

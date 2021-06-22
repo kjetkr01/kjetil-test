@@ -1,0 +1,116 @@
+/* grid for explore Badge */
+
+.exploreBadge {
+color: var(--main-textColorBadges);
+display: grid;
+word-break: keep-all;
+/*white-space: nowrap;*/
+margin-right: 7.5px;
+margin-bottom: 7.5px;
+border-radius: 18px;
+width: fit-content;
+height: fit-content;
+/*background-color: red;*/
+grid-template-areas:
+
+"c1b"
+"GexploreName"
+"c2b"
+"GexploreDescription"
+"c3b"
+
+;
+grid-template-rows: /* nedover */
+
+10px /* c1b */
+
+auto /* GexploreName */
+
+5px /* c2b */
+
+auto /* GexploreDescription */
+
+10px /* c3b */
+;
+
+grid-template-columns: /* bortover */
+auto;
+}
+
+/* elements */
+
+#GexploreName {
+font-weight: bold;
+font-size: 20px;
+}
+
+#GexploreDescription {
+font-size: 12.5px;
+}
+
+#GexploreName, #GexploreDescription {
+margin-right: 10px;
+margin-left: 10px;
+font-family: var(--main-font-Family-Verdana);
+}
+
+
+.exploreBadge > #c1b {
+grid-area: c1b;
+}
+
+.exploreBadge > #GexploreName {
+grid-area: GexploreName;
+}
+
+.exploreBadge > #c2b {
+grid-area: c2b;
+}
+
+.exploreBadge > #GexploreDescription {
+grid-area: GexploreDescription;
+}
+
+.exploreBadge > #c3b {
+grid-area: c3b;
+}
+
+
+/* end of grid for explore Badge */
+
+/* colors */
+
+.Leaderboards_TS {
+background-image: linear-gradient(45deg, rgb(252, 169, 90),rgb(162, 85, 124),rgb(71, 0, 157));
+}
+
+.Users_TS {
+background-image: linear-gradient(45deg, rgb(43, 33, 93),rgb(81, 240, 237));
+
+}
+
+.Workoutplans_TS {
+background-image: linear-gradient(0deg, rgba(244, 242, 39, 0.18),rgba(36, 196, 212, 0.18)),linear-gradient(135deg, rgb(38, 157, 54),rgb(63, 173, 71),rgb(114, 206, 106),rgb(89, 190, 89),rgb(13, 140, 37),rgb(139, 223, 123),rgb(164, 239, 140));
+}
+
+.Medals_TS {
+background-image: radial-gradient(circle at 68% 88%, hsla(193,0%,4%,0.06) 0%, hsla(193,0%,4%,0.06) 68%,transparent 68%, transparent 100%),radial-gradient(circle at 64% 21%, hsla(193,0%,4%,0.06) 0%, hsla(193,0%,4%,0.06) 45%,transparent 45%, transparent 100%),radial-gradient(circle at 18% 4%, hsla(193,0%,4%,0.06) 0%, hsla(193,0%,4%,0.06) 26%,transparent 26%, transparent 100%),radial-gradient(circle at 17% 69%, hsla(193,0%,4%,0.06) 0%, hsla(193,0%,4%,0.06) 15%,transparent 15%, transparent 100%),radial-gradient(circle at 84% 26%, hsla(193,0%,4%,0.06) 0%, hsla(193,0%,4%,0.06) 45%,transparent 45%, transparent 100%),linear-gradient(45deg, rgb(181, 73, 30),rgb(187, 114, 141));
+}
+
+.Statistics_TS {
+background-image: linear-gradient(135deg, transparent 0%, transparent 17%,rgba(87, 146, 234,0.6) 17%, rgba(87, 146, 234,0.6) 59%,transparent 59%, transparent 64%,rgba(34, 81, 222,0.6) 64%, rgba(34, 81, 222,0.6) 100%),linear-gradient(45deg, transparent 0%, transparent 2%,rgb(87, 146, 234) 2%, rgb(87, 146, 234) 46%,rgb(114, 178, 239) 46%, rgb(114, 178, 239) 54%,transparent 54%, transparent 63%,rgb(7, 48, 216) 63%, rgb(7, 48, 216) 100%),linear-gradient(90deg, rgb(255,255,255),rgb(255,255,255));
+}
+
+.API_TS {
+background-image: radial-gradient(circle at 23% 61%, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.03) 8%,transparent 8%, transparent 92%),radial-gradient(circle at 34% 3%, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.03) 8%,transparent 8%, transparent 92%),radial-gradient(circle at 10% 76%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.04) 6%,transparent 6%, transparent 94%),radial-gradient(circle at 20% 80%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.04) 6%,transparent 6%, transparent 94%),radial-gradient(circle at 48% 51%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.04) 6%,transparent 6%, transparent 94%),radial-gradient(circle at 69% 29%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.04) 6%,transparent 6%, transparent 94%),radial-gradient(circle at 34% 68%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.04) 4%,transparent 4%, transparent 96%),radial-gradient(circle at 22% 7%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.04) 4%,transparent 4%, transparent 96%),radial-gradient(circle at 15% 88%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.04) 4%,transparent 4%, transparent 96%),radial-gradient(circle at 14% 20%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.04) 4%,transparent 4%, transparent 96%),linear-gradient(135deg, rgb(212, 14, 0),rgb(235, 212, 64));
+}
+
+.Requests_TS {
+background-image: radial-gradient(circle 8px at 80% 68%, rgb(35,35,35) 0%, rgb(35,35,35) 50%,transparent 50%, transparent 100%),radial-gradient(circle 8px at 24% 41%, rgb(35,35,35) 0%, rgb(35,35,35) 50%,transparent 50%, transparent 100%),radial-gradient(circle 6px at 34% 66%, rgb(45,45,45) 0%, rgb(45,45,45) 50%,transparent 50%, transparent 100%),radial-gradient(circle 6px at 56% 55%, rgb(45,45,45) 0%, rgb(45,45,45) 50%,transparent 50%, transparent 100%),radial-gradient(circle 6px at 11% 60%, rgb(45,45,45) 0%, rgb(45,45,45) 50%,transparent 50%, transparent 100%),radial-gradient(circle 6px at 6% 89%, rgb(45,45,45) 0%, rgb(45,45,45) 50%,transparent 50%, transparent 100%),radial-gradient(circle 6px at 0% 36%, rgb(45,45,45) 0%, rgb(45,45,45) 50%,transparent 50%, transparent 100%),radial-gradient(circle 12px at 20% 56%, rgb(35,35,35) 0%, rgb(35,35,35) 50%,transparent 50%, transparent 100%),radial-gradient(circle 12px at 44% 56%, rgb(35,35,35) 0%, rgb(35,35,35) 50%,transparent 50%, transparent 100%),radial-gradient(circle 12px at 0% 43%, rgb(35,35,35) 0%, rgb(35,35,35) 50%,transparent 50%, transparent 100%),radial-gradient(circle 12px at 19% 33%, rgb(35,35,35) 0%, rgb(35,35,35) 50%,transparent 50%, transparent 100%),radial-gradient(circle at center left, rgb(35,35,35) 0%, rgb(35,35,35) 10%,transparent 10%, transparent 90%),linear-gradient(135deg, rgb(231, 16, 102),rgb(231, 158, 27));
+}
+
+.colorDisabled {
+background-image: linear-gradient(231deg, rgba(233, 233, 233, 0.01) 0%, rgba(233, 233, 233, 0.01) 25%,rgba(10, 10, 10, 0.01) 25%, rgba(10, 10, 10, 0.01) 50%,rgba(237, 237, 237, 0.01) 50%, rgba(237, 237, 237, 0.01) 75%,rgba(200, 200, 200, 0.01) 75%, rgba(200, 200, 200, 0.01) 100%),linear-gradient(344deg, rgba(2, 2, 2, 0.03) 0%, rgba(2, 2, 2, 0.03) 20%,rgba(10, 10, 10, 0.03) 20%, rgba(10, 10, 10, 0.03) 40%,rgba(100, 100, 100, 0.03) 40%, rgba(100, 100, 100, 0.03) 60%,rgba(60, 60, 60, 0.03) 60%, rgba(60, 60, 60, 0.03) 80%,rgba(135, 135, 135, 0.03) 80%, rgba(135, 135, 135, 0.03) 100%),linear-gradient(148deg, rgba(150, 150, 150, 0.03) 0%, rgba(150, 150, 150, 0.03) 14.286%,rgba(15, 15, 15, 0.03) 14.286%, rgba(15, 15, 15, 0.03) 28.572%,rgba(74, 74, 74, 0.03) 28.572%, rgba(74, 74, 74, 0.03) 42.858%,rgba(175, 175, 175, 0.03) 42.858%, rgba(175, 175, 175, 0.03) 57.144%,rgba(16, 16, 16, 0.03) 57.144%, rgba(16, 16, 16, 0.03) 71.42999999999999%,rgba(83, 83, 83, 0.03) 71.43%, rgba(83, 83, 83, 0.03) 85.71600000000001%,rgba(249, 249, 249, 0.03) 85.716%, rgba(249, 249, 249, 0.03) 100.002%),linear-gradient(122deg, rgba(150, 150, 150, 0.01) 0%, rgba(150, 150, 150, 0.01) 20%,rgba(252, 252, 252, 0.01) 20%, rgba(252, 252, 252, 0.01) 40%,rgba(226, 226, 226, 0.01) 40%, rgba(226, 226, 226, 0.01) 60%,rgba(49, 49, 49, 0.01) 60%, rgba(49, 49, 49, 0.01) 80%,rgba(94, 94, 94, 0.01) 80%, rgba(94, 94, 94, 0.01) 100%),linear-gradient(295deg, rgba(207, 207, 207, 0.02) 0%, rgba(207, 207, 207, 0.02) 25%,rgba(47, 47, 47, 0.02) 25%, rgba(47, 47, 47, 0.02) 50%,rgba(142, 142, 142, 0.02) 50%, rgba(142, 142, 142, 0.02) 75%,rgba(76, 76, 76, 0.02) 75%, rgba(76, 76, 76, 0.02) 100%),linear-gradient(73deg, rgba(81, 81, 81, 0.03) 0%, rgba(81, 81, 81, 0.03) 12.5%,rgba(158, 158, 158, 0.03) 12.5%, rgba(158, 158, 158, 0.03) 25%,rgba(136, 136, 136, 0.03) 25%, rgba(136, 136, 136, 0.03) 37.5%,rgba(209, 209, 209, 0.03) 37.5%, rgba(209, 209, 209, 0.03) 50%,rgba(152, 152, 152, 0.03) 50%, rgba(152, 152, 152, 0.03) 62.5%,rgba(97, 97, 97, 0.03) 62.5%, rgba(97, 97, 97, 0.03) 75%,rgba(167, 167, 167, 0.03) 75%, rgba(167, 167, 167, 0.03) 87.5%,rgba(22, 22, 22, 0.03) 87.5%, rgba(22, 22, 22, 0.03) 100%),linear-gradient(90deg, hsl(137,0%,23%),hsl(137,0%,23%));
+}
+
+/* */

@@ -1,15 +1,17 @@
+"use strict";
 // global variables
 
-const minCharLength = 3;
-const maxCharLength = 20;
+const minCharLength = 3,
+    maxCharLength = 20;
 
 //
 
 // usage: " validate("My Displayname", "myusername", "mypassword", "mypassword"); "
-async function validate(displayname, username, password, confirmpassword) {
+// validates input
+async function validate(displayname, username, password, confirmpassword, acceptedTOS) {
 
     let message = "";
-    let errorMsg = `må være lengre enn ${minCharLength} tegn og kortere enn ${maxCharLength} tegn`;
+    let errorMsg = `må være mellom ${minCharLength} og ${maxCharLength} tegn`;
 
     if (displayname && username && password && confirmpassword) {
 
@@ -23,37 +25,42 @@ async function validate(displayname, username, password, confirmpassword) {
 
                     if (username.match(letters)) {
 
-                        let splitDisplayName = displayname.split(" ");
-                        let fixedDisplayname = "";
+                        if (acceptedTOS === true) {
 
-                        for (let i = 0; i < splitDisplayName.length; i++) {
+                            let splitDisplayName = displayname.split(" ");
+                            let fixedDisplayname = "";
 
-                            function upperCaseFirstLetter(string) {
-                                return string.charAt(0).toUpperCase() + string.slice(1);
+                            for (let i = 0; i < splitDisplayName.length; i++) {
+
+                                function upperCaseFirstLetter(string) {
+                                    return string.charAt(0).toUpperCase() + string.slice(1);
+                                }
+
+                                function lowerCaseAllWordsExceptFirstLetters(string) {
+                                    return string.replace(/\S*/g, function (word) {
+                                        return word.charAt(0) + word.slice(1).toLowerCase();
+                                    });
+                                }
+
+                                fixedDisplayname += upperCaseFirstLetter(lowerCaseAllWordsExceptFirstLetters(splitDisplayName[i])) + " ";
+
                             }
 
-                            function lowerCaseAllWordsExceptFirstLetters(string) {
-                                return string.replace(/\S*/g, function (word) {
-                                    return word.charAt(0) + word.slice(1).toLowerCase();
-                                });
+                            fixedDisplayname = fixedDisplayname.trimRight();
+
+                            const infoHeader = { "authorization": "Basic " + window.btoa(`${username.toLowerCase()}:${password}:${fixedDisplayname}`) };
+                            const url = `/access`;
+
+                            const resp = await callServerAPIPost(infoHeader, url);
+
+                            if (resp) {
+                                message = resp;//"godkjent";
+                            } else {
+                                message = errorText;
                             }
 
-                            fixedDisplayname += upperCaseFirstLetter(lowerCaseAllWordsExceptFirstLetters(splitDisplayName[i])) + " ";
-
-                        }
-
-                        fixedDisplayname = fixedDisplayname.trimRight();
-
-                        //console.log(fixedDisplayname)
-                        const infoHeader = { "authorization": "Basic " + window.btoa(`${username.toLowerCase()}:${password}:${fixedDisplayname}`) };
-                        const url = `/access`;
-
-                        const resp = await callServerAPIPost(infoHeader, url);
-
-                        if (resp) {
-                            message = resp;//"godkjent";
                         } else {
-                            message = errorText;
+                            message = `Vennligst godta bruksvilkårene!`;
                         }
 
                     } else {
@@ -77,14 +84,14 @@ async function validate(displayname, username, password, confirmpassword) {
     }
 
     return message;
-
 }
+// End of validate function
 
 // usage: " login("myusername", "mypassword"); "
+// login user
 async function login(username, password, rmbrMe) {
 
     let message = "";
-    let errorMsg = `må være lengre enn ${minCharLength} tegn og kortere enn ${maxCharLength} tegn`;
 
     if (username && password) {
 
@@ -125,7 +132,7 @@ async function login(username, password, rmbrMe) {
             }
 
         } else {
-            message = `Brukernavnet ${errorMsg}`;
+            message = "Brukernavnet eller passordet er feil!";
         }
 
     } else {
@@ -133,5 +140,5 @@ async function login(username, password, rmbrMe) {
     }
 
     return message;
-
 }
+// End of login function

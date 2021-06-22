@@ -20,8 +20,8 @@ box-shadow: var(--bsSize) #2B237980;
 }
 
 .themeBadgeG {
-background: linear-gradient(to right bottom, var(--main-backgroundColor1), var(--main-bodyBackgroundColor));
-box-shadow: var(--bsSize) var(--main-backgroundColorRGBLowOpacity);
+background: linear-gradient(to right bottom, var(--main-themeBadgeColor1), var(--main-themeBadgeColor2));
+box-shadow: var(--bsSize) var(--main-themeBadgeShadow2);
 }
 
 .trainingsplit_defaultBadgeG {
@@ -55,8 +55,8 @@ box-shadow: var(--bsSize) #626BE380;
 }
 
 .themeBadge {
-background-color: var(--main-backgroundColor1);
-box-shadow: var(--bsSize) var(--main-backgroundColorRGBLowOpacity);
+background-color: var(--main-themeBadgeColor1);
+box-shadow: var(--bsSize) var(--main-themeBadgeShadow1);
 }
 
 /* end of Plain Color Badges */

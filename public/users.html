@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Brukere</title>
+
+   <meta charset="utf-8" />
+
+   <!-- manifest -->
+
+   <link rel="manifest" href="manifest.json">
+
+   <meta name="mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="application-name" content="Treningsstatistikken">
+   <meta name="apple-mobile-web-app-title" content="Treningsstatistikken">
+   <meta name="msapplication-starturl" content="/">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0">
+
+   <link rel="icon" sizes="192x192" type="image/png" href="images/placeholder_logo_icon.png">
+   <link rel="apple-touch-icon" sizes="192x192" type="image/png" href="images/placeholder_logo_icon.png">
+
+   <!-- -->
+
+   <!-- splashscreen for ios -->
+
+   <link href="images/splashscreens/iphone5_splash.png"
+      media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/iphone6_splash.png"
+      media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/iphoneplus_splash.png"
+      media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/iphonex_splash.png"
+      media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/iphonexr_splash.png"
+      media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/iphonexsmax_splash.png"
+      media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/ipad_splash.png"
+      media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/ipadpro1_splash.png"
+      media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/ipadpro3_splash.png"
+      media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+   <link href="images/splashscreens/ipadpro2_splash.png"
+      media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image" />
+
+   <!-- -->
+
+   <!-- status bar color -->
+
+   <meta id="themeColor" name="theme-color" content="#357F9B">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+   <!-- -->
+
+   <link rel="stylesheet" href="styles/global/globalVariables.css">
+   <link rel="stylesheet" href="styles/global/globalClasses.css">
+   <link rel="stylesheet" href="styles/global/global.css">
+
+   <link rel="stylesheet" href="styles/global/themes.css">
+
+   <link rel="stylesheet" href="styles/shared/exploreDefault.css">
+
+   <link rel="stylesheet" href="styles/shared/overlay.css">
+
+   <link rel="stylesheet" href="styles/leaderboards/board.css">
+
+   <script src="sw.js" type="module"></script>
+
+   <script src="ts_application.js" type="text/javascript"></script>
+   <script src="scripts/global/appInfo.js" type="text/javascript"></script>
+   <script src="scripts/global/user.js" type="text/javascript"></script>
+   <script src="scripts/global/global.js" type="text/javascript"></script>
+   <script src="scripts/global/functions.js" type="text/javascript"></script>
+   <script src="scripts/leaderboards/leaderboards.js" type="text/javascript"></script>
+   <script src="scripts/shared/overlay.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+   <script>
+      useHTTPS();
+      createUserClass();
+      changeColorTheme();
+   </script>
+
+   <div id="TSAlertOverlay" style="display: none;" class="overlay noselect"></div>
+
+   <section id="page">
+
+      <div id="c1r1"></div>
+      <div id="c2r1"></div>
+      <div id="c3r1"></div>
+
+      <div id="GbackBtn">
+         <svg id="backBtn" class="backBtnIcon fadeInLeft animate delaySmall pointer" style="stroke:white;"
+            draggable="false" onclick="redirectToExplore();" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 22.49 39.22">
+            <g id="Layer_2" data-name="Layer 2">
+               <g id="Layer_1-2" data-name="Layer 1">
+                  <polyline class="cls-1" points="21.25 1.24 2.48 20.02 20.45 37.99" />
+               </g>
+            </g>
+         </svg>
+      </div>
+
+      <div id="Gtitle">
+         <p id="title" class="noselect">
+            Brukere
+         </p>
+      </div>
+
+      <div id="Ginformation">
+         <p id="information" class="noselect">
+         </p>
+      </div>
+
+      <div id="Gline">
+         <hr id="line" class="noselect">
+      </div>
+
+      <div id="Glist">
+         <div id="list" class="noselect">
+         </div>
+      </div>
+
+   </section>
+
+</body>
+
+<script>
+   "use strict";
+   getTSAlertOverlay();
+
+   if (user) {
+
+      getUsersList();
+
+      // Get list of users
+      async function getUsersList() {
+
+         const information = document.getElementById("information");
+
+         if (navigator.onLine) {
+
+            const infoHeader = {};
+            const url = `/users/list/all`;
+
+            const resp = await callServerAPIPost(infoHeader, url);
+
+            if (resp.hasOwnProperty("allUsers")) {
+
+               const totalUsers = resp.allUsers.length;
+
+               if (totalUsers < 0) {
+                  information.innerHTML = `${application.name} har ingen offentlige brukere`;
+               } else if (totalUsers === 1) {
+                  information.innerHTML = `${application.name} har 1 offentlig bruker`;
+               } else {
+                  information.innerHTML = `${application.name} har ${totalUsers} offentlige brukere<br>Her er listen med brukere`;
+               }
+
+               if (resp.hasOwnProperty("allAPIUsers")) {
+                  displayAllUsersAdmin(resp.allUsers, resp.allAPIUsers);
+               } else {
+                  displayAllUsers(resp.allUsers);
+               }
+            }
+
+         } else {
+            information.innerHTML = `Du må ha Internett-forbindelse for å hente listen med alle offentlige brukere`;
+         }
+      }
+      // End of getUsersList function
+
+      // displayAllUsersAdmin
+      function displayAllUsersAdmin(aAllUsers, aAllAPIUsers) {
+
+         const allUsers = aAllUsers;
+         const allAPIUsers = aAllAPIUsers;
+
+         allUsers.sort(function (a, b) { return a.id - b.id });
+         const usersKeys = Object.keys(allUsers);
+
+         for (let i = 0; i < usersKeys.length; i++) {
+
+            const currentUser = allUsers[usersKeys[i]];
+
+            let myAccountColor = "";
+            if (user && currentUser.id === user.getId()) {
+               myAccountColor = "settingsHightlightUser";
+            }
+
+            const list = document.getElementById("list");
+
+            list.innerHTML += `
+            <div>
+            ${currentUser.displayname}
+            ${currentUser.username}
+            </div>`;
+
+            console.log(currentUser)
+
+         }
+      }
+      // End of displayAllUsersAdmin function
+
+      // displayAllUsers
+      function displayAllUsers(aAllUsers) {
+
+         const allUsers = aAllUsers;
+
+         allUsers.sort(function (a, b) { return a.id - b.id });
+         const usersKeys = Object.keys(allUsers);
+
+         for (let i = 0; i < usersKeys.length; i++) {
+
+            const currentUser = allUsers[usersKeys[i]];
+
+            let myAccountColor = "";
+            if (user && currentUser.id === user.getId()) {
+               myAccountColor = "settingsHightlightUser";
+            }
+
+            const list = document.getElementById("list");
+
+            list.innerHTML += `
+            <div>
+            ${currentUser.displayname}
+            ${currentUser.username}
+            </div>`;
+
+         }
+      }
+      // End of displayAllUsers function
+
+   }
+
+</script>
+
+</html>

@@ -82,6 +82,11 @@
 --main-iconsActiveColor: var(--default-light-iconsActiveColor);
 --main-iconsDefaultColor: var(--default-light-iconsDefaultColor);
 
+--main-themeBadgeColor1: #3996b8;
+--main-themeBadgeShadow1: #3fa9cf80;
+--main-themeBadgeColor2: #174657;
+--main-themeBadgeShadow2: #17465780;
+
 --main-emptyBadgeColor: var(--default-light-emptyBadgeColor);
 --main-emptyBadgeShadow: var(--default-light-emptyBadgeShadow);
 --main-emptyBadgeBorderColor: var(--default-light-emptyBadgeBorderColor);
@@ -114,6 +119,11 @@
 --main-iconsActiveColor: var(--default-light-iconsActiveColor);
 --main-iconsDefaultColor: var(--default-light-iconsDefaultColor);
 
+--main-themeBadgeColor1: #3f59f1;
+--main-themeBadgeShadow1: #3f59f180;
+--main-themeBadgeColor2: #1b276d;
+--main-themeBadgeShadow2: #1b276d80;
+
 --main-emptyBadgeColor: var(--default-light-emptyBadgeColor);
 --main-emptyBadgeShadow: var(--default-light-emptyBadgeShadow);
 --main-emptyBadgeBorderColor: var(--default-light-emptyBadgeBorderColor);
@@ -121,7 +131,7 @@
 
 
 .blue_fullColorTheme-light {
---main-headerBackground:  #0161E8;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-headerBackground:  #025ad6;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
 --main-backgroundColor1: #0069fc;
 --main-backgroundColorRGBLowOpacity: #0069fc80;
@@ -146,6 +156,11 @@
 --main-iconsActiveColor: #354e70;
 --main-iconsDefaultColor: #798eaa;
 
+--main-themeBadgeColor1: #006aff;
+--main-themeBadgeShadow1: #006aff80;
+--main-themeBadgeColor2: #002d6b;
+--main-themeBadgeShadow2: #002d6b80;
+
 --main-emptyBadgeColor: #798eaa;
 --main-emptyBadgeShadow: #798eaa80;
 --main-emptyBadgeBorderColor: white;
@@ -165,6 +180,7 @@
 
 --main-lineBorder: 1px #214f6e solid;
 --main-border: 1px #164e7085 solid;
+--main-borderHeaderTop: var(--main-border);
 --main-border2:  0.75px #15456485 solid;
 
 --main-backgroundColor2: #b6d7ec;
@@ -178,6 +194,11 @@
 --main-iconsActiveColor: #1d455f;
 --main-iconsDefaultColor: #7794a8;
 
+--main-themeBadgeColor1: #006aff;
+--main-themeBadgeShadow1: #006aff80;
+--main-themeBadgeColor2: #002d6b;
+--main-themeBadgeShadow2: #002d6b80;
+
 --main-emptyBadgeColor: #5a7283;
 --main-emptyBadgeShadow: #5a728380;
 --main-emptyBadgeBorderColor: white;
@@ -185,7 +206,7 @@
 
 
 .test_full_simpleColorTheme-light {
---main-headerBackground:  #0161E8;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
+--main-headerBackground:  #246bce;/*linear-gradient(to bottom right, #78CFF0, #094E5C);*/
 --main-bodyBackgroundColor: var(--main-headerBackground); /* #78CFF0 */
 --main-backgroundColor1: #ffffff;
 --main-backgroundColorRGBLowOpacity: #ffffff80;
@@ -199,7 +220,7 @@
 --main-border: 1px #ffffff85 solid;
 --main-border2:  0.75px #ffffff85 solid;
 
---main-backgroundColor2: #0161E8;
+--main-backgroundColor2: #466288;
 --main-backgroundColor3: #ebebeb;
 
 --main-headerTextColor: white;
@@ -209,6 +230,11 @@
 
 --main-iconsActiveColor: #0161E8;
 --main-iconsDefaultColor: #b6b6b6;
+
+--main-themeBadgeColor1: #0557ca;
+--main-themeBadgeShadow1: #0557ca80;
+--main-themeBadgeColor2: #002d6b;
+--main-themeBadgeShadow2: #002d6b80;
 
 --main-emptyBadgeColor: #5a7283;
 --main-emptyBadgeShadow: #5a728380;
@@ -245,6 +271,11 @@
 --main-iconsActiveColor: var(--default-dark-iconsActiveColor);
 --main-iconsDefaultColor: var(--default-dark-iconsDefaultColor);
 
+--main-themeBadgeColor1: #398da8;
+--main-themeBadgeShadow1: #398da880;
+--main-themeBadgeColor2: #0e313d;
+--main-themeBadgeShadow2: #0e313d80;
+
 --main-emptyBadgeColor: var(--default-dark-emptyBadgeColor);
 --main-emptyBadgeShadow: var(--default-dark-emptyBadgeShadow);
 --main-emptyBadgeBorderColor: var(--default-dark-emptyBadgeBorderColor);
@@ -275,6 +306,11 @@
 
 --main-iconsActiveColor: var(--default-dark-iconsActiveColor);
 --main-iconsDefaultColor: var(--default-dark-iconsDefaultColor);
+
+--main-themeBadgeColor1: #3444a0;
+--main-themeBadgeShadow1: #3444a080;
+--main-themeBadgeColor2: #121b47;
+--main-themeBadgeShadow2: #121b4780;
 
 --main-emptyBadgeColor: var(--default-dark-emptyBadgeColor);
 --main-emptyBadgeShadow: var(--default-dark-emptyBadgeShadow);
@@ -308,6 +344,11 @@
 --main-iconsActiveColor: #ffffff;
 --main-iconsDefaultColor: #747474;
 
+--main-themeBadgeColor1: #0e5483;
+--main-themeBadgeShadow1: #0e548380;
+--main-themeBadgeColor2: #062b44;
+--main-themeBadgeShadow2: #062b4480;
+
 --main-emptyBadgeColor: #1d394b;
 --main-emptyBadgeShadow: #12202980;
 --main-emptyBadgeBorderColor: #82aac2;
@@ -328,6 +369,7 @@
 
 --main-lineBorder: 1px #ffffff solid;
 --main-border: 1px #e6e6e685 solid;
+--main-borderHeaderTop: var(--main-border);
 --main-border2: 0.75px #dfdfdf85 solid;
 
 --main-backgroundColor2: #1e2830;
@@ -340,6 +382,11 @@
 
 --main-iconsActiveColor: #ffffff;
 --main-iconsDefaultColor: #747474;
+
+--main-themeBadgeColor1: #0e5483;
+--main-themeBadgeShadow1: #0e548380;
+--main-themeBadgeColor2: #062b44;
+--main-themeBadgeShadow2: #062b4480;
 
 --main-emptyBadgeColor: #1d394b;
 --main-emptyBadgeShadow: #12202980;
@@ -371,6 +418,11 @@
 
 --main-iconsActiveColor: #ffffff;
 --main-iconsDefaultColor: #747474;
+
+--main-themeBadgeColor1: #0e5483;
+--main-themeBadgeShadow1: #0e548380;
+--main-themeBadgeColor2: #062b44;
+--main-themeBadgeShadow2: #062b4480;
 
 --main-emptyBadgeColor: #1d394b;
 --main-emptyBadgeShadow: #12202980;

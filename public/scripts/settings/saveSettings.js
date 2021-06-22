@@ -1,4 +1,8 @@
-// update password
+"use strict";
+let isUpdatingAboutMe = false,
+    isUpdatingCheckboxSetting = false;
+
+// updates password
 async function updatePassword() {
     if (navigator.onLine) {
 
@@ -30,37 +34,25 @@ async function updatePassword() {
                     localStorage.clear();
                     sessionStorage.clear();
                     sessionStorage.setItem("cachedUsername", user.getUsername());
-                    /*alert(`Passordet ble endret. Du blir nå logget ut`);
-                    redirectToLogin();*/
                     showAlert(`Passordet ble endret. Du blir nå logget ut`, true, "redirectToLogin();");
                 } else {
-                    //alert(data.message);
                     showAlert(data.message, true);
                 }
 
             } else {
-                //alert("Ønskede passord og gjenta ønskede stemmer ikke");
                 showAlert("Ønskede passord og gjenta ønskede stemmer ikke", true);
             }
 
         } else {
-            //alert("Vennligst fyll inn alle feltene.");
             showAlert("Vennligst fyll ut alle feltene", true);
         }
     } else {
-        //alert("Du må ha Internett-tilkobling for å endre passord!");
         showAlert("Du må ha Internett-tilkobling for å endre passord!", true);
     }
 }
-
-//
-
-
+// End of updatePassword function
 
 // update about me
-
-let isUpdatingAboutMe = false;
-
 async function updateAboutMe() {
     if (navigator.onLine) {
 
@@ -104,18 +96,16 @@ async function updateAboutMe() {
             }, 2000);
         }
     } else {
-        //alert("Du må ha Internett-tilkobling for å endre detaljer om deg!");
         showAlert("Du må ha Internett-tilkobling for å endre detaljer om deg!", true);
     }
 }
+// End of updateAboutMe function
 
 //
 
 
 
 // update checkbox settings
-let isUpdatingCheckboxSetting = false;
-
 async function updateCheckboxSetting(aSetting, aValue) {
     if (navigator.onLine) {
 
@@ -148,9 +138,9 @@ async function updateCheckboxSetting(aSetting, aValue) {
         }
     }
 }
+// End of updateCheckboxSetting function
 
-//
-
+// savePreferredApperance
 async function savePreferredApperance() {
     if (navigator.onLine) {
 
@@ -173,13 +163,10 @@ async function savePreferredApperance() {
         }
     }
 }
+// End of savePreferredApperance function
 
 
-//
-
-
-//
-
+// saveColorTheme
 async function saveColorTheme() {
     if (navigator.onLine) {
 
@@ -202,8 +189,9 @@ async function saveColorTheme() {
         }
     }
 }
+// End of saveColorTheme function
 
-
+// updateBadgeSize
 async function updateBadgeSize() {
     if (navigator.onLine) {
 
@@ -221,7 +209,9 @@ async function updateBadgeSize() {
         }
     }
 }
+// End of updateBadgeSize function
 
+// updateBadgeDetails
 async function updateBadgeDetails() {
     if (navigator.onLine) {
         const value = document.getElementById("badgeDetailsSelection").value;
@@ -237,18 +227,19 @@ async function updateBadgeDetails() {
         }
     }
 }
+// End of updateBadgeDetails function
 
+// saveDisplaynameConfirm
 async function saveDisplaynameConfirm() {
     if (navigator.onLine) {
-
         showConfirm("Hvis du endrer visningsnavnet. Må du logge inn på nytt", "saveDisplayname();")
-
     } else {
-        //alert("Du må ha Internett-tilkobling for å endre visningsnavn!");
         showAlert(`Du må ha Internett-tilkobling for å endre visningsnavn!`, true);
     }
 }
+// End of saveDisplaynameConfirm function
 
+// saveDisplayname
 async function saveDisplayname() {
     if (navigator.onLine) {
 
@@ -287,36 +278,32 @@ async function saveDisplayname() {
                 localStorage.clear();
                 sessionStorage.clear();
                 sessionStorage.setItem("cachedUsername", user.getUsername());
-                /*alert(`Visningsnavet ble endret til: ${fixedDisplayname}. Du blir nå logget ut`);
-                redirectToLogin();*/
                 showAlert(`Visningsnavet ble endret til: ${fixedDisplayname}. Du blir nå logget ut`, true, "redirectToLogin();");
             } else {
-                //alert("Visningsnavet kunne ikke bli oppdatert. Vennligst prøv igjen.")
                 showAlert(`Visningsnavet kunne ikke bli oppdatert. Vennligst prøv igjen`, true);
             }
 
         } else {
-            //alert("Ugyldig visningsnavn!");
             showAlert(`Ugyldig visningsnavn!`, true);
         }
 
     } else {
-        //alert("Du må ha Internett-tilkobling for å endre visningsnavn!");
         showAlert(`Du må ha Internett-tilkobling for å endre visningsnavn!`, true);
     }
 }
+// End of saveDisplayname function
 
+// saveUsernameConfirm
 async function saveUsernameConfirm() {
     if (navigator.onLine) {
-
         showConfirm("Hvis du endrer brukernavnet. Må du logge inn på nytt", "saveUsername();");
-
     } else {
-        //alert("Du må ha Internett-tilkobling for å endre brukernavn!");
         showAlert(`Du må ha Internett-tilkobling for å endre brukernavn!`, true);
     }
 }
+// End of saveUsernameConfirm function
 
+// saveUsername
 async function saveUsername() {
     if (navigator.onLine) {
 
@@ -333,25 +320,23 @@ async function saveUsername() {
 
             const resp = await callServerAPIPost(infoHeader, url);
 
+            console.log(resp)
+
             if (resp === true) {
                 localStorage.clear();
                 sessionStorage.clear();
                 sessionStorage.setItem("cachedUsername", newUsername);
-                /*alert(`Brukernavnet ble endret til: ${newUsername}. Du blir nå logget ut`);
-                redirectToLogin();*/
                 showAlert(`Brukernavnet ble endret til: ${newUsername}. Du blir nå logget ut`, true, "redirectToLogin();");
             } else {
-                //alert("Brukernavnet er opptatt!")
-                showAlert(`Brukernavnet ble endret til: ${newUsername}. Du blir nå logget ut`, true);
+                showAlert(`Brukernavnet kunne ikke bli endret. Vennligst prøv et annet brukernavn.`, true);
             }
 
         } else {
-            //alert("Ugyldig brukernavn!");
             showAlert(`Ugyldig brukernavn!`, true);
         }
 
     } else {
-        //alert("Du må ha Internett-tilkobling for å endre brukernavn!");
         showAlert(`Du må ha Internett-tilkobling for å endre brukernavn!`, true);
     }
 }
+// End of saveUsername function

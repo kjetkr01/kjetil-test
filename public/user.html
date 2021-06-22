@@ -17,8 +17,8 @@
    <meta name="msapplication-starturl" content="/">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0">
 
-   <link rel="icon" type="image/png" sizes="192x192" href="images/appIcon.png">
-   <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="images/appIcon.png">
+   <link rel="icon" sizes="192x192" type="image/png" href="images/placeholder_logo_icon.png">
+   <link rel="apple-touch-icon" sizes="192x192" type="image/png" href="images/placeholder_logo_icon.png">
 
    <!-- -->
 
@@ -71,9 +71,9 @@
    <link rel="stylesheet" href="styles/global/themes.css">
 
 
-   <link rel="stylesheet" href="styles/user/desktop.css">
-   <link rel="stylesheet" href="styles/user/mobile.css">
-   <link rel="stylesheet" href="styles/user/common.css">
+   <link rel="stylesheet" href="styles/user/grid.css">
+   <link rel="stylesheet" href="styles/user/values.css">
+
    <link rel="stylesheet" href="styles/shared/overlay.css">
 
    <link rel="stylesheet" href="styles/shared/badges.css">
@@ -89,6 +89,7 @@
    <script src="scripts/shared/editInformation.js" type="text/javascript"></script>
    <script src="scripts/shared/badges.js" type="text/javascript"></script>
    <script src="scripts/shared/trainingsplit.js" type="text/javascript"></script>
+   <script src="scripts/shared/pushToArr.js" type="text/javascript"></script>
    <script src="scripts/shared/overlay.js" type="text/javascript"></script>
 
 </head>
@@ -112,7 +113,6 @@
       <div id="c3r1"></div>
 
       <div id="GbackBtn">
-
          <svg id="backBtn" class="backBtnIcon fadeInLeft animate delaySmall pointer" style="stroke:white;"
             draggable="false" onclick="returnToPrevious();" xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 22.49 39.22">
@@ -223,26 +223,27 @@
 </body>
 
 <script>
-
+   "use strict";
    getViewLiftorGoalOverlay();
    getTSAlertOverlay();
    getTSConfirmOverlay();
 
-   if (user) {
+   const referrer = sessionStorage.getItem("visit_user_referrer");
 
-      const referrer = sessionStorage.getItem("visit_user_referrer");
+   // returnToPrevious
+   function returnToPrevious() {
+      const redirect = sessionStorage.getItem("visit_user_referrer");
 
-      function returnToPrevious() {
-         const redirect = sessionStorage.getItem("visit_user_referrer");
-
-         if (redirect) {
-            sessionStorage.removeItem("visit_user_referrer");
-            location.href = redirect;
-         } else {
-            redirectToFeed();
-         }
+      if (redirect) {
+         sessionStorage.removeItem("visit_user_referrer");
+         location.href = redirect;
+      } else {
+         redirectToFeed();
       }
+   }
+   // End of returnToPrevious function
 
+   if (user) {
       requestAccountDetails();
    }
 

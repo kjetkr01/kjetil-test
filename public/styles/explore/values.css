@@ -1,0 +1,30 @@
+/* values for mobile & desktop */
+
+#title {
+color:var(--main-headerTextColor);
+font-weight: bold;
+font-family: var(--main-font-Family-Verdana);
+}
+
+#information {
+margin-left: 20px;
+margin-right: 20px;
+color:var(--main-textColorDark);
+font-family: var(--main-font-Family-Verdana);
+}
+
+#line {
+opacity: 40%;
+border: var(--main-lineBorder);
+}
+
+#c1r1 {
+border-top: var(--main-borderHeaderTop);
+}
+
+#c2r1 {
+/*border-top: 1px #75757585 solid;*/
+border-top: var(--main-border);
+}
+
+/* end of mobile & desktop */

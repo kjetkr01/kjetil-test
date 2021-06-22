@@ -1,7 +1,7 @@
 :root {
 --main-footerHeightTop: 14px; /* 17.5px før */ /*index/leaderboards/account*/
 --main-footerIconHeight: var(--main-footerIconSize); /*index/leaderboards/account*/
---main-footerHeightBottom: 22.5px; /* 22.5px før */ /*index/leaderboards/account*/
+--main-footerHeightBottom: 14px; /* 22.5px før */ /*index/leaderboards/account*/
 --main-footerIconSize: 27px; /* 28px før */
 }
 

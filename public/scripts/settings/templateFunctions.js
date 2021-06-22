@@ -1,3 +1,5 @@
+"use strict";
+// get default template
 function getTemplate(aSetting, aDivId, aInfo, aSpacingTop) {
 
    const setting = aSetting || "Innstillingen finnes ikke!";
@@ -31,7 +33,9 @@ function getTemplate(aSetting, aDivId, aInfo, aSpacingTop) {
  `;
    return html;
 }
+// End of getTemplate function
 
+// getTemplateWithBtn
 function getTemplateWithBtn(aSetting, aDivId, aSpacingTop) {
 
    const setting = aSetting || "Innstillingen finnes ikke!";
@@ -69,9 +73,9 @@ function getTemplateWithBtn(aSetting, aDivId, aSpacingTop) {
 `;
    return html;
 }
+// End of getTemplateWithBtn function
 
-
-
+// getTemplateWithCheckbox
 function getTemplateWithCheckbox(aSetting, aDivId, aChecked, aOnClickInfo, aSpacingTop) {
 
    const setting = aSetting || "Innstillingen finnes ikke!";
@@ -138,7 +142,9 @@ function getTemplateWithCheckbox(aSetting, aDivId, aChecked, aOnClickInfo, aSpac
 
    return html;
 }
+// End of getTemplateWithCheckbox function
 
+// getLogoutBtn
 function getLogoutBtn() {
 
    const html =
@@ -162,8 +168,9 @@ function getLogoutBtn() {
 `;
    return html;
 }
+// End of getLogoutBtn function
 
-
+// getPendingRequestsTemplate
 function getPendingRequestsTemplate() {
 
    const html =
@@ -192,7 +199,9 @@ function getPendingRequestsTemplate() {
 `;
    return html;
 }
+// End of getPendingRequestsTemplate function
 
+// getCenteredTextTemplate
 function getCenteredTextTemplate(aDetails, aDivId, aSpacingTop) {
 
    const details = aDetails || "Det har oppstått et problem";
@@ -220,7 +229,9 @@ function getCenteredTextTemplate(aDetails, aDivId, aSpacingTop) {
 `;
    return html;
 }
+// End of getCenteredTextTemplate function
 
+// getLeftTextTemplate
 function getLeftTextTemplate(aDetails, aDivId, aSpacingTop) {
 
    const details = aDetails || "Det har oppstått et problem";
@@ -248,7 +259,9 @@ function getLeftTextTemplate(aDetails, aDivId, aSpacingTop) {
 `;
    return html;
 }
+// End of getLeftTextTemplate function
 
+// justTextTemplate
 function justTextTemplate(aText, aTextAlign) {
 
    if (aTextAlign !== "left" && aTextAlign !== "center") {
@@ -274,7 +287,9 @@ function justTextTemplate(aText, aTextAlign) {
 `;
    return html;
 }
+// End of justTextTemplate function
 
+// getAPITextTemplate
 function getAPITextTemplate(aDetails, aDivId, aSpacingTop) {
 
    const details = aDetails || "Det har oppstått et problem";
@@ -302,9 +317,9 @@ function getAPITextTemplate(aDetails, aDivId, aSpacingTop) {
     `;
    return html;
 }
+// End of getAPITextTemplate function
 
-
-
+// getBottomSpacingTemplate
 function getBottomSpacingTemplate() {
 
    const html =
@@ -322,3 +337,4 @@ function getBottomSpacingTemplate() {
     `;
    return html;
 }
+// End of getBottomSpacingTemplate function

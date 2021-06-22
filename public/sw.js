@@ -1,4 +1,4 @@
-const cacheName = 'TS-PWA-v43';
+const cacheName = 'TS-PWA-v50';
 const swName = '[Service Worker]';
 
 const contentToCache = [
@@ -13,7 +13,9 @@ const contentToCache = [
     '/login.html',
     '/access.html',
     '/index.html',
+    '/explore.html',
     '/leaderboards.html',
+    '/users.html',
     '/account.html',
     '/settings.html',
     '/user.html',
@@ -21,7 +23,8 @@ const contentToCache = [
 
     /* IMAGES */
 
-    '/images/appIcon.png',
+    '/images/placeholder_logo_icon.png',
+    '/images/placeholder_logo.svg',
     '/images/trash.svg',
 
     /* SCRIPTS */
@@ -35,6 +38,7 @@ const contentToCache = [
     '/scripts/shared/badges.js',
     '/scripts/shared/trainingsplit.js',
     '/scripts/shared/overlay.js',
+    '/scripts/shared/pushToArr.js',
 
     '/scripts/validate/validateInfo.js',
     '/scripts/index/index.js',
@@ -61,40 +65,37 @@ const contentToCache = [
     '/styles/shared/userGrid.css',
     '/styles/shared/overlay.css',
     '/styles/shared/footer.css',
+    'styles/shared/exploreDefault.css',
 
-    '/styles/login/desktop.css',
-    '/styles/login/mobile.css',
-    '/styles/login/common.css',
+    '/styles/login/grid.css',
+    '/styles/login/values.css',
 
-    '/styles/access/desktop.css',
-    '/styles/access/mobile.css',
-    '/styles/access/common.css',
+    '/styles/access/grid.css',
+    '/styles/access/values.css',
 
-    '/styles/index/common.css',
-    '/styles/index/desktop.css',
-    '/styles/index/mobile.css',
+    '/styles/index/grid.css',
+    '/styles/index/values.css',
 
-    '/styles/account/common.css',
-    '/styles/account/desktop.css',
-    '/styles/account/mobile.css',
+    '/styles/account/grid.css',
+    '/styles/account/values.css',
+
+    '/styles/explore/exploreBadge.css',
+    '/styles/explore/grid.css',
+    '/styles/explore/values.css',
 
     '/styles/leaderboards/board.css',
-    '/styles/leaderboards/common.css',
-    '/styles/leaderboards/desktop.css',
-    '/styles/leaderboards/mobile.css',
+    '/styles/leaderboards/grid.css',
+    '/styles/leaderboards/values.css',
 
-    '/styles/settings/common.css',
-    '/styles/settings/desktop.css',
-    '/styles/settings/mobile.css',
+    '/styles/settings/grid.css',
+    '/styles/settings/values.css',
     '/styles/settings/settingsGrid.css',
 
-    '/styles/user/common.css',
-    '/styles/user/desktop.css',
-    '/styles/user/mobile.css',
+    '/styles/user/grid.css',
+    '/styles/user/values.css',
 
-    '/styles/trainingsplit/common.css',
-    '/styles/trainingsplit/desktop.css',
-    '/styles/trainingsplit/mobile.css',
+    '/styles/trainingsplit/grid.css',
+    '/styles/trainingsplit/values.css',
 ];
 
 if ('serviceWorker' in navigator) {

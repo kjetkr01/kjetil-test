@@ -1,5 +1,5 @@
+"use strict";
 const application = ts_application.ts_application;
-application.lastUpdated.date = getDateFormat(application.lastUpdated.day, application.lastUpdated.month, application.lastUpdated.year);
 
 const aboutAppText = `
 ${application.name} er et app prosjekt utviklet av ${createBtn("Kjetil Kristiansen", "2")}.
@@ -21,91 +21,7 @@ ${createBtn("Szilard Andri Reynisson", "4")},
 ${createBtn("Sondre Olsen", "10")}.
 `;
 
-//
-
-const ongoingUpdatesText = "Pågående oppdateringer";
-const ongoingUpdatesArr = [
-    "TITLE:Farge-tema",
-    "Lage flere farge-temaer",
-    "TITLE:Innstillinger",
-    "Personvern (75%)",
-    "TITLE:Treningsplan",
-    "Enklere se hvilken dag det er på badgesene (40%)",
-    "TITLE:Splash Screen (iOS)",
-    "Fikse slik at splash screen funker på landscape mode (iPad) (50%)",
-    "TITLE:Språk",
-    "God formulering og ordbruk (36%)",
-    "TITLE:Annet",
-    "Optimalisering",
-    "Annet",
-];
-
-//
-
-
-
-//
-
-const plannedUpdatesText = "Kommende oppdateringer";
-const plannedUpdatesArr = [
-    "TITLE:Løft/Mål",
-    "Legge til flere løft og mål. Foreløpi bare: Benkpress, Knebøy, Markløft, Skulderpress",
-
-    "TITLE:Badges",
-    "Lage flere badge farger",
-
-    "TITLE:Desktop design",
-    "Optimalisere desktop design",
-];
-
-//
-
-
-const aboutAppBottomInfo = `
-Prosjekt oppstart: ${getDateFormat("20", "11", "2020")}
-<br><br>
-Sist oppdatert: ${calcDaysSinceUpdate()}
-`;
-/*
-<br><br>
-<a href="https://kjetkr01.github.io/" target="_blank">kjetkr01.github.io</a>
-Full redesign: ${getDateFormat("19", "01", "2021")}
-*/
-
-// array to html
-let ongoingUpdates = "", plannedUpdates = "";
-for (let i = 0; i < ongoingUpdatesArr.length; i++) {
-    let cText = ongoingUpdatesArr[i];
-    let extraSpace = "<br>";
-    if (i === 0) {
-        extraSpace = "";
-    }
-
-    if (cText.includes("TITLE:")) {
-        cText = cText.split("TITLE:").pop();
-        ongoingUpdates += `<strong>${extraSpace}${cText}:</strong><br><br>`;
-    } else {
-        ongoingUpdates += `- ${cText}<br>`;
-    }
-}
-
-for (let i = 0; i < plannedUpdatesArr.length; i++) {
-    let cText = plannedUpdatesArr[i];
-    let extraSpace = "<br>";
-    if (i === 0) {
-        extraSpace = "";
-    }
-
-    if (cText.includes("TITLE:")) {
-        cText = cText.split("TITLE:").pop();
-        plannedUpdates += `<strong>${extraSpace}${cText}:</strong><br><br>`;
-    } else {
-        plannedUpdates += `- ${cText}<br>`;
-    }
-}
-//
-
-
+// creates clickable button if id is being sent in
 function createBtn(aUserFullname, aUserID) {
 
     if (aUserFullname) {
@@ -124,48 +40,4 @@ function createBtn(aUserFullname, aUserID) {
         return html;
     }
 }
-
-function getDateFormat(aDay, aMonth, aYear) {
-
-    const day = aDay;
-    const month = aMonth;
-    const year = aYear;
-
-    let string = "Ugyldig dato";
-
-    if (day && month && year) {
-        if (day.length === 1 || day.length === 2 && month.length === 1 || month.length === 2 && year.length === 4) {
-
-            string = new Date(`${year}-${month}-${day}`);
-            if (isNaN(string)) {
-                string = `${day}.${month}.${year}`;
-            } else {
-                string = new Date(`${year}-${month}-${day}`).toLocaleDateString();
-            }
-        }
-    }
-    return string;
-}
-
-function calcDaysSinceUpdate() {
-
-    let string = "";
-
-    const todayDate = new Date();
-    const updateDate = new Date(parseInt(application.lastUpdated.year), (parseInt(application.lastUpdated.month) - 1), parseInt(application.lastUpdated.day));
-
-    const daysSinceTime = parseInt((todayDate - updateDate) / (1000 * 3600 * 24));
-
-    if (todayDate < updateDate) {
-        //fremtiden
-    } else if (daysSinceTime === 0) {
-        string = `I dag`;
-    } else if (daysSinceTime === 1) {
-        string = `${parseInt(daysSinceTime)} dag siden`;
-    } else if (daysSinceTime > 1) {
-        string = `${parseInt(daysSinceTime)} dager siden`;
-    } else {
-        string = application.lastUpdated.date;
-    }
-    return string;
-}
+// End of createBtn function

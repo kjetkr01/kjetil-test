@@ -1,41 +1,21 @@
 (function (exports) {
 
-    // Oppdatere disse når ny commit
-
-    const updateDay = "15.06.2021";
-
-    // Slutt
-
-    const upd = updateDay.split(".");
-
     const app = {
         name: "Treningstatistikken",
-        logoURL: "images/appIcon.png",
-        version: {
-            state: "a", // a = alpha / b = beta / rc = release candidate / r = release
-            major: 6,
-            minor: 3,
-            revision: 24,
-            buildnumber: 969,
-        },
-        lastUpdated: {
-            day: upd[0],
-            month: upd[1],
-            year: upd[2]
-        },
-        updatesInfo: {
-            showOnGoing: true,
-            showPlanned: true,
+        logoURL: "images/placeholder_logo.svg",
+        versionLog: {
+            "6.3.27.989": {
+                "txt":
+                    ["Lagt til versjonslogg", "Feilrettinger", "Ytelsesforbedringer"],
+                "date": "21.06.2021"
+            }
         }
     }
 
-    if (app.version.state !== "r") {
-        app.version.fullNumber = `${app.version.major}.${app.version.minor}.${app.version.revision}-${app.version.state}.${app.version.buildnumber}`;
-    } else {
-        app.version.fullNumber = `${app.version.major}.${app.version.minor}.${app.version.revision}.${app.version.buildnumber}`;
-    }
+    // Uses first (newest version) as current version
+    app.versionFullNumber = Object.keys(app.versionLog)[0];
 
-    app.version.full = `Versjon ${app.version.fullNumber}`;
+    app.versionFull = `Versjon ${app.versionFullNumber}`;
 
     exports.ts_application = app;
 

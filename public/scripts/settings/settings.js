@@ -1,3 +1,4 @@
+"use strict";
 const ELoadSettings = {
     settings: {
         name: `Innstillinger`,
@@ -49,6 +50,7 @@ const ELoadSettings = {
     }
 };
 
+// updates userInfo with newest detailks
 async function updateUserInfo(aSkipReqData) {
 
     if (navigator.onLine && aSkipReqData !== true) {
@@ -90,7 +92,9 @@ async function updateUserInfo(aSkipReqData) {
 
     loadSetting(currentSetting);
 }
+// End of updateUserInfo function
 
+// scrolls to saved pos
 function scrollToSavedPos(setting, extraScroll) {
 
     let currentScroll = parseInt(sessionStorage.getItem(`@scroll-${setting}`));
@@ -106,7 +110,9 @@ function scrollToSavedPos(setting, extraScroll) {
         settingsDom.scrollTo(0, currentScroll);
     }
 }
+// End of scrollToSavedPos function
 
+// backToPrevious setting / page
 function backToPrevious() {
     if (titleDom.innerHTML === ELoadSettings.settings.name) {
         clearAllScrollPos();
@@ -119,7 +125,9 @@ function backToPrevious() {
         loadSetting(ELoadSettings.settings.name);
     }
 }
+// End of backToPrevious function
 
+// saves current setting
 function cacheCurrentSetting(aCurrentSetting) {
     if (!aCurrentSetting) {
         aCurrentSetting = ELoadSettings.settings.name;
@@ -129,28 +137,24 @@ function cacheCurrentSetting(aCurrentSetting) {
 
     sessionStorage.setItem("currentSetting", currentSetting);
 }
+// End of cacheCurrentSetting function
 
+// clearAllScrollPos
 function clearAllScrollPos() {
     const ELoadSettingsKeys = Object.keys(ELoadSettings);
     for (let i = 0; i < ELoadSettingsKeys.length; i++) {
         sessionStorage.removeItem(`@scroll-${ELoadSettings[ELoadSettingsKeys[i]].name}`);
     }
 }
+// End of clearAllScrollPos function
 
+// confirmLogout
 function confirmLogout() {
-
-    /*const logout = confirm("Er du sikker på at du vil logge ut?");
-
-    if (logout === true) {
-        localStorage.clear();
-        sessionStorage.clear();
-        sessionStorage.setItem("cachedUsername", user.getUsername());
-        redirectToLogin();
-    }*/
-
     showConfirm("Er du sikker på at du vil logge ut?", `localStorage.clear();sessionStorage.clear();sessionStorage.setItem('cachedUsername', '${user.getUsername()}');redirectToLogin();`);
 }
+// End of confirmLogout function
 
+// aboutMeResetValues
 function aboutMeResetValues() {
     const domList = ["gymInp", "ageInp", "heightInp", "weightInp"];
 
@@ -158,7 +162,9 @@ function aboutMeResetValues() {
         document.getElementById(domList[i]).value = "";
     }
 }
+// End of aboutMeResetValues function
 
+// validateDisplaynameInput
 function validateDisplaynameInput() {
 
     const displaynameInp = document.getElementById("displaynameInp").value;
@@ -169,9 +175,10 @@ function validateDisplaynameInput() {
     }
 
     checkIfEdited("displayname");
-
 }
+// End of validateDisplaynameInput function
 
+// validateUsernameInput
 function validateUsernameInput() {
 
     const usernameInp = document.getElementById("usernameInp").value;
@@ -182,9 +189,10 @@ function validateUsernameInput() {
     }
 
     checkIfEdited("username");
-
 }
+// End of validateUsernameInput function
 
+// checkIfEdited
 function checkIfEdited(aType) {
 
     if (aType) {
@@ -217,7 +225,9 @@ function checkIfEdited(aType) {
         }
     }
 }
+// End of checkIfEdited function
 
+// acceptPendingUserConfirm
 async function acceptPendingUserConfirm(username, acceptOrDeny) {
     if (!username || acceptOrDeny === "") {
         return;
@@ -230,9 +240,10 @@ async function acceptPendingUserConfirm(username, acceptOrDeny) {
     }
 
     showConfirm("Er du sikker på at du vil " + statusMsg + " " + username + " sin forespørsel?", `acceptPendingUser('${username}', ${acceptOrDeny})`);
-
 }
+// End of acceptPendingUserConfirm function
 
+// acceptPendingUser
 async function acceptPendingUser(username, acceptOrDeny) {
     if (!username || acceptOrDeny === "") {
         return;
@@ -250,16 +261,16 @@ async function acceptPendingUser(username, acceptOrDeny) {
     const results = await callServerAPIPost(infoHeader, url);
 
     if (results === "Ok") {
-        //alert(statusMsg2 + username);
         showAlert(statusMsg + username, true);
     } else {
-        //alert("Feil, brukeren finnes ikke!");
         showAlert("Feil, brukeren finnes ikke!", true);
     }
 
     loadSetting(ELoadSettings.pendingUsers.name);
 }
+// End of acceptPendingUser function
 
+// displayInformationAboutUser
 async function displayInformationAboutUser() {
 
     const informationAboutUser = document.getElementById("informationAboutUser");
@@ -418,9 +429,6 @@ async function displayInformationAboutUser() {
                 }
 
                 document.getElementById("detailsAboutMyAccountBtn").innerHTML = "Mine opplysninger";
-                setTimeout(() => {
-                    loadingInformationAboutUser = false;
-                }, 1000);
 
             } else {
                 informationAboutUser.innerHTML = `<br>Det her oppstått en feil, kunne ikke hente opplysningene dine. Vennligst prøv igjen.`;
@@ -439,7 +447,9 @@ async function displayInformationAboutUser() {
         informationAboutUser.innerHTML = "";
     }
 }
+// End of displayInformationAboutUser function
 
+// deleteInfoCache
 async function deleteInfoCache() {
 
     const allCaches = await caches.keys();
@@ -455,7 +465,9 @@ async function deleteInfoCache() {
         }
     }
 }
+// End of deleteInfoCache function
 
+// deleteAccountConfirm
 async function deleteAccountConfirm() {
     if (navigator.onLine) {
 
@@ -469,20 +481,19 @@ async function deleteAccountConfirm() {
                 showConfirm(`Er du sikkert på at du ønsker å slette kontoen din? Dette kan ikke angres!`, "deleteAccount();");
 
             } else {
-                //alert("Brukernavnet stemmer ikke med kontoen")
                 showAlert(`Brukernavnet stemmer ikke med kontoen`, true);
             }
 
         } else {
-            //alert("Vennligst fyll ut feltene");
             showAlert(`Vennligst fyll ut feltene!`, true);
         }
     } else {
-        //alert("Du må ha Internett-tilkobling for å kunne slette kontoen din!");
         showAlert(`Du må ha Internett-tilkobling for å kunne slette kontoen din!`, true);
     }
 }
+// End of deleteAccountConfirm function
 
+// deleteAccount
 async function deleteAccount() {
     if (navigator.onLine) {
 
@@ -492,8 +503,6 @@ async function deleteAccount() {
         if (usernameInpDeletion && usernameInpDeletion.length >= 3 && passwordInpDeletion) {
 
             if (usernameInpDeletion === user.getUsername()) {
-
-                // delete account
 
                 const body = { "authorization": "Basic " + window.btoa(`${usernameInpDeletion}:${passwordInpDeletion}`) };
                 const url = `/user/deleteMe`;
@@ -514,38 +523,34 @@ async function deleteAccount() {
                 if (data.status === true) {
                     sessionStorage.clear();
                     localStorage.clear();
-                    //alert(`${data.message} Takk for at du var medlem av ${application.name}`);
-                    //location.reload();
                     showAlert(`${data.message} Takk for at du var medlem av ${application.name}`, true, "redirectToLogin();");
                 } else {
-                    //alert(`Det har oppstått en feil: ${data.message}`);
                     showAlert(`Det har oppstått en feil: ${data.message}`, true);
                 }
 
             } else {
-                //alert("Brukernavnet stemmer ikke med kontoen")
                 showAlert(`Brukernavnet stemmer ikke med kontoen`, true);
             }
 
         } else {
-            //alert("Vennligst fyll ut feltene");
             showAlert(`Vennligst fyll ut feltene!`, true);
         }
     } else {
-        //alert("Du må ha Internett-tilkobling for å kunne slette kontoen din!");
         showAlert(`Du må ha Internett-tilkobling for å kunne slette kontoen din!`, true);
     }
 }
+// End of deleteAccount function
 
+// giveAPIAccessConfirm
 async function giveAPIAccessConfirm(aUsername, aID) {
 
     if (aID && aUsername) {
-
         showConfirm(`Er du sikker på at du ønsker å gi ${aUsername} (${aID}) API tilgang?`, `giveAPIAccess('${aUsername}', '${aID}');`);
-
     }
 }
+// End of giveAPIAccessConfirm function
 
+// giveAPIAccess
 async function giveAPIAccess(aUsername, aID) {
 
     if (aID && aUsername) {
@@ -559,24 +564,24 @@ async function giveAPIAccess(aUsername, aID) {
         const resp = await callServerAPIPost(infoHeader, url);
 
         if (resp !== true) {
-            //alert(`Det har oppståtte en feil. ${giveAPIUsername} kunne ikke få API tilgang.`);
             showAlert(`Det har oppstått en feil. ${giveAPIUsername} kunne ikke få API tilgang!`, true);
         }
 
         loadSetting(ELoadSettings.users.name);
-
     }
 }
+// End of giveAPIAccess function
 
+// removeAPIAccessConfirm
 async function removeAPIAccessConfirm(aUsername, aID) {
 
     if (aID && aUsername) {
-
         showConfirm(`Er du sikker på at du ønsker å fjerne ${aUsername} (${aID}) sin API tilgang?`, `removeAPIAccess('${aUsername}', '${aID}');`);
-
     }
 }
+// End of removeAPIAccessConfirm function
 
+// removeAPIAccess
 async function removeAPIAccess(aUsername, aID) {
 
     if (aID && aUsername) {
@@ -590,15 +595,15 @@ async function removeAPIAccess(aUsername, aID) {
         const resp = await callServerAPIPost(infoHeader, url);
 
         if (resp !== true) {
-            //alert(`Det har oppståtte en feil. ${removeAPIUsername} kunne ikke fjerne API tilgang.`);
             showAlert(`Det har oppståtte en feil. ${removeAPIUsername} kunne ikke fjerne API tilgang`, true);
         }
 
         loadSetting(ELoadSettings.users.name);
-
     }
 }
+// End of removeAPIAccess function
 
+// removeMedalConfirm
 async function removeMedalConfirm(aMedalsCount, aCount) {
 
     if (navigator.onLine) {
@@ -628,11 +633,12 @@ async function removeMedalConfirm(aMedalsCount, aCount) {
 
         }
     } else {
-        //alert("Det kreves Internett-tilkobling for å fjerne medaljer!");
         showAlert("Det kreves Internett-tilkobling for å fjerne medaljer!", true);
     }
 }
+// End of removeMedalConfirm function
 
+// removeMedal
 async function removeMedal(aMedalsCount, aCount) {
 
     if (navigator.onLine) {
@@ -657,10 +663,108 @@ async function removeMedal(aMedalsCount, aCount) {
             }
         }
     } else {
-        //alert("Det kreves Internett-tilkobling for å fjerne medaljer!");
         showAlert("Det kreves Internett-tilkobling for å fjerne medaljer!", true);
     }
 }
+// End of removeMedal function
+
+// shows newest version details
+function showNewestVersionLog() {
+    const versionLogsDiv = document.getElementById("versionLogsDiv");
+
+    versionLogsDiv.innerHTML = "";
+
+    const versionLogKeys = Object.keys(application.versionLog);
+    const newestVersion = versionLogKeys[0];
+
+    versionLogsDiv.innerHTML = getVersionLogTemplate(newestVersion);
+
+    if (versionLogKeys.length > 1) {
+        versionLogsDiv.innerHTML += `<br>
+        <br><button class='settingsButton pointer' onclick="expandVersionLogs();">Vis mer</button>`;
+    }
+}
+// End of showNewestVersionLog function
+
+// expands version logs (shows all logs)
+function expandVersionLogs() {
+
+    const versionLogsKeys = Object.keys(application.versionLog);
+
+    const versionLogsDiv = document.getElementById("versionLogsDiv");
+
+    versionLogsDiv.innerHTML = "";
+
+    for (let i = 0; i < versionLogsKeys.length; i++) {
+        const version = versionLogsKeys[i];
+
+        if (i >= 1) {
+            versionLogsDiv.innerHTML += "<br><br>";
+        }
+
+        versionLogsDiv.innerHTML += getVersionLogTemplate(version);
+    }
+
+    versionLogsDiv.innerHTML += `
+    <br>
+    <br><button class='settingsButton pointer' onclick="showNewestVersionLog();">Vis mindre</button>`;
+}
+// End of expandVersionLogs function
+
+// returns version log template
+function getVersionLogTemplate(aVersion) {
+
+    const version = aVersion;
+
+    const versionTextArr = application.versionLog[version].txt;
+    const versionDate = application.versionLog[version].date;
+
+    let versionTxt = "";
+
+    for (let i = 0; i < versionTextArr.length; i++) {
+        versionTxt += `- ${versionTextArr[i]}<br>`;
+    }
+
+    //
+
+    let string = "";
+
+    const date = versionDate.split(".");
+
+    const todayDate = new Date();
+    const updateDate = new Date(parseInt(date[2]), (parseInt(date[1]) - 1), parseInt(date[0]));
+
+    const option = { month: "long", day: "numeric", year: "numeric" };
+    let localDate = updateDate;
+    localDate.toLocaleDateString("no-NB", option);
+
+    const dateFormat = localDate.toLocaleDateString("no-NB", option);
+
+    const daysSinceTime = parseInt((todayDate - updateDate) / (1000 * 3600 * 24));
+
+    if (todayDate < updateDate) {
+        //fremtiden
+    } else if (daysSinceTime === 0) {
+        string = `I dag`;
+    } else if (daysSinceTime === 1) {
+        string = `I går`;
+    } else if (daysSinceTime <= 14) {
+        string = `${parseInt(daysSinceTime)} dager siden`;
+    } else {
+        string = dateFormat;
+    }
+
+    //
+
+    const html = `
+    <strong>${string}</strong>
+    <br><br>${versionTxt}
+    <br>Versjon ${version}
+    `;
+
+    return html;
+}
+// End of getVersionLogTemplate function
 
 // returns approximate size of a single cache (in bytes)
 function cacheSize(c) {
@@ -670,6 +774,7 @@ function cacheSize(c) {
         ).then(a => a.reduce((acc, n) => acc + n, 0));
     });
 }
+// End of cacheSize function
 
 // returns approximate size of all caches (in bytes)
 function cachesSize() {
@@ -679,3 +784,4 @@ function cachesSize() {
         ).then(a => a.reduce((acc, n) => acc + n, 0));
     });
 }
+// End of cachesSize function
