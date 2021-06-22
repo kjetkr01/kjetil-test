@@ -194,15 +194,19 @@ function checkConnection() {
     if (dom) {
 
         if (!window.navigator.onLine) {
+            dom.style.display = "block";
             dom.textContent = offlineTxt;
             dom.style.color = "red";
         } else if (window.navigator.onLine && dom.textContent === offlineTxt) {
+            dom.style.display = "block";
             dom.textContent = onlineTxt;
             dom.style.color = "green";
 
             setInterval(() => {
                 location.reload();
             }, 2500);
+        } else {
+            dom.style.display = "none";
         }
     }
 }

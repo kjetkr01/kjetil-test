@@ -5,7 +5,6 @@ bottom: 0;
 width: 100%;
 background-color: var(--main-backgroundColor3);
 text-align: center;
-max-height: var(--main-footerIconHeight);
 padding-top: var(--main-footerHeightTop);
 padding-bottom: var(--main-footerHeightBottom);
 border-top: var(--main-border);

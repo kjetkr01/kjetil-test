@@ -1429,8 +1429,16 @@ function changeOverlayBorderColor() {
 
         const editLiftorGoal = document.getElementById("editLiftorGoal");
 
+        let borderColor = null;
+
         if (badgeColorsJSON[inpVal.value]) {
-            editLiftorGoal.style.border = `1px solid #${badgeColorsJSON[inpVal.value].border}`;
+            if (badgeColorsJSON[inpVal.value].border) {
+                borderColor = badgeColorsJSON[inpVal.value].border;
+            }
+        }
+
+        if (borderColor) {
+            editLiftorGoal.style.border = `1px solid #${borderColor}`;
         } else {
             editLiftorGoal.style.border = "";
         }
