@@ -60,6 +60,11 @@ function loadSetting(aSetting) {
             loadAPIPage();
         }
 
+        else if (setting === ELoadSettings.termsofuse.name) {
+            cacheCurrentSetting(setting);
+            loadTermsOfUsePage();
+        }
+
         else if (setting === ELoadSettings.privacy.name) {
             cacheCurrentSetting(setting);
             loadPrivacyPage();
@@ -135,6 +140,7 @@ async function loadDefaultPage(setting) {
         }
     }
 
+    settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.termsofuse.name);
     settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.privacy.name);
 
     settingsGrid.innerHTML += getLogoutBtn();
@@ -470,10 +476,10 @@ async function loadAboutAppPage(setting) {
             settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton'>Versjonslogg</button>`, "", "spacingTop");
 
             settingsGrid.innerHTML += getLeftTextTemplate(`
-            <div id="versionLogsDiv">
+            <div id="changeLogsDiv">
             </div>`);
 
-            showNewestVersionLog();
+            showNewestChangeLog();
 
             try {
                 const allCaches = await caches.keys();
@@ -924,19 +930,51 @@ async function loadAPIPage() {
 }
 // End of loadAPIPage function
 
+// loads terms of use page in settings
+async function loadTermsOfUsePage() {
+
+    settingsGrid.innerHTML = justTextTemplate(`Her kan du lese om brukervilkårene til ${application.name}.`, "left");
+
+    const termsofuseKeys = Object.keys(ETOU);
+
+    for (let i = 0; i < termsofuseKeys.length; i++) {
+        const html =
+            `<button class='settingsButton pointer' onClick="expandOrCollapseTOUInfo('${termsofuseKeys[i]}');">${i + 1}. ${termsofuseKeys[i]}</button>
+            <p id="details-${termsofuseKeys[i]}" style="text-align:left;"></p>`;
+        settingsGrid.innerHTML += getCenteredTextTemplate(html, "", "spacingTop");
+    }
+
+    settingsGrid.innerHTML += getBottomSpacingTemplate();
+
+    settingsDom.scrollTop = 0;
+
+}
+// End of loadPrivacyPage function
+
 // loads privacy page in settings
 async function loadPrivacyPage() {
 
-    settingsGrid.innerHTML = justTextTemplate(`${application.name} respekterer personopplysningene til brukerene sine.`, "left");
+    settingsGrid.innerHTML = justTextTemplate(`Her kan du lese om personvernerklæringen til ${application.name}.`, "left");
+
+    const pKeys = Object.keys(EPrivacy);
+
+    for (let i = 0; i < pKeys.length; i++) {
+        const html =
+            `<button class='settingsButton pointer' onClick="expandOrCollapsePrivacyInfo('${pKeys[i]}');">${i + 1}. ${pKeys[i]}</button>
+            <p id="details-${pKeys[i]}" style="text-align:left;"></p>`;
+        settingsGrid.innerHTML += getCenteredTextTemplate(html, "", "spacingTop");
+    }
 
     settingsGrid.innerHTML += getCenteredTextTemplate(`
     <button id="detailsAboutMyAccountBtn" class='settingsButton pointer' onClick="displayInformationAboutUser();">Hent mine opplysninger</button>
     <p id="informationAboutUser" style="text-align:left;"></p>
-    `, "", "borderTop");
+    `, "", "spacingTop");
 
     settingsGrid.innerHTML += getCenteredTextTemplate(`<button class='settingsButton pointer' onClick="loadSetting('${ELoadSettings.deleteMe.name}');">Gå til sletting av konto</button>`, "", "spacingTop");
 
     settingsGrid.innerHTML += getBottomSpacingTemplate();
+
+    settingsDom.scrollTop = 0;
 
 }
 // End of loadPrivacyPage function

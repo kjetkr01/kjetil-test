@@ -152,7 +152,7 @@
          <p id="acceptTermsOfUse" class="noselect">
             <input id="acceptTermsOfUseCheckbox" type="checkbox" class="AcceptTOSBtn">
             <br>
-            Jeg godtar <button class="TOSBtn pointer" onclick="showTermsOfUse();">bruksvilkårene</button>
+            Jeg godtar <button class="TOSBtn pointer" onclick="showTermsOfUse();">bruksvilkår</button>
          </p>
 
       </div>
@@ -231,13 +231,26 @@
 
    function showTermsOfUse() {
 
-      const TOSTxt = `
-      <h3>Bruksvilkår</h3>
-      <br>
-      Kommer snart
-      `;
+      let txt = `<h2>Bruksvilkår</h2>`;
 
-      showAlert(TOSTxt, true);
+      const termsofuseKeys = Object.keys(ETOU);
+
+      for (let i = 0; i < termsofuseKeys.length; i++) {
+
+         const title = termsofuseKeys[i];
+         const details = ETOU[title];
+
+         txt += `
+         <br><br>
+         <h3>${i + 1}. ${title}</h3>
+         <br>
+         ${details}
+         `;
+
+      }
+
+      showAlert(txt, true);
+      //showAlert(termsOfUse, true);
 
    }
 

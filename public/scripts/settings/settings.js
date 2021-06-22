@@ -40,13 +40,17 @@ const ELoadSettings = {
         name: `API`,
         value: 10
     },
+    termsofuse: {
+        name: `Bruksvilkår`,
+        value: 11
+    },
     privacy: {
         name: `Personvern`,
-        value: 11
+        value: 12
     },
     deleteMe: {
         name: `Slett meg`,
-        value: 12
+        value: 13
     }
 };
 
@@ -669,55 +673,55 @@ async function removeMedal(aMedalsCount, aCount) {
 // End of removeMedal function
 
 // shows newest version details
-function showNewestVersionLog() {
-    const versionLogsDiv = document.getElementById("versionLogsDiv");
+function showNewestChangeLog() {
+    const changeLogsDiv = document.getElementById("changeLogsDiv");
 
-    versionLogsDiv.innerHTML = "";
+    changeLogsDiv.innerHTML = "";
 
-    const versionLogKeys = Object.keys(application.versionLog);
-    const newestVersion = versionLogKeys[0];
+    const changeLogKeys = Object.keys(application.changeLog);
+    const newestVersion = changeLogKeys[0];
 
-    versionLogsDiv.innerHTML = getVersionLogTemplate(newestVersion);
+    changeLogsDiv.innerHTML = getChangeLogTemplate(newestVersion);
 
-    if (versionLogKeys.length > 1) {
-        versionLogsDiv.innerHTML += `<br>
-        <br><button class='settingsButton pointer' onclick="expandVersionLogs();">Vis mer</button>`;
+    if (changeLogKeys.length > 1) {
+        changeLogsDiv.innerHTML += `<br>
+        <br><button class='settingsButton pointer' onclick="expandChangeLogs();">Vis mer</button>`;
     }
 }
-// End of showNewestVersionLog function
+// End of showNewestChangeLog function
 
 // expands version logs (shows all logs)
-function expandVersionLogs() {
+function expandChangeLogs() {
 
-    const versionLogsKeys = Object.keys(application.versionLog);
+    const changeLogsKeys = Object.keys(application.changeLog);
 
-    const versionLogsDiv = document.getElementById("versionLogsDiv");
+    const changeLogsDiv = document.getElementById("changeLogsDiv");
 
-    versionLogsDiv.innerHTML = "";
+    changeLogsDiv.innerHTML = "";
 
-    for (let i = 0; i < versionLogsKeys.length; i++) {
-        const version = versionLogsKeys[i];
+    for (let i = 0; i < changeLogsKeys.length; i++) {
+        const version = changeLogsKeys[i];
 
         if (i >= 1) {
-            versionLogsDiv.innerHTML += "<br><br>";
+            changeLogsDiv.innerHTML += "<br><br>";
         }
 
-        versionLogsDiv.innerHTML += getVersionLogTemplate(version);
+        changeLogsDiv.innerHTML += getChangeLogTemplate(version);
     }
 
-    versionLogsDiv.innerHTML += `
+    changeLogsDiv.innerHTML += `
     <br>
-    <br><button class='settingsButton pointer' onclick="showNewestVersionLog();">Vis mindre</button>`;
+    <br><button class='settingsButton pointer' onclick="showNewestChangeLog();">Vis mindre</button>`;
 }
-// End of expandVersionLogs function
+// End of expandChangeLog function
 
 // returns version log template
-function getVersionLogTemplate(aVersion) {
+function getChangeLogTemplate(aVersion) {
 
     const version = aVersion;
 
-    const versionTextArr = application.versionLog[version].txt;
-    const versionDate = application.versionLog[version].date;
+    const versionTextArr = application.changeLog[version].txt;
+    const versionDate = application.changeLog[version].date;
 
     let versionTxt = "";
 
@@ -764,7 +768,7 @@ function getVersionLogTemplate(aVersion) {
 
     return html;
 }
-// End of getVersionLogTemplate function
+// End of getChangeLogTemplate function
 
 // returns approximate size of a single cache (in bytes)
 function cacheSize(c) {
@@ -785,3 +789,33 @@ function cachesSize() {
     });
 }
 // End of cachesSize function
+
+// expands or collapses Terms of Use Information
+function expandOrCollapseTOUInfo(aTitle) {
+
+    const details = ETOU[aTitle];
+
+    const dom = document.getElementById(`details-${aTitle}`);
+
+    if (dom.innerHTML.length > 0) {
+        dom.innerHTML = "";
+    } else {
+        dom.innerHTML = "<br>" + details;
+    }
+}
+// End of expandOrCollapseTOUInfo function
+
+// expands or collapses Privacy Information
+function expandOrCollapsePrivacyInfo(aTitle) {
+
+    const details = EPrivacy[aTitle];
+
+    const dom = document.getElementById(`details-${aTitle}`);
+
+    if (dom.innerHTML.length > 0) {
+        dom.innerHTML = "";
+    } else {
+        dom.innerHTML = "<br>" + details;
+    }
+}
+// End of expandOrCollapsePrivacyInfo function
