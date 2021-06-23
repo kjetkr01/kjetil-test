@@ -4,7 +4,7 @@
         name: "Treningstatistikken",
         logoURL: "images/placeholder_logo.svg",
         changeLog: {
-            "6.3.27.993": {
+            "6.3.27.992": {
                 "txt":
                     [`Lagt til "Tillat API forespørsler" innstilling`,
                         `Lagt til info ikon på "Offentlig profil", "Ledertavler synlighet", "Trener i dag listen synlighet" og "Tillat API forespørsler" i Innstillinger.`,
