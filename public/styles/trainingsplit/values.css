@@ -1,12 +1,15 @@
 /* values for mobile & desktop */
 
 #title, #createdBy {
-color: var(--main-headerTextColor);
 font-weight: bold;
+}
+
+#title, #createdBy, #subscriberCount, #visibilityStatus {
+color: var(--main-headerTextColor);
 font-family: var(--main-font-Family-Verdana);
 }
 
-#createdBy{
+#createdBy, #subscriberCount, #visibilityStatus {
 opacity: 85%;
 }
 

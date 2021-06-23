@@ -1099,7 +1099,7 @@ auto /* GeditplanworkoutPlans */
 
 auto /* GcreateplanworkoutPlans */
 
-20px /* c5oWP */
+0px /* c5oWP */
 
 
 
@@ -1111,7 +1111,7 @@ auto /* GlistsubworkoutPlans */
 
 auto /* GviewsubplanworkoutPlans */
 
-20px /* c6oWP */
+0px /* c6oWP */
 
 
 
@@ -1199,6 +1199,7 @@ background-color: var(--main-backgroundColor2);
 
 #GviewsubplanworkoutPlans > #viewsubplanworkoutPlans {
 margin-top: 5px;
+margin-bottom: 10px;
 }
 
 #GviewplanworkoutPlans > #viewplanworkoutPlans{
@@ -1211,6 +1212,7 @@ margin-top: 5px;
 
 #GcreateplanworkoutPlans > #createplanworkoutPlans{
 margin-top: 5px;
+margin-bottom: 10px;
 }
 
 #GsetNoneActivePlanworkoutPlans > #setNoneActivePlanworkoutPlans {
@@ -1245,9 +1247,11 @@ border: transparent;
 }
 
 #Gtitle3workoutPlans > #title3workoutPlans {
+    margin-top: 10px;
 }
 
 #Gtitle4workoutPlans > #title4workoutPlans {
+    margin-top: 10px;
 }
 
 #title2workoutPlans, #title3workoutPlans, #title4workoutPlans {

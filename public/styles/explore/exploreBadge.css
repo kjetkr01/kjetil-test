@@ -4,12 +4,9 @@
 color: var(--main-textColorBadges);
 display: grid;
 word-break: keep-all;
-/*white-space: nowrap;*/
 margin-right: 7.5px;
 margin-bottom: 7.5px;
 border-radius: 18px;
-width: fit-content;
-height: fit-content;
 /*background-color: red;*/
 grid-template-areas:
 
@@ -84,13 +81,13 @@ grid-area: c3b;
 background-image: linear-gradient(45deg, rgb(252, 169, 90),rgb(162, 85, 124),rgb(71, 0, 157));
 }
 
+.Workoutplans_TS {
+background-image: linear-gradient(0deg, rgba(244, 242, 39, 0.18),rgba(36, 196, 212, 0.18)),linear-gradient(135deg, rgb(38, 157, 54),rgb(63, 173, 71),rgb(114, 206, 106),rgb(89, 190, 89),rgb(13, 140, 37),rgb(139, 223, 123),rgb(164, 239, 140));
+}
+
 .Users_TS {
 background-image: linear-gradient(45deg, rgb(43, 33, 93),rgb(81, 240, 237));
 
-}
-
-.Workoutplans_TS {
-background-image: linear-gradient(0deg, rgba(244, 242, 39, 0.18),rgba(36, 196, 212, 0.18)),linear-gradient(135deg, rgb(38, 157, 54),rgb(63, 173, 71),rgb(114, 206, 106),rgb(89, 190, 89),rgb(13, 140, 37),rgb(139, 223, 123),rgb(164, 239, 140));
 }
 
 .Medals_TS {

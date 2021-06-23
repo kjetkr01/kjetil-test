@@ -14,7 +14,6 @@ grid-template-areas:
 "GpeopleLeaderboardsTxt GpeopleLeaderboardsTxt GpeopleLeaderboardsTxt GpeopleLeaderboardsTxt GpeopleLeaderboardsTxt GpeopleLeaderboardsTxt GpeopleLeaderboardsTxt"
 "c3r1 c3r1 c3r1 c3r1 c3r1 c3r1 c3r1"
 "GpeopleLeaderboardsList GpeopleLeaderboardsList GpeopleLeaderboardsList GpeopleLeaderboardsList GpeopleLeaderboardsList GpeopleLeaderboardsList GpeopleLeaderboardsList"
-"c4r1 c4r1 c4r1 c4r1 c4r1 c4r1 c4r1"
 ;
 
 grid-template-rows: /* nedover */
@@ -36,8 +35,6 @@ auto /* title */
 6vh /* c3r1 */
 
 1fr /* GpeopleLeaderboardsList */
-
-90px /* c4r1 */
 ;
 
 grid-template-columns: /* bortover */
@@ -122,10 +119,6 @@ overflow-x: auto;
 grid-area: c3r1;
 }
 
-#page > #c4r1 {
-grid-area: c4r1;
-}
-
 #page > #GpeopleLeaderboardsTxt {
 grid-area: GpeopleLeaderboardsTxt;
 }
@@ -140,7 +133,7 @@ overflow-y: auto;
 min-height: 120px;
 }
 
-#c2r1, #c3r1, #c4r1, #c5r1, #GpeopleLeaderboardsTxt, #Gline, #GlistOfLeaderboards, #GpeopleLeaderboardsList {
+#c2r1, #c3r1, #GpeopleLeaderboardsTxt, #Gline, #GlistOfLeaderboards, #GpeopleLeaderboardsList {
 background-color: var(--main-backgroundColor2);
 }
 

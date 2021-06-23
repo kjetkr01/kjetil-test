@@ -52,12 +52,10 @@ margin: auto;
 }
 
 #Gusername>#username{
-
 }
 
 #Gweight>#weight{
 font-size: 14px;
-/*color: #939393;*/
 color: var(--main-textColorDark);
 opacity: 40%;
 }
@@ -71,19 +69,10 @@ font-family: var(--main-font-Family-Verdana);
 font-weight: bold;
 }
 
-
 /* elements */
 
 
-#Gprogression > #progression {
-margin-right: 10px;
-margin-left: 10px;
-color: var(--main-textColorLight);
-}
-
-
 /* end of elements */
-
 
 .peopleLeaderboardsListName {
 color: var(--main-textColorDark);

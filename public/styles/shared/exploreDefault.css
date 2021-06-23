@@ -12,7 +12,6 @@ grid-template-areas:
 "Ginformation Ginformation Ginformation Ginformation Ginformation Ginformation Ginformation"
 "Gline Gline Gline Gline Gline Gline Gline"
 "Glist Glist Glist Glist Glist Glist Glist"
-"c3r1 c3r1 c3r1 c3r1 c3r1 c3r1 c3r1"
 ;
 
 grid-template-rows: /* nedover */
@@ -30,8 +29,6 @@ auto /* Ginformation */
 2vh /* line */
 
 1fr /* Glist */
-
-90px /* c3r1 */
 ;
 
 grid-template-columns: /* bortover */
@@ -110,15 +107,11 @@ grid-area: Glist;
 overflow-y: auto;
 }
 
-#page > #c3r1 {
-grid-area: c3r1;
-}
-
 #page > #Gline {
 grid-area: Gline;
 }
 
-#c2r1, #c3r1, #Gline, #Ginformation, #Glist {
+#c2r1, #Gline, #Ginformation, #Glist {
 background-color: var(--main-backgroundColor2);
 }
 

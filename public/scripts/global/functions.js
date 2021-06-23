@@ -445,6 +445,10 @@ function redirectToLeaderboards() {
     location.href = "leaderboards.html";
 }
 
+function redirectToTrainingsplits() {
+    location.href = "trainingsplits.html";
+}
+
 function redirectToUsers() {
     location.href = "users.html";
 }

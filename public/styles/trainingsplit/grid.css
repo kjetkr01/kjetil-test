@@ -10,6 +10,8 @@ grid-template-areas:
 "GbackBtn GbackBtn GbackBtn GbackBtn GbackBtn GbackBtn GbackBtn"
 "Gtitle Gtitle Gtitle Gtitle Gtitle Gtitle Gtitle"
 "GcreatedBy GcreatedBy GcreatedBy GcreatedBy GcreatedBy GcreatedBy GcreatedBy"
+"GsubscriberCount GsubscriberCount GsubscriberCount GsubscriberCount GsubscriberCount GsubscriberCount GsubscriberCount"
+"GvisibilityStatus GvisibilityStatus GvisibilityStatus GvisibilityStatus GvisibilityStatus GvisibilityStatus GvisibilityStatus"
 "c2r1 c2r1 c2r1 c2r1 c2r1 c2r1 c2r1"
 "Ginfo Ginfo Ginfo Ginfo Ginfo Ginfo Ginfo"
 
@@ -26,6 +28,10 @@ auto /* GbackBtn */
 auto /* Gtitle */
 
 auto /* createdBy */
+
+auto /* subscriberCount */
+
+auto /* visibilityStatus */
 
 15px /* c2r1 */
 
@@ -60,6 +66,16 @@ font-size: 24px;
 }
 
 #GcreatedBy > #createdBy {
+font-size: 15px;
+}
+
+#GsubscriberCount > #subscriberCount {
+margin-top: 7.5px;
+font-size: 14px;
+}
+
+#GvisibilityStatus > #visibilityStatus {
+margin-top: 7.5px;
 font-size: 14px;
 }
 
@@ -72,7 +88,7 @@ word-break: keep-all;
 font-size: 18px;
 }
 
-#title, #createdBy, #info, #badges, #today, #peopleWorkoutTxt {
+#title, #createdBy, #subscriberCount, #visibilityStatus, #info, #badges, #today, #peopleWorkoutTxt {
 margin-right: 20px;
 margin-left: 20px;
 }
@@ -99,6 +115,14 @@ grid-area: Gtitle;
 
 #page > #GcreatedBy {
 grid-area: GcreatedBy;
+}
+
+#page > #GsubscriberCount {
+grid-area: GsubscriberCount;
+}
+
+#page > #GvisibilityStatus {
+grid-area: GvisibilityStatus;
 }
 
 #page > #c2r1 {

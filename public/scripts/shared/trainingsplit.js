@@ -53,11 +53,11 @@ async function requestTrainingsplitDetails() {
             let errorMsg = "Kunne ikke hente planen!";
 
             if (trainingsplit.edit !== "true") {
-                const cachedActiveTrainingsplit_owner = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
+                const cachedActiveTrainingsplit_owner = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner")) || JSON.parse(sessionStorage.getItem("cachedActiveTrainingsplit_owner"));
                 if (cachedActiveTrainingsplit_owner) {
                     if (cachedActiveTrainingsplit_owner.trainingsplit_id === parseInt(trainingsplit.id)) {
                         showTrainingsplitAnimations = false;
-                        resp = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
+                        resp = cachedActiveTrainingsplit_owner;
                     }
                 }
             }
@@ -134,7 +134,7 @@ function loadEditTrainingsplit(aResp, aSelectedDay) {
 
     let exerciseListHTML = "";
     try {
-        const allowedLifts = JSON.parse(sessionStorage.getItem("allowedLifts"));
+        const allowedLifts = JSON.parse(localStorage.getItem("allowedLifts")) || JSON.parse(sessionStorage.getItem("allowedLifts"));
         if (allowedLifts) {
             let exerciseListOptionsHTML = "";
             for (let v = 0; v < allowedLifts.length; v++) {
@@ -452,7 +452,16 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
         }
 
         document.getElementById("createdBy").innerHTML = `Av: ${resp.owner}`;
+
         document.getElementById("info").innerHTML += `<br><br>${copyHTML}${subscribeHTML}`;
+    }
+
+    if (resp.subscriberCount > 0) {
+        document.getElementById("subscriberCount").innerHTML = `Abonnenter: ${resp.subscriberCount}`;
+    }
+
+    if (resp.public === false) {
+        document.getElementById("visibilityStatus").innerHTML = "Treningsplanen er bare synlig for eieren og abonnenter";
     }
 
     let animation = "fadeInUp animate";

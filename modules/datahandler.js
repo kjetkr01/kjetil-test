@@ -321,6 +321,24 @@ class StorageHandler {
 
                                 if (activetrainingsplit.rows.length !== 0) {
 
+                                    let allSubscribedTrainingsplits = await client.query(`
+                                    SELECT subscribedtrainingsplits
+                                    FROM user_settings`);
+
+                                    let subscriberCount = 0;
+
+                                    if (allSubscribedTrainingsplits.rows.length > 0) {
+                                        allSubscribedTrainingsplits = allSubscribedTrainingsplits.rows;
+                                        for (let j = 0; j < allSubscribedTrainingsplits.length; j++) {
+                                            const trainingsplitIds = allSubscribedTrainingsplits[j].subscribedtrainingsplits;
+                                            if (trainingsplitIds.includes(activetrainingsplit.rows[0].trainingsplit_id.toString()) === true) {
+                                                subscriberCount++;
+                                            }
+                                        }
+                                    }
+
+                                    activetrainingsplit.rows[0].subscriberCount = subscriberCount;
+
                                     if (activetrainingsplit.rows[0].user_id === userIDReq) {
                                         activetrainingsplit.rows[0].canEdit = true;
                                     }
@@ -1369,10 +1387,27 @@ class StorageHandler {
                 }
             }
 
-
             if (results.rows.length > 0) {
 
                 trainingsplit = results.rows[0];
+
+                let allSubscribedTrainingsplits = await client.query(`
+                SELECT subscribedtrainingsplits
+                FROM user_settings`);
+
+                let subscriberCount = 0;
+
+                if (allSubscribedTrainingsplits.rows.length > 0) {
+                    allSubscribedTrainingsplits = allSubscribedTrainingsplits.rows;
+                    for (let j = 0; j < allSubscribedTrainingsplits.length; j++) {
+                        const trainingsplitIds = allSubscribedTrainingsplits[j].subscribedtrainingsplits;
+                        if (trainingsplitIds.includes(trainingsplit.trainingsplit_id.toString()) === true) {
+                            subscriberCount++;
+                        }
+                    }
+                }
+
+                trainingsplit.subscriberCount = subscriberCount;
 
                 if (trainingsplit.user_id === userid || trainingsplit.public === true || isSubscribed === true) {
                     let canEdit = false;
@@ -1412,6 +1447,96 @@ class StorageHandler {
         return { "status": results, "trainingsplit": trainingsplit, "msg": msg };
     }
     // End of getTrainingsplit function
+
+    // get all public trainingsplits (user)
+    async getAllTrainingsplits() {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        const trainingsplits = [];
+        let msg = "";
+
+        try {
+            await client.connect();
+
+            let allTrainingsplits = await client.query(`
+            SELECT *
+            FROM user_trainingsplit
+            WHERE public = true`);
+
+            // user id, username, subscribed trainingsplits
+            let allUsersInfo = await client.query(`
+            SELECT users.id, users.username, user_settings.subscribedtrainingsplits
+            FROM users, user_settings
+            WHERE users.id = user_settings.user_id`);
+
+            if (allTrainingsplits.rows.length > 0) {
+
+                allTrainingsplits = allTrainingsplits.rows;
+                allUsersInfo = allUsersInfo.rows;
+
+                const users = {};
+                const trainingsplitsSubscriberCount = {};
+                for (let i = 0; i < allUsersInfo.length; i++) {
+                    const currentUser = allUsersInfo[i];
+                    users[currentUser.id] = currentUser.username;
+
+                    if (currentUser.subscribedtrainingsplits.length > 0) {
+                        for (let j = 0; j < currentUser.subscribedtrainingsplits.length; j++) {
+                            const trainingsplitId = currentUser.subscribedtrainingsplits[j];
+                            if (trainingsplitsSubscriberCount[trainingsplitId]) {
+                                trainingsplitsSubscriberCount[trainingsplitId] = trainingsplitsSubscriberCount[trainingsplitId] + 1;
+                            } else {
+                                trainingsplitsSubscriberCount[trainingsplitId] = 1;
+                            }
+                        }
+                    }
+                }
+
+                for (let i = 0; i < allTrainingsplits.length; i++) {
+                    const currentTrainingsplit = allTrainingsplits[i];
+
+                    const trainingsplit = {
+                        "trainingsplit_id": currentTrainingsplit.trainingsplit_id,
+                        "trainingsplit_name": currentTrainingsplit.trainingsplit_name,
+                        "owner_username": users[currentTrainingsplit.user_id],
+                        "owner_id": currentTrainingsplit.user_id,
+                        "subscriberCount": trainingsplitsSubscriberCount[currentTrainingsplit.trainingsplit_id] || 0
+                    }
+
+                    const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+
+                    let trainingdays = [];
+                    for (let j = 0; j < days.length; j++) {
+                        const currentDay = currentTrainingsplit[days[j]];
+                        if (currentDay.short.length > 0) {
+                            trainingdays.push(days[j]);
+                        }
+                    }
+
+                    trainingsplit.trainingdays = trainingdays;
+
+                    trainingsplits.push(trainingsplit);
+                }
+
+                if (trainingsplits.length > 0) {
+                    results = true;
+                }
+
+            } else {
+                msg = "Treningsplanen finnes ikke!";
+                results = false;
+            }
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return { "status": results, "trainingsplits": trainingsplits, "msg": msg };
+    }
+    // End of getAllTrainingsplits function
 
     // copy Trainingsplit (user)
     async copyTrainingsplit(userid, trainingsplit_id, owner_id) {

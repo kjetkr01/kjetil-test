@@ -37,6 +37,7 @@ const createTrainingsplit = require("./modules/mw/trainingsplit").createTraining
      deleteTrainingsplit = require("./modules/mw/trainingsplit").deleteTrainingsplit,
      saveTrainingsplit = require("./modules/mw/trainingsplit").saveTrainingsplit,
      getTrainingsplit = require("./modules/mw/trainingsplit").getTrainingsplit,
+     getAllTrainingsplits = require("./modules/mw/trainingsplit").getAllTrainingsplits,
      copyTrainingsplit = require("./modules/mw/trainingsplit").copyTrainingsplit,
      subUnsubTrainingsplit = require("./modules/mw/trainingsplit").subUnsubTrainingsplit,
      setActiveTrainingsplit = require("./modules/mw/trainingsplit").setActiveTrainingsplit,
@@ -929,6 +930,25 @@ server.post("/user/get/trainingsplit", auth, async (req, res) => {
      }
 });
 // End of /user/get/trainingsplit POST
+
+// get all public trainingsplits
+server.post("/user/get/trainingsplit/all", auth, async (req, res) => {
+     try {
+
+          const resp = await getAllTrainingsplits();
+
+          if (resp.status === true) {
+               res.status(200).json(resp).end();
+          } else {
+               res.status(403).json(resp.msg).end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/get/trainingsplit/all POST
 
 // copy trainingsplit
 server.post("/user/copy/trainingsplit", auth, async (req, res) => {

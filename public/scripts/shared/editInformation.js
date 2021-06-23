@@ -1161,7 +1161,7 @@ async function setNoneActiveTrainingsplit() {
 
 // deleteTrainingsplitConfirm
 async function deleteTrainingsplitConfirm(aTrainingsplit_id) {
-    showConfirm("Er du sikker på at du ønsker å slette treningsplanen? Dette kan ikke angres!", `deleteTrainingsplit(${aTrainingsplit_id});`);
+    showConfirm(`Er du sikker på at du ønsker å slette treningsplanen? Hvis du har abonnenter, så vil de ikke lenger har tilgang til treningsplanen. Dette kan ikke angres!`, `deleteTrainingsplit(${aTrainingsplit_id});`);
 }
 // End of deleteTrainingsplitConfirm function
 
