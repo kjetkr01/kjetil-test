@@ -461,7 +461,7 @@ class StorageHandler {
     // End of getUserDetails function
 
     // update Displayname (user)
-    async updateDisplayname(username, newDisplayname) {
+    async updateDisplayname(userid, newDisplayname) {
 
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -472,8 +472,8 @@ class StorageHandler {
             await client.query(`
                                 UPDATE users
                                 SET displayname = $1
-                                WHERE username = $2`,
-                [newDisplayname, username]);
+                                WHERE id = $2`,
+                [newDisplayname, userid]);
 
             results = true;
 
@@ -488,7 +488,7 @@ class StorageHandler {
     // End of updateDisplayname function
 
     // update Username (user)
-    async updateUsername(username, newUsername) {
+    async updateUsername(userid, newUsername) {
 
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -517,8 +517,8 @@ class StorageHandler {
                     await client.query(`
                                 UPDATE users
                                 SET username = $1
-                                WHERE username = $2`,
-                        [newUsername, username]);
+                                WHERE id = $2`,
+                        [newUsername, userid]);
                     results = true;
                     client.end();
 
@@ -590,7 +590,7 @@ class StorageHandler {
     // End of updatePassword function
 
     // update about me (user)
-    async updateAboutMe(username, aboutme) {
+    async updateAboutMe(userid, aboutme) {
 
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -601,8 +601,8 @@ class StorageHandler {
             const user_id = await client.query(`
                                 SELECT id
                                 FROM users
-                                WHERE username = $1`,
-                [username]);
+                                WHERE id = $1`,
+                [userid]);
 
             if (user_id.rows[0].id) {
 
@@ -652,7 +652,7 @@ class StorageHandler {
     // End of updateAboutMe function
 
     // get userdetails (private settings page)
-    async getUserSettingsAndInfo(username) {
+    async getUserSettingsAndInfo(userid) {
 
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -664,9 +664,9 @@ class StorageHandler {
             results = await client.query(`
                                 SELECT users.id, users.username, users.displayname, user_settings.*
                                     FROM users, user_settings
-                                WHERE users.username = $1
+                                WHERE users.id = $1
                                 AND users.id = user_settings.user_id`,
-                [username]);
+                [userid]);
 
             userDetails = results.rows[0];
             results = true;
@@ -685,7 +685,7 @@ class StorageHandler {
     // End of getUserSettingsAndInfo function
 
     // update usersettings (private settings page)
-    async updateUserSetting(username, setting, value) {
+    async updateUserSetting(userid, setting, value) {
 
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -702,8 +702,8 @@ class StorageHandler {
             const user_id = await client.query(`
                 SELECT id
                 FROM users
-                WHERE username = $1`,
-                [username]);
+                WHERE id = $1`,
+                [userid]);
 
             await client.query(`
                 UPDATE user_settings
@@ -868,7 +868,7 @@ class StorageHandler {
     // End of getAllUserInformation function
 
     // delete account (user)
-    async deleteAccount(username, password) {
+    async deleteAccount(userid, password) {
 
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -879,9 +879,9 @@ class StorageHandler {
             let userInfo = await client.query(`
                                 SELECT id
                                 FROM users
-                                WHERE username = $1
+                                WHERE id = $1
                                 AND password = $2`,
-                [username, password]);
+                [userid, password]);
 
             if (userInfo.rows.length !== 0) {
 
@@ -2487,7 +2487,7 @@ class StorageHandler {
     // End of acceptOrDenyUser function
 
     // give user API Access
-    async giveUserAPIAccess(username, giveAPIUserAccess) {
+    async giveUserAPIAccess(userid, giveAPIUserAccess) {
         const client = new pg.Client(this.credentials);
         let results = false;
         try {
@@ -2496,9 +2496,9 @@ class StorageHandler {
             const checkIfAdmin = await client.query(`
                                 SELECT username
                                 FROM users
-                                WHERE username = $1
+                                WHERE id = $1
                                 AND isadmin = true`,
-                [username]);
+                [userid]);
 
             if (checkIfAdmin.rows.length !== 0) {
 
@@ -2539,7 +2539,7 @@ class StorageHandler {
     // End of giveUserAPIAccess function
 
     // remove user API Access
-    async removeUserAPIAccess(username, removeAPIUserAccess) {
+    async removeUserAPIAccess(userid, removeAPIUserAccess) {
         const client = new pg.Client(this.credentials);
         let results = false;
         try {
@@ -2548,9 +2548,9 @@ class StorageHandler {
             const checkIfAdmin = await client.query(`
                                 SELECT username
                                 FROM users
-                                WHERE username = $1
+                                WHERE id = $1
                                 AND isadmin = true`,
-                [username]);
+                [userid]);
 
             if (checkIfAdmin.rows.length !== 0) {
 

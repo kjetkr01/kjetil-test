@@ -52,30 +52,30 @@ async function decreaseMedalCount(userid, count) {
     }
 }
 
-async function deleteAccount(username, password) {
+async function deleteAccount(userid, password) {
     try {
         password = crypto.createHmac('sha256', secret)
             .update(password)
             .digest('hex');
-        const resp = await database.deleteAccount(username, password);
+        const resp = await database.deleteAccount(userid, password);
         return resp;
     } catch (error) {
         console.error(error);
     }
 }
 
-async function giveUserAPIAccess(username, giveAPIUserAccess) {
+async function giveUserAPIAccess(userid, giveAPIUserAccess) {
     try {
-        const resp = await database.giveUserAPIAccess(username, giveAPIUserAccess);
+        const resp = await database.giveUserAPIAccess(userid, giveAPIUserAccess);
         return resp;
     } catch (error) {
         console.error(error);
     }
 }
 
-async function removeUserAPIAccess(username, removeAPIUserAccess) {
+async function removeUserAPIAccess(userid, removeAPIUserAccess) {
     try {
-        const resp = await database.removeUserAPIAccess(username, removeAPIUserAccess);
+        const resp = await database.removeUserAPIAccess(userid, removeAPIUserAccess);
         return resp;
     } catch (error) {
         console.error(error);
@@ -83,27 +83,27 @@ async function removeUserAPIAccess(username, removeAPIUserAccess) {
 }
 
 
-async function updateUserSetting(username, setting, value) {
+async function updateUserSetting(userid, setting, value) {
     try {
-        const resp = await database.updateUserSetting(username, setting, value);
+        const resp = await database.updateUserSetting(userid, setting, value);
         return resp;
     } catch (error) {
         console.error(error);
     }
 }
 
-async function updateDisplayname(username, newDisplayname) {
+async function updateDisplayname(userid, newDisplayname) {
     try {
-        const resp = await database.updateDisplayname(username, newDisplayname);
+        const resp = await database.updateDisplayname(userid, newDisplayname);
         return resp;
     } catch (error) {
         console.error(error);
     }
 }
 
-async function updateUsername(username, newUsername) {
+async function updateUsername(userid, newUsername) {
     try {
-        const resp = await database.updateUsername(username, newUsername);
+        const resp = await database.updateUsername(userid, newUsername);
         return resp;
     } catch (error) {
         console.error(error);
@@ -126,9 +126,9 @@ async function updatePassword(user, exsistingPsw, newPsw) {
     }
 }
 
-async function updateAboutMe(username, settings) {
+async function updateAboutMe(userid, settings) {
     try {
-        const resp = await database.updateAboutMe(username, settings);
+        const resp = await database.updateAboutMe(userid, settings);
         return resp;
     } catch (error) {
         console.error(error);

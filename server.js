@@ -260,9 +260,9 @@ server.post("/user/update/displayname", auth, async (req, res) => {
           const letters = /^[A-Za-z0-9 ]+$/;
 
           if (newDisplayname.match(letters)) {
-               if (newDisplayname.length >= 3 && newDisplayname.length <= 20 && currentUser.username) {
+               if (newDisplayname.length >= 3 && newDisplayname.length <= 20) {
 
-                    const resp = await updateDisplayname(currentUser.username, newDisplayname);
+                    const resp = await updateDisplayname(currentUser.id, newDisplayname);
 
                     if (resp === true) {
                          res.status(200).json(resp).end();
@@ -294,9 +294,9 @@ server.post("/user/update/username", auth, async (req, res) => {
           const letters = /^[A-Za-z0-9]+$/;
 
           if (newUsername.match(letters)) {
-               if (newUsername.length >= 3 && newUsername.length <= 20 && currentUser.username) {
+               if (newUsername.length >= 3 && newUsername.length <= 20) {
 
-                    const resp = await updateUsername(currentUser.username, newUsername);
+                    const resp = await updateUsername(currentUser.id, newUsername);
 
                     if (resp === true) {
                          res.status(200).json(resp).end();
@@ -413,7 +413,7 @@ server.post("/user/update/settings/about/me", auth, async (req, res) => {
                          weight: weight
                     }
 
-                    const resp = await updateAboutMe(currentUser.username, updateSettings);
+                    const resp = await updateAboutMe(currentUser.id, updateSettings);
 
                     if (resp === true) {
                          res.status(200).json("Endringer har blitt oppdatert!").end();
@@ -440,26 +440,21 @@ server.post("/user/details/settingsInfo", auth, async (req, res) => {
 
           const currentUser = JSON.parse(req.headers.userinfo);
 
-          if (currentUser.username) {
+          const resp = await getUserSettingsAndInfo(currentUser.id);
 
-               const resp = await getUserSettingsAndInfo(currentUser.username);
-
-               const userInfo = {
-                    "id": resp.userDetails.id,
-                    "username": resp.userDetails.username,
-                    "displayname": resp.userDetails.displayname,
-                    "preferredColorTheme": resp.userDetails.settings.preferredColorTheme,
-               }
-
-               if (resp.status === true) {
-                    res.status(200).json({ "settings": resp.userDetails.settings, "userInfo": userInfo }).end();
-               } else {
-                    res.status(403).json("error, try again").end();
-               }
-
-          } else {
-               res.status(403).json("invalid user").end();
+          const userInfo = {
+               "id": resp.userDetails.id,
+               "username": resp.userDetails.username,
+               "displayname": resp.userDetails.displayname,
+               "preferredColorTheme": resp.userDetails.settings.preferredColorTheme,
           }
+
+          if (resp.status === true) {
+               res.status(200).json({ "settings": resp.userDetails.settings, "userInfo": userInfo }).end();
+          } else {
+               res.status(403).json("error, try again").end();
+          }
+
      } catch (err) {
           console.log(err);
           res.status(403).json("invalid user").end();
@@ -475,7 +470,7 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
           const setting = req.body.updateSetting;
           let value = req.body.value;
 
-          if (ECustomList.allowed.settings[setting] && currentUser.username && ECustomList.allowed.settings[setting].includes(value) || ECustomList.allowed.settings[setting][0] === "bypass") {
+          if (ECustomList.allowed.settings[setting] && ECustomList.allowed.settings[setting].includes(value) || ECustomList.allowed.settings[setting][0] === "bypass") {
 
                const savedValue = value;
 
@@ -500,7 +495,7 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
                     }
                }
 
-               const resp = await updateUserSetting(currentUser.username, setting, value);
+               const resp = await updateUserSetting(currentUser.id, setting, value);
 
                if (resp === true) {
                     res.status(200).json(resp).end();
@@ -577,11 +572,11 @@ server.post("/user/deleteMe", auth, async (req, res) => {
           const credentials = req.body.authorization.split(' ')[1];
           const [username, password] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
 
-          if (currentUser.username && username && password) {
+          if (username && password) {
 
                if (currentUser.username === username) {
 
-                    const resp = await deleteAccount(currentUser.username, password);
+                    const resp = await deleteAccount(currentUser.id, password);
 
                     if (resp === true) {
                          res.status(200).json({ "status": true, "message": "Brukeren din er nå slettet." }).end();
@@ -1415,9 +1410,9 @@ server.post("/user/giveAPIAccess", auth, async (req, res) => {
           const currentUser = JSON.parse(req.headers.userinfo);
           const giveAPIUserAccess = req.body.giveAPIUserAccess;
 
-          if (currentUser.username && giveAPIUserAccess) {
+          if (giveAPIUserAccess) {
 
-               const resp = await giveUserAPIAccess(currentUser.username, giveAPIUserAccess);
+               const resp = await giveUserAPIAccess(currentUser.id, giveAPIUserAccess);
 
                if (resp === true) {
                     res.status(200).json(true).end();
@@ -1442,9 +1437,9 @@ server.post("/user/removeAPIAccess", auth, async (req, res) => {
           const currentUser = JSON.parse(req.headers.userinfo);
           const removeAPIAccess = req.body.removeAPIUserAccess;
 
-          if (currentUser.username && removeAPIAccess) {
+          if (removeAPIAccess) {
 
-               const resp = await removeUserAPIAccess(currentUser.username, removeAPIAccess);
+               const resp = await removeUserAPIAccess(currentUser.id, removeAPIAccess);
 
                if (resp === true) {
                     res.status(200).json(true).end();

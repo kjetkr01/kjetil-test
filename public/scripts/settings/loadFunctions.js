@@ -292,11 +292,19 @@ function loadAppearancePage() {
     const preferredTheme = allowedColorThemes[user.getSetting("preferredcolortheme")].theme;
 
     for (let i = 0; i < colorThemeKeys.length; i++) {
+        const currentTheme = allowedColorThemes[colorThemeKeys[i]];
 
-        if (preferredTheme === allowedColorThemes[colorThemeKeys[i]].theme) {
-            themeColorOptionsHTML += `<option selected="selected" value="${colorThemeKeys[i]}">${allowedColorThemes[colorThemeKeys[i]].name}</option>`;
-        } else {
-            themeColorOptionsHTML += `<option value="${colorThemeKeys[i]}">${allowedColorThemes[colorThemeKeys[i]].name}</option>`;
+        const showTestThemes =
+            !currentTheme.name.toLowerCase().includes("test")
+            || location.href.includes("localhost")
+            || user.getDetail("isadmin") === true;
+
+        if (showTestThemes === true) {
+            if (preferredTheme === currentTheme.theme) {
+                themeColorOptionsHTML += `<option selected="selected" value="${colorThemeKeys[i]}">${currentTheme.name}</option>`;
+            } else {
+                themeColorOptionsHTML += `<option value="${colorThemeKeys[i]}">${currentTheme.name}</option>`;
+            }
         }
     }
 

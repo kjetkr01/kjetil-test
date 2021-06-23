@@ -45,9 +45,9 @@ async function getUserDetails(viewingUser, userID) {
     }
 }
 
-async function getUserSettingsAndInfo(username) {
+async function getUserSettingsAndInfo(userid) {
     try {
-        const resp = await database.getUserSettingsAndInfo(username);
+        const resp = await database.getUserSettingsAndInfo(userid);
         return resp;
     } catch (error) {
         console.error(error);
