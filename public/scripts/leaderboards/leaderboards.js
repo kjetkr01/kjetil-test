@@ -45,7 +45,7 @@ async function loadLeaderboards() {
             showPeopleLeaderboardsTxtAnimation = false;
         }
 
-        cached_leaderboardsArrOrder = JSON.parse(localStorage.getItem("cached_leaderboardsArrOrder"));
+        cached_leaderboardsArrOrder = JSON.parse(localStorage.getItem("cached_leaderboardsArrOrder")) || JSON.parse(sessionStorage.getItem("cached_leaderboardsArrOrder"));
 
         if (cached_leaderboardsArrOrder) {
             for (let i = 0; i < cached_leaderboardsArrOrder.length; i++) {
@@ -68,6 +68,7 @@ async function loadLeaderboards() {
 
     } catch {
         localStorage.removeItem("cached_leaderboardsArrOrder");
+        sessionStorage.removeItem("cached_leaderboardsArrOrder");
     }
 
     const infoHeader = { "reps": reps };
@@ -96,7 +97,11 @@ async function loadLeaderboards() {
 
                 leaderboardsArrOrder.sort(function (a, b) { return b.usersCount - a.usersCount });
 
-                localStorage.setItem("cached_leaderboardsArrOrder", JSON.stringify(leaderboardsArrOrder));
+                if(localStorage.getItem("user")){
+                    localStorage.setItem("cached_leaderboardsArrOrder", JSON.stringify(leaderboardsArrOrder));
+                }else{
+                    sessionStorage.setItem("cached_leaderboardsArrOrder", JSON.stringify(leaderboardsArrOrder));
+                }
 
                 try {
 

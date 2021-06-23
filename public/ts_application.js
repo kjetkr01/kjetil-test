@@ -4,6 +4,11 @@
         name: "Treningstatistikken",
         logoURL: "images/placeholder_logo.svg",
         changeLog: {
+            "6.3.27.991": {
+                "txt":
+                    ["Feilrettinger", "Ytelsesforbedringer"],
+                "date": "23.06.2021"
+            },
             "6.3.27.990": {
                 "txt":
                     ["Lagt til bruksvilkår", "Lagt til personvernerklæring", "Feilrettinger", "Ytelsesforbedringer"],

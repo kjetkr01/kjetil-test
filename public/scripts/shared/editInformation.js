@@ -900,7 +900,7 @@ function enableOverlayEditDays() {
     respMsg.textContent = "";
     let showSaveBtn = false;
 
-    const allTrainingsplits = JSON.parse(localStorage.getItem("cachedAllTrainingsplits_owner"));
+    const allTrainingsplits = JSON.parse(localStorage.getItem("cachedAllTrainingsplits_owner")) || JSON.parse(sessionStorage.getItem("cachedAllTrainingsplits_owner"));
     const subscribedTrainingsplits = user.getSetting("subscribedtrainingsplits");
 
     if (!activetrainingsplit) {

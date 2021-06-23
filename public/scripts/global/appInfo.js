@@ -62,7 +62,7 @@ const EPrivacy = {
         <br><br>
         Personoplysninger er opplysninger som direkte eller indirekte kan knyttes til deg. Regelverket skal beskytte deg mot at personopplysningene dine blir misbrukt.
         <br><br>
-        I ${application.name} er brukeren vår 'sjef'. Vi tar personvernet ditt på alvor og behandler personopplysningene dine i samsvar med personvernlovgivningen.`,
+        Vi tar personvernet ditt på alvor og behandler personopplysningene dine i samsvar med personvernlovgivningen.`,
     "Hvilke opplysninger lagrer vi om deg?":
         `<h4>2.1 Vi lagrer registreringsopplysninger</h4>
         Når det opprettes en brukerkonto, registrerer vi opplysningene du oppgir.

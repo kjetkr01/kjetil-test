@@ -1,4 +1,4 @@
-const cacheName = 'TS-PWA-v50';
+const cacheName = 'TS-PWA-v51';
 const swName = '[Service Worker]';
 
 const contentToCache = [
@@ -6,96 +6,96 @@ const contentToCache = [
     /* MAIN */
 
     '/',
-    '/sw.js',
-    '/ts_application.js',
-    '/manifest.json',
+    'sw.js',
+    'ts_application.js',
+    'manifest.json',
 
-    '/login.html',
-    '/access.html',
-    '/index.html',
-    '/explore.html',
-    '/leaderboards.html',
-    '/users.html',
-    '/account.html',
-    '/settings.html',
-    '/user.html',
-    '/trainingsplit.html',
+    'login.html',
+    'access.html',
+    'index.html',
+    'explore.html',
+    'leaderboards.html',
+    'users.html',
+    'account.html',
+    'settings.html',
+    'user.html',
+    'trainingsplit.html',
 
     /* IMAGES */
 
-    '/images/placeholder_logo_icon.png',
-    '/images/placeholder_logo.svg',
-    '/images/trash.svg',
+    'images/placeholder_logo_icon.png',
+    'images/placeholder_logo.svg',
+    'images/trash.svg',
 
     /* SCRIPTS */
 
-    '/scripts/global/appInfo.js',
-    '/scripts/global/global.js',
-    '/scripts/global/user.js',
-    '/scripts/global/functions.js',
+    'scripts/global/appInfo.js',
+    'scripts/global/global.js',
+    'scripts/global/user.js',
+    'scripts/global/functions.js',
 
-    '/scripts/shared/editInformation.js',
-    '/scripts/shared/badges.js',
-    '/scripts/shared/trainingsplit.js',
-    '/scripts/shared/overlay.js',
-    '/scripts/shared/pushToArr.js',
+    'scripts/shared/editInformation.js',
+    'scripts/shared/badges.js',
+    'scripts/shared/trainingsplit.js',
+    'scripts/shared/overlay.js',
+    'scripts/shared/pushToArr.js',
 
-    '/scripts/validate/validateInfo.js',
-    '/scripts/index/index.js',
+    'scripts/validate/validateInfo.js',
+    'scripts/index/index.js',
 
-    '/scripts/leaderboards/leaderboards.js',
+    'scripts/leaderboards/leaderboards.js',
 
-    '/scripts/account/account.js',
+    'scripts/account/account.js',
 
-    '/scripts/settings/loadFunctions.js',
-    '/scripts/settings/saveSettings.js',
-    '/scripts/settings/settings.js',
-    '/scripts/settings/templateFunctions.js',
-    '/scripts/user/user.js',
+    'scripts/settings/loadFunctions.js',
+    'scripts/settings/saveSettings.js',
+    'scripts/settings/settings.js',
+    'scripts/settings/templateFunctions.js',
+    'scripts/user/user.js',
 
     /* STYLES */
 
-    '/styles/global/global.css',
-    '/styles/global/globalClasses.css',
-    '/styles/global/globalVariables.css',
-    '/styles/global/themes.css',
+    'styles/global/global.css',
+    'styles/global/globalClasses.css',
+    'styles/global/globalVariables.css',
+    'styles/global/themes.css',
 
-    '/styles/shared/badgeColors.css',
-    '/styles/shared/badges.css',
-    '/styles/shared/userGrid.css',
-    '/styles/shared/overlay.css',
-    '/styles/shared/footer.css',
+    'styles/shared/badgeColors.css',
+    'styles/shared/badges.css',
+    'styles/shared/userGrid.css',
+    'styles/shared/overlay.css',
+    'styles/shared/footer.css',
     'styles/shared/exploreDefault.css',
 
-    '/styles/login/grid.css',
-    '/styles/login/values.css',
+    'styles/login/grid.css',
+    'styles/login/values.css',
 
-    '/styles/access/grid.css',
-    '/styles/access/values.css',
+    'styles/access/grid.css',
+    'styles/access/values.css',
 
-    '/styles/index/grid.css',
-    '/styles/index/values.css',
+    'styles/index/grid.css',
+    'styles/index/values.css',
 
-    '/styles/account/grid.css',
-    '/styles/account/values.css',
+    'styles/account/grid.css',
+    'styles/account/values.css',
 
-    '/styles/explore/exploreBadge.css',
-    '/styles/explore/grid.css',
-    '/styles/explore/values.css',
+    'styles/explore/exploreBadge.css',
+    'styles/explore/grid.css',
+    'styles/explore/values.css',
 
-    '/styles/leaderboards/board.css',
-    '/styles/leaderboards/grid.css',
-    '/styles/leaderboards/values.css',
+    'styles/leaderboards/board.css',
+    'styles/leaderboards/grid.css',
+    'styles/leaderboards/values.css',
 
-    '/styles/settings/grid.css',
-    '/styles/settings/values.css',
-    '/styles/settings/settingsGrid.css',
+    'styles/settings/grid.css',
+    'styles/settings/values.css',
+    'styles/settings/settingsGrid.css',
 
-    '/styles/user/grid.css',
-    '/styles/user/values.css',
+    'styles/user/grid.css',
+    'styles/user/values.css',
 
-    '/styles/trainingsplit/grid.css',
-    '/styles/trainingsplit/values.css',
+    'styles/trainingsplit/grid.css',
+    'styles/trainingsplit/values.css',
 ];
 
 if ('serviceWorker' in navigator) {

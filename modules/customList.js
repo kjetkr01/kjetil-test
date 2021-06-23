@@ -4,8 +4,8 @@ module.exports.ECustomList = {
 
     // Example: allowed.lifts = allowed lifts user can edit/create
     allowed: {
-        lifts: ["benkpress", "knebøy", "markløft", "skulderpress"],
-        goals: ["benkpress", "knebøy", "markløft", "skulderpress", "opp i vekt", "ned i vekt"],
+        lifts: ["benkpress", "markløft", "knebøy", "skulderpress"],
+        goals: ["benkpress", "markløft", "knebøy", "skulderpress", "opp i vekt", "ned i vekt"],
         settings: {
             "publicprofile": [true, false],
             "displayleaderboards": [true, false],

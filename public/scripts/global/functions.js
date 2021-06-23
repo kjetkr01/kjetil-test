@@ -116,7 +116,10 @@ async function getAccountDetails(aUserID) {
 
                 if (resp.hasOwnProperty("updatedUserObject")) {
 
+                    let saveInLocalStorage = false;
+
                     if (localStorage.getItem("user")) {
+                        saveInLocalStorage = true;
                         localStorage.setItem("user", JSON.stringify(resp.updatedUserObject));
                         localStorage.setItem("userDetails", JSON.stringify(resp.userDetails));
                         localStorage.setItem("userSettings", JSON.stringify(resp.info.settings));
@@ -127,24 +130,43 @@ async function getAccountDetails(aUserID) {
                     }
 
                     if (resp.info.hasOwnProperty("activetrainingsplit")) {
-                        localStorage.setItem("cachedActiveTrainingsplit_owner", JSON.stringify(resp.info.activetrainingsplit));
+                        if (saveInLocalStorage === true) {
+                            localStorage.setItem("cachedActiveTrainingsplit_owner", JSON.stringify(resp.info.activetrainingsplit));
+                        } else {
+                            sessionStorage.setItem("cachedActiveTrainingsplit_owner", JSON.stringify(resp.info.activetrainingsplit));
+                        }
                     } else {
                         localStorage.removeItem("cachedActiveTrainingsplit_owner");
+                        sessionStorage.removeItem("cachedActiveTrainingsplit_owner");
                     }
 
                     if (resp.info.hasOwnProperty("alltrainingsplits")) {
-                        localStorage.setItem("cachedAllTrainingsplits_owner", JSON.stringify(resp.info.alltrainingsplits));
+                        if (saveInLocalStorage === true) {
+                            localStorage.setItem("cachedAllTrainingsplits_owner", JSON.stringify(resp.info.alltrainingsplits));
+                        } else {
+                            sessionStorage.setItem("cachedAllTrainingsplits_owner", JSON.stringify(resp.info.alltrainingsplits));
+                        }
                     } else {
                         localStorage.removeItem("cachedAllTrainingsplits_owner");
+                        sessionStorage.removeItem("cachedAllTrainingsplits_owner");
                     }
 
                     if (resp.info.hasOwnProperty("allowedLifts")) {
-                        sessionStorage.setItem("allowedLifts", JSON.stringify(resp.info.allowedLifts));
                         allowedLifts = resp.info.allowedLifts;
+                        if (saveInLocalStorage === true) {
+                            localStorage.setItem("allowedLifts", JSON.stringify(allowedLifts));
+                        } else {
+                            sessionStorage.setItem("allowedLifts", JSON.stringify(allowedLifts));
+                        }
                     }
+
                     if (resp.info.hasOwnProperty("allowedGoals")) {
-                        sessionStorage.setItem("allowedGoals", JSON.stringify(resp.info.allowedGoals));
                         allowedGoals = resp.info.allowedGoals;
+                        if (saveInLocalStorage === true) {
+                            localStorage.setItem("allowedGoals", JSON.stringify(allowedGoals));
+                        } else {
+                            sessionStorage.setItem("allowedGoals", JSON.stringify(allowedGoals));
+                        }
                     }
 
                     let updatedThemeValues = false;

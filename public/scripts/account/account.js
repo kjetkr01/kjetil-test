@@ -104,15 +104,15 @@ async function requestAccountDetails() {
     if (user) {
 
         try {
-            lifts = JSON.parse(localStorage.getItem("cachedLifts_owner"));
-            goals = JSON.parse(localStorage.getItem("cachedGoals_owner"));
-            badgeColorsJSON = JSON.parse(localStorage.getItem("cachedBadgeColors"));
+            lifts = JSON.parse(localStorage.getItem("cachedLifts_owner")) || JSON.parse(sessionStorage.getItem("cachedLifts_owner"));
+            goals = JSON.parse(localStorage.getItem("cachedGoals_owner")) || JSON.parse(sessionStorage.getItem("cachedGoals_owner"));
+            badgeColorsJSON = JSON.parse(localStorage.getItem("cachedBadgeColors")) || JSON.parse(sessionStorage.getItem("cachedBadgeColors"));
 
-            const cachedLiftsLeft = JSON.parse(localStorage.getItem("cachedLiftsLeft_owner"));
-            const cachedGoalsLeft = JSON.parse(localStorage.getItem("cachedGoalsLeft_owner"));
-            const cachedTrainingsplitsLeft = JSON.parse(localStorage.getItem("cachedTrainingsplitsLeft_owner"));
+            const cachedLiftsLeft = parseInt(localStorage.getItem("cachedLiftsLeft_owner")) || parseInt(sessionStorage.getItem("cachedLiftsLeft_owner"));
+            const cachedGoalsLeft = parseInt(localStorage.getItem("cachedGoalsLeft_owner")) || parseInt(sessionStorage.getItem("cachedGoalsLeft_owner"));
+            const cachedTrainingsplitsLeft = parseInt(localStorage.getItem("cachedTrainingsplitsLeft_owner")) || parseInt(sessionStorage.getItem("cachedTrainingsplitsLeft_owner"));
 
-            activetrainingsplit = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner"));
+            activetrainingsplit = JSON.parse(localStorage.getItem("cachedActiveTrainingsplit_owner")) || JSON.parse(sessionStorage.getItem("cachedActiveTrainingsplit_owner"));
 
             if (cachedLiftsLeft >= 0) {
                 liftsLeft = new TliftsLeft(cachedLiftsLeft);
@@ -148,13 +148,15 @@ async function requestAccountDetails() {
                 badgeColors = new TbadgeColors(badgeColorsJSON);
             }
 
-
-
         } catch {
             localStorage.removeItem("cachedLifts_owner");
             localStorage.removeItem("cachedHasLiftsLeft_owner");
             localStorage.removeItem("cachedGoals_owner");
             localStorage.removeItem("cachedHasGoalsLeft_owner");
+            sessionStorage.removeItem("cachedLifts_owner");
+            sessionStorage.removeItem("cachedHasLiftsLeft_owner");
+            sessionStorage.removeItem("cachedGoals_owner");
+            sessionStorage.removeItem("cachedHasGoalsLeft_owner");
         }
 
         const resp = await getAccountDetails(user.getId());
@@ -162,12 +164,21 @@ async function requestAccountDetails() {
         if (resp) {
 
             if (resp.hasOwnProperty("info")) {
-                localStorage.setItem("cachedLifts_owner", JSON.stringify(resp.info.lifts));
-                localStorage.setItem("cachedLiftsLeft_owner", resp.info.liftsLeft);
-                localStorage.setItem("cachedGoals_owner", JSON.stringify(resp.info.goals));
-                localStorage.setItem("cachedGoalsLeft_owner", resp.info.goalsLeft);
-                localStorage.setItem("cachedBadgeColors", JSON.stringify(resp.info.badgeColors));
-                localStorage.setItem("cachedTrainingsplitsLeft_owner", resp.info.trainingsplitsLeft);
+                if (localStorage.getItem("user")) {
+                    localStorage.setItem("cachedLifts_owner", JSON.stringify(resp.info.lifts));
+                    localStorage.setItem("cachedLiftsLeft_owner", resp.info.liftsLeft);
+                    localStorage.setItem("cachedGoals_owner", JSON.stringify(resp.info.goals));
+                    localStorage.setItem("cachedGoalsLeft_owner", resp.info.goalsLeft);
+                    localStorage.setItem("cachedBadgeColors", JSON.stringify(resp.info.badgeColors));
+                    localStorage.setItem("cachedTrainingsplitsLeft_owner", resp.info.trainingsplitsLeft);
+                } else {
+                    sessionStorage.setItem("cachedLifts_owner", JSON.stringify(resp.info.lifts));
+                    sessionStorage.setItem("cachedLiftsLeft_owner", resp.info.liftsLeft);
+                    sessionStorage.setItem("cachedGoals_owner", JSON.stringify(resp.info.goals));
+                    sessionStorage.setItem("cachedGoalsLeft_owner", resp.info.goalsLeft);
+                    sessionStorage.setItem("cachedBadgeColors", JSON.stringify(resp.info.badgeColors));
+                    sessionStorage.setItem("cachedTrainingsplitsLeft_owner", resp.info.trainingsplitsLeft);
+                }
                 displayInformation(resp.info);
                 return;
             }
@@ -335,7 +346,7 @@ async function displayLifts(hasLiftsLeft) {
 
         document.getElementById("badgesLiftsTableRow").innerHTML = "";
 
-        hasLiftsLeft = localStorage.getItem("cachedLiftsLeft_owner") > 0 || false;
+        hasLiftsLeft = parseInt(localStorage.getItem("cachedLiftsLeft_owner")) > 0 || parseInt(sessionStorage.getItem("cachedLiftsLeft_owner")) > 0 || false;
 
         let sortByLifts = user.getSetting("lifts_filter_exercise");
 
@@ -461,7 +472,7 @@ async function displayGoals(hasGoalsLeft, checkIfCompleted) {
             checkIfCompleted = false;
         }
 
-        hasGoalsLeft = localStorage.getItem("cachedGoalsLeft_owner") > 0 || false;
+        hasGoalsLeft = parseInt(localStorage.getItem("cachedGoalsLeft_owner")) > 0 || parseInt(sessionStorage.getItem("cachedGoalsLeft_owner")) > 0 || false;
 
         let sortByGoals = user.getSetting("goals_filter_exercise");
 
