@@ -11,6 +11,7 @@ module.exports.ECustomList = {
             "displayleaderboards": [true, false],
             "displayworkoutlist": [true, false],
             "displaystatistics": [true, false],
+            "externalapirequests": [true, false],
             "preferredtheme": ["0", "1", "2"],
             "preferredcolortheme": ["0", "1", "2", "3", "4"],
             "badgesize": ["0", "1"],
@@ -24,10 +25,10 @@ module.exports.ECustomList = {
 
     // Example: max.lifts = maximum lifts a user can have
     max: {
-        lifts: 25,
-        goals: 25,
-        trainingsplits: 5,
-        subscribedTrainingsplits: 5,
+        lifts: 30,
+        goals: 30,
+        trainingsplits: 10,
+        subscribedTrainingsplits: 10,
         trainingsplitsExercisesPerDay: 12,
         trainingsplitsExerciseRows: 8
     },

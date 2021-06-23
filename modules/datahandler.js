@@ -2622,7 +2622,7 @@ AND apikey IS NOT null`,
                 }
 
                 results = await client.query(`
-SELECT publicprofile
+SELECT externalapirequests
 FROM user_settings
 WHERE user_id = $1`,
                     [user]);
@@ -2630,9 +2630,9 @@ WHERE user_id = $1`,
                 if (results.rows.length === 0) {
                     results = false;
                 } else {
-                    const userHasPublicProfile = results.rows[0].publicprofile;
+                    const userAllowsAPIRequests = results.rows[0].externalapirequests;
 
-                    if (userHasPublicProfile === true || isOwner === true) {
+                    if (userAllowsAPIRequests === true || isOwner === true) {
 
                         results = await client.query(`
                     SELECT activetrainingsplit
@@ -2735,7 +2735,7 @@ AND apikey IS NOT null`,
                 }
 
                 results = await client.query(`
-SELECT publicprofile
+SELECT externalapirequests
 FROM user_settings
 WHERE user_id = $1`,
                     [user]);
@@ -2743,9 +2743,9 @@ WHERE user_id = $1`,
                 if (results.rows.length === 0) {
                     results = false;
                 } else {
-                    const userHasPublicProfile = results.rows[0].publicprofile;
+                    const userAllowsAPIRequests = results.rows[0].externalapirequests;
 
-                    if (userHasPublicProfile === true || isOwner === true) {
+                    if (userAllowsAPIRequests === true || isOwner === true) {
 
                         results = await client.query(`
 SELECT users.id, users.username, user_lifts.benkpress, user_lifts.knebøy, user_lifts.markløft
@@ -2824,6 +2824,8 @@ AND users.id = user_lifts.user_id`, [user]);
                                 results = true;
                             }
                         }
+                    } else {
+                        results = false;
                     }
                 }
             }
@@ -2868,7 +2870,7 @@ AND apikey IS NOT null`,
             } else {
 
                 results = await client.query(`
-SELECT publicprofile
+SELECT externalapirequests
 FROM user_settings
 WHERE user_id = $1`,
                     [user]);
@@ -2877,9 +2879,9 @@ WHERE user_id = $1`,
                     results = false;
                     msg = "Brukeren finnes ikke!";
                 } else {
-                    const userHasPublicProfile = results.rows[0].publicprofile;
+                    const userAllowsAPIRequests = results.rows[0].externalapirequests;
 
-                    if (userHasPublicProfile === true) {
+                    if (userAllowsAPIRequests === true) {
 
                         results = await client.query(`
 SELECT username, displayname
@@ -2906,7 +2908,7 @@ WHERE user_id = $1`, [user]);
                         }
                     } else {
                         results = false;
-                        msg = "Brukeren har privat profil!";
+                        msg = "Brukeren tillater ikke API forespørsler!";
                     }
                 }
             }

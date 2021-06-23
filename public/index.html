@@ -238,7 +238,7 @@
 
                      if (user.getSetting("automaticupdates") === true) {
                         updateApplication(false);
-                        localStorage.setItem("updated_version_text", `${serverApplication.name} ble oppdatert til versjon ${serverApplication.versionFullNumber}`);
+                        localStorage.setItem("showNewestChangeLog", true);
                      } else {
                         sessionStorage.setItem("settings_notification_update", true);
                      }
@@ -253,19 +253,43 @@
       // End of checkForUpdate function
 
 
-
+      localStorage.setItem("showNewestChangeLog", true);
       updatedNotification();
       // shows notification if app has been updated to new version
       function updatedNotification() {
          if (navigator.onLine) {
-            if (localStorage.getItem("updated_version_text")) {
+            if (localStorage.getItem("showNewestChangeLog")) {
                const TSAlertOverlay = document.getElementById("TSAlertOverlay");
                if (TSAlertOverlay.style.display === "none") {
 
-                  const updateAlert = localStorage.getItem("updated_version_text");
-                  showAlert(updateAlert);
+                  const changeLogKeys = Object.keys(application.changeLog);
+                  const newestVersion = changeLogKeys[0];
 
-                  localStorage.removeItem("updated_version_text");
+                  const version = newestVersion;
+
+                  const versionTextArr = application.changeLog[version].txt;
+                  const versionDate = application.changeLog[version].date;
+
+                  let versionTxt = "";
+
+                  for (let i = 0; i < versionTextArr.length; i++) {
+                     versionTxt += `- ${versionTextArr[i]}<br>`;
+                  }
+
+                  const html = `
+                  <h3>${application.name} ble oppdatert!</h3>
+                  <br>
+                  <div style="text-align:left;">
+                  ${versionTxt}
+                  </div>
+                  <br>
+                  <h5>Versjon ${version}</h5>
+                  `;
+
+                  const newestChangeLogAlert = html;
+                  showAlert(newestChangeLogAlert, true);
+
+                  localStorage.removeItem("showNewestChangeLog");
                }
             }
          }

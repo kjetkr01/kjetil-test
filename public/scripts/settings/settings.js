@@ -231,6 +231,65 @@ function checkIfEdited(aType) {
 }
 // End of checkIfEdited function
 
+// show public profile description
+function showPublicProfileInfo() {
+    showAlert(
+        `<h4>Offentlig profil</h4>
+        Hvis du har «Offentlig profil» <strong>på</strong>, så kan brukere besøke profilen din.
+        De kan blant annet finne profilen din under "Utforsk>Brukere".
+        Der kan de se se informasjonen om din brukerkonto (ca som Min Konto siden).
+        `
+        , true);
+}
+// End of showPublicProfileInfo function
+
+// show leaderboards description
+function showDisplayLeaderboardsInfo() {
+    showAlert(
+        `<h4>Ledertavler synlighet</h4>
+        Hvis du har «Ledertavler synlighet» <strong>på</strong>, så vises brukeren din på ledertavler.
+        Får at du skal vises på ledertavler må du minst ha 1 løft.
+        `
+        , true);
+}
+// End of showDisplayLeaderboardsInfo function
+
+// show workout list description
+function showDisplayWorkoutListInfo() {
+    showAlert(
+        `<h4>Trener i dag listen synlighet</h4>
+        Hvis du har «Trener i dag listen synlighet» <strong>på</strong>, så vises brukeren din på Hjem-siden.
+        Du vises bare hvis du har en aktiv treningsplan og du skal trene noe på den dagen.
+        De kan se hva du trener, feks. "Bryst og Triceps".
+        `
+        , true);
+}
+// End of showDisplayWorkoutListInfo function
+
+// show statistics description
+function showDisplayStatisticsInfo() {
+    showAlert(
+        `<h4>Bruk dataene mine til statistikk</h4>
+        Hvis du har «Bruk dataene mine til statistikk» <strong>på</strong>, så brukes dataene dine (treningssenter, alder, høyde, vekt, løft, mål, treningsplan) til å vise statistikk under "Utforsk>Statistikk".
+        <br><br>
+        Hvis du har «Bruk dataene mine til statistikk» <strong>av</strong>, så brukes ikke dataene dine i statistikk siden.
+        `
+        , true);
+}
+// End of showDisplayStatisticsInfo function
+
+// show allow external api calls description
+function showExternalAPIRequestsInfo() {
+    showAlert(
+        `<h4>Tillat API forespørsler</h4>
+        Hvis du har «Tillat API forespørsler» <strong>på</strong>, så kan brukere som har API Tilgang hente ut dataene dine fra en forespørsel. Data kan være innenfor (løft, mål, treningsplan).
+        <br><br>
+        Hvis du har «Tillat API forespørsler» <strong>av</strong>, så er det bare din bruker som kan hente dataene dine.
+        `
+        , true);
+}
+// End of showExternalAPIRequestsInfo function
+
 // acceptPendingUserConfirm
 async function acceptPendingUserConfirm(username, acceptOrDeny) {
     if (!username || acceptOrDeny === "") {
