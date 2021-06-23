@@ -76,10 +76,9 @@ function getTemplateWithBtn(aSetting, aDivId, aSpacingTop) {
 // End of getTemplateWithBtn function
 
 // getTemplateWithCheckbox
-function getTemplateWithCheckbox(aSetting, aDivId, aChecked, aOnClickInfo, aSpacingTop) {
+function getTemplateWithCheckbox(aSetting, aChecked, aOnClickInfo, aSpacingTop) {
 
    const setting = aSetting || "Innstillingen finnes ikke!";
-   const divId = aDivId || "";
    const isChecked = aChecked || false;
    const onClickInfo = aOnClickInfo || "";
    const spacingTop = aSpacingTop || "";
@@ -98,7 +97,7 @@ function getTemplateWithCheckbox(aSetting, aDivId, aChecked, aOnClickInfo, aSpac
 
    let html =
       `
-       <div id="${divId}" class="userSettingsDefault noselect ${spacingTop}">
+       <div class="userSettingsDefault noselect ${spacingTop}">
           <div id="cS1" class="${borderT}">
           </div>
           <div id="gsSetting">
@@ -120,7 +119,7 @@ function getTemplateWithCheckbox(aSetting, aDivId, aChecked, aOnClickInfo, aSpac
    if (isChecked === true) {
       html =
          `
-       <div id="${divId}" class="userSettingsDefault noselect ${spacingTop}">
+       <div class="userSettingsDefault noselect ${spacingTop}">
           <div id="cS1" class="${borderT}">
           </div>
           <div id="gsSetting">

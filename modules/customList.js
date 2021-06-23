@@ -10,6 +10,7 @@ module.exports.ECustomList = {
             "publicprofile": [true, false],
             "displayleaderboards": [true, false],
             "displayworkoutlist": [true, false],
+            "displaystatistics": [true, false],
             "preferredtheme": ["0", "1", "2"],
             "preferredcolortheme": ["0", "1", "2", "3", "4"],
             "badgesize": ["0", "1"],

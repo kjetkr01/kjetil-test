@@ -97,22 +97,30 @@ async function loadDefaultPage(setting) {
     settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.aboutMe.name, "aboutDiv", "spacingTop");
 
     if (settings.publicprofile === true) {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Offentlig profil", "profileVisibilityDiv", true, "publicprofile", "spacingTop");
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Offentlig profil", true, "publicprofile", "spacingTop");
     } else {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Offentlig profil", "profileVisibilityDiv", false, "publicprofile", "spacingTop");
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Offentlig profil", false, "publicprofile", "spacingTop");
     }
 
     if (settings.displayleaderboards === true) {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Ledertavler synlighet", "leaderboardsVisibilityDiv", true, "displayleaderboards");
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Ledertavler synlighet", true, "displayleaderboards");
     } else {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Ledertavler synlighet", "leaderboardsVisibilityDiv", false, "displayleaderboards");
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Ledertavler synlighet", false, "displayleaderboards");
     }
 
     if (settings.displayworkoutlist === true) {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", "workoutTodayListDiv", true, "displayworkoutlist");
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", true, "displayworkoutlist");
     } else {
-        settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", "workoutTodayListDiv", false, "displayworkoutlist");
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Trener i dag listen synlighet", false, "displayworkoutlist");
     }
+
+    /*
+    if (settings.displaystatistics === true) {
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Bruk dataene mine til statistikk", true, "displaystatistics");
+    } else {
+        settingsGrid.innerHTML += getTemplateWithCheckbox("Bruk dataene mine til statistikk", false, "displaystatistics");
+    }
+    */
 
     settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.apperance.name, "", "spacingTop");
     settingsGrid.innerHTML += getTemplateWithBtn(ELoadSettings.progressionInfo.name);
@@ -474,9 +482,9 @@ async function loadAboutAppPage(setting) {
             settingsGrid.innerHTML += justTextTemplate(appInfoHTML, "center");
 
             if (settings.automaticupdates === true) {
-                settingsGrid.innerHTML += getTemplateWithCheckbox("Oppdater automatisk", "", true, "automaticupdates", "spacingTop");
+                settingsGrid.innerHTML += getTemplateWithCheckbox("Oppdater automatisk", true, "automaticupdates", "spacingTop");
             } else {
-                settingsGrid.innerHTML += getTemplateWithCheckbox("Oppdater automatisk", "", false, "automaticupdates", "spacingTop");
+                settingsGrid.innerHTML += getTemplateWithCheckbox("Oppdater automatisk", false, "automaticupdates", "spacingTop");
             }
 
             settingsGrid.innerHTML += getLeftTextTemplate(aboutAppText, "", "spacingTop");

@@ -470,41 +470,47 @@ server.post("/user/update/settings/:setting", auth, async (req, res) => {
           const setting = req.body.updateSetting;
           let value = req.body.value;
 
-          if (ECustomList.allowed.settings[setting] && ECustomList.allowed.settings[setting].includes(value) || ECustomList.allowed.settings[setting][0] === "bypass") {
+          if (ECustomList.allowed.settings[setting]) {
 
-               const savedValue = value;
+               if (ECustomList.allowed.settings[setting].includes(value) || ECustomList.allowed.settings[setting][0] === "bypass") {
 
-               if (ECustomList.allowed.settings[setting][1] === "check-lifts") {
-                    for (let i = 0; i < ECustomList.allowed.lifts.length; i++) {
-                         if (ECustomList.allowed.lifts[i] === savedValue) {
-                              value = savedValue;
-                              break;
-                         } else {
-                              value = null;
+                    const savedValue = value;
+
+                    if (ECustomList.allowed.settings[setting][1] === "check-lifts") {
+                         for (let i = 0; i < ECustomList.allowed.lifts.length; i++) {
+                              if (ECustomList.allowed.lifts[i] === savedValue) {
+                                   value = savedValue;
+                                   break;
+                              } else {
+                                   value = null;
+                              }
                          }
                     }
-               }
-               else if (ECustomList.allowed.settings[setting][1] === "check-goals") {
-                    for (let i = 0; i < ECustomList.allowed.goals.length; i++) {
-                         if (ECustomList.allowed.goals[i] === savedValue) {
-                              value = savedValue;
-                              break;
-                         } else {
-                              value = null;
+                    else if (ECustomList.allowed.settings[setting][1] === "check-goals") {
+                         for (let i = 0; i < ECustomList.allowed.goals.length; i++) {
+                              if (ECustomList.allowed.goals[i] === savedValue) {
+                                   value = savedValue;
+                                   break;
+                              } else {
+                                   value = null;
+                              }
                          }
                     }
-               }
 
-               const resp = await updateUserSetting(currentUser.id, setting, value);
+                    const resp = await updateUserSetting(currentUser.id, setting, value);
 
-               if (resp === true) {
-                    res.status(200).json(resp).end();
+                    if (resp === true) {
+                         res.status(200).json(resp).end();
+                    } else {
+                         res.status(403).json("error, try again").end();
+                    }
+
                } else {
-                    res.status(403).json("error, try again").end();
+                    res.status(403).json("invalid setting value").end();
                }
 
           } else {
-               res.status(403).json("invalid user").end();
+               res.status(403).json("invalid setting").end();
           }
      } catch (err) {
           console.log(err);
