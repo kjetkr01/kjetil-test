@@ -4,6 +4,11 @@
         name: "Treningstatistikken",
         logoURL: "images/placeholder_logo.svg",
         changeLog: {
+            "6.3.27.996": {
+                "txt":
+                    ["Fikset problem ved søk (Treningsplaner & Brukere)"],
+                "date": "24.06.2021"
+            },
             "6.3.27.995": {
                 "txt":
                     ["Mulighet for søk i brukere (Krever flere enn 5 stk i listen)",

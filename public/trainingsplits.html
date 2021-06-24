@@ -241,7 +241,7 @@
          if (searchFilter.length > 0) {
             for (let i = 0; i < trainingsplitsList.length; i++) {
                const current = trainingsplitsList[i];
-               if (!current.trainingsplit_name.toLowerCase().includes(searchFilter) && !current.owner_username.toLowerCase().includes(searchFilter)) {
+               if (!current.trainingsplit_name.toLowerCase().includes(searchFilter.toLowerCase()) && !current.owner_username.toLowerCase().includes(searchFilter.toLowerCase())) {
                } else {
                   tempList.push(current);
                }
@@ -390,7 +390,7 @@
 
    // checks search
    function checkSearch() {
-      const searchTrainingsplitInp = document.getElementById("searchTrainingsplitInp").value.toLowerCase();
+      const searchTrainingsplitInp = document.getElementById("searchTrainingsplitInp").value;
       if (searchFilter !== searchTrainingsplitInp) {
          searchFilter = searchTrainingsplitInp;
          displayAllTrainingsplits();

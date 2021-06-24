@@ -246,7 +246,7 @@
          if (searchFilter.length > 0) {
             for (let i = 0; i < allUsersList.length; i++) {
                const current = allUsersList[i];
-               if (!current.displayname.toLowerCase().includes(searchFilter) && !current.username.toLowerCase().includes(searchFilter)) {
+               if (!current.displayname.toLowerCase().includes(searchFilter.toLowerCase()) && !current.username.toLowerCase().includes(searchFilter.toLowerCase())) {
                } else {
                   tempList.push(current);
                }
@@ -360,7 +360,7 @@
 
    // checks search
    function checkSearch() {
-      const searchUsersInp = document.getElementById("searchUsersInp").value.toLowerCase();
+      const searchUsersInp = document.getElementById("searchUsersInp").value;
       if (searchFilter !== searchUsersInp) {
          searchFilter = searchUsersInp;
          displayAllUsers();
