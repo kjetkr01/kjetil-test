@@ -4,6 +4,13 @@
         name: "Treningstatistikken",
         logoURL: "images/placeholder_logo.svg",
         changeLog: {
+            "6.3.27.995": {
+                "txt":
+                    ["Mulighet for søk i treningsplaner (Krever flere enn 5 stk i listen)",
+                        "Feilrettinger",
+                        "Ytelsesforbedringer"],
+                "date": "24.06.2021"
+            },
             "6.3.27.994": {
                 "txt":
                     ["Feilrettinger",

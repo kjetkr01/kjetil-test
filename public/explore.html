@@ -183,13 +183,15 @@
             "redirect": `redirectToLeaderboards();`,
             "name": "Ledertavler",
             "description": "Sammenlign deg selv med andre brukere eller se hvor mye andre brukere tar i de ulike løftene",
+            "descriptionAdmin": "",
             "internetDependentOnLoad": true,
             "visible": true
          },
          "Workoutplans_TS": {
             "redirect": `redirectToTrainingsplits();`,
             "name": "Treningsplaner",
-            "description": "Se alle offentlige treningsplaner laget av andre brukere.",
+            "description": "Se alle offentlige treningsplaner laget av andre brukere",
+            "descriptionAdmin": "Se alle treningsplaner laget av andre brukere",
             "internetDependentOnLoad": true,
             "visible": true
          },
@@ -197,6 +199,7 @@
             "redirect": ``, // redirectToUsers();
             "name": "Brukere",
             "description": "Kommer snart", // Vis listen med alle offentlige brukere
+            "descriptionAdmin": "",
             "internetDependentOnLoad": true,
             "visible": true
          },
@@ -204,6 +207,7 @@
             "redirect": ``,
             "name": "Medaljer",
             "description": "Kommer snart",
+            "descriptionAdmin": "",
             "internetDependentOnLoad": false, // Kan se uten internett. Men krever internett for å redusere medaljer
             "visible": true
          },
@@ -211,6 +215,7 @@
             "redirect": ``,
             "name": "Statistikk",
             "description": "Kommer snart",
+            "descriptionAdmin": "",
             "internetDependentOnLoad": false,
             "visible": false
          }
@@ -221,16 +226,20 @@
             "redirect": ``,
             "name": "API",
             "description": "Kommer snart",
+            "descriptionAdmin": "",
             "internetDependentOnLoad": false,
             "visible": true
          }
       }
 
-      if (user.getDetail("isadmin") === true) {
+      const isAdmin = user.getDetail("isadmin") === true;
+
+      if (isAdmin === true) {
          EexploreElements.Requests_TS = {
             "redirect": ``,
             "name": "Forespørsler",
             "description": "Kommer snart", // Det er 8 forespørsler feks. Vise antall
+            "descriptionAdmin": "",
             "internetDependentOnLoad": false,
             "visible": true
          }
@@ -263,6 +272,13 @@
          const info = aInfo;
 
          const color = info.colorClass;
+         let description = info.description;
+
+         if (isAdmin === true) {
+            if (info.descriptionAdmin.length > 0) {
+               description = info.descriptionAdmin;
+            }
+         }
 
          const badgeTemplate = `
          <div style="display:inline-block;">
@@ -282,7 +298,7 @@
 
                   <div id="GexploreDescription">
                   <p id="exploreDescription">
-                  ${info.description}
+                  ${description}
                   </p>
                </div>
 

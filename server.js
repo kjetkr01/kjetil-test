@@ -962,7 +962,8 @@ server.post("/user/get/trainingsplit/subscriberCount", auth, async (req, res) =>
 server.post("/user/get/trainingsplit/all", auth, async (req, res) => {
      try {
 
-          const resp = await getAllTrainingsplits();
+          const currentUser = JSON.parse(req.headers.userinfo);
+          const resp = await getAllTrainingsplits(currentUser.id);
 
           if (resp.status === true) {
                res.status(200).json(resp).end();

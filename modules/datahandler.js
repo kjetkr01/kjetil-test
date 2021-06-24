@@ -1343,6 +1343,7 @@ class StorageHandler {
         let results = false;
         let trainingsplit = {};
         let isSubscribed = false;
+        let isAdmin = false;
         let msg = "";
 
         try {
@@ -1360,6 +1361,17 @@ class StorageHandler {
             WHERE user_id = $1`,
                 [userid]);
 
+            let isAdmin = await client.query(`
+            SELECT username
+            FROM users
+            WHERE id = $1
+            AND isadmin = true`,
+                [userid]);
+
+            if (isAdmin.rows.length > 0) {
+                isAdmin = true;
+            }
+
             if (subscribedtrainingsplits.rows.length > 0) {
 
                 subscribedtrainingsplits = subscribedtrainingsplits.rows[0].subscribedtrainingsplits;
@@ -1373,7 +1385,7 @@ class StorageHandler {
 
                 trainingsplit = results.rows[0];
 
-                if (trainingsplit.user_id === userid || trainingsplit.public === true || isSubscribed === true) {
+                if (isAdmin === true || trainingsplit.user_id === userid || trainingsplit.public === true || isSubscribed === true) {
                     let canEdit = false;
                     if (trainingsplit.user_id === userid) {
                         canEdit = true;
@@ -1449,7 +1461,7 @@ class StorageHandler {
     // End of getTrainingsplitSubscriberCount function
 
     // get all public trainingsplits (user)
-    async getAllTrainingsplits() {
+    async getAllTrainingsplits(userid) {
 
         const client = new pg.Client(this.credentials);
         let results = false;
@@ -1459,73 +1471,154 @@ class StorageHandler {
         try {
             await client.connect();
 
-            let allTrainingsplits = await client.query(`
-            SELECT *
-            FROM user_trainingsplit
-            WHERE public = true`);
+            const checkIfAdmin = await client.query(`
+            SELECT username
+            FROM users
+            WHERE id = $1
+            AND isadmin = true`,
+                [userid]);
 
-            // user id, username, subscribed trainingsplits
-            let allUsersInfo = await client.query(`
+            if (checkIfAdmin.rows.length !== 0) {
+
+                let allTrainingsplits = await client.query(`
+            SELECT *
+            FROM user_trainingsplit`);
+
+                // user id, username, subscribed trainingsplits
+                let allUsersInfo = await client.query(`
             SELECT users.id, users.username, user_settings.subscribedtrainingsplits
             FROM users, user_settings
             WHERE users.id = user_settings.user_id`);
 
-            if (allTrainingsplits.rows.length > 0) {
+                if (allTrainingsplits.rows.length > 0) {
 
-                allTrainingsplits = allTrainingsplits.rows;
-                allUsersInfo = allUsersInfo.rows;
+                    allTrainingsplits = allTrainingsplits.rows;
+                    allUsersInfo = allUsersInfo.rows;
 
-                const users = {};
-                const trainingsplitsSubscriberCount = {};
-                for (let i = 0; i < allUsersInfo.length; i++) {
-                    const currentUser = allUsersInfo[i];
-                    users[currentUser.id] = currentUser.username;
+                    const users = {};
+                    const trainingsplitsSubscriberCount = {};
+                    for (let i = 0; i < allUsersInfo.length; i++) {
+                        const currentUser = allUsersInfo[i];
+                        users[currentUser.id] = currentUser.username;
 
-                    if (currentUser.subscribedtrainingsplits.length > 0) {
-                        for (let j = 0; j < currentUser.subscribedtrainingsplits.length; j++) {
-                            const trainingsplitId = currentUser.subscribedtrainingsplits[j];
-                            if (trainingsplitsSubscriberCount[trainingsplitId]) {
-                                trainingsplitsSubscriberCount[trainingsplitId] = trainingsplitsSubscriberCount[trainingsplitId] + 1;
-                            } else {
-                                trainingsplitsSubscriberCount[trainingsplitId] = 1;
+                        if (currentUser.subscribedtrainingsplits.length > 0) {
+                            for (let j = 0; j < currentUser.subscribedtrainingsplits.length; j++) {
+                                const trainingsplitId = currentUser.subscribedtrainingsplits[j];
+                                if (trainingsplitsSubscriberCount[trainingsplitId]) {
+                                    trainingsplitsSubscriberCount[trainingsplitId] = trainingsplitsSubscriberCount[trainingsplitId] + 1;
+                                } else {
+                                    trainingsplitsSubscriberCount[trainingsplitId] = 1;
+                                }
                             }
                         }
                     }
-                }
 
-                for (let i = 0; i < allTrainingsplits.length; i++) {
-                    const currentTrainingsplit = allTrainingsplits[i];
+                    for (let i = 0; i < allTrainingsplits.length; i++) {
+                        const currentTrainingsplit = allTrainingsplits[i];
 
-                    const trainingsplit = {
-                        "trainingsplit_id": currentTrainingsplit.trainingsplit_id,
-                        "trainingsplit_name": currentTrainingsplit.trainingsplit_name,
-                        "owner_username": users[currentTrainingsplit.user_id],
-                        "owner_id": currentTrainingsplit.user_id,
-                        "subscriberCount": trainingsplitsSubscriberCount[currentTrainingsplit.trainingsplit_id] || 0
-                    }
-
-                    const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
-
-                    let trainingdays = [];
-                    for (let j = 0; j < days.length; j++) {
-                        const currentDay = currentTrainingsplit[days[j]];
-                        if (currentDay.short.length > 0) {
-                            trainingdays.push(days[j]);
+                        const trainingsplit = {
+                            "trainingsplit_id": currentTrainingsplit.trainingsplit_id,
+                            "trainingsplit_name": currentTrainingsplit.trainingsplit_name,
+                            "owner_username": users[currentTrainingsplit.user_id],
+                            "owner_id": currentTrainingsplit.user_id,
+                            "subscriberCount": trainingsplitsSubscriberCount[currentTrainingsplit.trainingsplit_id] || 0,
+                            "public": currentTrainingsplit.public
                         }
+
+                        const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+
+                        let trainingdays = [];
+                        for (let j = 0; j < days.length; j++) {
+                            const currentDay = currentTrainingsplit[days[j]];
+                            if (currentDay.short.length > 0) {
+                                trainingdays.push(days[j]);
+                            }
+                        }
+
+                        trainingsplit.trainingdays = trainingdays;
+
+                        trainingsplits.push(trainingsplit);
                     }
 
-                    trainingsplit.trainingdays = trainingdays;
+                    if (trainingsplits.length > 0) {
+                        results = true;
+                    }
 
-                    trainingsplits.push(trainingsplit);
-                }
-
-                if (trainingsplits.length > 0) {
-                    results = true;
+                } else {
+                    msg = "Det finnes ingen offentlige treningsplaner!";
+                    results = false;
                 }
 
             } else {
-                msg = "Treningsplanen finnes ikke!";
-                results = false;
+
+                let allTrainingsplits = await client.query(`
+            SELECT *
+            FROM user_trainingsplit
+            WHERE public = true`);
+
+                // user id, username, subscribed trainingsplits
+                let allUsersInfo = await client.query(`
+            SELECT users.id, users.username, user_settings.subscribedtrainingsplits
+            FROM users, user_settings
+            WHERE users.id = user_settings.user_id`);
+
+                if (allTrainingsplits.rows.length > 0) {
+
+                    allTrainingsplits = allTrainingsplits.rows;
+                    allUsersInfo = allUsersInfo.rows;
+
+                    const users = {};
+                    const trainingsplitsSubscriberCount = {};
+                    for (let i = 0; i < allUsersInfo.length; i++) {
+                        const currentUser = allUsersInfo[i];
+                        users[currentUser.id] = currentUser.username;
+
+                        if (currentUser.subscribedtrainingsplits.length > 0) {
+                            for (let j = 0; j < currentUser.subscribedtrainingsplits.length; j++) {
+                                const trainingsplitId = currentUser.subscribedtrainingsplits[j];
+                                if (trainingsplitsSubscriberCount[trainingsplitId]) {
+                                    trainingsplitsSubscriberCount[trainingsplitId] = trainingsplitsSubscriberCount[trainingsplitId] + 1;
+                                } else {
+                                    trainingsplitsSubscriberCount[trainingsplitId] = 1;
+                                }
+                            }
+                        }
+                    }
+
+                    for (let i = 0; i < allTrainingsplits.length; i++) {
+                        const currentTrainingsplit = allTrainingsplits[i];
+
+                        const trainingsplit = {
+                            "trainingsplit_id": currentTrainingsplit.trainingsplit_id,
+                            "trainingsplit_name": currentTrainingsplit.trainingsplit_name,
+                            "owner_username": users[currentTrainingsplit.user_id],
+                            "owner_id": currentTrainingsplit.user_id,
+                            "subscriberCount": trainingsplitsSubscriberCount[currentTrainingsplit.trainingsplit_id] || 0
+                        }
+
+                        const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+
+                        let trainingdays = [];
+                        for (let j = 0; j < days.length; j++) {
+                            const currentDay = currentTrainingsplit[days[j]];
+                            if (currentDay.short.length > 0) {
+                                trainingdays.push(days[j]);
+                            }
+                        }
+
+                        trainingsplit.trainingdays = trainingdays;
+
+                        trainingsplits.push(trainingsplit);
+                    }
+
+                    if (trainingsplits.length > 0) {
+                        results = true;
+                    }
+
+                } else {
+                    msg = "Det finnes ingen offentlige treningsplaner!";
+                    results = false;
+                }
             }
 
         } catch (err) {
@@ -1666,7 +1759,18 @@ class StorageHandler {
 
                 } else {
 
-                    if (trainingsplit.rows[0].public === true) {
+                    let isAdmin = await client.query(`
+                    SELECT username
+                    FROM users
+                    WHERE id = $1
+                    AND isadmin = true`,
+                                [userid]);
+
+                    if (isAdmin.rows.length > 0) {
+                        isAdmin = true;
+                    }
+
+                    if (isAdmin === true || trainingsplit.rows[0].public === true) {
 
                         if (subscribedTrainingsplits.length < ECustomList.max.subscribedTrainingsplits) {
                             //subscribe

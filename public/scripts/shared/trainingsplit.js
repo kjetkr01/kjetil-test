@@ -447,7 +447,7 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
         `;
 
         let copyHTML = `<button class="trainingsplitButton pointer" onClick="copyTrainingsplitConfirm(${resp.trainingsplit_id}, ${resp.user_id});">${copy_trainingsplit}</button>`;
-        if (!navigator.onLine) {
+        if (!navigator.onLine || resp.public === false) {
             copyHTML = `<button disabled class="trainingsplitButton">${copy_trainingsplit}</button>`;
         }
 

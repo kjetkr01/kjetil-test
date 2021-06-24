@@ -45,9 +45,9 @@ async function getTrainingsplitSubscriberCount(trainingsplit_id) {
     }
 }
 
-async function getAllTrainingsplits() {
+async function getAllTrainingsplits(userid) {
     try {
-        const resp = await database.getAllTrainingsplits();
+        const resp = await database.getAllTrainingsplits(userid);
         return resp;
     } catch (error) {
         console.error(error);

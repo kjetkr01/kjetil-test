@@ -97,9 +97,9 @@ async function loadLeaderboards() {
 
                 leaderboardsArrOrder.sort(function (a, b) { return b.usersCount - a.usersCount });
 
-                if(localStorage.getItem("user")){
+                if (localStorage.getItem("user")) {
                     localStorage.setItem("cached_leaderboardsArrOrder", JSON.stringify(leaderboardsArrOrder));
-                }else{
+                } else {
                     sessionStorage.setItem("cached_leaderboardsArrOrder", JSON.stringify(leaderboardsArrOrder));
                 }
 
@@ -295,6 +295,7 @@ async function getListOfLeaderboard(aLeaderboard) {
                     }
 
                     leaderboardIsLoading = false;
+                    scrollToSavedPos();
 
                 }
 

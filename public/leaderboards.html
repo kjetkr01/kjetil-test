@@ -108,7 +108,7 @@
 
       <div id="GbackBtn">
          <svg id="backBtn" class="backBtnIcon fadeInLeft animate delaySmall pointer" style="stroke:white;"
-            draggable="false" onclick="redirectToExplore();" xmlns="http://www.w3.org/2000/svg"
+            draggable="false" onclick="clearSavedInfo();redirectToExplore();" xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 22.49 39.22">
             <g id="Layer_2" data-name="Layer 2">
                <g id="Layer_1-2" data-name="Layer 1">
@@ -160,6 +160,28 @@
    if (user) {
       loadLeaderboards();
    }
+
+   // Eventlistener to save current scroll
+   document.getElementById("GpeopleLeaderboardsList").addEventListener("scroll", function (e) {
+      const scrollY = document.getElementById("GpeopleLeaderboardsList").scrollTop;
+      sessionStorage.setItem("@scroll-Leaderboards", scrollY);
+   });
+   // End of eventlistener
+
+   // scrolls to saved pos if saved
+   function scrollToSavedPos() {
+      const scrollY = sessionStorage.getItem("@scroll-Leaderboards");
+      if (scrollY) {
+         document.getElementById("GpeopleLeaderboardsList").scrollTop = scrollY;
+      }
+   }
+   // End of scrollToSavedPos function
+
+   // Clears saved info
+   function clearSavedInfo() {
+      sessionStorage.removeItem("@scroll-Leaderboards");
+   }
+   // End of clearSavedInfo function
 
 </script>
 

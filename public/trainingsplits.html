@@ -105,7 +105,7 @@
 
       <div id="GbackBtn">
          <svg id="backBtn" class="backBtnIcon fadeInLeft animate delaySmall pointer" style="stroke:white;"
-            draggable="false" onclick="redirectToExplore();" xmlns="http://www.w3.org/2000/svg"
+            draggable="false" onclick="clearSavedInfo();redirectToExplore();" xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 22.49 39.22">
             <g id="Layer_2" data-name="Layer 2">
                <g id="Layer_1-2" data-name="Layer 1">
@@ -144,6 +144,15 @@
 
    getTSAlertOverlay();
 
+   let trainingsplits = null, searchFilter = "", prevList = [];
+   function TTrainingsplits(aTrainingsplits) {
+      const trainingsplits = aTrainingsplits;
+
+      this.getList = function () {
+         return trainingsplits;
+      }
+   }
+
    if (user) {
 
       getTrainingsplitsList();
@@ -172,22 +181,49 @@
 
                let trainingsplitTxt = "";
 
-               if (totalTrainingsplits < 0) {
-                  trainingsplitTxt = `${application.name} har ingen offentlige treningsplaner.`;
-               } else if (totalTrainingsplits === 1) {
-                  trainingsplitTxt = `${application.name} har 1 offentlig treningsplan.`;
+               if (user.getDetail("isadmin") === true) {
+                  if (totalTrainingsplits < 0) {
+                     trainingsplitTxt = `${application.name} har ingen treningsplaner.`;
+                  } else if (totalTrainingsplits === 1) {
+                     trainingsplitTxt = `${application.name} har 1 treningsplan.`;
+                  } else {
+                     trainingsplitTxt = `
+                  ${application.name} har ${totalTrainingsplits} treningsplaner.
+                  <br>
+                  Du kan trykke deg inn på treningsplanen sitt navn for å se hele planen.`;
+                  }
                } else {
-                  trainingsplitTxt = `
+                  if (totalTrainingsplits < 0) {
+                     trainingsplitTxt = `${application.name} har ingen offentlige treningsplaner.`;
+                  } else if (totalTrainingsplits === 1) {
+                     trainingsplitTxt = `${application.name} har 1 offentlig treningsplan.`;
+                  } else {
+                     trainingsplitTxt = `
                   ${application.name} har ${totalTrainingsplits} offentlige treningsplaner.
                   <br>
                   Du kan trykke deg inn på treningsplanen sitt navn for å se hele planen.`;
+                  }
                }
 
                information.innerHTML = trainingsplitTxt;
 
                sessionStorage.setItem("cached_trainingsplitTxt", trainingsplitTxt);
 
-               displayAllTrainingsplits(resp.trainingsplits);
+               if (resp.trainingsplits.length > 5) {
+                  information.innerHTML += `<br><br><input id="searchTrainingsplitInp" placeholder="Søk" onkeyup="checkSearch();"></input>`;
+                  const cached_search_trainingsplits = sessionStorage.getItem("cached_search_trainingsplits");
+                  if (cached_search_trainingsplits) {
+                     const searchDom = document.getElementById("searchTrainingsplitInp");
+                     if (searchDom) {
+                        searchFilter = cached_search_trainingsplits;
+                        searchDom.value = searchFilter;
+                        sessionStorage.removeItem("cached_search_trainingsplits");
+                     }
+                  }
+               }
+
+               trainingsplits = new TTrainingsplits(resp.trainingsplits);
+               displayAllTrainingsplits();
             }
 
          } else {
@@ -196,138 +232,214 @@
       }
       // End of getTrainingsplitsList function
 
-      // displays all trainingsplits
-      function displayAllTrainingsplits(aTrainingsplits) {
+   }
 
-         const trainingsplits = aTrainingsplits;
+   // displays all trainingsplits
+   function displayAllTrainingsplits() {
 
-         trainingsplits.sort(function (a, b) { return b.subscriberCount - a.subscriberCount });
+      if (trainingsplits) {
+         let trainingsplitsList = trainingsplits.getList();
+
+         trainingsplitsList.sort(function (a, b) { return b.subscriberCount - a.subscriberCount });
 
          const list = document.getElementById("list");
-         for (let i = 0; i < trainingsplits.length; i++) {
-            const current = trainingsplits[i];
 
-            let placementHTML = `${i + 1}.`, svgMedal = null, svgMedalColor = null;
-
-            let firstAvailableDay = null;
-            if (current.trainingdays.length > 0) {
-               firstAvailableDay = current.trainingdays[0];
-            }
-
-            let trainingsplitNameHTML = `<button class="peopleListTrainingsplitName pointer" onClick="redirectToTrainingsplit('${current.trainingsplit_id}', '${firstAvailableDay}');">${current.trainingsplit_name}</button>`;
-            let usernameHTML = `<button class="peopleListName pointer" onClick="redirectToUser('${current.owner_id}');">${current.owner_username}</button>`;
-
-            if (current.owner_id === user.getId()) {
-               trainingsplitNameHTML = `<button class="accountTrainingsplitOwner pointer" onClick="redirectToTrainingsplit('${current.trainingsplit_id}', '${firstAvailableDay}');">${current.trainingsplit_name}</button>`;
-               usernameHTML = `<button class="accountOwner pointer" onClick="redirectToUser('${current.owner_id}');">${current.owner_username}</button>`;
-            }
-
-            switch (i) {
-               case 0:
-                  svgMedalColor = "medalIconGold";
-                  break;
-               case 1:
-                  svgMedalColor = "medalIconSilver";
-                  break;
-               case 2:
-                  svgMedalColor = "medalIconBronze";
-                  break;
-            }
-
-            if (svgMedal === null && svgMedalColor !== null) {
-               placementHTML = `
-                    <svg id="placement" class="medals ${svgMedalColor}" draggable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
-                        <defs>
-                            </defs>
-                            <g id="Layer_2" data-name="Layer 2">
-                            <g id="Layer_1-2" data-name="Layer 1">
-                            <path class="${svgMedalColor}"
-                            d="M28.33,17.38v-14H11.67V17.38a1.66,1.66,0,0,0,.81,1.44l7,4.18L17.8,26.9l-5.68.48,4.31,3.74-1.31,5.55,4.88-3,4.88,3-1.3-5.55,4.32-3.74-5.68-.48L20.57,23l7-4.18A1.66,1.66,0,0,0,28.33,17.38Zm-6.66,3-1.67,1-1.67-1V5h3.34Z" />
-                        </g>
-                    </g>
-                </svg>
-                `;
-            }
-
-            let trainingdaysTxt = "";
-
-            if (current.trainingdays.length > 0) {
-               trainingdaysTxt = "";
-               const NorweiganDays = {
-                  "monday": "Mandag",
-                  "tuesday": "Tirsdag",
-                  "wednesday": "Onsdag",
-                  "thursday": "Torsdag",
-                  "friday": "Fredag",
-                  "saturday": "Lørdag",
-                  "sunday": "Søndag",
-               }
-
-               /*const NorweiganDays = {
-                   "monday": "Man",
-                   "tuesday": "Tir",
-                   "wednesday": "Ons",
-                   "thursday": "Tor",
-                   "friday": "Fre",
-                   "saturday": "Lør",
-                   "sunday": "Søn",
-               }*/
-               for (let j = 0; j < current.trainingdays.length; j++) {
-                  const day = NorweiganDays[current.trainingdays[j]];
-
-                  if (j < (current.trainingdays.length - 2)) {
-                     trainingdaysTxt += `${day}, `;
-                  } else if (j < (current.trainingdays.length - 1)) {
-                     trainingdaysTxt += `${day} og `;
+         let tempList = [];
+         if (searchFilter.length > 0) {
+            for (let i = 0; i < trainingsplitsList.length; i++) {
+               const current = trainingsplitsList[i];
+               if (searchFilter.length > 0) {
+                  if (!current.trainingsplit_name.toLowerCase().includes(searchFilter) && !current.owner_username.toLowerCase().includes(searchFilter)) {
                   } else {
-                     trainingdaysTxt += day;
+                     tempList.push(current);
                   }
                }
             }
+         } else {
+            tempList = trainingsplitsList;
+         }
 
-            let subscriberCountTxt = "Ingen abonnenter";
+         if (JSON.stringify(tempList) !== JSON.stringify(prevList)) {
+            prevList = tempList;
+            list.innerHTML = "";
 
-            if (current.subscriberCount > 0) {
-               subscriberCountTxt = `Abonnenter: ${current.subscriberCount}`;
+            if (tempList.length > 0) {
+               for (let i = 0; i < tempList.length; i++) {
+                  const current = tempList[i];
+
+                  let placementHTML = `${i + 1}.`, svgMedal = null, svgMedalColor = null;
+
+                  let firstAvailableDay = null;
+                  if (current.trainingdays.length > 0) {
+                     firstAvailableDay = current.trainingdays[0];
+                  }
+
+                  let extraInfoTxt = "";
+                  if (current.public === false) {
+                     extraInfoTxt = "(<div style='display:inline-block;color:red;'>Privat</div>)";
+                  }
+
+                  let trainingsplitNameHTML = `<button class="peopleListTrainingsplitName pointer" onClick="saveSearch();redirectToTrainingsplit('${current.trainingsplit_id}', '${firstAvailableDay}');">${current.trainingsplit_name} ${extraInfoTxt}</button>`;
+                  let usernameHTML = `<button class="peopleListName pointer" onClick="saveSearch();redirectToUser('${current.owner_id}');">${current.owner_username}</button>`;
+
+                  if (current.owner_id === user.getId()) {
+                     usernameHTML = `<button class="accountOwner pointer" onClick="saveSearch();redirectToUser('${current.owner_id}');">${current.owner_username}</button>`;
+                  }
+
+                  switch (i) {
+                     case 0:
+                        svgMedalColor = "medalIconGold";
+                        break;
+                     case 1:
+                        svgMedalColor = "medalIconSilver";
+                        break;
+                     case 2:
+                        svgMedalColor = "medalIconBronze";
+                        break;
+                  }
+
+                  if (svgMedal === null && svgMedalColor !== null) {
+                     placementHTML = `
+            <svg id="placement" class="medals ${svgMedalColor}" draggable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+                  <defs>
+                     </defs>
+                     <g id="Layer_2" data-name="Layer 2">
+                     <g id="Layer_1-2" data-name="Layer 1">
+                     <path class="${svgMedalColor}"
+                     d="M28.33,17.38v-14H11.67V17.38a1.66,1.66,0,0,0,.81,1.44l7,4.18L17.8,26.9l-5.68.48,4.31,3.74-1.31,5.55,4.88-3,4.88,3-1.3-5.55,4.32-3.74-5.68-.48L20.57,23l7-4.18A1.66,1.66,0,0,0,28.33,17.38Zm-6.66,3-1.67,1-1.67-1V5h3.34Z" />
+                  </g>
+            </g>
+         </svg>
+         `;
+                  }
+
+                  let trainingdaysTxt = "";
+
+                  if (current.trainingdays.length > 0) {
+                     trainingdaysTxt = "";
+                     const NorweiganDays = {
+                        "monday": "Mandag",
+                        "tuesday": "Tirsdag",
+                        "wednesday": "Onsdag",
+                        "thursday": "Torsdag",
+                        "friday": "Fredag",
+                        "saturday": "Lørdag",
+                        "sunday": "Søndag",
+                     }
+
+                     /*const NorweiganDays = {
+                         "monday": "Man",
+                         "tuesday": "Tir",
+                         "wednesday": "Ons",
+                         "thursday": "Tor",
+                         "friday": "Fre",
+                         "saturday": "Lør",
+                         "sunday": "Søn",
+                     }*/
+                     for (let j = 0; j < current.trainingdays.length; j++) {
+                        const day = NorweiganDays[current.trainingdays[j]];
+
+                        if (j < (current.trainingdays.length - 2)) {
+                           trainingdaysTxt += `${day}, `;
+                        } else if (j < (current.trainingdays.length - 1)) {
+                           trainingdaysTxt += `${day} og `;
+                        } else {
+                           trainingdaysTxt += day;
+                        }
+                     }
+                  }
+
+                  let subscriberCountTxt = "Ingen abonnenter";
+
+                  if (current.subscriberCount > 0) {
+                     subscriberCountTxt = `Abonnenter: ${current.subscriberCount}`;
+                  }
+
+                  list.innerHTML += `
+         <div class="trainingsplit fadeInUp animate">
+         <div id="Gplacement">
+         <div id="placement">
+            ${placementHTML}
+         </div>
+         </div>
+         <div id="GtrainingsplitName">
+         <div id="trainingsplitName">
+            ${trainingsplitNameHTML}
+         </div>
+         </div>
+         <div id="GtrainingsplitOwner">
+         <div id="trainingsplitOwner">
+            Av: ${usernameHTML}
+         </div>
+         </div>
+         <div id="GtotalTrainingdays">
+         <div id="totalTrainingdays">
+            ${trainingdaysTxt}
+         </div>
+         </div>
+         <div id="GtrainingsplitSubscriberCount">
+         <div id="trainingsplitSubscriberCount">
+            ${subscriberCountTxt}
+         </div>
+         </div>
+
+         </div>
+         <hr class="boardLine fadeIn animate delayMedium">
+         `;
+
+               }
+               scrollToSavedPos();
+            } else {
+               list.innerHTML = `<div class="noResults">Fant ingen resultater</div>`;
             }
-
-            list.innerHTML += `
-             <div class="trainingsplit fadeInUp animate">
-             <div id="Gplacement">
-                <div id="placement">
-                   ${placementHTML}
-                </div>
-             </div>
-             <div id="GtrainingsplitName">
-                <div id="trainingsplitName">
-                   ${trainingsplitNameHTML}
-                </div>
-             </div>
-             <div id="GtrainingsplitOwner">
-                <div id="trainingsplitOwner">
-                  Av: ${usernameHTML}
-                </div>
-             </div>
-             <div id="GtotalTrainingdays">
-                <div id="totalTrainingdays">
-                   ${trainingdaysTxt}
-                </div>
-             </div>
-             <div id="GtrainingsplitSubscriberCount">
-                <div id="trainingsplitSubscriberCount">
-                   ${subscriberCountTxt}
-                </div>
-             </div>
-             
-          </div>
-          <hr class="boardLine fadeIn animate delayMedium">
-             `;
-
          }
       }
-      // End of displayAllTrainingsplits function
-
    }
+   // End of displayAllTrainingsplits function
+
+   // checks search
+   function checkSearch() {
+      const searchTrainingsplitInp = document.getElementById("searchTrainingsplitInp").value.toLowerCase();
+      if (searchFilter !== searchTrainingsplitInp) {
+         searchFilter = searchTrainingsplitInp;
+         displayAllTrainingsplits();
+      }
+   }
+   // End of checkSearch function
+
+   // Eventlistener to save current scroll
+   document.getElementById("Glist").addEventListener("scroll", function (e) {
+      const scrollY = document.getElementById("Glist").scrollTop;
+      sessionStorage.setItem("@scroll-Trainingsplits", scrollY);
+   });
+   // End of eventlistener
+
+   // scrolls to saved pos if saved
+   function scrollToSavedPos() {
+      const scrollY = sessionStorage.getItem("@scroll-Trainingsplits");
+      if (scrollY) {
+         document.getElementById("Glist").scrollTop = scrollY;
+      }
+   }
+   // End of scrollToSavedPos function
+
+   // Saves search
+   function saveSearch() {
+      const searchTrainingsplit = document.getElementById("searchTrainingsplitInp");
+      if (searchTrainingsplit) {
+         if (searchTrainingsplit.value.length > 0) {
+            sessionStorage.setItem("cached_search_trainingsplits", searchTrainingsplit.value);
+         }
+      }
+   }
+   // End of saveSearch function
+
+   // Clears saved info
+   function clearSavedInfo() {
+      sessionStorage.removeItem("@scroll-Trainingsplits");
+      sessionStorage.removeItem("cached_search_trainingsplits");
+   }
+   // End of clearSavedInfo function
 
 </script>
 
