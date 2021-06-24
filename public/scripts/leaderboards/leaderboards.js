@@ -179,7 +179,12 @@ async function getListOfLeaderboard(aLeaderboard) {
                 document.getElementById(viewingLeaderboard).classList.add("active");
             };
 
-            list.innerHTML = `<img class="loadingGif" draggable="false" src="images/loading.gif"></img>`;
+            list.innerHTML = `
+            <div class="three-balls">
+            <div class="ball ball1"></div>
+            <div class="ball ball2"></div>
+            <div class="ball ball3"></div>
+            </div>`;
 
             const infoBody = { "leaderboard": viewingLeaderboard, "reps": reps };
             const url = `/users/list/all/leaderboards/${viewingLeaderboard}`;

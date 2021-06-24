@@ -121,6 +121,12 @@
       <div id="GuserGrid" class="userGrid noselect">
          <div id="userGrid">
 
+            <div id="loading" class="three-balls">
+               <div class="ball ball1"></div>
+               <div class="ball ball2"></div>
+               <div class="ball ball3"></div>
+            </div>
+
             <div id="GbadgesLifts" class="hidden">
                <table id="badgesLifts" style="border-spacing:0 10px;">
                   <tr id="badgesLiftsTableRow-1">
@@ -187,6 +193,8 @@
 
          const resp = await fetch(url, config);
          const data = await resp.json();
+
+         document.getElementById("loading").remove();
 
          if (data.hasOwnProperty("userDetails") && data.hasOwnProperty("userLifts") && data.hasOwnProperty("badgeColors")) {
             displayInformation(data);

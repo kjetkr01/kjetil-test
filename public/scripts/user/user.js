@@ -135,6 +135,7 @@ async function requestAccountDetails() {
             const resp = await getAccountDetails(viewingUser);
 
             if (resp) {
+                document.getElementById("loading").remove();
                 if (resp.hasOwnProperty("info")) {
                     if (resp.cacheDetails) {
                         sessionStorage.setItem(`cachedDetails_visitor_${viewingUser}`, JSON.stringify(resp.cacheDetails));
@@ -188,7 +189,7 @@ function displayInformation(respInfo) {
     const medalscount = info.info.medalscount;
     memberSince = info.member_since;
 
-    badgeColorsJSON = new TbadgeColors(info.badgeColors);
+    badgeColorsJSON = info.badgeColors;
 
     lifts = info.lifts;
     goals = info.goals;
@@ -284,8 +285,6 @@ ${firstName[0]} har ingen løft, mål eller treningsplan
         if (memberSince) {
             displayMemberSince();
         }
-
-        document.getElementById("loadingGif").remove();
     }
 }
 // End of displayInformation function
