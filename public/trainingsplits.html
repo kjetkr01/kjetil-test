@@ -72,8 +72,6 @@
 
    <link rel="stylesheet" href="styles/shared/exploreDefault.css">
 
-   <link rel="stylesheet" href="styles/shared/overlay.css">
-
    <link rel="stylesheet" href="styles/trainingsplits/board.css">
 
    <script src="sw.js" type="module"></script>
@@ -84,7 +82,6 @@
    <script src="scripts/global/global.js" type="text/javascript"></script>
    <script src="scripts/global/functions.js" type="text/javascript"></script>
    <script src="scripts/leaderboards/leaderboards.js" type="text/javascript"></script>
-   <script src="scripts/shared/overlay.js" type="text/javascript"></script>
 
 </head>
 
@@ -96,8 +93,6 @@
       changeColorTheme();
    </script>
 
-   <div id="TSAlertOverlay" style="display: none;" class="overlay noselect"></div>
-
    <section id="page">
 
       <div id="c1r1"></div>
@@ -105,7 +100,7 @@
 
       <div id="GbackBtn">
          <svg id="backBtn" class="backBtnIcon fadeInLeft animate delaySmall pointer" style="stroke:white;"
-            draggable="false" onclick="clearSavedInfo();redirectToExplore();" xmlns="http://www.w3.org/2000/svg"
+            draggable="false" onclick="redirectToExplore();" xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 22.49 39.22">
             <g id="Layer_2" data-name="Layer 2">
                <g id="Layer_1-2" data-name="Layer 1">
@@ -142,8 +137,6 @@
 <script>
    "use strict";
 
-   getTSAlertOverlay();
-
    let trainingsplits = null, searchFilter = "", prevList = [];
    function TTrainingsplits(aTrainingsplits) {
       const trainingsplits = aTrainingsplits;
@@ -164,7 +157,7 @@
 
          if (navigator.onLine) {
 
-            let cached_trainingsplitTxt = sessionStorage.getItem("cached_trainingsplitTxt");
+            const cached_trainingsplitTxt = sessionStorage.getItem("cached_trainingsplitTxt");
 
             if (cached_trainingsplitTxt) {
                information.innerHTML = cached_trainingsplitTxt;
@@ -210,7 +203,7 @@
                sessionStorage.setItem("cached_trainingsplitTxt", trainingsplitTxt);
 
                if (resp.trainingsplits.length > 5) {
-                  information.innerHTML += `<br><br><input id="searchTrainingsplitInp" placeholder="Søk" onkeyup="checkSearch();"></input>`;
+                  information.innerHTML += `<br><br><input id="searchTrainingsplitInp" class="searchInp" placeholder="Søk" onkeyup="checkSearch();"></input>`;
                   const cached_search_trainingsplits = sessionStorage.getItem("cached_search_trainingsplits");
                   if (cached_search_trainingsplits) {
                      const searchDom = document.getElementById("searchTrainingsplitInp");
@@ -248,11 +241,9 @@
          if (searchFilter.length > 0) {
             for (let i = 0; i < trainingsplitsList.length; i++) {
                const current = trainingsplitsList[i];
-               if (searchFilter.length > 0) {
-                  if (!current.trainingsplit_name.toLowerCase().includes(searchFilter) && !current.owner_username.toLowerCase().includes(searchFilter)) {
-                  } else {
-                     tempList.push(current);
-                  }
+               if (!current.trainingsplit_name.toLowerCase().includes(searchFilter) && !current.owner_username.toLowerCase().includes(searchFilter)) {
+               } else {
+                  tempList.push(current);
                }
             }
          } else {
@@ -433,13 +424,6 @@
       }
    }
    // End of saveSearch function
-
-   // Clears saved info
-   function clearSavedInfo() {
-      sessionStorage.removeItem("@scroll-Trainingsplits");
-      sessionStorage.removeItem("cached_search_trainingsplits");
-   }
-   // End of clearSavedInfo function
 
 </script>
 

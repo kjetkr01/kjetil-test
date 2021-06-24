@@ -6,7 +6,9 @@
         changeLog: {
             "6.3.27.995": {
                 "txt":
-                    ["Mulighet for søk i treningsplaner (Krever flere enn 5 stk i listen)",
+                    ["Mulighet for søk i brukere (Krever flere enn 5 stk i listen)",
+                        "Lagt til brukere (Utforsk siden)",
+                        "Mulighet for søk i treningsplaner (Krever flere enn 5 stk i listen)",
                         "Feilrettinger",
                         "Ytelsesforbedringer"],
                 "date": "24.06.2021"

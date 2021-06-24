@@ -151,3 +151,23 @@ border-top: var(--main-border);
 }
 
 /* end of mobile & desktop */
+
+
+.searchInp {
+font-size: 15px;
+color: var(--main-textColorDark);
+background-color: transparent;
+border: 1px solid var(--main-accountOwnerColor);
+border-radius: 5px;
+}
+
+::placeholder {
+color: var(--main-textColorDark);
+font-size: 15px;
+opacity: 85%;
+}
+
+.noResults {
+font-size: 16px;
+color: var(--main-textColorDark);
+}

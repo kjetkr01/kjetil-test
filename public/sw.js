@@ -1,4 +1,4 @@
-const cacheName = 'TS-PWA-v52';
+const cacheName = 'TS-PWA-v53';
 const swName = '[Service Worker]';
 
 const contentToCache = [
@@ -89,6 +89,8 @@ const contentToCache = [
     'styles/leaderboards/values.css',
 
     'styles/trainingsplits/board.css',
+
+    'styles/users/board.css',
 
     'styles/settings/grid.css',
     'styles/settings/values.css',

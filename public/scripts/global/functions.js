@@ -446,10 +446,14 @@ function redirectToLeaderboards() {
 }
 
 function redirectToTrainingsplits() {
+    sessionStorage.removeItem("@scroll-Trainingsplits");
+    sessionStorage.removeItem("cached_search_trainingsplits");
     location.href = "trainingsplits.html";
 }
 
 function redirectToUsers() {
+    sessionStorage.removeItem("@scroll-Users");
+    sessionStorage.removeItem("cached_search_users");
     location.href = "users.html";
 }
 

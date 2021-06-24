@@ -1,0 +1,139 @@
+.users {
+display: grid;
+height: auto;
+word-break: keep-all;
+grid-template-areas:
+
+"Gdisplayname"
+"Gusername"
+"Gid"
+"Gvisibility"
+"GAPIaccess"
+"GVisit"
+;
+grid-template-rows: /* nedover */
+
+auto /* row1 */
+
+auto /* row2 */
+
+auto /* row3 */
+
+auto /* row4 */
+
+auto /* row5 */
+
+auto /* row5 */
+
+;
+
+grid-template-columns: /* bortover */
+auto 1fr 0px;
+}
+
+/* elements */
+
+.users > #Gdisplayname {
+grid-area: Gdisplayname;
+}
+
+.users > #Gusername {
+grid-area: Gusername;
+}
+
+.users > #Gid {
+grid-area: Gid;
+}
+
+.users > #Gvisibility {
+grid-area: Gvisibility;
+}
+
+.users > #GAPIaccess {
+grid-area: GAPIaccess;
+}
+
+.users > #GVisit {
+grid-area: GVisit;
+}
+
+
+/* end of grid */
+
+
+#Gdisplayname>#displayname{
+font-size: 16px;
+font-weight: bold;
+margin-bottom: 5px;
+}
+
+#Gusername>#username{
+font-size: 15px;
+margin-bottom: 5px;
+}
+
+#Gid>#id{
+    font-size: 15px;
+margin-top: 10px;
+margin-bottom: 5px;
+}
+
+#Gvisibility>#visibility{
+margin-bottom: 5px;
+}
+
+#GAPIaccess>#APIaccess{
+margin-bottom: 5px;
+}
+
+#GVisit>#Visit{
+margin-top: 10px;
+}
+
+#id {
+color: var(--main-textColorDark);
+}
+
+button {
+padding: 0;
+}
+
+/* elements */
+
+
+/* end of elements */
+
+.peopleListName, .visitBtn {
+color: var(--main-textColorDark);
+}
+
+.visitBtn, .apibtn {
+font-weight: bold;
+}
+
+.visitBtn {
+font-size: 15px;
+}
+
+.apibtn {
+font-size: 15px;
+background-color: transparent;
+border: transparent;
+}
+
+.accountOwner {
+color: var(--main-accountOwnerColor);
+}
+
+.peopleListName, .accountOwner, .visitBtn {
+font-family: var(--main-font-Family-Verdana);
+background-color: transparent;
+border: transparent;
+}
+
+.boardLine {
+border: var(--main-border2);
+opacity: 40%;
+margin-top: 14px;
+margin-bottom: 12px;
+}

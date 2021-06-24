@@ -74,7 +74,7 @@
 
    <link rel="stylesheet" href="styles/shared/overlay.css">
 
-   <link rel="stylesheet" href="styles/leaderboards/board.css">
+   <link rel="stylesheet" href="styles/users/board.css">
 
    <script src="sw.js" type="module"></script>
 
@@ -97,6 +97,7 @@
    </script>
 
    <div id="TSAlertOverlay" style="display: none;" class="overlay noselect"></div>
+   <div id="TSConfirmOverlay" style="display: none;" class="overlay noselect"></div>
 
    <section id="page">
 
@@ -141,18 +142,36 @@
 
 <script>
    "use strict";
+
    getTSAlertOverlay();
+   getTSConfirmOverlay();
+
+   let allUsers = null, searchFilter = "", prevList = [];;
+   const allAPIUsersArr = [];
+   function TAllUsers(aAllUsersList) {
+      const allUsersList = aAllUsersList;
+
+      this.getList = function () {
+         return allUsersList;
+      }
+   }
 
    if (user) {
 
       getUsersList();
 
-      // Get list of users
+      // gets a list of all public users
       async function getUsersList() {
 
          const information = document.getElementById("information");
 
          if (navigator.onLine) {
+
+            const cached_usersTxt = sessionStorage.getItem("cached_usersTxt");
+
+            if (cached_usersTxt) {
+               information.innerHTML = cached_usersTxt;
+            }
 
             const infoHeader = {};
             const url = `/users/list/all`;
@@ -160,23 +179,49 @@
             const resp = await callServerAPIPost(infoHeader, url);
 
             if (resp.hasOwnProperty("allUsers")) {
+               allUsers = new TAllUsers(resp.allUsers);
 
-               const totalUsers = resp.allUsers.length;
+               const usersKeys = Object.keys(resp.allUsers);
 
-               if (totalUsers < 0) {
-                  information.innerHTML = `${application.name} har ingen offentlige brukere`;
-               } else if (totalUsers === 1) {
-                  information.innerHTML = `${application.name} har 1 offentlig bruker`;
+               let totalUsers = usersKeys.length;
+               let usersText = "";
+               if (user.getDetail("isadmin") === true) {
+
+                  for (let i = 0; i < resp.allAPIUsers.length; i++) {
+                     allAPIUsersArr.push(parseInt(resp.allAPIUsers[i].user_id));
+                  }
+
+                  usersText = `${application.name} har ${totalUsers} brukere. ${allAPIUsersArr.length} av brukerene har API-tilgang.<br>Du kan trykke deg inn på en bruker for å se mer detaljer.`;
+                  if (totalUsers === 0) {
+                     usersText = `Det finnes ingen brukere`;
+                  }
                } else {
-                  information.innerHTML = `${application.name} har ${totalUsers} offentlige brukere<br>Her er listen med brukere`;
+
+                  usersText = `${application.name} har ${totalUsers} offentlige brukere.<br>Du kan trykke deg inn på en bruker for å se mer detaljer.`;
+                  if (totalUsers === 0) {
+                     usersText = `Det finnes ingen offentlige brukere`;
+                  }
                }
 
-               if (resp.hasOwnProperty("allAPIUsers")) {
-                  displayAllUsersAdmin(resp.allUsers, resp.allAPIUsers);
-               } else {
-                  displayAllUsers(resp.allUsers);
+               sessionStorage.setItem("cached_usersTxt", usersText);
+
+               document.getElementById("information").innerHTML = usersText;
+
+               if (totalUsers > 5) {
+                  document.getElementById("information").innerHTML += `<br><br><input id="searchUsersInp" class="searchInp" placeholder="Søk" onkeyup="checkSearch();"></input>`;
+                  const cached_search_users = sessionStorage.getItem("cached_search_users");
+                  if (cached_search_users) {
+                     const searchDom = document.getElementById("searchUsersInp");
+                     if (searchDom) {
+                        searchFilter = cached_search_users;
+                        searchDom.value = searchFilter;
+                        sessionStorage.removeItem("cached_search_users");
+                     }
+                  }
                }
             }
+
+            displayAllUsers();
 
          } else {
             information.innerHTML = `Du må ha Internett-forbindelse for å hente listen med alle offentlige brukere`;
@@ -184,68 +229,234 @@
       }
       // End of getUsersList function
 
-      // displayAllUsersAdmin
-      function displayAllUsersAdmin(aAllUsers, aAllAPIUsers) {
-
-         const allUsers = aAllUsers;
-         const allAPIUsers = aAllAPIUsers;
-
-         allUsers.sort(function (a, b) { return a.id - b.id });
-         const usersKeys = Object.keys(allUsers);
-
-         for (let i = 0; i < usersKeys.length; i++) {
-
-            const currentUser = allUsers[usersKeys[i]];
-
-            let myAccountColor = "";
-            if (user && currentUser.id === user.getId()) {
-               myAccountColor = "settingsHightlightUser";
-            }
-
-            const list = document.getElementById("list");
-
-            list.innerHTML += `
-            <div>
-            ${currentUser.displayname}
-            ${currentUser.username}
-            </div>`;
-
-            console.log(currentUser)
-
-         }
-      }
-      // End of displayAllUsersAdmin function
-
-      // displayAllUsers
-      function displayAllUsers(aAllUsers) {
-
-         const allUsers = aAllUsers;
-
-         allUsers.sort(function (a, b) { return a.id - b.id });
-         const usersKeys = Object.keys(allUsers);
-
-         for (let i = 0; i < usersKeys.length; i++) {
-
-            const currentUser = allUsers[usersKeys[i]];
-
-            let myAccountColor = "";
-            if (user && currentUser.id === user.getId()) {
-               myAccountColor = "settingsHightlightUser";
-            }
-
-            const list = document.getElementById("list");
-
-            list.innerHTML += `
-            <div>
-            ${currentUser.displayname}
-            ${currentUser.username}
-            </div>`;
-
-         }
-      }
-      // End of displayAllUsers function
-
    }
+
+
+   function displayAllUsers() {
+
+      if (allUsers) {
+
+         const allUsersList = allUsers.getList();
+
+         allUsersList.sort(function (a, b) { return a.id - b.id });
+
+         const list = document.getElementById("list");
+
+         let tempList = [];
+         if (searchFilter.length > 0) {
+            for (let i = 0; i < allUsersList.length; i++) {
+               const current = allUsersList[i];
+               if (!current.displayname.toLowerCase().includes(searchFilter) && !current.username.toLowerCase().includes(searchFilter)) {
+               } else {
+                  tempList.push(current);
+               }
+            }
+         } else {
+            tempList = allUsersList;
+         }
+
+         if (JSON.stringify(tempList) !== JSON.stringify(prevList)) {
+            const usersKeys = Object.keys(tempList);
+            prevList = tempList;
+            list.innerHTML = "";
+
+            if (tempList.length > 0) {
+               const isAdmin = user.getDetail("isadmin") === true;
+
+               for (let i = 0; i < usersKeys.length; i++) {
+
+                  const currentUser = tempList[usersKeys[i]];
+
+                  let accountColor = "peopleListName";
+                  let visitBtn = `
+               <button class="visitBtn pointer" onClick="saveSearch();redirectToUser('${currentUser.id}');">Besøk</button>
+               `;
+                  if (currentUser.id === user.getId()) {
+                     accountColor = "accountOwner";
+                     visitBtn = `
+               <button class="visitBtn pointer" onClick="redirectToUser('${currentUser.id}');">Din bruker</button>
+               `;
+                  }
+
+                  let extraDetails = "";
+
+                  if (isAdmin === true) {
+
+                     let visibilityTxt = "";
+
+                     if (currentUser.publicprofile === false) {
+                        visibilityTxt = "Privat";
+                     }
+
+                     let APIAccessTxt = `<button style="color:green;" class="apibtn pointer" onClick="saveSearch();giveAPIAccessConfirm('${currentUser.username}','${currentUser.id}');">Gi API tilgang</button>`;
+
+                     if (allAPIUsersArr.includes(currentUser.id)) {
+                        APIAccessTxt = `<button style="color:red;" class="apibtn pointer" onClick="saveSearch();removeAPIAccessConfirm('${currentUser.username}','${currentUser.id}');">Fjern API tilgang</button>`;
+                     }
+
+                     if (currentUser.id === user.getId()) {
+                        visibilityTxt = "";
+                        APIAccessTxt = "";
+                     }
+
+                     extraDetails =
+                        `<div id="Gid">
+               <div id="id">
+                  ID: ${currentUser.id}
+               </div>
+               </div>
+
+               <div id="Gvisibility">
+               <div id="visibility" style="color:red;">
+                  ${visibilityTxt}
+               </div>
+               </div>
+
+               <div id="GAPIaccess">
+               <div id="APIaccess">
+                  ${APIAccessTxt}
+               </div>
+               </div>
+               `;
+                  }
+
+                  list.innerHTML += `
+         <div class="users fadeInUp animate">
+
+         <div id="Gdisplayname">
+         <div id="displayname" class="${accountColor}">
+            ${currentUser.displayname}
+         </div>
+         </div>
+
+         <div id="Gusername">
+         <div id="username" class="${accountColor}">
+            ${currentUser.username}
+         </div>
+         </div>
+
+         ${extraDetails}
+
+         <div id="GVisit">
+         <div id="Visit">
+            ${visitBtn}
+         </div>
+         </div>
+
+         </div>
+         <hr class="boardLine fadeIn animate delayMedium">
+         `;
+
+               }
+
+            } else {
+               list.innerHTML = `<div class="noResults">Fant ingen resultater</div>`;
+            }
+            scrollToSavedPos();
+         }
+      }
+   }
+
+
+   // checks search
+   function checkSearch() {
+      const searchUsersInp = document.getElementById("searchUsersInp").value.toLowerCase();
+      if (searchFilter !== searchUsersInp) {
+         searchFilter = searchUsersInp;
+         displayAllUsers();
+      }
+   }
+   // End of checkSearch function
+
+   // Eventlistener to save current scroll
+   document.getElementById("Glist").addEventListener("scroll", function (e) {
+      const scrollY = document.getElementById("Glist").scrollTop;
+      sessionStorage.setItem("@scroll-Users", scrollY);
+   });
+   // End of eventlistener
+
+   // scrolls to saved pos if saved
+   function scrollToSavedPos() {
+      const scrollY = sessionStorage.getItem("@scroll-Users");
+      if (scrollY) {
+         document.getElementById("Glist").scrollTop = scrollY;
+      }
+   }
+   // End of scrollToSavedPos function
+
+   // Saves search
+   function saveSearch() {
+      const searchUsers = document.getElementById("searchUsersInp");
+      if (searchUsers) {
+         if (searchUsers.value.length > 0) {
+            sessionStorage.setItem("cached_search_users", searchUsers.value);
+         }
+      }
+   }
+   // End of saveSearch function
+
+
+   // giveAPIAccessConfirm
+   async function giveAPIAccessConfirm(aUsername, aID) {
+
+      if (aID && aUsername) {
+         showConfirm(`Er du sikker på at du ønsker å gi ${aUsername} (${aID}) API tilgang?`, `giveAPIAccess('${aUsername}', '${aID}');`);
+      }
+   }
+   // End of giveAPIAccessConfirm function
+
+   // giveAPIAccess
+   async function giveAPIAccess(aUsername, aID) {
+
+      if (aID && aUsername) {
+
+         const giveAPIUsername = aUsername;
+         const giveAPIID = parseInt(aID);
+
+         const infoHeader = { "giveAPIUserAccess": giveAPIID };
+         const url = `/user/giveAPIAccess`;
+
+         const resp = await callServerAPIPost(infoHeader, url);
+
+         if (resp !== true) {
+            showAlert(`Det har oppstått en feil. ${giveAPIUsername} kunne ikke få API-tilgang!`, true);
+         }
+
+         location.reload();
+      }
+   }
+   // End of giveAPIAccess function
+
+   // removeAPIAccessConfirm
+   async function removeAPIAccessConfirm(aUsername, aID) {
+
+      if (aID && aUsername) {
+         showConfirm(`Er du sikker på at du ønsker å fjerne ${aUsername} (${aID}) sin API tilgang?`, `removeAPIAccess('${aUsername}', '${aID}');`);
+      }
+   }
+   // End of removeAPIAccessConfirm function
+
+   // removeAPIAccess
+   async function removeAPIAccess(aUsername, aID) {
+
+      if (aID && aUsername) {
+
+         const removeAPIUsername = aUsername;
+         const removeAPIID = parseInt(aID);
+
+         const infoHeader = { "removeAPIUserAccess": removeAPIID };
+         const url = `/user/removeAPIAccess`;
+
+         const resp = await callServerAPIPost(infoHeader, url);
+
+         if (resp !== true) {
+            showAlert(`Det har oppstått en feil. ${removeAPIUsername} kunne ikke fjerne API-tilgang`, true);
+         }
+
+         location.reload();
+      }
+   }
+// End of removeAPIAccess function
 
 </script>
 
