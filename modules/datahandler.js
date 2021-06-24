@@ -1764,7 +1764,7 @@ class StorageHandler {
                     FROM users
                     WHERE id = $1
                     AND isadmin = true`,
-                                [userid]);
+                        [userid]);
 
                     if (isAdmin.rows.length > 0) {
                         isAdmin = true;

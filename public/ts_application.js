@@ -4,6 +4,13 @@
         name: "Treningstatistikken",
         logoURL: "images/placeholder_logo.svg",
         changeLog: {
+            "6.3.27.997": {
+                "txt":
+                    ["Lagt til 'loading gif'",
+                        "Feilrettinger",
+                        "Ytelsesforbedringer"],
+                "date": "24.06.2021"
+            },
             "6.3.27.996": {
                 "txt":
                     ["Fikset problem ved søk (Treningsplaner & Brukere)"],

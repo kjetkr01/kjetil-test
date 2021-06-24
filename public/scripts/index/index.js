@@ -73,89 +73,109 @@ async function checkWhoIsWorkingOutToday() {
     peopleWorkoutList.innerHTML = "";
     peopleWorkoutTxt.innerHTML = "";
 
-    const cached_peopleWorkoutTxt = sessionStorage.getItem("cached_peopleWorkoutTxt");
-    if (cached_peopleWorkoutTxt || !navigator.onLine) {
-        peopleWorkoutTxt.classList = "noselect";
-        peopleWorkoutTxt.innerHTML = cached_peopleWorkoutTxt;
-    }
-
     currentDayInfo();
 
     if (navigator.onLine) {
 
+        let workoutListWorkoutAnimation = "";
+        let workoutListUsersAnimation = "";
+
+        let resp = [];
+
+        try {
+            resp = JSON.parse(sessionStorage.getItem("cached_peopleWorkoutList"));
+            if (resp.length > 0) {
+                peopleWorkoutTxt.classList = "noselect";
+                displayWhoIsWorkingOutToday();
+            }
+        } catch { }
+
         const infoHeader = {};
         const url = `/whoIsWorkingOutToday`;
 
-        const resp = await callServerAPIPost(infoHeader, url);
+        let oldResp = resp;
 
-        if (resp.length > 0) {
+        resp = await callServerAPIPost(infoHeader, url);
 
-            if (resp.length === 1) {
-                peopleWorkoutTxt.innerHTML = `I dag trener ${resp.length} person`;
-            } else {
-                peopleWorkoutTxt.innerHTML = `I dag trener ${resp.length} personer`;
-            }
+        if (JSON.stringify(resp) !== JSON.stringify(oldResp)) {
+            workoutListWorkoutAnimation = "fadeIn";
+            workoutListUsersAnimation = "fadeInUp animate";
+            displayWhoIsWorkingOutToday();
+        }
 
-            resp.sort(function (a, b) {
-                if (a.todaysWorkout < b.todaysWorkout) {
-                    return -1;
+        function displayWhoIsWorkingOutToday() {
+
+            if (resp.length > 0) {
+
+                peopleWorkoutList.innerHTML = "";
+
+                if (resp.length === 1) {
+                    peopleWorkoutTxt.innerHTML = `I dag trener ${resp.length} person`;
+                } else {
+                    peopleWorkoutTxt.innerHTML = `I dag trener ${resp.length} personer`;
                 }
-                if (a.todaysWorkout > b.todaysWorkout) {
-                    return 1;
-                }
-                return 0;
-            });
 
-            let currentWorkout = "";
+                resp.sort(function (a, b) {
+                    if (a.todaysWorkout < b.todaysWorkout) {
+                        return -1;
+                    }
+                    if (a.todaysWorkout > b.todaysWorkout) {
+                        return 1;
+                    }
+                    return 0;
+                });
 
-            for (let i = 0; i < resp.length; i++) {
-                let splitFullName = resp[i].userFullName.split(" ");
-                let shortenedFullName = "";
+                let currentWorkout = "";
 
-                if (currentWorkout !== resp[i].todaysWorkout) {
-                    peopleWorkoutList.innerHTML += `
-               <button id="workout-${resp[i].todaysWorkout}" class="peopleWorkoutListWorkout fadeIn">${resp[i].todaysWorkout}</button>
+                for (let i = 0; i < resp.length; i++) {
+                    let splitFullName = resp[i].userFullName.split(" ");
+                    let shortenedFullName = "";
+
+                    if (currentWorkout !== resp[i].todaysWorkout) {
+                        peopleWorkoutList.innerHTML += `
+               <button id="workout-${resp[i].todaysWorkout}" class="peopleWorkoutListWorkout ${workoutListWorkoutAnimation}">${resp[i].todaysWorkout}</button>
                <br>
                `;
 
-                    currentWorkout = resp[i].todaysWorkout;
+                        currentWorkout = resp[i].todaysWorkout;
+                    }
+
+                    shortenedFullName = splitFullName[0] + " ";
+                    for (let j = 1; j < splitFullName.length; j++) {
+                        shortenedFullName += `${splitFullName[j][0]}.`;
+                    }
+
+                    if (user && user.getId() === resp[i].id) {
+                        const workoutBtn = document.getElementById(`workout-${currentWorkout}`);
+                        workoutBtn.classList += " pointer";
+
+                        const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+
+                        const dayNum = new Date().getDay();
+                        const day = days[dayNum];
+
+                        const link = `redirectToTrainingsplit('${user.getSetting("activetrainingsplit")}','${day}');`;
+                        workoutBtn.setAttribute("onclick", link);
+                        peopleWorkoutList.innerHTML += `
+                        <button class="accountOwner ${workoutListUsersAnimation} pointer" onClick="redirectToUser('${resp[i].id}')">${shortenedFullName}</button>
+                        <br>
+                        `;
+
+                    } else {
+                        peopleWorkoutList.innerHTML += `
+                        <button class="peopleWorkoutListName ${workoutListUsersAnimation} pointer" onClick="redirectToUser('${resp[i].id}')">${shortenedFullName}</button>
+                        <br>
+                        `;
+
+                    }
                 }
 
-                shortenedFullName = splitFullName[0] + " ";
-                for (let j = 1; j < splitFullName.length; j++) {
-                    shortenedFullName += `${splitFullName[j][0]}.`;
-                }
+                sessionStorage.setItem("cached_peopleWorkoutList", JSON.stringify(resp));
 
-                if (user && user.getId() === resp[i].id) {
-                    const workoutBtn = document.getElementById(`workout-${currentWorkout}`);
-                    workoutBtn.classList += " pointer";
-
-                    const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-
-                    const dayNum = new Date().getDay();
-                    const day = days[dayNum];
-
-                    const link = `redirectToTrainingsplit('${user.getSetting("activetrainingsplit")}','${day}');`;
-                    workoutBtn.setAttribute("onclick", link);
-                    peopleWorkoutList.innerHTML += `
-                    <button class="accountOwner fadeInUp animate pointer" onClick="redirectToUser('${resp[i].id}')">${shortenedFullName}</button>
-                    <br>
-                    `;
-
-                } else {
-                    peopleWorkoutList.innerHTML += `
-            <button class="peopleWorkoutListName fadeInUp animate pointer" onClick="redirectToUser('${resp[i].id}')">${shortenedFullName}</button>
-            <br>
-            `;
-
-                }
+            } else {
+                peopleWorkoutTxt.innerHTML = `I dag er det ingen som trener`;
             }
-
-        } else {
-            peopleWorkoutTxt.innerHTML = `I dag er det ingen som trener`;
         }
-
-        sessionStorage.setItem("cached_peopleWorkoutTxt", peopleWorkoutTxt.innerHTML);
 
     } else {
         peopleWorkoutTxt.innerHTML = defaultTxt.noConnection;

@@ -284,6 +284,8 @@ ${firstName[0]} har ingen løft, mål eller treningsplan
         if (memberSince) {
             displayMemberSince();
         }
+
+        document.getElementById("loadingGif").remove();
     }
 }
 // End of displayInformation function
