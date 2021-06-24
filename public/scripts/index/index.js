@@ -75,27 +75,33 @@ async function checkWhoIsWorkingOutToday() {
 
     currentDayInfo();
 
-    if (navigator.onLine) {
+    let resp = [];
+
+    try {
+        resp = JSON.parse(sessionStorage.getItem("cached_peopleWorkoutList"));
+        if (!resp) {
+            resp = [];
+        }
+    } catch { }
+
+    if (navigator.onLine || resp.length > 0) {
 
         let workoutListWorkoutAnimation = "";
         let workoutListUsersAnimation = "";
 
-        let resp = [];
-
-        try {
-            resp = JSON.parse(sessionStorage.getItem("cached_peopleWorkoutList"));
-            if (resp.length > 0) {
-                peopleWorkoutTxt.classList = "noselect";
-                displayWhoIsWorkingOutToday();
-            }
-        } catch { }
+        if (resp.length > 0) {
+            peopleWorkoutTxt.classList = "noselect";
+            displayWhoIsWorkingOutToday();
+        }
 
         const infoHeader = {};
         const url = `/whoIsWorkingOutToday`;
 
         let oldResp = resp;
 
-        resp = await callServerAPIPost(infoHeader, url);
+        if (navigator.onLine) {
+            resp = await callServerAPIPost(infoHeader, url);
+        }
 
         if (JSON.stringify(resp) !== JSON.stringify(oldResp)) {
             workoutListWorkoutAnimation = "fadeIn";
@@ -178,6 +184,7 @@ async function checkWhoIsWorkingOutToday() {
         }
 
     } else {
+        peopleWorkoutTxt.classList = "noselect";
         peopleWorkoutTxt.innerHTML = defaultTxt.noConnection;
     }
 }
