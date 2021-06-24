@@ -257,6 +257,9 @@
             if (current.internetDependentOnLoad === true && !navigator.onLine) {
                current.colorClass = "colorDisabled"
                current.redirect = `showAlert('${current.name} krever Internett-forbindelse.', true);`;
+            } else if (current.description.includes("Kommer snart")) {
+               current.colorClass = "colorDisabled"
+               current.redirect = `showAlert('${current.name} er ikke tilgjengelig enda.', true);`;
             } else {
                current.colorClass = cName;
             }

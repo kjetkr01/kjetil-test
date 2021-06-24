@@ -457,10 +457,6 @@ function redirectToUsers() {
     location.href = "users.html";
 }
 
-function redirectToUsers() {
-    location.href = "users.html";
-}
-
 function redirectToUser(viewUser) {
     const viewingUser = viewUser;
 
