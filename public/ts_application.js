@@ -4,6 +4,11 @@
         name: "Treningstatistikken",
         logoURL: "images/placeholder_logo.svg",
         changeLog: {
+            "6.3.27.998": {
+                "txt":
+                    ["Feilrettinger"],
+                "date": "24.06.2021"
+            },
             "6.3.27.997": {
                 "txt":
                     ["Lagt til 'loading gif'",
