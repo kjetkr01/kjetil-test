@@ -451,17 +451,81 @@ function loadViewTrainingsplit(aResp, aSelectedDay) {
             copyHTML = `<button disabled class="trainingsplitButton">${copy_trainingsplit}</button>`;
         }
 
-        document.getElementById("createdBy").innerHTML = `Av: ${resp.owner}`;
+        document.getElementById("createdBy").innerHTML = `
+        Av: <div style="display:inline-block;font-weight:bold;">
+        <div class="pointer" onclick="redirectToUser('${resp.user_id}');">${resp.owner}</div>
+        </div>`;
 
         document.getElementById("info").innerHTML += `<br><br>${copyHTML}${subscribeHTML}`;
     }
 
-    if (resp.subscriberCount > 0) {
-        document.getElementById("subscriberCount").innerHTML = `Abonnenter: ${resp.subscriberCount}`;
+    getSubscriberCount();
+    // displays subscriber count on trainingsplit if it has more than 0 subscribers
+    async function getSubscriberCount() {
+        const subscriberCountDom = document.getElementById("subscriberCount");
+        let cachedSubCounts = null;
+
+        try {
+            cachedSubCounts = JSON.parse(sessionStorage.getItem("cachedSubCounts"));
+            if (cachedSubCounts) {
+                let subCount = cachedSubCounts[resp.trainingsplit_id];
+                if (subCount) {
+                    if (!isNaN(subCount) && subCount > 0) {
+                        subscriberCountDom.innerHTML = `Abonnenter: ${subCount}`;
+                    }
+                }
+            }
+        } catch { }
+
+        if (navigator.onLine) {
+
+            const subCountBody = { "trainingsplit_id": resp.trainingsplit_id };
+            const subCountUrl = `/user/get/trainingsplit/subscriberCount`;
+
+            const subCountConfig = {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    "authtoken": user.getToken(),
+                    "userinfo": JSON.stringify(user.getUser())
+                },
+                body: JSON.stringify(subCountBody)
+            }
+
+            const subCountResponse = await fetch(subCountUrl, subCountConfig);
+            if (subCountResponse.status === 200) {
+                const subCountData = await subCountResponse.json();
+                const subscriberCount = parseInt(subCountData);
+                if (!isNaN(subscriberCount)) {
+                    try {
+                        cachedSubCounts = JSON.parse(sessionStorage.getItem("cachedSubCounts"));
+                        if (cachedSubCounts) {
+                            cachedSubCounts[resp.trainingsplit_id] = subscriberCount;
+                        } else {
+                            cachedSubCounts = {
+                                [resp.trainingsplit_id]: subscriberCount
+                            }
+                        }
+                        sessionStorage.setItem("cachedSubCounts", JSON.stringify(cachedSubCounts));
+                    } catch { }
+                    if (subscriberCount > 0) {
+                        subscriberCountDom.innerHTML = `Abonnenter: ${subscriberCount}`;
+                        return;
+                    }
+                }
+            }
+            subscriberCountDom.innerHTML = "";
+        }
     }
+    // End of getSubscriberCount function
 
     if (resp.public === false) {
-        document.getElementById("visibilityStatus").innerHTML = "Treningsplanen er bare synlig for eieren og abonnenter";
+        const visibilityStatusDom = document.getElementById("visibilityStatus");
+        if (resp.user_id === user.getId()) {
+            visibilityStatusDom.innerHTML = "Treningsplanen er bare synlig for deg og abonnenter";
+        } else {
+            visibilityStatusDom.innerHTML = "Treningsplanen er bare synlig for eieren og abonnenter";
+        }
     }
 
     let animation = "fadeInUp animate";

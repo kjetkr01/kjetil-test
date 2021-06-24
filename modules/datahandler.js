@@ -321,24 +321,6 @@ class StorageHandler {
 
                                 if (activetrainingsplit.rows.length !== 0) {
 
-                                    let allSubscribedTrainingsplits = await client.query(`
-                                    SELECT subscribedtrainingsplits
-                                    FROM user_settings`);
-
-                                    let subscriberCount = 0;
-
-                                    if (allSubscribedTrainingsplits.rows.length > 0) {
-                                        allSubscribedTrainingsplits = allSubscribedTrainingsplits.rows;
-                                        for (let j = 0; j < allSubscribedTrainingsplits.length; j++) {
-                                            const trainingsplitIds = allSubscribedTrainingsplits[j].subscribedtrainingsplits;
-                                            if (trainingsplitIds.includes(activetrainingsplit.rows[0].trainingsplit_id.toString()) === true) {
-                                                subscriberCount++;
-                                            }
-                                        }
-                                    }
-
-                                    activetrainingsplit.rows[0].subscriberCount = subscriberCount;
-
                                     if (activetrainingsplit.rows[0].user_id === userIDReq) {
                                         activetrainingsplit.rows[0].canEdit = true;
                                     }
@@ -1391,24 +1373,6 @@ class StorageHandler {
 
                 trainingsplit = results.rows[0];
 
-                let allSubscribedTrainingsplits = await client.query(`
-                SELECT subscribedtrainingsplits
-                FROM user_settings`);
-
-                let subscriberCount = 0;
-
-                if (allSubscribedTrainingsplits.rows.length > 0) {
-                    allSubscribedTrainingsplits = allSubscribedTrainingsplits.rows;
-                    for (let j = 0; j < allSubscribedTrainingsplits.length; j++) {
-                        const trainingsplitIds = allSubscribedTrainingsplits[j].subscribedtrainingsplits;
-                        if (trainingsplitIds.includes(trainingsplit.trainingsplit_id.toString()) === true) {
-                            subscriberCount++;
-                        }
-                    }
-                }
-
-                trainingsplit.subscriberCount = subscriberCount;
-
                 if (trainingsplit.user_id === userid || trainingsplit.public === true || isSubscribed === true) {
                     let canEdit = false;
                     if (trainingsplit.user_id === userid) {
@@ -1447,6 +1411,42 @@ class StorageHandler {
         return { "status": results, "trainingsplit": trainingsplit, "msg": msg };
     }
     // End of getTrainingsplit function
+
+    // get Trainingsplit subscriber count (user)
+    async getTrainingsplitSubscriberCount(trainingsplit_id) {
+
+        const client = new pg.Client(this.credentials);
+        let results = false;
+        let subscriberCount = 0;
+
+        try {
+            await client.connect();
+
+            let allSubscribedTrainingsplits = await client.query(`
+            SELECT subscribedtrainingsplits
+            FROM user_settings`);
+
+            if (allSubscribedTrainingsplits.rows.length > 0) {
+                allSubscribedTrainingsplits = allSubscribedTrainingsplits.rows;
+                for (let j = 0; j < allSubscribedTrainingsplits.length; j++) {
+                    const trainingsplitIds = allSubscribedTrainingsplits[j].subscribedtrainingsplits;
+                    if (trainingsplitIds.includes(trainingsplit_id.toString()) === true) {
+                        subscriberCount++;
+                    }
+                }
+            }
+
+            results = true;
+
+        } catch (err) {
+            client.end();
+            console.log(err);
+        }
+
+        client.end();
+        return { "status": results, "subscriberCount": subscriberCount };
+    }
+    // End of getTrainingsplitSubscriberCount function
 
     // get all public trainingsplits (user)
     async getAllTrainingsplits() {

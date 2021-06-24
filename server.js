@@ -37,6 +37,7 @@ const createTrainingsplit = require("./modules/mw/trainingsplit").createTraining
      deleteTrainingsplit = require("./modules/mw/trainingsplit").deleteTrainingsplit,
      saveTrainingsplit = require("./modules/mw/trainingsplit").saveTrainingsplit,
      getTrainingsplit = require("./modules/mw/trainingsplit").getTrainingsplit,
+     getTrainingsplitSubscriberCount = require("./modules/mw/trainingsplit").getTrainingsplitSubscriberCount,
      getAllTrainingsplits = require("./modules/mw/trainingsplit").getAllTrainingsplits,
      copyTrainingsplit = require("./modules/mw/trainingsplit").copyTrainingsplit,
      subUnsubTrainingsplit = require("./modules/mw/trainingsplit").subUnsubTrainingsplit,
@@ -930,6 +931,32 @@ server.post("/user/get/trainingsplit", auth, async (req, res) => {
      }
 });
 // End of /user/get/trainingsplit POST
+
+// get trainingsplit subscriber count
+server.post("/user/get/trainingsplit/subscriberCount", auth, async (req, res) => {
+     try {
+
+          const trainingsplit_id = parseInt(req.body.trainingsplit_id);
+
+          if (!isNaN(trainingsplit_id)) {
+
+               const resp = await getTrainingsplitSubscriberCount(trainingsplit_id);
+
+               if (resp.status === true) {
+                    res.status(200).json(resp.subscriberCount).end();
+               } else {
+                    res.status(403).json(`Ingen abonnenter`).end();
+               }
+          } else {
+               res.status(403).json("error, try again").end();
+          }
+
+     } catch (err) {
+          console.log(err);
+          res.status(403).json("invalid information").end();
+     }
+});
+// End of /user/get/trainingsplit/subscriberCount POST
 
 // get all public trainingsplits
 server.post("/user/get/trainingsplit/all", auth, async (req, res) => {

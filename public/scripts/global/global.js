@@ -23,11 +23,7 @@ const allowedColorThemes = {
 }
 
 try {
-    if (sessionStorage.getItem("allowedLifts")) {
-        allowedLifts = JSON.parse(sessionStorage.getItem("allowedLifts"));
-    }
-    if (sessionStorage.getItem("allowedGoals")) {
-        allowedGoals = JSON.parse(sessionStorage.getItem("allowedGoals"));
-    }
+    allowedLifts = JSON.parse(localStorage.getItem("allowedLifts")) || JSON.parse(sessionStorage.getItem("allowedLifts"));
+    allowedGoals = JSON.parse(localStorage.getItem("allowedGoals")) || JSON.parse(sessionStorage.getItem("allowedGoals"));
 } catch {
 }

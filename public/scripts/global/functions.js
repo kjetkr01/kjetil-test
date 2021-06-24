@@ -464,7 +464,22 @@ function redirectToUser(viewUser) {
         if (user && user.getId() === parseInt(viewingUser)) {
             redirectToAccount();
         } else {
-            sessionStorage.setItem("visit_user_referrer", document.URL);
+            try {
+                let history = JSON.parse(sessionStorage.getItem("visit_user_referrer"));
+                if (history && history.length > 0) {
+                    if (history[history.length - 1]) {
+                        history.push(document.URL);
+                        sessionStorage.setItem("visit_user_referrer", JSON.stringify(history));
+                    }
+                } else {
+                    history = [];
+                    history.push(document.URL)
+                    sessionStorage.setItem("visit_user_referrer", JSON.stringify(history));
+                }
+            } catch {
+                sessionStorage.removeItem("visit_user_referrer");
+            }
+            //sessionStorage.setItem("visit_user_referrer", document.URL);
             location.href = `user.html?user_id=${viewingUser}`;
         }
     } else {
@@ -490,7 +505,21 @@ function redirectToTrainingsplit(aTrainingsplitID, aDay, aEdit) {
     }
 
     if (trainingsplit_id) {
-        sessionStorage.setItem("visit_trainingsplit_referrer", document.URL);
+        try {
+            let history = JSON.parse(sessionStorage.getItem("visit_trainingsplit_referrer"));
+            if (history && history.length > 0) {
+                if (history[history.length - 1]) {
+                    history.push(document.URL);
+                    sessionStorage.setItem("visit_trainingsplit_referrer", JSON.stringify(history));
+                }
+            } else {
+                history = [];
+                history.push(document.URL)
+                sessionStorage.setItem("visit_trainingsplit_referrer", JSON.stringify(history));
+            }
+        } catch {
+            sessionStorage.removeItem("visit_trainingsplit_referrer");
+        }
         location.href = `trainingsplit.html?trainingsplit_id=${trainingsplit_id}${daySearch}${editSearch}`;
     } else {
         redirectToFeed();

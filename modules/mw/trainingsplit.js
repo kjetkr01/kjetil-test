@@ -36,6 +36,15 @@ async function getTrainingsplit(userid, trainingsplit_id) {
     }
 }
 
+async function getTrainingsplitSubscriberCount(trainingsplit_id) {
+    try {
+        const resp = await database.getTrainingsplitSubscriberCount(trainingsplit_id);
+        return resp;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function getAllTrainingsplits() {
     try {
         const resp = await database.getAllTrainingsplits();
@@ -139,6 +148,7 @@ module.exports.createTrainingsplit = createTrainingsplit;
 module.exports.deleteTrainingsplit = deleteTrainingsplit;
 module.exports.saveTrainingsplit = saveTrainingsplit;
 module.exports.getTrainingsplit = getTrainingsplit;
+module.exports.getTrainingsplitSubscriberCount = getTrainingsplitSubscriberCount;
 module.exports.getAllTrainingsplits = getAllTrainingsplits;
 module.exports.copyTrainingsplit = copyTrainingsplit;
 module.exports.subUnsubTrainingsplit = subUnsubTrainingsplit;

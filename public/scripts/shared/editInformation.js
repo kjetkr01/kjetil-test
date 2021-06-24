@@ -78,7 +78,7 @@ function enableOverlayCreate(aType) {
 
                 if (allowedLifts && allowedLifts.length > 0) {
                     respMsg.innerHTML = `Du kan lage ${liftsLeftInfo} løft til`;
-                    const currentlySorting = localStorage.getItem("display_lifts_owner");
+                    const currentlySorting = user.getSetting("lifts_filter_exercise");
                     for (let i = 0; i < allowedLifts.length; i++) {
 
                         if (allowedLifts[i] === currentlySorting) {
@@ -107,14 +107,16 @@ function enableOverlayCreate(aType) {
                 if (allowedGoals && allowedGoals.length > 0) {
                     respMsg.innerHTML = `Du kan lage ${goalsLeftInfo} mål til`;
                     inp1.setAttribute("onChange", "changeVisibility();");
-                    const currentlySorting = localStorage.getItem("display_goals_owner");
+                    const currentlySorting = user.getSetting("goals_filter_exercise");
                     for (let i = 0; i < allowedGoals.length; i++) {
-                        if (allowedGoals[i] === currentlySorting && allowedGoals.includes(currentlySorting)) {
+                        if (allowedGoals[i] === currentlySorting) {
                             inp1.innerHTML += `<option selected="selected" value="${allowedGoals[i]}">${capitalizeFirstLetter(allowedGoals[i])}`;
-                            for (let x = 0; x < doms.length; x++) {
-                                const dom = document.getElementById(doms[x]);
-                                if (dom) {
-                                    dom.classList = "hidden";
+                            if (currentlySorting.includes("i vekt")) {
+                                for (let x = 0; x < doms.length; x++) {
+                                    const dom = document.getElementById(doms[x]);
+                                    if (dom) {
+                                        dom.classList = "hidden";
+                                    }
                                 }
                             }
                         } else {

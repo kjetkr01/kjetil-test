@@ -74,6 +74,7 @@ font-family: var(--main-font-Family-Verdana);
 }
 
 #GtrainingsplitOwner>#trainingsplitOwner{
+font-size: 15px;
 color: var(--main-textColorDark);
 font-family: var(--main-font-Family-Verdana);
 }

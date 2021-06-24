@@ -228,16 +228,20 @@
    getTSAlertOverlay();
    getTSConfirmOverlay();
 
-   const referrer = sessionStorage.getItem("visit_user_referrer");
-
    // returnToPrevious
    function returnToPrevious() {
-      const redirect = sessionStorage.getItem("visit_user_referrer");
-
-      if (redirect) {
+      try {
+         let history = JSON.parse(sessionStorage.getItem("visit_user_referrer"));
+         if (history && history.length > 0) {
+            const r = history[history.length - 1];
+            history.pop();
+            sessionStorage.setItem("visit_user_referrer", JSON.stringify(history));
+            location.href = r;
+         } else {
+            redirectToFeed();
+         }
+      } catch {
          sessionStorage.removeItem("visit_user_referrer");
-         location.href = redirect;
-      } else {
          redirectToFeed();
       }
    }
