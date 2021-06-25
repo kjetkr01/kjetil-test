@@ -1,9 +1,14 @@
 (function (exports) {
 
     const app = {
-        name: "Treningstatistikken",
+        name: "Treningsstatistikken",
         logoURL: "images/placeholder_logo.svg",
         changeLog: {
+            "6.3.27.1000": {
+                "txt":
+                    [`Vennligst ta i bruk den nye <a href="https://treningsstatistikken.herokuapp.com/">Treningsstatistikken</a>`],
+                "date": "25.06.2021"
+            },
             "6.3.27.999": {
                 "txt":
                     ["Feilrettinger"],
