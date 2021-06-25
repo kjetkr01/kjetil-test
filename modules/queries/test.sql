@@ -1,1 +1,0 @@
-SELECT username FROM pending_users WHERE username=$1;
